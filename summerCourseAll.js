@@ -33,23 +33,13 @@ console.log("isPreview: " + isPreview);
  * • clean out PAST onReady() and gradeleveldropdown_change() debris, general comment cleanup
  * • implement console.warn() for end of functions (especially after setTimeout)
  * • Background Color by GradeLevelMax Data
- * ø resolve BUG below with setTimeout()
- *   \_ Doesn't Hold After Filter (just like pagenation in Dogs)
- *   \_ Drop-Down Lable and Value reset failing
+ * • resolve BUG below with setTimeout()
  * • REAL DATA
  * • Repoint Data wk1, wk2, wk3
  * ø Point Data wk4, wk5, wk6, wk7, wk8, wk9
- * ø Check that (and how) to make a column appear in Mobile
- *     \_ at this time all Week Lables in a list, then all Week Buttons in a list and then...
- * ø PUBLISH
- *
- * <circlback ancillary and cosmetic>
- * ø backgroundColors as constants (where?)
- * ø WTF "wixUsersBackend"
- * </circlback ancillary and cosmetic>
- *
- * @NOTE: field key for GradLvlMax is 'order'
- * @NOTE: field key for Week is 'week'
+ * • Check that (and how) to make a column appear in Mobile A: Grouping
+ * • PUBLISH
+ * ø comment out console log/warn code
  */
  /**
   * EXPECTED INITIAL CONSOLE LOGS:

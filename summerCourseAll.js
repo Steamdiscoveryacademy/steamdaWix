@@ -36,7 +36,7 @@ console.log("isPreview: " + isPreview);
  * • resolve BUG below with setTimeout()
  * • REAL DATA
  * • Repoint Data wk1, wk2, wk3
- * ø Point Data wk4, wk5, wk6, wk7, wk8, wk9
+ * • Point Data wk4, wk5, wk6, wk7, wk8, wk9
  * • Check that (and how) to make a column appear in Mobile A: Grouping
  * • PUBLISH
  * ø comment out console log/warn code

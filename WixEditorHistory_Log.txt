@@ -1,0 +1,38 @@
+20210219190000 CheckList Cleanup
+
+added other @STEPS: of just some minor cleanup
+
+/**
+ *@STEPS:
+ * • remove most / enhance remaining comments
+ * • onReady add wk1, wk2
+ * • onChange-All Grade Levels wk1, wk2
+ * • onChange-Grade Level wk1, wk2
+ * • SORTs onReady
+ * • Simplify by Grade Levels
+ * • Simplify by All Grade Levels
+ * • SORTs by Grade Levels
+ * • SORTs by AllGrade Levels
+ * • LINKs
+ * • make onReady() more efficient
+ * • clean out PAST onReady() and gradeleveldropdown_change() debris, general comment cleanup
+ * • implement console.warn() for end of functions (especially after setTimeout)
+ * • Background Color by GradeLevelMax Data
+ * ø resolve BUG below with setTimeout()
+ *   \_ Doesn't Hold After Filter (just like pagenation in Dogs)
+ *   \_ Drop-Down Lable and Value reset failing
+ * • REAL DATA
+ * • Repoint Data wk1, wk2, wk3
+ * ø Point Data wk4, wk5, wk6, wk7, wk8, wk9
+ * ø Check that (and how) to make a column appear in Mobile
+ *     \_ at this time all Week Lables in a list, then all Week Buttons in a list and then...
+ * ø PUBLISH
+ *
+ * <circlback ancillary and cosmetic>
+ * ø backgroundColors as constants (where?)
+ * ø WTF "wixUsersBackend"
+ * </circlback ancillary and cosmetic>
+ *
+ * @NOTE: field key for GradLvlMax is 'order'
+ * @NOTE: field key for Week is 'week'
+ */

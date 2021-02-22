@@ -333,6 +333,12 @@ export function refreshRepeaterWeekTwo(){
         }
         borderColor = index % 4 === 2 ? 'red' : borderColor;
         borderColor = index % 6 === 2 ? 'orange' : borderColor;
+        let spacesLeft = index % 3 === 2 ? Math.floor(Math.random() * 5) + 1 : 7;
+        if (spacesLeft <= 5 || index === 2) {
+            console.log("something");
+            $item('#spacesWk2').label = spacesLeft.toString();
+            $item('#spacesWk2').show();
+        }
         $item("#wk2Box").style.borderColor =  borderColor;
         $item("#wk2Box").style.backgroundColor =  backgroundColor;
 
@@ -371,6 +377,12 @@ export function refreshRepeaterWeekThree(){
         }
         borderColor = index % 3 === 2 ? 'orange' : borderColor;
         borderColor = index % 5 === 2 ? 'red' : borderColor;
+        let spacesLeft = index % 3 === 2 ? Math.floor(Math.random() * 5) + 1 : 7;
+        if (spacesLeft <= 5 || index === 2) {
+            console.log("something");
+            $item('#spacesWk3').label = spacesLeft.toString();
+            $item('#spacesWk3').show();
+        }
         $item("#wk3Box").style.borderColor =  borderColor;
         $item("#wk3Box").style.backgroundColor =  backgroundColor;
 
@@ -409,6 +421,12 @@ export function refreshRepeaterWeekFour(){
         }
         borderColor = index % 4 === 2 ? 'red' : borderColor;
         borderColor = index % 6 === 2 ? 'orange' : borderColor;
+        let spacesLeft = index % 3 === 2 ? Math.floor(Math.random() * 5) + 1 : 7;
+        if (spacesLeft <= 5 || index === 2) {
+            console.log("something");
+            $item('#spacesWk4').label = spacesLeft.toString();
+            $item('#spacesWk4').show();
+        }
         $item("#wk4Box").style.borderColor =  borderColor;
         $item("#wk4Box").style.backgroundColor =  backgroundColor;
 
@@ -491,6 +509,12 @@ export function refreshRepeaterWeekSix(){
         }
         borderColor = index % 4 === 2 ? 'red' : borderColor;
         borderColor = index % 6 === 2 ? 'orange' : borderColor;
+        let spacesLeft = index % 3 === 2 ? Math.floor(Math.random() * 5) + 1 : 7;
+        if (spacesLeft <= 5 || index === 2) {
+            console.log("something");
+            $item('#spacesWk6').label = spacesLeft.toString();
+            $item('#spacesWk6').show();
+        }
         $item("#wk6Box").style.borderColor =  borderColor;
         $item("#wk6Box").style.backgroundColor =  backgroundColor;
 
@@ -529,6 +553,12 @@ export function refreshRepeaterWeekSeven(){
         }
         borderColor = index % 3 === 2 ? 'orange' : borderColor;
         borderColor = index % 5 === 2 ? 'red' : borderColor;
+        let spacesLeft = index % 3 === 2 ? Math.floor(Math.random() * 5) + 1 : 7;
+        if (spacesLeft <= 5 || index === 2) {
+            console.log("something");
+            $item('#spacesWk7').label = spacesLeft.toString();
+            $item('#spacesWk7').show();
+        }
         $item("#wk7Box").style.borderColor =  borderColor;
         $item("#wk7Box").style.backgroundColor =  backgroundColor;
 
@@ -567,6 +597,12 @@ export function refreshRepeaterWeekEight(){
         }
         borderColor = index % 4 === 2 ? 'red' : borderColor;
         borderColor = index % 6 === 2 ? 'orange' : borderColor;
+        let spacesLeft = index % 3 === 2 ? Math.floor(Math.random() * 5) + 1 : 7;
+        if (spacesLeft <= 5 || index === 2) {
+            console.log("something");
+            $item('#spacesWk8').label = spacesLeft.toString();
+            $item('#spacesWk8').show();
+        }
         $item("#wk8Box").style.borderColor =  borderColor;
         $item("#wk8Box").style.backgroundColor =  backgroundColor;
 
@@ -605,6 +641,12 @@ export function refreshRepeaterWeekNine(){
         }        
         borderColor = index % 3 === 2 ? 'orange' : borderColor;
         borderColor = index % 5 === 2 ? 'red' : borderColor;
+        let spacesLeft = index % 3 === 2 ? Math.floor(Math.random() * 5) + 1 : 7;
+        if (spacesLeft <= 5 || index === 2) {
+            console.log("something");
+            $item('#spacesWk9').label = spacesLeft.toString();
+            $item('#spacesWk9').show();
+        }
         $item("#wk9Box").style.borderColor =  borderColor;
         $item("#wk9Box").style.backgroundColor =  backgroundColor;
 

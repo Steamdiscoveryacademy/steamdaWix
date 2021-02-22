@@ -290,9 +290,9 @@ export function refreshRepeaterWeekOne(){
         borderColor = index % 3 === 2 ? 'orange' : borderColor;
         borderColor = index % 5 === 2 ? 'red' : borderColor;
         let spacesLeft = index % 3 === 2 ? Math.floor(Math.random() * 5) + 1 : 7;
-        if (spacesLeft <= 5 || index === 2) {
+        if (spacesLeft <= 5) {
             console.log("something");
-            $item('#spacesWk1').text = spacesLeft.toString();
+            $item('#spacesWk1').label = spacesLeft.toString();
             $item('#spacesWk1').show();
         }
         $item("#wk1Box").style.borderColor =  borderColor;
@@ -447,6 +447,12 @@ export function refreshRepeaterWeekFive(){
         }
         borderColor = index % 3 === 2 ? 'orange' : borderColor;
         borderColor = index % 5 === 2 ? 'red' : borderColor;
+        let spacesLeft = index % 3 === 2 ? Math.floor(Math.random() * 5) + 1 : 7;
+        if (spacesLeft <= 5 || index === 2) {
+            console.log("something");
+            $item('#spacesWk5').label = spacesLeft.toString();
+            $item('#spacesWk5').show();
+        }
         $item("#wk5Box").style.borderColor =  borderColor;
         $item("#wk5Box").style.backgroundColor =  backgroundColor;
 

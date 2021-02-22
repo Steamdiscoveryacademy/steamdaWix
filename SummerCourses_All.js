@@ -21,7 +21,7 @@ console.log("isPreview: " + isPreview);
  *@STEPS: - just a few final ones
  * ø remove INERT Functions()
  * ø remove gratuitous comments
- * ø remove OOAAOC console.log's and console.warn's
+ * ø remove OOAAOC console.log's and console.warn's 
  * ø change any remaining console.warn's to console.log's
  */
  /**
@@ -46,8 +46,8 @@ $w.onReady(function () {
     console.warn("COMPLETE: " + "$w.onReady(function ()" );
 });
 export function gradeleveldropdown_change(event) {
-    // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-    // Add your code for this event here:
+	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+	// Add your code for this event here: 
     gradeleveldropdown_changeFull();
 }
 
@@ -287,6 +287,14 @@ export function refreshRepeaterWeekOne(){
                 backgroundColor = 'springgreen';
                 break;
         }
+        borderColor = index % 3 === 2 ? 'orange' : borderColor;
+        borderColor = index % 5 === 2 ? 'red' : borderColor;
+        let spacesLeft = index % 3 === 2 ? Math.floor(Math.random() * 5) + 1 : 7;
+        if (spacesLeft <= 5 || index === 2) {
+            console.log("something");
+            $item('#spacesWk1').text = spacesLeft.toString();
+            $item('#spacesWk1').show();
+        }
         $item("#wk1Box").style.borderColor =  borderColor;
         $item("#wk1Box").style.backgroundColor =  backgroundColor;
 
@@ -323,6 +331,8 @@ export function refreshRepeaterWeekTwo(){
                 backgroundColor = 'springgreen';
                 break;
         }
+        borderColor = index % 4 === 2 ? 'red' : borderColor;
+        borderColor = index % 6 === 2 ? 'orange' : borderColor;
         $item("#wk2Box").style.borderColor =  borderColor;
         $item("#wk2Box").style.backgroundColor =  backgroundColor;
 
@@ -359,6 +369,8 @@ export function refreshRepeaterWeekThree(){
                 backgroundColor = 'springgreen';
                 break;
         }
+        borderColor = index % 3 === 2 ? 'orange' : borderColor;
+        borderColor = index % 5 === 2 ? 'red' : borderColor;
         $item("#wk3Box").style.borderColor =  borderColor;
         $item("#wk3Box").style.backgroundColor =  backgroundColor;
 
@@ -395,6 +407,8 @@ export function refreshRepeaterWeekFour(){
                 backgroundColor = 'springgreen';
                 break;
         }
+        borderColor = index % 4 === 2 ? 'red' : borderColor;
+        borderColor = index % 6 === 2 ? 'orange' : borderColor;
         $item("#wk4Box").style.borderColor =  borderColor;
         $item("#wk4Box").style.backgroundColor =  backgroundColor;
 
@@ -431,6 +445,8 @@ export function refreshRepeaterWeekFive(){
                 backgroundColor = 'springgreen';
                 break;
         }
+        borderColor = index % 3 === 2 ? 'orange' : borderColor;
+        borderColor = index % 5 === 2 ? 'red' : borderColor;
         $item("#wk5Box").style.borderColor =  borderColor;
         $item("#wk5Box").style.backgroundColor =  backgroundColor;
 
@@ -467,6 +483,8 @@ export function refreshRepeaterWeekSix(){
                 backgroundColor = 'springgreen';
                 break;
         }
+        borderColor = index % 4 === 2 ? 'red' : borderColor;
+        borderColor = index % 6 === 2 ? 'orange' : borderColor;
         $item("#wk6Box").style.borderColor =  borderColor;
         $item("#wk6Box").style.backgroundColor =  backgroundColor;
 
@@ -503,6 +521,8 @@ export function refreshRepeaterWeekSeven(){
                 backgroundColor = 'springgreen';
                 break;
         }
+        borderColor = index % 3 === 2 ? 'orange' : borderColor;
+        borderColor = index % 5 === 2 ? 'red' : borderColor;
         $item("#wk7Box").style.borderColor =  borderColor;
         $item("#wk7Box").style.backgroundColor =  backgroundColor;
 
@@ -539,6 +559,8 @@ export function refreshRepeaterWeekEight(){
                 backgroundColor = 'springgreen';
                 break;
         }
+        borderColor = index % 4 === 2 ? 'red' : borderColor;
+        borderColor = index % 6 === 2 ? 'orange' : borderColor;
         $item("#wk8Box").style.borderColor =  borderColor;
         $item("#wk8Box").style.backgroundColor =  backgroundColor;
 
@@ -574,7 +596,9 @@ export function refreshRepeaterWeekNine(){
                 borderColor = 'yellow';
                 backgroundColor = 'springgreen';
                 break;
-        }
+        }        
+        borderColor = index % 3 === 2 ? 'orange' : borderColor;
+        borderColor = index % 5 === 2 ? 'red' : borderColor;
         $item("#wk9Box").style.borderColor =  borderColor;
         $item("#wk9Box").style.backgroundColor =  backgroundColor;
 
@@ -592,8 +616,8 @@ export function refreshRepeaterWeekNine(){
 
 
 export function courseNameWk9_click(event, $w) {
-    // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-    // Add your code for this event here:
+	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+	// Add your code for this event here: 
     // console.log("courseNameWk9_click: INERT");
     let targetItem = $w("#week9Courses").getCurrentItem();
     console.log("getCurrentItem: ");
@@ -604,98 +628,98 @@ export function courseNameWk9_click(event, $w) {
 }
 
 export function courseNameWk1_click(event, $w) {
-    // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-    // Add your code for this event here:
+	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+	// Add your code for this event here:
     // console.log("courseNameWk1_click: INERT");
     let targetItem = $w("#week1Courses").getCurrentItem();
     console.log("getCurrentItem: ");
     console.log(targetItem);
     let url = targetItem["link-summer-course-title"];
     console.warn("url: " + url);
-    wixLocation.to(url);
+    wixLocation.to(url); 
 }
 
 export function courseNameWk2_click(event, $w) {
-    // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-    // Add your code for this event here:
+	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+	// Add your code for this event here: 
     // console.log("courseNameWk1_click: INERT");
     let targetItem = $w("#week2Courses").getCurrentItem();
     console.log("getCurrentItem: ");
     console.log(targetItem);
     let url = targetItem["link-summer-course-title"];
     console.warn("url: " + url);
-    wixLocation.to(url);
+    wixLocation.to(url); 
 }
 
 export function courseNameWk3_click(event, $w) {
-    // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-    // Add your code for this event here:
+	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+	// Add your code for this event here: 
     // console.log("courseNameWk1_click: INERT");
     let targetItem = $w("#week3Courses").getCurrentItem();
     console.log("getCurrentItem: ");
     console.log(targetItem);
     let url = targetItem["link-summer-course-title"];
     console.warn("url: " + url);
-    wixLocation.to(url);
+    wixLocation.to(url); 
 }
 
 export function courseNameWk4_click(event, $w) {
-    // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-    // Add your code for this event here:
+	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+	// Add your code for this event here: 
     // console.log("courseNameWk1_click: INERT");
     let targetItem = $w("#week4Courses").getCurrentItem();
     console.log("getCurrentItem: ");
     console.log(targetItem);
     let url = targetItem["link-summer-course-title"];
     console.warn("url: " + url);
-    wixLocation.to(url);
+    wixLocation.to(url); 
 }
 
 export function courseNameWk5_click(event, $w) {
-    // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-    // Add your code for this event here:
+	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+	// Add your code for this event here: 
     // console.log("courseNameWk1_click: INERT");
     let targetItem = $w("#week5Courses").getCurrentItem();
     console.log("getCurrentItem: ");
     console.log(targetItem);
     let url = targetItem["link-summer-course-title"];
     console.warn("url: " + url);
-    wixLocation.to(url);
+    wixLocation.to(url); 
 }
 
 export function courseNameWk6_click(event, $w) {
-    // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-    // Add your code for this event here:
+	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+	// Add your code for this event here: 
     // console.log("courseNameWk1_click: INERT");
     let targetItem = $w("#week6Courses").getCurrentItem();
     console.log("getCurrentItem: ");
     console.log(targetItem);
     let url = targetItem["link-summer-course-title"];
     console.warn("url: " + url);
-    wixLocation.to(url);
+    wixLocation.to(url); 
 }
 
 
 export function courseNameWk7_click(event, $w) {
-    // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-    // Add your code for this event here:
+	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+	// Add your code for this event here: 
     // console.log("courseNameWk1_click: INERT");
     let targetItem = $w("#week7Courses").getCurrentItem();
     console.log("getCurrentItem: ");
     console.log(targetItem);
     let url = targetItem["link-summer-course-title"];
     console.warn("url: " + url);
-    wixLocation.to(url);
+    wixLocation.to(url); 
 }
 
 export function courseNameWk8_click(event, $w) {
-    // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-    // Add your code for this event here:
+	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+	// Add your code for this event here: 
     // console.log("courseNameWk1_click: INERT");
     let targetItem = $w("#week8Courses").getCurrentItem();
     console.log("getCurrentItem: ");
     console.log(targetItem);
     let url = targetItem["link-summer-course-title"];
     console.warn("url: " + url);
-    wixLocation.to(url);
+    wixLocation.to(url); 
 }

@@ -287,7 +287,7 @@ export function refreshRepeaterWeekOne(){
                 backgroundColor = 'springgreen';
                 break;
         }
-        let spacesLeftThis = Number(itemData.maxFull) - Number(itemData.currentEnrollment);
+        let spacesLeftThis = spacesLeft( itemData.currentEnrollment, itemData.maxFull, itemData.waitlist, itemData.absoluteMax, itemData.maxAm, itemData.maxPm, itemData.minFull );
         if (spacesLeftThis <= 0) {
             borderColor = 'red';
         } else if ( spacesLeftThis <= 5 ) {
@@ -331,7 +331,7 @@ export function refreshRepeaterWeekTwo(){
                 backgroundColor = 'springgreen';
                 break;
         }
-        let spacesLeftThis = Number(itemData.maxFull) - Number(itemData.currentEnrollment);
+        let spacesLeftThis = spacesLeft( itemData.currentEnrollment, itemData.maxFull, itemData.waitlist, itemData.absoluteMax, itemData.maxAm, itemData.maxPm, itemData.minFull );
         if (spacesLeftThis <= 0) {
             borderColor = 'red';
         } else if ( spacesLeftThis <= 5 ) {
@@ -375,7 +375,7 @@ export function refreshRepeaterWeekThree(){
                 backgroundColor = 'springgreen';
                 break;
         }
-        let spacesLeftThis = Number(itemData.maxFull) - Number(itemData.currentEnrollment);
+        let spacesLeftThis = spacesLeft( itemData.currentEnrollment, itemData.maxFull, itemData.waitlist, itemData.absoluteMax, itemData.maxAm, itemData.maxPm, itemData.minFull );
         if (spacesLeftThis <= 0) {
             borderColor = 'red';
         } else if ( spacesLeftThis <= 5 ) {
@@ -419,7 +419,7 @@ export function refreshRepeaterWeekFour(){
                 backgroundColor = 'springgreen';
                 break;
         }
-        let spacesLeftThis = Number(itemData.maxFull) - Number(itemData.currentEnrollment);
+        let spacesLeftThis = spacesLeft( itemData.currentEnrollment, itemData.maxFull, itemData.waitlist, itemData.absoluteMax, itemData.maxAm, itemData.maxPm, itemData.minFull );
         if (spacesLeftThis <= 0) {
             borderColor = 'red';
         } else if ( spacesLeftThis <= 5 ) {
@@ -463,7 +463,7 @@ export function refreshRepeaterWeekFive(){
                 backgroundColor = 'springgreen';
                 break;
         }
-        let spacesLeftThis = Number(itemData.maxFull) - Number(itemData.currentEnrollment);
+        let spacesLeftThis = spacesLeft( itemData.currentEnrollment, itemData.maxFull, itemData.waitlist, itemData.absoluteMax, itemData.maxAm, itemData.maxPm, itemData.minFull );
         if (spacesLeftThis <= 0) {
             borderColor = 'red';
         } else if ( spacesLeftThis <= 5 ) {
@@ -551,7 +551,7 @@ export function refreshRepeaterWeekSeven(){
                 backgroundColor = 'springgreen';
                 break;
         }
-        let spacesLeftThis = Number(itemData.maxFull) - Number(itemData.currentEnrollment);
+        let spacesLeftThis = spacesLeft( itemData.currentEnrollment, itemData.maxFull, itemData.waitlist, itemData.absoluteMax, itemData.maxAm, itemData.maxPm, itemData.minFull );
         if (spacesLeftThis <= 0) {
             borderColor = 'red';
         } else if ( spacesLeftThis <= 5 ) {
@@ -595,7 +595,7 @@ export function refreshRepeaterWeekEight(){
                 backgroundColor = 'springgreen';
                 break;
         }
-        let spacesLeftThis = Number(itemData.maxFull) - Number(itemData.currentEnrollment);
+        let spacesLeftThis = spacesLeft( itemData.currentEnrollment, itemData.maxFull, itemData.waitlist, itemData.absoluteMax, itemData.maxAm, itemData.maxPm, itemData.minFull );
         if (spacesLeftThis <= 0) {
             borderColor = 'red';
         } else if ( spacesLeftThis <= 5 ) {

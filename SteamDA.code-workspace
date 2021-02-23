@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"name": "canineConsulting",
+			"path": "../../canineConsultingLocal/canineConsulting"
+		}
+	],
+	"settings": {}
+}

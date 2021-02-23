@@ -511,7 +511,7 @@ export function refreshRepeaterWeekSix(){
         if (spacesLeftThis <= 0) {
             borderColor = 'red';
             $item('#spacesWk6').hide();
-        } else if ( spacesLeftThis <= 5 ) {
+        } else if ( spacesLeftThis < 77 ) {
             borderColor = 'orange';
             $item('#spacesWk6').label = spacesLeftThis.toString();
             $item('#spacesWk6').show();
@@ -661,7 +661,10 @@ export function refreshRepeaterWeekNine(){
 
 //<spacesLeft()>
 export function spacesLeft( currentEnrollment, maxFull, waitlist, absoluteMax, maxAm, maxPm, minFull ){
-    return Number(maxFull) - Number(currentEnrollment);
+    const maxShow = 5;
+    let seats =  Number(maxFull) - Number(currentEnrollment);
+    seats = steats <= maxShow ? seats : 77;
+    return seats;
     // return Math.floor( Math.random() * 6 );
 }
 //</spacesLeft()>

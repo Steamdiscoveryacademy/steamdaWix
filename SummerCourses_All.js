@@ -290,7 +290,7 @@ export function refreshRepeaterWeekOne(){
         let spacesLeftThis = spacesLeft( itemData.currentEnrollment, itemData.maxFull, itemData.waitlist, itemData.absoluteMax, itemData.maxAm, itemData.maxPm, itemData.minFull );
         if (spacesLeftThis <= 0) {
             borderColor = 'red';
-        } else if ( spacesLeftThis <= 5 ) {
+        } else if ( spacesLeftThis < 77 ) {
             borderColor = 'orange';
             $item('#spacesWk1').label = spacesLeftThis.toString();
             $item('#spacesWk1').show();
@@ -334,7 +334,7 @@ export function refreshRepeaterWeekTwo(){
         let spacesLeftThis = spacesLeft( itemData.currentEnrollment, itemData.maxFull, itemData.waitlist, itemData.absoluteMax, itemData.maxAm, itemData.maxPm, itemData.minFull );
         if (spacesLeftThis <= 0) {
             borderColor = 'red';
-        } else if ( spacesLeftThis <= 5 ) {
+        } else if ( spacesLeftThis < 77 ) {
             borderColor = 'orange';
             $item('#spacesWk2').label = spacesLeftThis.toString();
             $item('#spacesWk2').show();
@@ -378,7 +378,7 @@ export function refreshRepeaterWeekThree(){
         let spacesLeftThis = spacesLeft( itemData.currentEnrollment, itemData.maxFull, itemData.waitlist, itemData.absoluteMax, itemData.maxAm, itemData.maxPm, itemData.minFull );
         if (spacesLeftThis <= 0) {
             borderColor = 'red';
-        } else if ( spacesLeftThis <= 5 ) {
+        } else if ( spacesLeftThis < 77 ) {
             borderColor = 'orange';
             $item('#spacesWk3').label = spacesLeftThis.toString();
             $item('#spacesWk3').show();
@@ -422,7 +422,7 @@ export function refreshRepeaterWeekFour(){
         let spacesLeftThis = spacesLeft( itemData.currentEnrollment, itemData.maxFull, itemData.waitlist, itemData.absoluteMax, itemData.maxAm, itemData.maxPm, itemData.minFull );
         if (spacesLeftThis <= 0) {
             borderColor = 'red';
-        } else if ( spacesLeftThis <= 5 ) {
+        } else if ( spacesLeftThis < 77 ) {
             borderColor = 'orange';
             $item('#spacesWk4').label = spacesLeftThis.toString();
             $item('#spacesWk4').show();
@@ -466,7 +466,7 @@ export function refreshRepeaterWeekFive(){
         let spacesLeftThis = spacesLeft( itemData.currentEnrollment, itemData.maxFull, itemData.waitlist, itemData.absoluteMax, itemData.maxAm, itemData.maxPm, itemData.minFull );
         if (spacesLeftThis <= 0) {
             borderColor = 'red';
-        } else if ( spacesLeftThis <= 5 ) {
+        } else if ( spacesLeftThis < 77 ) {
             borderColor = 'orange';
             $item('#spacesWk5').label = spacesLeftThis.toString();
             $item('#spacesWk5').show();
@@ -557,7 +557,7 @@ export function refreshRepeaterWeekSeven(){
         let spacesLeftThis = spacesLeft( itemData.currentEnrollment, itemData.maxFull, itemData.waitlist, itemData.absoluteMax, itemData.maxAm, itemData.maxPm, itemData.minFull );
         if (spacesLeftThis <= 0) {
             borderColor = 'red';
-        } else if ( spacesLeftThis <= 5 ) {
+        } else if ( spacesLeftThis < 77 ) {
             borderColor = 'orange';
             $item('#spacesWk7').label = spacesLeftThis.toString();
             $item('#spacesWk7').show();
@@ -601,7 +601,7 @@ export function refreshRepeaterWeekEight(){
         let spacesLeftThis = spacesLeft( itemData.currentEnrollment, itemData.maxFull, itemData.waitlist, itemData.absoluteMax, itemData.maxAm, itemData.maxPm, itemData.minFull );
         if (spacesLeftThis <= 0) {
             borderColor = 'red';
-        } else if ( spacesLeftThis <= 5 ) {
+        } else if ( spacesLeftThis < 77 ) {
             borderColor = 'orange';
             $item('#spacesWk8').label = spacesLeftThis.toString();
             $item('#spacesWk8').show();
@@ -645,7 +645,7 @@ export function refreshRepeaterWeekNine(){
         let spacesLeftThis = spacesLeft( itemData.currentEnrollment, itemData.maxFull, itemData.waitlist, itemData.absoluteMax, itemData.maxAm, itemData.maxPm, itemData.minFull );
         if (spacesLeftThis <= 0) {
             borderColor = 'red';
-        } else if ( spacesLeftThis <= 5 ) {
+        } else if ( spacesLeftThis < 77 ) {
             borderColor = 'orange';
             $item('#spacesWk9').label = spacesLeftThis.toString();
             $item('#spacesWk9').show();

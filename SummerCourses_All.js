@@ -661,10 +661,12 @@ export function refreshRepeaterWeekNine(){
 
 //<spacesLeft()>
 export function spacesLeft( currentEnrollment, maxFull, waitlist, absoluteMax, maxAm, maxPm, minFull ){
-    const maxShow = 5;
-    let seats =  Number(maxFull) - Number(currentEnrollment);
-    seats = steats <= maxShow ? seats : 77;
-    return seats;
+    // const maxShow = 5;
+    // var seats = 77;
+    // seats =  Number(maxFull) - Number(currentEnrollment);
+    // seats = steats <= maxShow ? seats : 77;
+    // return seats;
+   return  Number(maxFull) - Number(currentEnrollment);
     // return Math.floor( Math.random() * 6 );
 }
 //</spacesLeft()>

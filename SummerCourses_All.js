@@ -510,10 +510,13 @@ export function refreshRepeaterWeekSix(){
         let spacesLeftThis = spacesLeft( itemData.currentEnrollment, itemData.maxFull, itemData.waitlist, itemData.absoluteMax, itemData.maxAm, itemData.maxPm, itemData.minFull );
         if (spacesLeftThis <= 0) {
             borderColor = 'red';
+            $item('#spacesWk6').hide();
         } else if ( spacesLeftThis <= 5 ) {
             borderColor = 'orange';
             $item('#spacesWk6').label = spacesLeftThis.toString();
             $item('#spacesWk6').show();
+        } else {
+            $item('#spacesWk6').hide();
         }
         $item("#wk6Box").style.borderColor =  borderColor;
         $item("#wk6Box").style.backgroundColor =  backgroundColor;

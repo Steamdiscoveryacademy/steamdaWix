@@ -333,7 +333,7 @@ export function refreshRepeaterWeekTwo(){
         }
         borderColor = index % 4 === 2 ? 'red' : borderColor;
         borderColor = index % 6 === 2 ? 'orange' : borderColor;
-        let spacesLeft = index % 3 === 2 ? Math.floor(Math.random() * 5) + 1 : 7;
+        let spacesLeft = index % 6 === 2 ? Math.floor(Math.random() * 5) + 1 : 7;
         if (spacesLeft <= 5 || index === 2) {
             console.log("something");
             $item('#spacesWk2').label = spacesLeft.toString();
@@ -421,7 +421,7 @@ export function refreshRepeaterWeekFour(){
         }
         borderColor = index % 4 === 2 ? 'red' : borderColor;
         borderColor = index % 6 === 2 ? 'orange' : borderColor;
-        let spacesLeft = index % 3 === 2 ? Math.floor(Math.random() * 5) + 1 : 7;
+        let spacesLeft = index % 6 === 2 ? Math.floor(Math.random() * 5) + 1 : 7;
         if (spacesLeft <= 5 || index === 2) {
             console.log("something");
             $item('#spacesWk4').label = spacesLeft.toString();
@@ -509,7 +509,7 @@ export function refreshRepeaterWeekSix(){
         }
         borderColor = index % 4 === 2 ? 'red' : borderColor;
         borderColor = index % 6 === 2 ? 'orange' : borderColor;
-        let spacesLeft = index % 3 === 2 ? Math.floor(Math.random() * 5) + 1 : 7;
+        let spacesLeft = index % 6 === 2 ? Math.floor(Math.random() * 5) + 1 : 7;
         if (spacesLeft <= 5 || index === 2) {
             console.log("something");
             $item('#spacesWk6').label = spacesLeft.toString();
@@ -597,7 +597,7 @@ export function refreshRepeaterWeekEight(){
         }
         borderColor = index % 4 === 2 ? 'red' : borderColor;
         borderColor = index % 6 === 2 ? 'orange' : borderColor;
-        let spacesLeft = index % 3 === 2 ? Math.floor(Math.random() * 5) + 1 : 7;
+        let spacesLeft = index % 6 === 2 ? Math.floor(Math.random() * 5) + 1 : 7;
         if (spacesLeft <= 5 || index === 2) {
             console.log("something");
             $item('#spacesWk8').label = spacesLeft.toString();

@@ -46,8 +46,8 @@ $w.onReady(function () {
     console.warn("COMPLETE: " + "$w.onReady(function ()" );
 });
 export function gradeleveldropdown_change(event) {
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-	// Add your code for this event here: 
+    // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+    // Add your code for this event here: 
     gradeleveldropdown_changeFull();
 }
 
@@ -287,13 +287,13 @@ export function refreshRepeaterWeekOne(){
                 backgroundColor = 'springgreen';
                 break;
         }
-        borderColor = index % 3 === 2 ? 'orange' : borderColor;
-        borderColor = index % 5 === 2 ? 'red' : borderColor;
-        let spacesLeft = index % 3 === 2 ? Math.floor(Math.random() * 5) + 1 : 7;
-        if (spacesLeft <= 5) {
-            console.log("something");
-            $item('#spacesWk1').label = spacesLeft.toString();
-            $item('#spacesWk1').show();
+        let spacesLeftThis = Number(itemData.maxFull) - Number(itemData.currentEnrollment);
+        if (spacesLeftThis <= 0) {
+            borderColor = 'red';
+        } else if ( spacesLeftThis <= 5 ) {
+            borderColor = 'orange';
+            $item('#spacesWk3').label = spacesLeft.toString();
+            $item('#spacesWk3').show();
         }
         $item("#wk1Box").style.borderColor =  borderColor;
         $item("#wk1Box").style.backgroundColor =  backgroundColor;
@@ -331,13 +331,13 @@ export function refreshRepeaterWeekTwo(){
                 backgroundColor = 'springgreen';
                 break;
         }
-        borderColor = index % 4 === 2 ? 'red' : borderColor;
-        borderColor = index % 6 === 2 ? 'orange' : borderColor;
-        let spacesLeft = index % 6 === 2 ? Math.floor(Math.random() * 5) + 1 : 7;
-        if (spacesLeft <= 5 || index === 2) {
-            console.log("something");
-            $item('#spacesWk2').label = spacesLeft.toString();
-            $item('#spacesWk2').show();
+        let spacesLeftThis = Number(itemData.maxFull) - Number(itemData.currentEnrollment);
+        if (spacesLeftThis <= 0) {
+            borderColor = 'red';
+        } else if ( spacesLeftThis <= 5 ) {
+            borderColor = 'orange';
+            $item('#spacesWk3').label = spacesLeft.toString();
+            $item('#spacesWk3').show();
         }
         $item("#wk2Box").style.borderColor =  borderColor;
         $item("#wk2Box").style.backgroundColor =  backgroundColor;
@@ -375,11 +375,11 @@ export function refreshRepeaterWeekThree(){
                 backgroundColor = 'springgreen';
                 break;
         }
-        borderColor = index % 3 === 2 ? 'orange' : borderColor;
-        borderColor = index % 5 === 2 ? 'red' : borderColor;
-        let spacesLeft = index % 3 === 2 ? Math.floor(Math.random() * 5) + 1 : 7;
-        if (spacesLeft <= 5 || index === 2) {
-            console.log("something");
+        let spacesLeftThis = Number(itemData.maxFull) - Number(itemData.currentEnrollment);
+        if (spacesLeftThis <= 0) {
+            borderColor = 'red';
+        } else if ( spacesLeftThis <= 5 ) {
+            borderColor = 'orange';
             $item('#spacesWk3').label = spacesLeft.toString();
             $item('#spacesWk3').show();
         }
@@ -419,13 +419,13 @@ export function refreshRepeaterWeekFour(){
                 backgroundColor = 'springgreen';
                 break;
         }
-        borderColor = index % 4 === 2 ? 'red' : borderColor;
-        borderColor = index % 6 === 2 ? 'orange' : borderColor;
-        let spacesLeft = index % 6 === 2 ? Math.floor(Math.random() * 5) + 1 : 7;
-        if (spacesLeft <= 5 || index === 2) {
-            console.log("something");
-            $item('#spacesWk4').label = spacesLeft.toString();
-            $item('#spacesWk4').show();
+        let spacesLeftThis = Number(itemData.maxFull) - Number(itemData.currentEnrollment);
+        if (spacesLeftThis <= 0) {
+            borderColor = 'red';
+        } else if ( spacesLeftThis <= 5 ) {
+            borderColor = 'orange';
+            $item('#spacesWk3').label = spacesLeft.toString();
+            $item('#spacesWk3').show();
         }
         $item("#wk4Box").style.borderColor =  borderColor;
         $item("#wk4Box").style.backgroundColor =  backgroundColor;
@@ -463,13 +463,13 @@ export function refreshRepeaterWeekFive(){
                 backgroundColor = 'springgreen';
                 break;
         }
-        borderColor = index % 3 === 2 ? 'orange' : borderColor;
-        borderColor = index % 5 === 2 ? 'red' : borderColor;
-        let spacesLeft = index % 3 === 2 ? Math.floor(Math.random() * 5) + 1 : 7;
-        if (spacesLeft <= 5 || index === 2) {
-            console.log("something");
-            $item('#spacesWk5').label = spacesLeft.toString();
-            $item('#spacesWk5').show();
+        let spacesLeftThis = Number(itemData.maxFull) - Number(itemData.currentEnrollment);
+        if (spacesLeftThis <= 0) {
+            borderColor = 'red';
+        } else if ( spacesLeftThis <= 5 ) {
+            borderColor = 'orange';
+            $item('#spacesWk3').label = spacesLeft.toString();
+            $item('#spacesWk3').show();
         }
         $item("#wk5Box").style.borderColor =  borderColor;
         $item("#wk5Box").style.backgroundColor =  backgroundColor;
@@ -507,13 +507,13 @@ export function refreshRepeaterWeekSix(){
                 backgroundColor = 'springgreen';
                 break;
         }
-        borderColor = index % 4 === 2 ? 'red' : borderColor;
-        borderColor = index % 6 === 2 ? 'orange' : borderColor;
-        let spacesLeft = index % 6 === 2 ? Math.floor(Math.random() * 5) + 1 : 7;
-        if (spacesLeft <= 5 || index === 2) {
-            console.log("something");
-            $item('#spacesWk6').label = spacesLeft.toString();
-            $item('#spacesWk6').show();
+        let spacesLeftThis = spacesLeft( itemData.currentEnrollment, itemData.maxFull, itemData.waitlist, itemData.absoluteMax, itemData.maxAm, itemData.maxPm, itemData.minFull );
+        if (spacesLeftThis <= 0) {
+            borderColor = 'red';
+        } else if ( spacesLeftThis <= 5 ) {
+            borderColor = 'orange';
+            $item('#spacesWk3').label = spacesLeft.toString();
+            $item('#spacesWk3').show();
         }
         $item("#wk6Box").style.borderColor =  borderColor;
         $item("#wk6Box").style.backgroundColor =  backgroundColor;
@@ -551,13 +551,13 @@ export function refreshRepeaterWeekSeven(){
                 backgroundColor = 'springgreen';
                 break;
         }
-        borderColor = index % 3 === 2 ? 'orange' : borderColor;
-        borderColor = index % 5 === 2 ? 'red' : borderColor;
-        let spacesLeft = index % 3 === 2 ? Math.floor(Math.random() * 5) + 1 : 7;
-        if (spacesLeft <= 5 || index === 2) {
-            console.log("something");
-            $item('#spacesWk7').label = spacesLeft.toString();
-            $item('#spacesWk7').show();
+        let spacesLeftThis = Number(itemData.maxFull) - Number(itemData.currentEnrollment);
+        if (spacesLeftThis <= 0) {
+            borderColor = 'red';
+        } else if ( spacesLeftThis <= 5 ) {
+            borderColor = 'orange';
+            $item('#spacesWk3').label = spacesLeft.toString();
+            $item('#spacesWk3').show();
         }
         $item("#wk7Box").style.borderColor =  borderColor;
         $item("#wk7Box").style.backgroundColor =  backgroundColor;
@@ -595,13 +595,13 @@ export function refreshRepeaterWeekEight(){
                 backgroundColor = 'springgreen';
                 break;
         }
-        borderColor = index % 4 === 2 ? 'red' : borderColor;
-        borderColor = index % 6 === 2 ? 'orange' : borderColor;
-        let spacesLeft = index % 6 === 2 ? Math.floor(Math.random() * 5) + 1 : 7;
-        if (spacesLeft <= 5 || index === 2) {
-            console.log("something");
-            $item('#spacesWk8').label = spacesLeft.toString();
-            $item('#spacesWk8').show();
+        let spacesLeftThis = Number(itemData.maxFull) - Number(itemData.currentEnrollment);
+        if (spacesLeftThis <= 0) {
+            borderColor = 'red';
+        } else if ( spacesLeftThis <= 5 ) {
+            borderColor = 'orange';
+            $item('#spacesWk3').label = spacesLeft.toString();
+            $item('#spacesWk3').show();
         }
         $item("#wk8Box").style.borderColor =  borderColor;
         $item("#wk8Box").style.backgroundColor =  backgroundColor;
@@ -639,13 +639,13 @@ export function refreshRepeaterWeekNine(){
                 backgroundColor = 'springgreen';
                 break;
         }        
-        borderColor = index % 3 === 2 ? 'orange' : borderColor;
-        borderColor = index % 5 === 2 ? 'red' : borderColor;
-        let spacesLeft = index % 3 === 2 ? Math.floor(Math.random() * 5) + 1 : 7;
-        if (spacesLeft <= 5 || index === 2) {
-            console.log("something");
-            $item('#spacesWk9').label = spacesLeft.toString();
-            $item('#spacesWk9').show();
+        let spacesLeftThis = spacesLeft( itemData.currentEnrollment, itemData.maxFull, itemData.waitlist, itemData.absoluteMax, itemData.maxAm, itemData.maxPm, itemData.minFull );
+        if (spacesLeftThis <= 0) {
+            borderColor = 'red';
+        } else if ( spacesLeftThis <= 5 ) {
+            borderColor = 'orange';
+            $item('#spacesWk3').label = spacesLeft.toString();
+            $item('#spacesWk3').show();
         }
         $item("#wk9Box").style.borderColor =  borderColor;
         $item("#wk9Box").style.backgroundColor =  backgroundColor;
@@ -656,6 +656,12 @@ export function refreshRepeaterWeekNine(){
 }
 //</Week9>
 
+//<spacesLeft()>
+export function spacesLeft( currentEnrollment, maxFull, waitlist, absoluteMax, maxAm, maxPm, minFull ){
+    Number(maxFull) - Number(currentEnrollment);
+    return Math.floor( Math.random() * 6 );
+}
+//</spacesLeft()>
 
 //</CALLED FUNCTIONS>
 
@@ -664,8 +670,8 @@ export function refreshRepeaterWeekNine(){
 
 
 export function courseNameWk9_click(event, $w) {
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-	// Add your code for this event here: 
+    // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+    // Add your code for this event here: 
     // console.log("courseNameWk9_click: INERT");
     let targetItem = $w("#week9Courses").getCurrentItem();
     console.log("getCurrentItem: ");
@@ -676,8 +682,8 @@ export function courseNameWk9_click(event, $w) {
 }
 
 export function courseNameWk1_click(event, $w) {
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-	// Add your code for this event here:
+    // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+    // Add your code for this event here:
     // console.log("courseNameWk1_click: INERT");
     let targetItem = $w("#week1Courses").getCurrentItem();
     console.log("getCurrentItem: ");
@@ -688,8 +694,8 @@ export function courseNameWk1_click(event, $w) {
 }
 
 export function courseNameWk2_click(event, $w) {
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-	// Add your code for this event here: 
+    // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+    // Add your code for this event here: 
     // console.log("courseNameWk1_click: INERT");
     let targetItem = $w("#week2Courses").getCurrentItem();
     console.log("getCurrentItem: ");
@@ -700,8 +706,8 @@ export function courseNameWk2_click(event, $w) {
 }
 
 export function courseNameWk3_click(event, $w) {
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-	// Add your code for this event here: 
+    // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+    // Add your code for this event here: 
     // console.log("courseNameWk1_click: INERT");
     let targetItem = $w("#week3Courses").getCurrentItem();
     console.log("getCurrentItem: ");
@@ -712,8 +718,8 @@ export function courseNameWk3_click(event, $w) {
 }
 
 export function courseNameWk4_click(event, $w) {
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-	// Add your code for this event here: 
+    // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+    // Add your code for this event here: 
     // console.log("courseNameWk1_click: INERT");
     let targetItem = $w("#week4Courses").getCurrentItem();
     console.log("getCurrentItem: ");
@@ -724,8 +730,8 @@ export function courseNameWk4_click(event, $w) {
 }
 
 export function courseNameWk5_click(event, $w) {
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-	// Add your code for this event here: 
+    // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+    // Add your code for this event here: 
     // console.log("courseNameWk1_click: INERT");
     let targetItem = $w("#week5Courses").getCurrentItem();
     console.log("getCurrentItem: ");
@@ -736,8 +742,8 @@ export function courseNameWk5_click(event, $w) {
 }
 
 export function courseNameWk6_click(event, $w) {
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-	// Add your code for this event here: 
+    // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+    // Add your code for this event here: 
     // console.log("courseNameWk1_click: INERT");
     let targetItem = $w("#week6Courses").getCurrentItem();
     console.log("getCurrentItem: ");
@@ -749,8 +755,8 @@ export function courseNameWk6_click(event, $w) {
 
 
 export function courseNameWk7_click(event, $w) {
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-	// Add your code for this event here: 
+    // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+    // Add your code for this event here: 
     // console.log("courseNameWk1_click: INERT");
     let targetItem = $w("#week7Courses").getCurrentItem();
     console.log("getCurrentItem: ");
@@ -761,8 +767,8 @@ export function courseNameWk7_click(event, $w) {
 }
 
 export function courseNameWk8_click(event, $w) {
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-	// Add your code for this event here: 
+    // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+    // Add your code for this event here: 
     // console.log("courseNameWk1_click: INERT");
     let targetItem = $w("#week8Courses").getCurrentItem();
     console.log("getCurrentItem: ");

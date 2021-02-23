@@ -661,8 +661,8 @@ export function refreshRepeaterWeekNine(){
 
 //<spacesLeft()>
 export function spacesLeft( currentEnrollment, maxFull, waitlist, absoluteMax, maxAm, maxPm, minFull ){
-    Number(maxFull) - Number(currentEnrollment);
-    return Math.floor( Math.random() * 6 );
+    return Number(maxFull) - Number(currentEnrollment);
+    // return Math.floor( Math.random() * 6 );
 }
 //</spacesLeft()>
 

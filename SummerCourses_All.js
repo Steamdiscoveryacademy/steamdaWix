@@ -292,7 +292,7 @@ export function refreshRepeaterWeekOne(){
             borderColor = 'red';
         } else if ( spacesLeftThis <= 5 ) {
             borderColor = 'orange';
-            $item('#spacesWk1').label = spacesLeft.toString();
+            $item('#spacesWk1').label = spacesLeftThis.toString();
             $item('#spacesWk1').show();
         }
         $item("#wk1Box").style.borderColor =  borderColor;
@@ -336,7 +336,7 @@ export function refreshRepeaterWeekTwo(){
             borderColor = 'red';
         } else if ( spacesLeftThis <= 5 ) {
             borderColor = 'orange';
-            $item('#spacesWk2').label = spacesLeft.toString();
+            $item('#spacesWk2').label = spacesLeftThis.toString();
             $item('#spacesWk2').show();
         }
         $item("#wk2Box").style.borderColor =  borderColor;
@@ -380,7 +380,7 @@ export function refreshRepeaterWeekThree(){
             borderColor = 'red';
         } else if ( spacesLeftThis <= 5 ) {
             borderColor = 'orange';
-            $item('#spacesWk3').label = spacesLeft.toString();
+            $item('#spacesWk3').label = spacesLeftThis.toString();
             $item('#spacesWk3').show();
         }
         $item("#wk3Box").style.borderColor =  borderColor;
@@ -424,7 +424,7 @@ export function refreshRepeaterWeekFour(){
             borderColor = 'red';
         } else if ( spacesLeftThis <= 5 ) {
             borderColor = 'orange';
-            $item('#spacesWk4').label = spacesLeft.toString();
+            $item('#spacesWk4').label = spacesLeftThis.toString();
             $item('#spacesWk4').show();
         }
         $item("#wk4Box").style.borderColor =  borderColor;
@@ -468,7 +468,7 @@ export function refreshRepeaterWeekFive(){
             borderColor = 'red';
         } else if ( spacesLeftThis <= 5 ) {
             borderColor = 'orange';
-            $item('#spacesWk5').label = spacesLeft.toString();
+            $item('#spacesWk5').label = spacesLeftThis.toString();
             $item('#spacesWk5').show();
         }
         $item("#wk5Box").style.borderColor =  borderColor;
@@ -512,7 +512,7 @@ export function refreshRepeaterWeekSix(){
             borderColor = 'red';
         } else if ( spacesLeftThis <= 5 ) {
             borderColor = 'orange';
-            $item('#spacesWk6').label = spacesLeft.toString();
+            $item('#spacesWk6').label = spacesLeftThis.toString();
             $item('#spacesWk6').show();
         }
         $item("#wk6Box").style.borderColor =  borderColor;
@@ -556,7 +556,7 @@ export function refreshRepeaterWeekSeven(){
             borderColor = 'red';
         } else if ( spacesLeftThis <= 5 ) {
             borderColor = 'orange';
-            $item('#spacesWk7').label = spacesLeft.toString();
+            $item('#spacesWk7').label = spacesLeftThis.toString();
             $item('#spacesWk7').show();
         }
         $item("#wk7Box").style.borderColor =  borderColor;
@@ -600,7 +600,7 @@ export function refreshRepeaterWeekEight(){
             borderColor = 'red';
         } else if ( spacesLeftThis <= 5 ) {
             borderColor = 'orange';
-            $item('#spacesWk8').label = spacesLeft.toString();
+            $item('#spacesWk8').label = spacesLeftThis.toString();
             $item('#spacesWk8').show();
         }
         $item("#wk8Box").style.borderColor =  borderColor;
@@ -644,7 +644,7 @@ export function refreshRepeaterWeekNine(){
             borderColor = 'red';
         } else if ( spacesLeftThis <= 5 ) {
             borderColor = 'orange';
-            $item('#spacesWk9').label = spacesLeft.toString();
+            $item('#spacesWk9').label = spacesLeftThis.toString();
             $item('#spacesWk9').show();
         }
         $item("#wk9Box").style.borderColor =  borderColor;

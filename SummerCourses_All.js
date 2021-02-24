@@ -661,13 +661,10 @@ export function refreshRepeaterWeekNine(){
 
 //<spacesLeft()>
 export function spacesLeft( currentEnrollment, maxFull, waitlist, absoluteMax, maxAm, maxPm, minFull ){
-    // const maxShow = 5;
-    // var seats = 77;
-    // seats =  Number(maxFull) - Number(currentEnrollment);
-    // seats = steats <= maxShow ? seats : 77;
-    // return seats;
-   return  Number(maxFull) - Number(currentEnrollment);
-    // return Math.floor( Math.random() * 6 );
+//return  Number(maxFull) - Number(currentEnrollment) <= 3 ? Number(maxFull) - Number(currentEnrollment) : 77;
+   // \_ worked out with Lisel approx 10;30 Feb 24, 2021
+    // return Math.floor( Math.random() * 4 );//randomize Seats 0 thu 3
+    return Math.floor( Math.random() * 2 ) + 1; //randomize Seats 1 thru 3
 }
 //</spacesLeft()>
 
@@ -675,8 +672,7 @@ export function spacesLeft( currentEnrollment, maxFull, waitlist, absoluteMax, m
 
 
 
-
-
+//<coursName CLICK Functions>
 export function courseNameWk9_click(event, $w) {
     // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
     // Add your code for this event here: 
@@ -785,3 +781,4 @@ export function courseNameWk8_click(event, $w) {
     console.warn("url: " + url);
     wixLocation.to(url); 
 }
+//</coursName CLICK Functions>

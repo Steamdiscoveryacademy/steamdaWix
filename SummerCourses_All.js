@@ -661,10 +661,11 @@ export function refreshRepeaterWeekNine(){
 
 //<spacesLeft()>
 export function spacesLeft( currentEnrollment, maxFull, waitlist, absoluteMax, maxAm, maxPm, minFull ){
-//return  Number(maxFull) - Number(currentEnrollment) <= 3 ? Number(maxFull) - Number(currentEnrollment) : 77;
+return  Number(maxFull) - Number(currentEnrollment) <= 3 ? Number(maxFull) - Number(currentEnrollment) : 77;
    // \_ worked out with Lisel approx 10;30 Feb 24, 2021
     // return Math.floor( Math.random() * 4 );//randomize Seats 0 thu 3
-    return Math.floor( Math.random() * 2 ) + 1; //randomize Seats 1 thru 3
+    // return Math.floor( Math.random() * 3 ) + 1; //randomize Seats 1 thru 3
+    // return Math.floor( Math.random() * 11 ); //randomize Seats 0 thru `0`
 }
 //</spacesLeft()>
 

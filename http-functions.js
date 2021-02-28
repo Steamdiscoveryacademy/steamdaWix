@@ -1,58 +1,73 @@
-32
-31
-30
-29
-28
-27
-26
-25
-24
-23
-22
-21
-20
-19
-18
-17
-16
-15
-14
-13
-12
-11
-10
-9
-8
-7
-5
-6
-3
-4
-1
-2
-//  "success": "got it FormStack"
-// response.body = {
-if (handshakeMatch) {
-	// with the answer in the response body
-	// Perform the requested operation and return an OK response
-	const handshakeMatch = manualHandshake === verifyHandshake ? true : false;
-	const verifyHandshake = '8FD7E76007870C3F4352D478B19E5AE6E61672918EBDEADC023491A7ABBE8197';
-	const manualHandshake = '8FD7E76007870C3F4352D478B19E5AE6E61672918EBDEADC023491A7ABBE8197';
-	const fsFormId = '4262311';
-	const source = "FormStack";
-	const title = 'freeLessonRequest';
-};
-        }
-"Content-Type": "application/json"
-"headers": {
+
+import { ok, notFound, serverError } from 'wix-http-functions'; //YOUTUBE:v=4yCBplV3MPQ&t=1s
+import wixData from 'wix-data';
+
+// URL to call this HTTP function from your published site looks like:
+// Premium site - https://mysite.com/_functions/example/multiply?leftOperand=3&rightOperand=4
+// Premium site - https://steamda.com/_functions/freeLessonRequest
+// Free site - https://brad7390.wixsite.com/my-site-2/_functions/freeLessonRequest
+
+// URL to test this HTTP function from your saved site looks like:
+// Premium site - https://steamda.com/_functions-dev/freeLessonRequest
+// Free site - https://brad7390.wixsite.com/my-site-2/_functions-dev/freeLessonRequest
+
+export function post_freeLessonRequest(request) {
 	let options = {
-		export function post_freeLessonRequest(request) {
-			// Free site - https://brad7390.wixsite.com/my-site-2/_functions-dev/freeLessonRequest
-			// Premium site - https://steamda.com/_functions-dev/freeLessonRequest
-			// URL to test this HTTP function from your saved site looks like:
-			// Free site - https://brad7390.wixsite.com/my-site-2/_functions/freeLessonRequest
-			// Premium site - https://steamda.com/_functions/freeLessonRequest
-			// URL to call this HTTP function from your published site looks like:
-			// Premium site - https://mysite.com/_functions/example/multiply?leftOperand=3&rightOperand=4
-			import wixData from 'wix-data';
-	import { ok, notFound, serverError } from 'wix-http-functions'; //YOUTUBE:v=4yCBplV3MPQ&t=1s
+		"headers": {
+			"Content-Type": "application/json"
+		}
+	};
+
+
+	const title = 'freeLessonRequest';
+	const source = "FormStack";
+	const fsFormId = '4262311';
+	const verifyHandshake = '8FD7E76007870C3F4352D478B19E5AE6E61672918EBDEADC023491A7ABBE8197';
+	return request.body.json()
+		.then((body) => {
+			if (verifyHandshake !== body.HandshakeKey) {
+				// console.warn('Handshake Failed');//maybe later...
+				return notFound(options);
+			}
+			// insert the item in a collection
+			let thisPayload = JSON.stringify(body);
+			let thisWebhookStamp = new Date();
+			thisWebhookStamp.shortDateTime();
+			let thisTitle = title + ' on ' + thisWebhookStamp.short;
+			thisWebhookStamp = thisWebhookStamp.toISOString();
+			let thisCurrentStatusStamp = new Date();
+
+			let thisCurrentStatus = 'PENDING';//for this form
+			let recordInsert = {
+				"title": thisTitle,
+				"source": source,
+				"payload": thisPayload,
+				"payloadId": body.UniqueID,
+				"webhookStamp": thisWebhookStamp,
+				"webhookId": body.FormID,
+				"currentStatus": thisCurrentStatus,
+				"currentStatusStamp": thisCurrentStatusStamp,
+				"resolvedStatus": null,
+				"resolvedStatusStamp": null,
+			}
+			wixData.insert("webhookPayload", recordInsert);
+			// console.log('free_lesson_request Received');//maybe later...
+			// console.log(thisPayload);//maybe later...
+			// console.log(recordInsert);//maybe later...
+			// console.log(body.HandshakeKey);//maybe later...
+			return ok(options);
+		})
+}
+
+Date.prototype.shortDateTime = function () {
+	let mons = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+	let mon = mons[this.getMonth()];
+	let d = this.getDate();
+	let yyyy = this.getFullYear();
+	let h24 = this.getHours();
+	let h = h24 % 12 === 0 ? 12 : h24 % 12;
+	let ii = '00' + this.getMinutes();
+	ii = ii.substr(-2, 2);
+	let ampm = h24 > 11 ? 'PM' : 'AM';
+	this.short = mon + ' ' + d + ' @ ' + h + ':' + ii + ampm;
+};

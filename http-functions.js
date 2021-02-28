@@ -11,6 +11,55 @@ import wixData from 'wix-data';
 // Premium site - https://steamda.com/_functions-dev/freeLessonRequest
 // Free site - https://brad7390.wixsite.com/my-site-2/_functions-dev/freeLessonRequest
 
+export function post_contactUs(request) {
+
+	let options = {
+		"headers": {
+			"Content-Type": "application/json"
+		}
+	};
+
+
+	const title = 'contactUs';
+	const source = "FormStack";
+	const fsFormId = '4273251';
+	const verifyHandshake = 'CB2F4FBB32DFF3F4DF1CBDC05FE4A0AFF82432F5FA02BD48F0516AE3C06A74B1';
+	return request.body.json()
+		.then((body) => {
+			if (verifyHandshake !== body.HandshakeKey) {
+				// console.warn('Handshake Failed');//maybe later...
+				return notFound(options);
+			}
+			// insert the item in a collection
+			let thisPayload = JSON.stringify(body);
+			let thisWebhookStamp = new Date();
+			thisWebhookStamp.shortDateTime();
+			let thisTitle = title + ' on ' + thisWebhookStamp.short;
+			thisWebhookStamp = thisWebhookStamp.toISOString();
+			let thisCurrentStatusStamp = new Date();
+
+			let thisCurrentStatus = 'PENDING';//for this form
+			let recordInsert = {
+				"title": thisTitle,
+				"source": source,
+				"payload": thisPayload,
+				"payloadId": body.UniqueID,
+				"webhookStamp": thisWebhookStamp,
+				"webhookId": body.FormID,
+				"currentStatus": thisCurrentStatus,
+				"currentStatusStamp": thisCurrentStatusStamp,
+				"resolvedStatus": null,
+				"resolvedStatusStamp": null,
+			}
+			wixData.insert("webhookPayload", recordInsert);
+			// console.log('free_lesson_request Received');//maybe later...
+			// console.log(thisPayload);//maybe later...
+			// console.log(recordInsert);//maybe later...
+			// console.log(body.HandshakeKey);//maybe later...
+			return ok(options);
+		})
+}
+
 export function post_freeLessonRequest(request) {
 	let options = {
 		"headers": {
@@ -64,7 +113,7 @@ Date.prototype.shortDateTime = function () {
 	let mon = mons[this.getMonth()];
 	let d = this.getDate();
 	let yyyy = this.getFullYear();
-	let h24 = this.getHours();
+	let h24 = this.getHours() - 6;//MANUAL, should be dynamic from site.
 	let h = h24 % 12 === 0 ? 12 : h24 % 12;
 	let ii = '00' + this.getMinutes();
 	ii = ii.substr(-2, 2);

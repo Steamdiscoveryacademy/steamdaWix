@@ -28,4 +28,15 @@ export function rptrTitle_click(event, $w) {
     let wixId = targetItem["_id"];
     // let wixId = "testID";
     $w('#thisKey').value = wixId;
+    $w('#thisTitle').value = targetItem['title'];
+    $w('#thisSource').value = targetItem['source'];
+    $w('#thisPayload').value = targetItem['payload'];
+    $w('#thisPayloadId').value = targetItem['payloadId'];
+    $w('#thisCurrentStatus').value = targetItem['currentStatus'];
+    let currentStatusStamp = targetItem['currentStatusStamp'].toString();
+    currentStatusStamp = currentStatusStamp.substr(0, currentStatusStamp.search(" GMT"))
+    $w('#thisCurrentStatusStamp').value = currentStatusStamp;
+    // $w('#thisCurrentStatusStamp').value = targetItem['currentStatusStamp']; //copy pasted
+    $w('#thisResolvedStatus').value = targetItem['resolvedStatus'];
+    $w('#thisResolvedStatusStamp').value = targetItem['resolvedStatusStamp'];
 }

@@ -6,6 +6,10 @@
 		{
 			"name": "canineConsulting",
 			"path": "../../canineConsultingLocal/canineConsulting"
+		},
+		{
+			"name": "punchclock",
+			"path": "../../zPunchClockLocal/punchclock"
 		}
 	],
 	"settings": {}

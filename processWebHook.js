@@ -1,5 +1,9 @@
 import wixData from 'wix-data';
+import wixLocation from 'wix-location';
+
+const dashboardBaseUrl = 'https://manage.wix.com/dashboard/a8472b36-bc63-4063-bd42-95519419cb8a/admin-pages/';
 const repeaterLimit = 10;
+
 $w.onReady(function () {
     // wixData.query("dsWebhookPayload")
     //     .count()
@@ -42,8 +46,11 @@ export function rptrTitle_click(event, $w) {
     // let wixId = "testID";
     $w('#thisKey').value = wixId;
     $w('#thisTitle').value = targetItem['title'];
+    let webhookId = targetItem['webhookId'];
+    let source = targetItem['source'];
     $w('#thisSource').value = targetItem['source'];
     $w('#thisPayload').value = targetItem['payload'];
+    $w('#thisWebhookId').value = targetItem['webhookId'];
     $w('#thisPayloadId').value = targetItem['payloadId'];
     $w('#thisCurrentStatus').value = targetItem['currentStatus'];
     let currentStatusStamp = targetItem['currentStatusStamp'].toString();
@@ -57,6 +64,20 @@ export function rptrTitle_click(event, $w) {
         let resolvedStatusStamp = targetItem['resolvedStatusStamp'].toString();
         resolvedStatusStamp = resolvedStatusStamp.substr(0, resolvedStatusStamp.search(" GMT"))
         $w('#thisResolvedStatusStamp').value = resolvedStatusStamp;
+    }
+
+    let sourceArray = ['FormStack']
+    for (let sourceThis of sourceArray) {
+
+        let webhookIdArray = ['4223065']
+        for (let webhookIdThis of webhookIdArray) {
+            let buttonIdConcat = '#' + sourceThis + webhookIdThis;
+            if (webhookId === webhookIdThis && source === sourceThis) {
+                $w(buttonIdConcat).show();
+            } else {
+                $w(buttonIdConcat).hide();
+            }
+        }
     }
 }
 
@@ -115,4 +136,12 @@ export function dropdownFilter_change(event) {
     }
     $w('#moreItems').text = totalCount - repeaterLimit > 0 ? 'plus ' + Number(totalCount - repeaterLimit) + ' additional items' : '';
 
+}
+
+export function btnApplicationSummer_click(event) {
+    // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+    // Add your code for this event here:
+    //?referralInfo=viewerNavigation
+    let url = dashboardBaseUrl + "blank-5?referralInfo=viewerNavigation&wixId=" + $w("#thisKey");
+    wixLocation.to(url);
 }

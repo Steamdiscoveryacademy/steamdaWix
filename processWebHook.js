@@ -78,7 +78,7 @@ export function dropdownFilter_change(event) {
             console.log(filterValue);
             break;
 
-        case 'FREELESSNREQUEST':
+        case 'FREELESSONREQUEST':
             $w("#dsWebhookPayload").setFilter(wixData.filter()
                 .isEmpty("resolvedStatus")
                 .eq("source", 'FormStack')

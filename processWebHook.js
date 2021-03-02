@@ -5,7 +5,8 @@ $w.onReady(function () {
         .count()
         .then((num) => {
             let numberOfItems = num;
-            let moreItems = numberOfItems - 4;
+            let moreItems = numberOfItems - 10;
+            console.log("moreItems: " + moreItems);
             if (moreItems > 0) {
                 moreItems = 'plus ' + moreItems + ' additional items';
                 $w('#moreItems').text = moreItems;
@@ -44,5 +45,54 @@ export function rptrTitle_click(event, $w) {
         let resolvedStatusStamp = targetItem['resolvedStatusStamp'].toString();
         resolvedStatusStamp = resolvedStatusStamp.substr(0, resolvedStatusStamp.search(" GMT"))
         $w('#thisResolvedStatusStamp').value = resolvedStatusStamp;
+    }
+}
+
+export function dropdownFilter_change(event) {
+    var filterValue = $w('#dropdownFilter').value;
+    switch (filterValue) {
+        case 'ALLRESOLVED':
+            $w("#dsWebhookPayload").setFilter(wixData.filter()
+                .isNotEmpty("resolvedStatus"));
+            $w('#filterDescr').text = "Descriptison for All Resolved Webhook's Received";
+            console.log(filterValue);
+            break;
+
+        case 'CONTACTUS':
+            $w("#dsWebhookPayload").setFilter(wixData.filter()
+                .isEmpty("resolvedStatus")
+                .eq("source", 'FormStack')
+                .eq("webhookId", '4273251')
+            );
+            $w('#filterDescr').text = "Descriptison for All 'Contact Us' Webhook's Received";
+            console.log(filterValue);
+            break;
+
+        case 'APPLICATIONSUMMER':
+            $w("#dsWebhookPayload").setFilter(wixData.filter()
+                .isEmpty("resolvedStatus")
+                .eq("source", 'FormStack')
+                .eq("webhookId", '4223065')
+            );
+            $w('#filterDescr').text = "Descriptison for All 'Application Summer' Webhook's Received";
+            console.log(filterValue);
+            break;
+
+        case 'FREELESSNREQUEST':
+            $w("#dsWebhookPayload").setFilter(wixData.filter()
+                .isEmpty("resolvedStatus")
+                .eq("source", 'FormStack')
+                .eq("webhookId", '4262311')
+            );
+            $w('#filterDescr').text = "Descriptison for All 'Free Lesson Request' Webhook's Received";
+            console.log(filterValue);
+            break;
+
+        default:
+            $w("#dsWebhookPayload").setFilter(wixData.filter()
+                .isEmpty("resolvedStatus"));
+            $w('#filterDescr').text = "Descriptison for All Un-Resolved Webhook's Received";
+            console.log(filterValue);
+            break;
     }
 }

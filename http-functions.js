@@ -20,10 +20,59 @@ export function post_contactUs(request) {
 	};
 
 
-	const title = 'contactUs';
+	const title = 'Contact Us';
 	const source = "FormStack";
 	const fsFormId = '4273251';
 	const verifyHandshake = 'CB2F4FBB32DFF3F4DF1CBDC05FE4A0AFF82432F5FA02BD48F0516AE3C06A74B1';
+	return request.body.json()
+		.then((body) => {
+			if (verifyHandshake !== body.HandshakeKey) {
+				// console.warn('Handshake Failed');//maybe later...
+				return notFound(options);
+			}
+			// insert the item in a collection
+			let thisPayload = JSON.stringify(body);
+			let thisWebhookStamp = new Date();
+			thisWebhookStamp.shortDateTime();
+			let thisTitle = title + ' on ' + thisWebhookStamp.short;
+			thisWebhookStamp = thisWebhookStamp.toISOString();
+			let thisCurrentStatusStamp = new Date();
+
+			let thisCurrentStatus = 'PENDING';//for this form
+			let recordInsert = {
+				"title": thisTitle,
+				"source": source,
+				"payload": thisPayload,
+				"payloadId": body.UniqueID,
+				"webhookStamp": thisWebhookStamp,
+				"webhookId": body.FormID,
+				"currentStatus": thisCurrentStatus,
+				"currentStatusStamp": thisCurrentStatusStamp,
+				"resolvedStatus": null,
+				"resolvedStatusStamp": null,
+			}
+			wixData.insert("webhookPayload", recordInsert);
+			// console.log('free_lesson_request Received');//maybe later...
+			// console.log(thisPayload);//maybe later...
+			// console.log(recordInsert);//maybe later...
+			// console.log(body.HandshakeKey);//maybe later...
+			return ok(options);
+		})
+}
+
+export function post_applicationSummer(request) {
+
+	let options = {
+		"headers": {
+			"Content-Type": "application/json"
+		}
+	};
+
+
+	const title = 'Application Summer';
+	const source = "FormStack";
+	const fsFormId = '4223065';
+	const verifyHandshake = 'AB324590076895D72F0F36A40070CEAB038B99982F41ACFA83EE6DDCDFF4BB2A';
 	return request.body.json()
 		.then((body) => {
 			if (verifyHandshake !== body.HandshakeKey) {

@@ -38,5 +38,11 @@ export function rptrTitle_click(event, $w) {
     $w('#thisCurrentStatusStamp').value = currentStatusStamp;
     // $w('#thisCurrentStatusStamp').value = targetItem['currentStatusStamp']; //copy pasted
     $w('#thisResolvedStatus').value = targetItem['resolvedStatus'];
-    $w('#thisResolvedStatusStamp').value = targetItem['resolvedStatusStamp'];
+    if (targetItem['resolvedStatusStamp'] === null) {
+        $w('#thisResolvedStatusStamp').value = targetItem['resolvedStatusStamp'];
+    } else {
+        let resolvedStatusStamp = targetItem['resolvedStatusStamp'].toString();
+        resolvedStatusStamp = resolvedStatusStamp.substr(0, resolvedStatusStamp.search(" GMT"))
+        $w('#thisResolvedStatusStamp').value = resolvedStatusStamp;
+    }
 }

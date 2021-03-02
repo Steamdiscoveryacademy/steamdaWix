@@ -1,22 +1,34 @@
 import wixData from 'wix-data';
-
+const repeaterLimit = 10;
 $w.onReady(function () {
-    wixData.query("dsWebhookPayload")
-        .count()
-        .then((num) => {
-            let numberOfItems = num;
-            let moreItems = numberOfItems - 10;
-            console.log("moreItems: " + moreItems);
-            if (moreItems > 0) {
-                moreItems = 'plus ' + moreItems + ' additional items';
-                $w('#moreItems').text = moreItems;
-                $w('#moreItems').show();
-            }
-        })
-        .catch((error) => {
-            let errorMsg = error.message;
-            let code = error.code;
-        });
+    // wixData.query("dsWebhookPayload")
+    //     .count()
+    //     .then((num) => {
+    //         let numberOfItems = num;
+    //         let moreItems = numberOfItems - 10;
+    //         console.log("moreItems: " + moreItems);
+    //         if (moreItems > 0) {
+    //             moreItems = 'plus ' + moreItems + ' additional items';
+    //             $w('#moreItems').text = moreItems;
+    //             $w('#moreItems').show();
+    //         }
+    //     })
+    //     .catch((error) => {
+    //         let errorMsg = error.message;
+    //         let code = error.code;
+    //     });
+
+    $w('#filterDescr').text = "Descriptison for All Un-Resolved Webhook's Received";
+    $w('#dsWebhookPayload')
+    $w('#moreItems').text = "moreItems Default";
+
+    $w("#dsWebhookPayload").setFilter(wixData.filter()
+        .isEmpty("resolvedStatus"));
+    let totalCount = $w("#dsWebhookPayload").getTotalCount();
+    console.log('totalCount: ' + totalCount);
+    $w('#moreItems').text = totalCount - repeaterLimit > 0 ? 'plus ' + Number(totalCount - repeaterLimit) + ' additional items' : '';
+
+
 });
 
 export function rptrTitle_click(event, $w) {
@@ -24,8 +36,8 @@ export function rptrTitle_click(event, $w) {
     // Add your code for this event here:
     // console.log("rptrTitle_click: INERT");
     let targetItem = $w("#dsWebhookPayload").getCurrentItem();
-    console.log("getCurrentItem: ");
-    console.log(targetItem);
+    // console.log("getCurrentItem: ");
+    // console.log(targetItem);
     let wixId = targetItem["_id"];
     // let wixId = "testID";
     $w('#thisKey').value = wixId;
@@ -49,50 +61,58 @@ export function rptrTitle_click(event, $w) {
 }
 
 export function dropdownFilter_change(event) {
+    var totalCount = 0;
     var filterValue = $w('#dropdownFilter').value;
     switch (filterValue) {
         case 'ALLRESOLVED':
+            $w('#filterDescr').text = "Descriptison for All Resolved Webhook's Received";
             $w("#dsWebhookPayload").setFilter(wixData.filter()
                 .isNotEmpty("resolvedStatus"));
-            $w('#filterDescr').text = "Descriptison for All Resolved Webhook's Received";
-            console.log(filterValue);
+            totalCount = $w("#dsWebhookPayload").getTotalCount();
+            console.log(filterValue + ': ' + totalCount);
             break;
 
         case 'CONTACTUS':
+            $w('#filterDescr').text = "Descriptison for All 'Contact Us' Webhook's Received";
             $w("#dsWebhookPayload").setFilter(wixData.filter()
                 .isEmpty("resolvedStatus")
                 .eq("source", 'FormStack')
                 .eq("webhookId", '4273251')
             );
-            $w('#filterDescr').text = "Descriptison for All 'Contact Us' Webhook's Received";
-            console.log(filterValue);
+            totalCount = $w("#dsWebhookPayload").getTotalCount();
+            console.log(filterValue + ': ' + totalCount);
             break;
 
         case 'APPLICATIONSUMMER':
+            $w('#filterDescr').text = "Descriptison for All 'Application Summer' Webhook's Received";
             $w("#dsWebhookPayload").setFilter(wixData.filter()
                 .isEmpty("resolvedStatus")
                 .eq("source", 'FormStack')
                 .eq("webhookId", '4223065')
             );
-            $w('#filterDescr').text = "Descriptison for All 'Application Summer' Webhook's Received";
-            console.log(filterValue);
+            totalCount = $w("#dsWebhookPayload").getTotalCount();
+            console.log(filterValue + ': ' + totalCount);
             break;
 
         case 'FREELESSONREQUEST':
+            $w('#filterDescr').text = "Descriptison for All 'Free Lesson Request' Webhook's Received";
             $w("#dsWebhookPayload").setFilter(wixData.filter()
                 .isEmpty("resolvedStatus")
                 .eq("source", 'FormStack')
                 .eq("webhookId", '4262311')
             );
-            $w('#filterDescr').text = "Descriptison for All 'Free Lesson Request' Webhook's Received";
-            console.log(filterValue);
+            totalCount = $w("#dsWebhookPayload").getTotalCount();
+            console.log(filterValue + ': ' + totalCount);
             break;
 
         default:
+            $w('#filterDescr').text = "Descriptison for All Un-Resolved Webhook's Received";
             $w("#dsWebhookPayload").setFilter(wixData.filter()
                 .isEmpty("resolvedStatus"));
-            $w('#filterDescr').text = "Descriptison for All Un-Resolved Webhook's Received";
-            console.log(filterValue);
+            totalCount = $w("#dsWebhookPayload").getTotalCount();
+            console.log(filterValue + ': ' + totalCount);
             break;
     }
+    $w('#moreItems').text = totalCount - repeaterLimit > 0 ? 'plus ' + Number(totalCount - repeaterLimit) + ' additional items' : '';
+
 }

@@ -175,21 +175,124 @@ export function btnConfirmClasses_click(event) {
     // Add your code for this event here:
     $w("#memberIdParent").value = $w("#thisMemberId").value;
     var objApplicationSummer = JSON.parse($w('#thisPayload').value);
-    let gradeStudent = objApplicationSummer.grade_during_the_202021_school_year.value + 0;
+    $w("#nameStudent").value = objApplicationSummer.student_name.first + ' ' + objApplicationSummer.student_name.last;
+    $w("#namePreferredStudent").value = objApplicationSummer.preferred_name;
     let dobStudent = objApplicationSummer.date_of_birth;
+    let gradeStudent = objApplicationSummer.grade_during_the_202021_school_year[0].value;
+    console.log(gradeStudent);
     let gradeLevelStudnet = gradeLeveFromGrade(gradeStudent);
+    $w("#gradeLevelStudent").value = gradeLevelStudnet;
     $w("#dobStudent").value = dobStudent;
     $w("#nameParentCC").value = $w("#nameParent").value;
-    $w("#emailParentCC").value = $w("#nameParent").value;
+    $w("#emailParentCC").value = $w("#emailParent").value;
     $w("#phoneParentCC").value = "(" + $w("#phoneParent").value.substr(0, 3) + ") "
-        + $w("#phoneParent").value.substr(3, 3) + "-";
-    + $w("#phoneParent").value.substr(6);
-    // $w("#");
+        + $w("#phoneParent").value.substr(3, 3) + "-"
+        + $w("#phoneParent").value.substr(-4);
+    let address = objApplicationSummer.mailing_address.address;
+    let address2 = objApplicationSummer.mailing_address.address2;
+    let city = objApplicationSummer.mailing_address.city;
+    let state = objApplicationSummer.mailing_address.state;
+    let zip = objApplicationSummer.mailing_address.zip;
+    if (!address2 || address2.trim().length === 0) {
+        $w("#parentAddressBlock").value = `${address}\n ${city}, ${state}  ${zip}`;
+    } else {
+        $w("#parentAddressBlock").value = `${address}\n ${address2}\n ${city}, ${state}  ${zip}`;
+    }
 }
 
 export function validateGradeVsAge(currentGrade, DOB) {
     return Number.random * 10 > 5 ? true : false;
 }
 export function gradeLeveFromGrade(currentGrade) {
-    return Number.random * 10 > 5 ? true : false;
+    /*<ERROR is Appropriate in both cases>
+    currentGrade = currentGrade ? Number(currentGrade) : 0;
+    currentGrade = Number.isNaN(currentGrade) ? 0 : Number(currentGrade);
+    </ERROR is Appropriate in both cases>*/
+    currentGrade = Number(currentGrade);
+    let gradeLevel = 'ERROR';
+    gradeLevel = currentGrade <= 2 ? 'K-2' : gradeLevel;
+    gradeLevel = currentGrade > 2 ? '3-5' : gradeLevel;
+    gradeLevel = currentGrade > 5 ? '6-8' : gradeLevel;
+    gradeLevel = currentGrade > 8 ? '9-12' : gradeLevel;
+    return gradeLevel
+
+}
+
+
+
+export function htmlFunRandomBtn_click(event) {
+    //<HTML Fun DEMO>
+    //<Un-Comment one or the Other to Enable/Disable thid DEMO>
+    let htmlFunButton_enabled = true;
+    //let htmlFunButton_enabled = false;
+    if (htmlFunButton_enabled === false) {
+        return false;
+    }
+    //</Un-Comment one or the Other to Enable/Disable thid DEMO>
+
+    // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+    // Add your code for this event here:
+    let classesWeekOne = Math.floor(Math.random() * 4)
+    let classesWeekTwo = Math.floor(Math.random() * 4)
+    let dlStyle = "\"font-size: 16px; font-family : 'Avenir Black'; background-color: yellow;\"";
+    let dhStyle = "color: blue; text-decoration: underline; line-height: 1";
+    let ddStyle = "color: green; text-indent: 55px;";
+
+    //<Week 1>
+    $w("#switch101").hide();
+    $w("#switch102").hide();
+    $w("#switch103").hide();
+    let textWeek1 = "<dl style=" + dlStyle + ">"
+        + "<dh style='" + dhStyle + "'>Week 1: June 7-11 2021</dh>";
+    if (classesWeekOne >= 1) {
+        textWeek1 += "<dd style='" + ddStyle + "'>Drone Academy</li></dd>";
+        $w("#switch101").show();
+        $w("#switch101").checked = false;
+    }
+    if (classesWeekOne >= 2) {
+        textWeek1 += "<dd style='" + ddStyle + "'>Gadgets & Gizmos</li></dd>";
+        $w("#switch102").show();
+        $w("#switch102").checked = false;
+    }
+    if (classesWeekOne >= 3) {
+        textWeek1 += "<dd style='" + ddStyle + "'>Forsensics</li></dd>";
+        $w("#switch103").show();
+        $w("#switch103").checked = false;
+    }
+    textWeek1 += "</dl>"
+        ;
+    $w("#textWeek1").html = textWeek1;
+    //</Week 1>
+
+    //<Week 2>
+    $w("#switch201").hide();
+    $w("#switch202").hide();
+    $w("#switch203").hide();
+    let textWeek2 = "<dl style=" + dlStyle + ">"
+        + "<dh style='" + dhStyle + "'>Week 2: June 14-18 2021</dh>";
+    if (classesWeekTwo >= 1) {
+        textWeek2 += "<dd style='" + ddStyle + "'>From Ada Lovelace to Grace Hopper</li></dd>";
+        $w("#switch201").show();
+        $w("#switch201").checked = false;
+    }
+    if (classesWeekTwo >= 2) {
+        textWeek2 += "<dd style='" + ddStyle + "'>Playing Bongo's Like Richard Feynman</li></dd>";
+        $w("#switch202").show();
+        $w("#switch202").checked = false;
+    }
+    if (classesWeekTwo >= 3) {
+        textWeek2 += "<dd style='" + ddStyle + "'>The Eels and the Multiverse Theory</li></dd>";
+        $w("#switch203").show();
+        $w("#switch203").checked = false;
+    }
+    textWeek2 += "</dl>"
+        ;
+    $w("#textWeek2").html = textWeek2;
+    //</Week 2>
+
+
+
+    // $w("#htmlFunAlert").value = "Applying the almost unused HTML construct called 'Data Lists' ('<dl>') to the simple Camping List Text to the Dynamic Content for Weeks 1 & 2 of Steam Discovery Academy";
+
+    //</HTML Fun DEMO>
 }

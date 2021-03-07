@@ -228,7 +228,8 @@ export function htmlFunRandomBtn_click(event) {
         return false;
     }
     //</Un-Comment one or the Other to Enable/Disable thid DEMO>
-    let weeksCount = 9 - Math.floor(Math.random() - 4)
+    $w("#weeksCount").value = weeksCount;
+    let weeksCount = 9;
     // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
     // Add your code for this event here:
     let classesWeekOne = Math.floor(Math.random() * 4)
@@ -265,7 +266,7 @@ export function htmlFunRandomBtn_click(event) {
         $w("#switch103").show();
         $w("#switch103").checked = false;
     }
-    textWeek1 += "</dl>"
+        textWeek1 += "</dl>"
         ;
     if (weeksCount >= 1) {
         $w("#textWeek1").html = textWeek1;
@@ -295,7 +296,7 @@ export function htmlFunRandomBtn_click(event) {
         $w("#switch203").show();
         $w("#switch203").checked = false;
     }
-    textWeek2 += "</dl>"
+        textWeek2 += "</dl>"
         ;
     if (weeksCount >= 2) {
         $w("#textWeek2").html = textWeek2;
@@ -316,16 +317,16 @@ export function htmlFunRandomBtn_click(event) {
         $w("#switch301").checked = false;
     }
     if (classesWeekThree >= 2) {
-        textWeek2 += "<dd style='" + ddStyle + "'>Playing Bongo's Like Richard Feynman</li></dd>";
+        textWeek3 += "<dd style='" + ddStyle + "'>Playing Bongo's Like Richard Feynman</li></dd>";
         $w("#switch302").show();
         $w("#switch302").checked = false;
     }
     if (classesWeekThree >= 3) {
-        textWeek2 += "<dd style='" + ddStyle + "'>The Eels and the Multiverse Theory</li></dd>";
+        textWeek3 += "<dd style='" + ddStyle + "'>The Eels and the Multiverse Theory</li></dd>";
         $w("#switch303").show();
         $w("#switch303").checked = false;
     }
-    textWeek3 += "</dl>"
+        textWeek3 += "</dl>"
         ;
     if (weeksCount >= 3) {
         $w("#textWeek3").html = textWeek3;
@@ -346,16 +347,16 @@ export function htmlFunRandomBtn_click(event) {
         $w("#switch401").checked = false;
     }
     if (classesWeekFour >= 2) {
-        textWeek2 += "<dd style='" + ddStyle + "'>Playing Bongo's Like Richard Feynman</li></dd>";
+        textWeek4 += "<dd style='" + ddStyle + "'>Playing Bongo's Like Richard Feynman</li></dd>";
         $w("#switch402").show();
         $w("#switch402").checked = false;
     }
     if (classesWeekFour >= 3) {
-        textWeek2 += "<dd style='" + ddStyle + "'>The Eels and the Multiverse Theory</li></dd>";
+        textWeek4 += "<dd style='" + ddStyle + "'>The Eels and the Multiverse Theory</li></dd>";
         $w("#switch403").show();
         $w("#switch403").checked = false;
     }
-    textWeek4 += "</dl>"
+        textWeek4 += "</dl>"
         ;
     if (weeksCount >= 4) {
         $w("#textWeek4").html = textWeek4;
@@ -376,12 +377,12 @@ export function htmlFunRandomBtn_click(event) {
         $w("#switch501").checked = false;
     }
     if (classesWeekFive >= 2) {
-        textWeek2 += "<dd style='" + ddStyle + "'>Playing Bongo's Like Richard Feynman</li></dd>";
+        textWeek5 += "<dd style='" + ddStyle + "'>Playing Bongo's Like Richard Feynman</li></dd>";
         $w("#switch502").show();
         $w("#switch502").checked = false;
     }
     if (classesWeekFive >= 3) {
-        textWeek2 += "<dd style='" + ddStyle + "'>The Eels and the Multiverse Theory</li></dd>";
+        textWeek5 += "<dd style='" + ddStyle + "'>The Eels and the Multiverse Theory</li></dd>";
         $w("#switch503").show();
         $w("#switch503").checked = false;
     }

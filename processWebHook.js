@@ -271,6 +271,7 @@ export function htmlFunRandomBtn_click(event) {
             textWeek1 += "</dl>"
             ;
         $w("#textWeek1").html = textWeek1;
+        $w("#textWeek1").show();
     } else {
         $w("#textWeek1").hide();
     }
@@ -301,6 +302,7 @@ export function htmlFunRandomBtn_click(event) {
             textWeek2 += "</dl>"
             ;
         $w("#textWeek2").html = textWeek2;
+        $w("#textWeek2").show();
     } else {
         $w("#textWeek2").hide();
     }
@@ -331,6 +333,7 @@ export function htmlFunRandomBtn_click(event) {
             textWeek3 += "</dl>"
             ;
         $w("#textWeek3").html = textWeek3;
+        $w("#textWeek3").show();
     } else {
         $w("#textWeek3").hide();
     }
@@ -361,6 +364,7 @@ export function htmlFunRandomBtn_click(event) {
             textWeek4 += "</dl>"
             ;
         $w("#textWeek4").html = textWeek4;
+        $w("#textWeek4").show();
     } else {
         $w("#textWeek4").hide();
     }
@@ -391,6 +395,7 @@ export function htmlFunRandomBtn_click(event) {
         textWeek5 += "</dl>"
             ;
         $w("#textWeek5").html = textWeek5;
+        $w("#textWeek5").show();
     } else {
         $w("#textWeek5").hide();
     }
@@ -421,6 +426,7 @@ export function htmlFunRandomBtn_click(event) {
         textWeek6 += "</dl>"
         ;
         $w("#textWeek6").html = textWeek6;
+        $w("#textWeek6").show();
     } else {
         $w("#textWeek6").hide();
     }
@@ -451,6 +457,7 @@ export function htmlFunRandomBtn_click(event) {
         textWeek7 += "</dl>"
             ;
         $w("#textWeek7").html = textWeek7;
+        $w("#textWeek7").show();
     } else {
         $w("#textWeek7").hide();
     }
@@ -481,6 +488,7 @@ export function htmlFunRandomBtn_click(event) {
         textWeek8 += "</dl>"
             ;
         $w("#textWeek8").html = textWeek8;
+        $w("#textWeek8").show();
     } else {
         $w("#textWeek8").hide();
     }
@@ -511,6 +519,7 @@ export function htmlFunRandomBtn_click(event) {
         textWeek9 += "</dl>"
             ;
         $w("#textWeek9").html = textWeek9;
+        $w("#textWeek9").show();
     } else {
         $w("#textWeek9").hide();
     }

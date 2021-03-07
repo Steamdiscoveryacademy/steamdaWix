@@ -12,5 +12,10 @@
 			"path": "../../zPunchClockLocal/punchclock"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"workbench.colorCustomizations": {
+			"tab.activeBackground": "#0000ff"
+		},
+		"liveServer.settings.multiRootWorkspaceName": "steamdaWixLocal"
+	}
 }

@@ -228,8 +228,8 @@ export function htmlFunRandomBtn_click(event) {
         return false;
     }
     //</Un-Comment one or the Other to Enable/Disable thid DEMO>
-    // let weeksCount = 9 - Math.floor(Math.random() * 5);
-    let weeksCount = 6;
+    let weeksCount = 9 - Math.floor(Math.random() * 5);
+    // let weeksCount = 9;
     $w("#weeksCount").value = weeksCount;
     // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
     // Add your code for this event here:
@@ -250,26 +250,26 @@ export function htmlFunRandomBtn_click(event) {
     $w("#switch101").hide();
     $w("#switch102").hide();
     $w("#switch103").hide();
-    let textWeek1 = "<dl style=" + dlStyle + ">"
-        + "<dh style='" + dhStyle + "'>Week 1: June 7-11 2021</dh>";
-    if (classesWeekOne >= 1) {
-        textWeek1 += "<dd style='" + ddStyle + "'>Drone Academy</li></dd>";
-        $w("#switch101").show();
-        $w("#switch101").checked = false;
-    }
-    if (classesWeekOne >= 2) {
-        textWeek1 += "<dd style='" + ddStyle + "'>Gadgets & Gizmos</li></dd>";
-        $w("#switch102").show();
-        $w("#switch102").checked = false;
-    }
-    if (classesWeekOne >= 3) {
-        textWeek1 += "<dd style='" + ddStyle + "'>Forsensics</li></dd>";
-        $w("#switch103").show();
-        $w("#switch103").checked = false;
-    }
-        textWeek1 += "</dl>"
-        ;
     if (weeksCount >= 1) {
+        let textWeek1 = "<dl style=" + dlStyle + ">"
+            + "<dh style='" + dhStyle + "'>Week 1: June 7-11 2021</dh>";
+        if (classesWeekOne >= 1) {
+            textWeek1 += "<dd style='" + ddStyle + "'>Drone Academy</li></dd>";
+            $w("#switch101").show();
+            $w("#switch101").checked = false;
+        }
+        if (classesWeekOne >= 2) {
+            textWeek1 += "<dd style='" + ddStyle + "'>Gadgets & Gizmos</li></dd>";
+            $w("#switch102").show();
+            $w("#switch102").checked = false;
+        }
+        if (classesWeekOne >= 3) {
+            textWeek1 += "<dd style='" + ddStyle + "'>Forsensics</li></dd>";
+            $w("#switch103").show();
+            $w("#switch103").checked = false;
+        }
+            textWeek1 += "</dl>"
+            ;
         $w("#textWeek1").html = textWeek1;
     } else {
         $w("#textWeek1").hide();
@@ -280,26 +280,26 @@ export function htmlFunRandomBtn_click(event) {
     $w("#switch201").hide();
     $w("#switch202").hide();
     $w("#switch203").hide();
-    let textWeek2 = "<dl style=" + dlStyle + ">"
-        + "<dh style='" + dhStyle + "'>Week 2: June 14-18 2021</dh>";
-    if (classesWeekTwo >= 1) {
-        textWeek2 += "<dd style='" + ddStyle + "'>From Ada Lovelace to Grace Hopper</li></dd>";
-        $w("#switch201").show();
-        $w("#switch201").checked = false;
-    }
-    if (classesWeekTwo >= 2) {
-        textWeek2 += "<dd style='" + ddStyle + "'>Playing Bongo's Like Richard Feynman</li></dd>";
-        $w("#switch202").show();
-        $w("#switch202").checked = false;
-    }
-    if (classesWeekTwo >= 3) {
-        textWeek2 += "<dd style='" + ddStyle + "'>The Eels and the Multiverse Theory</li></dd>";
-        $w("#switch203").show();
-        $w("#switch203").checked = false;
-    }
-        textWeek2 += "</dl>"
-        ;
     if (weeksCount >= 2) {
+        let textWeek2 = "<dl style=" + dlStyle + ">"
+            + "<dh style='" + dhStyle + "'>Week 2: June 14-18 2021</dh>";
+        if (classesWeekTwo >= 1) {
+            textWeek2 += "<dd style='" + ddStyle + "'>From Ada Lovelace to Grace Hopper</li></dd>";
+            $w("#switch201").show();
+            $w("#switch201").checked = false;
+        }
+        if (classesWeekTwo >= 2) {
+            textWeek2 += "<dd style='" + ddStyle + "'>Playing Bongo's Like Richard Feynman</li></dd>";
+            $w("#switch202").show();
+            $w("#switch202").checked = false;
+        }
+        if (classesWeekTwo >= 3) {
+            textWeek2 += "<dd style='" + ddStyle + "'>The Eels and the Multiverse Theory</li></dd>";
+            $w("#switch203").show();
+            $w("#switch203").checked = false;
+        }
+            textWeek2 += "</dl>"
+            ;
         $w("#textWeek2").html = textWeek2;
     } else {
         $w("#textWeek2").hide();
@@ -310,26 +310,26 @@ export function htmlFunRandomBtn_click(event) {
     $w("#switch301").hide();
     $w("#switch302").hide();
     $w("#switch303").hide();
-    let textWeek3 = "<dl style=" + dlStyle + ">"
-        + "<dh style='" + dhStyle + "'>Week 3: June 14-18 2021</dh>";
-    if (classesWeekThree >= 1) {
-        textWeek3 += "<dd style='" + ddStyle + "'>From Ada Lovelace to Grace Hopper</li></dd>";
-        $w("#switch301").show();
-        $w("#switch301").checked = false;
-    }
-    if (classesWeekThree >= 2) {
-        textWeek3 += "<dd style='" + ddStyle + "'>Playing Bongo's Like Richard Feynman</li></dd>";
-        $w("#switch302").show();
-        $w("#switch302").checked = false;
-    }
-    if (classesWeekThree >= 3) {
-        textWeek3 += "<dd style='" + ddStyle + "'>The Eels and the Multiverse Theory</li></dd>";
-        $w("#switch303").show();
-        $w("#switch303").checked = false;
-    }
-        textWeek3 += "</dl>"
-        ;
     if (weeksCount >= 3) {
+        let textWeek3 = "<dl style=" + dlStyle + ">"
+            + "<dh style='" + dhStyle + "'>Week 3: June 14-18 2021</dh>";
+        if (classesWeekThree >= 1) {
+            textWeek3 += "<dd style='" + ddStyle + "'>From Ada Lovelace to Grace Hopper</li></dd>";
+            $w("#switch301").show();
+            $w("#switch301").checked = false;
+        }
+        if (classesWeekThree >= 2) {
+            textWeek3 += "<dd style='" + ddStyle + "'>Playing Bongo's Like Richard Feynman</li></dd>";
+            $w("#switch302").show();
+            $w("#switch302").checked = false;
+        }
+        if (classesWeekThree >= 3) {
+            textWeek3 += "<dd style='" + ddStyle + "'>The Eels and the Multiverse Theory</li></dd>";
+            $w("#switch303").show();
+            $w("#switch303").checked = false;
+        }
+            textWeek3 += "</dl>"
+            ;
         $w("#textWeek3").html = textWeek3;
     } else {
         $w("#textWeek3").hide();
@@ -340,26 +340,26 @@ export function htmlFunRandomBtn_click(event) {
     $w("#switch401").hide();
     $w("#switch402").hide();
     $w("#switch403").hide();
-    let textWeek4 = "<dl style=" + dlStyle + ">"
-        + "<dh style='" + dhStyle + "'>Week 4: June 14-18 2021</dh>";
-    if (classesWeekFour >= 1) {
-        textWeek4 += "<dd style='" + ddStyle + "'>From Ada Lovelace to Grace Hopper</li></dd>";
-        $w("#switch401").show();
-        $w("#switch401").checked = false;
-    }
-    if (classesWeekFour >= 2) {
-        textWeek4 += "<dd style='" + ddStyle + "'>Playing Bongo's Like Richard Feynman</li></dd>";
-        $w("#switch402").show();
-        $w("#switch402").checked = false;
-    }
-    if (classesWeekFour >= 3) {
-        textWeek4 += "<dd style='" + ddStyle + "'>The Eels and the Multiverse Theory</li></dd>";
-        $w("#switch403").show();
-        $w("#switch403").checked = false;
-    }
-        textWeek4 += "</dl>"
-        ;
     if (weeksCount >= 4) {
+        let textWeek4 = "<dl style=" + dlStyle + ">"
+            + "<dh style='" + dhStyle + "'>Week 4: June 14-18 2021</dh>";
+        if (classesWeekFour >= 1) {
+            textWeek4 += "<dd style='" + ddStyle + "'>From Ada Lovelace to Grace Hopper</li></dd>";
+            $w("#switch401").show();
+            $w("#switch401").checked = false;
+        }
+        if (classesWeekFour >= 2) {
+            textWeek4 += "<dd style='" + ddStyle + "'>Playing Bongo's Like Richard Feynman</li></dd>";
+            $w("#switch402").show();
+            $w("#switch402").checked = false;
+        }
+        if (classesWeekFour >= 3) {
+            textWeek4 += "<dd style='" + ddStyle + "'>The Eels and the Multiverse Theory</li></dd>";
+            $w("#switch403").show();
+            $w("#switch403").checked = false;
+        }
+            textWeek4 += "</dl>"
+            ;
         $w("#textWeek4").html = textWeek4;
     } else {
         $w("#textWeek4").hide();

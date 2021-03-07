@@ -1,6 +1,11 @@
 
 //<HTML Fun DEMO>
 export function htmlFunButton_click(event) {
+    //<HTML Fun Demo>
+    /**
+     * @doxygen: this
+     */
+
     //<Un-Comment one or the Other to Enable/Disable thid DEMO>
     let htmlFunButton_enabled = true;
     //let htmlFunButton_enabled = false;
@@ -293,7 +298,7 @@ export function htmlFunButton_click(event) {
         $w("#textWeek9").hide();
     }
     //</Week 9>
-
     // $w("#htmlFunAlert").value = "Applying the almost unused HTML construct called 'Data Lists' ('<dl>') to the simple Camping List Text to the Dynamic Content for Weeks 1 & 2 of Steam Discovery Academy";
+
+    //</HTML Fun DEMO>
 }
-//</HTML Fun DEMO>

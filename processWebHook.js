@@ -427,12 +427,40 @@ export function writeCoursesSwitches(returnObjectArrayObject) {
             codeBlockArray[mapToBlock] += "</dl>"; // finish the HTML
             wixTextKey = '#textWeek' + i; //1,2,3...
             $w(wixTextKey).html = codeBlockArray[mapToBlock];
-            console.log('Map HTML in block ' + mapToBlock + ' to Text Block #id ' + wixTextKey);
+            // console.log('Map HTML in block ' + mapToBlock + ' to Text Block #id ' + wixTextKey);
         }
-        console.log('[all]Map HTML in block ' + mapToBlock + ' to Text Block #id ' + i);
+        // console.log('[all]Map HTML in block ' + mapToBlock + ' to Text Block #id ' + i);
+        // if (returnObjectArrayObject.countWeekArray[mapToBlock] === 1) {
+        //     console.log('show 1 and ON [switch' + i + '01]');
+        // } else if (returnObjectArrayObject.countWeekArray[mapToBlock] > 1) {
+        //     console.log('show ' + returnObjectArrayObject.countWeekArray[mapToBlock] + ' and OFF');
+        // }
+        switch (returnObjectArrayObject.countWeekArray[mapToBlock]) {
+            case -999:
+                break;
+            case 0:
+                break;
+            case 1:
+                console.log('show 1 and ON [switch' + i + '01]');
+                break;
+            case 2:
+                console.log('show 1 and OFF [switch' + i + '01]');
+                console.log('show 2 and OFF [switch' + i + '02]');
+                break;
+            case 3:
+                console.log('show 1 and OFF [switch' + i + '01]');
+                console.log('show 2 and OFF [switch' + i + '02]');
+                console.log('show 3 and OFF [switch' + i + '03]');
+                break;
+
+            default:
+                console.log('warn: Users Selected more than 3 for a single week');
+                break;
+        }
     }
     console.log("codeBlockArray");
     console.log(codeBlockArray);
+
 
 }
 export function validateGradeVsAge(currentGrade, DOB) {

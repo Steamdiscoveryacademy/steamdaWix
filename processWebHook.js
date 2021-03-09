@@ -179,7 +179,8 @@ export function btnConfirmClasses_click(event) {
     var payload = JSON.parse($w('#thisPayload').value);
     // console.log("payload: ");
     // console.log(payload);
-    var runningTotalObject = { "runningTotal": 0 };
+    // var runningTotalObject = {"runningTotal": 0};
+    var runningTotalObject = { "runningTotal": 0, "countWeekArray": [-999, 0, 0, 0, 0, 0, 0, 0, 0, 0] };
     let week = payload.week_1_june_711_2021;
     console.log("week: ");
     console.log(week);
@@ -207,6 +208,10 @@ export function btnConfirmClasses_click(event) {
     week = payload.week_9_august_914_2021;
     returnObjectArrayObject.courses_array = returnObjectArrayObject.courses_array.concat(returnArrayObjectWeek(week, 9, runningTotalObject));
 
+    returnObjectArrayObject.countWeekArray = runningTotalObject.countWeekArray;
+    let writeMapWeekArray = [-999, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    returnObjectArrayObject.writeMapWeekArray = writeMapWeekArray;
+    writeCoursesSwitches(returnObjectArrayObject);
     console.log("returnObjectArrayObject: ");
     console.log(returnObjectArrayObject);
     console.log(runningTotalObject);
@@ -329,6 +334,7 @@ export function returnArrayObjectWeek(week, weekNumber, runningTotalObject) {
         const element = {};
         element.index = i;
         element.weekId = weekNumber;
+        runningTotalObject.countWeekArray[weekNumber]++;
         element.dateString = weekDatesStringArray[weekNumber];
         element.dateStart = weekStartDatesArray[weekNumber];
         element.dateEnd = weekEndDatesArray[weekNumber];
@@ -378,6 +384,57 @@ export function returnArrayObjectWeek(week, weekNumber, runningTotalObject) {
     return returnObjectArray;
 }// END: function returnArrayObjectWeek(week, weekNumber, runningTotalObject)
 
+export function writeCoursesSwitches(returnObjectArrayObject) {
+    let textWeekThis = '';
+    let writeMapThis = 0;
+    let nextWeekMapIndex = 1;
+    let nextWeekHide = 9;//maybe should be coded from somewhere
+    var i = 0;
+    for (i = 0; i < returnObjectArrayObject.countWeekArray.length; i++) {
+        if (returnObjectArrayObject.countWeekArray[i] === 0) {
+            textWeekThis = "#textWeek" + nextWeekHide;
+            $w(textWeekThis).hide();
+            nextWeekHide--;
+        } else if (returnObjectArrayObject.countWeekArray[i] > 0) {
+            returnObjectArrayObject.writeMapWeekArray[nextWeekMapIndex] = i;
+            nextWeekMapIndex++;
+        }
+    }
+
+    let dlStyle = "font-size: 16px; font-family : 'Avenir Black'; background-color: yellow;";
+    let dtStyle = "color: blue; text-decoration: underline; line-height: 1;";
+    let ddStyle = "color: green; text-indent: 55px;";
+
+    let courseArray = returnObjectArrayObject.courses_array;
+    let writeMapArray = returnObjectArrayObject.writeMapWeekArray;
+    let codeBlockArray = ["NNULL", "", "", "", "", "", "", "", "", ""]
+    let weekIdThis = 0;
+    let weekString = '';
+    for (i = 0; i < courseArray.length; i++) {
+        weekIdThis = courseArray[i].weekId;
+        if (codeBlockArray[weekIdThis].length === 0) {
+            weekString = weekIdThis + ': ' + courseArray[i].dateString;
+            codeBlockArray[weekIdThis] = "<dl style='" + dlStyle + "'><dt style='" + dtStyle + "'>" + weekString + "</dt>";
+        }
+        codeBlockArray[weekIdThis] += "<dd style='" + ddStyle + "'>" + courseArray[i].courseName + "</dd>";
+    } // END: function writeCoursesSwitches(returnObjectArrayObject)
+    // codeBlockArray.map((currentValue) => currentValue + '</dl>');
+    let mapToBlock = 0;
+    let wixTextKey = 0;
+    for (i = 0; i < writeMapArray.length; i++) {
+        mapToBlock = writeMapArray[i];
+        if (codeBlockArray[mapToBlock] !== 'NNULL' && codeBlockArray[mapToBlock] !== '') { //if HTML in codeBlock
+            codeBlockArray[mapToBlock] += "</dl>"; // finish the HTML
+            wixTextKey = '#textWeek' + i; //1,2,3...
+            $w(wixTextKey).html = codeBlockArray[mapToBlock];
+            console.log('Map HTML in block ' + mapToBlock + ' to Text Block #id ' + wixTextKey);
+        }
+        console.log('[all]Map HTML in block ' + mapToBlock + ' to Text Block #id ' + i);
+    }
+    console.log("codeBlockArray");
+    console.log(codeBlockArray);
+
+}
 export function validateGradeVsAge(currentGrade, DOB) {
     return Number.random * 10 > 5 ? true : false;
 }

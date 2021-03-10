@@ -215,6 +215,7 @@ export function btnConfirmClasses_click(event) {
     console.log("returnObjectArrayObject: ");
     console.log(returnObjectArrayObject);
     console.log(runningTotalObject);
+    $w("#btnEnroll").show();
 }
 
 export function instantiateEnrollment(returnObjectArrayObject) {
@@ -401,7 +402,7 @@ export function writeCoursesSwitches(returnObjectArrayObject) {
         }
     }
 
-    let dlStyle = "font-size: 16px; font-family : 'Avenir Black'; background-color: yellow;";
+    let dlStyle = "font-size: 16px; font-family : 'Avenir Black'; background-color: white;";
     let dtStyle = "color: blue; text-decoration: underline; line-height: 1;";
     let ddStyle = "color: green; text-indent: 55px;";
 
@@ -435,19 +436,33 @@ export function writeCoursesSwitches(returnObjectArrayObject) {
         // } else if (returnObjectArrayObject.countWeekArray[mapToBlock] > 1) {
         //     console.log('show ' + returnObjectArrayObject.countWeekArray[mapToBlock] + ' and OFF');
         // }
+        let switchKey = '';
         switch (returnObjectArrayObject.countWeekArray[mapToBlock]) {
             case -999:
                 break;
             case 0:
                 break;
             case 1:
+                switchKey = '#switch' + i + '01';
+                $w(switchKey).show();
+                $w(switchKey).checked = true;
                 console.log('show 1 and ON [switch' + i + '01]');
                 break;
             case 2:
+                switchKey = '#switch' + i + '01';
+                $w(switchKey).show();
+                switchKey = '#switch' + i + '02';
+                $w(switchKey).show();
                 console.log('show 1 and OFF [switch' + i + '01]');
                 console.log('show 2 and OFF [switch' + i + '02]');
                 break;
             case 3:
+                switchKey = '#switch' + i + '01';
+                $w(switchKey).show();
+                switchKey = '#switch' + i + '02';
+                $w(switchKey).show();
+                switchKey = '#switch' + i + '03';
+                $w(switchKey).show();
                 console.log('show 1 and OFF [switch' + i + '01]');
                 console.log('show 2 and OFF [switch' + i + '02]');
                 console.log('show 3 and OFF [switch' + i + '03]');
@@ -481,3 +496,43 @@ export function gradeLeveFromGrade(currentGrade) {
 
 }
 
+
+
+export function btnMemberMatch_click(event, $w) {
+    // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+    // Add your code for this event here:
+    let $item = $w.at(event.context);
+    let targetItem = $w("#dsMembers").getCurrentItem();
+    console.log(targetItem);
+    $w("#thisMemberId").value = targetItem._id;
+    $w("#btnConfirmClasses").show();
+
+}
+
+export function btnEnroll_click(event, returnObjectArrayObject) {
+    // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+    // Add your code for this event here:
+    let isValid = validateEnrollment(returnObjectArrayObject);
+    if (!isValid) {
+        return false;
+    }
+    return true;
+    //create courses Checked Courses
+    //create invoice for Courses to Stripe
+    // etc., etc., etc.
+}
+
+export function validateEnrollment(returnObjectArrayObject) {
+    returnObjectArrayObject.validation = {};
+    returnObjectArrayObject.validation.message = {};
+    returnObjectArrayObject.validation.message.error = [];
+    returnObjectArrayObject.validation.message.warn = [];
+    returnObjectArrayObject.validation.message.fyi = [];
+    returnObjectArrayObject.validation.message.btw = [];
+    returnObjectArrayObject.validation.primaryBoolean = true;
+    return returnObjectArrayObject.validation.primaryBoolean;
+
+
+
+    return true;
+}

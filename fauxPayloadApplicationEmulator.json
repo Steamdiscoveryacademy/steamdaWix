@@ -1,207 +1,207 @@
 {
-    "aaaBradDocumenttion": [
-        "Will change the _values_ to the Excel Column letter?",
-        "OR create a Sheet that calculates them in pristine order",
-        "I'll put 'ZXZ' as any value that I am pretty sure is extraneous (or just 'on file)",
-        "Not sure how, but some headers are empty attributes where you'd expect data, but there is none (student_information",
-        "for these I will put 'EEMPTY'",
-        "'i_agree_to_abide_by_the_behavior_standards...' & 'i_understand_that_as_part_of_my_course...'",
-        "ABOVE: weird ordering",
-        "Double-check that 'waivers_and_release_form' is 'EEMPTY'",
-        "Another place where Label & Value should be split: 'please_indicate_how_you_would_like_to_be_invoiced'",
-        "Credit Card 3-digit code NOT in Payload? - might be a thing"
-    ]
-    "FormID": "4223065",
-    "UniqueID": "ZXZ",
-    "HandshakeKey": "ZXZ",
-    "student_information": "EEMPTY",
-    "student_name": {
-        "first": "Keith",
-        "last": "Partridge"
-    },
-    "preferred_name": "Keith",
-    "date_of_birth": "04/12/2001",
-    "gender": "Male",
-    "grade_during_the_202021_school_year": [
-        {
-            "value": "8",
-            "label": "Eighth Grade"
-        }
-    ],
-    "current_school": "Mailbu Middle School",
-    "have_you_attended_steam_discovery_academy_before": "No",
-    "why_are_you_interested_in_attending_steam_discovery_academy_this_summer": "Music Physics",
-    "how_did_you_hear_about_us": "CNN",
-    "have_you_discussed_the_course_selection": "Yes",
-    "parentguardian_information": "EEMPTY",
-    "primary_parentguardian_name": {
-        "first": "Shirley",
-        "last": "Partridge"
-    },
-    "mailing_address": {
-        "address": "123 Old School Bus Road",
-        "address2": "#101",
-        "city": "Tuluca Lake",
-        "state": "CA",
-        "zip": "90210"
-    },
-    "primary_mobile_phone": "(218) 595-0499",
-    "secondary_phone": "",
-    "primary_email_address": "bradlowry+keith@gmail.com",
-    "second_parentguardian_phone": {
-        "first": "Ruben",
-        "last": "Kincaid"
-    },
-    "secondary_parentguardian_mobile_phone": "",
-    "i_certify_that_i_am_the_legal_guardian_of_this_participant_and_am_allowing_himher_to_participate_in_the_steam_discovery_academy": "ZXZ",
-    "2021_course_selection": "EEMPTY",
-    "week_1_june_711_2021": [
-        {
-            "value": "1SKCK2",
-            "label": "K-2: Summer Kickoff Camp - Charlottesville Catholic"
-        },
-        {
-            "value": "1SKCK2H",
-            "label": "K-2: Summer Kickoff Camp - HALF DAY - Charlottesville Catholic"
-        },
-        {
-            "value": "1SKC35",
-            "label": "3-5: Summer Kickoff Camp - Charlottesville Catholic"
-        }
-    ],
-    "week_2_june_1418_2021": [
-        {
-            "value": "2CMK2",
-            "label": "K-2: Ceramics - WAITLIST ONLY - Charlottesville Catholic"
-        },
-        {
-            "value": "2ISK2",
-            "label": "K-2: Intro to STEAM - Charlottesville Catholic"
-        },
-        {
-            "value": "2ISK2H",
-            "label": "K-2: Intro to STEAM - HALF DAY - Charlottesville Catholic"
-        }
-    ],
-    "week_3_june_2125_2021": [
-        {
-            "value": "3SHSK2",
-            "label": "K-2: Superhero Science - Charlottesville Catholic"
-        },
-        {
-            "value": "3SHSK2H",
-            "label": "K-2: Superhero Science - HALF DAY - WAITLIST ONLY - Charlottesville Catholic"
-        },
-        {
-            "value": "3MSCK2",
-            "label": "K-2: Mad Science Chemistry - WAITLIST ONLY - Charlottesville Catholic"
-        }
-    ],
-    "week_4_june_28july_2_2021": [
-        {
-            "value": "4PSK2",
-            "label": "K-2: Pirate Science - WAITLIST ONLY - Charlottesville Catholic"
-        },
-        {
-            "value": "4PSK2H",
-            "label": "K-2: Pirate Science - HALF DAY - WAITLIST ONLY - Charlottesville Catholic"
-        },
-        {
-            "value": "4REK2",
-            "label": "K-2: Renewable Energy - WAITLIST ONLY - Charlottesville Catholic"
-        }
-    ],
-    "week_5_july_1216_2021": [
-        {
-            "value": "5SDLK2",
-            "label": "K-2: STEAM Design Lab - WAITLIST ONLY - Charlottesville Catholic"
-        },
-        {
-            "value": "5SDLK2H",
-            "label": "K-2: STEAM DESIGN Lab - WAITLIST ONLY -HALF DAY - Charlottesville Catholic"
-        },
-        {
-            "value": "5GGK2",
-            "label": "K-2: Gadgets & Gizmos - WAITLIST ONLY - Charlottesville Catholic"
-        }
-    ],
-    "week_6_july_1923_2021": [
-        {
-            "value": "6REK2",
-            "label": "K-2: Renewable Energy - Charlottesville Catholic"
-        },
-        {
-            "value": "6MSCK2H",
-            "label": "K-2: Mad Science Chemistry - HALF DAY - WAITLIST ONLY -  Charlottesville Catholic"
-        },
-        {
-            "value": "6MSCK2",
-            "label": "K-2: Mad Science Chemistry - WAITLIST ONLY -Charlottesville Catholic School"
-        }
-    ],
-    "week_7_july_2630_2021": [
-        {
-            "value": "7GIK2",
-            "label": "K-2: Girls Inspiration Station - WAITLIST ONLY - Charlottesville Catholic"
-        },
-        {
-            "value": "7GIK2H",
-            "label": "K-2: Girls Inspiration Station - HALF DAY - WAITLIST ONLY - Charlottesville Catholic"
-        },
-        {
-            "value": "7ALK2",
-            "label": "K-2: Art Lab - WAITLIST ONLY - Charlottesville Catholic"
-        }
-    ],
-    "week_8_aug_26_2021": [
-        {
-            "value": "8MSPK2",
-            "label": "K-2: Mission Space - HALF DAY - STEAM Incubator"
-        },
-        {
-            "value": "8MSP35",
-            "label": "3-5: Mission Space - STEAM Incubator"
-        },
-        {
-            "value": "8MSP35H",
-            "label": "3-5: Mission Space - HALF DAY - STEAM Incubator"
-        }
-    ],
-    "week_9_august_914_2021": [
-        {
-            "value": "9TVK2",
-            "label": "K-2: As Seen on TV - HALF DAY - STEAM Incubator"
-        },
-        {
-            "value": "9TV35",
-            "label": "3-5: As Seen on TV - STEAM Incubator"
-        },
-        {
-            "value": "9TV68",
-            "label": "6-8: As Seen on TV - STEAM Incubator"
-        }
-    ],
-    "student_acknowledgement": "ZXZ",
-    "i_agree_to_abide_by_the_behavior_standards_set_forth_by_steam_discovery_academy_to_participate_in_all_planned_events_and_activities": "ZXZ",
-    "i_understand_that_as_part_of_my_course_i_will_have_access_to_expensive_and_fragile_tools_such_as_ipads_drones_and_robots_i_agree_to_use_all_tools_and_equipment_responsibly_and_as_it_is_intended_i_acknowledge_that_intentional_misuse_and_damage_will_result_in_a_replacement_fee_at_retail_rate": null,
-    "parent_acknowledgment": "ZXZ",
-    "waivers_and_release_form": "EEMPTY",
-    "initials": "ZXZ",
-    "photo_release": "Approved",
-    "parentguardian_signature_required": "https://steamdiscoveryacademy.formstack.com/admin/download/file/10170736588",
-    "date_": "03/07/2021",
-    "parentguardian_signature": "https://steamdiscoveryacademy.formstack.com/admin/download/file/10170736590",
-    "date": "03/07/2021",
-    "application_deposit__program_payment": "",
-    "please_indicate_how_you_would_like_to_be_invoiced": "One Invoice",
-    "application_deposit": {
-        "0": "quantity",
-        "1": "total",
-        "charge_type": "fixed_amount",
-        "unit_price": "75"
-    },
-    "credit_card": {
-        "card": "************6626",
-        "cardexp": "01/22"
+  "aaaBradDocumenttion": [
+    "Will change the _values_ to the Excel Column letter?",
+    "OR create a Sheet that calculates them in pristine order",
+    "I'll put 'ZXZ' as any value that I am pretty sure is extraneous (or just 'on file)",
+    "Not sure how, but some headers are empty attributes where you'd expect data, but there is none (student_information",
+    "for these I will put 'EEMPTY'",
+    "'i_agree_to_abide_by_the_behavior_standards...' & 'i_understand_that_as_part_of_my_course...'",
+    "ABOVE: weird ordering",
+    "Double-check that 'waivers_and_release_form' is 'EEMPTY'",
+    "Another place where Label & Value should be split: 'please_indicate_how_you_would_like_to_be_invoiced'",
+    "Credit Card 3-digit code NOT in Payload? - might be a thing"
+  ],
+  "FormID": "4223065",
+  "UniqueID": "ZXZ",
+  "HandshakeKey": "ZXZ",
+  "student_information": "EEMPTY",
+  "student_name": {
+    "first": "Keith",
+    "last": "Partridge"
+  },
+  "preferred_name": "Keith",
+  "date_of_birth": "04/12/2001",
+  "gender": "Male",
+  "grade_during_the_202021_school_year": [
+    {
+      "value": "8",
+      "label": "Eighth Grade"
     }
+  ],
+  "current_school": "Mailbu Middle School",
+  "have_you_attended_steam_discovery_academy_before": "No",
+  "why_are_you_interested_in_attending_steam_discovery_academy_this_summer": "Music Physics",
+  "how_did_you_hear_about_us": "CNN",
+  "have_you_discussed_the_course_selection": "Yes",
+  "parentguardian_information": "EEMPTY",
+  "primary_parentguardian_name": {
+    "first": "Shirley",
+    "last": "Partridge"
+  },
+  "mailing_address": {
+    "address": "123 Old School Bus Road",
+    "address2": "#101",
+    "city": "Tuluca Lake",
+    "state": "CA",
+    "zip": "90210"
+  },
+  "primary_mobile_phone": "(218) 595-0499",
+  "secondary_phone": "",
+  "primary_email_address": "bradlowry+keith@gmail.com",
+  "second_parentguardian_phone": {
+    "first": "Ruben",
+    "last": "Kincaid"
+  },
+  "secondary_parentguardian_mobile_phone": "",
+  "i_certify_that_i_am_the_legal_guardian_of_this_participant_and_am_allowing_himher_to_participate_in_the_steam_discovery_academy": "ZXZ",
+  "2021_course_selection": "EEMPTY",
+  "week_1_june_711_2021": [
+    {
+      "value": "1SKCK2",
+      "label": "K-2: Summer Kickoff Camp - Charlottesville Catholic"
+    },
+    {
+      "value": "1SKCK2H",
+      "label": "K-2: Summer Kickoff Camp - HALF DAY - Charlottesville Catholic"
+    },
+    {
+      "value": "1SKC35",
+      "label": "3-5: Summer Kickoff Camp - Charlottesville Catholic"
+    }
+  ],
+  "week_2_june_1418_2021": [
+    {
+      "value": "2CMK2",
+      "label": "K-2: Ceramics - WAITLIST ONLY - Charlottesville Catholic"
+    },
+    {
+      "value": "2ISK2",
+      "label": "K-2: Intro to STEAM - Charlottesville Catholic"
+    },
+    {
+      "value": "2ISK2H",
+      "label": "K-2: Intro to STEAM - HALF DAY - Charlottesville Catholic"
+    }
+  ],
+  "week_3_june_2125_2021": [
+    {
+      "value": "3SHSK2",
+      "label": "K-2: Superhero Science - Charlottesville Catholic"
+    },
+    {
+      "value": "3SHSK2H",
+      "label": "K-2: Superhero Science - HALF DAY - WAITLIST ONLY - Charlottesville Catholic"
+    },
+    {
+      "value": "3MSCK2",
+      "label": "K-2: Mad Science Chemistry - WAITLIST ONLY - Charlottesville Catholic"
+    }
+  ],
+  "week_4_june_28july_2_2021": [
+    {
+      "value": "4PSK2",
+      "label": "K-2: Pirate Science - WAITLIST ONLY - Charlottesville Catholic"
+    },
+    {
+      "value": "4PSK2H",
+      "label": "K-2: Pirate Science - HALF DAY - WAITLIST ONLY - Charlottesville Catholic"
+    },
+    {
+      "value": "4REK2",
+      "label": "K-2: Renewable Energy - WAITLIST ONLY - Charlottesville Catholic"
+    }
+  ],
+  "week_5_july_1216_2021": [
+    {
+      "value": "5SDLK2",
+      "label": "K-2: STEAM Design Lab - WAITLIST ONLY - Charlottesville Catholic"
+    },
+    {
+      "value": "5SDLK2H",
+      "label": "K-2: STEAM DESIGN Lab - WAITLIST ONLY -HALF DAY - Charlottesville Catholic"
+    },
+    {
+      "value": "5GGK2",
+      "label": "K-2: Gadgets & Gizmos - WAITLIST ONLY - Charlottesville Catholic"
+    }
+  ],
+  "week_6_july_1923_2021": [
+    {
+      "value": "6REK2",
+      "label": "K-2: Renewable Energy - Charlottesville Catholic"
+    },
+    {
+      "value": "6MSCK2H",
+      "label": "K-2: Mad Science Chemistry - HALF DAY - WAITLIST ONLY -  Charlottesville Catholic"
+    },
+    {
+      "value": "6MSCK2",
+      "label": "K-2: Mad Science Chemistry - WAITLIST ONLY -Charlottesville Catholic School"
+    }
+  ],
+  "week_7_july_2630_2021": [
+    {
+      "value": "7GIK2",
+      "label": "K-2: Girls Inspiration Station - WAITLIST ONLY - Charlottesville Catholic"
+    },
+    {
+      "value": "7GIK2H",
+      "label": "K-2: Girls Inspiration Station - HALF DAY - WAITLIST ONLY - Charlottesville Catholic"
+    },
+    {
+      "value": "7ALK2",
+      "label": "K-2: Art Lab - WAITLIST ONLY - Charlottesville Catholic"
+    }
+  ],
+  "week_8_aug_26_2021": [
+    {
+      "value": "8MSPK2",
+      "label": "K-2: Mission Space - HALF DAY - STEAM Incubator"
+    },
+    {
+      "value": "8MSP35",
+      "label": "3-5: Mission Space - STEAM Incubator"
+    },
+    {
+      "value": "8MSP35H",
+      "label": "3-5: Mission Space - HALF DAY - STEAM Incubator"
+    }
+  ],
+  "week_9_august_914_2021": [
+    {
+      "value": "9TVK2",
+      "label": "K-2: As Seen on TV - HALF DAY - STEAM Incubator"
+    },
+    {
+      "value": "9TV35",
+      "label": "3-5: As Seen on TV - STEAM Incubator"
+    },
+    {
+      "value": "9TV68",
+      "label": "6-8: As Seen on TV - STEAM Incubator"
+    }
+  ],
+  "student_acknowledgement": "ZXZ",
+  "i_agree_to_abide_by_the_behavior_standards_set_forth_by_steam_discovery_academy_to_participate_in_all_planned_events_and_activities": "ZXZ",
+  "i_understand_that_as_part_of_my_course_i_will_have_access_to_expensive_and_fragile_tools_such_as_ipads_drones_and_robots_i_agree_to_use_all_tools_and_equipment_responsibly_and_as_it_is_intended_i_acknowledge_that_intentional_misuse_and_damage_will_result_in_a_replacement_fee_at_retail_rate": null,
+  "parent_acknowledgment": "ZXZ",
+  "waivers_and_release_form": "EEMPTY",
+  "initials": "ZXZ",
+  "photo_release": "Approved",
+  "parentguardian_signature_required": "https://steamdiscoveryacademy.formstack.com/admin/download/file/10170736588",
+  "date_": "03/07/2021",
+  "parentguardian_signature": "https://steamdiscoveryacademy.formstack.com/admin/download/file/10170736590",
+  "date": "03/07/2021",
+  "application_deposit__program_payment": "",
+  "please_indicate_how_you_would_like_to_be_invoiced": "One Invoice",
+  "application_deposit": {
+    "0": "quantity",
+    "1": "total",
+    "charge_type": "fixed_amount",
+    "unit_price": "75"
+  },
+  "credit_card": {
+    "card": "************6626",
+    "cardexp": "01/22"
+  }
 }

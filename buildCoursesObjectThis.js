@@ -1,5 +1,6 @@
 
 var log = "Hello Marcy!"
+//! this just for force a commit on new Mac
 // document.getElementById("echo").innerHTML = log;
 // throw new Error('PHP die()');
 

@@ -173,14 +173,14 @@ export function btnAssignMember_click(event) {
 export function btnConfirmClasses_click(event) {
     // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
     // Add your code for this event here:
-    var returnObjectArrayObject = { "courses_array": [], "dogs_array": ["Marcy", "Chester", "Marais"] };
+    var returnObjectArrayObject = {"courses_array":[], "dogs_array":["Marcy","Chester","Marais"]};
     instantiateEnrollment(returnObjectArrayObject);
     // let payload = $w('#thisPayload').value;
     var payload = JSON.parse($w('#thisPayload').value);
     // console.log("payload: ");
     // console.log(payload);
     // var runningTotalObject = {"runningTotal": 0};
-    var runningTotalObject = { "runningTotal": 0, "countWeekArray": [-999, 0, 0, 0, 0, 0, 0, 0, 0, 0] };
+    var runningTotalObject = {"runningTotal": 0,"countWeekArray": [-999,0,0,0,0,0,0,0,0,0]};
     let week = payload.week_1_june_711_2021;
     console.log("week: ");
     console.log(week);
@@ -209,7 +209,7 @@ export function btnConfirmClasses_click(event) {
     returnObjectArrayObject.courses_array = returnObjectArrayObject.courses_array.concat(returnArrayObjectWeek(week, 9, runningTotalObject));
 
     returnObjectArrayObject.countWeekArray = runningTotalObject.countWeekArray;
-    let writeMapWeekArray = [-999, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    let writeMapWeekArray = [-999,0,0,0,0,0,0,0,0,0]
     returnObjectArrayObject.writeMapWeekArray = writeMapWeekArray;
     writeCoursesSwitches(returnObjectArrayObject);
     console.log("returnObjectArrayObject: ");
@@ -218,26 +218,26 @@ export function btnConfirmClasses_click(event) {
     $w("#btnEnroll").show();
 }
 
-export function instantiateEnrollment(returnObjectArrayObject) {
+export function instantiateEnrollment (returnObjectArrayObject) {
     var objApplicationSummer = JSON.parse($w('#thisPayload').value);
     let creationDate = $w("#thisCurrentStatusStamp").value;
     returnObjectArrayObject.creationDateString = creationDate;
     returnObjectArrayObject.creationDateUnix = Date.parse(creationDate);
 
     returnObjectArrayObject.family = {};
-    returnObjectArrayObject.family.messages = { "dox": ["only messages you want the Whole Family to see"] };
+    returnObjectArrayObject.family.messages = {"dox": ["only messages you want the Whole Family to see"]};
     returnObjectArrayObject.family.student = {};
     returnObjectArrayObject.family.student.name = {};
     returnObjectArrayObject.family.parent = {};
-    returnObjectArrayObject.family.parent.messages = { "dox": ["messages you want Both Parents to see"] };
+    returnObjectArrayObject.family.parent.messages = {"dox": ["messages you want Both Parents to see"]};
     returnObjectArrayObject.family.parent.primary = {};
     returnObjectArrayObject.family.student.name.first = objApplicationSummer.student_name.first;
     returnObjectArrayObject.family.student.name.last = objApplicationSummer.student_name.last;
     returnObjectArrayObject.family.student.name.lastFirst = objApplicationSummer.student_name.last + ', ' + objApplicationSummer.student_name.first;
     returnObjectArrayObject.family.student.name.fullName = objApplicationSummer.student_name.first + ' ' + objApplicationSummer.student_name.last;
-    returnObjectArrayObject.family.student.messages = { "dox": ["messages you want the Student only to see"] };
+    returnObjectArrayObject.family.student.messages = {"dox": ["messages you want the Student only to see"]};
     returnObjectArrayObject.family.parent.primary.memberId = $w("#thisMemberId").value;
-    returnObjectArrayObject.family.parent.primary.messages = { "dox": ["messages you want the Primary Parent/Web Account Holder only to see"] };
+    returnObjectArrayObject.family.parent.primary.messages = {"dox": ["messages you want the Primary Parent/Web Account Holder only to see"]};
     $w("#memberIdParent").value = $w("#thisMemberId").value;
     $w("#nameStudent").value = objApplicationSummer.student_name.first + ' ' + objApplicationSummer.student_name.last;
     $w("#namePreferredStudent").value = objApplicationSummer.preferred_name;
@@ -265,72 +265,72 @@ export function instantiateEnrollment(returnObjectArrayObject) {
 
 }
 
-export function returnArrayObjectWeek(week, weekNumber, runningTotalObject) {
+export function returnArrayObjectWeek(week, weekNumber, runningTotalObject){
     var returnObjectArray = [];
     var runningTotal = runningTotalObject.runningTotal;
-    let emptyArray = [];
-    if (typeof week === 'string') {
-        return emptyArray;
-    } else if (!week) {
-        return emptyArray;
-    }
-    const priceFullDay = 345;
-    const priceHalfDay = 240;
+     let emptyArray = [];
+      if (typeof week === 'string') {
+         return emptyArray;
+     } else if (!week){
+         return emptyArray;
+     }
+     const priceFullDay = 345;
+     const priceHalfDay = 240;
 
-    //<Billing Object Element>
-    const billing = {};
-    const dicountEarlyBirdAmount = 50
-    const discountEarlyBirdEndDate = Date.parse('May 01 2021 23:59:59 GMT-0500 (Eastern Standard Time)');
+     //<Billing Object Element>
+     const billing = {};
+     const dicountEarlyBirdAmount = 50
+     const discountEarlyBirdEndDate = Date.parse('May 01 2021 23:59:59 GMT-0500 (Eastern Standard Time)');
     //  const discountEarlyBird = discountEarlyBirdEndDate > returnObjectArrayObject.creationDateUnix ? true : false;
-    const discountEarlyBird = true;
-    //</Billing Object Element>
+     const discountEarlyBird = true;
+     //</Billing Object Element>
 
-    //<Date Arrays Literal>
-    let weekDatesStringArray = [
-        'NNULL',
-        'June 7-11, 2021'
-        , 'June 14-18, 2021'
-        , 'June 21-25, 2021'
-        , 'June 28 - July 2, 2021'
-        , 'July 12-16, 2021'
-        , 'July 19-23, 2021'
-        , 'July 26-30, 2021'
-        , 'Aug 2-6, 2021'
-        , 'August 9-14, 2021'
-    ];
+     //<Date Arrays Literal>
+     let weekDatesStringArray = [
+         'NNULL',
+         'June 7-11, 2021'
+         ,'June 14-18, 2021'
+         ,'June 21-25, 2021'
+         ,'June 28 - July 2, 2021'
+         , 'July 12-16, 2021'
+         , 'July 19-23, 2021'
+         , 'July 26-30, 2021'
+         , 'Aug 2-6, 2021'
+         , 'August 9-14, 2021'
+        ];
 
-    let weekStartDatesArray = [
-        0
-        , Date.parse('June 7, 2021 8:00:00 GMT-0500')
-        , Date.parse('June 14, 2021 8:00:00 GMT-0500')
-        , Date.parse('June 21, 2021 8:00:00 GMT-0500')
-        , Date.parse('June 28, 2021 8:00:00 GMT-0500')
-        , Date.parse('July 12, 2021 8:00:00 GMT-0500')
-        , Date.parse('July 19, 2021 8:00:00 GMT-0500')
-        , Date.parse('July 26, 2021 8:00:00 GMT-0500')
-        , Date.parse('August 2, 2021 8:00:00 GMT-0500')
-        , Date.parse('August 9, 2021 8:00:00 GMT-0500')
-    ];
+        let weekStartDatesArray = [
+            0
+            , Date.parse('June 7, 2021 8:00:00 GMT-0500')
+            ,Date.parse('June 14, 2021 8:00:00 GMT-0500')
+            ,Date.parse('June 21, 2021 8:00:00 GMT-0500')
+            ,Date.parse('June 28, 2021 8:00:00 GMT-0500')
+            ,Date.parse('July 12, 2021 8:00:00 GMT-0500')
+            ,Date.parse('July 19, 2021 8:00:00 GMT-0500')
+            ,Date.parse('July 26, 2021 8:00:00 GMT-0500')
+            ,Date.parse('August 2, 2021 8:00:00 GMT-0500')
+            ,Date.parse('August 9, 2021 8:00:00 GMT-0500')
+        ];
 
-    let weekEndDatesArray = [
-        0
-        , Date.parse('June 11, 2021 17:00:00 GMT-0500')
-        , Date.parse('June 18, 2021 17:00:00 GMT-0500')
-        , Date.parse('June 25, 2021 17:00:00 GMT-0500')
-        , Date.parse('July 2, 2021 17:00:00 GMT-0500')
-        , Date.parse('July 16, 2021 17:00:00 GMT-0500')
-        , Date.parse('July 23, 2021 17:00:00 GMT-0500')
-        , Date.parse('July 30, 2021 17:00:00 GMT-0500')
-        , Date.parse('August 6, 2021 17:00:00 GMT-0500')
-        , Date.parse('August 14, 2021 17:00:00 GMT-0500')
-    ];
-    //</Date Arrays Literal>
+        let weekEndDatesArray = [
+            0
+            , Date.parse('June 11, 2021 17:00:00 GMT-0500')
+            ,Date.parse('June 18, 2021 17:00:00 GMT-0500')
+            ,Date.parse('June 25, 2021 17:00:00 GMT-0500')
+            ,Date.parse('July 2, 2021 17:00:00 GMT-0500')
+            ,Date.parse('July 16, 2021 17:00:00 GMT-0500')
+            ,Date.parse('July 23, 2021 17:00:00 GMT-0500')
+            ,Date.parse('July 30, 2021 17:00:00 GMT-0500')
+            ,Date.parse('August 6, 2021 17:00:00 GMT-0500')
+            ,Date.parse('August 14, 2021 17:00:00 GMT-0500')
+        ];
+        //</Date Arrays Literal>
 
-    var label = '';
-    var HOLDER = '';
-    var firstColon = 0;
+        var label = '';
+        var HOLDER = '';
+        var firstColon = 0;
     var lastDash = 0;
-
+        
     for (let i = 0; i < week.length; i++) {
         const element = {};
         element.index = i;
@@ -347,7 +347,7 @@ export function returnArrayObjectWeek(week, weekNumber, runningTotalObject) {
         HOLDER = week[i].value;
         if (HOLDER.substr(-1) === "H") {
             element.day = "HALF";
-            HOLDER = HOLDER.substr(0, (HOLDER.length - 2));
+            HOLDER = HOLDER.substr(0,(HOLDER.length - 2));
             element.billing.tuition = priceHalfDay;
             runningTotal += priceHalfDay;
         } else {
@@ -359,7 +359,7 @@ export function returnArrayObjectWeek(week, weekNumber, runningTotalObject) {
             element.billing.discount[i].kind = 'Early Bird';
             element.billing.discount[i].amount = 1 * dicountEarlyBirdAmount;
         }
-        else if ("YES" === "NO: Display False Discount?".substr(0, 3)) {
+        else if ("YES" === "NO: Display False Discount?".substr(0,3)){
             element.billing.discount[i].kind = 'Early Bird';
             element.billing.discount[i].amount = 0 * dicountEarlyBirdAmount;
         }
@@ -368,7 +368,7 @@ export function returnArrayObjectWeek(week, weekNumber, runningTotalObject) {
         label = week[i].label;
         firstColon = label.indexOf(":");
         lastDash = label.lastIndexOf("-");
-        HOLDER = label.substr(0, label.indexOf(":"));
+        HOLDER = label.substr (0, label.indexOf(":"));
         HOLDER = HOLDER.length >= 2 ? HOLDER : "TBD";
         element.gradeLevel = HOLDER;
         element.location = label.substr(lastDash + 1).trim();
@@ -380,7 +380,7 @@ export function returnArrayObjectWeek(week, weekNumber, runningTotalObject) {
 
         returnObjectArray[i] = element;
     } //END: for (let i = 0; i < week.length; i++)
-
+    
     runningTotalObject.runningTotal = runningTotal;
     return returnObjectArray;
 }// END: function returnArrayObjectWeek(week, weekNumber, runningTotalObject)
@@ -391,15 +391,15 @@ export function writeCoursesSwitches(returnObjectArrayObject) {
     let nextWeekMapIndex = 1;
     let nextWeekHide = 9;//maybe should be coded from somewhere
     var i = 0;
-    for (i = 0; i < returnObjectArrayObject.countWeekArray.length; i++) {
+    for ( i = 0; i < returnObjectArrayObject.countWeekArray.length; i++) {
         if (returnObjectArrayObject.countWeekArray[i] === 0) {
             textWeekThis = "#textWeek" + nextWeekHide;
             $w(textWeekThis).hide();
             nextWeekHide--;
         } else if (returnObjectArrayObject.countWeekArray[i] > 0) {
             returnObjectArrayObject.writeMapWeekArray[nextWeekMapIndex] = i;
-            nextWeekMapIndex++;
-        }
+            nextWeekMapIndex++;            
+        }  
     }
 
     let dlStyle = "font-size: 16px; font-family : 'Avenir Black'; background-color: white;";
@@ -408,21 +408,21 @@ export function writeCoursesSwitches(returnObjectArrayObject) {
 
     let courseArray = returnObjectArrayObject.courses_array;
     let writeMapArray = returnObjectArrayObject.writeMapWeekArray;
-    let codeBlockArray = ["NNULL", "", "", "", "", "", "", "", "", ""]
-    let weekIdThis = 0;
+    let codeBlockArray = ["NNULL","","","","","","","","",""]
+    let weekIdThis =0;
     let weekString = '';
-    for (i = 0; i < courseArray.length; i++) {
+    for ( i = 0; i < courseArray.length; i++) {
         weekIdThis = courseArray[i].weekId;
         if (codeBlockArray[weekIdThis].length === 0) {
             weekString = weekIdThis + ': ' + courseArray[i].dateString;
-            codeBlockArray[weekIdThis] = "<dl style='" + dlStyle + "'><dt style='" + dtStyle + "'>" + weekString + "</dt>";
+            codeBlockArray[weekIdThis] = "<dl style='" + dlStyle + "'><dt style='" + dtStyle + "'>" + weekString + "</dt>";               
         }
         codeBlockArray[weekIdThis] += "<dd style='" + ddStyle + "'>" + courseArray[i].courseName + "</dd>";
     } // END: function writeCoursesSwitches(returnObjectArrayObject)
     // codeBlockArray.map((currentValue) => currentValue + '</dl>');
     let mapToBlock = 0;
     let wixTextKey = 0;
-    for (i = 0; i < writeMapArray.length; i++) {
+    for ( i = 0; i < writeMapArray.length; i++) {
         mapToBlock = writeMapArray[i];
         if (codeBlockArray[mapToBlock] !== 'NNULL' && codeBlockArray[mapToBlock] !== '') { //if HTML in codeBlock
             codeBlockArray[mapToBlock] += "</dl>"; // finish the HTML
@@ -432,30 +432,30 @@ export function writeCoursesSwitches(returnObjectArrayObject) {
         }
         // console.log('[all]Map HTML in block ' + mapToBlock + ' to Text Block #id ' + i);
         // if (returnObjectArrayObject.countWeekArray[mapToBlock] === 1) {
-        //     console.log('show 1 and ON [switch' + i + '01]');
+        //     console.log('show 1 and ON [switch' + i + '01]');            
         // } else if (returnObjectArrayObject.countWeekArray[mapToBlock] > 1) {
-        //     console.log('show ' + returnObjectArrayObject.countWeekArray[mapToBlock] + ' and OFF');
+        //     console.log('show ' + returnObjectArrayObject.countWeekArray[mapToBlock] + ' and OFF');           
         // }
         let switchKey = '';
         switch (returnObjectArrayObject.countWeekArray[mapToBlock]) {
             case -999:
-                break;
+                break;           
             case 0:
-                break;
+                break;           
             case 1:
                 switchKey = '#switch' + i + '01';
                 $w(switchKey).show();
                 $w(switchKey).checked = true;
-                console.log('show 1 and ON [switch' + i + '01]');
-                break;
+                console.log('show 1 and ON [switch' + i + '01]');            
+                break;           
             case 2:
                 switchKey = '#switch' + i + '01';
                 $w(switchKey).show();
                 switchKey = '#switch' + i + '02';
                 $w(switchKey).show();
-                console.log('show 1 and OFF [switch' + i + '01]');
-                console.log('show 2 and OFF [switch' + i + '02]');
-                break;
+                console.log('show 1 and OFF [switch' + i + '01]');            
+                console.log('show 2 and OFF [switch' + i + '02]');            
+                break;           
             case 3:
                 switchKey = '#switch' + i + '01';
                 $w(switchKey).show();
@@ -463,13 +463,13 @@ export function writeCoursesSwitches(returnObjectArrayObject) {
                 $w(switchKey).show();
                 switchKey = '#switch' + i + '03';
                 $w(switchKey).show();
-                console.log('show 1 and OFF [switch' + i + '01]');
-                console.log('show 2 and OFF [switch' + i + '02]');
-                console.log('show 3 and OFF [switch' + i + '03]');
-                break;
-
+                // console.log('show 1 and OFF [switch' + i + '01]');            
+                // console.log('show 2 and OFF [switch' + i + '02]');            
+                // console.log('show 3 and OFF [switch' + i + '03]'); 
+                break;           
+                
             default:
-                console.log('warn: Users Selected more than 3 for a single week');
+                console.log('warn: Users Selected more than 3 for a single week'); 
                 break;
         }
     }
@@ -499,8 +499,8 @@ export function gradeLeveFromGrade(currentGrade) {
 
 
 export function btnMemberMatch_click(event, $w) {
-    // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-    // Add your code for this event here:
+	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+	// Add your code for this event here: 
     let $item = $w.at(event.context);
     let targetItem = $w("#dsMembers").getCurrentItem();
     console.log(targetItem);
@@ -509,20 +509,20 @@ export function btnMemberMatch_click(event, $w) {
 
 }
 
-export function btnEnroll_click(event, returnObjectArrayObject) {
-    // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-    // Add your code for this event here:
+export function btnEnroll_click(event,returnObjectArrayObject) {
+	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+	// Add your code for this event here: 
     let isValid = validateEnrollment(returnObjectArrayObject);
     if (!isValid) {
         return false;
     }
-    return true;
+    return true; 
     //create courses Checked Courses
     //create invoice for Courses to Stripe
     // etc., etc., etc.
 }
 
-export function validateEnrollment(returnObjectArrayObject) {
+export function validateEnrollment(returnObjectArrayObject){
     returnObjectArrayObject.validation = {};
     returnObjectArrayObject.validation.message = {};
     returnObjectArrayObject.validation.message.error = [];
@@ -535,4 +535,43 @@ export function validateEnrollment(returnObjectArrayObject) {
 
 
     return true;
+}
+
+export function checkoutBox_click(event) {
+	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+	// Add your code for this event here: 
+}
+
+export function goToTopAndCleanup_click(event) {
+	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+	// Add your code for this event here: 
+    cleanUp();
+}
+export function cleanUp() {
+    let switchKey = '';
+    let week = 0;
+    let instance = 0;
+    for (var i = 0; i < 9; i++) {
+       week = i + 1;
+       for (var j = 0; j < 3; j++) {
+           instance = j + 1;
+            switchKey = '#switch' + week + '0' + instance;
+            $w(switchKey).checked = false;
+            $w(switchKey).hide();
+       }
+    }
+    $w('#checkoutBox').changeState("First");
+    // ø cleanup Member Strip data
+    // ø cleanup Web-Hook Repeater Strip (except for yellow dot)
+    // ø \_ that is, eventually, it will disappear for having been resolved
+    $w("#anchorTop").scrollTo();
+    return true;
+}
+
+
+
+export function btnFauxEnroll_click(event) {
+	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+	// Add your code for this event here: 
+    $w('#checkoutBox').changeState("Second");
 }

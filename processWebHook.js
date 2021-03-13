@@ -160,13 +160,11 @@ export function FormStack4223065_click(event, $w) {
     // let finalFilter = filter1.or(filter2);
     let finalFilter = filter2;
     $w("#dsMembers").setFilter(finalFilter);
-    $w("#btnAssignMember").show();
+    $w("#btnAssignNewMember").show();
 }
 
-export function btnAssignMember_click(event) {
-    // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-    // Add your code for this event here:
-    $w("#thisMemberId").value = "dc74d778-c930-4cc5-8bd8-99f314b0a4c7";
+export function btnAssignNewMember_click(event) {
+    $w("#thisMemberId").value = "INSTANTIATE";
     $w("#btnConfirmClasses").show();
 }
 
@@ -262,7 +260,6 @@ export function instantiateEnrollment (returnObjectArrayObject) {
     } else {
         $w("#parentAddressBlock").value = `${address}\n ${address2}\n ${city}, ${state}  ${zip}`;
     }
-
 }
 
 export function returnArrayObjectWeek(week, weekNumber, runningTotalObject){
@@ -496,8 +493,6 @@ export function gradeLeveFromGrade(currentGrade) {
 
 }
 
-
-
 export function btnMemberMatch_click(event, $w) {
 	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
 	// Add your code for this event here: 
@@ -547,12 +542,17 @@ export function goToTopAndCleanup_click(event) {
 	// Add your code for this event here: 
     cleanUp();
 }
-export function cleanUp() {
+export function cleanUp(returnObjectArrayObject, runningTotalObject, objApplicationSummer) {
+    //<confirmCourse>
     let switchKey = '';
+    let weekTextKey = '';
     let week = 0;
     let instance = 0;
     for (var i = 0; i < 9; i++) {
        week = i + 1;
+        weekTextKey = '#textWeek' + week;
+        $w(weekTextKey).show();
+
        for (var j = 0; j < 3; j++) {
            instance = j + 1;
             switchKey = '#switch' + week + '0' + instance;
@@ -561,10 +561,52 @@ export function cleanUp() {
        }
     }
     $w('#checkoutBox').changeState("First");
+    //</confirmCourse>
+    //<form fields throughout>
+    let unsetElementsArray = [
+        "#thisKey"
+        ,"#thisTitle"
+        ,"#thisSource"
+        ,"#thisPayload"
+        ,"#thisWebhookId"
+        ,"#thisPayloadId"
+        ,"#thisCurrentStatus"
+        ,"#thisCurrentStatusStamp"
+        ,"#thisResolvedStatus"
+        ,"#thisResolvedStatusStamp"
+        ,"#nameParent"
+        ,"#emailParent"
+        ,"#phoneParent"
+        ,"#memberIdParent"
+        ,"#nameStudent"
+        ,"#namePreferredStudent"
+        ,"#gradeLevelStudent"
+        ,"#dobStudent"
+        ,"#nameParentCC"
+        ,"#emailParentCC"
+        ,"#phoneParentCC"
+        ,"#parentAddressBlock"
+    ]
+    
+    for ( let element of unsetElementsArray) {
+        $w(element).value = null;
+    }
+    //</form fields throughout>
+    //<memberAssignment>
+    $w("#btnAssignNewMember").hide();
+    $w("#btnConfirmClasses").hide();
+    $w("#thisMemberId").value = null;
+    //</memberAssignment>
+    //<webhookRepeater>
+    //</webhookRepeater>
+    objApplicationSummer = undefined;
+    returnObjectArrayObject = undefined;
+    runningTotalObject = undefined;
+    $w("#anchorTop").scrollTo();
     // ø cleanup Member Strip data
     // ø cleanup Web-Hook Repeater Strip (except for yellow dot)
     // ø \_ that is, eventually, it will disappear for having been resolved
-    $w("#anchorTop").scrollTo();
+    // ø empty Object(s)
     return true;
 }
 
@@ -575,3 +617,4 @@ export function btnFauxEnroll_click(event) {
 	// Add your code for this event here: 
     $w('#checkoutBox').changeState("Second");
 }
+

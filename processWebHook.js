@@ -370,9 +370,6 @@ export function returnArrayObjectWeek(week, weekNumber, runningTotalObject){
         element.gradeLevel = HOLDER;
         element.location = label.substr(lastDash + 1).trim();
         element.courseName = label.substr(firstColon + 1, lastDash - firstColon - 1).trim();;
-        // HOLDER = label.substr (0, label.indexOf(":");
-        // element.courseName = label;
-        // HOLDER = label.substr(lastDash + 1).trim();
         element.billing.runningTotal = runningTotal;
 
         returnObjectArray[i] = element;
@@ -399,21 +396,10 @@ export function writeCoursesSwitches(returnObjectArrayObject) {
         }  
     }
 
-    let dlStyle = "font-size: 16px; font-family : 'Avenir Black'; background-color: white;";
-    let dtStyle = "color: blue; text-decoration: underline; line-height: 1;";
-    let ddStyle = "color: green; text-indent: 55px;";
     let fieldsetStyle = "\"background-color: LemonChiffon; border: SteelBlue; border-radius: 5px; border-style: solid solid solid none;\"";
-    let legendStyle = "\"font-size: 16px; font-family : 'Avenir Black'; color: SteelBlue;\"";
+    let legendStyle = "\"font-size: 16px; font-family : 'Avenir Black'; color: SteelBlue; background-color: LemonChiffon;\"";
     let ulStyle = "\"list-style-type: none;\"";
     let liStyle = "\"font-size: 16px; margin: 10px; font-family : 'Avenir Black';color: SteelBlue; font-style: italic; line-height: 1;\"";
-// let htmlWeekThree = "<fieldset style=" + fieldsetStyle + ">"
-//     + "<legend style=" + legendStyle + ">Week 2: June 14-18 2021</legend>";
-// htmlWeekThree += "<ul style=" + ulStyle + ">";
-// htmlWeekThree += "<li style=" + liStyle + ">From Ada Lovelace to Grace Hopper</li>";
-// htmlWeekThree += "<li style=" + liStyle + ">Playing Bongo's Like Richard Feynman</li>";
-// htmlWeekThree += "<li style=" + liStyle + ">The Eels and the Multiverse Theory</li>";
-// htmlWeekThree += "</ul>";
-// htmlWeekThree += "</fieldset>"
 
     let courseArray = returnObjectArrayObject.courses_array;
     let writeMapArray = returnObjectArrayObject.writeMapWeekArray;
@@ -429,27 +415,17 @@ export function writeCoursesSwitches(returnObjectArrayObject) {
                 + "<legend style=" + legendStyle + ">" + weekString + "</legend>";
             codeBlockArray[weekIdThis] += "<ul style=" + ulStyle + ">";
         }
-        // codeBlockArray[weekIdThis] += "<dd style='" + ddStyle + "'>" + courseArray[i].courseName + "</dd>";
         codeBlockArray[weekIdThis] += "<li style=" + liStyle + ">" + courseArray[i].courseName + "</li>";
     } // END: function writeCoursesSwitches(returnObjectArrayObject)
-    // codeBlockArray.map((currentValue) => currentValue + '</dl>');
     let mapToBlock = 0;
     let wixTextKey = 0;
     for ( i = 0; i < writeMapArray.length; i++) {
         mapToBlock = writeMapArray[i];
         if (codeBlockArray[mapToBlock] !== 'NNULL' && codeBlockArray[mapToBlock] !== '') { //if HTML in codeBlock
-            // codeBlockArray[mapToBlock] += "</dl>"; // finish the HTML
             codeBlockArray[mapToBlock] += "</ul></fieldset>"; // finish the HTML
             wixTextKey = '#textWeek' + i; //1,2,3...
             $w(wixTextKey).html = codeBlockArray[mapToBlock];
-            // console.log('Map HTML in block ' + mapToBlock + ' to Text Block #id ' + wixTextKey);
         }
-        // console.log('[all]Map HTML in block ' + mapToBlock + ' to Text Block #id ' + i);
-        // if (returnObjectArrayObject.countWeekArray[mapToBlock] === 1) {
-        //     console.log('show 1 and ON [switch' + i + '01]');            
-        // } else if (returnObjectArrayObject.countWeekArray[mapToBlock] > 1) {
-        //     console.log('show ' + returnObjectArrayObject.countWeekArray[mapToBlock] + ' and OFF');           
-        // }
         let switchKey = '';
         switch (returnObjectArrayObject.countWeekArray[mapToBlock]) {
             case -999:
@@ -477,9 +453,6 @@ export function writeCoursesSwitches(returnObjectArrayObject) {
                 $w(switchKey).show();
                 switchKey = '#switch' + i + '03';
                 $w(switchKey).show();
-                // console.log('show 1 and OFF [switch' + i + '01]');            
-                // console.log('show 2 and OFF [switch' + i + '02]');            
-                // console.log('show 3 and OFF [switch' + i + '03]'); 
                 break;           
                 
             default:
@@ -487,8 +460,8 @@ export function writeCoursesSwitches(returnObjectArrayObject) {
                 break;
         }
     }
-    console.log("codeBlockArray");
-    console.log(codeBlockArray);
+    // console.log("codeBlockArray");
+    // console.log(codeBlockArray);
 
 
 }

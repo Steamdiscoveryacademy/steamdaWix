@@ -402,6 +402,18 @@ export function writeCoursesSwitches(returnObjectArrayObject) {
     let dlStyle = "font-size: 16px; font-family : 'Avenir Black'; background-color: white;";
     let dtStyle = "color: blue; text-decoration: underline; line-height: 1;";
     let ddStyle = "color: green; text-indent: 55px;";
+    let fieldsetStyle = "\"background-color: LemonChiffon; border: SteelBlue; border-radius: 5px; border-style: solid solid solid none;\"";
+    let legendStyle = "\"font-size: 16px; font-family : 'Avenir Black'; color: SteelBlue;\"";
+    let ulStyle = "\"list-style-type: none;\"";
+    let liStyle = "\"font-size: 16px; margin: 10px; font-family : 'Avenir Black';color: SteelBlue; font-style: italic; line-height: 1;\"";
+// let htmlWeekThree = "<fieldset style=" + fieldsetStyle + ">"
+//     + "<legend style=" + legendStyle + ">Week 2: June 14-18 2021</legend>";
+// htmlWeekThree += "<ul style=" + ulStyle + ">";
+// htmlWeekThree += "<li style=" + liStyle + ">From Ada Lovelace to Grace Hopper</li>";
+// htmlWeekThree += "<li style=" + liStyle + ">Playing Bongo's Like Richard Feynman</li>";
+// htmlWeekThree += "<li style=" + liStyle + ">The Eels and the Multiverse Theory</li>";
+// htmlWeekThree += "</ul>";
+// htmlWeekThree += "</fieldset>"
 
     let courseArray = returnObjectArrayObject.courses_array;
     let writeMapArray = returnObjectArrayObject.writeMapWeekArray;
@@ -411,10 +423,14 @@ export function writeCoursesSwitches(returnObjectArrayObject) {
     for ( i = 0; i < courseArray.length; i++) {
         weekIdThis = courseArray[i].weekId;
         if (codeBlockArray[weekIdThis].length === 0) {
-            weekString = weekIdThis + ': ' + courseArray[i].dateString;
-            codeBlockArray[weekIdThis] = "<dl style='" + dlStyle + "'><dt style='" + dtStyle + "'>" + weekString + "</dt>";               
+            weekString = 'Week ' +weekIdThis + ': ' + courseArray[i].dateString;
+            // codeBlockArray[weekIdThis] = "<dl style='" + dlStyle + "'><dt style='" + dtStyle + "'>" + weekString + "</dt>";               
+            codeBlockArray[weekIdThis] = "<fieldset style=" + fieldsetStyle + ">"
+                + "<legend style=" + legendStyle + ">" + weekString + "</legend>";
+            codeBlockArray[weekIdThis] += "<ul style=" + ulStyle + ">";
         }
-        codeBlockArray[weekIdThis] += "<dd style='" + ddStyle + "'>" + courseArray[i].courseName + "</dd>";
+        // codeBlockArray[weekIdThis] += "<dd style='" + ddStyle + "'>" + courseArray[i].courseName + "</dd>";
+        codeBlockArray[weekIdThis] += "<li style=" + liStyle + ">" + courseArray[i].courseName + "</li>";
     } // END: function writeCoursesSwitches(returnObjectArrayObject)
     // codeBlockArray.map((currentValue) => currentValue + '</dl>');
     let mapToBlock = 0;
@@ -422,7 +438,8 @@ export function writeCoursesSwitches(returnObjectArrayObject) {
     for ( i = 0; i < writeMapArray.length; i++) {
         mapToBlock = writeMapArray[i];
         if (codeBlockArray[mapToBlock] !== 'NNULL' && codeBlockArray[mapToBlock] !== '') { //if HTML in codeBlock
-            codeBlockArray[mapToBlock] += "</dl>"; // finish the HTML
+            // codeBlockArray[mapToBlock] += "</dl>"; // finish the HTML
+            codeBlockArray[mapToBlock] += "</ul></fieldset>"; // finish the HTML
             wixTextKey = '#textWeek' + i; //1,2,3...
             $w(wixTextKey).html = codeBlockArray[mapToBlock];
             // console.log('Map HTML in block ' + mapToBlock + ' to Text Block #id ' + wixTextKey);
@@ -560,9 +577,6 @@ export function cleanUp(returnObjectArrayObject, runningTotalObject, objApplicat
             $w(switchKey).hide();
        }
     }
-    $w('#checkoutBox').changeState("First");
-    //</confirmCourse>
-    //<form fields throughout>
     let unsetElementsArray = [
         "#thisKey"
         ,"#thisTitle"
@@ -586,12 +600,13 @@ export function cleanUp(returnObjectArrayObject, runningTotalObject, objApplicat
         ,"#emailParentCC"
         ,"#phoneParentCC"
         ,"#parentAddressBlock"
-    ]
-    
+]
+
     for ( let element of unsetElementsArray) {
         $w(element).value = null;
     }
-    //</form fields throughout>
+    $w('#checkoutBox').changeState("First");
+    //</confirmCourse>
     //<memberAssignment>
     $w("#btnAssignNewMember").hide();
     $w("#btnConfirmClasses").hide();

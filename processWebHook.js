@@ -599,11 +599,6 @@ export function cleanUp(returnObjectArrayObject, runningTotalObject, objApplicat
     return true;
 }
 
-
-
-
-
-
 export function btnProcessEnrollment_click(event) {
 	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
 	// Add your code for this event here: 
@@ -611,12 +606,23 @@ export function btnProcessEnrollment_click(event) {
 }
 
 export function btnValidateEnrollment_click(event, enrollmentObject) {
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-	// Add your code for this event here: 
+//<Test by Randomized Boolean Array>
+    let enrollmentErrorArray = [false, false, false, false];
+    let enrollmentErrorOverloadArray = [false, false, false, false];
+    if (7 < 9) {
+        let tempBoolean = false;
+        for (let index = 0; index < enrollmentErrorArray.length; index++) {
+            tempBoolean = Math.floor(Math.random() * 2) === 1 ? true : false;
+            enrollmentErrorArray[index] = tempBoolean;
+        }
+    }
+//</Test by Randomized Boolean Array>
+    displayErrors(enrollmentErrorArray);
+}
 
-    // <reset>
-    let index = 0;
-    let showIndexArray = [];
+export function displayErrors(enrollmentErrorArray = [false, false, false, false]) {
+    console.log("enrollmentErrorArray: ");
+    console.log(enrollmentErrorArray);
     const showElementsObject = {
             "showArray": [
                 {
@@ -631,43 +637,27 @@ export function btnValidateEnrollment_click(event, enrollmentObject) {
                 { "index": 3, "show": ["#swtchOverloaGradeDob", "#errorGradeDobText"] }
             ]
         }
-    let simpleHideByIdArray = [];
-    for (index = 0; index < showElementsObject.showArray.length; index++) {
-        if (showElementsObject.showArray[index].index === index) {
-            simpleHideByIdArray = simpleHideByIdArray.concat(showElementsObject.showArray[index].show);
-        }
-    }
-    console.log(simpleHideByIdArray);
-    for (index = 0; index < simpleHideByIdArray.length; index++) {
-        $w(simpleHideByIdArray[index]).hide();   
-    }
-    // </reset>
-
-
-
-    let enrollmentErrorArray = [false, false, false, false];
-    let enrollmentErrorOverloadArray = [false, false, false, false];
-    if (7 < 9) {
-        let tempBoolean = false;
-        for (index = 0; index < enrollmentErrorArray.length; index++) {
-            tempBoolean = Math.floor(Math.random() * 2) === 1 ? true : false;
-            enrollmentErrorArray[index] = tempBoolean;
-        }
-    }
-    console.log("enrollmentErrorArray: ");
-    console.log(enrollmentErrorArray);
     let simpleShowByIdArray = [];
+    let simpleHideByIdArray = [];
+    let index = 0;
     for (index = 0; index < enrollmentErrorArray.length; index++) {
         if (enrollmentErrorArray[index] === true) {
             if (showElementsObject.showArray[index].index === index) {
                 simpleShowByIdArray = simpleShowByIdArray.concat(showElementsObject.showArray[index].show);
             }
+        } else {
+            if (showElementsObject.showArray[index].index === index) {
+                simpleHideByIdArray = simpleHideByIdArray.concat(showElementsObject.showArray[index].show);
+            }
         }
     }
     console.log(simpleShowByIdArray);
+    console.log(simpleHideByIdArray);
     for (index = 0; index < simpleShowByIdArray.length; index++) {
         $w(simpleShowByIdArray[index]).show();   
     }
+    for (index = 0; index < simpleHideByIdArray.length; index++) {
+        $w(simpleHideByIdArray[index]).hide();   
+    }
+    
 }
-
-

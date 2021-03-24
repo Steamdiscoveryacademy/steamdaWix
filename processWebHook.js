@@ -14,7 +14,8 @@ $w.onReady(function () {
     let totalCount = $w("#dsWebhookPayload").getTotalCount();
     console.log('totalCount: ' + totalCount);
     $w('#moreItems').text = totalCount - repeaterLimit > 0 ? 'plus ' + Number(totalCount - repeaterLimit) + ' additional items' : '';
-
+    // const develObject = {"use20210324":"Testing Validation Logic"};
+    // console.log(develObject);
 
 });
 
@@ -551,6 +552,7 @@ export function cleanUp(returnObjectArrayObject, runningTotalObject, objApplicat
             $w(switchKey).hide();
        }
     }
+    displayErrors();
     let unsetElementsArray = [
         "#thisKey"
         ,"#thisTitle"
@@ -573,7 +575,8 @@ export function cleanUp(returnObjectArrayObject, runningTotalObject, objApplicat
         ,"#nameParentCC"
         ,"#emailParentCC"
         ,"#phoneParentCC"
-        ,"#parentAddressBlock"
+        ,"#parentAddressBlock"         
+        ,"#develObjectHolder"
 ]
 
     for ( let element of unsetElementsArray) {
@@ -607,22 +610,73 @@ export function btnProcessEnrollment_click(event) {
 
 export function btnValidateEnrollment_click(event, enrollmentObject) {
 //<Test by Randomized Boolean Array>
-    let enrollmentErrorArray = [false, false, false, false];
-    let enrollmentErrorOverloadArray = [false, false, false, false];
-    if (7 < 9) {
+    const develObject = isJson($w("#develObjectHolder").value) || {"use20210324":"Testing Validation Logic","clickCount": 0};
+    let randomize = false; 
+    if( typeof develObject.enrollmentErrorArray === 'undefined') {
+        randomize = true;
+    } 
+    console.log("[617]randomize: " + randomize);
+    let develEnrollmentErrorArray = develObject.enrollmentErrorArray || [false, false, false, false];
+    console.log("[619]develEnrollmentErrorArray: ");
+    console.log(develEnrollmentErrorArray);
+    // if (typeof develObject === 'undefined'){
+    //     const develObject = {"use20210324":"Testing Validation Logic"};
+    // } else {
+    //     let develEnrollmentErrorArray = JSON.parse($w("#develObjectHolder").value).enrollmentErrorArray;
+    // }
+    // var randomize = true;
+    let enrollmentErrorArray = develEnrollmentErrorArray;
+    // if (typeof develEnrollmentErrorArray !== 'undefined') {
+    //     enrollmentErrorArray = develEnrollmentErrorArray;
+    //     randomize = false;
+    // }
+
+    let enrollmentErrorOverloadArray = getOverloadedErrors();
+    console.log("enrollmentErrorOverloadArray: ")
+    console.log(enrollmentErrorOverloadArray)
+    // for (let index = 0; index < enrollmentErrorArray.length; index++) {}
+    if (randomize) {
         let tempBoolean = false;
         for (let index = 0; index < enrollmentErrorArray.length; index++) {
             tempBoolean = Math.floor(Math.random() * 2) === 1 ? true : false;
             enrollmentErrorArray[index] = tempBoolean;
         }
     }
+    // let switchIdArray = ["#swtchOverloadZeroCourses", "#swtchOverloadTwoCourses", "#swtchOverloadGradeCourse", "#swtchOverloaGradeDob"];
+    // for (let index = 0; index < enrollmentErrorArray.length; index++) {
+    // //<CHECK where true && true>
+    //     if (enrollmentErrorArray[index] && enrollmentErrorOverloadArray[index]) {
+    //         console.log("[649]true&true: " + index);
+    //         $w(switchIdArray[index]).checked = true;
+    //     }
+    // //</CHECK where true && true>
+    // }
+    // $w("#swtchOverloadZeroCourses").checked = true;
+
+
+    develObject.enrollmentErrorArray = enrollmentErrorArray;
+    develObject.enrollmentErrorOverloadArray = enrollmentErrorOverloadArray;
+    console.log("[622]develObject: ");
+    console.log(develObject);
+    develObject.clickCount++;
+    $w("#develObjectHolder").value = JSON.stringify(develObject, undefined, 4);
 //</Test by Randomized Boolean Array>
     displayErrors(enrollmentErrorArray);
+}
+
+export function getOverloadedErrors(){
+    let switchIdArray = ["#swtchOverloadZeroCourses", "#swtchOverloadTwoCourses", "#swtchOverloadGradeCourse", "#swtchOverloaGradeDob"];
+    let overloadedErrorArray = [];
+    for (let index = 0; index < switchIdArray.length; index++) {
+        overloadedErrorArray[index] = $w(switchIdArray[index]).checked;
+    }
+    return overloadedErrorArray;
 }
 
 export function displayErrors(enrollmentErrorArray = [false, false, false, false]) {
     console.log("enrollmentErrorArray: ");
     console.log(enrollmentErrorArray);
+    let enrollmentErrorOverloadArray = getOverloadedErrors();
     const showElementsObject = {
             "showArray": [
                 {
@@ -639,12 +693,18 @@ export function displayErrors(enrollmentErrorArray = [false, false, false, false
         }
     let simpleShowByIdArray = [];
     let simpleHideByIdArray = [];
+    let simpleCheckByIdArray = [];
+    let simpleSwitchByIdArray = ["#swtchOverloadZeroCourses", "#swtchOverloadTwoCourses", "#swtchOverloadGradeCourse", "#swtchOverloaGradeDob"];
     let index = 0;
     for (index = 0; index < enrollmentErrorArray.length; index++) {
         if (enrollmentErrorArray[index] === true) {
             if (showElementsObject.showArray[index].index === index) {
                 simpleShowByIdArray = simpleShowByIdArray.concat(showElementsObject.showArray[index].show);
             }
+            if (enrollmentErrorArray[index] && enrollmentErrorOverloadArray[index]) {
+                simpleCheckByIdArray[simpleCheckByIdArray.length] = simpleSwitchByIdArray[index];
+            }
+        
         } else {
             if (showElementsObject.showArray[index].index === index) {
                 simpleHideByIdArray = simpleHideByIdArray.concat(showElementsObject.showArray[index].show);
@@ -654,10 +714,36 @@ export function displayErrors(enrollmentErrorArray = [false, false, false, false
     console.log(simpleShowByIdArray);
     console.log(simpleHideByIdArray);
     for (index = 0; index < simpleShowByIdArray.length; index++) {
+        if (simpleSwitchByIdArray.indexOf(simpleShowByIdArray[index]) >= 0){
+            $w(simpleShowByIdArray[index]).checked = false;   
+        }
         $w(simpleShowByIdArray[index]).show();   
     }
+    for (index = 0; index < simpleCheckByIdArray.length; index++) {
+        // if (simpleSwitchByIdArray.indexOf(simpleHideByIdArray[index]) >= 0){
+        //     $w(simpleHideByIdArray[index]).checked = false;   
+        // }
+        $w(simpleCheckByIdArray[index]).checked = true;   
+    }
     for (index = 0; index < simpleHideByIdArray.length; index++) {
+        // if (simpleSwitchByIdArray.indexOf(simpleHideByIdArray[index]) >= 0){
+        //     $w(simpleHideByIdArray[index]).checked = false;   
+        // }
         $w(simpleHideByIdArray[index]).hide();   
     }
     
 }
+
+/**
+ * <Utility Functions
+ */
+function isJson(str) {
+    let parsed = "let";
+    try {
+        parsed = JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return parsed;
+}
+//</Utility Functions>

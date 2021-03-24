@@ -619,17 +619,8 @@ export function btnValidateEnrollment_click(event, enrollmentObject) {
     let develEnrollmentErrorArray = develObject.enrollmentErrorArray || [false, false, false, false];
     console.log("[619]develEnrollmentErrorArray: ");
     console.log(develEnrollmentErrorArray);
-    // if (typeof develObject === 'undefined'){
-    //     const develObject = {"use20210324":"Testing Validation Logic"};
-    // } else {
-    //     let develEnrollmentErrorArray = JSON.parse($w("#develObjectHolder").value).enrollmentErrorArray;
-    // }
-    // var randomize = true;
+
     let enrollmentErrorArray = develEnrollmentErrorArray;
-    // if (typeof develEnrollmentErrorArray !== 'undefined') {
-    //     enrollmentErrorArray = develEnrollmentErrorArray;
-    //     randomize = false;
-    // }
 
     let enrollmentErrorOverloadArray = getOverloadedErrors();
     console.log("enrollmentErrorOverloadArray: ")
@@ -642,17 +633,6 @@ export function btnValidateEnrollment_click(event, enrollmentObject) {
             enrollmentErrorArray[index] = tempBoolean;
         }
     }
-    // let switchIdArray = ["#swtchOverloadZeroCourses", "#swtchOverloadTwoCourses", "#swtchOverloadGradeCourse", "#swtchOverloaGradeDob"];
-    // for (let index = 0; index < enrollmentErrorArray.length; index++) {
-    // //<CHECK where true && true>
-    //     if (enrollmentErrorArray[index] && enrollmentErrorOverloadArray[index]) {
-    //         console.log("[649]true&true: " + index);
-    //         $w(switchIdArray[index]).checked = true;
-    //     }
-    // //</CHECK where true && true>
-    // }
-    // $w("#swtchOverloadZeroCourses").checked = true;
-
 
     develObject.enrollmentErrorArray = enrollmentErrorArray;
     develObject.enrollmentErrorOverloadArray = enrollmentErrorOverloadArray;

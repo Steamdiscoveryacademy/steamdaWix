@@ -418,7 +418,7 @@ export function writeCoursesSwitches(returnObjectArrayObject) {
         codeBlockArray[weekIdThis] += "<li style=" + liStyle + ">" + courseArray[i].courseName + "</li>";
     } // END: function writeCoursesSwitches(returnObjectArrayObject)
     let mapToBlock = 0;
-    let wixTextKey = 0;
+    let wixTextKey = '';
     for ( i = 0; i < writeMapArray.length; i++) {
         mapToBlock = writeMapArray[i];
         if (codeBlockArray[mapToBlock] !== 'NNULL' && codeBlockArray[mapToBlock] !== '') { //if HTML in codeBlock
@@ -466,7 +466,8 @@ export function writeCoursesSwitches(returnObjectArrayObject) {
 
 }
 export function validateGradeVsAge(currentGrade, DOB) {
-    return Number.random * 10 > 5 ? true : false;
+    // return Number.random * 10 > 5 ? true : false;
+    return true;
 }
 export function gradeLeveFromGrade(currentGrade) {
     /*<ERROR is Appropriate in both cases>
@@ -600,9 +601,73 @@ export function cleanUp(returnObjectArrayObject, runningTotalObject, objApplicat
 
 
 
-export function btnFauxEnroll_click(event) {
+
+
+
+export function btnProcessEnrollment_click(event) {
 	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
 	// Add your code for this event here: 
     $w('#checkoutBox').changeState("Second");
 }
+
+export function btnValidateEnrollment_click(event, enrollmentObject) {
+	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+	// Add your code for this event here: 
+
+    // <reset>
+    let index = 0;
+    let showIndexArray = [];
+    const showElementsObject = {
+            "showArray": [
+                {
+                "index": 0,
+                "show": ["#swtchOverloadZeroCourses", "#errorZeroCoursesText"]
+                },
+                { "index": 1, "show": ["#swtchOverloadTwoCourses", "#errorTwpCoursesText"] },
+                {
+                "index": 2,
+                "show": ["#swtchOverloadGradeCourse", "#errorGradeCourseText"]
+                },
+                { "index": 3, "show": ["#swtchOverloaGradeDob", "#errorGradeDobText"] }
+            ]
+        }
+    let simpleHideByIdArray = [];
+    for (index = 0; index < showElementsObject.showArray.length; index++) {
+        if (showElementsObject.showArray[index].index === index) {
+            simpleHideByIdArray = simpleHideByIdArray.concat(showElementsObject.showArray[index].show);
+        }
+    }
+    console.log(simpleHideByIdArray);
+    for (index = 0; index < simpleHideByIdArray.length; index++) {
+        $w(simpleHideByIdArray[index]).hide();   
+    }
+    // </reset>
+
+
+
+    let enrollmentErrorArray = [false, false, false, false];
+    let enrollmentErrorOverloadArray = [false, false, false, false];
+    if (7 < 9) {
+        let tempBoolean = false;
+        for (index = 0; index < enrollmentErrorArray.length; index++) {
+            tempBoolean = Math.floor(Math.random() * 2) === 1 ? true : false;
+            enrollmentErrorArray[index] = tempBoolean;
+        }
+    }
+    console.log("enrollmentErrorArray: ");
+    console.log(enrollmentErrorArray);
+    let simpleShowByIdArray = [];
+    for (index = 0; index < enrollmentErrorArray.length; index++) {
+        if (enrollmentErrorArray[index] === true) {
+            if (showElementsObject.showArray[index].index === index) {
+                simpleShowByIdArray = simpleShowByIdArray.concat(showElementsObject.showArray[index].show);
+            }
+        }
+    }
+    console.log(simpleShowByIdArray);
+    for (index = 0; index < simpleShowByIdArray.length; index++) {
+        $w(simpleShowByIdArray[index]).show();   
+    }
+}
+
 

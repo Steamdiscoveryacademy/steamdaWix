@@ -213,6 +213,7 @@ export function btnConfirmClasses_click(event) {
     writeCoursesSwitches(returnObjectArrayObject);
     console.log("returnObjectArrayObject: ");
     console.log(returnObjectArrayObject);
+    $w("#superObjectHolder").value = JSON.stringify(returnObjectArrayObject, undefined, 4);
     console.log(runningTotalObject);
     $w("#btnEnroll").show();
 }
@@ -232,8 +233,11 @@ export function instantiateEnrollment (returnObjectArrayObject) {
     returnObjectArrayObject.family.parent.primary = {};
     returnObjectArrayObject.family.student.name.first = objApplicationSummer.student_name.first;
     returnObjectArrayObject.family.student.name.last = objApplicationSummer.student_name.last;
-    returnObjectArrayObject.family.student.name.lastFirst = objApplicationSummer.student_name.last + ', ' + objApplicationSummer.student_name.first;
-    returnObjectArrayObject.family.student.name.fullName = objApplicationSummer.student_name.first + ' ' + objApplicationSummer.student_name.last;
+    let preferredName = objApplicationSummer.preferred_name;
+    preferredName = preferredName.length > 0 ? preferredName : objApplicationSummer.student_name.first;
+    returnObjectArrayObject.family.student.name.preferred = preferredName;
+    returnObjectArrayObject.family.student.name.lastFirst = objApplicationSummer.student_name.last + ', ' + preferredName;
+    returnObjectArrayObject.family.student.name.fullName = preferredName + ' ' + objApplicationSummer.student_name.last;
     returnObjectArrayObject.family.student.messages = {"dox": ["messages you want the Student only to see"]};
     returnObjectArrayObject.family.parent.primary.memberId = $w("#thisMemberId").value;
     returnObjectArrayObject.family.parent.primary.messages = {"dox": ["messages you want the Primary Parent/Web Account Holder only to see"]};
@@ -241,11 +245,18 @@ export function instantiateEnrollment (returnObjectArrayObject) {
     $w("#nameStudent").value = objApplicationSummer.student_name.first + ' ' + objApplicationSummer.student_name.last;
     $w("#namePreferredStudent").value = objApplicationSummer.preferred_name;
     let dobStudent = objApplicationSummer.date_of_birth;
+    returnObjectArrayObject.family.student.name.dob = dobStudent;
     let gradeStudent = objApplicationSummer.grade_during_the_202021_school_year[0].value;
+    returnObjectArrayObject.family.student.name.currentGrad = gradeStudent;
     console.log(gradeStudent);
     let gradeLevelStudnet = gradeLeveFromGrade(gradeStudent);
+    returnObjectArrayObject.family.student.name.currentGrad = gradeLevelStudnet;
     $w("#gradeLevelStudent").value = gradeLevelStudnet;
     $w("#dobStudent").value = dobStudent;
+    returnObjectArrayObject.family.parent.primary.last = objApplicationSummer.primary_parentguardian_name.last;
+    returnObjectArrayObject.family.parent.primary.first = objApplicationSummer.primary_parentguardian_name.first;
+    returnObjectArrayObject.family.parent.primary.fullName = objApplicationSummer.primary_parentguardian_name.first + ' ' + objApplicationSummer.primary_parentguardian_name.last;
+    returnObjectArrayObject.family.parent.primary.lastFirst = objApplicationSummer.primary_parentguardian_name.last + ', ' + objApplicationSummer.primary_parentguardian_name.first;
     $w("#nameParentCC").value = $w("#nameParent").value;
     $w("#emailParentCC").value = $w("#emailParent").value;
     $w("#phoneParentCC").value = "(" + $w("#phoneParent").value.substr(0, 3) + ") "
@@ -255,12 +266,16 @@ export function instantiateEnrollment (returnObjectArrayObject) {
     let address2 = objApplicationSummer.mailing_address.address2;
     let city = objApplicationSummer.mailing_address.city;
     let state = objApplicationSummer.mailing_address.state;
-    let zip = objApplicationSummer.mailing_address.zip;
+    let zip = objApplicationSummer.mailing_address.zip
+    let familyAddress = "";
     if (!address2 || address2.trim().length === 0) {
-        $w("#parentAddressBlock").value = `${address}\n ${city}, ${state}  ${zip}`;
+        familyAddress = `${address}\n ${city}, ${state}  ${zip}`;
     } else {
-        $w("#parentAddressBlock").value = `${address}\n ${address2}\n ${city}, ${state}  ${zip}`;
+        familyAddress = `${address}\n ${address2}\n ${city}, ${state}  ${zip}`;
     }
+    $w("#parentAddressBlock").value = familyAddress;
+    returnObjectArrayObject.family.addresses = {};
+    returnObjectArrayObject.family.addresses.mailing = objApplicationSummer.mailing_address;
 }
 
 export function returnArrayObjectWeek(week, weekNumber, runningTotalObject){
@@ -524,6 +539,8 @@ export function validateEnrollment(returnObjectArrayObject){
     return true;
 }
 
+
+
 export function checkoutBox_click(event) {
 	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
 	// Add your code for this event here: 
@@ -582,6 +599,15 @@ export function cleanUp(returnObjectArrayObject, runningTotalObject, objApplicat
     for ( let element of unsetElementsArray) {
         $w(element).value = null;
     }
+    let switchErrorIdArray = ["#swtchOverloadZeroCourses", "#swtchOverloadTwoCourses", "#swtchOverloadGradeCourse", "#swtchOverloaGradeDob"];
+    for (let index = 0; index < switchErrorIdArray.length; index++) {
+        // if (simpleSwitchByIdArray.indexOf(simpleHideByIdArray[index]) >= 0){
+        //     $w(simpleHideByIdArray[index]).checked = false;   
+        // }
+        $w(switchErrorIdArray[index]).checked = false;   
+        $w(switchErrorIdArray[index]).hide();   
+    }
+
     $w('#checkoutBox').changeState("First");
     //</confirmCourse>
     //<memberAssignment>
@@ -608,31 +634,44 @@ export function btnProcessEnrollment_click(event) {
     $w('#checkoutBox').changeState("Second");
 }
 
-export function btnValidateEnrollment_click(event, enrollmentObject) {
-//<Test by Randomized Boolean Array>
+export function btnValidateEnrollment_click(event, returnObjectArrayObject) {
     const develObject = isJson($w("#develObjectHolder").value) || {"use20210324":"Testing Validation Logic","clickCount": 0};
-    let randomize = false; 
-    if( typeof develObject.enrollmentErrorArray === 'undefined') {
-        randomize = true;
-    } 
-    console.log("[617]randomize: " + randomize);
-    let develEnrollmentErrorArray = develObject.enrollmentErrorArray || [false, false, false, false];
-    console.log("[619]develEnrollmentErrorArray: ");
-    console.log(develEnrollmentErrorArray);
+    let enrollmentErrorArray = [];
+    let develEnrollmentErrorArray = [];
+    let enrollmentErrorOverloadArray = [];
+    let NOTICE = "YES - Use the Real Logic for the Big Enrollment Object"
+    if (NOTICE.substr(0,3) === "NO ") {
+       validateEnrollment(returnObjectArrayObject); 
+    } else {
+        //<Test by Randomized Boolean Array>
+        //<Randomize>
+        let randomize = false; 
+        if( typeof develObject.enrollmentErrorArray === 'undefined') {
+            randomize = true;
+        } 
+        console.log("[617]randomize: " + randomize);
+        develEnrollmentErrorArray = develObject.enrollmentErrorArray || [false, false, false, false];
+        console.log("[619]develEnrollmentErrorArray: ");
+        console.log(develEnrollmentErrorArray);
 
-    let enrollmentErrorArray = develEnrollmentErrorArray;
+        enrollmentErrorArray = develEnrollmentErrorArray;
 
-    let enrollmentErrorOverloadArray = getOverloadedErrors();
-    console.log("enrollmentErrorOverloadArray: ")
-    console.log(enrollmentErrorOverloadArray)
-    // for (let index = 0; index < enrollmentErrorArray.length; index++) {}
-    if (randomize) {
-        let tempBoolean = false;
-        for (let index = 0; index < enrollmentErrorArray.length; index++) {
-            tempBoolean = Math.floor(Math.random() * 2) === 1 ? true : false;
-            enrollmentErrorArray[index] = tempBoolean;
+        enrollmentErrorOverloadArray = getOverloadedErrors();
+        console.log("enrollmentErrorOverloadArray: ")
+        console.log(enrollmentErrorOverloadArray)
+        // for (let index = 0; index < enrollmentErrorArray.length; index++) {}
+        if (randomize) {
+            let tempBoolean = false;
+            for (let index = 0; index < enrollmentErrorArray.length; index++) {
+                tempBoolean = Math.floor(Math.random() * 2) === 1 ? true : false;
+                enrollmentErrorArray[index] = tempBoolean;
+            }
         }
+        //</Randomize>
+        //</Test by Randomized Boolean Array>
     }
+    // $w("#superObjectHolder").value = JSON.stringify(returnObjectArrayObject, undefined, 4);
+
 
     develObject.enrollmentErrorArray = enrollmentErrorArray;
     develObject.enrollmentErrorOverloadArray = enrollmentErrorOverloadArray;
@@ -640,7 +679,6 @@ export function btnValidateEnrollment_click(event, enrollmentObject) {
     console.log(develObject);
     develObject.clickCount++;
     $w("#develObjectHolder").value = JSON.stringify(develObject, undefined, 4);
-//</Test by Randomized Boolean Array>
     displayErrors(enrollmentErrorArray);
 }
 

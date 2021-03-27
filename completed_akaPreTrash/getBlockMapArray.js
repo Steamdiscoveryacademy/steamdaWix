@@ -1,8 +1,8 @@
 
 let marais = "dog";
 
-fillBlockMapArray(enrollmentObject);
-getStudentGradeMisMatchDob(enrollmentObject);
+// fillBlockMapArray(enrollmentObject);
+// getStudentGradeMisMatchDob(enrollmentObject);
 
 document.getElementById("code").innerHTML = JSON.stringify(enrollmentObject, undefined, 4);
 

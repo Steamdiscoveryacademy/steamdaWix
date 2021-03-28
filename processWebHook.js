@@ -898,9 +898,6 @@ export function displayErrors(enrollmentErrorArray = [false, false, false, false
      let index = 0;
      let weekOfBlockIndex = -7;
      let element = {};
-    //  let jindex = 0;
-    //  let jisChecked = false;
-    //  let jelement = "";
      let zeroCheckedCount = 0;
      let multipleCheckedCount = 0;
      let gradeMisMatchCount = 0;
@@ -909,48 +906,12 @@ export function displayErrors(enrollmentErrorArray = [false, false, false, false
          weekOfBlockIndex = enrollmentObject.writeMapWeekArray[index];
          element.week = weekOfBlockIndex;
          if (weekOfBlockIndex + 0 > 0) {
-             // console.log(weekOfBlockIndex);
-             // console.log(enrollmentObject.countWeekArray[weekOfBlockIndex]);
              element.selectedCount = enrollmentObject.countWeekArray[weekOfBlockIndex];
          } else {
              element.selectedCount = 0;
          }
          element.checkedCount = 0;
          element.gradeMismatchCount = 0;
-         //<forLoop Inert> for {if(testing){}else if (testing)}
-         //  for (let jindex = 0; jindex < element.switchIdArray.length; jindex++) {
-            // let jelement = element.switchIdArray[jindex];
-            //if (testing) {
-                 // element.checkedCount = Math.floor(Math.random() * (element.selectedCount + 1));
-            // } else if (testing) {
-                     // jisChecked = $w(jelement).checked;
-                     // element.checkedCount += jisChecked ? 1 : 0;
-                     // // FOR: weekOfBlockIndex is WEEK 1 thru 9
-                     // // AND: jindex is Index of Week's Course 0 thru 2
-                     // // AND: jisChecked
-                     // // THEN: getGradeLevel
-                     // let gradeLevel = "3-5";
-                     // /**
-                     //  * "courses_array": [
-                    //      {
-                    //        "index": 0,
-                    //        "weekId": 1,
-                    //        ...
-                    //  */
-                    //         //  console.log({gradeLevel});
-                    // let minString = gradeLevel.split("-")[0];
-                    // let minGrade = minString === "K" ? 0 : parseInt(minString);
-                    // let maxString = gradeLevel.split("-")[1];
-                    // let maxGrade = parseInt(maxString);
-                    // let misMatch = false;
-                    // misMatch = studentGrade < minGrade ? true : misMatch;
-                    // misMatch = studentGrade > maxGrade ? true : misMatch;
-                    // console.log({misMatch});
-                    // element.gradeMismatchCount += misMatch ? 1 : 0;
-                    
-            // }
-        //  }
-        //</forLoop Inert>
          element.zeroChecked = element.checkedCount === 0 ? 1 : 0;
          element.zeroChecked = element.selectedCount === 0 ? 0 : element.zeroChecked;
          zeroCheckedCount += element.zeroChecked;

@@ -209,7 +209,7 @@ export function instantiateEnrollment (returnObjectArrayObject) {
     returnObjectArrayObject.family.parent.primary.messages = {"dox": ["messages you want the Primary Parent/Web Account Holder only to see"]};
     $w("#memberIdParent").value = $w("#thisMemberId").value;
     $w("#nameStudent").value = objApplicationSummer.student_name.first + ' ' + objApplicationSummer.student_name.last;
-    $w("#namePreferredStudent").value = objApplicationSummer.preferred_name;
+    $w("#namePreferredStudent").value = preferredName;
     let dobStudent = objApplicationSummer.date_of_birth;
     returnObjectArrayObject.family.student.dobString = dobStudent;
     let currentGrade = parseInt(objApplicationSummer.grade_during_the_202021_school_year[0].value);
@@ -219,7 +219,8 @@ export function instantiateEnrollment (returnObjectArrayObject) {
     console.log('[' + currentGrade + '] ' + currentGradeString);
     let gradeLevelStudent = gradeLeveFromGrade(currentGrade);
     returnObjectArrayObject.family.student.currentGradeLevel = gradeLevelStudent;
-    $w("#gradeLevelStudent").value = gradeLevelStudent;
+    let currentGradeCharacter = currentGrade === 0 ? 'K' : currentGrade.toString();
+    $w("#gradeLevelStudent").value = gradeLevelStudent + '     [ current grade: ' + currentGradeCharacter + ' ]';
     $w("#dobStudent").value = dobStudent;
     returnObjectArrayObject.family.parent.primary.last = objApplicationSummer.primary_parentguardian_name.last;
     returnObjectArrayObject.family.parent.primary.first = objApplicationSummer.primary_parentguardian_name.first;
@@ -559,6 +560,9 @@ export function cleanUp(returnObjectArrayObject, runningTotalObject, objApplicat
         ,"#parentAddressBlock"         
         ,"#superObjectHolder"
         ,"#superEnrollmentObject"
+        ,"#develObjectHolder"
+        ,"#dobGradeLevelErrorText"
+        ,"#warnTextBox"
 ]
 
     for ( let element of unsetElementsArray) {
@@ -575,6 +579,10 @@ export function cleanUp(returnObjectArrayObject, runningTotalObject, objApplicat
     let hideArray = ["#boxReadyToEnroll"];
     for ( let element of hideArray) {
         $w(element).hide();
+    }
+    let disableArray = ["#warnTextBox"];
+    for ( let element of disableArray) {
+        $w(element).disable();
     }
 
     $w('#checkoutBox').changeState("First");
@@ -617,11 +625,9 @@ export function btnValidateEnrollment_click(event, returnObjectArrayObject) {
     border-radius: 8px;`
     );
 
-    // return;
-    // console.log({overloadedErrorArray});
     returnObjectArrayObject = JSON.parse($w("#superObjectHolder").value);
     console.log(returnObjectArrayObject);
-    // return;
+
     fillBlockMapArray(returnObjectArrayObject);
     validateCourseGradeLevelMatch(returnObjectArrayObject);
     let enrollmentErrorArray = returnObjectArrayObject.enrollment.errorArray;
@@ -647,6 +653,23 @@ export function btnValidateEnrollment_click(event, returnObjectArrayObject) {
 
     displayErrors(enrollmentErrorArray);
     $w("#superEnrollmentObject").value = JSON.stringify(returnObjectArrayObject, undefined, 4);
+    //<maybe should be a method for ALL messages>
+    let warnArray = returnObjectArrayObject.enrollment.messages.warn;
+    // let warnList = 'Warning List: ' + warnArray.toString();
+    let warnList = '';//warnArray.toString();
+    let prepend = '';
+    warnArray.forEach(element => {
+        warnList += prepend; 
+        warnList += element.toString();
+        prepend = '\n'; 
+    });
+    console.log("warnList: ");
+    console.log(warnList);
+    if(warnList.length > 0) {
+        $w("#warnTextBox").value = warnList;
+        $w("#warnTextBox").enable();
+    }
+    //</maybe should be a method for ALL messages>
     let develMessage = "Developer Message:\n";
     develMessage += errorArray.toString() + " :EA" + "\n";
     develMessage += overloadedErrorArray.toString() + " :OA" + "\n";
@@ -655,60 +678,8 @@ export function btnValidateEnrollment_click(event, returnObjectArrayObject) {
     develMessage = develMessage.replace(/true/gi, "truue");
     develMessage = develMessage.replace(/,/g, "|");
     $w("#develObjectHolder").value = develMessage;
-    /**
-     * <REALLY NOT USING>
-    const develObject = isJson($w("#develObjectHolder").value) ?? {"use20210324":"Testing Validation Logic","clickCount": 0};
-    let enrollmentErrorArray = [];
-    let develEnrollmentErrorArray = [];
-    let enrollmentErrorOverloadArray = [];
-    let NOTICE = "YES - Use the Real Logic for the Big Enrollment Object"
-    if (NOTICE.substr(0,3) === "NO ") {
-       validateEnrollment(returnObjectArrayObject); 
-    } else {
-        //<Test by Randomized Boolean Array>
-        //<Randomize>
-        let randomize = false; 
-        if( typeof develObject.enrollmentErrorArray === 'undefined') {
-            randomize = true;
-        } 
-        console.log("[617]randomize: " + randomize);
-        develEnrollmentErrorArray = develObject.enrollmentErrorArray ?? [false, false, false, false];
-        console.log("[619]develEnrollmentErrorArray: ");
-        console.log(develEnrollmentErrorArray);
 
-        enrollmentErrorArray = develEnrollmentErrorArray;
-
-     */
-    /**
-     * </REALLY NOT USING>
-     */
-
-    /* 
-        enrollmentErrorOverloadArray = getOverloadedErrors();
-        console.log("enrollmentErrorOverloadArray: ")
-        console.log(enrollmentErrorOverloadArray)
-        // for (let index = 0; index < enrollmentErrorArray.length; index++) {}
-        if (randomize) {
-            let tempBoolean = false;
-            for (let index = 0; index < enrollmentErrorArray.length; index++) {
-                tempBoolean = Math.floor(Math.random() * 2) === 1 ? true : false;
-                enrollmentErrorArray[index] = tempBoolean;
-            }
-        }
-        //</Randomize>
-        //</Test by Randomized Boolean Array>
-    }
-    // $w("#superObjectHolder").value = JSON.stringify(returnObjectArrayObject, undefined, 4);
-
-
-    develObject.enrollmentErrorArray = enrollmentErrorArray;
-    develObject.enrollmentErrorOverloadArray = enrollmentErrorOverloadArray;
-    console.log("[622]develObject: ");
-    console.log(develObject);
-    develObject.clickCount++;
-    $w("#develObjectHolder").value = JSON.stringify(develObject, undefined, 4);
-    displayErrors(enrollmentErrorArray);
- */
+    
 }
 
 export function getOverloadedErrors(){
@@ -900,7 +871,6 @@ export function displayErrors(enrollmentErrorArray = [false, false, false, false
      let element = {};
      let zeroCheckedCount = 0;
      let multipleCheckedCount = 0;
-     let gradeMisMatchCount = 0;
      for (index = 1; index < blockMapArray.blockMapArray.length; index++) {
          element = blockMapArray.blockMapArray[index];
          weekOfBlockIndex = enrollmentObject.writeMapWeekArray[index];
@@ -917,9 +887,6 @@ export function displayErrors(enrollmentErrorArray = [false, false, false, false
          zeroCheckedCount += element.zeroChecked;
          element.multipleChecked = element.checkedCount > 1 ? 1 : 0;
          multipleCheckedCount += element.multipleChecked;
-
- 
- 
      }
      blockMapArray.blockMapErrors.zeroCheckedCount = zeroCheckedCount;
      blockMapArray.blockMapErrors.multipleCheckedCount = multipleCheckedCount;
@@ -941,10 +908,16 @@ export function displayErrors(enrollmentErrorArray = [false, false, false, false
  export function getStudentGradeMisMatchDob(enrollmentObject) {
      //http://charlottesvilleschools.org/home/programs-activities/kindergarten/
      //In order to enroll, potential kindergarteners must be 5 years old by September 30.
+    //  let errorString = "               Student was 15 years old on September 30, 2005";//15 spaces
      const monthK = 9;
      const dayK = 30;
      let now = new Date;
-     const yearK = now.getFullYear()
+     const yearNow = now.getFullYear()
+     const monthNow = now.getMonth() + 1;
+     const dayNow = now.getDate();
+     let lastYear = monthK > monthNow ? 1 : 0; 
+     lastYear = monthK === monthNow && dayK > dayNow ? 1 : lastYear; 
+     const yearK = yearNow - lastYear;
      enrollmentObject.enrollment.messages = {};
      enrollmentObject.enrollment.messages.dox = ["Zero Checked","Multible Checked","Student-Course GradeLevel","Grade-DOB","messaging specifically for the Enrollment Event"];
      enrollmentObject.enrollment.messages.error = [];
@@ -971,6 +944,11 @@ export function displayErrors(enrollmentErrorArray = [false, false, false, false
      minusK = month === monthK  && day < dayK ? 1 : minusK;
      ageK -= minusK;
      ageK -= grade; 
+     let yearKindergarden = yearK - grade;
+     let errorString = "               Student was ";//15 spaces
+     errorString += ageK.toString() + " ";//"               Student was 15 years old on September 30, 2005";//15 spaces
+     errorString += "years old on September 30, ";//"               Student was 15 years old on September 30, 2005";//15 spaces
+     errorString += yearKindergarden.toString();//"               Student was 15 years old on September 30, 2005";//15 spaces
      console.log("ageK: " + ageK);
      let ageError = false
      let ageWarning = false
@@ -979,8 +957,13 @@ export function displayErrors(enrollmentErrorArray = [false, false, false, false
      console.log("ageError: " + ageError);
      console.log("ageWarning: " + ageWarning);
      enrollmentObject.enrollment.errorArray[3] = ageError;
+     let showAgeForKindergarden = true;
+     if (ageError || showAgeForKindergarden) {
+         $w("#dobGradeLevelErrorText").value = errorString;
+     }
      if (ageWarning) {
-         enrollmentObject.enrollment.messages.warn[enrollmentObject.enrollment.messages.warn.length] = "Student Grade is a Mismatch with Date-of-Birth (1 year)"
+        //  enrollmentObject.enrollment.messages.warn[enrollmentObject.enrollment.messages.warn.length] = "Student Grade is a Mismatch with Date-of-Birth (1 year)"
+         enrollmentObject.enrollment.messages.warn[enrollmentObject.enrollment.messages.warn.length] = errorString.trim();
      }
  }
 

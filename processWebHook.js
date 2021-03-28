@@ -684,6 +684,14 @@ export function btnValidateEnrollment_click(event, returnObjectArrayObject) {
 
     displayErrors(enrollmentErrorArray);
     $w("#superEnrollmentObject").value = JSON.stringify(returnObjectArrayObject, undefined, 4);
+    let develMessage = "Developer Message:\n";
+    develMessage += errorArray.toString() + " :EA" + "\n";
+    develMessage += overloadedErrorArray.toString() + " :OA" + "\n";
+    develMessage += errorNoOverloadArray.toString() + " :ENO" + "\n";
+    develMessage += anyErrorWhatsoever ? "Hide Message" : "Show Message";
+    develMessage = develMessage.replace(/true/gi, "truue");
+    develMessage = develMessage.replace(/,/g, "|");
+    $w("#develObjectHolder").value = develMessage;
     /**
      * <REALLY NOT USING>
     const develObject = isJson($w("#develObjectHolder").value) ?? {"use20210324":"Testing Validation Logic","clickCount": 0};

@@ -14,24 +14,22 @@ $w.onReady(function () {
     let totalCount = $w("#dsWebhookPayload").getTotalCount();
     console.log('totalCount: ' + totalCount);
     $w('#moreItems').text = totalCount - repeaterLimit > 0 ? 'plus ' + Number(totalCount - repeaterLimit) + ' additional items' : '';
-    // const develObject = {"use20210324":"Testing Validation Logic"};
-    // console.log(develObject);
+    console.log(
+        "%cReally Emphatic Console Log for Debugging [Line ~18]",
+        `color: #fff;
+        background-color: #EA4335;
+        font-weight: bold;
+        padding: 8px 16px;
+        border-radius: 8px;`
+        );
 
 });
 
 export function rptrTitle_click(event, $w) {
-    // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-    // Add your code for this event here:
-    // console.log("rptrTitle_click: INERT");
     let $item = $w.at(event.context);
-    // $item("#myRepeatedText").text = "Selected";
     $item("#rptrButton").show();
-    //$item("#rptrLine").style.color = "#EA4335";
     let targetItem = $w("#dsWebhookPayload").getCurrentItem();
-    // console.log("getCurrentItem: ");
-    // console.log(targetItem);
     let wixId = targetItem["_id"];
-    // let wixId = "testID";
     $w('#thisKey').value = wixId;
     $w('#thisTitle').value = targetItem['title'];
     let webhookId = targetItem['webhookId'];
@@ -44,7 +42,6 @@ export function rptrTitle_click(event, $w) {
     let currentStatusStamp = targetItem['currentStatusStamp'].toString();
     currentStatusStamp = currentStatusStamp.substr(0, currentStatusStamp.search(" GMT"))
     $w('#thisCurrentStatusStamp').value = currentStatusStamp;
-    // $w('#thisCurrentStatusStamp').value = targetItem['currentStatusStamp']; //copy pasted
     $w('#thisResolvedStatus').value = targetItem['resolvedStatus'];
     if (targetItem['resolvedStatusStamp'] === null) {
         $w('#thisResolvedStatusStamp').value = targetItem['resolvedStatusStamp'];
@@ -128,36 +125,18 @@ export function dropdownFilter_change(event) {
 
 export function FormStack4223065_click(event, $w) {
     // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-    // Add your code for this event here:
-    //?referralInfo=viewerNavigation
-    // let url = dashboardBaseUrl + "blank-5?referralInfo=viewerNavigation&wixId=" + $w("#thisKey").value;
-    // console.log(url);
-    // console.log(dashboardBaseUrl);
-    // console.log("blank-5?referralInfo=viewerNavigation&wixId=");
-    // console.log($w("#thisKey").value);
-    // // wixLocation.to(url);
     var objApplicationSummer = JSON.parse($w('#thisPayload').value);
     let nameParent = objApplicationSummer.primary_parentguardian_name.first + ' ' + objApplicationSummer.primary_parentguardian_name.last;
     $w('#nameParent').value = nameParent;
     let emailParent = objApplicationSummer.primary_email_address;
-    //<Starts With Test>
-    // var atPosition = emailParent.lastIndexOf("@");
-    // emailParent = emailParent.substr(0, atPosition)
-    //</Starts With Test>
-    // let emailParent = "abbytammen@gmail.com";//TEST: FAIL
-    // let emailParent = "goodphyte@gmail.com";//TEST: FAIL
-    // let emailParent = "lisel@steamda.com";//TEST: FAIL
     $w('#emailParent').value = emailParent;
     let phone = objApplicationSummer.primary_mobile_phone;
-    // let phone = "(434) 825-2508";
     let pattern = /[^0-9]/g;
     let phoneRaw = phone.replace(pattern, '');
     $w('#phoneParent').value = phoneRaw;
 
     let filter1 = wixData.filter().eq("mainPhone", phoneRaw);
     let filter2 = wixData.filter().startsWith("loginEmail", emailParent);
-    // let filter1 = wixData.filter().eq("lastName", "Pritchard");
-    // let filter2 = wixData.filter().eq("firstName", "Lisel");
     // let finalFilter = filter1.or(filter2);
     let finalFilter = filter2;
     $w("#dsMembers").setFilter(finalFilter);
@@ -170,25 +149,12 @@ export function btnAssignNewMember_click(event) {
 }
 
 export function btnConfirmClasses_click(event) {
-    // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-    // Add your code for this event here:
     var returnObjectArrayObject = {"courses_array":[], "dogs_array":["Marcy","Chester","Marais"]};
     instantiateEnrollment(returnObjectArrayObject);
-    // let payload = $w('#thisPayload').value;
     var payload = JSON.parse($w('#thisPayload').value);
-    // console.log("payload: ");
-    // console.log(payload);
-    // var runningTotalObject = {"runningTotal": 0};
     var runningTotalObject = {"runningTotal": 0,"countWeekArray": [-999,0,0,0,0,0,0,0,0,0]};
     let week = payload.week_1_june_711_2021;
-    console.log("week: ");
-    console.log(week);
-    // let firstWeekObject = returnArrayObjectWeek(week, 1, runningTotalObject);
-    console.log(runningTotalObject);
-    // console.log("firstWeekObject: ");
-    // console.log(firstWeekObject);
 
-    // let payload = $w('#thisPayload').value;
     returnObjectArrayObject.courses_array = returnObjectArrayObject.courses_array.concat(returnArrayObjectWeek(week, 1, runningTotalObject));
     week = payload.week_2_june_1418_2021;
     returnObjectArrayObject.courses_array = returnObjectArrayObject.courses_array.concat(returnArrayObjectWeek(week, 2, runningTotalObject));
@@ -488,10 +454,6 @@ export function validateGradeVsAge(currentGrade, DOB) {
     return true;
 }
 export function gradeLeveFromGrade(currentGrade) {
-    /*<ERROR is Appropriate in both cases>
-    currentGrade = currentGrade ? Number(currentGrade) : 0;
-    currentGrade = Number.isNaN(currentGrade) ? 0 : Number(currentGrade);
-    </ERROR is Appropriate in both cases>*/
     currentGrade = Number(currentGrade);
     let gradeLevel = 'ERROR';
     gradeLevel = currentGrade <= 2 ? 'K-2' : gradeLevel;
@@ -632,6 +594,7 @@ export function cleanUp(returnObjectArrayObject, runningTotalObject, objApplicat
     // ø cleanup Web-Hook Repeater Strip (except for yellow dot)
     // ø \_ that is, eventually, it will disappear for having been resolved
     // ø empty Object(s)
+    // ø write out age on September 30, YYYY below gradeLevel and DOB
     return true;
 }
 
@@ -821,19 +784,8 @@ export function displayErrors(enrollmentErrorArray = [false, false, false, false
 /**
  * <Validate Enrollment>
  */
-
- let marais = "dog";
-
- // fillBlockMapArray(enrollmentObject);
- // getStudentGradeMisMatchDob(enrollmentObject);
- 
-//  document.getElementById("code").innerHTML = JSON.stringify(enrollmentObject, undefined, 4);
  
  export function fillBlockMapArray(enrollmentObject) {
-     let testing = false;
-     // let testing = false;
-     // let countWeekArray = enrollmentObject.countWeekArray;
-     // let writeMapWeekArray = enrollmentObject.writeMapWeekArray;
      let blockMapArray = {
          "blockMapErrors": {
              "zeroCheckedCount": -7,
@@ -946,9 +898,9 @@ export function displayErrors(enrollmentErrorArray = [false, false, false, false
      let index = 0;
      let weekOfBlockIndex = -7;
      let element = {};
-     let jindex = 0;
-     let jisChecked = false;
-     let jelement = "";
+    //  let jindex = 0;
+    //  let jisChecked = false;
+    //  let jelement = "";
      let zeroCheckedCount = 0;
      let multipleCheckedCount = 0;
      let gradeMisMatchCount = 0;
@@ -965,38 +917,40 @@ export function displayErrors(enrollmentErrorArray = [false, false, false, false
          }
          element.checkedCount = 0;
          element.gradeMismatchCount = 0;
-         for (let jindex = 0; jindex < element.switchIdArray.length; jindex++) {
-             let jelement = element.switchIdArray[jindex];
-             if (testing) {
-                 element.checkedCount = Math.floor(Math.random() * (element.selectedCount + 1));
-             } else if (testing) {
-                 jisChecked = $w(jelement).checked;
-                 element.checkedCount += jisChecked ? 1 : 0;
-                 // FOR: weekOfBlockIndex is WEEK 1 thru 9
-                 // AND: jindex is Index of Week's Course 0 thru 2
-                 // AND: jisChecked
-                 // THEN: getGradeLevel
-                 let gradeLevel = "3-5";
-                 /**
-                  * "courses_array": [
-                      {
-                        "index": 0,
-                        "weekId": 1,
-                        ...
-                  */
-                //  console.log({gradeLevel});
-                 let minString = gradeLevel.split("-")[0];
-                 let minGrade = minString === "K" ? 0 : parseInt(minString);
-                 let maxString = gradeLevel.split("-")[1];
-                 let maxGrade = parseInt(maxString);
-                 let misMatch = false;
-                 misMatch = studentGrade < minGrade ? true : misMatch;
-                 misMatch = studentGrade > maxGrade ? true : misMatch;
-                 console.log({misMatch});
-                 element.gradeMismatchCount += misMatch ? 1 : 0;
- 
-             }
-         }
+         //<forLoop Inert> for {if(testing){}else if (testing)}
+         //  for (let jindex = 0; jindex < element.switchIdArray.length; jindex++) {
+            // let jelement = element.switchIdArray[jindex];
+            //if (testing) {
+                 // element.checkedCount = Math.floor(Math.random() * (element.selectedCount + 1));
+            // } else if (testing) {
+                     // jisChecked = $w(jelement).checked;
+                     // element.checkedCount += jisChecked ? 1 : 0;
+                     // // FOR: weekOfBlockIndex is WEEK 1 thru 9
+                     // // AND: jindex is Index of Week's Course 0 thru 2
+                     // // AND: jisChecked
+                     // // THEN: getGradeLevel
+                     // let gradeLevel = "3-5";
+                     // /**
+                     //  * "courses_array": [
+                    //      {
+                    //        "index": 0,
+                    //        "weekId": 1,
+                    //        ...
+                    //  */
+                    //         //  console.log({gradeLevel});
+                    // let minString = gradeLevel.split("-")[0];
+                    // let minGrade = minString === "K" ? 0 : parseInt(minString);
+                    // let maxString = gradeLevel.split("-")[1];
+                    // let maxGrade = parseInt(maxString);
+                    // let misMatch = false;
+                    // misMatch = studentGrade < minGrade ? true : misMatch;
+                    // misMatch = studentGrade > maxGrade ? true : misMatch;
+                    // console.log({misMatch});
+                    // element.gradeMismatchCount += misMatch ? 1 : 0;
+                    
+            // }
+        //  }
+        //</forLoop Inert>
          element.zeroChecked = element.checkedCount === 0 ? 1 : 0;
          element.zeroChecked = element.selectedCount === 0 ? 0 : element.zeroChecked;
          zeroCheckedCount += element.zeroChecked;
@@ -1024,18 +978,18 @@ export function displayErrors(enrollmentErrorArray = [false, false, false, false
  }
  
  export function getStudentGradeMisMatchDob(enrollmentObject) {
-     enrollmentObject.enrollment.messages = {};
-     enrollmentObject.enrollment.messages.dox = ["Zero Checked","Multible Checked","Student-Course GradeLevel","Grade-DOB","messaging specifically for the Enrollment Event"];
-     enrollmentObject.enrollment.messages.error = [];
-     enrollmentObject.enrollment.messages.warn = [];
-     enrollmentObject.enrollment.messages.fyi = [];
-     enrollmentObject.enrollment.messages.btw = [];
      //http://charlottesvilleschools.org/home/programs-activities/kindergarten/
      //In order to enroll, potential kindergarteners must be 5 years old by September 30.
      const monthK = 9;
      const dayK = 30;
      let now = new Date;
      const yearK = now.getFullYear()
+     enrollmentObject.enrollment.messages = {};
+     enrollmentObject.enrollment.messages.dox = ["Zero Checked","Multible Checked","Student-Course GradeLevel","Grade-DOB","messaging specifically for the Enrollment Event"];
+     enrollmentObject.enrollment.messages.error = [];
+     enrollmentObject.enrollment.messages.warn = [];
+     enrollmentObject.enrollment.messages.fyi = [];
+     enrollmentObject.enrollment.messages.btw = [];
      let dob = new Date(enrollmentObject.family.student.dobString);
      let dobString = enrollmentObject.family.student.dobString;
      console.log(dobString);
@@ -1090,8 +1044,6 @@ function validateCourseGradeLevelMatch(superEnrollmentObject){
         courseCardinality = element.index++;
         switchKey = "#switch" + weekIndexWas + "0" + courseCardinality;
         switched = $w(switchKey).checked;
-        // switched = Math.random() >= 0.5;
-        // switched = true;
         //<Better Logic>
         misMatch = studentCurrentGrade < minGrade ? true : misMatch;
         misMatch = studentCurrentGrade > maxGrade ? true : misMatch;
@@ -1099,23 +1051,15 @@ function validateCourseGradeLevelMatch(superEnrollmentObject){
         console.log({misMatch});
         element.gradeMismatchCount += misMatch ? 1 : 0;
         //</Better Logic>
-
-        //<Abandined Logic>
-        // mismatchThis = false;
-        // mismatchThis = studentCurrentGrade === element.gradeLevel ? false : true;
-        // mismatchThis = switched ? mismatchThis : false;
-        // mismatchCount += mismatchThis ? 1 : 0;
-        //</Abandined Logic>
     });
     superEnrollmentObject.blockMapArray.blockMapErrors.gradeLevelMismatchCount = mismatchCount;
     console.log({mismatchCount});
     superEnrollmentObject.enrollment.errorArray[2] = mismatchCount === 0 ? false : true;
 }
-
-// <Validate Enrollment>
+// </Validate Enrollment>
 
 /**
- * <Utility Functions
+ * <Utility Functions>
  */
 export function isJson(str) {
     let parsed = "let";

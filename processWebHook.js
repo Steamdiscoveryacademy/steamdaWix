@@ -245,13 +245,15 @@ export function instantiateEnrollment (returnObjectArrayObject) {
     $w("#nameStudent").value = objApplicationSummer.student_name.first + ' ' + objApplicationSummer.student_name.last;
     $w("#namePreferredStudent").value = objApplicationSummer.preferred_name;
     let dobStudent = objApplicationSummer.date_of_birth;
-    returnObjectArrayObject.family.student.name.dob = dobStudent;
-    let gradeStudent = objApplicationSummer.grade_during_the_202021_school_year[0].value;
-    returnObjectArrayObject.family.student.name.currentGrad = gradeStudent;
-    console.log(gradeStudent);
-    let gradeLevelStudnet = gradeLeveFromGrade(gradeStudent);
-    returnObjectArrayObject.family.student.name.currentGrad = gradeLevelStudnet;
-    $w("#gradeLevelStudent").value = gradeLevelStudnet;
+    returnObjectArrayObject.family.student.dobString = dobStudent;
+    let currentGrade = parseInt(objApplicationSummer.grade_during_the_202021_school_year[0].value);
+    let currentGradeString = objApplicationSummer.grade_during_the_202021_school_year[0].label;
+    returnObjectArrayObject.family.student.currentGrade = currentGrade;
+    returnObjectArrayObject.family.student.currentGradeString = currentGradeString;
+    console.log('[' + currentGrade + '] ' + currentGradeString);
+    let gradeLevelStudent = gradeLeveFromGrade(currentGrade);
+    returnObjectArrayObject.family.student.currentGradeLevel = gradeLevelStudent;
+    $w("#gradeLevelStudent").value = gradeLevelStudent;
     $w("#dobStudent").value = dobStudent;
     returnObjectArrayObject.family.parent.primary.last = objApplicationSummer.primary_parentguardian_name.last;
     returnObjectArrayObject.family.parent.primary.first = objApplicationSummer.primary_parentguardian_name.first;
@@ -501,7 +503,7 @@ export function gradeLeveFromGrade(currentGrade) {
 }
 
 export function btnMemberMatch_click(event, $w) {
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+	// export function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
 	// Add your code for this event here: 
     let $item = $w.at(event.context);
     let targetItem = $w("#dsMembers").getCurrentItem();
@@ -512,7 +514,7 @@ export function btnMemberMatch_click(event, $w) {
 }
 
 export function btnEnroll_click(event,returnObjectArrayObject) {
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+	// export function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
 	// Add your code for this event here: 
     let isValid = validateEnrollment(returnObjectArrayObject);
     if (!isValid) {
@@ -542,12 +544,12 @@ export function validateEnrollment(returnObjectArrayObject){
 
 
 export function checkoutBox_click(event) {
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+	// export function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
 	// Add your code for this event here: 
 }
 
 export function goToTopAndCleanup_click(event) {
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+	// export function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
 	// Add your code for this event here: 
     cleanUp();
 }
@@ -593,7 +595,8 @@ export function cleanUp(returnObjectArrayObject, runningTotalObject, objApplicat
         ,"#emailParentCC"
         ,"#phoneParentCC"
         ,"#parentAddressBlock"         
-        ,"#develObjectHolder"
+        ,"#superObjectHolder"
+        ,"#superEnrollmentObject"
 ]
 
     for ( let element of unsetElementsArray) {
@@ -606,6 +609,10 @@ export function cleanUp(returnObjectArrayObject, runningTotalObject, objApplicat
         // }
         $w(switchErrorIdArray[index]).checked = false;   
         $w(switchErrorIdArray[index]).hide();   
+    }
+    let hideArray = ["#boxReadyToEnroll"];
+    for ( let element of hideArray) {
+        $w(element).hide();
     }
 
     $w('#checkoutBox').changeState("First");
@@ -629,13 +636,57 @@ export function cleanUp(returnObjectArrayObject, runningTotalObject, objApplicat
 }
 
 export function btnProcessEnrollment_click(event) {
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+	// export function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
 	// Add your code for this event here: 
     $w('#checkoutBox').changeState("Second");
 }
 
 export function btnValidateEnrollment_click(event, returnObjectArrayObject) {
-    const develObject = isJson($w("#develObjectHolder").value) || {"use20210324":"Testing Validation Logic","clickCount": 0};
+    $w("#boxReadyToEnroll").hide();
+    let dog = "Chester";
+    console.log(dog);
+    console.log(
+    "%cHardCoded gradeLevel: 3-5 [Line ~946]",
+    `color: #fff;
+    background-color: #EA4335;
+    font-weight: bold;
+    padding: 8px 16px;
+    border-radius: 8px;`
+    );
+
+    // return;
+    // console.log({overloadedErrorArray});
+    returnObjectArrayObject = JSON.parse($w("#superObjectHolder").value);
+    console.log(returnObjectArrayObject);
+    // return;
+    fillBlockMapArray(returnObjectArrayObject);
+    validateCourseGradeLevelMatch(returnObjectArrayObject);
+    let enrollmentErrorArray = returnObjectArrayObject.enrollment.errorArray;
+    let overloadedErrorArray = getOverloadedErrors();
+    returnObjectArrayObject.enrollment.overloadedErrorArray = overloadedErrorArray;
+    getStudentGradeMisMatchDob(returnObjectArrayObject);
+    
+    let errorArray = returnObjectArrayObject.enrollment.errorArray;
+    let errorNoOverloadArray = [];
+    let anyErrorWhatsoever = false;
+    for (let index = 0; index < errorArray.length; index++) {
+        let errorThis = errorArray[index];
+        let overloadedThis = overloadedErrorArray[index];
+        let finalErrorThis = errorThis && !overloadedThis ? true : false;
+        errorNoOverloadArray[index] = finalErrorThis;
+        anyErrorWhatsoever = finalErrorThis ? true : anyErrorWhatsoever;
+    }
+    returnObjectArrayObject.enrollment.errorNoOverloadArray = errorNoOverloadArray;
+    returnObjectArrayObject.enrollment.anyErrorWhatsoever = anyErrorWhatsoever;
+    if (!anyErrorWhatsoever){
+        $w("#boxReadyToEnroll").show();
+    }
+
+    displayErrors(enrollmentErrorArray);
+    $w("#superEnrollmentObject").value = JSON.stringify(returnObjectArrayObject, undefined, 4);
+    /**
+     * <REALLY NOT USING>
+    const develObject = isJson($w("#develObjectHolder").value) ?? {"use20210324":"Testing Validation Logic","clickCount": 0};
     let enrollmentErrorArray = [];
     let develEnrollmentErrorArray = [];
     let enrollmentErrorOverloadArray = [];
@@ -650,12 +701,18 @@ export function btnValidateEnrollment_click(event, returnObjectArrayObject) {
             randomize = true;
         } 
         console.log("[617]randomize: " + randomize);
-        develEnrollmentErrorArray = develObject.enrollmentErrorArray || [false, false, false, false];
+        develEnrollmentErrorArray = develObject.enrollmentErrorArray ?? [false, false, false, false];
         console.log("[619]develEnrollmentErrorArray: ");
         console.log(develEnrollmentErrorArray);
 
         enrollmentErrorArray = develEnrollmentErrorArray;
 
+     */
+    /**
+     * </REALLY NOT USING>
+     */
+
+    /* 
         enrollmentErrorOverloadArray = getOverloadedErrors();
         console.log("enrollmentErrorOverloadArray: ")
         console.log(enrollmentErrorOverloadArray)
@@ -680,6 +737,7 @@ export function btnValidateEnrollment_click(event, returnObjectArrayObject) {
     develObject.clickCount++;
     $w("#develObjectHolder").value = JSON.stringify(develObject, undefined, 4);
     displayErrors(enrollmentErrorArray);
+ */
 }
 
 export function getOverloadedErrors(){
@@ -753,9 +811,305 @@ export function displayErrors(enrollmentErrorArray = [false, false, false, false
 }
 
 /**
+ * <Validate Enrollment>
+ */
+
+ let marais = "dog";
+
+ // fillBlockMapArray(enrollmentObject);
+ // getStudentGradeMisMatchDob(enrollmentObject);
+ 
+//  document.getElementById("code").innerHTML = JSON.stringify(enrollmentObject, undefined, 4);
+ 
+ export function fillBlockMapArray(enrollmentObject) {
+     let testing = false;
+     // let testing = false;
+     // let countWeekArray = enrollmentObject.countWeekArray;
+     // let writeMapWeekArray = enrollmentObject.writeMapWeekArray;
+     let blockMapArray = {
+         "blockMapErrors": {
+             "zeroCheckedCount": -7,
+             "multipleCheckedCount": -7
+         },
+         "blockMapArray": [
+             {
+                 "blockMap": -999,
+                 "week": -999,
+                 "switchIdArray": [-999],
+                 "selectedCount": -999,
+                 "checkedCount": -999,
+                 "zeroChecked": -999,
+                 "multipleChecked": -999,
+                 "gradeMismatchCount": -999
+             },
+             {
+                 "blockMap": 1,
+                 "week": -7,
+                 "switchIdArray": ["#switch101", "#switch102", "#switch103"],
+                 "selectedCount": -7,
+                 "checkedCount": -7,
+                 "zeroChecked": -7,
+                 "multipleChecked": -7,
+                 "gradeMismatchCount": -7
+             },
+             {
+                 "blockMap": 2,
+                 "week": -7,
+                 "switchIdArray": ["#switch201", "#switch202", "#switch203"],
+                 "selectedCount": -7,
+                 "checkedCount": -7,
+                 "zeroChecked": -7,
+                 "multipleChecked": -7,
+                 "gradeMismatchCount": -7
+             },
+             {
+                 "blockMap": 3,
+                 "week": -7,
+                 "switchIdArray": ["#switch301", "#switch302", "#switch303"],
+                 "selectedCount": -7,
+                 "checkedCount": -7,
+                 "zeroChecked": -7,
+                 "multipleChecked": -7,
+                 "gradeMismatchCount": -7
+             },
+             {
+                 "blockMap": 4,
+                 "week": -7,
+                 "switchIdArray": ["#switch401", "#switch402", "#switch403"],
+                 "selectedCount": -7,
+                 "checkedCount": -7,
+                 "zeroChecked": -7,
+                 "multipleChecked": -7,
+                 "gradeMismatchCount": -7
+             },
+             {
+                 "blockMap": 5,
+                 "week": -7,
+                 "switchIdArray": ["#switch501", "#switch502", "#switch503"],
+                 "selectedCount": -7,
+                 "checkedCount": -7,
+                 "zeroChecked": -7,
+                 "multipleChecked": -7,
+                 "gradeMismatchCount": -7
+             },
+             {
+                 "blockMap": 6,
+                 "week": -7,
+                 "switchIdArray": ["#switch601", "#switch602", "#switch603"],
+                 "selectedCount": -7,
+                 "checkedCount": -7,
+                 "zeroChecked": -7,
+                 "multipleChecked": -7,
+                 "gradeMismatchCount": -7
+             },
+             {
+                 "blockMap": 7,
+                 "week": -7,
+                 "switchIdArray": ["#switch701", "#switch702", "#switch703"],
+                 "selectedCount": -7,
+                 "checkedCount": -7,
+                 "zeroChecked": -7,
+                 "multipleChecked": -7,
+                 "gradeMismatchCount": -7
+             },
+             {
+                 "blockMap": 8,
+                 "week": -7,
+                 "switchIdArray": ["#switch801", "#switch802", "#switch803"],
+                 "selectedCount": -7,
+                 "checkedCount": -7,
+                 "zeroChecked": -7,
+                 "multipleChecked": -7,
+                 "gradeMismatchCount": -7
+             },
+             {
+                 "blockMap": 9,
+                 "week": -7,
+                 "switchIdArray": ["#switch901", "#switch902", "#switch903"],
+                 "selectedCount": -7,
+                 "checkedCount": -7,
+                 "zeroChecked": -7,
+                 "multipleChecked": -7,
+                 "gradeMismatchCount": -7
+             }
+         ]
+     };
+     let studentGrade = parseInt(enrollmentObject.family.student.currentGrade);
+     let index = 0;
+     let weekOfBlockIndex = -7;
+     let element = {};
+     let jindex = 0;
+     let jisChecked = false;
+     let jelement = "";
+     let zeroCheckedCount = 0;
+     let multipleCheckedCount = 0;
+     let gradeMisMatchCount = 0;
+     for (index = 1; index < blockMapArray.blockMapArray.length; index++) {
+         element = blockMapArray.blockMapArray[index];
+         weekOfBlockIndex = enrollmentObject.writeMapWeekArray[index];
+         element.week = weekOfBlockIndex;
+         if (weekOfBlockIndex + 0 > 0) {
+             // console.log(weekOfBlockIndex);
+             // console.log(enrollmentObject.countWeekArray[weekOfBlockIndex]);
+             element.selectedCount = enrollmentObject.countWeekArray[weekOfBlockIndex];
+         } else {
+             element.selectedCount = 0;
+         }
+         element.checkedCount = 0;
+         element.gradeMismatchCount = 0;
+         for (let jindex = 0; jindex < element.switchIdArray.length; jindex++) {
+             let jelement = element.switchIdArray[jindex];
+             if (testing) {
+                 element.checkedCount = Math.floor(Math.random() * (element.selectedCount + 1));
+             } else if (testing) {
+                 jisChecked = $w(jelement).checked;
+                 element.checkedCount += jisChecked ? 1 : 0;
+                 // FOR: weekOfBlockIndex is WEEK 1 thru 9
+                 // AND: jindex is Index of Week's Course 0 thru 2
+                 // AND: jisChecked
+                 // THEN: getGradeLevel
+                 let gradeLevel = "3-5";
+                 /**
+                  * "courses_array": [
+                      {
+                        "index": 0,
+                        "weekId": 1,
+                        ...
+                  */
+                //  console.log({gradeLevel});
+                 let minString = gradeLevel.split("-")[0];
+                 let minGrade = minString === "K" ? 0 : parseInt(minString);
+                 let maxString = gradeLevel.split("-")[1];
+                 let maxGrade = parseInt(maxString);
+                 let misMatch = false;
+                 misMatch = studentGrade < minGrade ? true : misMatch;
+                 misMatch = studentGrade > maxGrade ? true : misMatch;
+                 console.log({misMatch});
+                 element.gradeMismatchCount += misMatch ? 1 : 0;
+ 
+             }
+         }
+         element.zeroChecked = element.checkedCount === 0 ? 1 : 0;
+         element.zeroChecked = element.selectedCount === 0 ? 0 : element.zeroChecked;
+         zeroCheckedCount += element.zeroChecked;
+         element.multipleChecked = element.checkedCount > 1 ? 1 : 0;
+         multipleCheckedCount += element.multipleChecked;
+
+ 
+ 
+     }
+     blockMapArray.blockMapErrors.zeroCheckedCount = zeroCheckedCount;
+     blockMapArray.blockMapErrors.multipleCheckedCount = multipleCheckedCount;
+     enrollmentObject.blockMapArray = blockMapArray;
+     enrollmentObject.enrollment = {};
+     enrollmentObject.enrollment.errorArray = [];
+     enrollmentObject.enrollment.errorArray[0] = blockMapArray.blockMapErrors.zeroCheckedCount > 0 ? true : false;
+     enrollmentObject.enrollment.errorArray[1] = blockMapArray.blockMapErrors.multipleCheckedCount > 0 ? true : false;
+     enrollmentObject.enrollment.errorArray[2] = blockMapArray.blockMapErrors.multipleCheckedCount > 0 ? true : false;
+    //  return blockMapArray;
+ 
+     //  return enrollmentObject + " Chester!";
+ }
+ 
+ export function getCoursesSwitched (enrollmentObject) {
+     
+ }
+ 
+ export function getStudentGradeMisMatchDob(enrollmentObject) {
+     enrollmentObject.enrollment.messages = {};
+     enrollmentObject.enrollment.messages.dox = ["Zero Checked","Multible Checked","Student-Course GradeLevel","Grade-DOB","messaging specifically for the Enrollment Event"];
+     enrollmentObject.enrollment.messages.error = [];
+     enrollmentObject.enrollment.messages.warn = [];
+     enrollmentObject.enrollment.messages.fyi = [];
+     enrollmentObject.enrollment.messages.btw = [];
+     //http://charlottesvilleschools.org/home/programs-activities/kindergarten/
+     //In order to enroll, potential kindergarteners must be 5 years old by September 30.
+     const monthK = 9;
+     const dayK = 30;
+     let now = new Date;
+     const yearK = now.getFullYear()
+     let dob = new Date(enrollmentObject.family.student.dobString);
+     let dobString = enrollmentObject.family.student.dobString;
+     console.log(dobString);
+     console.log(dob);
+     // enrollmentObject.family.student.dobString = dobString;
+     enrollmentObject.family.student.dob = {};
+     enrollmentObject.family.student.dob.date = dob;
+     let month = dob.getMonth() + 1;
+     enrollmentObject.family.student.dob.month = month;
+     let day = dob.getDate();
+     enrollmentObject.family.student.dob.day = day;
+     let year = dob.getFullYear();
+     enrollmentObject.family.student.dob.year = year;
+     let grade = parseInt(enrollmentObject.family.student.currentGrade);
+     let ageK = yearK - year;
+     let minusK = 0;
+     minusK = month < monthK ? 1 : minusK;
+     minusK = month === monthK  && day < dayK ? 1 : minusK;
+     ageK -= minusK;
+     ageK -= grade; 
+     console.log("ageK: " + ageK);
+     let ageError = false
+     let ageWarning = false
+     ageError = Math.abs(ageK - 5) > 1 ? true : false;
+     ageWarning = !ageError && Math.abs(ageK - 5) > 0 ? true : false;
+     console.log("ageError: " + ageError);
+     console.log("ageWarning: " + ageWarning);
+     enrollmentObject.enrollment.errorArray[3] = ageError;
+     if (ageWarning) {
+         enrollmentObject.enrollment.messages.warn[enrollmentObject.enrollment.messages.warn.length] = "Student Grade is a Mismatch with Date-of-Birth (1 year)"
+     }
+ }
+
+function validateCourseGradeLevelMatch(superEnrollmentObject){
+    let studentCurrentGrade = superEnrollmentObject.family.student.currentGrade;
+    console.log({studentCurrentGrade})
+    let weekIndexWas = 0
+    let weekWas = 0
+    let courseCardinality = 0
+    let switchKey = "ZXZ";
+    let mismatchThis = false;
+    let mismatchCount = 0;
+    let switched = false;
+    let minString = "Z";
+    let minGrade = -7;
+    let maxString = "Z";
+    let maxGrade = -7;
+    let misMatch = false;
+    superEnrollmentObject.courses_array.forEach(element => {
+        weekIndexWas = element.WeekId === weekWas ? weekIndexWas : weekIndexWas++;
+        weekWas = element.WeekId;
+        courseCardinality = element.index++;
+        switchKey = "#switch" + weekIndexWas + "0" + courseCardinality;
+        switched = $w(switchKey).checked;
+        // switched = Math.random() >= 0.5;
+        // switched = true;
+        //<Better Logic>
+        misMatch = studentCurrentGrade < minGrade ? true : misMatch;
+        misMatch = studentCurrentGrade > maxGrade ? true : misMatch;
+        misMatch = switched ? misMatch : false;
+        console.log({misMatch});
+        element.gradeMismatchCount += misMatch ? 1 : 0;
+        //</Better Logic>
+
+        //<Abandined Logic>
+        // mismatchThis = false;
+        // mismatchThis = studentCurrentGrade === element.gradeLevel ? false : true;
+        // mismatchThis = switched ? mismatchThis : false;
+        // mismatchCount += mismatchThis ? 1 : 0;
+        //</Abandined Logic>
+    });
+    superEnrollmentObject.blockMapArray.blockMapErrors.gradeLevelMismatchCount = mismatchCount;
+    console.log({mismatchCount});
+    superEnrollmentObject.enrollment.errorArray[2] = mismatchCount === 0 ? false : true;
+}
+
+// <Validate Enrollment>
+
+/**
  * <Utility Functions
  */
-function isJson(str) {
+export function isJson(str) {
     let parsed = "let";
     try {
         parsed = JSON.parse(str);

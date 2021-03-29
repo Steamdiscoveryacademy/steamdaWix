@@ -563,6 +563,7 @@ export function cleanUp(returnObjectArrayObject, runningTotalObject, objApplicat
         ,"#develObjectHolder"
         ,"#dobGradeLevelErrorText"
         ,"#warnTextBox"
+        ,"#develTemp"
 ]
 
     for ( let element of unsetElementsArray) {
@@ -865,22 +866,29 @@ export function displayErrors(enrollmentErrorArray = [false, false, false, false
              }
          ]
      };
-     let studentGrade = parseInt(enrollmentObject.family.student.currentGrade);
+    //  let studentGrade = parseInt(enrollmentObject.family.student.currentGrade);
      let index = 0;
      let weekOfBlockIndex = -7;
      let element = {};
+     let arraySwitchId = [];
+     let thisSwitchId = "";
      let zeroCheckedCount = 0;
      let multipleCheckedCount = 0;
      for (index = 1; index < blockMapArray.blockMapArray.length; index++) {
          element = blockMapArray.blockMapArray[index];
          weekOfBlockIndex = enrollmentObject.writeMapWeekArray[index];
          element.week = weekOfBlockIndex;
-         if (weekOfBlockIndex + 0 > 0) {
-             element.selectedCount = enrollmentObject.countWeekArray[weekOfBlockIndex];
-         } else {
-             element.selectedCount = 0;
-         }
          element.checkedCount = 0;
+         if (weekOfBlockIndex + 0 > 0) {
+            element.selectedCount = enrollmentObject.countWeekArray[weekOfBlockIndex];
+        } else {
+            element.selectedCount = 0;
+        }
+        arraySwitchId = element.switchIdArray;
+        for (let index = 0; index < element.selectedCount; index++) {
+            thisSwitchId = arraySwitchId[index];
+            element.checkedCount += $w(thisSwitchId).checked ? 1 : 0; 
+        }
          element.gradeMismatchCount = 0;
          element.zeroChecked = element.checkedCount === 0 ? 1 : 0;
          element.zeroChecked = element.selectedCount === 0 ? 0 : element.zeroChecked;
@@ -896,7 +904,7 @@ export function displayErrors(enrollmentErrorArray = [false, false, false, false
      enrollmentObject.enrollment.errorArray[0] = blockMapArray.blockMapErrors.zeroCheckedCount > 0 ? true : false;
      enrollmentObject.enrollment.errorArray[1] = blockMapArray.blockMapErrors.multipleCheckedCount > 0 ? true : false;
      enrollmentObject.enrollment.errorArray[2] = blockMapArray.blockMapErrors.multipleCheckedCount > 0 ? true : false;
-    //  return blockMapArray;
+    $w("#develTemp").value = JSON.stringify(blockMapArray, undefined, 4);
  
      //  return enrollmentObject + " Chester!";
  }

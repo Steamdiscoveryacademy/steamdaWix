@@ -129,6 +129,7 @@ export function FormStack4223065_click(event, $w) {
     let nameParent = objApplicationSummer.primary_parentguardian_name.first + ' ' + objApplicationSummer.primary_parentguardian_name.last;
     $w('#nameParent').value = nameParent;
     let emailParent = objApplicationSummer.primary_email_address;
+    emailParent = emailParent.trim();
     $w('#emailParent').value = emailParent;
     let phone = objApplicationSummer.primary_mobile_phone;
     let pattern = /[^0-9]/g;
@@ -190,6 +191,29 @@ export function instantiateEnrollment (returnObjectArrayObject) {
     returnObjectArrayObject.creationDateString = creationDate;
     returnObjectArrayObject.creationDateUnix = Date.parse(creationDate);
 
+    let emailParent = objApplicationSummer.primary_email_address;
+    emailParent = emailParent.trim();
+    let phone = objApplicationSummer.primary_mobile_phone;
+    // let pattern = /[^0-9]/g;
+    phone = phone.replace(/[^0-9]/g, '');
+    phone = "(" + phone.substr(0, 3) + ") "
+        + phone.substr(3, 3) + "-"
+        + phone.substr(-4);
+
+    let parentFirst = objApplicationSummer.primary_parentguardian_name.first;
+    parentFirst = parentFirst.trim();
+    let parentLast = objApplicationSummer.primary_parentguardian_name.last;
+    parentLast = parentLast.trim();
+    let studentFirst = objApplicationSummer.student_name.first;
+    studentFirst = studentFirst.trim();
+    let studentLast = objApplicationSummer.student_name.last;
+    studentLast = studentLast.trim();
+    let preferredName = objApplicationSummer.preferred_name;
+    preferredName = preferredName.trim();
+    preferredName = preferredName.length > 0 ? preferredName : studentFirst;
+    let studentParentCombo = preferredName + ' ' + studentLast + ' (' + parentFirst;
+    studentParentCombo += studentLast === parentLast ? '' : parentLast;
+    studentParentCombo += ')';
     returnObjectArrayObject.family = {};
     returnObjectArrayObject.family.messages = {"dox": ["only messages you want the Whole Family to see"]};
     returnObjectArrayObject.family.student = {};
@@ -197,18 +221,17 @@ export function instantiateEnrollment (returnObjectArrayObject) {
     returnObjectArrayObject.family.parent = {};
     returnObjectArrayObject.family.parent.messages = {"dox": ["messages you want Both Parents to see"]};
     returnObjectArrayObject.family.parent.primary = {};
-    returnObjectArrayObject.family.student.name.first = objApplicationSummer.student_name.first;
-    returnObjectArrayObject.family.student.name.last = objApplicationSummer.student_name.last;
-    let preferredName = objApplicationSummer.preferred_name;
-    preferredName = preferredName.length > 0 ? preferredName : objApplicationSummer.student_name.first;
+    returnObjectArrayObject.family.student.name.first = studentFirst;
+    returnObjectArrayObject.family.student.name.last = studentLast;
     returnObjectArrayObject.family.student.name.preferred = preferredName;
-    returnObjectArrayObject.family.student.name.lastFirst = objApplicationSummer.student_name.last + ', ' + preferredName;
-    returnObjectArrayObject.family.student.name.fullName = preferredName + ' ' + objApplicationSummer.student_name.last;
+    returnObjectArrayObject.family.student.name.studentParentCombo = studentParentCombo;
+    returnObjectArrayObject.family.student.name.lastFirst = studentLast + ', ' + preferredName;
+    returnObjectArrayObject.family.student.name.fullName = preferredName + ' ' + studentLast;
     returnObjectArrayObject.family.student.messages = {"dox": ["messages you want the Student only to see"]};
     returnObjectArrayObject.family.parent.primary.memberId = $w("#thisMemberId").value;
     returnObjectArrayObject.family.parent.primary.messages = {"dox": ["messages you want the Primary Parent/Web Account Holder only to see"]};
     $w("#memberIdParent").value = $w("#thisMemberId").value;
-    $w("#nameStudent").value = objApplicationSummer.student_name.first + ' ' + objApplicationSummer.student_name.last;
+    $w("#nameStudent").value = returnObjectArrayObject.family.student.name.fullName;
     $w("#namePreferredStudent").value = preferredName;
     let dobStudent = objApplicationSummer.date_of_birth;
     returnObjectArrayObject.family.student.dobString = dobStudent;
@@ -216,28 +239,31 @@ export function instantiateEnrollment (returnObjectArrayObject) {
     let currentGradeString = objApplicationSummer.grade_during_the_202021_school_year[0].label;
     returnObjectArrayObject.family.student.currentGrade = currentGrade;
     returnObjectArrayObject.family.student.currentGradeString = currentGradeString;
-    console.log('[' + currentGrade + '] ' + currentGradeString);
+    // console.log('[' + currentGrade + '] ' + currentGradeString);
     let gradeLevelStudent = gradeLeveFromGrade(currentGrade);
     returnObjectArrayObject.family.student.currentGradeLevel = gradeLevelStudent;
     let currentGradeCharacter = currentGrade === 0 ? 'K' : currentGrade.toString();
     $w("#gradeLevelStudent").value = gradeLevelStudent + '     [ current grade: ' + currentGradeCharacter + ' ]';
     $w("#dobStudent").value = dobStudent;
-    returnObjectArrayObject.family.parent.primary.last = objApplicationSummer.primary_parentguardian_name.last;
-    returnObjectArrayObject.family.parent.primary.first = objApplicationSummer.primary_parentguardian_name.first;
-    returnObjectArrayObject.family.parent.primary.fullName = objApplicationSummer.primary_parentguardian_name.first + ' ' + objApplicationSummer.primary_parentguardian_name.last;
-    returnObjectArrayObject.family.parent.primary.lastFirst = objApplicationSummer.primary_parentguardian_name.last + ', ' + objApplicationSummer.primary_parentguardian_name.first;
-    $w("#nameParentCC").value = $w("#nameParent").value;
+    returnObjectArrayObject.family.parent.primary.last = parentLast;
+    returnObjectArrayObject.family.parent.primary.first = parentFirst;
+    returnObjectArrayObject.family.parent.primary.fullName = parentFirst + ' ' + parentLast;
+    returnObjectArrayObject.family.parent.primary.lastFirst = parentLast + ', ' + parentFirst;
+    $w("#nameParentCC").value = returnObjectArrayObject.family.parent.primary.fullName;
+    $w("#phoneParentCC").value = phone;
     $w("#emailParentCC").value = $w("#emailParent").value;
-    $w("#phoneParentCC").value = "(" + $w("#phoneParent").value.substr(0, 3) + ") "
-        + $w("#phoneParent").value.substr(3, 3) + "-"
-        + $w("#phoneParent").value.substr(-4);
     let address = objApplicationSummer.mailing_address.address;
+    // address = address.trim();
     let address2 = objApplicationSummer.mailing_address.address2;
+    // address2 = address2.trim();
     let city = objApplicationSummer.mailing_address.city;
+    // city = city.trim();
     let state = objApplicationSummer.mailing_address.state;
-    let zip = objApplicationSummer.mailing_address.zip
+    // state = state.trim();
+    let zip = objApplicationSummer.mailing_address.zip;
+    // zip = zip.trim();
     let familyAddress = "";
-    if (!address2 || address2.trim().length === 0) {
+    if (!address2 || address2.length === 0) {
         familyAddress = `${address}\n ${city}, ${state}  ${zip}`;
     } else {
         familyAddress = `${address}\n ${address2}\n ${city}, ${state}  ${zip}`;
@@ -418,26 +444,29 @@ export function writeCoursesSwitches(returnObjectArrayObject) {
             case 0:
                 break;           
             case 1:
-                switchKey = '#switch' + i + '01';
+                switchKey = '#switch' + i.toString() + '01';
                 $w(switchKey).show();
                 $w(switchKey).checked = true;
-                console.log('show 1 and ON [switch' + i + '01]');            
+                console.log('show 1 and ON [switch' + i.toString() + '01]');            
                 break;           
             case 2:
-                switchKey = '#switch' + i + '01';
+                switchKey = '#switch' + i.toString() + '01';
                 $w(switchKey).show();
-                switchKey = '#switch' + i + '02';
+                switchKey = '#switch' + i.toString() + '02';
                 $w(switchKey).show();
-                console.log('show 1 and OFF [switch' + i + '01]');            
-                console.log('show 2 and OFF [switch' + i + '02]');            
+                console.log('show 1 and OFF [switch' + i.toString() + '01]');            
+                console.log('show 2 and OFF [switch' + i.toString() + '02]');            
                 break;           
             case 3:
-                switchKey = '#switch' + i + '01';
+                switchKey = '#switch' + i.toString() + '01';
                 $w(switchKey).show();
-                switchKey = '#switch' + i + '02';
+                switchKey = '#switch' + i.toString() + '02';
                 $w(switchKey).show();
-                switchKey = '#switch' + i + '03';
+                switchKey = '#switch' + i.toString() + '03';
                 $w(switchKey).show();
+                console.log('show 1 and OFF [switch' + i.toString() + '01]');            
+                console.log('show 2 and OFF [switch' + i.toString() + '02]');            
+                console.log('show 3 and OFF [switch' + i.toString() + '03]');            
                 break;           
                 
             default:
@@ -977,35 +1006,91 @@ export function displayErrors(enrollmentErrorArray = [false, false, false, false
 
 function validateCourseGradeLevelMatch(superEnrollmentObject){
     let studentCurrentGrade = superEnrollmentObject.family.student.currentGrade;
-    console.log({studentCurrentGrade})
-    let weekIndexWas = 0
-    let weekWas = 0
-    let courseCardinality = 0
+    console.log("%cGrade: " + studentCurrentGrade +  ' [Line ~1009]',
+        `color: #fff;
+        background-color: #EA4335;
+        font-weight: bold;
+        padding: 8px 16px;
+        border-radius: 8px;`
+        );
+    let switchWord = "#switch";
+    let zeroString = "0";
+    let weekIndexWas = 0;
+    let weekIndexIncrement = 0;
+    let weekWas = 0;
+    let courseCardinality = 0;
     let switchKey = "ZXZ";
     let mismatchThis = false;
     let mismatchCount = 0;
     let switched = false;
+    let gradeLevel = "Z";
+    let arrHOLDER = [];
     let minString = "Z";
     let minGrade = -7;
     let maxString = "Z";
     let maxGrade = -7;
     let misMatch = false;
-    superEnrollmentObject.courses_array.forEach(element => {
-        weekIndexWas = element.WeekId === weekWas ? weekIndexWas : weekIndexWas++;
-        weekWas = element.WeekId;
-        courseCardinality = element.index++;
-        switchKey = "#switch" + weekIndexWas + "0" + courseCardinality;
-        switched = $w(switchKey).checked;
-        //<Better Logic>
-        misMatch = studentCurrentGrade < minGrade ? true : misMatch;
-        misMatch = studentCurrentGrade > maxGrade ? true : misMatch;
-        misMatch = switched ? misMatch : false;
-        console.log({misMatch});
-        element.gradeMismatchCount += misMatch ? 1 : 0;
-        //</Better Logic>
-    });
+    let simpleIndex = 0;
+    for (let index = 0; index < superEnrollmentObject.courses_array.length; index++) {
+        const element = superEnrollmentObject.courses_array[index];
+        console.log("index: " + index);
+        console.log(element);
+        console.log("weekId: " + element.weekId);
+        console.log("weekIndexWas: " + weekIndexWas);
+        console.log("weekWas: " + weekWas);
+        weekIndexIncrement = element.weekId === weekWas ? 0 : 1;
+        console.log("weekIndexIncrement: " + weekIndexIncrement);
+        weekIndexWas += weekIndexIncrement;
+        weekWas = element.weekId;
+        courseCardinality = element.index + 1;
+        switchKey = switchWord.concat(weekIndexWas.toString(), zeroString, courseCardinality.toString());
+        switched = $w(switchKey).checked; 
+        console.log("weekIndexWas: " + weekIndexWas);
+        console.log("courseCardinality: " + courseCardinality);
+        console.log("switchKey: " + switchKey);
+        console.log("switched: " + switched);
+    //     console.log("misMatch: " + misMatch);
+    
+    }
+    // superEnrollmentObject.courses_array.forEach(element => {
+    //     weekIndexIncrement = element.WeekId === weekWas ? 0 : 1;
+    //     // weekIndexWas = element.WeekId === weekWas ? weekIndexWas : weekIndexWas++;
+    //     weekIndexWas += weekIndexIncrement;
+    //     weekWas = element.WeekId;
+    //     // courseCardinality = element.index++;
+    //     courseCardinality = element.index + 1;
+    //     // courseCardinality = element.index;
+    //     // courseCardinality++;
+    //     // switchKey = "#switch" + weekIndexWas.toString() + "0" + courseCardinality.toString();
+    //     switchKey = switchWord.concat(weekIndexWas.toString(), zeroString, courseCardinality.toString());
+    //     switched = $w(switchKey).checked; 
+    //     //<parse gradeLevel>
+    //     gradeLevel = element.gradeLevel;
+    //     arrHOLDER = gradeLevel.split('-');
+    //     // console.log(arrHOLDER);
+    //     minString = arrHOLDER[0];
+    //     maxString = arrHOLDER[1];
+    //     minGrade = parseInt(minString,10);
+    //     maxGrade = parseInt(maxString,10);
+    //     // console.log(minGrade);
+    //     // console.log(maxGrade);
+    //     //</parse gradeLevel>
+    //     //<Better Logic>
+    //     misMatch = false;
+    //     misMatch = studentCurrentGrade < minGrade ? true : misMatch;
+    //     misMatch = studentCurrentGrade > maxGrade ? true : misMatch;
+    //     // misMatch = switched ? misMatch : false;
+    //     console.log("simpleIndex: " + simpleIndex);
+    //     console.log("weekIndexWas: " + weekIndexWas);
+    //     console.log("courseCardinality: " + courseCardinality);
+    //     console.log("switchKey: " + switchKey);
+    //     console.log("misMatch: " + misMatch);
+    //     mismatchCount += misMatch ? 1 : 0;
+    //     //</Better Logic>
+    //     simpleIndex++;
+    // });
     superEnrollmentObject.blockMapArray.blockMapErrors.gradeLevelMismatchCount = mismatchCount;
-    console.log({mismatchCount});
+    console.log(mismatchCount);
     superEnrollmentObject.enrollment.errorArray[2] = mismatchCount === 0 ? false : true;
 }
 // </Validate Enrollment>

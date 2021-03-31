@@ -1013,6 +1013,7 @@ function validateCourseGradeLevelMatch(superEnrollmentObject){
         padding: 8px 16px;
         border-radius: 8px;`
         );
+    let mapIndex = 0;
     let switchWord = "#switch";
     let zeroString = "0";
     let weekIndexWas = 0;
@@ -1029,10 +1030,12 @@ function validateCourseGradeLevelMatch(superEnrollmentObject){
     let minGrade = -7;
     let maxString = "Z";
     let maxGrade = -7;
-    let misMatch = false;
+    let misMatch = 0;
     let simpleIndex = 0;
     for (let index = 0; index < superEnrollmentObject.courses_array.length; index++) {
+        mapIndex = index + 1;
         const element = superEnrollmentObject.courses_array[index];
+        const mapElement = superEnrollmentObject.blockMapArray.blockMapArray[mapIndex];
         console.log("index: " + index);
         console.log(element);
         console.log("weekId: " + element.weekId);
@@ -1043,13 +1046,31 @@ function validateCourseGradeLevelMatch(superEnrollmentObject){
         weekIndexWas += weekIndexIncrement;
         weekWas = element.weekId;
         courseCardinality = element.index + 1;
+        arrHOLDER = element.gradeLevel.split('-');
+        // console.log(arrHOLDER);
+        minString = arrHOLDER[0];
+        console.log("minString raw: " + minString);
+        minString =minString === 'K' ? '0' : minString;
+        maxString = arrHOLDER[1];
+        minGrade = parseInt(minString,10);
+        maxGrade = parseInt(maxString,10);
         switchKey = switchWord.concat(weekIndexWas.toString(), zeroString, courseCardinality.toString());
         switched = $w(switchKey).checked; 
         console.log("weekIndexWas: " + weekIndexWas);
         console.log("courseCardinality: " + courseCardinality);
         console.log("switchKey: " + switchKey);
+        console.log("minString: " + minString);
+        console.log("minGrade: " + minGrade);
+        console.log("maxString: " + maxString);
+        console.log("maxGrade: " + maxGrade);
         console.log("switched: " + switched);
-    //     console.log("misMatch: " + misMatch);
+        misMatch = 0;
+        misMatch = studentCurrentGrade < minGrade ? 1 : 0;
+        misMatch = studentCurrentGrade > maxGrade ? 1 : misMatch;
+        misMatch = switched ? misMatch : 0;
+        mapElement.gradeMismatchCount = misMatch;
+        mismatchCount += misMatch;
+        console.log("misMatch: " + misMatch);
     
     }
     // superEnrollmentObject.courses_array.forEach(element => {

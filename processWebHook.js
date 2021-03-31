@@ -191,6 +191,8 @@ export function instantiateEnrollment (returnObjectArrayObject) {
     returnObjectArrayObject.creationDateString = creationDate;
     returnObjectArrayObject.creationDateUnix = Date.parse(creationDate);
 
+    let studentStatement = objApplicationSummer.why_are_you_interested_in_attending_steam_discovery_academy_this_summer;
+    $w("#studentStatement").value = studentStatement;
     let emailParent = objApplicationSummer.primary_email_address;
     emailParent = emailParent.trim();
     let phone = objApplicationSummer.primary_mobile_phone;
@@ -426,7 +428,7 @@ export function writeCoursesSwitches(returnObjectArrayObject) {
                 + "<legend style=" + legendStyle + ">" + weekString + "</legend>";
             codeBlockArray[weekIdThis] += "<ul style=" + ulStyle + ">";
         }
-        codeBlockArray[weekIdThis] += "<li style=" + liStyle + ">" + courseArray[i].courseName + "</li>";
+        codeBlockArray[weekIdThis] += "<li style=" + liStyle + ">" + courseArray[i].gradeLevel + ": " + courseArray[i].courseName + "</li>";
     } // END: function writeCoursesSwitches(returnObjectArrayObject)
     let mapToBlock = 0;
     let wixTextKey = '';

@@ -3,6 +3,7 @@ import wixLocation from 'wix-location';
 
 const dashboardBaseUrl = 'https://manage.wix.com/dashboard/a8472b36-bc63-4063-bd42-95519419cb8a/admin-pages/';
 const repeaterLimit = 10;
+var textHOLDER = '';
 
 $w.onReady(function () {
     $w('#filterDescr').text = "Descriptison for All Un-Resolved Webhook's Received";
@@ -193,14 +194,8 @@ export function instantiateEnrollment (returnObjectArrayObject) {
 
     let studentStatement = objApplicationSummer.why_are_you_interested_in_attending_steam_discovery_academy_this_summer;
     $w("#studentStatement").value = studentStatement;
-    let emailParent = objApplicationSummer.primary_email_address;
-    emailParent = emailParent.trim();
-    let phone = objApplicationSummer.primary_mobile_phone;
-    // let pattern = /[^0-9]/g;
-    phone = phone.replace(/[^0-9]/g, '');
-    phone = "(" + phone.substr(0, 3) + ") "
-        + phone.substr(3, 3) + "-"
-        + phone.substr(-4);
+    let emailParent = objApplicationSummer.primary_email_address.trim();
+    // emailParent = emailParent.trim();
 
     let parentFirst = objApplicationSummer.primary_parentguardian_name.first;
     parentFirst = parentFirst.trim();
@@ -216,7 +211,32 @@ export function instantiateEnrollment (returnObjectArrayObject) {
     let studentParentCombo = preferredName + ' ' + studentLast + ' (' + parentFirst;
     studentParentCombo += studentLast === parentLast ? '' : parentLast;
     studentParentCombo += ')';
+    let parentFirstSecondary = objApplicationSummer.second_parentguardian_phone.first.trim();
+    let parentLastSecondary = objApplicationSummer.second_parentguardian_phone.last.trim();
+
     returnObjectArrayObject.family = {};
+    //<phones>
+    // const PhoneObject = function(phone, role, who, kind = "cell", usage = "Personal"){
+    returnObjectArrayObject.family.phones = [];
+    let phoneThis = new PhoneObject(objApplicationSummer.primary_mobile_phone, "Primary Parent", parentFirst);
+    returnObjectArrayObject.family.phones.push(phoneThis);
+    if(objApplicationSummer.secondary_phone.trim().length > 0) {
+        phoneThis = new PhoneObject(objApplicationSummer.secondary_phone, "Home", "family", "landline", "Family");
+        returnObjectArrayObject.family.phones.push(phoneThis);
+    }
+    if(objApplicationSummer.secondary_parentguardian_mobile_phone.trim().length > 0) {
+        textHOLDER = parentFirstSecondary.length > 0 ? parentFirstSecondary : "Other";
+        phoneThis = new PhoneObject(objApplicationSummer.secondary_parentguardian_mobile_phone, "Secondary Parent", textHOLDER);
+        returnObjectArrayObject.family.phones.push(phoneThis);
+    }
+    //</phones>
+    //<emails>
+    // emailThis = new EmailObject(emailParentPrimary, "Primary Parent", parentFirst );
+    // const EmailObject = function(email, role, who, kind = "home", usage = "Personal"){
+    returnObjectArrayObject.family.emails = [];
+    let emailThis = new EmailObject(emailParent, "Primary Parent", parentFirst );
+    returnObjectArrayObject.family.emails.push(emailThis);
+    //</emails>
     returnObjectArrayObject.family.messages = {"dox": ["only messages you want the Whole Family to see"]};
     returnObjectArrayObject.family.student = {};
     returnObjectArrayObject.family.student.name = {};
@@ -232,6 +252,14 @@ export function instantiateEnrollment (returnObjectArrayObject) {
     returnObjectArrayObject.family.student.messages = {"dox": ["messages you want the Student only to see"]};
     returnObjectArrayObject.family.parent.primary.memberId = $w("#thisMemberId").value;
     returnObjectArrayObject.family.parent.primary.messages = {"dox": ["messages you want the Primary Parent/Web Account Holder only to see"]};
+    console.log("objApplicationSummer.second_parentguardian_phone.first: " + objApplicationSummer.second_parentguardian_phone.first);
+    if (objApplicationSummer.second_parentguardian_phone.first.trim().length + objApplicationSummer.second_parentguardian_phone.last.trim().length > 0 ) {
+        returnObjectArrayObject.family.parent.secondary = {};
+        textHOLDER = objApplicationSummer.second_parentguardian_phone.first.trim().length > 0 ? objApplicationSummer.second_parentguardian_phone.first.trim() : '[unknown]';
+        returnObjectArrayObject.family.parent.secondary.first = textHOLDER;
+        textHOLDER = objApplicationSummer.second_parentguardian_phone.last.trim().length > 0 ? objApplicationSummer.second_parentguardian_phone.last.trim() : '[unknown]';
+        returnObjectArrayObject.family.parent.secondary.last = textHOLDER;
+    }
     $w("#memberIdParent").value = $w("#thisMemberId").value;
     $w("#nameStudent").value = returnObjectArrayObject.family.student.name.fullName;
     $w("#namePreferredStudent").value = preferredName;
@@ -252,7 +280,7 @@ export function instantiateEnrollment (returnObjectArrayObject) {
     returnObjectArrayObject.family.parent.primary.fullName = parentFirst + ' ' + parentLast;
     returnObjectArrayObject.family.parent.primary.lastFirst = parentLast + ', ' + parentFirst;
     $w("#nameParentCC").value = returnObjectArrayObject.family.parent.primary.fullName;
-    $w("#phoneParentCC").value = phone;
+    $w("#phoneParentCC").value = returnObjectArrayObject.family.phones[0].phone;
     $w("#emailParentCC").value = $w("#emailParent").value;
     let address = objApplicationSummer.mailing_address.address;
     // address = address.trim();
@@ -1038,11 +1066,11 @@ function validateCourseGradeLevelMatch(superEnrollmentObject){
         mapIndex = index + 1;
         const element = superEnrollmentObject.courses_array[index];
         const mapElement = superEnrollmentObject.blockMapArray.blockMapArray[mapIndex];
-        // console.log("index: " + index);
-        // console.log(element);
-        // console.log("weekId: " + element.weekId);
-        // console.log("weekIndexWas: " + weekIndexWas);
-        // console.log("weekWas: " + weekWas);
+        console.log("index: " + index);
+        console.log(element);
+        console.log("weekId: " + element.weekId);
+        console.log("weekIndexWas: " + weekIndexWas);
+        console.log("weekWas: " + weekWas);
         weekIndexIncrement = element.weekId === weekWas ? 0 : 1;
         console.log("weekIndexIncrement: " + weekIndexIncrement);
         weekIndexWas += weekIndexIncrement;
@@ -1051,30 +1079,67 @@ function validateCourseGradeLevelMatch(superEnrollmentObject){
         arrHOLDER = element.gradeLevel.split('-');
         // console.log(arrHOLDER);
         minString = arrHOLDER[0];
-        // console.log("minString raw: " + minString);
+        console.log("minString raw: " + minString);
         minString =minString === 'K' ? '0' : minString;
         maxString = arrHOLDER[1];
         minGrade = parseInt(minString,10);
         maxGrade = parseInt(maxString,10);
         switchKey = switchWord.concat(weekIndexWas.toString(), zeroString, courseCardinality.toString());
         switched = $w(switchKey).checked; 
-        // console.log("weekIndexWas: " + weekIndexWas);
-        // console.log("courseCardinality: " + courseCardinality);
-        // console.log("switchKey: " + switchKey);
-        // console.log("minString: " + minString);
-        // console.log("minGrade: " + minGrade);
-        // console.log("maxString: " + maxString);
-        // console.log("maxGrade: " + maxGrade);
-        // console.log("switched: " + switched);
+        console.log("weekIndexWas: " + weekIndexWas);
+        console.log("courseCardinality: " + courseCardinality);
+        console.log("switchKey: " + switchKey);
+        console.log("minString: " + minString);
+        console.log("minGrade: " + minGrade);
+        console.log("maxString: " + maxString);
+        console.log("maxGrade: " + maxGrade);
+        console.log("switched: " + switched);
         misMatch = 0;
         misMatch = studentCurrentGrade < minGrade ? 1 : 0;
         misMatch = studentCurrentGrade > maxGrade ? 1 : misMatch;
         misMatch = switched ? misMatch : 0;
         mapElement.gradeMismatchCount = misMatch;
         mismatchCount += misMatch;
-        // console.log("misMatch: " + misMatch);
+        console.log("misMatch: " + misMatch);
+    
     }
-
+    // superEnrollmentObject.courses_array.forEach(element => {
+    //     weekIndexIncrement = element.WeekId === weekWas ? 0 : 1;
+    //     // weekIndexWas = element.WeekId === weekWas ? weekIndexWas : weekIndexWas++;
+    //     weekIndexWas += weekIndexIncrement;
+    //     weekWas = element.WeekId;
+    //     // courseCardinality = element.index++;
+    //     courseCardinality = element.index + 1;
+    //     // courseCardinality = element.index;
+    //     // courseCardinality++;
+    //     // switchKey = "#switch" + weekIndexWas.toString() + "0" + courseCardinality.toString();
+    //     switchKey = switchWord.concat(weekIndexWas.toString(), zeroString, courseCardinality.toString());
+    //     switched = $w(switchKey).checked; 
+    //     //<parse gradeLevel>
+    //     gradeLevel = element.gradeLevel;
+    //     arrHOLDER = gradeLevel.split('-');
+    //     // console.log(arrHOLDER);
+    //     minString = arrHOLDER[0];
+    //     maxString = arrHOLDER[1];
+    //     minGrade = parseInt(minString,10);
+    //     maxGrade = parseInt(maxString,10);
+    //     // console.log(minGrade);
+    //     // console.log(maxGrade);
+    //     //</parse gradeLevel>
+    //     //<Better Logic>
+    //     misMatch = false;
+    //     misMatch = studentCurrentGrade < minGrade ? true : misMatch;
+    //     misMatch = studentCurrentGrade > maxGrade ? true : misMatch;
+    //     // misMatch = switched ? misMatch : false;
+    //     console.log("simpleIndex: " + simpleIndex);
+    //     console.log("weekIndexWas: " + weekIndexWas);
+    //     console.log("courseCardinality: " + courseCardinality);
+    //     console.log("switchKey: " + switchKey);
+    //     console.log("misMatch: " + misMatch);
+    //     mismatchCount += misMatch ? 1 : 0;
+    //     //</Better Logic>
+    //     simpleIndex++;
+    // });
     superEnrollmentObject.blockMapArray.blockMapErrors.gradeLevelMismatchCount = mismatchCount;
     console.log(mismatchCount);
     superEnrollmentObject.enrollment.errorArray[2] = mismatchCount === 0 ? false : true;
@@ -1082,7 +1147,8 @@ function validateCourseGradeLevelMatch(superEnrollmentObject){
 // </Validate Enrollment>
 
 /**
- * <Utility Functions>
+ * <Utility Functions & Constructors>
+ * ? why can't these go in masterPage.js
  */
 export function isJson(str) {
     let parsed = "let";
@@ -1093,4 +1159,24 @@ export function isJson(str) {
     }
     return parsed;
 }
-//</Utility Functions>
+// emailThis = new EmailObject(emailParentPrimary, "Primary Parent", parentFirst );
+const EmailObject = function(email, role, who, kind = "home", usage = "Personal"){
+    this.email = email.trim();
+    this.role = role.trim();
+    this.who = who.trim();
+    this.kind = kind;
+    this.usage = usage;
+};
+// phoneThis = new PhoneObject(phoneParentPrimary, "Primary Parent", parentFirst);
+const PhoneObject = function(phone, role, who, kind = "cell", usage = "Personal"){
+    phone = phone.replace(/[^0-9]/g,'');
+    this.phone = "(" + phone.substr(0, 3) + ") "
+    + phone.substr(3, 3) + "-"
+    + phone.substr(-4);
+    this.role = role.trim();
+    this.who = who.trim();
+    this.kind = kind;
+    this.usage = usage;
+};
+
+//</Utility Functions & Constructors>

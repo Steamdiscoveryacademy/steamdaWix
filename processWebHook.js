@@ -221,7 +221,8 @@ export function instantiateEnrollment (returnObjectArrayObject) {
     returnObjectArrayObject.family.phones = [];
     let phoneThis = new PhoneObject(objApplicationSummer.primary_mobile_phone, "Primary Parent", parentFirst);
     returnObjectArrayObject.family.phones.push(phoneThis);
-    if(objApplicationSummer.secondary_phone.trim().length > 0) {
+    console.log("renderableString(objApplicationSummer.secondary_phone): " + renderableString(objApplicationSummer.secondary_phone))
+    if(renderableString(objApplicationSummer.secondary_phone) > 0) {
         phoneThis = new PhoneObject(objApplicationSummer.secondary_phone, "Home", "family", "landline", "Family");
         returnObjectArrayObject.family.phones.push(phoneThis);
     }
@@ -1247,5 +1248,28 @@ const AddressObject = function(address, address2, city, state, zip){
     this.formatted += this.country === 'US' ? 'USA' : this.country;
     //</formatted>
 };
+export function renderableString(string) {
+    let renderableStringLength = -777777;
+    let thisType = typeof string;
+    switch (thisType) {
+        case 'number':
+            renderableStringLength = -7;
+            break;
+        case 'object':
+            renderableStringLength = -99999;
+            break;
+
+        default:
+            if(string === null){
+                renderableStringLength =  -777;
+            } else if (string.length === 0){
+                renderableStringLength =  -77;
+            } else {
+                renderableStringLength =  string.length;
+            }
+            break;
+    }
+    return renderableStringLength;
+}
 
 //</Utility Functions & Constructors>

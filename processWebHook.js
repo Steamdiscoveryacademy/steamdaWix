@@ -4,6 +4,7 @@ import wixLocation from 'wix-location';
 const dashboardBaseUrl = 'https://manage.wix.com/dashboard/a8472b36-bc63-4063-bd42-95519419cb8a/admin-pages/';
 const repeaterLimit = 10;
 var textHOLDER = '';
+var objectHOLDER = {};
 
 $w.onReady(function () {
     $w('#filterDescr').text = "Descriptison for All Un-Resolved Webhook's Received";
@@ -252,14 +253,24 @@ export function instantiateEnrollment (returnObjectArrayObject) {
     returnObjectArrayObject.family.student.messages = {"dox": ["messages you want the Student only to see"]};
     returnObjectArrayObject.family.parent.primary.memberId = $w("#thisMemberId").value;
     returnObjectArrayObject.family.parent.primary.messages = {"dox": ["messages you want the Primary Parent/Web Account Holder only to see"]};
-    console.log("objApplicationSummer.second_parentguardian_phone.first: " + objApplicationSummer.second_parentguardian_phone.first);
-    if (objApplicationSummer.second_parentguardian_phone.first.trim().length + objApplicationSummer.second_parentguardian_phone.last.trim().length > 0 ) {
-        returnObjectArrayObject.family.parent.secondary = {};
-        textHOLDER = objApplicationSummer.second_parentguardian_phone.first.trim().length > 0 ? objApplicationSummer.second_parentguardian_phone.first.trim() : '[unknown]';
-        returnObjectArrayObject.family.parent.secondary.first = textHOLDER;
-        textHOLDER = objApplicationSummer.second_parentguardian_phone.last.trim().length > 0 ? objApplicationSummer.second_parentguardian_phone.last.trim() : '[unknown]';
-        returnObjectArrayObject.family.parent.secondary.last = textHOLDER;
-    }
+    //<Secondary Parent [first, last]>
+    // console.log("objApplicationSummer.second_parentguardian_phone.first: " + objApplicationSummer.second_parentguardian_phone.first);
+    // textHOLDER = objApplicationSummer.second_parentguardian_phone.first?objApplicationSummer.second_parentguardian_phone.first : '';
+    // textHOLDER = textHOLDER.trim();
+    // textHOLDER += objApplicationSummer.second_parentguardian_phone.first?objApplicationSummer.second_parentguardian_phone.first:'';
+    // textHOLDER = textHOLDER.trim();
+    // if (textHOLDER.length > 0 ) {
+    //     returnObjectArrayObject.family.parent.secondary = {};
+    //     textHOLDER = objApplicationSummer.second_parentguardian_phone.first ? objApplicationSummer.second_parentguardian_phone.first : '';
+    //     textHOLDER = textHOLDER.trim();
+    //     textHOLDER = textHOLDER.length > 0 ? textHOLDER.trim() : '[unknown]';
+    //     returnObjectArrayObject.family.parent.secondary.first = textHOLDER;
+    //     textHOLDER = objApplicationSummer.second_parentguardian_phone.last ? objApplicationSummer.second_parentguardian_phone.last : '';
+    //     textHOLDER = textHOLDER.trim();
+    //     textHOLDER = textHOLDER.length > 0 ? textHOLDER.trim() : '[unknown]';
+    //     returnObjectArrayObject.family.parent.secondary.last = textHOLDER;
+    // }
+    //</Secondary Parent [first, last]>
     $w("#memberIdParent").value = $w("#thisMemberId").value;
     $w("#nameStudent").value = returnObjectArrayObject.family.student.name.fullName;
     $w("#namePreferredStudent").value = preferredName;
@@ -282,25 +293,46 @@ export function instantiateEnrollment (returnObjectArrayObject) {
     $w("#nameParentCC").value = returnObjectArrayObject.family.parent.primary.fullName;
     $w("#phoneParentCC").value = returnObjectArrayObject.family.phones[0].phone;
     $w("#emailParentCC").value = $w("#emailParent").value;
-    let address = objApplicationSummer.mailing_address.address;
-    // address = address.trim();
+
+    returnObjectArrayObject.family.addresses = [];
+    let addressThis = {};
+    addressThis.kind = "mailing";
+    // console.log("addressThis: " + JSON.stringify(addressThis))
+
+    let address = objApplicationSummer.mailing_address.address.trim();
+    console.log("address: " + address);
+    // let address2 = '';
     let address2 = objApplicationSummer.mailing_address.address2;
-    // address2 = address2.trim();
-    let city = objApplicationSummer.mailing_address.city;
-    // city = city.trim();
+    address2 = address2 ? address2.trim() : '';
+    let city = objApplicationSummer.mailing_address.city.trim();
     let state = objApplicationSummer.mailing_address.state;
-    // state = state.trim();
-    let zip = objApplicationSummer.mailing_address.zip;
-    // zip = zip.trim();
-    let familyAddress = "";
-    if (!address2 || address2.length === 0) {
-        familyAddress = `${address}\n ${city}, ${state}  ${zip}`;
-    } else {
-        familyAddress = `${address}\n ${address2}\n ${city}, ${state}  ${zip}`;
-    }
-    $w("#parentAddressBlock").value = familyAddress;
-    returnObjectArrayObject.family.addresses = {};
-    returnObjectArrayObject.family.addresses.mailing = objApplicationSummer.mailing_address;
+    // //  \_state is Drop-Down so no .trim()
+    let zip = objApplicationSummer.mailing_address.zip.trim();
+
+    objectHOLDER = new AddressObject(address, address2, city, state, zip);
+    // console.log("addressThis.address: " + JSON.stringify(objectHOLDER));
+    addressThis.address = objectHOLDER;
+    returnObjectArrayObject.family.addresses.push(addressThis);
+
+    // let address = objApplicationSummer.mailing_address.address;
+    // // address = address.trim();
+    // let address2 = objApplicationSummer.mailing_address.address2;
+    // // address2 = address2.trim();
+    // let city = objApplicationSummer.mailing_address.city;
+    // // city = city.trim();
+    // let state = objApplicationSummer.mailing_address.state;
+    // // state = state.trim();
+    // let zip = objApplicationSummer.mailing_address.zip;
+    // // zip = zip.trim();
+    // let familyAddress = "";
+    // if (!address2 || address2.length === 0) {
+    //     familyAddress = `${address}\n ${city}, ${state}  ${zip}`;
+    // } else {
+    //     familyAddress = `${address}\n ${address2}\n ${city}, ${state}  ${zip}`;
+    // }
+    // $w("#parentAddressBlock").value = familyAddress;
+    // returnObjectArrayObject.family.addresses = {};
+    // returnObjectArrayObject.family.addresses.mailing = objApplicationSummer.mailing_address;
 }
 
 export function returnArrayObjectWeek(week, weekNumber, runningTotalObject){
@@ -1177,6 +1209,43 @@ const PhoneObject = function(phone, role, who, kind = "cell", usage = "Personal"
     this.who = who.trim();
     this.kind = kind;
     this.usage = usage;
+};
+
+// addressThis = new AddressObject(mileyAddress, mileyAddress2, mileyCity, mileyState, mileyZip );
+const AddressObject = function(address, address2, city, state, zip){
+    this.streetAddress = {};
+    this.city = address.replace(" ", "|");
+    console.log(this.city)
+    this.streetAddress.number = this.city.split('|')[0];
+    console.log(this.streetAddress.number)
+    this.streetAddress.name = this.city.split('|')[1];
+    console.log(this.streetAddress.name)
+    if (address2){
+        this.streetAddress2 = address2.trim();
+    }
+    this.city = city.trim() ?? '';
+    console.log(this.city)
+    this.state = state.trim() ?? '';
+    this.postalCode = zip.trim() ?? '';
+    this.country = 'US';
+    this.subdivision = this.state;
+    this.location = {};
+    this.location.latitude = null;
+    this.location.longitue = null;
+    //<formatted>
+    this.formatted = this.streetAddress.number;
+    this.formatted += ' ';
+    this.formatted += this.streetAddress.name;
+    this.formatted += ', ';
+    this.formatted += this.streetAddress2 && this.streetAddress2.length > 0 ? this.streetAddress2 + ', ': '';
+    this.formatted += this.city;
+    this.formatted += ', ';
+    this.formatted += this.subdivision;
+    this.formatted += ' ';
+    this.formatted += this.postalCode;
+    this.formatted += ', ';
+    this.formatted += this.country === 'US' ? 'USA' : this.country;
+    //</formatted>
 };
 
 //</Utility Functions & Constructors>

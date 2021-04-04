@@ -26,7 +26,8 @@ $w.onReady(function () {
         );
 
 });
-
+//0402errorNOT: HOLDER is a vallid string
+//0402errorMAYBE: 
 export function rptrTitle_click(event, $w) {
     let $item = $w.at(event.context);
     $item("#rptrButton").show();
@@ -180,7 +181,7 @@ export function btnConfirmClasses_click(event) {
     let writeMapWeekArray = [-999,0,0,0,0,0,0,0,0,0]
     returnObjectArrayObject.writeMapWeekArray = writeMapWeekArray;
     writeCoursesSwitches(returnObjectArrayObject);
-    console.log("returnObjectArrayObject: ");
+    console.log("[Line: ~184] returnObjectArrayObject: ");
     console.log(returnObjectArrayObject);
     $w("#superObjectHolder").value = JSON.stringify(returnObjectArrayObject, undefined, 4);
     console.log(runningTotalObject);
@@ -189,9 +190,31 @@ export function btnConfirmClasses_click(event) {
 
 export function instantiateEnrollment (returnObjectArrayObject) {
     var objApplicationSummer = JSON.parse($w('#thisPayload').value);
-    let creationDate = $w("#thisCurrentStatusStamp").value;
-    returnObjectArrayObject.creationDateString = creationDate;
-    returnObjectArrayObject.creationDateUnix = Date.parse(creationDate);
+    returnObjectArrayObject.formStack = {};
+    returnObjectArrayObject.formStack.uniqueId = objApplicationSummer.UniqueID;
+    returnObjectArrayObject.formStack.formId = objApplicationSummer.FormID;
+    returnObjectArrayObject.formStack.wixWebhookId = $w("#thisKey").value;
+
+    returnObjectArrayObject.appllication = {};
+    returnObjectArrayObject.appllication.studentStatement = objApplicationSummer.why_are_you_interested_in_attending_steam_discovery_academy_this_summer;
+
+    let creationDateForm = $w("#thisCurrentStatusStamp").value;
+    returnObjectArrayObject.stamps = [];
+    let stampCreation = {};
+    stampCreation.kind = "creation";
+    let creationDate = new Date(creationDateForm);
+    stampCreation.string = creationDate.toString();
+    stampCreation.iso = creationDate.toISOString().replace(/[^0-9]/g,'');
+    stampCreation.unix = parseInt((creationDate.getTime() / 1000).toFixed(0));
+    returnObjectArrayObject.stamps.push(stampCreation);
+    let stampProcess= {};
+    let processDate = new Date();
+    stampProcess.kind = "process";
+    stampProcess.string = processDate.toString();
+    stampProcess.iso = processDate.toISOString().replace(/[^0-9]/g,'');
+    stampProcess.unix = parseInt((processDate.getTime() / 1000).toFixed(0));
+    returnObjectArrayObject.stamps.push(stampProcess);
+    // returnObjectArrayObject.creationDateUnix = Date.parse(creationDate);
 
     let studentStatement = objApplicationSummer.why_are_you_interested_in_attending_steam_discovery_academy_this_summer;
     $w("#studentStatement").value = studentStatement;
@@ -207,13 +230,27 @@ export function instantiateEnrollment (returnObjectArrayObject) {
     let studentLast = objApplicationSummer.student_name.last;
     studentLast = studentLast.trim();
     let preferredName = objApplicationSummer.preferred_name;
-    preferredName = preferredName.trim();
-    preferredName = preferredName.length > 0 ? preferredName : studentFirst;
+    if(renderableString(preferredName) > 0){
+        preferredName = preferredName.trim();
+    } else {
+        preferredName = studentFirst;
+    }
     let studentParentCombo = preferredName + ' ' + studentLast + ' (' + parentFirst;
     studentParentCombo += studentLast === parentLast ? '' : parentLast;
     studentParentCombo += ')';
-    let parentFirstSecondary = objApplicationSummer.second_parentguardian_phone.first.trim();
-    let parentLastSecondary = objApplicationSummer.second_parentguardian_phone.last.trim();
+    let parentFirstSecondary = objApplicationSummer.second_parentguardian_phone.first;
+    let parentLastSecondary = objApplicationSummer.second_parentguardian_phone.last;
+    let parentSecondaryRenderable = false;
+    if(renderableString(parentFirstSecondary) > 0) {
+        parentSecondaryRenderable = true;
+        parentFirstSecondary = parentFirstSecondary.trim();
+        // parentLastSecondary = parentLastSecondary.trim();
+    }
+    if(renderableString(parentLastSecondary) > 0) {
+        parentSecondaryRenderable = parentSecondaryRenderable ? true : false;
+        // parentFirstSecondary = parentFirstSecondary.trim();
+        parentLastSecondary = parentLastSecondary.trim();
+    }
 
     returnObjectArrayObject.family = {};
     //<phones>
@@ -221,13 +258,13 @@ export function instantiateEnrollment (returnObjectArrayObject) {
     returnObjectArrayObject.family.phones = [];
     let phoneThis = new PhoneObject(objApplicationSummer.primary_mobile_phone, "Primary Parent", parentFirst);
     returnObjectArrayObject.family.phones.push(phoneThis);
-    console.log("renderableString(objApplicationSummer.secondary_phone): " + renderableString(objApplicationSummer.secondary_phone))
+    // console.log("renderableString(objApplicationSummer.secondary_phone): " + renderableString(objApplicationSummer.secondary_phone))
     if(renderableString(objApplicationSummer.secondary_phone) > 0) {
         phoneThis = new PhoneObject(objApplicationSummer.secondary_phone, "Home", "family", "landline", "Family");
         returnObjectArrayObject.family.phones.push(phoneThis);
     }
-    if(objApplicationSummer.secondary_parentguardian_mobile_phone.trim().length > 0) {
-        textHOLDER = parentFirstSecondary.length > 0 ? parentFirstSecondary : "Other";
+    if(renderableString(objApplicationSummer.secondary_parentguardian_mobile_phone) > 0) {
+        textHOLDER = !parentSecondaryRenderable ? "Other" :parentFirstSecondary;
         phoneThis = new PhoneObject(objApplicationSummer.secondary_parentguardian_mobile_phone, "Secondary Parent", textHOLDER);
         returnObjectArrayObject.family.phones.push(phoneThis);
     }
@@ -251,32 +288,24 @@ export function instantiateEnrollment (returnObjectArrayObject) {
     returnObjectArrayObject.family.student.name.studentParentCombo = studentParentCombo;
     returnObjectArrayObject.family.student.name.lastFirst = studentLast + ', ' + preferredName;
     returnObjectArrayObject.family.student.name.fullName = preferredName + ' ' + studentLast;
+    returnObjectArrayObject.family.student.declaredGender = objApplicationSummer.gender;
+    returnObjectArrayObject.family.student.studentStatement = studentStatement;
     returnObjectArrayObject.family.student.messages = {"dox": ["messages you want the Student only to see"]};
     returnObjectArrayObject.family.parent.primary.memberId = $w("#thisMemberId").value;
     returnObjectArrayObject.family.parent.primary.messages = {"dox": ["messages you want the Primary Parent/Web Account Holder only to see"]};
     //<Secondary Parent [first, last]>
-    // console.log("objApplicationSummer.second_parentguardian_phone.first: " + objApplicationSummer.second_parentguardian_phone.first);
-    // textHOLDER = objApplicationSummer.second_parentguardian_phone.first?objApplicationSummer.second_parentguardian_phone.first : '';
-    // textHOLDER = textHOLDER.trim();
-    // textHOLDER += objApplicationSummer.second_parentguardian_phone.first?objApplicationSummer.second_parentguardian_phone.first:'';
-    // textHOLDER = textHOLDER.trim();
-    // if (textHOLDER.length > 0 ) {
-    //     returnObjectArrayObject.family.parent.secondary = {};
-    //     textHOLDER = objApplicationSummer.second_parentguardian_phone.first ? objApplicationSummer.second_parentguardian_phone.first : '';
-    //     textHOLDER = textHOLDER.trim();
-    //     textHOLDER = textHOLDER.length > 0 ? textHOLDER.trim() : '[unknown]';
-    //     returnObjectArrayObject.family.parent.secondary.first = textHOLDER;
-    //     textHOLDER = objApplicationSummer.second_parentguardian_phone.last ? objApplicationSummer.second_parentguardian_phone.last : '';
-    //     textHOLDER = textHOLDER.trim();
-    //     textHOLDER = textHOLDER.length > 0 ? textHOLDER.trim() : '[unknown]';
-    //     returnObjectArrayObject.family.parent.secondary.last = textHOLDER;
-    // }
+    if (parentSecondaryRenderable){
+        returnObjectArrayObject.family.parent.secondary = {};
+        returnObjectArrayObject.family.parent.secondary.first = parentFirstSecondary;
+        returnObjectArrayObject.family.parent.secondary.last = parentLastSecondary;
+    }
     //</Secondary Parent [first, last]>
     $w("#memberIdParent").value = $w("#thisMemberId").value;
     $w("#nameStudent").value = returnObjectArrayObject.family.student.name.fullName;
     $w("#namePreferredStudent").value = preferredName;
     let dobStudent = objApplicationSummer.date_of_birth;
     returnObjectArrayObject.family.student.dobString = dobStudent;
+    returnObjectArrayObject.family.student.currentSchool = objApplicationSummer.current_school;
     let currentGrade = parseInt(objApplicationSummer.grade_during_the_202021_school_year[0].value);
     let currentGradeString = objApplicationSummer.grade_during_the_202021_school_year[0].label;
     returnObjectArrayObject.family.student.currentGrade = currentGrade;
@@ -314,26 +343,6 @@ export function instantiateEnrollment (returnObjectArrayObject) {
     // console.log("addressThis.address: " + JSON.stringify(objectHOLDER));
     addressThis.address = objectHOLDER;
     returnObjectArrayObject.family.addresses.push(addressThis);
-
-    // let address = objApplicationSummer.mailing_address.address;
-    // // address = address.trim();
-    // let address2 = objApplicationSummer.mailing_address.address2;
-    // // address2 = address2.trim();
-    // let city = objApplicationSummer.mailing_address.city;
-    // // city = city.trim();
-    // let state = objApplicationSummer.mailing_address.state;
-    // // state = state.trim();
-    // let zip = objApplicationSummer.mailing_address.zip;
-    // // zip = zip.trim();
-    // let familyAddress = "";
-    // if (!address2 || address2.length === 0) {
-    //     familyAddress = `${address}\n ${city}, ${state}  ${zip}`;
-    // } else {
-    //     familyAddress = `${address}\n ${address2}\n ${city}, ${state}  ${zip}`;
-    // }
-    // $w("#parentAddressBlock").value = familyAddress;
-    // returnObjectArrayObject.family.addresses = {};
-    // returnObjectArrayObject.family.addresses.mailing = objApplicationSummer.mailing_address;
 }
 
 export function returnArrayObjectWeek(week, weekNumber, runningTotalObject){
@@ -419,6 +428,7 @@ export function returnArrayObjectWeek(week, weekNumber, runningTotalObject){
         if (HOLDER.substr(-1) === "H") {
             element.day = "HALF";
             HOLDER = HOLDER.substr(0,(HOLDER.length - 2));
+            //0402errorNOT: HOLDER is a vallid string
             element.billing.tuition = priceHalfDay;
             runningTotal += priceHalfDay;
         } else {
@@ -441,6 +451,7 @@ export function returnArrayObjectWeek(week, weekNumber, runningTotalObject){
         lastDash = label.lastIndexOf("-");
         HOLDER = label.substr (0, label.indexOf(":"));
         HOLDER = HOLDER.length >= 2 ? HOLDER : "TBD";
+        //0402errorNOT: HOLDER is a vallid string
         element.gradeLevel = HOLDER;
         element.location = label.substr(lastDash + 1).trim();
         element.courseName = label.substr(firstColon + 1, lastDash - firstColon - 1).trim();;
@@ -483,6 +494,7 @@ export function writeCoursesSwitches(returnObjectArrayObject) {
     for ( i = 0; i < courseArray.length; i++) {
         weekIdThis = courseArray[i].weekId;
         if (codeBlockArray[weekIdThis].length === 0) {
+            //0402errorMAYBE: 
             weekString = 'Week ' +weekIdThis + ': ' + courseArray[i].dateString;
             // codeBlockArray[weekIdThis] = "<dl style='" + dlStyle + "'><dt style='" + dtStyle + "'>" + weekString + "</dt>";               
             codeBlockArray[weekIdThis] = "<fieldset style=" + fieldsetStyle + ">"
@@ -759,6 +771,7 @@ export function btnValidateEnrollment_click(event, returnObjectArrayObject) {
     console.log("warnList: ");
     console.log(warnList);
     if(warnList.length > 0) {
+        //0402errorNOT: wasMAYBE confirmed not
         $w("#warnTextBox").value = warnList;
         $w("#warnTextBox").enable();
     }
@@ -853,7 +866,8 @@ export function displayErrors(enrollmentErrorArray = [false, false, false, false
      let blockMapArray = {
          "blockMapErrors": {
              "zeroCheckedCount": -7,
-             "multipleCheckedCount": -7
+             "multipleCheckedCount": -7,
+             "gradeLevelMismatchCount": -7
          },
          "blockMapArray": [
              {
@@ -1136,6 +1150,15 @@ function validateCourseGradeLevelMatch(superEnrollmentObject){
         console.log("misMatch: " + misMatch);
     
     }
+    console.log(
+        "%cBig Block of Commented-Out Code [Line ~1154",
+        `color: #fff;
+        background-color: #EA4335;
+        font-weight: bold;
+        padding: 8px 16px;
+        border-radius: 8px;`
+        );
+
     // superEnrollmentObject.courses_array.forEach(element => {
     //     weekIndexIncrement = element.WeekId === weekWas ? 0 : 1;
     //     // weekIndexWas = element.WeekId === weekWas ? weekIndexWas : weekIndexWas++;
@@ -1221,7 +1244,9 @@ const AddressObject = function(address, address2, city, state, zip){
     console.log(this.streetAddress.number)
     this.streetAddress.name = this.city.split('|')[1];
     console.log(this.streetAddress.name)
-    if (address2){
+    let renderableAddress2 = false;
+    if (renderableString(address2) > 0){
+        renderableAddress2 = true;
         this.streetAddress2 = address2.trim();
     }
     this.city = city.trim() ?? '';
@@ -1238,7 +1263,7 @@ const AddressObject = function(address, address2, city, state, zip){
     this.formatted += ' ';
     this.formatted += this.streetAddress.name;
     this.formatted += ', ';
-    this.formatted += this.streetAddress2 && this.streetAddress2.length > 0 ? this.streetAddress2 + ', ': '';
+    this.formatted += renderableAddress2 ? this.streetAddress2 + ', ': '';
     this.formatted += this.city;
     this.formatted += ', ';
     this.formatted += this.subdivision;
@@ -1258,15 +1283,17 @@ export function renderableString(string) {
         case 'object':
             renderableStringLength = -99999;
             break;
-
-        default:
-            if(string === null){
-                renderableStringLength =  -777;
-            } else if (string.length === 0){
+        case 'string':
+            if (string.length === 0){
                 renderableStringLength =  -77;
             } else {
                 renderableStringLength =  string.length;
             }
+            break;
+
+        default:
+            //SHOULD NOT HAPPEND
+            renderableStringLength =  -999999;
             break;
     }
     return renderableStringLength;

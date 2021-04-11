@@ -176,11 +176,28 @@ export function btnConfirmClasses_click(event) {
     returnObjectArrayObject.courses_array = returnObjectArrayObject.courses_array.concat(returnArrayObjectWeek(week, 8, runningTotalObject));
     week = payload.week_9_august_914_2021;
     returnObjectArrayObject.courses_array = returnObjectArrayObject.courses_array.concat(returnArrayObjectWeek(week, 9, runningTotalObject));
-
     returnObjectArrayObject.countWeekArray = runningTotalObject.countWeekArray;
     let writeMapWeekArray = [-999,0,0,0,0,0,0,0,0,0]
     returnObjectArrayObject.writeMapWeekArray = writeMapWeekArray;
     writeCoursesSwitches(returnObjectArrayObject);
+
+    /**
+     * <mapWeekCountObject>
+     * takes two arrays and makes a very useful Array of Arrays
+     * * returnObjectArrayObject.writeMapWeekArray
+     * * runningTotalObject.countWeekArray
+     * ! superceeds either of the component arrays, but for backwards compatability they are not being removed
+     * ø yet
+     */
+    var mapWeekCountObject = returnObjectArrayObject.writeMapWeekArray.map(function (value, index){
+        return [value, runningTotalObject.countWeekArray[value]]
+    });
+    mapWeekCountObject[0][1] = -777;
+    returnObjectArrayObject.mapWeekCountObject = mapWeekCountObject;
+    // console.log("mapWeekCountObject: ");
+    // console.log(mapWeekCountObject);
+    //  * <mapWeekCountObject>
+
     console.log("[Line: ~184] returnObjectArrayObject: ");
     console.log(returnObjectArrayObject);
     $w("#superObjectHolder").value = JSON.stringify(returnObjectArrayObject, undefined, 4);
@@ -195,8 +212,9 @@ export function instantiateEnrollment (returnObjectArrayObject) {
     returnObjectArrayObject.formStack.formId = objApplicationSummer.FormID;
     returnObjectArrayObject.formStack.wixWebhookId = $w("#thisKey").value;
 
-    returnObjectArrayObject.appllication = {};
-    returnObjectArrayObject.appllication.studentStatement = objApplicationSummer.why_are_you_interested_in_attending_steam_discovery_academy_this_summer;
+    returnObjectArrayObject.application = {};
+    returnObjectArrayObject.application.studentStatement = objApplicationSummer.why_are_you_interested_in_attending_steam_discovery_academy_this_summer;
+    returnObjectArrayObject.application.photoRelease = objApplicationSummer.photo_release;
 
     let creationDateForm = $w("#thisCurrentStatusStamp").value;
     returnObjectArrayObject.stamps = [];
@@ -278,6 +296,7 @@ export function instantiateEnrollment (returnObjectArrayObject) {
     //</emails>
     returnObjectArrayObject.family.messages = {"dox": ["only messages you want the Whole Family to see"]};
     returnObjectArrayObject.family.student = {};
+    returnObjectArrayObject.family.student.photoRelease = objApplicationSummer.photo_release === 'Approved' ? true : false;
     returnObjectArrayObject.family.student.name = {};
     returnObjectArrayObject.family.parent = {};
     returnObjectArrayObject.family.parent.messages = {"dox": ["messages you want Both Parents to see"]};
@@ -1101,8 +1120,10 @@ function validateCourseGradeLevelMatch(superEnrollmentObject){
     let weekIndexWas = 0;
     let weekIndexIncrement = 0;
     let weekWas = 0;
+    let courseIndex = 0;
     let courseCardinality = 0;
     let switchKey = "ZXZ";
+    let switchKeyDELETE = "ZXZ";
     let mismatchThis = false;
     let mismatchCount = 0;
     let switched = false;
@@ -1115,37 +1136,66 @@ function validateCourseGradeLevelMatch(superEnrollmentObject){
     let misMatch = 0;
     let simpleIndex = 0;
     for (let index = 0; index < superEnrollmentObject.courses_array.length; index++) {
-        mapIndex = index + 1;
+        // console.log("index: " + index);
         const element = superEnrollmentObject.courses_array[index];
-        const mapElement = superEnrollmentObject.blockMapArray.blockMapArray[mapIndex];
-        console.log("index: " + index);
-        console.log(element);
-        console.log("weekId: " + element.weekId);
-        console.log("weekIndexWas: " + weekIndexWas);
-        console.log("weekWas: " + weekWas);
-        weekIndexIncrement = element.weekId === weekWas ? 0 : 1;
-        console.log("weekIndexIncrement: " + weekIndexIncrement);
-        weekIndexWas += weekIndexIncrement;
+        // mapIndex = element.weekId;
+        if(weekWas < element.weekId) {
+            mapIndex = mapIndex + 1;
+        }
         weekWas = element.weekId;
         courseCardinality = element.index + 1;
+        // console.log("mapIndex: " + mapIndex);
+        // const element = superEnrollmentObject.courses_array[index];
+        const mapElement = superEnrollmentObject.blockMapArray.blockMapArray[mapIndex];
+        console.log("index: " + index
+             + "\ncourse.weekId: " + element.weekId
+             + "\nmapIndex: " + mapIndex
+             + "\ncourse.index: " + element.index
+             + "\nswitch[course.index]: "+  mapElement.switchIdArray[element.index]);
+        // console.log("element: ");
+        console.log(element);
+        // console.log("mapElement: ");
+        console.log(mapElement);
+        // console.log("index: " + index);
+        // console.log(element);
+        // console.log("weekId: " + element.weekId);
+        // console.log("weekIndexWas: " + weekIndexWas);
+        // console.log("weekId: " + element.weekId);
+        // console.log("weekWas: " + weekWas
+        //      + "\nweekIndexWas: " + weekIndexWas
+        //      + "\weekIndexIncrement: " + weekIndexIncrement);
+        weekIndexIncrement = element.weekId === weekWas ? 0 : 1;
+        // console.log("weekIndexIncrement: " + weekIndexIncrement);
+        weekIndexWas += weekIndexIncrement;
         arrHOLDER = element.gradeLevel.split('-');
         // console.log(arrHOLDER);
         minString = arrHOLDER[0];
-        console.log("minString raw: " + minString);
+        // console.log("minString raw: " + minString);
         minString =minString === 'K' ? '0' : minString;
         maxString = arrHOLDER[1];
         minGrade = parseInt(minString,10);
         maxGrade = parseInt(maxString,10);
-        switchKey = switchWord.concat(weekIndexWas.toString(), zeroString, courseCardinality.toString());
+        switchKey = mapElement.switchIdArray[element.index];
+        switchKeyDELETE = switchWord.concat(weekIndexWas.toString(), zeroString, courseCardinality.toString());
+        console.log("switchKeyDELETE: " + switchKeyDELETE);
         switched = $w(switchKey).checked; 
-        console.log("weekIndexWas: " + weekIndexWas);
-        console.log("courseCardinality: " + courseCardinality);
-        console.log("switchKey: " + switchKey);
-        console.log("minString: " + minString);
-        console.log("minGrade: " + minGrade);
-        console.log("maxString: " + maxString);
-        console.log("maxGrade: " + maxGrade);
-        console.log("switched: " + switched);
+        element.checked = switched;
+        // console.log("weekIndexWas: " + weekIndexWas
+        //     + "\ncourseCardinality: " + courseCardinality
+        //     + "\nswitchKey: " + switchKey
+        //     + "\nminString: " + minString
+        //     + "\nminGrade: " + minGrade
+        //     + "\nmaxString: " + maxString
+        //     + "\nmaxGrade: " + maxGrade
+        //     + "\nswitched: " + switched);
+        // console.log("weekIndexWas: " + weekIndexWas);
+        // console.log("courseCardinality: " + courseCardinality);
+        // console.log("switchKey: " + switchKey);
+        // console.log("minString: " + minString);
+        // console.log("minGrade: " + minGrade);
+        // console.log("maxString: " + maxString);
+        // console.log("maxGrade: " + maxGrade);
+        // console.log("switched: " + switched);
         misMatch = 0;
         misMatch = studentCurrentGrade < minGrade ? 1 : 0;
         misMatch = studentCurrentGrade > maxGrade ? 1 : misMatch;
@@ -1155,52 +1205,7 @@ function validateCourseGradeLevelMatch(superEnrollmentObject){
         console.log("misMatch: " + misMatch);
     
     }
-    console.log(
-        "%cBig Block of Commented-Out Code [Line ~1154",
-        `color: #fff;
-        background-color: #EA4335;
-        font-weight: bold;
-        padding: 8px 16px;
-        border-radius: 8px;`
-        );
 
-    // superEnrollmentObject.courses_array.forEach(element => {
-    //     weekIndexIncrement = element.WeekId === weekWas ? 0 : 1;
-    //     // weekIndexWas = element.WeekId === weekWas ? weekIndexWas : weekIndexWas++;
-    //     weekIndexWas += weekIndexIncrement;
-    //     weekWas = element.WeekId;
-    //     // courseCardinality = element.index++;
-    //     courseCardinality = element.index + 1;
-    //     // courseCardinality = element.index;
-    //     // courseCardinality++;
-    //     // switchKey = "#switch" + weekIndexWas.toString() + "0" + courseCardinality.toString();
-    //     switchKey = switchWord.concat(weekIndexWas.toString(), zeroString, courseCardinality.toString());
-    //     switched = $w(switchKey).checked; 
-    //     //<parse gradeLevel>
-    //     gradeLevel = element.gradeLevel;
-    //     arrHOLDER = gradeLevel.split('-');
-    //     // console.log(arrHOLDER);
-    //     minString = arrHOLDER[0];
-    //     maxString = arrHOLDER[1];
-    //     minGrade = parseInt(minString,10);
-    //     maxGrade = parseInt(maxString,10);
-    //     // console.log(minGrade);
-    //     // console.log(maxGrade);
-    //     //</parse gradeLevel>
-    //     //<Better Logic>
-    //     misMatch = false;
-    //     misMatch = studentCurrentGrade < minGrade ? true : misMatch;
-    //     misMatch = studentCurrentGrade > maxGrade ? true : misMatch;
-    //     // misMatch = switched ? misMatch : false;
-    //     console.log("simpleIndex: " + simpleIndex);
-    //     console.log("weekIndexWas: " + weekIndexWas);
-    //     console.log("courseCardinality: " + courseCardinality);
-    //     console.log("switchKey: " + switchKey);
-    //     console.log("misMatch: " + misMatch);
-    //     mismatchCount += misMatch ? 1 : 0;
-    //     //</Better Logic>
-    //     simpleIndex++;
-    // });
     superEnrollmentObject.blockMapArray.blockMapErrors.gradeLevelMismatchCount = mismatchCount;
     console.log(mismatchCount);
     superEnrollmentObject.enrollment.errorArray[2] = mismatchCount === 0 ? false : true;

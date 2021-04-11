@@ -1082,6 +1082,11 @@ export function displayErrors(enrollmentErrorArray = [false, false, false, false
  }
 
 function validateCourseGradeLevelMatch(superEnrollmentObject){
+    /**
+     * ALSO: Populate Checked within superEnrollmentObject.courses_array
+     * [Line ~1180]
+     * element.checked = switched;
+     */
     let studentCurrentGrade = superEnrollmentObject.family.student.currentGrade;
     console.log("%cGrade: " + studentCurrentGrade +  ' [Line ~1009]',
         `color: #fff;

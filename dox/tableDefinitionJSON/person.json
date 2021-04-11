@@ -5,7 +5,7 @@
             "title": {
                 "key": "title",
                 "name": "Title",
-                "source": "form",
+                "source": "enrollmentObject record",
                 "usage": "display only",
                 "dataType": "Text",
                 "notes": [
@@ -63,8 +63,7 @@
                 "usage": "used to connect Parent with Member with any and all Enrollments for her/his children",
                 "dataType": "Text",
                 "notes": [
-                    "in a sense this makes Family ID redundant, but still good to have Family ID so that it is its own thing",
-                    "in geek talk, using the Family ID makes everything more 'extensible'"
+                    "either dynamically created, or identified as part of the Enrollment process"
                 ]
             },
             "idFM": {
@@ -75,18 +74,20 @@
                 "dataType": "Text",
                 "notes": [
                     "from the perspective of the Student there is only ONE Family",
-                    "same as idPP for simplicity accross tables"
+                    "same as idPP for simplicity accross tables",
+                    "for extensibility, notwithstanding apparent redundancy"
                 ]
             },
             "idHH": {
                 "key": "idHH",
                 "name": "Household ID",
-                "source": "WiX Velo by way of automated Parent Membership",
+                "source": "Always the same as idPP",
                 "usage": "used to connect Parent with Member with any and all Enrollments for her/his children",
                 "dataType": "Text",
                 "notes": [
                     "from the perspective of the Student the _First_ HH _is_ the PP's HH'",
-                    "therefore, same as idPP for simplicity accross tables"
+                    "therefore, same as idPP for simplicity accross tables",
+                    "for extensibility, notwithstanding apparent redundancy"
                 ]
             },
             "idBL": {
@@ -99,7 +100,8 @@
                     "ONLY for PP Person at present",
                     "this exists for putative use as billing gets more complicated",
                     "by way of _being_ PP there is implied Billing 'ownership'",
-                    "for present it will be ignored, but maybe divorced couple both pay half"
+                    "for present it will be ignored, but maybe divorced couple both pay half etc.",
+                    "for extensibility, notwithstanding apparent redundancy"
                 ]
             },
             "idWix": {
@@ -121,47 +123,57 @@
             "role": {
                 "key": "role",
                 "name": "Role",
-                "source": "enrollment logic or other editing logic",
-                "usage": "determin query behavior, notwithstanding the intentional redundancy of IDs",
+                "source": "enrollmentObject record",
+                "usage": "determines query behavior, notwithstanding the intentional redundancy of IDs",
                 "dataType": "Text",
-                "notes": []
+                "expectedValues": [
+                    "Primary",
+                    "Secondary",
+                    "Student",
+                    "Documented PickUp Person"
+                ],
+                "notes": [
+                    "LOGIC not this database will limit the values",
+                    "... it would be good if this were updated as the Logic progresses",
+                    "at this time ALL parents other than PP are SP's (step parents, estranged parents, etc.)"
+                ]
             },
             "first": {
-                "key": "studentFirst",
-                "name": "Student First",
-                "source": "enrollment form",
+                "key": "first",
+                "name": "First",
+                "source": "enrollmentObject record",
                 "usage": "human identification",
                 "dataType": "Text",
                 "notes": []
             },
             "last": {
-                "key": "studentLast",
-                "name": "Student Last",
-                "source": "enrollment form",
+                "key": "last",
+                "name": "Last",
+                "source": "enrollmentObject record",
                 "usage": "human identification",
                 "dataType": "Text",
                 "notes": []
             },
             "fullName": {
-                "key": "parentFirst",
-                "name": "Parent First",
-                "source": "enrollment form",
+                "key": "fullName",
+                "name": "Full Name",
+                "source": "enrollmentObject record",
                 "usage": "human identification",
                 "dataType": "Text",
                 "notes": []
             },
             "lastFirst": {
-                "key": "parentLast",
-                "name": "Parent Last",
-                "source": "enrollment form",
+                "key": "lastFirst",
+                "name": "Last First",
+                "source": "enrollmentObject record",
                 "usage": "human identification",
                 "dataType": "Text",
                 "notes": []
             },
             "comboName": {
-                "key": "parentLast",
-                "name": "Parent Last",
-                "source": "for Student 'First Last (First {lastIfDifferent})'",
+                "key": "comboName",
+                "name": "Combo Name",
+                "source": "for Students 'First Last (parentFirst {parentLastIfDifferent})'",
                 "usage": "human identification",
                 "dataType": "Text",
                 "notes": [
@@ -171,43 +183,88 @@
                 ]
             },
             "jsonData": {
-                "key": "jsonEnrollment",
-                "name": "Enrollment JSON",
-                "source": "'Webhook Processing' dashboard process",
-                "usage": "this holds all the data about the Parent(s) and the Student and the current enrollment Enrollment",
+                "key": "jsonData",
+                "name": "Person Data JSON",
+                "source": "enrollmentObject record",
+                "usage": "holds the JSON of the superEnrollemntObject for the subset for this person",
                 "dataType": "Text",
                 "notes": [
-                    "the Holy Grail",
-                    "this can be used to Enroll a Student programatically",
-                    "at the outset, generating this record and actual enrollment will be two separate tasks with two spearate clicks",
-                    "eventually, this will happen instantaneously",
-                    "still two separate tasks, but done one after the other by code so it seems like one task"
+                    "this is everything we know from the superEnrollemntObject",
+                    "it is expected that this will be a single element from the superEnrollemntObject",
+                    "... however, it could be that some data needs to be gathered elsewhere, none at outset"
                 ]
             },
             "jsonCorollary": {
                 "key": "jsonCorollary",
                 "name": "Corollary JSON",
-                "source": "if any, 'Webhook Processing' dashboard process",
+                "source": "any indicated source, none (empty object brackets) at onset",
                 "usage": "unknown",
                 "dataType": "Text",
                 "notes": [
-                    "since the enrollmentOJson is the Holy Grail, there needs to be a place for any number of additional datapoints",
-                    "none at first so an empty object will be iserted",
-                    "eventually, additional data that is not _intrinsic_ to the enrollmentJson, but is as yet unknown",
-                    "there may come a time where the code harvesting the enrollmentJson is _so_ stable",
-                    "...that we use this corollaryJson for true enrollment data, but for the sake of not entering a potential bug this is used",
-                    "again, this offers nearly unlimited extensibility"
+                    "since the enrollmentJSON is the Holy Grail, there needs to be a place for any number of additional datapoints",
+                    "other than PP and Studeent, none at first so an empty object will be iserted",
+                    "Student: courseArray[]",
+                    "Primary Parent: much of the Contact Info (under family{} im superEnrollemntObject)"
                 ]
             },
             "jsonStatusNotes": {
                 "key": "jsonStatusNotes",
                 "name": "Status Notes JSON",
-                "source": "logic",
-                "usage": "discrete values to describe the status of the Enrollment",
+                "source": "via utilites.jsw, instantiated then 'PENDING'",
+                "usage": "discrete values to describe the status of the Enrollment (and notes)",
                 "dataType": "Text",
                 "notes": [
-                    {"notes":["different values by 'role'"],
+                    {
+                        "notes": [
+                            "by design, the First element is _always_ the most recent Status",
+                            "by design, the Last element is _always_ the most recent Note",
+                            "LOGIC not this database will limit the values",
+                            "... it would be good if this were updated as the Logic progresses",
+                            "different values by 'role'",
+                            "1st Draft",
+                            "'raw' is everything that was in enrollmentObjects value here"
+                        ],
                         "primaryParent": [
+                            "PENDING",
+                            "---",
+                            "TODELETE",
+                            "REJECTED",
+                            "---",
+                            "ESCALATED",
+                            "---",
+                            "ACTIVE",
+                            "---",
+                            "ALUMNI",
+                            "---",
+                            "BLACKLIST",
+                            "(capitalized by convention)",
+                            "of course, this can be anything",
+                            "...but the idea a collection of one word values that succicntly capture the, well, Status"
+                        ],
+                        "student": [
+                            "PENDING",
+                            "---",
+                            "TODELETE",
+                            "REJECTED",
+                            "---",
+                            "ESCALATED",
+                            "---",
+                            "ENROLLED",
+                            "---",
+                            "COMPLETED",
+                            "GRADUATED",
+                            "PASSED",
+                            "FAILED",
+                            "---",
+                            "CANCELLED",
+                            "WITHDRAWN",
+                            "---",
+                            "EXPELLED",
+                            "(capitalized by convention)",
+                            "of course, this can be anything",
+                            "...but the idea a collection of one word values that succicntly capture the, well, Status"
+                        ],
+                        "RAW": [
                             "PENDING",
                             "---",
                             "TODELETE",
@@ -234,5 +291,9 @@
                 ]
             }
         }
-    }
+    },
+    "tableNotes": [
+        "source is 'enrollmentObject record' for nearly all attributes",
+        "...this does not exclude additions and edits by _other_ mechanisms"
+    ]
 }

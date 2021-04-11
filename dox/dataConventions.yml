@@ -1,0 +1,12 @@
+#! FYI, I have decided, for the most part, to go with the Default Field Key based
+# on Field Name. For example "Student First" has the key "studentFirst" (Camel
+# Case: No Spaces, all words except first is Capitalized). EXCEPT: 
+# ø our ID's (like Primary Parent ID, Family ID, Household ID, Term ID). Instead
+# these will be keyed with "id" as the first part of the Key for really
+# important keys I will go with condensed Abbreviation, for not so important
+# ID's just 'id' and the ID Name. Respectively (idPP, idFM, idHH, idTerm) 
+# ø any field whose sole reason for being is to hold JSON data. Since this will
+# NEVER be really rendered to any user as such, these will be prefixed with
+# 'json' and then the normal name. Therefore, Enrollment JSON, Corollary JSON
+# and Status Notes JSON will be, respectively, jsonEnrollment, jsonCorollary,
+# jsonStatusNotes.

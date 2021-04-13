@@ -1,6 +1,7 @@
 {
     "table": {
         "name": "enrollmentObjects",
+        "attributesSimpleArray": ["title","_id","_owner","_createdDate","_updatedDate","studentFirst","studentLast","parentFirst","parentLast","idPP","jsonEnrollment","jsonCorollary","jsonStatusNotes"],
         "attributes": {
             "title": {
                 "key": "title",

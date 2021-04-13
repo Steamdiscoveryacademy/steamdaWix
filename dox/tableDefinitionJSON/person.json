@@ -154,13 +154,25 @@
                 "dataType": "Text",
                 "notes": []
             },
+            "firstLegal": {
+                "key": "firstLegal",
+                "name": "First Legal",
+                "source": "enrollmentObject record",
+                "usage": "special legal usage",
+                "dataType": "Text",
+                "notes": [
+                    "human legal identification",
+                    "as opposed to 'preferred'",
+                    "...which we use"
+                ]
+            },
             "fullName": {
                 "key": "fullName",
                 "name": "Full Name",
                 "source": "enrollmentObject record",
                 "usage": "display only, human identification",
                 "dataType": "Text",
-                "notes": []
+                "notes": ["first + ' ' + last"]
             },
             "lastFirst": {
                 "key": "lastFirst",
@@ -168,7 +180,7 @@
                 "source": "enrollmentObject record",
                 "usage": "display only, human identification",
                 "dataType": "Text",
-                "notes": []
+                "notes": ["last + ', ' + first"]
             },
             "comboName": {
                 "key": "comboName",
@@ -222,8 +234,8 @@
                             "... it would be good if this were updated as the Logic progresses",
                             "different values by 'role'",
                             "1st Draft",
-                            "'raw' is everything that was in enrollmentObjects value here"
-                            ,"notes are unlimited, so below only putative Statuses"
+                            "'raw' is everything that was in enrollmentObjects value here",
+                            "notes are unlimited, so below only putative Statuses"
                         ],
                         "primaryParent": [
                             "PENDING",

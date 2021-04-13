@@ -98,7 +98,8 @@
                 "dataType": "Text",
                 "notes": [
                     "in a sense this makes Family ID redundant, but still good to have Family ID so that it is its own thing",
-                    "in geek talk, using the Family ID makes everything more 'extensible'"
+                    "in geek talk, using the Family ID makes everything more 'extensible'",
+                    "it is permissible, for this table, for this value to be 'INSTANTIATE'"
                 ]
             },
             "jsonEnrollment": {

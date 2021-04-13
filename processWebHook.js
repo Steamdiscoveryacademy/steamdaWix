@@ -69,6 +69,43 @@ export function rptrTitle_click(event, $w) {
     }
 }
 
+export function resolveSelectedWebHook() {
+    const options = {
+        "suppressAuth": true,
+        "suppressHooks": true
+    };
+    let webhookId = $w('#thisKey').value;
+    wixData.get("webhookPayload", webhookId, options)
+        .then( (results) => {
+            let toUpdate = results;
+            console.log("get.then() [Line: ~81]");
+            console.log(toUpdate);
+            let now = new Date();
+            toUpdate.resolvedStatusStamp = now;
+            toUpdate.resolvedStatus = "RESOLVED";
+            console.log("returned toUpdate, updated [Line: ~86]");
+            console.log(toUpdate);
+            wixData.update("webhookPayload", toUpdate, options)
+                .then( (results) => {
+                    console.log("update.then() [Line: ~90]");
+                    $w("#dsWebhookPayload").refresh()
+                    .then( () => {
+                        console.log("Done refreshing the dataset");
+                        cleanUp();
+                    } );
+                } )
+                .catch( (err) => {
+                    console.error("resolveSelectedWebhook.catch() [Line: ~93]");
+                    console.error(err);
+                } );
+            
+        } )
+        .catch( (err) => {
+            console.error("resolveSelectedWebhook.catch() [Line: ~85]");
+            console.error(err);
+        } );
+    }
+
 export function dropdownFilter_change(event) {
     var totalCount = 0;
     var filterValue = $w('#dropdownFilter').value;
@@ -1310,3 +1347,12 @@ export function renderableString(string) {
 }
 
 //</Utility Functions & Constructors>
+
+/**
+ *	Adds an event handler that runs when the element is clicked.
+ *	 @param {$w.MouseEvent} event
+ */
+export function postEnrollment_click(event) {
+	resolveSelectedWebHook();
+}
+

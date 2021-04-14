@@ -1,0 +1,15 @@
+{
+    "course": {
+        "name": "Drone Academy",
+        "idCS": "58f4112a-c807-4ab8-a3ff-3cd5d5e64ce6",
+        "scheduleDescr": "M thru F 9am to 5pm",
+        "idSchedule": null,
+        "jsonSchedule": "something groovey like iCal (https://tools.ietf.org/html/rfc7265)",
+        "spanDescr": "June 7 thru June 11, 2021",
+        "isoLocalStart": 20210607090000,
+        "isoLocalEnd": 20210611170000,
+        "isoTZ": -6,
+        "idCurriculum": "c807112a-58f4-4ab8-a3ff-3cd5d5e64ce6",
+        "idLocation": "d5e64ce6-58f4-4ab8-a3ff-3cd5c807112a"
+    }
+}

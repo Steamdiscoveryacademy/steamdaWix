@@ -1,0 +1,57 @@
+{
+    "name": "Steam Discovery Academy",
+    "altNames": {
+        "abbrv": "SteamDA"
+    },
+    "domains": [
+        "steamda.com",
+        "steamdiscoveryacademy.com"
+    ],
+    "regions": [
+        {
+            "name": "Charlottesville",
+            "addresses": [
+                {
+                    "Address": "100 10th Street, NE ",
+                    "Address2": "Suite 300",
+                    "city": "Charlottesville",
+                    "state": "VA",
+                    "Zip": "22902",
+                    "formatted": "100 10th Street, NE Suite 300, Charlottesville, VA 22902"
+                }
+            ],
+            "phones": [
+                "434-987-3918"
+            ],
+            "zipcodes": {
+                "threeDigit": {
+                    "exclusive": ["201","220","221","222","223","224","225","226","227","228","229","230","231","232","233","234","235","236","237","238","239","240","241","242","243","244","245","246","247","248","249","250","251","252","253","254","255","256","257","258","259","260","261","262","263","264","265","266","267","268"],
+                    "overlap": []
+                },
+                "fiveDigit": {
+                    "exclusive": [],
+                    "overlap": []
+                },
+                "notes": [
+                    "for 3 digit overlap where within that there is no overlap for some 5 digits within, use 5 digit arrays",
+                    "...thus there should be very few overlap 5 digit zip codes"
+                ]
+            },
+            "timezone": {
+                "name:": "Eastern Time",
+                "abbrv": "ET",
+                "afterArray":[["2021-03-14T020000","daylight"],["2021-11-07T020000","standard"],["2022-03-13T020000","daylight"]],
+                "standard": {
+                    "name": "Eastern Standard Time",
+                    "abbrv": "EST",
+                    "offest": -5
+                },
+                "daylight": {
+                    "name": "Eastern Daylight Time",
+                    "abbrv": "EDT",
+                    "offest": -4
+                }
+            }
+        }
+    ]
+}

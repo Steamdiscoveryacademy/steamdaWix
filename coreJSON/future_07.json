@@ -1,0 +1,69 @@
+{
+    "name": "Steam Discovery Academy",
+    "tag": "flagship",
+    "abbrv": "SteamDA",
+    "urlArray": [
+        "steamdiscoveryacademy.com",
+        "steamda.com"
+    ],
+    "currentTerm": "t202106",
+    "activeTermArray": [
+        "t202106"
+    ],
+    "officeAddress": {
+        "streetAddress": {
+            "number": "3004",
+            "name": "Berkmar Drive"
+        },
+        "city": "Charlottesville",
+        "subdivision": "VA",
+        "postalCode": "22901",
+        "country": "US",
+        "location": {
+            "latitude": "38.12300501818869",
+            "longitude": "-78.47768216332757"
+        }
+    },
+    "locations": [
+        {
+            "address": {
+                "streetAddress": {
+                    "number": "3004",
+                    "name": "Berkmar Drive"
+                },
+                "city": "Charlottesville",
+                "subdivision": "VA",
+                "postalCode": "22901",
+                "country": "US",
+                "location": {
+                    "latitude": "38.12300501818869",
+                    "longitude": "-78.47768216332757"
+                }
+            },
+            "tag": "primary",
+            "name": "The Hub",
+            "abbrv": "hub"
+        },
+        {
+            "address": {
+                "streetAddress": {
+                    "number": "Pen Park Rd",
+                    "name": "1205"
+                },
+                "city": "Charlottesville",
+                "subdivision": "VA",
+                "postalCode": "22901",
+                "country": "US",
+                "location": {
+                    "latitude": "38.30186212206945",
+                    "longitude": "-78.48123805591004"
+                }
+            },
+            "tag": "secondary",
+            "name": "Charlottesville Catholic School",
+            "abbrv": "cvilleCatholic"
+        }
+    ],
+    "effectiveStamp": "20210814235959",
+    "errorString": ""
+}

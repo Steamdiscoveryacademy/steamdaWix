@@ -1,0 +1,96 @@
+K_PREFIX = OBJECT NAME:
+
+family.phones": [
+        {
+            "phone": "(218) 595-0499",
+            "role": "Primary Parent",
+            "who": "Shirley",
+            "kind": "cell",
+            "usage": "Personal"
+        }
+    ],
+
+
+
+family.emails": [
+        {
+            "email": "bradlowry+dannu@gmail.com",
+            "role": "Primary Parent",
+            "who": "Shirley",
+            "kind": "home",
+            "usage": "Personal"
+        }
+    ],
+
+
+
+
+    family.student": {
+        "photoRelease": true,
+        "name": {
+            "first": "Danny",
+            "last": "Partridge",
+            "preferred": "Danny",
+            "studentParentCombo": "Danny Partridge (Shirley)",
+            "lastFirst": "Partridge, Danny",
+            "fullName": "Danny Partridge"
+        },
+        "declaredGender": "Male",
+        "studentStatement": "Radio Science",
+        "messages": {
+            "dox": [
+                "messages you want the Student only to see"
+            ]
+        },
+        "dobString": "02/07/2003",
+        "currentSchool": "Bonaducci Prep",
+        "currentGrade": 3,
+        "currentGradeString": "Third Grade",
+        "currentGradeLevel": "3-5",
+        "dob": {
+            "date": "2003-02-07T06:00:00.000Z",
+            "month": 2,
+            "day": 7,
+            "year": 2003
+        }
+    },
+
+
+
+
+
+family.parent.primary": {
+            "memberId": "INSTANTIATE",
+            "last": "Partridge",
+            "first": "Shirley",
+            "fullName": "Shirley Partridge",
+            "lastFirst": "Partridge, Shirley"
+        },
+
+family.parent.secondary": {
+            "first": "Ruben",
+            "last": "Kincaid"
+        },
+
+
+family.addresses": [
+        {
+            "tag": "HOME",//CANNOT
+            "address": {
+                "streetAddress": {
+                    "number": "123",
+                    "name": "Old Bus Way"
+                },
+                "city": "Teluca Lake",
+                "streetAddress2": "101",
+                "state": "CA",
+                "postalCode": "90210",
+                "country": "US",
+                "subdivision": "CA",
+                "location": {
+                    "latitude": "",
+                    "longitue": ""
+                },
+            }
+        }
+    ]

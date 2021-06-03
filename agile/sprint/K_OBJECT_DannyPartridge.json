@@ -1,96 +1,78 @@
-K_PREFIX = OBJECT NAME:
+let family = {};
+family.phones = [];
+family.phones[0] = {};
+family.emails = [];
+family.emails[0] = {};
+family.student = {};
+family.student.name = {};
+family.student.dob = {};
+family.parent = {};
+family.parent.primary = {};
+family.parent.secondary = {};
+family.addresses = [];
+family.addresses[0] = {};
 
-family.phones": [
-        {
-            "phone": "(218) 595-0499",
-            "role": "Primary Parent",
-            "who": "Shirley",
-            "kind": "cell",
-            "usage": "Personal"
-        }
-    ],
-
-
-
-family.emails": [
-        {
-            "email": "bradlowry+dannu@gmail.com",
-            "role": "Primary Parent",
-            "who": "Shirley",
-            "kind": "home",
-            "usage": "Personal"
-        }
-    ],
+family.phones[0].phone = "(218) 595-0499";
+family.phones[0].role = "Primary Parent";
+family.phones[0].who = "Shirley";
+family.phones[0].kind = "cell";
+family.phones[0].usage = "Personal";
 
 
 
+family.emails[0].email = "bradlowry+dannu@gmail.com";
+family.emails[0].role = "Primary Parent";
+family.emails[0].who = "Shirley";
+family.emails[0].kind = "home";
+family.emails[0].usage = "Personal";
 
-    family.student": {
-        "photoRelease": true,
-        "name": {
-            "first": "Danny",
-            "last": "Partridge",
-            "preferred": "Danny",
-            "studentParentCombo": "Danny Partridge (Shirley)",
-            "lastFirst": "Partridge, Danny",
-            "fullName": "Danny Partridge"
-        },
-        "declaredGender": "Male",
-        "studentStatement": "Radio Science",
-        "messages": {
-            "dox": [
-                "messages you want the Student only to see"
-            ]
-        },
-        "dobString": "02/07/2003",
-        "currentSchool": "Bonaducci Prep",
-        "currentGrade": 3,
-        "currentGradeString": "Third Grade",
-        "currentGradeLevel": "3-5",
-        "dob": {
-            "date": "2003-02-07T06:00:00.000Z",
-            "month": 2,
-            "day": 7,
-            "year": 2003
-        }
-    },
+
+
+
+family.student.photoRelease = true;
+family.student.name.first = "Danny";
+family.student.name.last = "Partridge";
+family.student.name.preferred = "Danny";
+family.student.name.studentParentCombo = "Danny Partridge (Shirley)";
+family.student.name.lastFirst = "Partridge, Danny";
+family.student.name.fullName = "Danny Partridge";
+family.student.declaredGender = "Male";
+family.student.studentStatement = "Radio Science";
+
+family.student.dobString = "02/07/2003";
+family.student.currentSchool = "Bonaducci Prep";
+family.student.currentGrade = 3;
+family.student.currentGradeString = "Third Grade";
+family.student.currentGradeLevel = "3-5";
+family.student.dob.date = "2003-02-07T06:00:00.000Z";
+family.student.dob.month = 2;
+family.student.dob.day = 7;
+family.student.dob.year = 2003
 
 
 
 
 
-family.parent.primary": {
-            "memberId": "INSTANTIATE",
-            "last": "Partridge",
-            "first": "Shirley",
-            "fullName": "Shirley Partridge",
-            "lastFirst": "Partridge, Shirley"
-        },
-
-family.parent.secondary": {
-            "first": "Ruben",
-            "last": "Kincaid"
-        },
+family.parent.primary.memberId = "INSTANTIATE";
+family.parent.primary.last = "Partridge";
+family.parent.primary.first = "Shirley";
+family.parent.primary.fullName = "Shirley Partridge";
+family.parent.primary.lastFirst = "Partridge, Shirley";
 
 
-family.addresses": [
-        {
-            "tag": "HOME",//CANNOT
-            "address": {
-                "streetAddress": {
-                    "number": "123",
-                    "name": "Old Bus Way"
-                },
-                "city": "Teluca Lake",
-                "streetAddress2": "101",
-                "state": "CA",
-                "postalCode": "90210",
-                "country": "US",
-                "subdivision": "CA",
-                "location": {
-                    "latitude": "",
-                    "longitue": ""
-                },
-            }
-        }
-    ]
+family.parent.secondary.first = "Ruben";
+family.parent.secondary.last = "Kincaid";
+
+
+
+family.addresses[0].tag = "HOME";
+family.addresses[0].streetAddress.number = "123";
+family.addresses[0].streetAddress.name = "Old Bus Way";
+family.addresses[0].city = "Teluca Lake";
+family.addresses[0].streetAddress2 = "101";
+family.addresses[0].state = "CA";
+family.addresses[0].postalCode = "90210";
+family.addresses[0].country = "US";
+family.addresses[0].subdivision = "CA";
+family.addresses[0].location.latitude = "";
+family.addresses[0].location.longitue = ""

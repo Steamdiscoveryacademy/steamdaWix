@@ -1,0 +1,96 @@
+- APPLICATION SYSTEM TO THIS POINT!
+---
+
+Member Primry Parent:
+  - First
+  - Last
+  - email
+  - phone
+
+  Create/Update Member
+
+Contact Primary Parent:
+ - everything else
+
+ Create/Update Contact
+ # this is _always_ update, actually, but in common parlance, 'update' is for
+ # when the family has participated in previous terms
+
+Database Primary Parent:
+ - (review database schema)
+ Create Primary Parent Record
+  - NOTE: there is a _new_ database entry (batch) for every Term/Region
+
+---
+
+Member Student:
+  - First (Preferred, 'legal-first' is an extended field)
+  - Last
+  - email (Faux)
+  - phone (same as PP)
+
+  Create/Update Member
+
+Contact Student:
+ - everything else
+
+ Create/Update Contact
+ # this is _always_ update, actually, but in common parlance, 'update' is for
+ # when the family has participated in previous terms
+
+Database Student:
+ - (review database schema)
+ Create Student Record
+  - NOTE: there is a _new_ database entry (batch) for every Term/Region
+
+---
+
+Member Secondary Parent:
+  - SECONDARY PARENT IS NOT A MEMBER AT THIS TIME
+
+Contact Secondary Parent:
+ - other than First and Last (and...) _everything_ is the same as Primary Parent
+ - everything else
+
+ Create/Update Contact
+ # this is _always_ update, actually, but in common parlance, 'update' is for
+ # when the family has participated in previous terms
+
+Database Secondary Parent:
+ - (review database schema)
+ Create Secondary Parent Record
+  - NOTE: there is a _new_ database entry (batch) for every Term/Region
+
+---
+
+ - COURSES/BOOKINGS COMPLETELY SEPARATE
+
+---
+
+- BILLING/INVOICING COMPLETELY SEPARATE
+
+---
+
+Additional Thoughts
+use Student ContactID as 'key' to an Object Array of Student Courses -- appended
+in Parent DB Record for All Childrent
+
+Separate Manual Interface for adding Grama/Nanny/Best Friends' Mom and so on for
+Pick-Up.
+
+--- 
+NOW Steps:
+ - Add JSONtoHTMLTable backend file
+ - Add/Create Build Member Object from App Primary Parent
+ - Add/Create Build Member Object from App Student
+ - Add/Create Build Contact Object from App Primary Parent
+ - Add/Create Build Contact Object from App Student
+ - Add/Create Build Contact Object from App Secondary Parent
+ - Add/Create Append Courses Data in DB:
+  - {"familyCoursesArray":[
+      "878bc...": [
+        {
+          "CourseStuff":"stuff"
+        }
+      ]
+  ]}

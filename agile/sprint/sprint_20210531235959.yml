@@ -2,5 +2,5 @@
 FOR CURRENT WEBHOOK PROCESSING: 
 add: import {local, session, memory} from 'wix-storage';
 add: instantiateDevelJSON()
-reset previos ending point to session.enrollmentOnDeck
+reset previous ending point to session.enrollmentOnDeck
 build big page

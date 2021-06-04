@@ -1,78 +1,79 @@
-let family = {};
-family.phones = [];
-family.phones[0] = {};
-family.emails = [];
-family.emails[0] = {};
-family.student = {};
-family.student.name = {};
-family.student.dob = {};
-family.parent = {};
-family.parent.primary = {};
-family.parent.secondary = {};
-family.addresses = [];
-family.addresses[0] = {};
+let enrollmentObject = {}; 
+enrollmentObject.family = {};
+enrollmentObject.family.phones = [];
+enrollmentObject.family.phones[0] = {};
+enrollmentObject.family.emails = [];
+enrollmentObject.family.emails[0] = {};
+enrollmentObject.family.student = {};
+enrollmentObject.family.student.name = {};
+enrollmentObject.family.student.dob = {};
+enrollmentObject.family.parent = {};
+enrollmentObject.family.parent.primary = {};
+enrollmentObject.family.parent.secondary = {};
+enrollmentObject.family.addresses = [];
+enrollmentObject.family.addresses[0] = {};
 
-family.phones[0].phone = "(218) 595-0499";
-family.phones[0].role = "Primary Parent";
-family.phones[0].who = "Shirley";
-family.phones[0].kind = "cell";
-family.phones[0].usage = "Personal";
-
-
-
-family.emails[0].email = "bradlowry+dannu@gmail.com";
-family.emails[0].role = "Primary Parent";
-family.emails[0].who = "Shirley";
-family.emails[0].kind = "home";
-family.emails[0].usage = "Personal";
+enrollmentObject.family.phones[0].phone = "(218) 595-0499";
+enrollmentObject.family.phones[0].role = "Primary Parent";
+enrollmentObject.family.phones[0].who = "Shirley";
+enrollmentObject.family.phones[0].kind = "cell";
+enrollmentObject.family.phones[0].usage = "Personal";
 
 
 
-
-family.student.photoRelease = true;
-family.student.name.first = "Danny";
-family.student.name.last = "Partridge";
-family.student.name.preferred = "Danny";
-family.student.name.studentParentCombo = "Danny Partridge (Shirley)";
-family.student.name.lastFirst = "Partridge, Danny";
-family.student.name.fullName = "Danny Partridge";
-family.student.declaredGender = "Male";
-family.student.studentStatement = "Radio Science";
-
-family.student.dobString = "02/07/2003";
-family.student.currentSchool = "Bonaducci Prep";
-family.student.currentGrade = 3;
-family.student.currentGradeString = "Third Grade";
-family.student.currentGradeLevel = "3-5";
-family.student.dob.date = "2003-02-07T06:00:00.000Z";
-family.student.dob.month = 2;
-family.student.dob.day = 7;
-family.student.dob.year = 2003
+enrollmentObject.family.emails[0].email = "bradlowry+dannu@gmail.com";
+enrollmentObject.family.emails[0].role = "Primary Parent";
+enrollmentObject.family.emails[0].who = "Shirley";
+enrollmentObject.family.emails[0].kind = "home";
+enrollmentObject.family.emails[0].usage = "Personal";
 
 
 
 
+enrollmentObject.family.student.photoRelease = true;
+enrollmentObject.family.student.name.first = "Daniel";
+enrollmentObject.family.student.name.last = "Partridge";
+enrollmentObject.family.student.name.preferred = "Danny";
+enrollmentObject.family.student.name.studentParentCombo = "Danny Partridge (Shirley)";
+enrollmentObject.family.student.name.lastFirst = "Partridge, Danny";
+enrollmentObject.family.student.name.fullName = "Danny Partridge";
+enrollmentObject.family.student.declaredGender = "Male";
+enrollmentObject.family.student.studentStatement = "Radio Science";
 
-family.parent.primary.memberId = "INSTANTIATE";
-family.parent.primary.last = "Partridge";
-family.parent.primary.first = "Shirley";
-family.parent.primary.fullName = "Shirley Partridge";
-family.parent.primary.lastFirst = "Partridge, Shirley";
+enrollmentObject.family.student.dobString = "02/07/2003";
+enrollmentObject.family.student.currentSchool = "Bonaducci Prep";
+enrollmentObject.family.student.currentGrade = 3;
+enrollmentObject.family.student.currentGradeString = "Third Grade";
+enrollmentObject.family.student.currentGradeLevel = "3-5";
+enrollmentObject.family.student.dob.date = "2003-02-07T06:00:00.000Z";
+enrollmentObject.family.student.dob.month = 2;
+enrollmentObject.family.student.dob.day = 7;
+enrollmentObject.family.student.dob.year = 2003;
 
 
-family.parent.secondary.first = "Ruben";
-family.parent.secondary.last = "Kincaid";
 
 
 
-family.addresses[0].tag = "HOME";
-family.addresses[0].streetAddress.number = "123";
-family.addresses[0].streetAddress.name = "Old Bus Way";
-family.addresses[0].city = "Teluca Lake";
-family.addresses[0].streetAddress2 = "101";
-family.addresses[0].state = "CA";
-family.addresses[0].postalCode = "90210";
-family.addresses[0].country = "US";
-family.addresses[0].subdivision = "CA";
-family.addresses[0].location.latitude = "";
-family.addresses[0].location.longitue = ""
+enrollmentObject.family.parent.primary.memberId = "INSTANTIATE";
+enrollmentObject.family.parent.primary.last = "Partridge";
+enrollmentObject.family.parent.primary.first = "Shirley";
+enrollmentObject.family.parent.primary.fullName = "Shirley Partridge";
+enrollmentObject.family.parent.primary.lastFirst = "Partridge, Shirley";
+
+
+enrollmentObject.family.parent.secondary.first = "Ruben";
+enrollmentObject.family.parent.secondary.last = "Kincaid";
+
+
+
+enrollmentObject.family.addresses[0].tag = "HOME";
+enrollmentObject.family.addresses[0].streetAddress.number = "123";
+enrollmentObject.family.addresses[0].streetAddress.name = "Old Bus Way";
+enrollmentObject.family.addresses[0].city = "Teluca Lake";
+enrollmentObject.family.addresses[0].streetAddress2 = "101";
+enrollmentObject.family.addresses[0].state = "CA";
+enrollmentObject.family.addresses[0].postalCode = "90210";
+enrollmentObject.family.addresses[0].country = "US";
+enrollmentObject.family.addresses[0].subdivision = "CA";
+enrollmentObject.family.addresses[0].location.latitude = "";
+enrollmentObject.family.addresses[0].location.longitue = "";

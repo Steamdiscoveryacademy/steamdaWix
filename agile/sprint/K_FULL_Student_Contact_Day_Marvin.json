@@ -1,0 +1,41 @@
+{
+    "contactInfo": {
+        "addresses": [
+            {
+                "address": {
+                    "formatted": "United States",
+                    "country": "US"
+                },
+                "tag": "UNTAGGED"
+            }
+        ],
+        "emails": [
+            {
+                "tag": "UNTAGGED",
+                "email": "qiqgroup+marvin8521@gmail.com",
+                "primary": true
+            }
+        ],
+        "extendedFields": {
+            "contacts.displayByLastName": "Day Marvin",
+            "emailSubscriptions.deliverabilityStatus": "VALID",
+            "members.membershipStatus": "APPROVED",
+            "emailSubscriptions.subscriptionStatus": "NOT_SET",
+            "members.mobile": false,
+            "emailSubscriptions.effectiveEmail": "qiqgroup+marvin8521@gmail.com",
+            "contacts.displayByFirstName": "Marvin Day"
+        },
+        "name": {
+            "first": "Marvin",
+            "last": "Day"
+        },
+        "phones": [
+            {
+                "tag": "UNTAGGED",
+                "phone": "(408)-457-0917",
+                "primary": true
+            }
+        ],
+        "picture": {}
+    }
+}

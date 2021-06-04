@@ -1,0 +1,67 @@
+{
+    "contactInfo": {
+        "name": {
+            "first": "Debbie",
+            "last": "Watts"
+        },
+        "company": "Central Associates",
+        "jobTitle": "Graphic Design",
+        "locale": "en-US",
+        "birthdate": "1961-09-27",
+        "labelKeys": [
+            "custom.gender-female",
+            "custom.t202106",
+            "custom.primary-parent"
+        ],
+        "emails": [
+            {
+                "tag": "UNTAGGED",
+                "email": "debbie.watts@example.com"
+            },
+            {
+                "tag": "MAIN",
+                "email": "qiqgroup+debbie4965@gmail.com",
+                "primary": "true"
+            }
+        ],
+        "phones": [
+            {
+                "tag": "MOBILE",
+                "phone": "(977)-712-0309",
+                "primary": "true"
+            },
+            {
+                "tag": "HOME",
+                "phone": "(854)-580-1811"
+            }
+        ],
+        "addresses": [
+            {
+                "tag": "home",
+                "address": {
+                    "streetAddress": {
+                        "number": "4965",
+                        "name": "Central St",
+                        "apt": "8"
+                    },
+                    "addressLine2": "# 19",
+                    "city": "Helena",
+                    "subdivision": "SC",
+                    "postalCode": "75081",
+                    "country": "US",
+                    "location": {
+                        "latitude": "-20.1427",
+                        "longitude": "37.2382"
+                    }
+                }
+            }
+        ],
+        "extendedFields": {
+            "custom.lastupdate": "2010-08-20",
+            "custom.current-region": "Charlottesville",
+            "custom.timezone-offset": "-3:00",
+            "custom.legal-first": "Debbie",
+            "custom.seed": "e27b93365b6e4da9"
+        }
+    }
+}

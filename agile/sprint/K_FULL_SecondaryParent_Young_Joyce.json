@@ -1,0 +1,67 @@
+{
+    "contactInfo": {
+        "name": {
+            "first": "Joyce",
+            "last": "Young"
+        },
+        "company": "Paddock Limited",
+        "jobTitle": "Supervisor",
+        "locale": "en-US",
+        "birthdate": "1993-05-15",
+        "labelKeys": [
+            "custom.gender-female",
+            "custom.t202106",
+            "custom.secondary-parent"
+        ],
+        "emails": [
+            {
+                "tag": "UNTAGGED",
+                "email": "joyce.young@example.com"
+            },
+            {
+                "tag": "MAIN",
+                "email": "qiqgroup+joyce2188@gmail.com",
+                "primary": "true"
+            }
+        ],
+        "phones": [
+            {
+                "tag": "MOBILE",
+                "phone": "(040)-760-4814",
+                "primary": "true"
+            },
+            {
+                "tag": "HOME",
+                "phone": "(003)-777-6717"
+            }
+        ],
+        "addresses": [
+            {
+                "tag": "home",
+                "address": {
+                    "streetAddress": {
+                        "number": "2188",
+                        "name": "Paddock Way",
+                        "apt": "43"
+                    },
+                    "addressLine2": "Suite 47",
+                    "city": "Round Rock",
+                    "subdivision": "MS",
+                    "postalCode": "29220",
+                    "country": "US",
+                    "location": {
+                        "latitude": "-17.7550",
+                        "longitude": "150.3474"
+                    }
+                }
+            }
+        ],
+        "extendedFields": {
+            "custom.lastupdate": "2004-08-04",
+            "custom.current-region": "Charlottesville",
+            "custom.timezone-offset": "+2:00",
+            "custom.legal-first": "Joyce",
+            "custom.seed": "d87c357e78e90d2f"
+        }
+    }
+}

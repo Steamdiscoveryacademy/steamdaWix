@@ -1,0 +1,144 @@
+{
+    "IINSTANTIATE": {
+        "preValidationNotes": [
+            "Validate storage-cleanup"
+        ],
+        "stepNotes": [
+            "Prep & Execute Primary Parent Member first Then Prep & Execute Student Member second",
+            "Primary Parent Member is necessary for Family ID",
+            "Student Member is necessary for Student ID as Key to multi-child courseArray Key for Parent JSON in DB",
+            "THEN all the Remaining PREP",
+            "THEN all the Remaining EXECUTE (probably best to make this more contexual"
+        ],
+        "postValidationNotes": [],
+        "postStepAssignmentNotes": [
+            "local.setItem(familyId) whatever it is"
+        ]
+    },
+    "PREP_ppMember": {
+        "preValidationNotes": [],
+        "stepNotes": [],
+        "postValidationNotes": [],
+        "postStepAssignmentNotes": []
+    },
+    "EXECUTE_ppMember": {
+        "preValidationNotes": [],
+        "stepNotes": [
+            "IF local.getItem(familyId) is 'INSTANTIATE'",
+            "THEN New Member",
+            "ELSE Update Member"
+        ],
+        "postValidationNotes": [],
+        "postStepAssignmentNotes": [
+            "Overwrite local.setItem(familyId) – even if Update, one place not two"
+        ]
+    },
+    "PREP_stMember": {
+        "preValidationNotes": [],
+        "stepNotes": [
+            "AFTER t202106 there needs to be check for existing Student Member/Contact"
+        ],
+        "postValidationNotes": [],
+        "postStepAssignmentNotes": []
+    },
+    "EXECUTE_stMember": {
+        "preValidationNotes": [],
+        "stepNotes": [],
+        "postValidationNotes": [],
+        "postStepAssignmentNotes": [
+            "Set local.setItem(studentId) – even if Update, one place not two"
+        ]
+    },
+    "PREP_ppContact": {
+        "preValidationNotes": [],
+        "stepNotes": [],
+        "postValidationNotes": [],
+        "postStepAssignmentNotes": []
+    },
+    "PREP_ppDatabase": {
+        "preValidationNotes": [],
+        "stepNotes": [
+            "build DB JSON as Courses (including financials) Keyed by StudentID (for multi-child families)"
+        ],
+        "postValidationNotes": [],
+        "postStepAssignmentNotes": []
+    },
+    "PREP_stContact": {
+        "preValidationNotes": [],
+        "stepNotes": [],
+        "postValidationNotes": [],
+        "postStepAssignmentNotes": []
+    },
+    "PREP_stDatabase": {
+        "preValidationNotes": [],
+        "stepNotes": [
+            "build DB JSON to include Courses - Exclude the finanicals"
+        ],
+        "postValidationNotes": [],
+        "postStepAssignmentNotes": []
+    },
+    "PREP_spContact": {
+        "preValidationNotes": [],
+        "stepNotes": [
+            "this part of the form is optional, could be MOOT"
+        ],
+        "postValidationNotes": [],
+        "postStepAssignmentNotes": []
+    },
+    "PREP_spDatabase": {
+        "preValidationNotes": [],
+        "stepNotes": [
+            "this part of the form is optional, could be MOOT"
+        ],
+        "postValidationNotes": [],
+        "postStepAssignmentNotes": []
+    },
+    "EXECUTE_ppContact": {
+        "preValidationNotes": [],
+        "stepNotes": [],
+        "postValidationNotes": [],
+        "postStepAssignmentNotes": []
+    },
+    "EXECUTE_ppDatabase": {
+        "preValidationNotes": [],
+        "stepNotes": [],
+        "postValidationNotes": [],
+        "postStepAssignmentNotes": []
+    },
+    "EXECUTE_stContact": {
+        "preValidationNotes": [],
+        "stepNotes": [],
+        "postValidationNotes": [],
+        "postStepAssignmentNotes": []
+    },
+    "EXECUTE_stDatabase": {
+        "preValidationNotes": [],
+        "stepNotes": [],
+        "postValidationNotes": [],
+        "postStepAssignmentNotes": []
+    },
+    "EXECUTE_spContact": {
+        "preValidationNotes": [],
+        "stepNotes": [
+            "this part of the form is optional, could be MOOT"
+        ],
+        "postValidationNotes": [],
+        "postStepAssignmentNotes": []
+    },
+    "EXECUTE_spDatabase": {
+        "preValidationNotes": [],
+        "stepNotes": [
+            "this part of the form is optional, could be MOOT"
+        ],
+        "postValidationNotes": [],
+        "postStepAssignmentNotes": []
+    },
+    "CCOMPLETE": {
+        "preValidationNotes": [],
+        "stepNotes": [],
+        "postValidationNotes": [],
+        "postStepAssignmentNotes": [
+            "run Storage Clean-Up"
+        ]
+    }
+}

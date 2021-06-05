@@ -1,0 +1,348 @@
+{
+    "IINSTANTIATE": {
+        "preValidationNotes": [
+            "Validate storage-cleanup"
+        ],
+        "stepNotes": [
+            "Prep & Execute Primary Parent Member first Then Prep & Execute Student Member second",
+            "Primary Parent Member is necessary for Family ID",
+            "Student Member is necessary for Student ID as Key to multi-child courseArray Key for Parent JSON in DB",
+            "THEN all the Remaining PREP",
+            "THEN all the actual EXECUTE (probably best to make this more contexual"
+        ],
+        "postStepAssignmentNotes": [
+            "local.setItem(familyId) whatever it is"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "PREP_ppMember": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "EXECUTE_ppMember": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "IF local.getItem(familyId) is 'INSTANTIATE'",
+            "THEN New Member",
+            "ELSE Update Member"
+        ],
+        "postStepAssignmentNotes": [
+            "Overwrite local.setItem(familyId) – even if Update, one place not two"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "PREP_stMember": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "EXECUTE_stMember": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Set local.setItem(studentId) – even if Update, one place not two"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "PREP_ppContact": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "PREP_ppDatabase": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Prep & Execute Primary Parent Member first iThen Prep & Execute Primary Parent Member first is necessary for Family ID"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "PREP_stContact": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "PREP_stDatabase": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "PREP_spMember": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "PREP_spContact": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "PREP_spDatabase": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "EXECUTE_ppContact": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "EXECUTE_ppDatabase": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "EXECUTE_stContact": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "EXECUTE_stDatabase": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "EXECUTE_spMember": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "EXECUTE_spContact": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "EXECUTE_spDatabase": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "CCOMPLETE": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "run Storage Clean-Up"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    }
+}

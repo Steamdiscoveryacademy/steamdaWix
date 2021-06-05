@@ -1,0 +1,342 @@
+{
+    "IINSTANTIATE": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "PREP_ppMember": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "EXECUTE_ppMember": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "PREP_ppContact": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "PREP_ppDatabase": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "PREP_stMember": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "PREP_stContact": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "PREP_stDatabase": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "PREP_spMember": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "PREP_spContact": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "PREP_spDatabase": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "EXECUTE_ppContact": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "EXECUTE_ppDatabase": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "EXECUTE_stMember": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "EXECUTE_stContact": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "EXECUTE_stDatabase": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "EXECUTE_spMember": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "EXECUTE_spContact": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "EXECUTE_spDatabase": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    },
+    "CCOMPLETE": {
+        "preValidationNotes": [
+            "Notes on any Pre-Validation Required"
+        ],
+        "stepNotes": [
+            "Notes on the actual Step"
+        ],
+        "postStepAssignmentNotes": [
+            "Notes on any Required Storage"
+        ],
+        "postStepCleanupNotes": [
+            "Notes on any Post-Step 'Clean-Up'"
+        ],
+        "postValidationNotes": [
+            "Notes on any Post-Validation"
+        ]
+    }
+}

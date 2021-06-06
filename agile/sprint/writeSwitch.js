@@ -16,6 +16,14 @@ stepArrayOrig.forEach(element => {
     comma = ',';
 });
 stepArrayDeclarationString += `];`;
+let resetBlock = `if(memory.getItem('enrollmentStepList').indexOf(',') < 0){`;
+resetBlock += `\n` + ind4 + `let stepArrayList = stepArray.toString();`;
+resetBlock += `\n` + ind4 + `memory.setItem('enrollmentStepList',stepArrayList);`;
+resetBlock += `\n` + ind4 + `memory.setItem('enrollmentStepCurrent','PPENDING');`;
+resetBlock += `\n` + ind4 + `let stepNext = memory.getItem('enrollmentStepList').substr(0,memory.getItem('enrollmentStepList').indexOf(','));`;
+resetBlock += `\n` + ind4 + `memory.setItem('enrollmentStepNext',stepNext);`;
+resetBlock += `\n` + ind0 + `}`;
+
 // console.warn('stepArrayDeclarationString: ');
 // console.warn(stepArrayDeclarationString);
 // ! </could be a function>
@@ -28,10 +36,10 @@ let stepArray = stepList.split(',');
 // console.warn(stepArray);
 
 let exitAfterStepDeclarationAndCheckString = `\n` + ind0 + `let exitAfter = 'ALL';`
-    + `\n` + ind0 + `let exitNow = false;`
-    + `\n` + ind0 + `exitNow = true; //Force: until logic below is ready`
+    + `\n` + ind0 + `let exitNow = 'FFALSE';`
+    + `\n` + ind0 + `exitNow = 'TTRUE'; //Force: until logic below is ready`
     + `\n` + ind0 + `//memory.getItem(List) if indexOf(exitAfter) < indexOf('CCOMPLETE')`
-    + `\n` + ind0 + `exitNow = exitAfter === 'ALL' ? true : exitNow;`;
+    + `\n` + ind0 + `exitNow = exitAfter === 'ALL' ? 'TTRUE' : exitNow;`;
 // console.warn('exitAfterStepDeclarationAndCheckString: ');
 // console.warn(exitAfterStepDeclarationAndCheckString);
 
@@ -58,22 +66,54 @@ let switchItemEndString = `\n` + ind8 + `break;`
 // console.warn('switchItemEndString: ');
 // console.warn(switchItemEndString);
 
-
+let functionCode = '';
+let functionCodeThis = '';
+let functionStringKey = '';
+let switchElementThis = '';
 let switchCode = stepArrayDeclarationString;
+switchCode += resetBlock;
 switchCode += exitAfterStepDeclarationAndCheckString;
 switchCode += loopBeginString;
 switchCode += switchBeginString;
 // let buildFunctionName = '';
+let prepORexecute = '';
+let now = "00000000000000";
 stepArray.forEach(stepKey => {
     // console.log(stepKey);
     // ! <could be a function>
+    prepORexecute = stepKey.substr(0,4) === 'PREP' ? 'PREP' : 'NNULL';
+    prepORexecute = stepKey.substr(0,7) === 'EXECUTE' ? 'EXECUTE' : prepORexecute;
     let functionString = stepKey.substr(0,5) === 'PREP_' ? stepKey.substr(5) : '';
     functionString = stepKey.substr(0,8) === 'EXECUTE_' ? stepKey.substr(8) : functionString;
     functionString += stepKey.substr(0,5) === 'PREP_' ? 'Prep' : '';
     functionString += stepKey.substr(0,8) === 'EXECUTE_' ? 'Execute' : '';
     functionString += stepKey.substr(0,5) === 'PREP_' ? 'JSON' : '';
     functionString += stepKey.substr(0,8) === 'EXECUTE_' ? 'Upsert' : '';
+    functionStringKey = functionString.length > 0 ? functionString : '';
+    functionCodeThis = functionString.length > 0 ? 'export function ' + functionString + '()' : '';
     functionString = functionString.length > 0 ? '\n'+ ind12 + functionString + '()' : '';
+    if(functionCodeThis.length > 0){
+        // now = toLocalISO();
+        console.log
+        functionCodeThis += `{`;
+        if(prepORexecute === 'PREP'){
+            functionCodeThis += `\n` + ind4 + `let now = new Date();`;
+            functionCodeThis += `\n` + ind4 + `let timeDateString = ' [ on ' + now.toLocaleDateString() + ']';`;
+            functionCodeThis += `\n` + ind4 + `timeDateString = now.toLocaleTimeString('en-US') + timeDateString;`;
+            functionCodeThis += `\n` + ind4 + `memory.setItem('` + functionStringKey + `','` + functionStringKey + `' + ' set on ' + timeDateString);`;
+            functionCodeThis += `\n` + ind4 + `console.log(memory.getItem('` + functionStringKey + `');`;
+        } 
+        if(prepORexecute === 'EXECUTE'){
+            functionCodeThis += `\n` + ind4 + `let now = new Date();`;
+            functionCodeThis += `\n` + ind4 + `let timeDateString = ' [ on ' + now.toLocaleDateString() + ']';`;
+            functionCodeThis += `\n` + ind4 + `timeDateString = now.toLocaleTimeString('en-US') + timeDateString;`;
+            // functionCodeThis += `\n` + ind4 + `memory.setItem('` + functionStringKey + `','` + functionStringKey + `' + ' set on ' + timeDateString);`;
+            functionCodeThis += `\n` + ind4 + `console.log('` + functionStringKey + ` set on ' + timeDateString);`;
+        }
+        functionCodeThis += `\n` + ind0 + `}`; 
+        functionCode += `\n\n` + functionCodeThis; 
+    }
+
     // console.warn('functionString: ' + functionString);
     // ! </could be a function>
     // ! <could be a function>
@@ -93,8 +133,28 @@ stepArray.forEach(stepKey => {
 switchCode += switchEndString;
 switchCode += loopEndString;
 
-console.warn('switchCode: ');
-console.warn(switchCode);
+// console.warn('switchCode: ');
+// console.warn(switchCode);
 
+console.warn('functionCode: ');
+console.warn(functionCode);
+
+// ø <---------- <toLocalISO>  ---------->
+// export function toLocalISO( date ){
+// 	let isDate = date instanceof Date && !isNaN(date.valueOf());
+// 	let now = new Date();
+// 	let evalDate = isDate ? date : now;
+// 	let returnString = '';
+// 	returnString += evalDate.getFullYear();
+// 	returnString += ("00" + (evalDate.getMonth() + 1).toString()).substr(-2);
+// 	returnString += ("00" + evalDate.getDate().toString()).substr(-2);
+// 	// returnString += evalDate.getDate();
+// 	returnString += ("00" + evalDate.getHours().toString()).substr(-2);;
+// 	returnString += ("00" + evalDate.getMinutes().toString()).substr(-2);;
+// 	returnString += ("00" + evalDate.getSeconds().toString()).substr(-2);;
+
+// 	return returnString;
+// }
+// ø <---------- </toLocalISO> ---------->
 
 

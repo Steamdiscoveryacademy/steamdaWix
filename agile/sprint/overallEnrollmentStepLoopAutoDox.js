@@ -93,3 +93,4 @@ stepDoxObject.CCOMPLETE.postStepAssignmentNotes[0] = "run Storage Clean-Up";
 
 //  console.warn('JSON.stringify(overallEnrollmentDoxObject.stepDoxObject): ');
 //  console.warn(JSON.stringify(stepDoxObject));
+ console.warn(JSON.stringify(stepDoxObject,undefined,4));

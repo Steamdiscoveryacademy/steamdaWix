@@ -125,8 +125,12 @@ let ind0 = '';
 let ind4 = '    ';
 let cleanupCodeEnrollmentNew = `export function doEnrollmentCleanupNew(){`;
 cleanupCodeEnrollmentNew += `\n` + ind0 + `// ø <code Cleanup for New Enrollment>`;
+cleanupCodeEnrollmentNew += `\n` + ind0 + `return 'This process is  could screw things up and is rarely necessary, therefore, it has been disabled.\\nNo action taken. Please ask for assistance.';`;
 let cleanupCodeEnrollmentCurrent = `export function doEnrollmentCleanupCurrent(){`;
 cleanupCodeEnrollmentCurrent += `\n` + ind0 + `// ø <code Cleanup for Current Enrollment> mostly for testing`;
+let logCodeEnrollmentCurrent = `export function doEnrollmentLogCurrent(){`;
+logCodeEnrollmentCurrent += `\n` + ind0 + `// ø <code Log for Current Enrollment> mostly for testing`;
+logCodeEnrollmentCurrent += `\n` + ind4 + `let logString = '';`;
 
 
 let cleanupArray = storageObject.storageObjectArray;
@@ -140,7 +144,11 @@ for (let index = 0; index < cleanupArray.length; index++) {
     cleanupValue = typeof cleanupElementObject.emptyValue === 'string' && cleanupElementObject.emptyValue.length > 0 ? cleanupElementObject.emptyValue :cleanupValueDefault;
     cleanupElementLine += `.setItem('` + cleanupElementObject.memoryKey + `','` + cleanupValue + `');`;
     cleanupElementLine = cleanupElementObject.confirmed === false ? '//' + cleanupElementLine : cleanupElementLine
+    logLine = `` + `logString += `;//Assignment
+    logLine += `"` + cleanupElementObject.memoryKind + `.getItem('` + cleanupElementObject.memoryKey + `'): "`;//Label
+    logLine += ` + ` + cleanupElementObject.memoryKind + `.getItem('` + cleanupElementObject.memoryKey + `'); `;//Value
     
+
     // console.warn('cleanupElementLine: ');
     // console.warn(cleanupElementLine);
     // cleanupCodeEnrollmentNew += `\n` + ind4 + cleanupElementLine;
@@ -151,7 +159,9 @@ for (let index = 0; index < cleanupArray.length; index++) {
     }
     if(cleanupElementObject.codeKind.indexOf('|CURRENT|') >= 0){
         cleanupCodeEnrollmentCurrent += `\n` + ind4 + cleanupElementLine;
+        logCodeEnrollmentCurrent += `\n` + ind4 + logLine;
     }else{
+        logCodeEnrollmentCurrent += `\n` + ind4 + '/*Not CURRENT*///' + logLine;
         cleanupCodeEnrollmentCurrent += `\n` + ind4 + '/*Not CURRENT*///' + cleanupElementLine;
     }
 }
@@ -160,17 +170,26 @@ for (let index = 0; index < cleanupArray.length; index++) {
 
 cleanupCodeEnrollmentNew += `\n` + ind0 + `// ø </code Cleanup for New Enrollment>`;
 cleanupCodeEnrollmentNew += `\n` + ind0 + `}`;
+
 cleanupCodeEnrollmentCurrent += `\n` + ind0 + `// ø </code Cleanup for Current Enrollment>`;
+cleanupCodeEnrollmentCurrent += `\n` + ind4 + `return "The Current Enrollment Data has been Reset to 'EEMPTY', Clean-Up Successful.";`;
 cleanupCodeEnrollmentCurrent += `\n` + ind0 + `}`;
 
+logCodeEnrollmentCurrent += `\n` + ind4 + `return logString;`;
+logCodeEnrollmentCurrent += `\n` + ind0 + `// ø </code Log for Current Enrollment>`;
+logCodeEnrollmentCurrent += `\n` + ind0 + `}`;
 
 
 
-console.warn('cleanupCodeEnrollmentNew: ');
+
+console.warn('//cleanupCodeEnrollmentNew: ');
 console.warn(cleanupCodeEnrollmentNew);
 
-console.warn('cleanupCodeEnrollmentCurrent: ');
+console.warn('//cleanupCodeEnrollmentCurrent: ');
 console.warn(cleanupCodeEnrollmentCurrent);
+
+console.warn('//logCodeEnrollmentCurrent: ');
+console.warn(logCodeEnrollmentCurrent);
 
 
 

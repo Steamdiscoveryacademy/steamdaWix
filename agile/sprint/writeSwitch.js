@@ -1,4 +1,6 @@
 
+
+
 let stepKey = 'HHOLDER';
 let stepArrayOrig = [ 'IINSTANTIATE','PREP_ppMember','EXECUTE_ppMember','PREP_stMember','EXECUTE_stMember','PREP_ppContact','PREP_ppDatabase','PREP_stContact','PREP_stDatabase','PREP_spContact','PREP_spDatabase','EXECUTE_ppContact','EXECUTE_ppDatabase','EXECUTE_stContact','EXECUTE_stDatabase','EXECUTE_spContact','EXECUTE_spDatabase','CCOMPLETE' ];
 //`\n` + ind0 + `
@@ -16,7 +18,7 @@ stepArrayOrig.forEach(element => {
     comma = ',';
 });
 stepArrayDeclarationString += `];`;
-let resetBlock = `if(memory.getItem('enrollmentStepList').indexOf(',') < 0){`;
+let resetBlock = `\n` + ind0 + `if(memory.getItem('enrollmentStepList').indexOf(',') < 0){`;
 resetBlock += `\n` + ind4 + `let stepArrayList = stepArray.toString();`;
 resetBlock += `\n` + ind4 + `memory.setItem('enrollmentStepList',stepArrayList);`;
 resetBlock += `\n` + ind4 + `memory.setItem('enrollmentStepCurrent','PPENDING');`;
@@ -69,11 +71,13 @@ let switchItemEndString = `\n` + ind8 + `break;`
 let functionCode = '';
 let functionCodeThis = '';
 let functionStringKey = '';
+let codeOverallLoopSwitch = '';
 let switchElementThis = '';
-let switchCode = stepArrayDeclarationString;
-switchCode += resetBlock;
-switchCode += exitAfterStepDeclarationAndCheckString;
-switchCode += loopBeginString;
+let switchCode = '';
+codeOverallLoopSwitch = stepArrayDeclarationString;
+codeOverallLoopSwitch += resetBlock;
+codeOverallLoopSwitch += exitAfterStepDeclarationAndCheckString;
+codeOverallLoopSwitch += loopBeginString;
 switchCode += switchBeginString;
 // let buildFunctionName = '';
 let prepORexecute = '';
@@ -100,15 +104,15 @@ stepArray.forEach(stepKey => {
             functionCodeThis += `\n` + ind4 + `let now = new Date();`;
             functionCodeThis += `\n` + ind4 + `let timeDateString = ' [ on ' + now.toLocaleDateString() + ']';`;
             functionCodeThis += `\n` + ind4 + `timeDateString = now.toLocaleTimeString('en-US') + timeDateString;`;
-            functionCodeThis += `\n` + ind4 + `memory.setItem('` + functionStringKey + `','` + functionStringKey + `' + ' set on ' + timeDateString);`;
-            functionCodeThis += `\n` + ind4 + `console.log(memory.getItem('` + functionStringKey + `');`;
+            functionCodeThis += `\n` + ind4 + `memory.setItem('` + functionStringKey + `','` + functionStringKey + `' + ' PREPPED on ' + timeDateString);`;
+            // functionCodeThis += `\n` + ind4 + `console.log(memory.getItem('` + functionStringKey + `');`;
         } 
         if(prepORexecute === 'EXECUTE'){
             functionCodeThis += `\n` + ind4 + `let now = new Date();`;
             functionCodeThis += `\n` + ind4 + `let timeDateString = ' [ on ' + now.toLocaleDateString() + ']';`;
             functionCodeThis += `\n` + ind4 + `timeDateString = now.toLocaleTimeString('en-US') + timeDateString;`;
-            // functionCodeThis += `\n` + ind4 + `memory.setItem('` + functionStringKey + `','` + functionStringKey + `' + ' set on ' + timeDateString);`;
-            functionCodeThis += `\n` + ind4 + `console.log('` + functionStringKey + ` set on ' + timeDateString);`;
+            functionCodeThis += `\n` + ind4 + `memory.setItem('` + functionStringKey + `','` + functionStringKey + `' + ' EXECUTED on ' + timeDateString);`;
+            // functionCodeThis += `\n` + ind4 + `console.log('` + functionStringKey + ` set on ' + timeDateString);`;
         }
         functionCodeThis += `\n` + ind0 + `}`; 
         functionCode += `\n\n` + functionCodeThis; 
@@ -131,10 +135,17 @@ stepArray.forEach(stepKey => {
     switchCode += switchElementThis;
 });
 switchCode += switchEndString;
-switchCode += loopEndString;
+codeOverallLoopSwitch += switchCode;
+
+
+
+codeOverallLoopSwitch += loopEndString;
 
 // console.warn('switchCode: ');
 // console.warn(switchCode);
+
+// console.warn('codeOverallLoopSwitch: ');
+// console.warn(codeOverallLoopSwitch);
 
 console.warn('functionCode: ');
 console.warn(functionCode);

@@ -50,29 +50,29 @@ let stepArray = stepList.split(',');
 // console.warn('exitAfterStepDeclarationAndCheckString: ');
 // console.warn(exitAfterStepDeclarationAndCheckString);
 
-let doInstantiateExitAfterFunction = '<---------- <doInstantiateExitAfter>  ---------->';
-doInstantiateExitAfterFunction += `\n` + ind0Z + `export function doInstantiateExitAfter(exitAfter = 'FFALSE'){`;
+let doInstantiateExitAfterFunction = '// ø <---------- <doInstantiateExitAfter>  ---------->';
+doInstantiateExitAfterFunction += `\n` + ind0Z + `export function doInstantiateExitAfter(exitAfter = 'TTRUE_FUCNTION_DEFAULT'){`;
 doInstantiateExitAfterFunction += `\n` + ind4Z + `let exitNow = 'FFALSE';`;
 doInstantiateExitAfterFunction += `\n` + ind4Z + `//exitNow = 'TTRUE_FORCE'; //Force: until logic below is ready`;
 doInstantiateExitAfterFunction += `\n` + ind4Z + `exitNow = exitAfter === 'ALL' ? 'TTRUE_ALL' : exitNow;`;
 doInstantiateExitAfterFunction += `\n` + ind4Z + `memory.setItem('loopExitAfterStep',exitAfter);`;
 doInstantiateExitAfterFunction += `\n` + ind4Z + `memory.setItem('loopExitNow',exitNow);`;
 doInstantiateExitAfterFunction += `\n` + ind0Z + '}';
-doInstantiateExitAfterFunction += `\n` + ind0Z + '<---------- </doInstantiateExitAfter> ---------->';
+doInstantiateExitAfterFunction += `\n` + ind0Z + '// ø <---------- </doInstantiateExitAfter> ---------->';
 
 
 let exitAfterSwitchCheckBlock = '';
-exitAfterSwitchCheckBlock += `\n` + ind0Z + `// ø <ExitAfter Switch Check>`;
-// exitAfterSwitchCheckBlock += `\n` + ind4Z + `exitNow = exitAfter === memory.getItem('enrollmentStepCurrent') ? 'EXIT_AFTER_MATCH' : exitNow;`;
-// exitAfterSwitchCheckBlock += `\n` + ind4Z + `exitNow = memory.getItem('enrollmentStepCurrent') === 'CCOMPLETE' ? 'EXIT_CCOMPLETE_CURRENT' : exitNow;`;
-exitAfterSwitchCheckBlock += `\n` + ind4Z + `doCheckExitAfter();`;
-exitAfterSwitchCheckBlock += `\n` + ind4Z + `if(memory.getItem('loopExitNow') !== 'FFALSE'){`;
-exitAfterSwitchCheckBlock += `\n` + ind8Z + `break;//(Break Loop is Exit)`;
-exitAfterSwitchCheckBlock += `\n` + ind4Z + `}`;
-exitAfterSwitchCheckBlock += `\n` + ind0Z + `// ø </ExitAfter Switch Check>`;
+// exitAfterSwitchCheckBlock += `\n` + ind0Z + `// ø <ExitAfter Switch Check>`;
+// // exitAfterSwitchCheckBlock += `\n` + ind4Z + `exitNow = exitAfter === memory.getItem('enrollmentStepCurrent') ? 'EXIT_AFTER_MATCH' : exitNow;`;
+// // exitAfterSwitchCheckBlock += `\n` + ind4Z + `exitNow = memory.getItem('enrollmentStepCurrent') === 'CCOMPLETE' ? 'EXIT_CCOMPLETE_CURRENT' : exitNow;`;
+// exitAfterSwitchCheckBlock += `\n` + ind4Z + `doCheckExitAfter();`;
+// exitAfterSwitchCheckBlock += `\n` + ind4Z + `if(memory.getItem('loopExitNow') !== 'FFALSE'){`;
+// exitAfterSwitchCheckBlock += `\n` + ind8Z + `break;//(Break Loop is Exit)`;
+// exitAfterSwitchCheckBlock += `\n` + ind4Z + `}`;
+// exitAfterSwitchCheckBlock += `\n` + ind0Z + `// ø </ExitAfter Switch Check>`;
 
 
-let exitAfterSwitchCheckFunction = '<---------- <doCheckExitAfter> ---------->';
+let exitAfterSwitchCheckFunction = '// ø <---------- <doCheckExitAfter> ---------->';
 exitAfterSwitchCheckFunction += `\n` + ind0Z + 'export function doCheckExitAfter(){';
 exitAfterSwitchCheckFunction += `\n` + ind0Z + `// ø <ExitAfter Switch Check>`;
 exitAfterSwitchCheckFunction += `\n` + ind4Z + `let exitNow = memory.getItem('loopExitNow')`;
@@ -82,7 +82,7 @@ exitAfterSwitchCheckFunction += `\n` + ind4Z + `exitNow = memory.getItem('enroll
 exitAfterSwitchCheckFunction += `\n` + ind4Z + `memory.setItem('loopExitNow',exitNow);`;
 exitAfterSwitchCheckFunction += `\n` + ind0Z + `// ø </ExitAfter Switch Check>`;
 exitAfterSwitchCheckFunction += `\n` + ind0Z + '}';
-exitAfterSwitchCheckFunction += `\n` + ind0Z + '<---------- <doCheckExitAfter> ---------->';
+exitAfterSwitchCheckFunction += `\n` + ind0Z + '// ø <---------- <doCheckExitAfter> ---------->';
 
 
 
@@ -192,15 +192,15 @@ codeOverallLoopSwitch += loopEndString;
 // console.warn('switchCode: ');
 // console.warn(switchCode);
 
-console.warn('codeOverallLoopSwitch: ');
-console.warn(codeOverallLoopSwitch);
+// console.warn('codeOverallLoopSwitch: ');
+// console.warn(codeOverallLoopSwitch);
 
 // console.warn('functionCode: ');
 // console.warn(functionCode);
-// console.warn('doInstantiateExitAfterFunction: ');
-// console.warn(doInstantiateExitAfterFunction);
-// console.warn('exitAfterSwitchCheckFunction: ');
-// console.warn(exitAfterSwitchCheckFunction);
+console.warn('//doInstantiateExitAfterFunction: ');
+console.warn(doInstantiateExitAfterFunction);
+console.warn('//exitAfterSwitchCheckFunction: ');
+console.warn(exitAfterSwitchCheckFunction);
 
 // ø <---------- <toLocalISO>  ---------->
 // export function toLocalISO( date ){

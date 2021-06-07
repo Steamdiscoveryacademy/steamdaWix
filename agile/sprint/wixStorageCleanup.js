@@ -121,6 +121,23 @@ storageObjectElement.codeKind = '|HHOLDER|CURRENT|NEW|';
 storageObjectElement.confirmed = true;
 storageObject.storageObjectArray.push(storageObjectElement);
 
+storageObjectElement = {};
+storageObjectElement.memoryKey = 'loopExitAfterStep';
+storageObjectElement.memoryKind = 'local';
+storageObjectElement.codeKind = '|HHOLDER|CURRENT|NEW|';
+storageObjectElement.confirmed = true;
+storageObject.storageObjectArray.push(storageObjectElement);
+
+storageObjectElement = {};
+storageObjectElement.memoryKey = 'loopExitNow';
+storageObjectElement.memoryKind = 'local';
+storageObjectElement.codeKind = '|HHOLDER|CURRENT|NEW|';
+storageObjectElement.emptyValue = 'TTRUE_DEFUALT';
+storageObjectElement.confirmed = true;
+storageObject.storageObjectArray.push(storageObjectElement);
+
+
+
 let ind0 = '';
 let ind4 = '    ';
 let cleanupCodeEnrollmentNew = `export function doEnrollmentCleanupNew(){`;
@@ -145,7 +162,7 @@ for (let index = 0; index < cleanupArray.length; index++) {
     cleanupElementLine += `.setItem('` + cleanupElementObject.memoryKey + `','` + cleanupValue + `');`;
     cleanupElementLine = cleanupElementObject.confirmed === false ? '//' + cleanupElementLine : cleanupElementLine
     logLine = `` + `logString += `;//Assignment
-    logLine += `"` + cleanupElementObject.memoryKind + `.getItem('` + cleanupElementObject.memoryKey + `'): "`;//Label
+    logLine += `'\\n' + "` + cleanupElementObject.memoryKind + `.getItem('` + cleanupElementObject.memoryKey + `'): "`;//Label
     logLine += ` + ` + cleanupElementObject.memoryKind + `.getItem('` + cleanupElementObject.memoryKey + `'); `;//Value
     
 
@@ -182,8 +199,8 @@ logCodeEnrollmentCurrent += `\n` + ind0 + `}`;
 
 
 
-console.warn('//cleanupCodeEnrollmentNew: ');
-console.warn(cleanupCodeEnrollmentNew);
+// console.warn('//cleanupCodeEnrollmentNew: ');
+// console.warn(cleanupCodeEnrollmentNew);
 
 console.warn('//cleanupCodeEnrollmentCurrent: ');
 console.warn(cleanupCodeEnrollmentCurrent);

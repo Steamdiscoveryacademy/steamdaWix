@@ -53,9 +53,10 @@ console.warn('exitNow: ' + exitNow);
 
 
 
-export function stepsDisplayStatus(List,Current,Next,tag = 'unknown tag'){
+export function stepsDisplayStatus(List,Current,Next,Completed,tag = 'unknown tag'){
     console.warn('========================================')
     console.warn('==========      <'+tag+'>     ==========')
+    console.warn('memItemCOMPLETED: ' + Completed)
     console.warn('memItemCURRENT: ' + Current)
     console.warn('memItemNEXT: ' + Next)
     console.warn('memItemLIST: ')
@@ -68,6 +69,7 @@ export function stepsDisplayStatus(List,Current,Next,tag = 'unknown tag'){
 export function stepsCycleSteps(thisMemItemLIST){
     //memItemLIST will be replaced with memory.getItem()
     let funcStepArray = thisMemItemLIST.split(',');
+    let funcMemItemCOMPLETED = funcStepArray[0];
     let funcMemItemCURRENT = funcStepArray[1];
     let funcMemItemNEXT = funcStepArray[2];
     let cycleElement = funcStepArray.shift();

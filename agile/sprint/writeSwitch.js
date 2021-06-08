@@ -2,7 +2,7 @@
 
 
 let stepKey = 'HHOLDER';
-let stepArrayOrig = [ 'IINSTANTIATE','PREP_ppMember','EXECUTE_ppMember','PREP_stMember','EXECUTE_stMember','PREP_ppContact','PREP_ppDatabase','PREP_stContact','PREP_stDatabase','PREP_spContact','PREP_spDatabase','EXECUTE_ppContact','EXECUTE_ppDatabase','EXECUTE_stContact','EXECUTE_stDatabase','EXECUTE_spContact','EXECUTE_spDatabase','CCOMPLETE' ];
+let stepArrayOrig = ['IINSTANTIATE', 'PREP_ppMember', 'EXECUTE_ppMember', 'PREP_stMember', 'EXECUTE_stMember', 'PREP_ppContact', 'PREP_ppDatabase', 'PREP_stContact', 'PREP_stDatabase', 'PREP_spContact', 'PREP_spDatabase', 'EXECUTE_ppContact', 'EXECUTE_ppDatabase', 'EXECUTE_stContact', 'EXECUTE_stDatabase', 'EXECUTE_spContact', 'EXECUTE_spDatabase', 'CCOMPLETE'];
 //`\n` + ind0 + `
 let ind0 = '';
 let ind0Z = '';
@@ -62,14 +62,14 @@ doInstantiateExitAfterFunction += `\n` + ind0Z + '// ø <---------- </doInstanti
 
 
 let exitAfterSwitchCheckBlock = '';
-// exitAfterSwitchCheckBlock += `\n` + ind0Z + `// ø <ExitAfter Switch Check>`;
-// // exitAfterSwitchCheckBlock += `\n` + ind4Z + `exitNow = exitAfter === memory.getItem('enrollmentStepCurrent') ? 'EXIT_AFTER_MATCH' : exitNow;`;
-// // exitAfterSwitchCheckBlock += `\n` + ind4Z + `exitNow = memory.getItem('enrollmentStepCurrent') === 'CCOMPLETE' ? 'EXIT_CCOMPLETE_CURRENT' : exitNow;`;
-// exitAfterSwitchCheckBlock += `\n` + ind4Z + `doCheckExitAfter();`;
-// exitAfterSwitchCheckBlock += `\n` + ind4Z + `if(memory.getItem('loopExitNow') !== 'FFALSE'){`;
-// exitAfterSwitchCheckBlock += `\n` + ind8Z + `break;//(Break Loop is Exit)`;
-// exitAfterSwitchCheckBlock += `\n` + ind4Z + `}`;
-// exitAfterSwitchCheckBlock += `\n` + ind0Z + `// ø </ExitAfter Switch Check>`;
+exitAfterSwitchCheckBlock += `\n` + ind0Z + `// ø <ExitAfter Switch Check>`;
+// exitAfterSwitchCheckBlock += `\n` + ind4Z + `exitNow = exitAfter === memory.getItem('enrollmentStepCurrent') ? 'EXIT_AFTER_MATCH' : exitNow;`;
+// exitAfterSwitchCheckBlock += `\n` + ind4Z + `exitNow = memory.getItem('enrollmentStepCurrent') === 'CCOMPLETE' ? 'EXIT_CCOMPLETE_CURRENT' : exitNow;`;
+exitAfterSwitchCheckBlock += `\n` + ind4Z + `doCheckExitAfter();`;
+exitAfterSwitchCheckBlock += `\n` + ind4Z + `if(memory.getItem('loopExitNow') !== 'FFALSE'){`;
+exitAfterSwitchCheckBlock += `\n` + ind8Z + `break;//(Break Loop is Exit)`;
+exitAfterSwitchCheckBlock += `\n` + ind4Z + `}`;
+exitAfterSwitchCheckBlock += `\n` + ind0Z + `// ø </ExitAfter Switch Check>`;
 
 
 let exitAfterSwitchCheckFunction = '// ø <---------- <doCheckExitAfter> ---------->';
@@ -88,22 +88,24 @@ exitAfterSwitchCheckFunction += `\n` + ind0Z + '// ø <---------- <doCheckExitAf
 
 
 
-let loopBeginString = `\n`+'<---------- <doStepLoopSwitch>  ---------->';
-loopBeginString += `\n`+'export function doStepLoopSwitch(){';
+let loopBeginString = `\n` + '// ø <---------- <doStepLoopSwitch>  ---------->';
+loopBeginString += `\n` + 'export function doStepLoopSwitch(){';
 loopBeginString += `\n` + ind0Z + `let stepKey = 'PPENDING';`;
+loopBeginString += `\n` + ind0Z + `let stepArray = memory.getItem('enrollmentStepList').split(',');`;
 loopBeginString += `\n` + ind0Z + `for (let stepArrayIndex = 0; stepArrayIndex < stepArray.length; stepArrayIndex++) {`;
 loopBeginString += `\n` + ind4Z + `stepKey = stepArray[stepArrayIndex];`;
 loopBeginString += `\n` + ind4Z + `console.warn('stepKey[' + stepArrayIndex + ']:' + stepKey);`;
 let loopEndString = `\n` + ind0Z + `}`;
 loopEndString += `\n` + ind0Z + `}`;
-loopEndString += `\n`+'<---------- </doStepLoopSwitch> ---------->';
+loopEndString += `\n` + '// ø <---------- </doStepLoopSwitch> ---------->';
 
 let switchBeginString = `\n` + ind4Z + `let errorString = '';`
     + `\n` + ind4Z + `switch (stepKey) {`;
 let switchEndString = `\n\n` + ind8Z + `default:`
-+ `\n` + ind12Z + `errorString = 'stepKey ('`+` + stepKey + `+`') is Not Supported within this Switch Structure';`
-+ `\n` + ind12Z + `break;`
-+ `\n` + ind4Z + `}`;
+    + `\n` + ind12Z + `errorString = 'stepKey ('` + ` + stepKey + ` + `') is Not Supported within this Switch Structure';`
+    + `\n` + ind12Z + `break;`
+    + `\n` + ind4Z + `}`;
+let switchCycleStepsString = `\n`+ ind4Z + `stepsCycleSteps();`;
 // console.warn('switchEndString: ');
 // console.warn(switchEndString);
 let switchItemBeginString = `\n` + ind8Z + `case '` + stepKey + `':`;
@@ -119,7 +121,7 @@ let functionCode = '';
 let functionCodeThis = '';
 let functionStringKey = '';
 let codeOverallLoopSwitch = '';
-let switchElementThis = ''; 
+let switchElementThis = '';
 let switchCode = '';
 // codeOverallLoopSwitch = stepArrayDeclarationString;
 // codeOverallLoopSwitch += resetBlock;
@@ -132,43 +134,43 @@ let now = "00000000000000";
 stepArray.forEach(stepKey => {
     // console.log(stepKey);
     // ! <could be a function>
-    prepORexecute = stepKey.substr(0,4) === 'PREP' ? 'PREP' : 'NNULL';
-    prepORexecute = stepKey.substr(0,7) === 'EXECUTE' ? 'EXECUTE' : prepORexecute;
-    let functionString = stepKey.substr(0,5) === 'PREP_' ? stepKey.substr(5) : '';
-    functionString = stepKey.substr(0,8) === 'EXECUTE_' ? stepKey.substr(8) : functionString;
-    functionString += stepKey.substr(0,5) === 'PREP_' ? 'Prep' : '';
-    functionString += stepKey.substr(0,8) === 'EXECUTE_' ? 'Execute' : '';
-    functionString += stepKey.substr(0,5) === 'PREP_' ? 'JSON' : '';
-    functionString += stepKey.substr(0,8) === 'EXECUTE_' ? 'Upsert' : '';
+    prepORexecute = stepKey.substr(0, 4) === 'PREP' ? 'PREP' : 'NNULL';
+    prepORexecute = stepKey.substr(0, 7) === 'EXECUTE' ? 'EXECUTE' : prepORexecute;
+    let functionString = stepKey.substr(0, 5) === 'PREP_' ? stepKey.substr(5) : '';
+    functionString = stepKey.substr(0, 8) === 'EXECUTE_' ? stepKey.substr(8) : functionString;
+    functionString += stepKey.substr(0, 5) === 'PREP_' ? 'Prep' : '';
+    functionString += stepKey.substr(0, 8) === 'EXECUTE_' ? 'Execute' : '';
+    functionString += stepKey.substr(0, 5) === 'PREP_' ? 'JSON' : '';
+    functionString += stepKey.substr(0, 8) === 'EXECUTE_' ? 'Upsert' : '';
     functionStringKey = functionString.length > 0 ? functionString : '';
     functionCodeThis = functionString.length > 0 ? 'export function ' + functionString + '()' : '';
-    functionString = functionString.length > 0 ? '\n'+ ind12Z + functionString + '()' : '';
-    if(functionCodeThis.length > 0){
+    functionString = functionString.length > 0 ? '\n' + ind12Z + functionString + '()' : '';
+    if (functionCodeThis.length > 0) {
         // now = toLocalISO();
         console.log
         functionCodeThis += `{`;
-        if(prepORexecute === 'PREP'){
+        if (prepORexecute === 'PREP') {
             functionCodeThis += `\n` + ind4Z + `let now = new Date();`;
             functionCodeThis += `\n` + ind4Z + `let timeDateString = ' [ on ' + now.toLocaleDateString() + ']';`;
             functionCodeThis += `\n` + ind4Z + `timeDateString = now.toLocaleTimeString('en-US') + timeDateString;`;
             functionCodeThis += `\n` + ind4Z + `memory.setItem('` + functionStringKey + `','` + functionStringKey + `' + ' PREPPED on ' + timeDateString);`;
             // functionCodeThis += `\n` + ind4Z + `console.log(memory.getItem('` + functionStringKey + `');`;
-        } 
-        if(prepORexecute === 'EXECUTE'){
+        }
+        if (prepORexecute === 'EXECUTE') {
             functionCodeThis += `\n` + ind4Z + `let now = new Date();`;
             functionCodeThis += `\n` + ind4Z + `let timeDateString = ' [ on ' + now.toLocaleDateString() + ']';`;
             functionCodeThis += `\n` + ind4Z + `timeDateString = now.toLocaleTimeString('en-US') + timeDateString;`;
             functionCodeThis += `\n` + ind4Z + `memory.setItem('` + functionStringKey + `','` + functionStringKey + `' + ' EXECUTED on ' + timeDateString);`;
             // functionCodeThis += `\n` + ind4Z + `console.log('` + functionStringKey + ` set on ' + timeDateString);`;
         }
-        functionCodeThis += `\n` + ind0Z + `}`; 
-        functionCode += `\n\n` + functionCodeThis; 
+        functionCodeThis += `\n` + ind0Z + `}`;
+        functionCode += `\n\n` + functionCodeThis;
     }
 
     // console.warn('functionString: ' + functionString);
     // ! </could be a function>
     // ! <could be a function>
-    let consoleLogString = `\n` + ind12Z + `consoleLog('Step: ' + stepKey)`; 
+    let consoleLogString = `\n` + ind12Z + `console.log('Step: ' + stepKey)`;
     // console.warn('consoleLogString: ' + consoleLogString);
     // ! </could be a function>
 
@@ -182,6 +184,7 @@ stepArray.forEach(stepKey => {
     switchCode += switchElementThis;
 });
 switchCode += switchEndString;
+switchCode += switchCycleStepsString;
 switchCode += exitAfterSwitchCheckBlock;
 codeOverallLoopSwitch += switchCode;
 
@@ -192,15 +195,15 @@ codeOverallLoopSwitch += loopEndString;
 // console.warn('switchCode: ');
 // console.warn(switchCode);
 
-// console.warn('codeOverallLoopSwitch: ');
-// console.warn(codeOverallLoopSwitch);
+console.warn('codeOverallLoopSwitch: ');
+console.warn(codeOverallLoopSwitch);
 
 // console.warn('functionCode: ');
 // console.warn(functionCode);
-console.warn('//doInstantiateExitAfterFunction: ');
-console.warn(doInstantiateExitAfterFunction);
-console.warn('//exitAfterSwitchCheckFunction: ');
-console.warn(exitAfterSwitchCheckFunction);
+// console.warn('//doInstantiateExitAfterFunction: ');
+// console.warn(doInstantiateExitAfterFunction);
+// console.warn('//exitAfterSwitchCheckFunction: ');
+// console.warn(exitAfterSwitchCheckFunction);
 
 // ø <---------- <toLocalISO>  ---------->
 // export function toLocalISO( date ){

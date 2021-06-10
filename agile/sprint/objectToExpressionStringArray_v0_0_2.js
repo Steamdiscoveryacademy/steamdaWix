@@ -100,7 +100,7 @@ export function expressionBuilderObject(paramObject,responseObject){
     appendToStartString = paramObject.nextElementTrueTypeOf === 'BASE' ? paramObject.nextElementName : appendToStartString;
     paramObject.previousElementStringStart += appendToStartString;
 
-    let nextElementKeyArray = Object.keys(paramObject.nextElement);//?
+    let nextElementKeyArray = Object.keys(paramObject.nextElement);////?
     for (let index = 0; index < nextElementKeyArray.length; index++) {
         const elementKey = nextElementKeyArray[index];
         paramObject.nextElement = nextElementKonstantHere[elementKey] ;
@@ -129,11 +129,11 @@ export function expressionBuilderTerminus(paramObject,responseObject){
     // console.warn(paramObject);
     // console.warn('paramObject.nextElement: ');
     // console.warn(paramObject.nextElement);
-    let stringThisKey = paramObject.previousElementStringStart;//?
-    stringThisKey += paramObject.previousElementTrueType === 'array' ? `[${paramObject.nextElementName}]` : stringThisKey;//?
+    let stringThisKey = paramObject.previousElementStringStart;////?
+    stringThisKey += paramObject.previousElementTrueType === 'array' ? `[${paramObject.nextElementName}]` : stringThisKey;////?
     let stringThisValue = paramObject.nextElement;
     stringThisValue = paramObject.nextElementTrueTypeOf === 'string' ? `"${stringThisValue}"` : stringThisValue;
-    let stringThis = `${stringThisKey} = ${stringThisValue};`//?
+    let stringThis = `${stringThisKey} = ${stringThisValue};`////?
     responseObject.expressionStringArray.push(stringThis);
     // console.warn('stringThis: ' + stringThis);
 

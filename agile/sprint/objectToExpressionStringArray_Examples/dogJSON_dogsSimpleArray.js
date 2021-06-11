@@ -2,6 +2,8 @@ let PARAM_dogsSimpleArray = ['Chester','Marais'];
 let PARAM_dogsSimpleArrayJSON = `["Chester","Marais"]`;
 
 // ! <Sylvester McMonkey McBean>
+// ø OUT OF DATE
+// ! <Sylvester McMonkey McBean>
 
 let dogObject = {};
 dogObject.name = "Chester";

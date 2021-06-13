@@ -1,0 +1,67 @@
+{
+    "contactInfo": {
+        "name": {
+            "first": "Laini",
+            "last": "Cooper"
+        },
+        "company": "Robinson Incorporated",
+        "jobTitle": "Accounting",
+        "locale": "en-US",
+        "birthdate": "1980-07-15",
+        "labelKeys": [
+            "custom.gender-female",
+            "custom.t202106",
+            "custom.secondary-parent"
+        ],
+        "emails": [
+            {
+                "tag": "UNTAGGED",
+                "email": "elaine.cooper@example.com"
+            },
+            {
+                "tag": "MAIN",
+                "email": "qiqgroup+elaine7686@gmail.com",
+                "primary": "true"
+            }
+        ],
+        "phones": [
+            {
+                "tag": "MOBILE",
+                "phone": "(984)-597-7116",
+                "primary": "true"
+            },
+            {
+                "tag": "HOME",
+                "phone": "(888)-829-9763"
+            }
+        ],
+        "addresses": [
+            {
+                "tag": "home",
+                "address": {
+                    "streetAddress": {
+                        "number": "7686",
+                        "name": "Robinson Rd",
+                        "apt": "65"
+                    },
+                    "addressLine2": "# 37",
+                    "city": "West Jordan",
+                    "subdivision": "OH",
+                    "postalCode": "15810",
+                    "country": "US",
+                    "location": {
+                        "latitude": "86.6803",
+                        "longitude": "71.6425"
+                    }
+                }
+            }
+        ],
+        "extendedFields": {
+            "custom.lastupdate": "2017-01-29",
+            "custom.current-region": "Blacksburg",
+            "custom.timezone-offset": "+4:30",
+            "custom.legal-first": "Elaine",
+            "custom.seed": "f21adad517566eac"
+        }
+    }
+}

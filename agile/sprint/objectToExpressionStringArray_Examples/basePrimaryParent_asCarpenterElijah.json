@@ -1,0 +1,67 @@
+{
+    "contactInfo": {
+        "name": {
+            "first": "Eli",
+            "last": "Carpenter"
+        },
+        "company": "Forest Associates",
+        "jobTitle": "Human Resources",
+        "locale": "en-US",
+        "birthdate": "1991-08-01",
+        "labelKeys": [
+            "custom.gender-male",
+            "custom.t202106",
+            "custom.primary-parent"
+        ],
+        "emails": [
+            {
+                "tag": "UNTAGGED",
+                "email": "eli.carpenter@example.com"
+            },
+            {
+                "tag": "MAIN",
+                "email": "qiqgroup+eli9375@gmail.com",
+                "primary": "true"
+            }
+        ],
+        "phones": [
+            {
+                "tag": "MOBILE",
+                "phone": "(375)-634-4884",
+                "primary": "true"
+            },
+            {
+                "tag": "HOME",
+                "phone": "(579)-264-8376"
+            }
+        ],
+        "addresses": [
+            {
+                "tag": "home",
+                "address": {
+                    "streetAddress": {
+                        "number": "9375",
+                        "name": "Forest Ln",
+                        "apt": "52"
+                    },
+                    "addressLine2": "# 43",
+                    "city": "Scottsdale",
+                    "subdivision": "NM",
+                    "postalCode": "27856",
+                    "country": "US",
+                    "location": {
+                        "latitude": "-25.9980",
+                        "longitude": "-136.6533"
+                    }
+                }
+            }
+        ],
+        "extendedFields": {
+            "custom.lastupdate": "2016-01-29",
+            "custom.current-region": "Charlottesville",
+            "custom.timezone-offset": "+8:00",
+            "custom.legal-first": "Elijah",
+            "custom.seed": "b53333aa164cc0b1"
+        }
+    }
+}

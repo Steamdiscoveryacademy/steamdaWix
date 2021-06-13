@@ -1,0 +1,67 @@
+{
+    "contactInfo": {
+        "name": {
+            "first": "Nellie",
+            "last": "Garrett"
+        },
+        "company": "Nowlin University",
+        "jobTitle": "Manager",
+        "locale": "en-US",
+        "birthdate": "1984-06-27",
+        "labelKeys": [
+            "custom.gender-female",
+            "custom.t202106",
+            "custom.student"
+        ],
+        "emails": [
+            {
+                "tag": "UNTAGGED",
+                "email": "nellie.garrett@example.com"
+            },
+            {
+                "tag": "MAIN",
+                "email": "qiqgroup+nellie9336@gmail.com",
+                "primary": "true"
+            }
+        ],
+        "phones": [
+            {
+                "tag": "MOBILE",
+                "phone": "(705)-610-7168",
+                "primary": "true"
+            },
+            {
+                "tag": "HOME",
+                "phone": "(173)-530-2911"
+            }
+        ],
+        "addresses": [
+            {
+                "tag": "home",
+                "address": {
+                    "streetAddress": {
+                        "number": "9336",
+                        "name": "Nowlin Rd",
+                        "apt": "13"
+                    },
+                    "addressLine2": "# 4",
+                    "city": "Tucson",
+                    "subdivision": "TX",
+                    "postalCode": "52405",
+                    "country": "US",
+                    "location": {
+                        "latitude": "88.1425",
+                        "longitude": "76.9592"
+                    }
+                }
+            }
+        ],
+        "extendedFields": {
+            "custom.lastupdate": "2011-03-08",
+            "custom.current-region": "Blacksburg",
+            "custom.timezone-offset": "-4:00",
+            "custom.legal-first": "Penelope",
+            "custom.seed": "750893979db16754"
+        }
+    }
+}

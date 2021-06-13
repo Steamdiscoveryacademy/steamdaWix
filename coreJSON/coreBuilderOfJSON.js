@@ -9,6 +9,8 @@ let coreObject = {};
 	coreObject.urlArray = ['steamdiscoveryacademy.com','steamda.com'];
 	coreObject.currentTerm = "t202106";
 	coreObject.activeTermArray = ["t202106"];
+	coreObject.activeTermBeginMMDD = ["0607"];
+	coreObject.activeTermEndMMDD = ["0813"];
 	coreObject.officeAddress = JSON.parse(`{"streetAddress":{"number":"3004","name":"Berkmar Drive"},"city":"Charlottesville","subdivision":"VA","postalCode":"22901","country":"US","location":{"latitude":"38.12300501818869","longitude":"-78.47768216332757"}}`)
 	
 	coreObject.locations = [];

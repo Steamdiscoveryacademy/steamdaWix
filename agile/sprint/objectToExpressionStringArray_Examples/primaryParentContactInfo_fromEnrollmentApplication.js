@@ -6,7 +6,7 @@ let timezoneOffest = "-4:00";
 
 enrollmentObj.family.student.dob.month = 2;
 enrollmentObj.family.student.dob.day = 7;
-let studentBDAY = ("00" + enrollmentObj.family.student.dob.month = "7").substr(-2);
+let studentBDAY = ("00" + enrollmentObj.family.student.dob.month).substr(-2);
 studentBDAY += ("00" + enrollmentObj.family.student.dob.day).substr(-2);
 
 let tBDAY = studentBDAY < local.getItem('termBeginMMDD') ? false : true;
@@ -53,10 +53,8 @@ finalLabelKeyArray.push(memberLabelKey);
 let primaryParent = {};
 primaryParent.contactInfo = {};
 primaryParent.contactInfo.name = {};
-primaryParent.contactInfo.name.first = "Eli";
-enrollmentObj.family.parent.primary.first = "Shirley";
-primaryParent.contactInfo.name.last = "Carpenter";
-enrollmentObj.family.parent.primary.last = "Partridge";
+primaryParent.contactInfo.name.first = enrollmentObj.family.parent.primary.first;
+primaryParent.contactInfo.name.last = enrollmentObj.family.parent.primary.last;
 primaryParent.contactInfo.locale = "en-US";
 // ! </FINAL>
 
@@ -81,8 +79,7 @@ primaryParent.contactInfo.emails = [];
 primaryParent.contactInfo.emails[0] = {};
 primaryParent.contactInfo.emails[0].tag = "MAIN";
 // enrollmentObj.family.emails[0].kind = "home";
-primaryParent.contactInfo.emails[0].email = "eli.carpenter@example.com";
-enrollmentObj.family.emails[0].email = "bradlowry+dannu@gmail.com";
+primaryParent.contactInfo.emails[0].email = enrollmentObj.family.emails[0].email;
 primaryParent.contactInfo.emails[0].primary = "true";
 // enrollmentObj.family.emails[0].role = "Primary Parent";
 // enrollmentObj.family.emails[0].who = "Shirley";
@@ -97,8 +94,7 @@ primaryParent.contactInfo.phones = [];
 primaryParent.contactInfo.phones[0] = {};
 primaryParent.contactInfo.phones[0].tag = "MOBILE";
 // enrollmentObj.family.phones[0].kind = "cell";
-primaryParent.contactInfo.phones[0].phone = "(375)-634-4884";
-enrollmentObj.family.phones[0].phone = "(218) 595-0499";
+primaryParent.contactInfo.phones[0].phone = enrollmentObj.family.phones[0].phone;
 primaryParent.contactInfo.phones[0].primary = "true";
 // enrollmentObj.family.phones[0].role = "Primary Parent";
 // enrollmentObj.family.phones[0].who = "Shirley";
@@ -114,27 +110,18 @@ primaryParent.contactInfo.addresses[0] = {};
 primaryParent.contactInfo.addresses[0].tag = "HOME";
 primaryParent.contactInfo.addresses[0].address = {};
 primaryParent.contactInfo.addresses[0].address.streetAddress = {};
-primaryParent.contactInfo.addresses[0].address.streetAddress.number = "9375";
-enrollmentObj.family.addresses[0].address.streetAddress.number = "123";
-primaryParent.contactInfo.addresses[0].address.streetAddress.name = "Forest Ln";
-enrollmentObj.family.addresses[0].address.streetAddress.name = "Old Bus Way";
+primaryParent.contactInfo.addresses[0].address.streetAddress.number = enrollmentObj.family.addresses[0].address.streetAddress.number;
+primaryParent.contactInfo.addresses[0].address.streetAddress.name = enrollmentObj.family.addresses[0].address.streetAddress.name;
 // primaryParent.contactInfo.addresses[0].address.streetAddress.apt = "52";
 
-primaryParent.contactInfo.addresses[0].address.addressLine2 = "# 43";
-enrollmentObj.family.addresses[0].address.streetAddress2 = "101";
-primaryParent.contactInfo.addresses[0].address.city = "Scottsdale";
-enrollmentObj.family.addresses[0].address.city = "Teluca Lake";
-primaryParent.contactInfo.addresses[0].address.subdivision = "NM";
-enrollmentObj.family.addresses[0].address.subdivision = "CA";
-primaryParent.contactInfo.addresses[0].address.postalCode = "27856";
-enrollmentObj.family.addresses[0].address.postalCode = "90210";
-primaryParent.contactInfo.addresses[0].address.country = "US";
-enrollmentObj.family.addresses[0].address.country = "US";
+primaryParent.contactInfo.addresses[0].address.addressLine2 = enrollmentObj.family.addresses[0].address.streetAddress2;
+primaryParent.contactInfo.addresses[0].address.city = enrollmentObj.family.addresses[0].address.city;
+primaryParent.contactInfo.addresses[0].address.subdivision = enrollmentObj.family.addresses[0].address.subdivision;
+primaryParent.contactInfo.addresses[0].address.postalCode = enrollmentObj.family.addresses[0].address.postalCode;
+primaryParent.contactInfo.addresses[0].address.country = enrollmentObj.family.addresses[0].address.country;
 primaryParent.contactInfo.addresses[0].address.location = {};
-primaryParent.contactInfo.addresses[0].address.location.latitude = "-25.9980";
-enrollmentObj.family.addresses[0].address.location.latitude = "nnull";
-primaryParent.contactInfo.addresses[0].address.location.longitude = "-136.6533";
-enrollmentObj.family.addresses[0].address.location.longitue = "nnull";
+primaryParent.contactInfo.addresses[0].address.location.latitude = enrollmentObj.family.addresses[0].address.location.latitude;
+primaryParent.contactInfo.addresses[0].address.location.longitude = enrollmentObj.family.addresses[0].address.location.longitue;
 
 
 primaryParent.contactInfo.extendedFields = {};

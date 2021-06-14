@@ -6,11 +6,13 @@
 // import {workflows} from 'wix-crm-backend';
 import {local, session, memory} from 'wix-storage';
 import wixUsers from 'wix-users';
+import { steamdaGetContactFunction } from 'backend/crmModule.jsw'
 
 
 $w.onReady(function () {
 	// Wix.Features.isSupported(Wix.Features.Types.RESIZE_COMPONENT, function(data) {console.log(data)})
 	onReadyPostEnrollment();
+    doUserInterfaceCleanupCurrent()
 });
 
 export function onReadyPostEnrollment(){
@@ -259,6 +261,7 @@ export function doInstantiateLoopSwitchStep(){
     // let memberId = Math.random() > 0.1 ? 'INSTANTIATE' : '777888'
     let memberId = enrollmentObject.family.parent.primary.memberId
 	local.setItem('staffIdentifiedFamilyId', memberId);
+    local.setItem('wixWebhookId', enrollmentObject.formStack.wixWebhookId)
 }
 // ø <---------- </doInstantiateLoopSwitchStep> ---------->
 // ø <---------- </manually added Step Functions> ---------->
@@ -427,10 +430,23 @@ export async function stMemberExecuteUpsert(){
     }
 }
 
-export function ppContactPrepJSON(){
+export async function ppContactPrepJSON(){
     let now = new Date();
     let timeDateString = ' [ on ' + now.toLocaleDateString() + ']';
     timeDateString = now.toLocaleTimeString('en-US') + timeDateString;
+    let stepStampArrayObject = JSON.parse(memory.getItem('stepStampArray'));
+    let stampArrayElementObject = {};
+    stampArrayElementObject.step = memory.getItem('enrollmentStepCurrent');
+    stampArrayElementObject.stamp = timeDateString;
+    stepStampArrayObject.stampArray.push(stampArrayElementObject);
+    memory.setItem('stepStampArray',JSON.stringify(stepStampArrayObject));    
+    // ø <---------- timeDateString ---------->
+
+
+    let contact = await steamdaGetContactFunction(local.getItem('familyId'));
+    $w('#ppContactResponseJSON').value = JSON.stringify(contact,undefined,4);
+    memory.setItem('ppRevision',contact.revision);
+
     memory.setItem('ppContactPrepJSON','ppContactPrepJSON' + ' PREPPED on ' + timeDateString);
 }
 
@@ -823,7 +839,7 @@ export function simpleComplexPass(){
 //ø <---------- </simpleComplexPass()> ---------->
 
 //ø <---------- <displaySteps>  ---------->
-export function displayStepsZZZ(){
+export function displaySteps(){
 	let status = typeof memory.getItem('enrollmentStepList') === 'string' ? 'string' : 'undefined';
 	status = status === 'string' && memory.getItem('enrollmentStepList').length < 1 ? 'empty' : status;
 	let result = 'GET';
@@ -849,10 +865,10 @@ export function displayStepsZZZ(){
 export function doEnrollmentCleanupCurrent() {
     // ø <code Cleanup for Current Enrollment> mostly for testing
     /*Not CURRENT*///local.setItem('ondeckEnrollmentJSON','EEMPTY');
-    local.setItem('staffIdentifiedFamilyId', 'EEMPTY');
-    local.setItem('familyId', 'EEMPTY');
+    // local.setItem('staffIdentifiedFamilyId', 'EEMPTY');
+    // local.setItem('familyId', 'EEMPTY');
     memory.setItem('ppRevision',"EEMPTY")
-    local.setItem('studentId', 'EEMPTY');
+    // local.setItem('studentId', 'EEMPTY');
     memory.setItem('stRevision',"EEMPTY")
     memory.setItem('ppMemberPrepJSON', 'EEMPTY');
     memory.setItem('ppMemberExecuteUpsert', 'EEMPTY');
@@ -871,6 +887,7 @@ export function doEnrollmentCleanupCurrent() {
     memory.setItem('spContactExecuteUpsert', 'EEMPTY');
     memory.setItem('spDatabaseExecuteUpsert', 'EEMPTY');
     memory.setItem('enrollmentStepList', 'EEMPTY');
+    memory.setItem('enrollmentStepCompleted', 'EEMPTY');
     memory.setItem('enrollmentStepCurrent', 'EEMPTY');
     memory.setItem('enrollmentStepNext', 'EEMPTY');
     local.setItem('loopExitAfterStep', 'EEMPTY');
@@ -885,46 +902,68 @@ export function doEnrollmentCleanupCurrent() {
 
 
 // ø <---------- <doEnrollmentLogCurrent>  ---------->
-export function doEnrollmentLogCurrent() {
+export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
+    let kindSupportedArray = ['CODE','STEPS','DATA','DDEFAULT'];
+    kind = kindSupportedArray.includes(kind) ? kind : 'DDEFAULT';
+    console.warn('kind: ' + kind);
+
     // ø <code Log for Current Enrollment> mostly for testing
     let logString = '';
     /*Not CURRENT*///logString += '\n' + "local.getItem('ondeckEnrollmentJSON'): " + local.getItem('ondeckEnrollmentJSON'); 
-    logString += /*'\n' + */"local.getItem('staffIdentifiedFamilyId'): " + local.getItem('staffIdentifiedFamilyId');
-    logString += '\n' + "local.getItem('familyId'): " + local.getItem('familyId');
-    logString += '\n' + "memory.getItem('ppRevision'): " + memory.getItem('ppRevision');
-    logString += '\n' + "local.getItem('studentId'): " + local.getItem('studentId');
-    logString += '\n' + "memory.getItem('stRevision'): " + memory.getItem('stRevision');
-    logString += '\n' + "memory.getItem('ppMemberPrepJSON'): " + memory.getItem('ppMemberPrepJSON');
-    logString += '\n' + "memory.getItem('ppMemberExecuteUpsert'): " + memory.getItem('ppMemberExecuteUpsert');
-    logString += '\n' + "memory.getItem('stMemberPrepJSON'): " + memory.getItem('stMemberPrepJSON');
-    logString += '\n' + "memory.getItem('stMemberExecuteUpsert'): " + memory.getItem('stMemberExecuteUpsert');
-    logString += '\n' + "memory.getItem('ppContactPrepJSON'): " + memory.getItem('ppContactPrepJSON');
-    logString += '\n' + "memory.getItem('ppDatabasePrepJSON'): " + memory.getItem('ppDatabasePrepJSON');
-    logString += '\n' + "memory.getItem('stContactPrepJSON'): " + memory.getItem('stContactPrepJSON');
-    logString += '\n' + "memory.getItem('stDatabasePrepJSON'): " + memory.getItem('stDatabasePrepJSON');
-    logString += '\n' + "memory.getItem('spContactPrepJSON'): " + memory.getItem('spContactPrepJSON');
-    logString += '\n' + "memory.getItem('spDatabasePrepJSON'): " + memory.getItem('spDatabasePrepJSON');
-    logString += '\n' + "memory.getItem('ppContactExecuteUpsert'): " + memory.getItem('ppContactExecuteUpsert');
-    logString += '\n' + "memory.getItem('ppDatabaseExecuteUpsert'): " + memory.getItem('ppDatabaseExecuteUpsert');
-    logString += '\n' + "memory.getItem('stContactExecuteUpsert'): " + memory.getItem('stContactExecuteUpsert');
-    logString += '\n' + "memory.getItem('stDatabaseExecuteUpsert'): " + memory.getItem('stDatabaseExecuteUpsert');
-    logString += '\n' + "memory.getItem('spContactExecuteUpsert'): " + memory.getItem('spContactExecuteUpsert');
-    logString += '\n' + "memory.getItem('spDatabaseExecuteUpsert'): " + memory.getItem('spDatabaseExecuteUpsert');
-    logString += '\n' + "memory.getItem('enrollmentStepList'): " + memory.getItem('enrollmentStepList');
-    logString += '\n' + "memory.getItem('enrollmentStepCompleted'): " + memory.getItem('enrollmentStepCompleted');
-    logString += '\n' + "memory.getItem('enrollmentStepCurrent'): " + memory.getItem('enrollmentStepCurrent');
-    logString += '\n' + "memory.getItem('enrollmentStepNext'): " + memory.getItem('enrollmentStepNext');
-    logString += '\n' + "local.getItem('loopExitAfterStep'): " + local.getItem('loopExitAfterStep');
-    logString += '\n' + "local.getItem('loopExitNow'): " + local.getItem('loopExitNow');
-    logString += '\n' + "memory.getItem('stepStampArray'): " + memory.getItem('stepStampArray');
-    logString += '\n' + "memory.getItem('yyyymm'): " + local.getItem('yyyymm');
-    logString += '\n' + "local.getItem('termId'): " + local.getItem('termId');
-    logString += '\n' + "local.getItem('termLabelKey'): " + local.getItem('termLabelKey');
-    logString += '\n' + "local.getItem('termLabelKey'): " + local.getItem('termLabelKey');
-    logString += '\n' + "local.getItem('weekIdToLabelKeyJSON'): " + local.getItem('weekIdToLabelKeyJSON');
-    //local.setItem('weekIdToLabelKeyJSON'
-    //'termId','202106');
-        // local.setItem('termLabelKey'
+    // ø <DATA>
+    if(kind === 'DATA' || kind === 'DDEFAULT'){
+        // console.log(kind);
+        logString += '\n' + "local.getItem('staffIdentifiedFamilyId'): " + local.getItem('staffIdentifiedFamilyId');
+        logString += '\n' + "local.getItem('familyId'): " + local.getItem('familyId');
+        logString += '\n' + "memory.getItem('ppRevision'): " + memory.getItem('ppRevision');
+        logString += '\n' + "local.getItem('studentId'): " + local.getItem('studentId');
+        logString += '\n' + "memory.getItem('stRevision'): " + memory.getItem('stRevision');
+    }//END if(kind === 'DATA' || kind === 'DDEFAULT')
+    // ø </DATA>
+    // ø <CODE>
+    if(kind === 'CODE' || kind === 'DDEFAULT'){
+        // console.log(kind);
+        logString += '\n' + "memory.getItem('ppMemberPrepJSON'): " + memory.getItem('ppMemberPrepJSON');
+        logString += '\n' + "memory.getItem('ppMemberExecuteUpsert'): " + memory.getItem('ppMemberExecuteUpsert');
+        logString += '\n' + "memory.getItem('stMemberPrepJSON'): " + memory.getItem('stMemberPrepJSON');
+        logString += '\n' + "memory.getItem('stMemberExecuteUpsert'): " + memory.getItem('stMemberExecuteUpsert');
+        logString += '\n' + "memory.getItem('ppContactPrepJSON'): " + memory.getItem('ppContactPrepJSON');
+        logString += '\n' + "memory.getItem('ppDatabasePrepJSON'): " + memory.getItem('ppDatabasePrepJSON');
+        logString += '\n' + "memory.getItem('stContactPrepJSON'): " + memory.getItem('stContactPrepJSON');
+        logString += '\n' + "memory.getItem('stDatabasePrepJSON'): " + memory.getItem('stDatabasePrepJSON');
+        logString += '\n' + "memory.getItem('spContactPrepJSON'): " + memory.getItem('spContactPrepJSON');
+        logString += '\n' + "memory.getItem('spDatabasePrepJSON'): " + memory.getItem('spDatabasePrepJSON');
+        logString += '\n' + "memory.getItem('ppContactExecuteUpsert'): " + memory.getItem('ppContactExecuteUpsert');
+        logString += '\n' + "memory.getItem('ppDatabaseExecuteUpsert'): " + memory.getItem('ppDatabaseExecuteUpsert');
+        logString += '\n' + "memory.getItem('stContactExecuteUpsert'): " + memory.getItem('stContactExecuteUpsert');
+        logString += '\n' + "memory.getItem('stDatabaseExecuteUpsert'): " + memory.getItem('stDatabaseExecuteUpsert');
+        logString += '\n' + "memory.getItem('spContactExecuteUpsert'): " + memory.getItem('spContactExecuteUpsert');
+        logString += '\n' + "memory.getItem('spDatabaseExecuteUpsert'): " + memory.getItem('spDatabaseExecuteUpsert');
+    }//END if(kind === 'CODE' || kind === 'DDEFAULT')
+    // ø </CODE>
+    // ø <STEPS>
+    if(kind === 'STEPS' || kind === 'DDEFAULT'){
+        //console.log(kind);
+        logString += '\n' + "memory.getItem('enrollmentStepList'): " + memory.getItem('enrollmentStepList');
+        logString += '\n' + "memory.getItem('enrollmentStepCompleted'): " + memory.getItem('enrollmentStepCompleted');
+        logString += '\n' + "memory.getItem('enrollmentStepCurrent'): " + memory.getItem('enrollmentStepCurrent');
+        logString += '\n' + "memory.getItem('enrollmentStepNext'): " + memory.getItem('enrollmentStepNext');
+        logString += '\n' + "local.getItem('loopExitAfterStep'): " + local.getItem('loopExitAfterStep');
+        logString += '\n' + "local.getItem('loopExitNow'): " + local.getItem('loopExitNow');
+        logString += '\n' + "memory.getItem('stepStampArray'): " + memory.getItem('stepStampArray');
+    }//END if(kind === 'STEPS' || kind === 'DDEFAULT')
+    // ø </STEPS>
+    // ø <DATA>
+    if(kind === 'DATA' || kind === 'DDEFAULT'){
+        console.log(kind);
+        logString += '\n' + "memory.getItem('yyyymm'): " + local.getItem('yyyymm');
+        logString += '\n' + "local.getItem('termId'): " + local.getItem('termId');
+        logString += '\n' + "local.getItem('termLabelKey'): " + local.getItem('termLabelKey');
+        // logString += '\n' + "local.getItem('termLabelKey'): " + local.getItem('termLabelKey');
+        logString += '\n' + "local.getItem('wixWebhookId'): " + local.getItem('wixWebhookId');
+        logString += '\n' + "local.getItem('weekIdToLabelKeyJSON'): " + '\n' + local.getItem('weekIdToLabelKeyJSON');
+    }//END if(kind === 'DATA' || kind === 'DDEFAULT')
+    // ø </DATA>
     return logString;
     // ø </code Log for Current Enrollment>
 }
@@ -935,10 +974,23 @@ export function doUserInterfaceCleanupCurrent(){
 	// $w("#btnUiFamilyID").label = "Family ID: c2660053-903f-4bc5-b7b4-e4d7824a381f";
 	// $w("#btnUiStudentID").label = "Student ID: 955c303e-39ac-4308-b5ee-e3786234b70e";
 	$w("#btnUiPpId").label = "Staff ID PP: " + local.getItem('staffIdentifiedFamilyId');
-	$w("#btnUiFamilyID").label = "Family ID: " + local.getItem('familyId');
+    let label = "Family ID: ";
+    label += local.getItem('familyId') !== "EEMPTY" ? local.getItem('familyId') : '';
+    label += Number(memory.getItem('ppRevision')) > 0 ? ' [' + memory.getItem('ppRevision') + ']' : ''; 
+	$w("#btnUiFamilyID").label = label;
+	// $w("#btnUiStudentID").label = "Student ID: " + local.getItem('studentId');
+    label = "Student ID: ";
+    label += local.getItem('studentId') !== "EEMPTY" ? local.getItem('studentId') : '';
+    label += Number(memory.getItem('stRevision')) > 0 ? ' [' + memory.getItem('stRevision') + ']' : ''; 
 	$w("#btnUiStudentID").label = "Student ID: " + local.getItem('studentId');
-	$w("#btStepCompleted").label = "" + memory.getItem('enrollmentStepCompleted');
-	$w("#btStepCurrent").label = "" + memory.getItem('enrollmentStepCurrent');
+    let step = memory.getItem('enrollmentStepCompleted') === null ? false : true;
+    step = memory.getItem('enrollmentStepCompleted') === "EEMPTY" ? false : step;
+    step = memory.getItem('enrollmentStepCompleted') === "NNOT_AAPPLICABLE" ? false : step;
+	$w("#btStepCompleted").label = step ?  memory.getItem('enrollmentStepCompleted') : '';
+    step = memory.getItem('enrollmentStepCurrent') === null ? false : true;
+    step = memory.getItem('enrollmentStepCurrent') === "EEMPTY" ? false : step;
+    step = memory.getItem('enrollmentStepCurrent') === "NNOT_AAPPLICABLE" ? false : step;
+	$w("#btStepCurrent").label = step ? memory.getItem('enrollmentStepCurrent') :'';
 }
 
 // ! ====================================================================================================
@@ -1002,7 +1054,7 @@ export function btnResetSteps_click(event) {
 	if($w('#radioAreYouSure').value === 'YES'){
 		instantiateLoopSwitchEnrollmentSteps();
 		$w('#sessionEnrollmentJSON').value = stepsDisplayStatusAsReturnString('init');
-		displayStepsZZZ();
+		displaySteps();
 	}else{
 		$w('#sessionEnrollmentJSON').value = "'Reset Steps' is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.";
 	}
@@ -1020,28 +1072,9 @@ export function btnResetSteps_click(event) {
 	// $w('#sessionEnrollmentJSON').value = stepNext;
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
-export function btnRefreshSteps_click(event) {
-	displayStepsZZZ();
-}
-
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
-export function btnFauxNextStep_click(event) {
-	// cycleStepsZZZ();
-	stepsCycleSteps();
-	$w('#sessionEnrollmentJSON').value = stepsDisplayStatusAsReturnString('Faux Next Step');
-	displayStepsZZZ();
-}
-
-
 export function btnDisplayCurrentState_click(event) {
-	$w('#sessionEnrollmentJSON').value = doEnrollmentLogCurrent();
+    let kind = $w('#ddDisplayKind').value;
+	$w('#sessionEnrollmentJSON').value = doEnrollmentLogCurrent(kind);
 }
 
 export function btnCleanupCurrentState_click(event) {
@@ -1063,6 +1096,59 @@ export function btnCleanupCurrentState_click(event) {
  */
 export async function btnPeformNextStep_click(event) {
 	await doPeformNextStep();
-	$w('#sessionEnrollmentJSON').value = doEnrollmentLogCurrent();
-	displayStepsZZZ();
+	$w('#sessionEnrollmentJSON').value = doEnrollmentLogCurrent('CODE');
+	displaySteps();
+}
+
+/**
+ *	Adds an event handler that runs when the element is clicked.
+ *	 @param {$w.MouseEvent} event
+ */
+export function btnSkipNextStep_click(event) {
+	if($w('#radioAreYouSure').value !== 'YES'){
+		$w('#sessionEnrollmentJSON').value = "'Skip Next Step' is so critical that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.";
+	}else if(memory.getItem('enrollmentStepCurrent') === 'IINSTANTIATE'){
+		$w('#sessionEnrollmentJSON').value = "You cannot use 'Skip Next Step' to skip the 'IINSTANTIATE' step. Please proceed normally to execute the 'IINSTANTIATE' step.\n\nNo action taken. \nPlease try again or ask for assistance.";
+    }else{
+        stepsCycleSteps();
+		displaySteps();
+        $w('#sessionEnrollmentJSON').value = doEnrollmentLogCurrent('STEPS');
+	}
+    $w("#radioAreYouSure").value = 'NO';
+}
+
+export function toggleBoxState(){
+    if($w("#boxUImultiState").currentState.id === "Main"){
+        $w("#boxUImultiState").changeState("Original");
+    }else{
+        $w("#boxUImultiState").changeState("Main");
+    }
+}
+
+export function btnToggleBoxState_click(event) {
+	toggleBoxState();
+}
+
+export function btnToggleBoxStateToo_click(event) {
+	toggleBoxState(); 
+}
+
+export function btCleanUpAllExceptEnrJSON_click(event) {
+	if($w('#radioAreYouSure').value === 'YES'){
+		$w('#sessionEnrollmentJSON').value = "'Clean Up All – Except Enrollment JSON' is NOT Enabled at this time.\n\nNo action taken. \nPlease try again or ask for assistance.";
+	}else{
+		$w('#sessionEnrollmentJSON').value = "'Clean Up All – Except Enrollment JSON' is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.";
+	}
+	$w("#radioAreYouSure").value = 'NO';
+	// $w("#radioAreYouSure").resetValidityIndication();
+}
+
+export function btCleanUpAllIncludingnrJSON_click(event) {
+	if($w('#radioAreYouSure').value === 'YES'){
+		$w('#sessionEnrollmentJSON').value = "'Clean Up All – Including Enrollment JSON' is NOT Enabled at this time.\n\nNo action taken. \nPlease try again or ask for assistance.";
+	}else{
+		$w('#sessionEnrollmentJSON').value = "'Clean Up All – Including Enrollment JSON' is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.";
+	}
+	$w("#radioAreYouSure").value = 'NO';
+	// $w("#radioAreYouSure").resetValidityIndication();
 }

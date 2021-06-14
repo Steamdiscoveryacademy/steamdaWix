@@ -30,5 +30,10 @@ export function trueTypeOf(operand){
     if(trueTypeOf === 'object'){
         trueTypeOf = Array.isArray(operand) ? 'array' : trueTypeOf;
     }
+    if(trueTypeOf === 'string'){
+        if(operand.length < 1){
+            trueTypeOf = 'empty_string'
+        }
+    }
     return trueTypeOf;
 }

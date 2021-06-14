@@ -7,14 +7,25 @@
 import {local, session, memory} from 'wix-storage';
 import wixUsers from 'wix-users';
 
+
 $w.onReady(function () {
 	// Wix.Features.isSupported(Wix.Features.Types.RESIZE_COMPONENT, function(data) {console.log(data)})
-	// onReadyPostEnrollment();
+	onReadyPostEnrollment();
 });
 
 export function onReadyPostEnrollment(){
-	$w('#sessionEnrollmentJSON').value = local.getItem("ondeckEnrollmentJSON");
+	// $w('#sessionEnrollmentJSON').value = local.getItem("ondeckEnrollmentJSON");
 	// $w('#anchorEnrollmentJSON').scrollTo()
+    let now = new Date();
+    let ISO = now.getFullYear() + ("00" +(now.getMonth() + 1)).substr(-2) + ("00" + now.getDate()).substr(-2) + ("00" + now.getHours()).substr(-2) + ("00" + now.getMinutes()).substr(-2) + ("00" + now.getSeconds()).substr(-2);
+    // console.log(ISO + ' < "20210814235959"');
+    // let beforeEndOfSummer2021 = Number(ISO) < Number("20210814235959");
+    // console.log('beforeEndOfSummer2021: ' + beforeEndOfSummer2021);
+    if(Number(ISO) < Number("20210814235959")){
+        local.setItem('termId','202106');
+        local.setItem('termLabelKey','custom.t202106');
+        local.setItem('weekIdToLabelKeyJSON',`[['custom.w0-2021010102','0101','0102'],['custom.w1-2021060711','0607','0611'],['custom.w2-2021061418','0614','0618'],['custom.w3-2021062125','0621','0625'],['custom.w4-2021062832','0628','0702'],['custom.w5-2021071216','0712','0716'],['custom.w6-2021071923','0719','0723'],['custom.w7-2021072630','0726','0730'],['custom.w8-2021080206','0802','0806'],['custom.w9-2021080913','0809','0813']];`);
+    }
 }
 
 
@@ -22,14 +33,14 @@ export function onReadyPostEnrollment(){
 // ! ====================            <Overall Enrollment Steps Loop-Switch Code>           ==============
 // ! ====================        ...for Testing, Running, (perhaps later) Debugging        ==============
 // ! ====================================================================================================
-export function doPeformNextStep(){
+export async function doPeformNextStep(){
 	$w('#txtCodeLabel').text = 'doPerformNextStep';
 	local.setItem('loopExitAfterStep', $w('#ddExitAfterStep').value);
-	doStepLoopSwitch();
+	await doStepLoopSwitch();
 	$w('#sessionEnrollmentJSON').value = stepsDisplayStatusAsReturnString("After Completed: " + memory.getItem('enrollmentStepCompleted'))
 }
 // ø <---------- <doStepLoopSwitch>  ---------->
-export function doStepLoopSwitch() {
+export async function doStepLoopSwitch() {
     let stepKey = 'PPENDING';
     let stepArray = memory.getItem('enrollmentStepList').split(',');
     for (let stepArrayIndex = 0; stepArrayIndex < stepArray.length; stepArrayIndex++) {
@@ -46,7 +57,7 @@ export function doStepLoopSwitch() {
                 console.log('Step: ' + stepKey)
                 break;
             case 'EXECUTE_ppMember':
-                ppMemberExecuteUpsert()
+                await ppMemberExecuteUpsert()
                 console.log('Step: ' + stepKey)
                 break;
             case 'PREP_stMember':
@@ -54,7 +65,7 @@ export function doStepLoopSwitch() {
                 console.log('Step: ' + stepKey)
                 break;
             case 'EXECUTE_stMember':
-                stMemberExecuteUpsert()
+                await stMemberExecuteUpsert()
                 console.log('Step: ' + stepKey)
                 break;
             case 'PREP_ppContact':
@@ -143,18 +154,26 @@ export function doStepLoopSwitch() {
 
 
 // ø <---------- <steamdaMemberRegistration>  ---------->
-export async function steamdaMemberRegistration(paramObject = {"empty":true}) {
-	//<Expected> allows for override of wixStorage default
-	if(paramObject.empty){
-		paramObject = JSON.parse(memory.getItem("paramObjectOnDeckJSON"))
-	}
+export async function steamdaMemberRegistration(paramObjectParam = {}) {
+    // ø <expected that paramObject will be gathered from memory.getItem(JSON)>
+	let paramObject = {};
+    if(typeof paramObjectParam.memoryKey === 'string'){
+		paramObject = JSON.parse(memory.getItem(paramObjectParam.memoryKey))
+        console.log('[~Line 152] paramObject: ');
+        console.log(paramObject);
+        // return "Default"
+	}else{
+    // ø <BUT still allows for Direct paramObject>
+        paramObject = paramObjectParam;
+    }
+    // ø </expected that paramObject will be gathered from memory.getItem(JSON)>
     let email = paramObject.email;// the user's email addresses
     let password = paramObject.password;// the user's password
     let firstName = paramObject.firstName;// the user's first name
     let lastName = paramObject.lastName;// the user's last name
     let phone = paramObject.phone;// the user's phone number
 
-    await wixUsers.register(email, password, {
+    let memberResponse = await wixUsers.register(email, password, {
         contactInfo: {
             "firstName": firstName,
             "lastName": lastName,
@@ -164,6 +183,8 @@ export async function steamdaMemberRegistration(paramObject = {"empty":true}) {
         // .then((result) => {
         //     let resultStatus = result.status;
         // });
+    
+    return memberResponse;
 }
 // ø <---------- </steamdaMemberRegistration> ---------->
 
@@ -220,8 +241,24 @@ export function ppMemberBuildOnDeckJSONZZZ(){
 // ø <---------- <manually added Step Functions>  ---------->
 // ø <---------- <doInstantiateLoopSwitchStep>  ---------->
 export function doInstantiateLoopSwitchStep(){
+    let stepStampArrayObject = {};
+    stepStampArrayObject.stampArray = [];
+    let now = new Date();
+    let yyyymm = now.getFullYear() * 100 + now.getMonth() + 1;
+    memory.setItem('yyyymm',yyyymm.toString());
+    let timeDateString = ' [ on ' + now.toLocaleDateString() + ']';
+    timeDateString = now.toLocaleTimeString('en-US') + timeDateString;
+    let stampArrayElementObject = {};
+    stampArrayElementObject.step = memory.getItem('enrollmentStepCurrent');
+    stampArrayElementObject.stamp = timeDateString;
+    stepStampArrayObject.stampArray.push(stampArrayElementObject);
+    memory.setItem('stepStampArray',JSON.stringify(stepStampArrayObject));
+    // ø <---------- timeDateString ---------->
+
 	let enrollmentObject = JSON.parse(local.getItem('ondeckEnrollmentJSON'));
-	local.setItem('staffIdentifiedFamilyId', enrollmentObject.family.parent.primary.memberId);
+    // let memberId = Math.random() > 0.1 ? 'INSTANTIATE' : '777888'
+    let memberId = enrollmentObject.family.parent.primary.memberId
+	local.setItem('staffIdentifiedFamilyId', memberId);
 }
 // ø <---------- </doInstantiateLoopSwitchStep> ---------->
 // ø <---------- </manually added Step Functions> ---------->
@@ -229,28 +266,165 @@ export function ppMemberPrepJSON(){
     let now = new Date();
     let timeDateString = ' [ on ' + now.toLocaleDateString() + ']';
     timeDateString = now.toLocaleTimeString('en-US') + timeDateString;
-    memory.setItem('ppMemberPrepJSON','ppMemberPrepJSON' + ' PREPPED on ' + timeDateString);
+    let stepStampArrayObject = JSON.parse(memory.getItem('stepStampArray'));
+    let stampArrayElementObject = {};
+    stampArrayElementObject.step = memory.getItem('enrollmentStepCurrent');
+    stampArrayElementObject.stamp = timeDateString;
+    stepStampArrayObject.stampArray.push(stampArrayElementObject);
+    memory.setItem('stepStampArray',JSON.stringify(stepStampArrayObject));    
+    // ø <---------- timeDateString ---------->
+    let enrollmentObject = JSON.parse(local.getItem("ondeckEnrollmentJSON"));
+
+    if(local.getItem('staffIdentifiedFamilyId') === 'INSTANTIATE'){
+        // memory.setItem('ppMemberPrepJSON','ppMemberPrepJSON' + ' INSERT PREPPED on ' + timeDateString);
+        	let ppPhoneIndex = -1;
+		for (let index = 0; index < enrollmentObject.family.phones.length; index++) {
+			let element = enrollmentObject.family.phones[index];
+			if(element.role === "Primary Parent"){
+				ppPhoneIndex = index;
+			}
+			
+		}
+		ppPhoneIndex = ppPhoneIndex === -1 ? 0 : ppPhoneIndex;
+
+		let ppEmailIndex = -1;
+		for (let index = 0; index < enrollmentObject.family.emails.length; index++) {
+			let element = enrollmentObject.family.emails[index];
+			if(element.role === "Primary Parent"){
+				ppEmailIndex = index;
+			}
+			
+		}
+		ppEmailIndex = ppEmailIndex === -1 ? 0 : ppEmailIndex;
+
+		let paramObject = {};
+		paramObject.email = enrollmentObject.family.emails[ppEmailIndex].email;
+		paramObject.password = simpleComplexPass();//"fMcM777";
+		paramObject.firstName = enrollmentObject.family.parent.primary.first;
+		paramObject.lastName = enrollmentObject.family.parent.primary.last;
+		paramObject.phone = enrollmentObject.family.phones[ppPhoneIndex].phone;
+		memory.setItem("ppMemberPrepJSON", JSON.stringify(paramObject));    
+    }else{
+        memory.setItem('ppMemberPrepJSON','ppMemberPrepJSON' + ' UPDATE PREPPED on ' + timeDateString);
+    }
 }
 
-export function ppMemberExecuteUpsert(){
+export async function ppMemberExecuteUpsert(){
     let now = new Date();
     let timeDateString = ' [ on ' + now.toLocaleDateString() + ']';
     timeDateString = now.toLocaleTimeString('en-US') + timeDateString;
-    memory.setItem('ppMemberExecuteUpsert','ppMemberExecuteUpsert' + ' EXECUTED on ' + timeDateString);
+    let stepStampArrayObject = JSON.parse(memory.getItem('stepStampArray'));
+    let stampArrayElementObject = {};
+    stampArrayElementObject.step = memory.getItem('enrollmentStepCurrent');
+    stampArrayElementObject.stamp = timeDateString;
+    stepStampArrayObject.stampArray.push(stampArrayElementObject);
+    memory.setItem('stepStampArray',JSON.stringify(stepStampArrayObject));    
+    // ø <---------- timeDateString ---------->
+    // memory.setItem('ppMemberExecuteUpsert','ppMemberExecuteUpsert' + ' EXECUTED on ' + timeDateString);
+    if(local.getItem('staffIdentifiedFamilyId') === 'INSTANTIATE'){
+        let paramObjectParam = {};
+        paramObjectParam.memoryKey = "ppMemberPrepJSON";
+        let ppMemberResponse = await steamdaMemberRegistration(paramObjectParam);
+        local.setItem('familyId',ppMemberResponse.user.id);
+        // memory.setItem('ppMemberExecuteUpsert','ppMemberExecuteUpsert' + ' INSERT EXECUTED on ' + timeDateString);
+        memory.setItem('ppMemberExecuteUpsert', JSON.stringify(ppMemberResponse));
+    }else{
+        memory.setItem('ppMemberExecuteUpsert','ppMemberExecuteUpsert' + ' UPDATE EXECUTED on ' + timeDateString);
+    }
+    if(local.getItem('staffIdentifiedFamilyId') === 'INSTANTIATE'){
+        // let memberResponseObject = JSON.parse(memory.getItem('ppMemberExecuteUpsert');
+        memory.setItem('HHOLDER',timeDateString);
+    }else{
+        local.setItem('familyId',local.getItem('staffIdentifiedFamilyId'));
+    }
 }
 
 export function stMemberPrepJSON(){
     let now = new Date();
     let timeDateString = ' [ on ' + now.toLocaleDateString() + ']';
     timeDateString = now.toLocaleTimeString('en-US') + timeDateString;
-    memory.setItem('stMemberPrepJSON','stMemberPrepJSON' + ' PREPPED on ' + timeDateString);
+    let stepStampArrayObject = JSON.parse(memory.getItem('stepStampArray'));
+    let stampArrayElementObject = {};
+    stampArrayElementObject.step = memory.getItem('enrollmentStepCurrent');
+    stampArrayElementObject.stamp = timeDateString;
+    stepStampArrayObject.stampArray.push(stampArrayElementObject);
+    memory.setItem('stepStampArray',JSON.stringify(stepStampArrayObject));    
+    // ø <---------- timeDateString ---------->
+    let enrollmentObject = JSON.parse(local.getItem("ondeckEnrollmentJSON"));
+    // ø <KLUDGE> there will need to be a more robust query
+    if(memory.getItem('yyyymm') > "202108"){
+        memory.setItem('stMemberPrepJSON','stMemberPrepJSON' + ' REQUIRES QUERY FOR EXISTING STUDENT');
+        return;
+    }else{
+       local.setItem('studentId','INSTANTIATE') 
+    }
+    // ø </KLUDGE>
+    if(local.getItem('studentId') === 'INSTANTIATE'){
+        let ppPhoneIndex = -1;
+		for (let index = 0; index < enrollmentObject.family.phones.length; index++) {
+			let element = enrollmentObject.family.phones[index];
+			if(element.role === "Primary Parent"){
+				ppPhoneIndex = index;
+			}
+			
+		}
+		ppPhoneIndex = ppPhoneIndex === -1 ? 0 : ppPhoneIndex;
+
+		// let ppEmailIndex = -1;
+		// for (let index = 0; index < enrollmentObject.family.emails.length; index++) {
+		// 	let element = enrollmentObject.family.emails[index];
+		// 	if(element.role === "Primary Parent"){
+		// 		ppEmailIndex = index;
+		// 	}
+			
+		// }
+		// ppEmailIndex = ppEmailIndex === -1 ? 0 : ppEmailIndex;
+        let firstLegal = enrollmentObject.family.student.name.first;
+        let firstPreferred = enrollmentObject.family.student.name.preferred;
+        let email = firstLegal;
+        email += local.getItem('familyId').substr(0,4);
+        email = 'steamdiscoveryacademy' + '+' + email + '@gmail.com';
+
+		let paramObject = {};
+		paramObject.email = email;
+		paramObject.password = simpleComplexPass();//"fMcM777";
+		paramObject.firstName = firstPreferred;
+		paramObject.lastName = enrollmentObject.family.student.name.last;
+		paramObject.phone = enrollmentObject.family.phones[ppPhoneIndex].phone;
+		memory.setItem("stMemberPrepJSON", JSON.stringify(paramObject));    
+    }else{
+        memory.setItem('stMemberPrepJSON','stMemberPrepJSON' + ' UPDATE PREPPED on ' + timeDateString);
+    }
 }
 
-export function stMemberExecuteUpsert(){
+export async function stMemberExecuteUpsert(){
     let now = new Date();
     let timeDateString = ' [ on ' + now.toLocaleDateString() + ']';
     timeDateString = now.toLocaleTimeString('en-US') + timeDateString;
-    memory.setItem('stMemberExecuteUpsert','stMemberExecuteUpsert' + ' EXECUTED on ' + timeDateString);
+    let stepStampArrayObject = JSON.parse(memory.getItem('stepStampArray'));
+    let stampArrayElementObject = {};
+    stampArrayElementObject.step = memory.getItem('enrollmentStepCurrent');
+    stampArrayElementObject.stamp = timeDateString;
+    stepStampArrayObject.stampArray.push(stampArrayElementObject);
+    memory.setItem('stepStampArray',JSON.stringify(stepStampArrayObject));    
+    // ø <---------- timeDateString ---------->
+    // memory.setItem('stMemberExecuteUpsert','stMemberExecuteUpsert' + ' EXECUTED on ' + timeDateString);
+    if(local.getItem('studentId') === 'INSTANTIATE'){
+        // local.setItem('studentId','888888');
+        // memory.setItem('stMemberExecuteUpsert','stMemberExecuteUpsert' + ' INSERT EXECUTED on ' + timeDateString);
+        let paramObjectParam = {};
+        paramObjectParam.memoryKey = "stMemberPrepJSON";
+        let stMemberResponse = await steamdaMemberRegistration(paramObjectParam);
+        console.log('[~LINE 408] stMemberResponse: ');
+        console.log(stMemberResponse);
+        local.setItem('studentId',stMemberResponse.user.id);
+        // memory.setItem('ppMemberExecuteUpsert','ppMemberExecuteUpsert' + ' INSERT EXECUTED on ' + timeDateString);
+        memory.setItem('stMemberExecuteUpsert', JSON.stringify(stMemberResponse));
+        //stMemberExecuteUpsert
+
+    }else{
+        memory.setItem('stMemberExecuteUpsert','stMemberExecuteUpsert' + ' UPDATE EXECUTED on ' + timeDateString);
+    }
 }
 
 export function ppContactPrepJSON(){
@@ -677,7 +851,9 @@ export function doEnrollmentCleanupCurrent() {
     /*Not CURRENT*///local.setItem('ondeckEnrollmentJSON','EEMPTY');
     local.setItem('staffIdentifiedFamilyId', 'EEMPTY');
     local.setItem('familyId', 'EEMPTY');
+    memory.setItem('ppRevision',"EEMPTY")
     local.setItem('studentId', 'EEMPTY');
+    memory.setItem('stRevision',"EEMPTY")
     memory.setItem('ppMemberPrepJSON', 'EEMPTY');
     memory.setItem('ppMemberExecuteUpsert', 'EEMPTY');
     memory.setItem('stMemberPrepJSON', 'EEMPTY');
@@ -699,6 +875,9 @@ export function doEnrollmentCleanupCurrent() {
     memory.setItem('enrollmentStepNext', 'EEMPTY');
     local.setItem('loopExitAfterStep', 'EEMPTY');
     local.setItem('loopExitNow', 'TTRUE_DEFUALT');
+    memory.setItem('stepStampArray', 'EEMPTY_AARRAY');
+    memory.setItem('yyyymm', 'EEMPTY');
+
     // ø </code Cleanup for Current Enrollment>
     return "The Current Enrollment Data has been Reset to 'EEMPTY', Clean-Up Successful.";
 }
@@ -712,7 +891,9 @@ export function doEnrollmentLogCurrent() {
     /*Not CURRENT*///logString += '\n' + "local.getItem('ondeckEnrollmentJSON'): " + local.getItem('ondeckEnrollmentJSON'); 
     logString += /*'\n' + */"local.getItem('staffIdentifiedFamilyId'): " + local.getItem('staffIdentifiedFamilyId');
     logString += '\n' + "local.getItem('familyId'): " + local.getItem('familyId');
+    logString += '\n' + "memory.getItem('ppRevision'): " + memory.getItem('ppRevision');
     logString += '\n' + "local.getItem('studentId'): " + local.getItem('studentId');
+    logString += '\n' + "memory.getItem('stRevision'): " + memory.getItem('stRevision');
     logString += '\n' + "memory.getItem('ppMemberPrepJSON'): " + memory.getItem('ppMemberPrepJSON');
     logString += '\n' + "memory.getItem('ppMemberExecuteUpsert'): " + memory.getItem('ppMemberExecuteUpsert');
     logString += '\n' + "memory.getItem('stMemberPrepJSON'): " + memory.getItem('stMemberPrepJSON');
@@ -735,6 +916,15 @@ export function doEnrollmentLogCurrent() {
     logString += '\n' + "memory.getItem('enrollmentStepNext'): " + memory.getItem('enrollmentStepNext');
     logString += '\n' + "local.getItem('loopExitAfterStep'): " + local.getItem('loopExitAfterStep');
     logString += '\n' + "local.getItem('loopExitNow'): " + local.getItem('loopExitNow');
+    logString += '\n' + "memory.getItem('stepStampArray'): " + memory.getItem('stepStampArray');
+    logString += '\n' + "memory.getItem('yyyymm'): " + local.getItem('yyyymm');
+    logString += '\n' + "local.getItem('termId'): " + local.getItem('termId');
+    logString += '\n' + "local.getItem('termLabelKey'): " + local.getItem('termLabelKey');
+    logString += '\n' + "local.getItem('termLabelKey'): " + local.getItem('termLabelKey');
+    logString += '\n' + "local.getItem('weekIdToLabelKeyJSON'): " + local.getItem('weekIdToLabelKeyJSON');
+    //local.setItem('weekIdToLabelKeyJSON'
+    //'termId','202106');
+        // local.setItem('termLabelKey'
     return logString;
     // ø </code Log for Current Enrollment>
 }
@@ -871,8 +1061,8 @@ export function btnCleanupCurrentState_click(event) {
  *	Adds an event handler that runs when the element is clicked.
  *	 @param {$w.MouseEvent} event
  */
-export function btnPeformNextStep_click(event) {
-	doPeformNextStep();
+export async function btnPeformNextStep_click(event) {
+	await doPeformNextStep();
 	$w('#sessionEnrollmentJSON').value = doEnrollmentLogCurrent();
 	displayStepsZZZ();
 }

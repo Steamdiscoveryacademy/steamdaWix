@@ -1,0 +1,47 @@
+// .jsw files enable you to write functions that run on the server side
+
+// Test any backend function by clicking the "Play" button on the left side of the code panel
+
+// About testing backend functions: https://support.wix.com/en/article/velo-testing-your-backend-functions
+
+// Sample function
+
+export function multiply(factor1, factor2) {
+    return factor1 * factor2;
+}
+
+import { contacts } from 'wix-crm-backend';
+
+export function steamdaGetContactFunction(contactId) {
+  //DEPRECATED? NOPE wuould say 'ById' below if it was https://www.wix.com/velo/reference/wix-crm-backend/getcontactbyid
+  //IS: https://www.wix.com/velo/reference/wix-crm-backend/contacts-obj/getcontact
+  //SAYS: This function replaces the deprecated wixCrmBackend.getContactById()
+  const options = {
+    suppressAuth: false
+  };
+
+  return contacts.getContact(contactId, options)
+    .then((contact) => {
+      console.log(contact);
+      return contact;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+// Execute the sample function above by copying the following into your page code
+
+/* 
+import {multiply} from 'backend/crmModule';
+
+$w.onReady(function () {
+	
+	multiply(4,5).then(product => {
+	    console.log(product);
+	      // Logs: 20
+	})
+	.catch(error => {
+		console.log(error);
+	});
+});
+*/

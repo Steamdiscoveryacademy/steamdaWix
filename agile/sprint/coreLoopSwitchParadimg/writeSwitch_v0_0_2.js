@@ -185,6 +185,9 @@ export function echoSwitchCode(stateObject){
     // let buildFunctionName = '';
     let prepORexecute = '';
     let now = "00000000000000";
+    stateObject.functionStringArray = [];
+    stateObject.functionCodeArray = [];
+    let index = 0; 
     stepArray.forEach(stepKey => {
         // console.log(stepKey);
         // ! <could be a function>
@@ -199,6 +202,7 @@ export function echoSwitchCode(stateObject){
         functionStringKey = functionString.length > 0 ? functionString : '';
         functionCodeThis = functionString.length > 0 ? 'export function ' + functionString + '()' : '';
         functionString = functionString.length > 0 ? '\n' + '|ind12Z|' + functionString + '()' : '';
+        stateObject.functionStringArray[index] = functionString;
         if (functionCodeThis.length > 0) {
             // now = toLocalISO();
             console.log
@@ -218,7 +222,10 @@ export function echoSwitchCode(stateObject){
                 // functionCodeThis += `\n` + '|ind4Z|' + `console.log('` + functionStringKey + ` set on ' + timeDateString);`;
             }
             functionCodeThis += `\n` + '|ind0Z|' + `}`;
+            stateObject.functionCodeArray[index] = functionCodeThis;
             functionCode += `\n\n` + functionCodeThis;
+            index++;
+
         }
         
         
@@ -259,8 +266,13 @@ codeOverallLoopSwitch += echoLoopEndString(stateObject);
 // console.warn('switchCode: ');
 // console.warn(switchCode);
 
-console.warn('codeOverallLoopSwitch: ');
-console.warn(codeOverallLoopSwitch);
+// console.warn('codeOverallLoopSwitch: ');
+// console.warn(codeOverallLoopSwitch);
+
+// console.warn('functionStringArray: ');
+// console.warn(stateObject.functionStringArray);
+// console.warn('functionCodeArray: ');
+// console.warn(stateObject.functionCodeArray);
 
 // console.warn('functionCode: ');
 // console.warn(functionCode);

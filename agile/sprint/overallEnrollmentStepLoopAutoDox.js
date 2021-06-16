@@ -46,6 +46,7 @@ let stepArray = [];
     // stepDoxObject = {}; 
     stepDoxObject[step] = {}; 
      stepDoxObject[step].preValidationNotes = [];//["Notes on any Pre-Validation Required"]; 
+     stepDoxObject[step].stepSubRoutines = [];//["Sub-Routines NOT part of the Core Loop-Switch Paradigm"]; 
      stepDoxObject[step].stepNotes = [];//["Notes on the actual Step"]; 
      stepDoxObject[step].postValidationNotes = [];//["Notes on any Post-Validation"]; 
      

@@ -1,0 +1,24 @@
+{
+    "contactIdentifiers": {
+        "contactId": "6f798dc9-c431-4d86-b8ef-af6af59ded37",
+        "revision": 3
+    },
+    "contactInfo": {
+        "addresses": [
+            {
+                "tag": "HOME",
+                "address": {
+                    "streetAddress": {
+                        "number": "123",
+                        "name": "Old Bus Way"
+                    },
+                    "addressLine2": "101",
+                    "city": "Teluca Lake",
+                    "subdivision": "CA",
+                    "postalCode": "90210",
+                    "country": "US"
+                }
+            }
+        ]
+    }
+}

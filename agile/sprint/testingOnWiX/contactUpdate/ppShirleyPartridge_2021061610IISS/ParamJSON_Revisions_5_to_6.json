@@ -1,0 +1,13 @@
+{
+    "contactIdentifiers": {
+        "contactId": "6f798dc9-c431-4d86-b8ef-af6af59ded37",
+        "revision": 5
+    },
+    "contactInfo": {
+        "extendedFields": {
+            "custom.last-update": "2021-6-16",
+            "custom.current-region": "Charlottesville",
+            "custom.timezone-offset": "-4:00"
+        }
+    }
+}

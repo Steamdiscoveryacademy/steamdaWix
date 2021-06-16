@@ -1,0 +1,22 @@
+{
+    "contactIdentifiers": {
+        "contactId": "6f798dc9-c431-4d86-b8ef-af6af59ded37",
+        "revision": 6
+    },
+    "contactInfo": {
+        "emails": [
+            {
+                "tag": "MAIN",
+                "email": "bradlowry+dannu@gmail.com",
+                "primary": "true"
+            }
+        ],
+        "phones": [
+            {
+                "tag": "MOBILE",
+                "phone": "(218) 595-0499",
+                "primary": "true"
+            }
+        ]
+    }
+}

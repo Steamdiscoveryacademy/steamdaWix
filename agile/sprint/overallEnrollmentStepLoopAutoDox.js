@@ -68,10 +68,10 @@ stepDoxObject.IINSTANTIATE.postStepAssignmentNotes[0] = "local.setItem(familyId)
 stepDoxObject.PREP_stMember.stepNotes[0] = "AFTER t202106 there needs to be check for existing Student Member/Contact";
 
 stepDoxObject.EXECUTE_ppMember.postValidationNotes[0] = "confirm that '_id' matches 'ContactId'";
-stepDoxObject.EXECUTE_ppMember.postStepAssignmentNotes[0] = "Overwrite local.setItem(familyId) – even if Update, one place not two";
+stepDoxObject.EXECUTE_ppMember.postStepAssignmentNotes[0] = "Overwrite local.setItem(familyId) - even if Update, one place not two";
 
 stepDoxObject.EXECUTE_stMember.postValidationNotes[0] = "confirm that '_id' matches 'ContactId'";
-stepDoxObject.EXECUTE_stMember.postStepAssignmentNotes[0] = "Set local.setItem(studentId) – even if Update, one place not two";
+stepDoxObject.EXECUTE_stMember.postStepAssignmentNotes[0] = "Set local.setItem(studentId) - even if Update, one place not two";
 
 
 stepDoxObject.EXECUTE_ppMember.stepNotes[0] = "IF local.getItem(familyId) is 'INSTANTIATE'";

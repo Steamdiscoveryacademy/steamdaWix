@@ -1,0 +1,20 @@
+{
+    "contactIdentifiers": {
+        "contactId": "6f798dc9-c431-4d86-b8ef-af6af59ded37",
+        "revision": 4
+    },
+    "contactInfo": {
+        "labelKeys": [
+            "custom.w1-2021060711",
+            "custom.w2-2021061418",
+            "custom.w3-2021062125",
+            "custom.w4-2021062832",
+            "custom.w4-2021062832bday",
+            "custom.w5-2021071216",
+            "custom.t202106",
+            "custom.t202106bday",
+            "custom.primary-parent",
+            "custom.member-active"
+        ]
+    }
+}

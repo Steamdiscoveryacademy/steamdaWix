@@ -1,0 +1,67 @@
+{
+    "_createdDate": "2021-06-14T15:38:32.171Z",
+    "_id": "6f798dc9-c431-4d86-b8ef-af6af59ded37",
+    "info": {
+        "addresses": [
+            {
+                "address": {
+                    "formatted": "123 Old Bus Way, 101\nTeluca Lake, California 90210\nUnited States",
+                    "city": "Teluca Lake",
+                    "subdivision": "US-CA",
+                    "country": "US",
+                    "postalCode": "90210",
+                    "streetAddress": {
+                        "name": "Old Bus Way",
+                        "number": "123",
+                        "apt": ""
+                    },
+                    "addressLine2": "101"
+                },
+                "_id": "74f33820-408b-4e8b-b544-787a09dae046",
+                "tag": "HOME"
+            }
+        ],
+        "emails": [
+            {
+                "tag": "UNTAGGED",
+                "email": "bradlowry+dannu@gmail.com",
+                "primary": true
+            }
+        ],
+        "extendedFields": {
+            "contacts.displayByLastName": "Partridge Shirley",
+            "emailSubscriptions.deliverabilityStatus": "NOT_SET",
+            "members.membershipStatus": "APPROVED",
+            "emailSubscriptions.subscriptionStatus": "NOT_SET",
+            "members.mobile": false,
+            "emailSubscriptions.effectiveEmail": "bradlowry+dannu@gmail.com",
+            "contacts.displayByFirstName": "Shirley Partridge"
+        },
+        "name": {
+            "first": "Shirley",
+            "last": "Partridge"
+        },
+        "phones": [
+            {
+                "tag": "UNTAGGED",
+                "phone": "(218) 595-0499",
+                "primary": true
+            }
+        ],
+        "picture": {}
+    },
+    "lastActivity": {
+        "activityDate": "2021-06-14T15:38:32.230Z",
+        "activityType": "MEMBER_REGISTER"
+    },
+    "primaryInfo": {
+        "email": "bradlowry+dannu@gmail.com",
+        "phone": "(218) 595-0499"
+    },
+    "revision": 4,
+    "source": {
+        "appId": "eb377299-86b4-4a86-a1b5-774a2d1d374b",
+        "sourceType": "WIX_SITE_MEMBERS"
+    },
+    "_updatedDate": "2021-06-16T15:52:54.382Z"
+}

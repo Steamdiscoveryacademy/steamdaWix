@@ -42,6 +42,44 @@ let union100 =
   'memory.getItem(stRevision)',
   'local.getItem(yyyymm)' ];
 
+  let logStringStorage = 
+  ['local.getItem(staffIdentifiedFamilyId)',
+  'local.getItem(familyId)',
+  'memory.getItem(ppRevision)',
+  'local.getItem(studentId)',
+  'memory.getItem(stRevision)',
+  'memory.getItem(ppMemberPrepJSON)',
+  'memory.getItem(ppMemberExecuteUpsert)',
+  'memory.getItem(stMemberPrepJSON)',
+  'memory.getItem(stMemberExecuteUpsert)',
+  'memory.getItem(ppContactPrepJSON)',
+  'memory.getItem(ppDatabasePrepJSON)',
+  'memory.getItem(stContactPrepJSON)',
+  'memory.getItem(stDatabasePrepJSON)',
+  'memory.getItem(spContactPrepJSON)',
+  'memory.getItem(spDatabasePrepJSON)',
+  'memory.getItem(ppContactExecuteUpsert)',
+  'memory.getItem(ppDatabaseExecuteUpsert)',
+  'memory.getItem(stContactExecuteUpsert)',
+  'memory.getItem(stDatabaseExecuteUpsert)',
+  'memory.getItem(spContactExecuteUpsert)',
+  'memory.getItem(spDatabaseExecuteUpsert)',
+  'memory.getItem(enrollmentStepList)',
+  'memory.getItem(enrollmentStepCompleted)',
+  'memory.getItem(enrollmentStepCurrent)',
+  'memory.getItem(enrollmentStepNext)',
+  'local.getItem(loopExitAfterStep)',
+  'local.getItem(loopExitNow)',
+  'memory.getItem(stepStampArray)',
+  'memory.getItem(yyyymm)',
+  'local.getItem(termId)',
+  'local.getItem(termLabelKey)',
+  'local.getItem(wixWebhookId)',
+  'local.getItem(weekIdToLabelKeyJSON)'];
+
+let unAccountedForArray = [];
+
+
   let union100_local = [];
   let union100_session = [];
   let union100_memory = [];
@@ -57,6 +95,9 @@ union100.forEach(element => {
     if(element.substr(0,6) === 'memory'){
         union100_memory.push(element)
     }
+    if(!logStringStorage.includes(element)){
+        unAccountedForArray.push(element);
+    }
 });
 
 console.warn('union100['+union100.length+']: ');
@@ -70,6 +111,9 @@ console.warn(union100_session);
 
 console.warn('union100_memory['+union100_memory.length+']: ');
 console.warn(union100_memory);
+
+console.warn('unAccountedForArray['+unAccountedForArray.length+']: ');
+console.warn(unAccountedForArray);
 
 
 

@@ -1,6 +1,6 @@
 // ø <---------- <doEnrollmentLogCurrent>  ---------->
 export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
-    let kindSupportedArray = ['CODE','STEPS','DATA','DDEFAULT'];
+    let kindSupportedArray = ['CODE','STEPS','DATA','CORE','DDEFAULT'];
     kind = kindSupportedArray.includes(kind) ? kind : 'DDEFUALT';
     console.warn('kind: ' + kind);
 
@@ -50,17 +50,31 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
         logString += '\n' + "memory.getItem('stepStampArray'): " + memory.getItem('stepStampArray');
     }//END if(kind === 'STEPS' || kind === 'DDEFAULT')
     // ø </STEPS>
-    // ø <DATA>
-    if(kind === 'DATA' || kind === 'DDEFAULT'){
+    // ø <CORE>
+    if(kind === 'CORE' || kind === 'DDEFAULT'){
         console.log(kind);
         logString += '\n' + "memory.getItem('yyyymm'): " + local.getItem('yyyymm');
         logString += '\n' + "local.getItem('termId'): " + local.getItem('termId');
+        logString += '\n' + "local.getItem('termBeginMMDD')" + local.getItem('termBeginMMDD');
+        logString += '\n' + "local.getItem('termEndMMDD')" + local.getItem('termEndMMDD');
         logString += '\n' + "local.getItem('termLabelKey'): " + local.getItem('termLabelKey');
-        // logString += '\n' + "local.getItem('termLabelKey'): " + local.getItem('termLabelKey');
         logString += '\n' + "local.getItem('wixWebhookId'): " + local.getItem('wixWebhookId');
         logString += '\n' + "local.getItem('weekIdToLabelKeyJSON'): " + '\n' + local.getItem('weekIdToLabelKeyJSON');
     }//END if(kind === 'DATA' || kind === 'DDEFAULT')
-    // ø </DATA>
+    // ø </CORE>
+    // ø <UNACCOUNTED_FOR>
+    if(kind === 'UNACCOUNTED_FOR'){
+    // if(kind === 'UNACCOUNTED_FOR' || kind === 'DDEFAULT'){
+        if(kind === 'OTHERWISE_SUPPORTED'){
+            logString += '\n' + "local.getItem('ondeckEnrollmentJSON')" + local.getItem('ondeckEnrollmentJSON');
+        }
+        logString += '\n' + "memory.getItem('loopExitNow') ['memory' Dupe?]" + memory.getItem('loopExitNow');
+        logString += '\n' + "memory.getItem('ppMemberOnDeckJSON') [Dupe with 'PREP'?" + memory.getItem('ppMemberOnDeckJSON');
+        logString += '\n' + "memory.getItem('HHOLDER') [well...]" + memory.getItem('HHOLDER');
+        logString += '\n' + "memory.getItem('loopExitAfterStep') ['memory' Dupe?]" + memory.getItem('loopExitAfterStep');
+        logString += '\n' + "local.getItem('yyyymm') [where,how used?]" + local.getItem('yyyymm');
+    }//END if(kind === 'UNACCOUNTED_FOR')
+    // ø </UNACCOUNTED_FOR>
     return logString;
     // ø </code Log for Current Enrollment>
 }

@@ -72,7 +72,8 @@ export async function stContactPrepJSON(){
         let declaredGender = enrollmentObject.family.student.declaredGender.trim().toLowerCase();
         let assignedGenderKey = 'unreported'
         let maleOptionArray = ['masculine','men','he','man','male','gentleman','boy','guy','fellow','gent','bloke','chap','lad'];
-        let femaleOptionArray = ['woman','female','lady','girl','lass','lassie','bird'];
+        let femaleOptionArray = ['feminine','women','she','woman','female','lady','girl','gal','lass','lassie','bird'];
+        
         assignedGenderKey = maleOptionArray.includes(declaredGender) ? 'male' : assignedGenderKey;
         assignedGenderKey = femaleOptionArray.includes(declaredGender) ? 'female' : assignedGenderKey;
         assignedGenderKey = assignedGenderKey === 'unreported' && declaredGender.length > 0 ? 'alternative' : assignedGenderKey;

@@ -1,0 +1,200 @@
+{
+    "original": {
+        "contactIdentifiers": {
+            "contactId": "bf057354-5c9e-4d0b-8962-760ae1655c08",
+            "revision": 1
+        },
+        "contactInfo": {
+            "name": {
+                "first": "Danny",
+                "last": "Partridge"
+            },
+            "locale": "en-US",
+            "company": "Bonaducci Prep",
+            "jobTitle": "Third Grade",
+            "birthdate": "2004-07-02",
+            "labelKeys": [
+                "custom.w1-2021060711",
+                "custom.w2-2021061418",
+                "custom.w3-2021062125",
+                "custom.w4-2021062832",
+                "custom.w4-2021062832bday",
+                "custom.w5-2021071216",
+                "custom.t202106",
+                "custom.t202106bday",
+                "custom.student",
+                "custom.member-faux",
+                "custom.gender-male"
+            ],
+            "emails": [
+                {
+                    "tag": "MAIN",
+                    "email": "bradlowry+dannu@gmail.com",
+                    "primary": "true"
+                }
+            ],
+            "phones": [
+                {
+                    "tag": "MOBILE",
+                    "phone": "(218) 595-0499",
+                    "primary": "true"
+                }
+            ],
+            "addresses": [
+                {
+                    "tag": "HOME",
+                    "address": {
+                        "streetAddress": {
+                            "number": "123",
+                            "name": "Old Bus Way"
+                        },
+                        "addressLine2": "101",
+                        "city": "Teluca Lake",
+                        "subdivision": "CA",
+                        "postalCode": "90210",
+                        "country": "US"
+                    }
+                }
+            ],
+            "extendedFields": {
+                "custom.last-update": "2021-6-18",
+                "custom.current-region": "Charlottesville",
+                "custom.timezone-offset": "-4:00",
+                "custom.legal-first": "Danny",
+                "custom.grade": 3
+            }
+        }
+    },
+    "again": {
+        "contactIdentifiers": {
+            "contactId": "bf057354-5c9e-4d0b-8962-760ae1655c08",
+            "revision": 1
+        },
+        "contactInfo": {
+            "name": {
+                "first": "Danny",
+                "last": "Partridge"
+            },
+            "locale": "en-US",
+            "company": "Bonaducci Prep",
+            "jobTitle": "Third Grade",
+            "birthdate": "2004-07-02",
+            "labelKeys": [
+                "custom.w1-2021060711",
+                "custom.w2-2021061418",
+                "custom.w3-2021062125",
+                "custom.w4-2021062832",
+                "custom.w4-2021062832bday",
+                "custom.w5-2021071216",
+                "custom.t202106",
+                "custom.t202106bday",
+                "custom.student",
+                "custom.member-faux",
+                "custom.gender-male"
+            ],
+            "emails": [
+                {
+                    "tag": "MAIN",
+                    "email": "bradlowry+dannu@gmail.com",
+                    "primary": "true"
+                }
+            ],
+            "phones": [
+                {
+                    "tag": "MOBILE",
+                    "phone": "(218) 595-0499",
+                    "primary": "true"
+                }
+            ],
+            "addresses": [
+                {
+                    "tag": "HOME",
+                    "address": {
+                        "streetAddress": {
+                            "number": "123",
+                            "name": "Old Bus Way"
+                        },
+                        "addressLine2": "101",
+                        "city": "Teluca Lake",
+                        "subdivision": "CA",
+                        "postalCode": "90210",
+                        "country": "US"
+                    }
+                }
+            ],
+            "extendedFields": {
+                "custom.last-update": "2021-6-18",
+                "custom.current-region": "Charlottesville",
+                "custom.timezone-offset": "-4:00",
+                "custom.legal-first": "Danny",
+                "custom.grade": 3
+            }
+        }
+    },
+    "andAgain": {
+        "contactIdentifiers": {
+            "contactId": "bf057354-5c9e-4d0b-8962-760ae1655c08",
+            "revision": 1
+        },
+        "contactInfo": {
+            "name": {
+                "first": "Danny",
+                "last": "Partridge"
+            },
+            "locale": "en-US",
+            "company": "Bonaducci Prep",
+            "jobTitle": "Third Grade",
+            "birthdate": "2004-07-02",
+            "labelKeys": [
+                "custom.w1-2021060711",
+                "custom.w2-2021061418",
+                "custom.w3-2021062125",
+                "custom.w4-2021062832",
+                "custom.w4-2021062832bday",
+                "custom.w5-2021071216",
+                "custom.t202106",
+                "custom.t202106bday",
+                "custom.student",
+                "custom.member-faux",
+                "custom.gender-male"
+            ],
+            "emails": [
+                {
+                    "tag": "MAIN",
+                    "email": "bradlowry+dannu@gmail.com",
+                    "primary": "true"
+                }
+            ],
+            "phones": [
+                {
+                    "tag": "MOBILE",
+                    "phone": "(218) 595-0499",
+                    "primary": "true"
+                }
+            ],
+            "addresses": [
+                {
+                    "tag": "HOME",
+                    "address": {
+                        "streetAddress": {
+                            "number": "123",
+                            "name": "Old Bus Way"
+                        },
+                        "addressLine2": "101",
+                        "city": "Teluca Lake",
+                        "subdivision": "CA",
+                        "postalCode": "90210",
+                        "country": "US"
+                    }
+                }
+            ],
+            "extendedFields": {
+                "custom.last-update": "2021-6-18",
+                "custom.current-region": "Charlottesville",
+                "custom.timezone-offset": "-4:00",
+                "custom.legal-first": "Danny",
+                "custom.grade": 3
+            }
+        }
+    }
+}

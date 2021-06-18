@@ -1,5 +1,5 @@
-// ø <---------- <ppContactPrepJSON AS Step>  ---------->
-export async function ppContactPrepJSON(){
+// ø <---------- <stContactPrepJSON AS Step>  ---------->
+export async function stContactPrepJSON(){
     let now = new Date();
     let timeDateString = ' [ on ' + now.toLocaleDateString() + ']';
     timeDateString = now.toLocaleTimeString('en-US') + timeDateString;
@@ -21,7 +21,7 @@ export async function ppContactPrepJSON(){
 
     let paramObjectThis = {};
 	paramObjectThis.contactIdentifiers = {};
-    if(contact._id === local.getItem('familyId')){
+    if(contact._id === local.getItem('studentId')){
         paramObjectThis.contactIdentifiers.contactId = contact._id;
         paramObjectThis.contactIdentifiers.revision = contact.revision;
         // paramObjectThis.contactInfo = wixContactInfo.contactInfo;
@@ -69,14 +69,14 @@ export async function ppContactPrepJSON(){
         let roleLabelKey = 'custom.student';
         let memberLabelKey = 'custom.member-faux';
 
-        let declaredGender = enrollmentObj.family.student.declaredGender.trim().toLowerCase();
+        let declaredGender = enrollmentObject.family.student.declaredGender.trim().toLowerCase();
         let assignedGenderKey = 'unreported'
         let maleOptionArray = ['masculine','men','he','man','male','gentleman','boy','guy','fellow','gent','bloke','chap','lad'];
         let femaleOptionArray = ['woman','female','lady','girl','lass','lassie','bird'];
         assignedGenderKey = maleOptionArray.includes(declaredGender) ? 'male' : assignedGenderKey;
         assignedGenderKey = femaleOptionArray.includes(declaredGender) ? 'female' : assignedGenderKey;
         assignedGenderKey = assignedGenderKey === 'unreported' && declaredGender.length > 0 ? 'alternative' : assignedGenderKey;
-        genderLabelKey = 'custom.gender-' + assignedGenderKey;
+        let genderLabelKey = 'custom.gender-' + assignedGenderKey;
 
 
         // let idZZZToLableKeyArray = [[1,'custom.w1-2021060711'],[2,'custom.w2-2021061418'],[3,'custom.w3-2021062125'],[4,'custom.w4-2021062832'],[5,'custom.w5-2021071216'],[6,'custom.w6-2021071923'],[7,'custom.w7-2021072630'],[8,'custom.w8-2021080206'],[9,'custom.w9-2021080913'],['custom.w1-2021060711',1],['custom.w2-2021061418',2],['custom.w3-2021062125',3],['custom.w4-2021062832',4],['custom.w5-2021071216',5],['custom.w6-2021071923',6],['custom.w7-2021072630',7],['custom.w8-2021080206',8],['custom.w9-2021080913',9]];
@@ -126,15 +126,15 @@ export async function ppContactPrepJSON(){
         student.contactInfo = {};
         // ø <ZXZ-TTESTING DISABLED>
         student.contactInfo.name = {};
-        student.contactInfo.name.first = enrollmentObj.family.student.name.preferred;
-        student.contactInfo.name.last = enrollmentObj.family.student.name.last;
+        student.contactInfo.name.first = enrollmentObject.family.student.name.preferred;
+        student.contactInfo.name.last = enrollmentObject.family.student.name.last;
         student.contactInfo.locale = "en-US";
         // ø </ZXZ-TTESTING DISABLED>
         // ! </FINAL>
 
-        student.contactInfo.company = enrollmentObj.family.student.currentSchool;
-        student.contactInfo.jobTitle = enrollmentObj.family.student.currentGradeString;
-        student.contactInfo.birthdate = enrollmentObj.family.student.dob.date.substr(0,10);
+        student.contactInfo.company = enrollmentObject.family.student.currentSchool;
+        student.contactInfo.jobTitle = enrollmentObject.family.student.currentGradeString;
+        student.contactInfo.birthdate = enrollmentObject.family.student.dob.date.substr(0,10);
 
 
         // student.contactInfo.labelKeys = [];
@@ -221,8 +221,8 @@ export async function ppContactPrepJSON(){
         student.contactInfo.extendedFields['custom.last-update'] = lastupdate;
         student.contactInfo.extendedFields['custom.current-region'] = currentRegion;
         student.contactInfo.extendedFields['custom.timezone-offset'] = timezoneOffest;
-        student.contactInfo.extendedFields['custom.legal-first'] = enrollmentObj.family.student.name.first;
-        student.contactInfo.extendedFields['custom.grade'] = enrollmentObj.family.student.currentGrade;
+        student.contactInfo.extendedFields['custom.legal-first'] = enrollmentObject.family.student.name.first;
+        student.contactInfo.extendedFields['custom.grade'] = enrollmentObject.family.student.currentGrade;
         // ! </FINAL>
         // ø </ZXZ-TTESTING DISABLED>
         // student.contactInfo.extendedFields.custom['legal-first'] = "Elijah";
@@ -235,6 +235,6 @@ export async function ppContactPrepJSON(){
         paramObjectThis.contactInfo = student.contactInfo;
     }
     let paramJSON = JSON.stringify(paramObjectThis);
-    memory.setItem('ppContactPrepJSON',paramJSON);
+    memory.setItem('stContactPrepJSON',paramJSON);
 }
-// ø <---------- </ppContactPrepJSON AS Step> ---------->
+// ø <---------- </stContactPrepJSON AS Step> ---------->

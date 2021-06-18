@@ -1,0 +1,9 @@
+{
+    "contactIdentifiers": {
+        "contactId": "EERROR",
+        "errorContactId": "bf057354-5c9e-4d0b-8962-760ae1655c08",
+        "errorMemberId": "f7671489-1182-41ba-8ce0-cc1423daf12e",
+        "revision": 1
+    },
+    "errorString": "Member ID !== Contact ID"
+}

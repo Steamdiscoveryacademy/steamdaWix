@@ -1,0 +1,57 @@
+{
+    "_createdDate": "2021-06-18T11:03:10.041Z",
+    "_id": "bf057354-5c9e-4d0b-8962-760ae1655c08",
+    "info": {
+        "addresses": [
+            {
+                "address": {
+                    "formatted": "United States",
+                    "country": "US"
+                },
+                "tag": "UNTAGGED"
+            }
+        ],
+        "emails": [
+            {
+                "tag": "UNTAGGED",
+                "email": "steamdiscoveryacademy+dannyf767@gmail.com",
+                "primary": true
+            }
+        ],
+        "extendedFields": {
+            "contacts.displayByLastName": "Partridge Danny",
+            "emailSubscriptions.deliverabilityStatus": "NOT_SET",
+            "members.membershipStatus": "APPROVED",
+            "emailSubscriptions.subscriptionStatus": "NOT_SET",
+            "members.mobile": false,
+            "emailSubscriptions.effectiveEmail": "steamdiscoveryacademy+dannyf767@gmail.com",
+            "contacts.displayByFirstName": "Danny Partridge"
+        },
+        "name": {
+            "first": "Danny",
+            "last": "Partridge"
+        },
+        "phones": [
+            {
+                "tag": "UNTAGGED",
+                "phone": "(218) 595-0499",
+                "primary": true
+            }
+        ],
+        "picture": {}
+    },
+    "lastActivity": {
+        "activityDate": "2021-06-18T11:03:10.138Z",
+        "activityType": "MEMBER_REGISTER"
+    },
+    "primaryInfo": {
+        "email": "steamdiscoveryacademy+dannyf767@gmail.com",
+        "phone": "(218) 595-0499"
+    },
+    "revision": 1,
+    "source": {
+        "appId": "eb377299-86b4-4a86-a1b5-774a2d1d374b",
+        "sourceType": "WIX_SITE_MEMBERS"
+    },
+    "_updatedDate": "2021-06-18T11:03:11.502Z"
+}

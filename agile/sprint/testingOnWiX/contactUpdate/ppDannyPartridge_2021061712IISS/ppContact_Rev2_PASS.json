@@ -1,0 +1,85 @@
+{
+    "_createdDate": "2021-06-17T17:17:33.853Z",
+    "_id": "f7671489-1182-41ba-8ce0-cc1423daf12e",
+    "info": {
+        "addresses": [
+            {
+                "address": {
+                    "formatted": "123 Old Bus Way, 101\nTeluca Lake, California 90210\nUnited States",
+                    "city": "Teluca Lake",
+                    "subdivision": "US-CA",
+                    "country": "US",
+                    "postalCode": "90210",
+                    "streetAddress": {
+                        "name": "Old Bus Way",
+                        "number": "123",
+                        "apt": ""
+                    },
+                    "addressLine2": "101"
+                },
+                "_id": "226335ac-1033-4573-94ec-f532541455cb",
+                "tag": "HOME"
+            }
+        ],
+        "emails": [
+            {
+                "_id": "34f71b72-74e9-4189-8691-a1c93376a2b9",
+                "tag": "MAIN",
+                "email": "bradlowry+dannu@gmail.com",
+                "primary": true
+            }
+        ],
+        "extendedFields": {
+            "contacts.displayByLastName": "Partridge Shirley",
+            "emailSubscriptions.deliverabilityStatus": "NOT_SET",
+            "custom.last-update": "2021-06-18",
+            "members.membershipStatus": "APPROVED",
+            "emailSubscriptions.subscriptionStatus": "NOT_SET",
+            "custom.current-region": "Charlottesville",
+            "members.mobile": false,
+            "emailSubscriptions.effectiveEmail": "bradlowry+dannu@gmail.com",
+            "contacts.displayByFirstName": "Shirley Partridge",
+            "custom.timezone-offset": "-4:00"
+        },
+        "labelKeys": [
+            "custom.t202106bday",
+            "custom.primary-parent",
+            "custom.w3-2021062125",
+            "custom.w4-2021062832",
+            "custom.w2-2021061418",
+            "custom.t202106",
+            "custom.w5-2021071216",
+            "custom.w1-2021060711",
+            "custom.member-active",
+            "custom.w4-2021062832bday"
+        ],
+        "locale": "en-us",
+        "name": {
+            "first": "Shirley",
+            "last": "Partridge"
+        },
+        "phones": [
+            {
+                "_id": "a59f4e06-dd0b-440e-99b5-178694a05fed",
+                "tag": "MOBILE",
+                "phone": "(218) 595-0499",
+                "primary": true
+            }
+        ],
+        "picture": {}
+    },
+    "lastActivity": {
+        "activityDate": "2021-06-17T17:17:33.889Z",
+        "activityType": "MEMBER_REGISTER"
+    },
+    "primaryInfo": {
+        "email": "bradlowry+dannu@gmail.com",
+        "phone": "(218) 595-0499"
+    },
+    "revision": 2,
+    "source": {
+        "appId": "eb377299-86b4-4a86-a1b5-774a2d1d374b",
+        "sourceType": "WIX_SITE_MEMBERS"
+    },
+    "_updatedDate": "2021-06-18T11:31:08.618Z"
+}

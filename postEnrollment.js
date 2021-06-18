@@ -6,6 +6,7 @@
 // import {workflows} from 'wix-crm-backend';
 import {local, session, memory} from 'wix-storage';
 import wixUsers from 'wix-users';
+import { getUser } from 'backend/userReference.jsw'
 import { steamdaGetContactFunction } from 'backend/crmModule.jsw'
 import { streamdaUpdateContactFunction } from 'backend/contactReference.jsw'
 
@@ -151,6 +152,18 @@ export async function doStepLoopSwitch() {
 // ! ====================                 <Front-End Code Calling Back-End Code>           ==============
 // ! ====================             ...core to the Final Enrollment Process              ==============
 // ! ====================================================================================================
+
+// ø <---------- <getUserFrontEnd Front-End>  ---------->
+export async function getUserFrontEnd(memberId) {
+	let thisUserData = await getUser(memberId); 
+	console.log('thisUserData: ');
+	console.log(thisUserData);
+    return thisUserData;
+	// $w('#gotContact').value = JSON.stringify(thisUserData,undefined,4);
+	// $w('#gotContact').value = JSON.stringify(thisUserData.undefined,4);
+}
+// ø <---------- </getUserFrontEnd Front-End> ---------->
+
 
 // ø <----------- <doUpdateContact Front-End>  ----------->
 export async function doUpdateContact(paramObjectThis) {
@@ -1138,8 +1151,8 @@ export function doEnrollmentCleanupCurrent() {
 
 // ø <---------- <doEnrollmentLogCurrent>  ---------->
 export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
-    let kindSupportedArray = ['CODE','STEPS','DATA','DDEFAULT'];
-    kind = kindSupportedArray.includes(kind) ? kind : 'DDEFAULT';
+    let kindSupportedArray = ['CODE','STEPS','DATA','CORE','UNACCOUNTED_FOR','DDEFAULT'];
+    kind = kindSupportedArray.includes(kind) ? kind : 'DDEFUALT';
     console.warn('kind: ' + kind);
 
     // ø <code Log for Current Enrollment> mostly for testing
@@ -1188,21 +1201,36 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
         logString += '\n' + "memory.getItem('stepStampArray'): " + memory.getItem('stepStampArray');
     }//END if(kind === 'STEPS' || kind === 'DDEFAULT')
     // ø </STEPS>
-    // ø <DATA>
-    if(kind === 'DATA' || kind === 'DDEFAULT'){
+    // ø <CORE>
+    if(kind === 'CORE' || kind === 'DDEFAULT'){
         console.log(kind);
         logString += '\n' + "memory.getItem('yyyymm'): " + local.getItem('yyyymm');
         logString += '\n' + "local.getItem('termId'): " + local.getItem('termId');
+        logString += '\n' + "local.getItem('termBeginMMDD')" + local.getItem('termBeginMMDD');
+        logString += '\n' + "local.getItem('termEndMMDD')" + local.getItem('termEndMMDD');
         logString += '\n' + "local.getItem('termLabelKey'): " + local.getItem('termLabelKey');
-        // logString += '\n' + "local.getItem('termLabelKey'): " + local.getItem('termLabelKey');
         logString += '\n' + "local.getItem('wixWebhookId'): " + local.getItem('wixWebhookId');
         logString += '\n' + "local.getItem('weekIdToLabelKeyJSON'): " + '\n' + local.getItem('weekIdToLabelKeyJSON');
     }//END if(kind === 'DATA' || kind === 'DDEFAULT')
-    // ø </DATA>
+    // ø </CORE>
+    // ø <UNACCOUNTED_FOR>
+    if(kind === 'UNACCOUNTED_FOR'){
+    // if(kind === 'UNACCOUNTED_FOR' || kind === 'DDEFAULT'){
+        if(kind !== 'UNACCOUNTED_FOR'){
+            logString += '\n' + "local.getItem('ondeckEnrollmentJSON')" + local.getItem('ondeckEnrollmentJSON');
+        }
+        logString += '\n' + "memory.getItem('loopExitNow') ['memory' Dupe?]" + memory.getItem('loopExitNow');
+        logString += '\n' + "memory.getItem('ppMemberOnDeckJSON') [Dupe with 'PREP'?" + memory.getItem('ppMemberOnDeckJSON');
+        logString += '\n' + "memory.getItem('HHOLDER') [well...]" + memory.getItem('HHOLDER');
+        logString += '\n' + "memory.getItem('loopExitAfterStep') ['memory' Dupe?]" + memory.getItem('loopExitAfterStep');
+        logString += '\n' + "local.getItem('yyyymm') [where,how used?]" + local.getItem('yyyymm');
+    }//END if(kind === 'UNACCOUNTED_FOR')
+    // ø </UNACCOUNTED_FOR>
     return logString;
     // ø </code Log for Current Enrollment>
 }
 // ø <---------- </doEnrollmentLogCurrent> ---------->
+
 
 export function doUserInterfaceCleanupCurrent(){
 	// $w("#btnUiPpId").label = "Staff ID PP: acee678e-76a6-49b1-96c3-a467b7a1acba";
@@ -1217,7 +1245,8 @@ export function doUserInterfaceCleanupCurrent(){
     label = "Student ID: ";
     label += local.getItem('studentId') !== "EEMPTY" ? local.getItem('studentId') : '';
     label += Number(memory.getItem('stRevision')) > 0 ? ' [' + memory.getItem('stRevision') + ']' : ''; 
-	$w("#btnUiStudentID").label = "Student ID: " + local.getItem('studentId');
+	// $w("#btnUiStudentID").label = "Student ID: " + local.getItem('studentId');
+	$w("#btnUiStudentID").label = label;
     let step = memory.getItem('enrollmentStepCompleted') === null ? false : true;
     step = memory.getItem('enrollmentStepCompleted') === "EEMPTY" ? false : step;
     step = memory.getItem('enrollmentStepCompleted') === "NNOT_AAPPLICABLE" ? false : step;
@@ -1258,6 +1287,64 @@ export function doUpdateStudentDOB(){
     resultString = "The logic to allow 'Student Date-of-Birth to Update' was successfully executed."
     resultString += "\n\nNo further action taken. \nPlease click 'Show Enrollment JSON' to check the result.";
     $w("#sessionEnrollmentJSON").value = resultString;
+}
+
+export async function doGetRecord(what,where){
+    let whatLower = what.toLowerCase();
+    let supportedWhatValues = ['ppMember','ppContact','stMember','stContact'];
+    let kAppend = '\n\nNo Action Taken.\nPlease try again or ask for assistance.';
+    let response = "'"+what+"' is Not Supported to be 'gotten' at this time." + kAppend;
+    let responseObject = {};
+    // let memberID = 'ZXZ';
+    let familyId = typeof local.getItem('familyId') === 'string' ? local.getItem('familyId') : 'ZZZ';
+    let studentId = typeof local.getItem('studentId') === 'string' ? local.getItem('studentId') : 'ZZZ';
+    let secondaryId = typeof local.getItem('secondaryId') === 'string' ? local.getItem('secondaryId') : 'ZZZ';
+    let valid = true;
+    valid = what.substr(0,2) === 'pp' && familyId.length < 10 ? false : valid;
+    valid = what.substr(0,2) === 'st' && studentId.length < 10 ? false : valid;
+    valid = what.substr(0,2) === 'sp' && secondaryId.length < 10 ? false : valid;
+    let thisId = what.substr(0,2) === 'pp' && valid === true ? familyId : 'ZZnomatchZZ'
+    thisId = what.substr(0,2) === 'st' && valid === true ? studentId : thisId;
+    thisId = what.substr(0,2) === 'sp' && valid === true ? secondaryId : thisId;
+    if(supportedWhatValues.includes(what)){
+        if(!valid){
+            response = "'"+what+"' is not able to be 'gotten' at this time. Primary-Parent ID (aka Family ID) is not valid.";
+            response += kAppend;
+        }
+        if(whatLower.indexOf('member') > 0){
+            responseObject = await getUserFrontEnd(thisId);
+            response = JSON.stringify(responseObject,undefined,4);
+        }
+        if(whatLower.indexOf('contact') > 0){
+            responseObject = await steamdaGetContactFunction(thisId);
+            response = JSON.stringify(responseObject,undefined,4);
+        }
+    }
+    where = where.substr(0,1) === '#' ? where : '#' + where;
+    $w(where).value = response;
+}
+export function doClear(clearIdArray){
+    let idArray = [];
+    let inValid = true;
+    if(typeof clearIdArray === 'string'){
+        idArray.push(clearIdArray);
+        inValid = false;
+    }
+    if(typeof clearIdArray === 'object' && Array.isArray(clearIdArray)){
+        idArray = clearIdArray;
+        inValid = false;
+    }
+    if(inValid){
+        return;
+    }
+    idArray.forEach(elementId => {
+        if(elementId.substr(0,1) !== '#'){
+            elementId = '#' + elementId;
+        }
+        $w(elementId).value = '';
+    })
+
+
 }
 // ! ====================================================================================================
 // ! ====================                    </Only UI Support Functiions>                   ==============
@@ -1421,10 +1508,147 @@ export function btCleanUpAllIncludingnrJSON_click(event) {
 	// $w("#radioAreYouSure").resetValidityIndication();
 }
 
+export function btnUpdateStudentDOB_click(event) {
+	doUpdateStudentDOB()
+}
+
+export function btnGetPpMember_click(event) {
+	doGetRecord('ppMember','ppMemberResponseJSON');
+}
+
+export function btnGetPpCpntact_click(event) {
+	doGetRecord('ppContact','ppContactResponseJSON');
+}
+
+export function btnGetPpDbase_click(event) {
+	doGetRecord('ppDbase','ppDatabaseResponseJSON');
+}
+
+export function btnClearPpMember_click(event) {
+	doClear('ppMemberResponseJSON')
+}
+
+export function btnClearPpContact_click(event) {
+	doClear('#ppContactResponseJSON')
+}
+
+export function btnClearPpDbase_click(event) {
+    let clearArray = ['#ppDatabaseResponseJSON'];
+	 doClear(clearArray);
+}
+
+export function btnKludgeClearPpStSpIDs_click(event) {
+	local.setItem('familyId','EEMPTY');
+    memory.setItem('ppRevision','EEMPTY');
+    local.setItem('studentId','EEMPTY');
+    memory.setItem('stRevision','EEMPTY');
+    local.setItem('secondaryId','EEMPTY');
+    memory.setItem('spRevision','EEMPTY');
+    doUserInterfaceCleanupCurrent();
+    $w('#sessionEnrollmentJSON').value = 'Kludge-Clear has removed all Primary-Parent, Student, and Secondary-Parent ID Values from Storage.'
+}
+
 /**
  *	Adds an event handler that runs when the element is clicked.
  *	 @param {$w.MouseEvent} event
  */
-export function btnUpdateStudentDOB_click(event) {
-	doUpdateStudentDOB()
+export function btnGetStMember_click(event) {
+	doGetRecord('stMember','stMemberResponseJSON');
+}
+
+/**
+ *	 @param {$w.MouseEvent} event
+ *	Adds an estnt handler that runs when the element is clicked.
+ *	Adds an estnt handler that runs when the element is clicked.
+ */
+export function btnGetStCpntact_click(event) {
+	doGetRecord('stContact','stContactResponseJSON');
+}
+
+
+
+/**
+ *	Adds an event handler that runs when the element is clicked.
+ *	 @param {$w.MouseEvent} event
+ */
+export function btnGetStDbase_click(event) {
+	doGetRecord('stDbase','stDatabaseResponseJSON');
+}
+
+/**
+ *	Adds an event handler that runs when the element is clicked.
+ *	 @param {$w.MouseEvent} event
+ */
+export function btnClearStMember_click(event) {
+	doClear('stMemberResponseJSON')
+}
+
+/**
+ *	Adds an event handler that runs when the element is clicked.
+ *	 @param {$w.MouseEvent} event
+ */
+export function btnClearStContact_click(event) {
+	doClear('stContactResponseJSON')
+}
+
+/**
+ *	Adds an event handler that runs when the element is clicked.
+ *	 @param {$w.MouseEvent} event
+ */
+export function btnClearStDbase_click(event) {
+	doClear('stDatabaseResponseJSON')
+}
+
+/**
+ *	Adds an event handler that runs when the element is clicked.
+ *	 @param {$w.MouseEvent} event
+ */
+export function btnGetSpMember_click(event) {
+	doGetRecord('spMember','spMemberResponseJSON');
+}
+
+/**
+ *	Adds an event handler that runs when the element is clicked.
+ *	 @param {$w.MouseEvent} event
+ */
+export function btnGetSpCpntact_click(event) {
+	doGetRecord('spContact','spContactResponseJSON');
+}
+
+/**
+ *	Adds an event handler that runs when the element is clicked.
+ *	 @param {$w.MouseEvent} event
+ */
+export function btnGetSpDbase_click(event) {
+	doGetRecord('spDbase','spDatabaseResponseJSON');
+}
+
+/**
+ *	Adds an event handler that runs when the element is clicked.
+ *	 @param {$w.MouseEvent} event
+ */
+export function btnClearSpMember_click(event) {
+	doClear('spMemberResponseJSON')
+	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+	// Add your code for this event here: 
+}
+
+/**
+ *	Adds an event handler that runs when the element is clicked.
+ *	 @param {$w.MouseEvent} event
+ */
+export function btnClearSpContact_click(event) {
+	doClear('spContactResponseJSON')
+	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+	// Add your code for this event here: 
+}
+
+/**
+ *	Adds an event handler that runs when the element is clicked.
+ *	 @param {$w.MouseEvent} event
+ */
+export function btnClearSpDbase_click(event) {
+	doClear('spDatabaseResponseJSON')
+	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+	// Add your code for this event here: 
 }

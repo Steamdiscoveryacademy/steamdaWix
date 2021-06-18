@@ -1,6 +1,6 @@
 // ø <---------- <doEnrollmentLogCurrent>  ---------->
 export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
-    let kindSupportedArray = ['CODE','STEPS','DATA','CORE','DDEFAULT'];
+    let kindSupportedArray = ['CODE','STEPS','DATA','CORE','OTHER','DDEFAULT'];
     kind = kindSupportedArray.includes(kind) ? kind : 'DDEFUALT';
     console.warn('kind: ' + kind);
 

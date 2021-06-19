@@ -1,21 +1,6 @@
-let kindKeyThis = 'CODE';
-// kindKeyThis = 'STEPS';
-// kindKeyThis = 'DATA';
-// kindKeyThis = 'CORE';
-// kindKeyThis = 'OTHER';
-// kindKeyThis = 'MEMORY_ALL';
-// kindKeyThis = 'LOCAL_TEMP';
-// kindKeyThis = 'ALL_EXCEPT_ENROLLMENT';
-// kindKeyThis = 'ALL_INCLUDING_ENROLLMENT';
-// kindKeyThis = 'ABORT';
-
-// ! <Perform the Function>
-doEnrollmentCleanupByKind(kindKeyThis);
-// ! </Perform the Function>
-
-
 // ø <---------- <doEnrollmentCleanupByKind>  ---------->
 export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
+    let errorStringArray = [];
     let cleanupString = 'EEMPTY';//override where appropriate
     let kindKeySupportedArray = ['CODE','STEPS','DATA','CORE','OTHER','MEMORY_ALL','LOCAL_TEMP','ALL_EXCEPT_ENROLLMENT','ALL_INCLUDING_ENROLLMENT','ABORT'];
     let kindSupportedArray = ['CODE','STEPS','DATA','CORE','OTHER','NEXT_ENROLLMENT'];
@@ -32,7 +17,28 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     kindArray = kindKey === 'OTHER' ? ['OTHER'] : kindArray
     kindArray = kindKey === 'MEMORY_ALL' ? ['MEMORY_ALL'] : kindArray
     kindArray = kindKey === 'LOCAL_TEMP' ? ['LOCAL_TEMP'] : kindArray
+
+    // ø <VALIDATION HERE>
+    if(kindArray.includes('NEXT_ENROLLMENT')){
+        if(typeof ZXZlocal.getItemZlpqZwixWebhookStatusZqrpZ !== 'string' || ZXZlocal.getItemZlpqZwixWebhookStatusZqrpZ !== 'RESOLVED')
+        errorStringArray.push("'Next Enrollment' rquires that the current Webhook Payload have a status of 'Resolved'")
+    }
+    // ø </VALIDATION HERE>
     
+    // ø <VALIDATION EXIT IFF>
+    let lineFeed = '';
+    if(errorStringArray.length > 0){
+        let errorStringLog = '';
+        errorStringArray.forEach(errorString => {
+            // console.log(errorString); 
+            errorStringLog += lineFeed + ' • ' + errorString; 
+            lineFeed = '\n';
+        });
+        console.warn('errorStringLog: ');
+        console.warn(errorStringLog);
+        return errorStringLog;
+    }
+    // ø </VALIDATION EXIT IFF>
 
     // ø <code Log for Current Enrollment> mostly for testing
     let logString = '';
@@ -90,12 +96,13 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
         ZXZlocal.getItemZlpqZtermBeginMMDDZqrpZ = cleanupString;
         ZXZlocal.getItemZlpqZtermEndMMDDZqrpZ = cleanupString;
         ZXZlocal.getItemZlpqZtermLabelKeyZqrpZ = cleanupString;
-        ZXZlocal.getItemZlpqZwixWebhookIdZqrpZ = cleanupString;
         ZXZlocal.getItemZlpqZweekIdToLabelKeyJSONZqrpZ = cleanupString;
     }//END if(kind === 'DATA' || kind === 'DDEFAULT')
     // ø </CORE>
     // ø <NEXT_ENROLLMENT>
     if(kindArray.includes('NEXT_ENROLLMENT')){
+        ZXZlocal.getItemZlpqZwixWebhookIdZqrpZ = cleanupString;
+        ZXZlocal.getItemZlpqZwixWebhookStatusZqrpZ = cleanupString;
         ZXZlocal.getItemZlpqZondeckEnrollmentJSONZqrpZ = cleanupString;
     }
     // ø </NEXT_ENROLLMENT>

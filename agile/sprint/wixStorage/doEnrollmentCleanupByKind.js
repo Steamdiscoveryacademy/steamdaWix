@@ -20,7 +20,7 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
 
     // ø <VALIDATION HERE>
     if(kindArray.includes('NEXT_ENROLLMENT')){
-        if(typeof ZXZlocal.getItemZlpqZwixWebhookStatusZqrpZ !== 'string' || ZXZlocal.getItemZlpqZwixWebhookStatusZqrpZ !== 'RESOLVED')
+        if(typeof local.getItem('wixWebhookStatus') !== 'string' || local.getItem('wixWebhookStatus') !== 'RESOLVED')
         errorStringArray.push("'Next Enrollment' rquires that the current Webhook Payload have a status of 'Resolved'")
     }
     // ø </VALIDATION HERE>
@@ -41,79 +41,89 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     // ø </VALIDATION EXIT IFF>
 
     // ø <code Log for Current Enrollment> mostly for testing
-    let logString = '';
-    let ZXZmemory = {};
-    let ZXZlocal = {};
+    // let logString = '';
+    // let memory = {};
+    // let local = {};
     /*Not CURRENT*///logString += '\n' + "local.getItem('ondeckEnrollmentJSON'): " + local.getItem('ondeckEnrollmentJSON'); 
     // ø <DATA>
     if(kindArray.includes('DATA')){
         // console.log(kind);
-        ZXZlocal.getItemZlpqZstaffIdentifiedFamilyIdZqrpZ = cleanupString;
-        ZXZlocal.getItemZlpqZfamilyIdZqrpZ = cleanupString;
-        ZXZmemory.getItemZlpqZppRevisionZqrpZ = cleanupString;
-        ZXZlocal.getItemZlpqZstudentIdZqrpZ = cleanupString;
-        ZXZmemory.getItemZlpqZstRevisionZqrpZ = cleanupString;
+        // local.getItem('staffIdentifiedFamilyId') = cleanupString;
+        // local.getItem('familyId') = cleanupString;
+        memory.getItem('ppRevision') = cleanupString;
+        // local.getItem('studentId') = cleanupString;
+        memory.getItem('stRevision') = cleanupString;
     }//END if(kind === 'DATA' || kind === 'DDEFAULT')
     // ø </DATA>
+    // ø <LOCAL_DATA>
+    if(kindArray.includes('LOCAL_DATA')){
+        // console.log(kind);
+        local.getItem('staffIdentifiedFamilyId') = cleanupString;
+        local.getItem('familyId') = cleanupString;
+        // memory.getItem('ppRevision') = cleanupString;
+        local.getItem('studentId') = cleanupString;
+        // memory.getItem('stRevision') = cleanupString;
+    }//END if(kind === 'LOCAL_DATA' || kind === 'DDEFAULT')
+    // ø </LOCAL_DATA>
     // ø <CODE>
     if(kindArray.includes('CODE')){
         // console.log(kind);
-        ZXZmemory.getItemZlpqZppMemberPrepJSONZqrpZ = cleanupString;
-        ZXZmemory.getItemZlpqZppMemberExecuteUpsertZqrpZ = cleanupString;
-        ZXZmemory.getItemZlpqZstMemberPrepJSONZqrpZ = cleanupString;
-        ZXZmemory.getItemZlpqZstMemberExecuteUpsertZqrpZ = cleanupString;
-        ZXZmemory.getItemZlpqZppContactPrepJSONZqrpZ = cleanupString;
-        ZXZmemory.getItemZlpqZppDatabasePrepJSONZqrpZ = cleanupString;
-        ZXZmemory.getItemZlpqZstContactPrepJSONZqrpZ = cleanupString;
-        ZXZmemory.getItemZlpqZstDatabasePrepJSONZqrpZ = cleanupString;
-        ZXZmemory.getItemZlpqZspContactPrepJSONZqrpZ = cleanupString;
-        ZXZmemory.getItemZlpqZspDatabasePrepJSONZqrpZ = cleanupString;
-        ZXZmemory.getItemZlpqZppContactExecuteUpsertZqrpZ = cleanupString;
-        ZXZmemory.getItemZlpqZppDatabaseExecuteUpsertZqrpZ = cleanupString;
-        ZXZmemory.getItemZlpqZstContactExecuteUpsertZqrpZ = cleanupString;
-        ZXZmemory.getItemZlpqZstDatabaseExecuteUpsertZqrpZ = cleanupString;
-        ZXZmemory.getItemZlpqZspContactExecuteUpsertZqrpZ = cleanupString;
-        ZXZmemory.getItemZlpqZspDatabaseExecuteUpsertZqrpZ = cleanupString;
+        memory.getItem('ppMemberPrepJSON') = cleanupString;
+        memory.getItem('ppMemberExecuteUpsert') = cleanupString;
+        memory.getItem('stMemberPrepJSON') = cleanupString;
+        memory.getItem('stMemberExecuteUpsert') = cleanupString;
+        memory.getItem('ppContactPrepJSON') = cleanupString;
+        memory.getItem('ppDatabasePrepJSON') = cleanupString;
+        memory.getItem('stContactPrepJSON') = cleanupString;
+        memory.getItem('stDatabasePrepJSON') = cleanupString;
+        memory.getItem('spContactPrepJSON') = cleanupString;
+        memory.getItem('spDatabasePrepJSON') = cleanupString;
+        memory.getItem('ppContactExecuteUpsert') = cleanupString;
+        memory.getItem('ppDatabaseExecuteUpsert') = cleanupString;
+        memory.getItem('stContactExecuteUpsert') = cleanupString;
+        memory.getItem('stDatabaseExecuteUpsert') = cleanupString;
+        memory.getItem('spContactExecuteUpsert') = cleanupString;
+        memory.getItem('spDatabaseExecuteUpsert') = cleanupString;
     }//END if(kind === 'CODE' || kind === 'DDEFAULT')
     // ø </CODE>
     // ø <STEPS>
     if(kindArray.includes('STEPS')){
         //console.log(kind);
-        ZXZmemory.getItemZlpqZenrollmentStepListZqrpZ = cleanupString;
-        ZXZmemory.getItemZlpqZenrollmentStepCompletedZqrpZ = cleanupString;
-        ZXZmemory.getItemZlpqZenrollmentStepCurrentZqrpZ = cleanupString;
-        ZXZmemory.getItemZlpqZenrollmentStepNextZqrpZ = cleanupString;
-        ZXZlocal.getItemZlpqZloopExitAfterStepZqrpZ = cleanupString;
-        ZXZlocal.getItemZlpqZloopExitNowZqrpZ = cleanupString;
-        ZXZmemory.getItemZlpqZstepStampArrayZqrpZ = cleanupString;
+        memory.getItem('enrollmentStepList') = cleanupString;
+        memory.getItem('enrollmentStepCompleted') = cleanupString;
+        memory.getItem('enrollmentStepCurrent') = cleanupString;
+        memory.getItem('enrollmentStepNext') = cleanupString;
+        local.getItem('loopExitAfterStep') = cleanupString;
+        local.getItem('loopExitNow') = cleanupString;
+        memory.getItem('stepStampArray') = cleanupString;
     }//END if(kind === 'STEPS' || kind === 'DDEFAULT')
     // ø </STEPS>
     // ø <CORE>
     if(kindArray.includes('CORE')){
         console.log(kind);
-        ZXZlocal.getItemZlpqZyyyymmZqrpZ = cleanupString;
-        ZXZlocal.getItemZlpqZtermIdZqrpZ = cleanupString;
-        ZXZlocal.getItemZlpqZtermBeginMMDDZqrpZ = cleanupString;
-        ZXZlocal.getItemZlpqZtermEndMMDDZqrpZ = cleanupString;
-        ZXZlocal.getItemZlpqZtermLabelKeyZqrpZ = cleanupString;
-        ZXZlocal.getItemZlpqZweekIdToLabelKeyJSONZqrpZ = cleanupString;
+        local.getItem('yyyymm') = cleanupString;
+        local.getItem('termId') = cleanupString;
+        local.getItem('termBeginMMDD') = cleanupString;
+        local.getItem('termEndMMDD') = cleanupString;
+        local.getItem('termLabelKey') = cleanupString;
+        local.getItem('weekIdToLabelKeyJSON') = cleanupString;
     }//END if(kind === 'DATA' || kind === 'DDEFAULT')
     // ø </CORE>
     // ø <NEXT_ENROLLMENT>
     if(kindArray.includes('NEXT_ENROLLMENT')){
-        ZXZlocal.getItemZlpqZwixWebhookIdZqrpZ = cleanupString;
-        ZXZlocal.getItemZlpqZwixWebhookStatusZqrpZ = cleanupString;
-        ZXZlocal.getItemZlpqZondeckEnrollmentJSONZqrpZ = cleanupString;
+        local.getItem('wixWebhookId') = cleanupString;
+        local.getItem('wixWebhookStatus') = cleanupString;
+        local.getItem('ondeckEnrollmentJSON') = cleanupString;
     }
     // ø </NEXT_ENROLLMENT>
     // ø <UNACCOUNTED_FOR>
     if(kindArray.includes('UNACCOUNTED_FOR')){
     // if(kind === 'UNACCOUNTED_FOR' || kind === 'DDEFAULT'){
-        ZXZmemory.getItemZlpqZloopExitNowZqrpZ = cleanupString;
-        ZXZmemory.getItemZlpqZppMemberOnDeckJSONZqrpZ = cleanupString;
-        ZXZmemory.getItemZlpqZHHOLDERZqrpZ = cleanupString;
-        ZXZmemory.getItemZlpqZloopExitAfterStepZqrpZ = cleanupString;
-        ZXZlocal.getItemZlpqZyyyymmZqrpZ = cleanupString;
+        memory.getItem('loopExitNow') = cleanupString;
+        memory.getItem('ppMemberOnDeckJSON') = cleanupString;
+        memory.getItem('HHOLDER') = cleanupString;
+        memory.getItem('loopExitAfterStep') = cleanupString;
+        local.getItem('yyyymm') = cleanupString;
     }//END if(kind === 'UNACCOUNTED_FOR')
     // ø </UNACCOUNTED_FOR>
     // return logString;

@@ -78,7 +78,7 @@ let union100 =
   'local.getItem(weekIdToLabelKeyJSON)'];
 
   let quickAndDirtyStorageAddedToPostEnrollment = ['local.getItem(secondaryId)',
-  'memory.getItem(spRevision)','local.getItem(wixWebhookStatus)'];
+  'memory.getItem(spRevision)','local.getItem(wixWebhookStatus)','local.getItem(kAppendString)'];
 
 let unAccountedForArray = [];
 

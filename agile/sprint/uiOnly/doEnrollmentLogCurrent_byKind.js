@@ -59,6 +59,7 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
         logString += '\n' + "local.getItem('termEndMMDD')" + local.getItem('termEndMMDD');
         logString += '\n' + "local.getItem('termLabelKey'): " + local.getItem('termLabelKey');
         logString += '\n' + "local.getItem('wixWebhookId'): " + local.getItem('wixWebhookId');
+        logString += '\n' + "local.getItem('wixWebhookStatus'): " + local.getItem('wixWebhookStatus');
         logString += '\n' + "local.getItem('weekIdToLabelKeyJSON'): " + '\n' + local.getItem('weekIdToLabelKeyJSON');
     }//END if(kind === 'DATA' || kind === 'DDEFAULT')
     // ø </CORE>

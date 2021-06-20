@@ -17,11 +17,21 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     kindArray = kindKey === 'OTHER' ? ['OTHER'] : kindArray
     kindArray = kindKey === 'MEMORY_ALL' ? ['MEMORY_ALL'] : kindArray
     kindArray = kindKey === 'LOCAL_TEMP' ? ['LOCAL_TEMP'] : kindArray
-
+    // ø <Deprecated Use kindKey = 'CURRENT'>
+    kindArray = kindKey === 'CURRENT' ? ['DATA','CODE','STEPS'] : kindArray;
+    // ø </Deprecated Use kindKey = 'CURRENT'>
+    
     // ø <VALIDATION HERE>
+    if(kindArray.length === 0){
+        errorStringArray.push("The function 'doEnrollmentCleanupByKind()' with the parameter '"+kindKey+"' is not vallid.");
+    }
+    if(kindArray.length === 1 && kindArray[0] === 'ZZZ'){
+        errorStringArray.push("The function 'doEnrollmentCleanupByKind()' with the parameter '"+kindKey+"' is not enabled at this time.");
+    }
     if(kindArray.includes('NEXT_ENROLLMENT')){
-        if(typeof local.getItem('wixWebhookStatus') !== 'string' || local.getItem('wixWebhookStatus') !== 'RESOLVED')
-        errorStringArray.push("'Next Enrollment' rquires that the current Webhook Payload have a status of 'Resolved'")
+        if(typeof local.getItem('wixWebhookStatus') !== 'string' || local.getItem('wixWebhookStatus') !== 'RESOLVED'){
+            errorStringArray.push("'Next Enrollment' rquires that the current Webhook Payload have a status of 'Resolved'")
+        }
     }
     // ø </VALIDATION HERE>
     
@@ -95,13 +105,13 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
         memory.getItem('enrollmentStepNext') = cleanupString;
         local.getItem('loopExitAfterStep') = cleanupString;
         local.getItem('loopExitNow') = cleanupString;
-        memory.getItem('stepStampArray') = cleanupString;
+        memory.getItem('stepStampArray') = 'EEMPTY_AARRAY';
     }//END if(kind === 'STEPS' || kind === 'DDEFAULT')
     // ø </STEPS>
     // ø <CORE>
     if(kindArray.includes('CORE')){
-        console.log(kind);
-        local.getItem('yyyymm') = cleanupString;
+        // console.log(kind);
+        local.getItem('yyyymm') = cleanupString;//was included in Deprecated version
         local.getItem('termId') = cleanupString;
         local.getItem('termBeginMMDD') = cleanupString;
         local.getItem('termEndMMDD') = cleanupString;

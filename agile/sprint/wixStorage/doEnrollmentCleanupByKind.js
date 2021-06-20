@@ -1,5 +1,6 @@
 // ø <---------- <doEnrollmentCleanupByKind>  ---------->
 export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
+    let develTest = true;
     let errorStringArray = [];
     let cleanupString = 'EEMPTY';//override where appropriate
     let kindKeySupportedArray = ['CODE','STEPS','DATA','CORE','OTHER','MEMORY_ALL','LOCAL_TEMP','ALL_EXCEPT_ENROLLMENT','ALL_INCLUDING_ENROLLMENT','ABORT'];
@@ -57,7 +58,7 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     /*Not CURRENT*///logString += '\n' + "local.getItem('ondeckEnrollmentJSON'): " + local.getItem('ondeckEnrollmentJSON'); 
     // ø <DATA>
     if(kindArray.includes('DATA')){
-        // console.log(kind);
+        cleanupString = develTest === true ? 'DATA' : cleanupString;
         // local.getItem('staffIdentifiedFamilyId') = cleanupString;
         // local.getItem('familyId') = cleanupString;
         memory.getItem('ppRevision') = cleanupString;
@@ -67,7 +68,7 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     // ø </DATA>
     // ø <LOCAL_DATA>
     if(kindArray.includes('LOCAL_DATA')){
-        // console.log(kind);
+        cleanupString = develTest === true ? 'LOCAL_DATA' : cleanupString;
         local.getItem('staffIdentifiedFamilyId') = cleanupString;
         local.getItem('familyId') = cleanupString;
         // memory.getItem('ppRevision') = cleanupString;
@@ -77,7 +78,7 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     // ø </LOCAL_DATA>
     // ø <CODE>
     if(kindArray.includes('CODE')){
-        // console.log(kind);
+        cleanupString = develTest === true ? 'CODE' : cleanupString;
         memory.getItem('ppMemberPrepJSON') = cleanupString;
         memory.getItem('ppMemberExecuteUpsert') = cleanupString;
         memory.getItem('stMemberPrepJSON') = cleanupString;
@@ -98,7 +99,7 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     // ø </CODE>
     // ø <STEPS>
     if(kindArray.includes('STEPS')){
-        //console.log(kind);
+        cleanupString = develTest === true ? 'STEPS' : cleanupString;
         memory.getItem('enrollmentStepList') = cleanupString;
         memory.getItem('enrollmentStepCompleted') = cleanupString;
         memory.getItem('enrollmentStepCurrent') = cleanupString;
@@ -110,7 +111,7 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     // ø </STEPS>
     // ø <CORE>
     if(kindArray.includes('CORE')){
-        // console.log(kind);
+        cleanupString = develTest === true ? 'CORE' : cleanupString;
         local.getItem('yyyymm') = cleanupString;//was included in Deprecated version
         local.getItem('termId') = cleanupString;
         local.getItem('termBeginMMDD') = cleanupString;
@@ -121,6 +122,7 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     // ø </CORE>
     // ø <NEXT_ENROLLMENT>
     if(kindArray.includes('NEXT_ENROLLMENT')){
+        cleanupString = develTest === true ? 'NEXT_ENROLLMENT' : cleanupString;
         local.getItem('wixWebhookId') = cleanupString;
         local.getItem('wixWebhookStatus') = cleanupString;
         local.getItem('ondeckEnrollmentJSON') = cleanupString;
@@ -129,6 +131,7 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     // ø <UNACCOUNTED_FOR>
     if(kindArray.includes('UNACCOUNTED_FOR')){
     // if(kind === 'UNACCOUNTED_FOR' || kind === 'DDEFAULT'){
+        cleanupString = develTest === true ? 'UNACCOUNTED_FOR' : cleanupString;
         memory.getItem('loopExitNow') = cleanupString;
         memory.getItem('ppMemberOnDeckJSON') = cleanupString;
         memory.getItem('HHOLDER') = cleanupString;

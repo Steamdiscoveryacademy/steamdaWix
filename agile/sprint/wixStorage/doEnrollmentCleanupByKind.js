@@ -1,21 +1,26 @@
 // ø <---------- <doEnrollmentCleanupByKind>  ---------->
 export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
+    // ø <DO NOT REMOVE>
+    // ! well, unless really final
+    // ! do assign either true or false
     let develTest = true;
+    // ø </DO NOT REMOVE>
     let errorStringArray = [];
     let cleanupString = 'EEMPTY';//override where appropriate
     let kindKeySupportedArray = ['CODE','STEPS','DATA','CORE','OTHER','MEMORY_ALL','LOCAL_TEMP','ALL_EXCEPT_ENROLLMENT','ALL_INCLUDING_ENROLLMENT','ABORT'];
+    // let kindKeySupportedArray = ['CODE','STEPS','DATA','NOT_LOCAL_DATA','NOT_CORE','OTHER','MEMORY_ALL','LOCAL_TEMP','ALL_EXCEPT_ENROLLMENT','ALL_INCLUDING_ENROLLMENT','ABORT'];
     let kindSupportedArray = ['CODE','STEPS','DATA','CORE','OTHER','NEXT_ENROLLMENT'];
     kindKey = kindKeySupportedArray.includes(kindKey) ? kindKey : 'DDEFUALT';
     console.warn('kindKey: ' + kindKey);
-    kindArray = [];
+    let kindArray = [];
     kindArray = kindKey === 'ABORT' ? /*kindSupportedArray*/['ZZZ'] : kindArray;
-    kindArray = kindKey === 'ALL_INCLUDING_ENROLLMENT' ? /*['CODE','STEPS','DATA','NEXT_ENROLLMENT']*/['ZZZ'] : kindArray;
-    kindArray = kindKey === 'ALL_EXCEPT_ENROLLMENT' ? /*['CODE','STEPS','DATA']*/['ZZZ'] : kindArray;
+    kindArray = kindKey === 'ALL_INCLUDING_ENROLLMENT' ? ['CODE','STEPS','DATA','NEXT_ENROLLMENT'] : kindArray;
+    kindArray = kindKey === 'ALL_EXCEPT_ENROLLMENT' ? ['CODE','STEPS','DATA'] : kindArray;
     kindArray = kindKey === 'CODE' ? ['CODE'] : kindArray
     kindArray = kindKey === 'STEPS' ? ['STEPS'] : kindArray
-    kindArray = kindKey === 'DATA' ? ['DATA'] : kindArray
-    kindArray = kindKey === 'CORE' ? ['ZZZ'] : kindArray
-    kindArray = kindKey === 'OTHER' ? ['OTHER'] : kindArray
+    kindArray = kindKey === 'DATA' ? ['DATA','NOT_LOCAL_DATA'] : kindArray
+    kindArray = kindKey === 'CORE' ? ['NOT_CORE'] : kindArray
+    kindArray = kindKey === 'OTHER' ? ['NOT_UNACCOUNTED_FOR'] : kindArray
     kindArray = kindKey === 'MEMORY_ALL' ? ['MEMORY_ALL'] : kindArray
     kindArray = kindKey === 'LOCAL_TEMP' ? ['LOCAL_TEMP'] : kindArray
     // ø <Deprecated Use kindKey = 'CURRENT'>
@@ -30,8 +35,10 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
         errorStringArray.push("The function 'doEnrollmentCleanupByKind()' with the parameter '"+kindKey+"' is not enabled at this time.");
     }
     if(kindArray.includes('NEXT_ENROLLMENT')){
-        if(typeof local.getItem('wixWebhookStatus') !== 'string' || local.getItem('wixWebhookStatus') !== 'RESOLVED'){
-            errorStringArray.push("'Next Enrollment' rquires that the current Webhook Payload have a status of 'Resolved'")
+        if(typeof develTest !== 'boolean' || develTest !== true){
+            if(typeof local.getItem('wixWebhookStatus') !== 'string' || local.getItem('wixWebhookStatus') !== 'RESOLVED'){
+                errorStringArray.push("'Next Enrollment' rquires that the current Webhook Payload have a status of 'Resolved'")
+            }
         }
     }
     // ø </VALIDATION HERE>
@@ -123,9 +130,12 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     // ø <NEXT_ENROLLMENT>
     if(kindArray.includes('NEXT_ENROLLMENT')){
         cleanupString = develTest === true ? 'NEXT_ENROLLMENT' : cleanupString;
-        local.setItem('wixWebhookId', cleanupString);
-        local.setItem('wixWebhookStatus', cleanupString);
-        local.setItem('ondeckEnrollmentJSON', cleanupString);
+        if(typeof develTest === 'boolean' && develTest !== true){
+            cleanupString = develTest === true ? 'NEXT_ENROLLMENT' : cleanupString;
+            local.setItem('wixWebhookId', cleanupString);
+            local.setItem('wixWebhookStatus', cleanupString);
+            local.setItem('ondeckEnrollmentJSON', cleanupString);
+        }
     }
     // ø </NEXT_ENROLLMENT>
     // ø <UNACCOUNTED_FOR>
@@ -136,7 +146,6 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
         memory.setItem('ppMemberOnDeckJSON', cleanupString);
         memory.setItem('HHOLDER', cleanupString);
         memory.setItem('loopExitAfterStep', cleanupString);
-        local.setItem('yyyymm', cleanupString);
     }//END if(kind === 'UNACCOUNTED_FOR')
     // ø </UNACCOUNTED_FOR>
     // return logString;

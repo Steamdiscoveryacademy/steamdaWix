@@ -55,88 +55,88 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     // let logString = '';
     // let memory = {};
     // let local = {};
-    /*Not CURRENT*///logString += '\n' + "local.getItem('ondeckEnrollmentJSON'): " + local.getItem('ondeckEnrollmentJSON'); 
+    /*Not CURRENT*///logString += '\n' + "local.getItem('ondeckEnrollmentJSON'): " + local.setItem('ondeckEnrollmentJSON'); 
     // ø <DATA>
     if(kindArray.includes('DATA')){
         cleanupString = develTest === true ? 'DATA' : cleanupString;
-        // local.getItem('staffIdentifiedFamilyId') = cleanupString;
-        // local.getItem('familyId') = cleanupString;
-        memory.getItem('ppRevision') = cleanupString;
-        // local.getItem('studentId') = cleanupString;
-        memory.getItem('stRevision') = cleanupString;
+        // local.setItem('staffIdentifiedFamilyId', cleanupString);
+        // local.setItem('familyId', cleanupString);
+        memory.setItem('ppRevision', cleanupString);
+        // local.setItem('studentId', cleanupString);
+        memory.setItem('stRevision', cleanupString);
     }//END if(kind === 'DATA' || kind === 'DDEFAULT')
     // ø </DATA>
     // ø <LOCAL_DATA>
     if(kindArray.includes('LOCAL_DATA')){
         cleanupString = develTest === true ? 'LOCAL_DATA' : cleanupString;
-        local.getItem('staffIdentifiedFamilyId') = cleanupString;
-        local.getItem('familyId') = cleanupString;
-        // memory.getItem('ppRevision') = cleanupString;
-        local.getItem('studentId') = cleanupString;
-        // memory.getItem('stRevision') = cleanupString;
+        local.setItem('staffIdentifiedFamilyId', cleanupString);
+        local.setItem('familyId', cleanupString);
+        // memory.setItem('ppRevision', cleanupString);
+        local.setItem('studentId', cleanupString);
+        // memory.setItem('stRevision', cleanupString);
     }//END if(kind === 'LOCAL_DATA' || kind === 'DDEFAULT')
     // ø </LOCAL_DATA>
     // ø <CODE>
     if(kindArray.includes('CODE')){
         cleanupString = develTest === true ? 'CODE' : cleanupString;
-        memory.getItem('ppMemberPrepJSON') = cleanupString;
-        memory.getItem('ppMemberExecuteUpsert') = cleanupString;
-        memory.getItem('stMemberPrepJSON') = cleanupString;
-        memory.getItem('stMemberExecuteUpsert') = cleanupString;
-        memory.getItem('ppContactPrepJSON') = cleanupString;
-        memory.getItem('ppDatabasePrepJSON') = cleanupString;
-        memory.getItem('stContactPrepJSON') = cleanupString;
-        memory.getItem('stDatabasePrepJSON') = cleanupString;
-        memory.getItem('spContactPrepJSON') = cleanupString;
-        memory.getItem('spDatabasePrepJSON') = cleanupString;
-        memory.getItem('ppContactExecuteUpsert') = cleanupString;
-        memory.getItem('ppDatabaseExecuteUpsert') = cleanupString;
-        memory.getItem('stContactExecuteUpsert') = cleanupString;
-        memory.getItem('stDatabaseExecuteUpsert') = cleanupString;
-        memory.getItem('spContactExecuteUpsert') = cleanupString;
-        memory.getItem('spDatabaseExecuteUpsert') = cleanupString;
+        memory.setItem('ppMemberPrepJSON', cleanupString);
+        memory.setItem('ppMemberExecuteUpsert', cleanupString);
+        memory.setItem('stMemberPrepJSON', cleanupString);
+        memory.setItem('stMemberExecuteUpsert', cleanupString);
+        memory.setItem('ppContactPrepJSON', cleanupString);
+        memory.setItem('ppDatabasePrepJSON', cleanupString);
+        memory.setItem('stContactPrepJSON', cleanupString);
+        memory.setItem('stDatabasePrepJSON', cleanupString);
+        memory.setItem('spContactPrepJSON', cleanupString);
+        memory.setItem('spDatabasePrepJSON', cleanupString);
+        memory.setItem('ppContactExecuteUpsert', cleanupString);
+        memory.setItem('ppDatabaseExecuteUpsert', cleanupString);
+        memory.setItem('stContactExecuteUpsert', cleanupString);
+        memory.setItem('stDatabaseExecuteUpsert', cleanupString);
+        memory.setItem('spContactExecuteUpsert', cleanupString);
+        memory.setItem('spDatabaseExecuteUpsert', cleanupString);
     }//END if(kind === 'CODE' || kind === 'DDEFAULT')
     // ø </CODE>
     // ø <STEPS>
     if(kindArray.includes('STEPS')){
         cleanupString = develTest === true ? 'STEPS' : cleanupString;
-        memory.getItem('enrollmentStepList') = cleanupString;
-        memory.getItem('enrollmentStepCompleted') = cleanupString;
-        memory.getItem('enrollmentStepCurrent') = cleanupString;
-        memory.getItem('enrollmentStepNext') = cleanupString;
-        local.getItem('loopExitAfterStep') = cleanupString;
-        local.getItem('loopExitNow') = cleanupString;
-        memory.getItem('stepStampArray') = 'EEMPTY_AARRAY';
+        memory.setItem('enrollmentStepList', cleanupString);
+        memory.setItem('enrollmentStepCompleted', cleanupString);
+        memory.setItem('enrollmentStepCurrent', cleanupString);
+        memory.setItem('enrollmentStepNext', cleanupString);
+        local.setItem('loopExitAfterStep', cleanupString);
+        local.setItem('loopExitNow', cleanupString);
+        memory.setItem('stepStampArray', cleanupString);
     }//END if(kind === 'STEPS' || kind === 'DDEFAULT')
     // ø </STEPS>
     // ø <CORE>
     if(kindArray.includes('CORE')){
         cleanupString = develTest === true ? 'CORE' : cleanupString;
-        local.getItem('yyyymm') = cleanupString;//was included in Deprecated version
-        local.getItem('termId') = cleanupString;
-        local.getItem('termBeginMMDD') = cleanupString;
-        local.getItem('termEndMMDD') = cleanupString;
-        local.getItem('termLabelKey') = cleanupString;
-        local.getItem('weekIdToLabelKeyJSON') = cleanupString;
+        local.setItem('yyyymm', cleanupString);//was included in Deprecated version
+        local.setItem('termId', cleanupString);
+        local.setItem('termBeginMMDD', cleanupString);
+        local.setItem('termEndMMDD', cleanupString);
+        local.setItem('termLabelKey', cleanupString);
+        local.setItem('weekIdToLabelKeyJSON', cleanupString);
     }//END if(kind === 'DATA' || kind === 'DDEFAULT')
     // ø </CORE>
     // ø <NEXT_ENROLLMENT>
     if(kindArray.includes('NEXT_ENROLLMENT')){
         cleanupString = develTest === true ? 'NEXT_ENROLLMENT' : cleanupString;
-        local.getItem('wixWebhookId') = cleanupString;
-        local.getItem('wixWebhookStatus') = cleanupString;
-        local.getItem('ondeckEnrollmentJSON') = cleanupString;
+        local.setItem('wixWebhookId', cleanupString);
+        local.setItem('wixWebhookStatus', cleanupString);
+        local.setItem('ondeckEnrollmentJSON', cleanupString);
     }
     // ø </NEXT_ENROLLMENT>
     // ø <UNACCOUNTED_FOR>
     if(kindArray.includes('UNACCOUNTED_FOR')){
     // if(kind === 'UNACCOUNTED_FOR' || kind === 'DDEFAULT'){
         cleanupString = develTest === true ? 'UNACCOUNTED_FOR' : cleanupString;
-        memory.getItem('loopExitNow') = cleanupString;
-        memory.getItem('ppMemberOnDeckJSON') = cleanupString;
-        memory.getItem('HHOLDER') = cleanupString;
-        memory.getItem('loopExitAfterStep') = cleanupString;
-        local.getItem('yyyymm') = cleanupString;
+        memory.setItem('loopExitNow', cleanupString);
+        memory.setItem('ppMemberOnDeckJSON', cleanupString);
+        memory.setItem('HHOLDER', cleanupString);
+        memory.setItem('loopExitAfterStep', cleanupString);
+        local.setItem('yyyymm', cleanupString);
     }//END if(kind === 'UNACCOUNTED_FOR')
     // ø </UNACCOUNTED_FOR>
     // return logString;

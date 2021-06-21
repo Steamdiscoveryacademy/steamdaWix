@@ -1,0 +1,115 @@
+{
+    "title": {
+        "key": "title",
+        "name": "Title",
+        "source": "enrollmentObject record",
+        "dataType": "Text",
+        "pseudoCode": "Last, First; nearly direct local.getItem()",
+        "code": "toInsert.title = local.getItem()"
+    },
+    "personId": {
+        "key": "personId",
+        "name": "Person ID",
+        "source": "the Individual Member/ContactID",
+        "dataType": "Text",
+        "pseudoCode": "direct",
+        "code": "toInsert.personId = local.getItem()"
+    },
+    "familyId": {
+        "key": "familyId",
+        "name": "Family ID",
+        "source": "Always the same as idPP",
+        "dataType": "Text",
+        "pseudoCode": "direct",
+        "code": "toInsert.familyId = local.getItem()"
+    },
+    "role": {
+        "key": "role",
+        "name": "Role",
+        "source": "enrollmentObject record",
+        "dataType": "Text",
+        "pseudoCode": "literal in code, direct, use enrollmentOhjectKey",
+        "code": "toInsert.role = local.getItem()"
+    },
+    "first": {
+        "key": "first",
+        "name": "First",
+        "source": "enrollmentObject record",
+        "dataType": "Text",
+        "pseudoCode": "direct local.getItem(ppFirst|stPreferredFirst|spFirst)",
+        "code": "toInsert.first = local.getItem()"
+    },
+    "last": {
+        "key": "last",
+        "name": "Last",
+        "source": "enrollmentObject record",
+        "dataType": "Text",
+        "pseudoCode": "direct local.getItem()",
+        "code": "toInsert.last = local.getItem()"
+    },
+    "firstLegal": {
+        "key": "firstLegal",
+        "name": "First Legal",
+        "source": "enrollmentObject record",
+        "dataType": "Text",
+        "pseudoCode": "direct local.getItem(ppFirst|stFirst|spFirst)",
+        "code": "toInsert.firstLegal = local.getItem()"
+    },
+    "fullName": {
+        "key": "fullName",
+        "name": "Full Name",
+        "source": "enrollmentObject record",
+        "dataType": "Text",
+        "pseudoCode": "almost direct local.getItem()",
+        "code": "toInsert.fullName = local.getItem()"
+    },
+    "lastFirst": {
+        "key": "lastFirst",
+        "name": "Last First",
+        "source": "enrollmentObject record",
+        "dataType": "Text",
+        "pseudoCode": "almost direct local.getItem()",
+        "code": "toInsert.lastFirst = local.getItem()"
+    },
+    "comboName": {
+        "key": "comboName",
+        "name": "Combo Name",
+        "source": "for Students 'preferredFirst Last (parentFirst {parentLastIfDifferent})'",
+        "dataType": "Text",
+        "pseudoCode": "direct local.getItem()",
+        "code": "toInsert.comboName = local.getItem()"
+    },
+    "webhookId": {
+        "key": "webhookId",
+        "name": "Webhook ID",
+        "fullName": "Webhook Payload Record ID",
+        "source": "enrollmentObject record",
+        "dataType": "Text",
+        "pseudoCode": "dwebhookIdirect local.getItem()",
+        "code": "toInsert. = local.getItem()"
+    },
+    "idHH": {
+        "key": "idHH",
+        "name": "Household ID",
+        "source": "Always the same as idPP",
+        "dataType": "Text",
+        "pseudoCode": "direct local.getItem(familyId)",
+        "code": "toInsert.idHH = local.getItem()"
+    },
+    "idBL": {
+        "key": "idBL",
+        "name": "Billing ID",
+        "source": "Always the same as idPP",
+        "dataType": "Text",
+        "pseudoCode": "direct local.getItem(familyId)",
+        "code": "toInsert.idBL = local.getItem()"
+    },
+    "altPersonId": {
+        "key": "altPersonId",
+        "name": "Alt Person ID",
+        "source": "Member ID of the same Person.",
+        "dataType": "Text",
+        "pseudoCode": "direct (check done prior)",
+        "code": "toInsert.altPersonId = local.getItem()"
+    }
+}

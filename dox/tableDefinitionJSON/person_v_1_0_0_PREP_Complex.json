@@ -1,0 +1,23 @@
+{
+    "objectData": {
+        "key": "objectData",
+        "name": "Person Data Object",
+        "source": "enrollmentObject record",
+        "dataType": "Object",
+        "pseudoCode": "PP:parse to only family and course array;ST:parse to only student and course array (without financials);SP: unknown"
+    },
+    "objectCorollary": {
+        "key": "objectCorollary",
+        "name": "Corollary Data Object",
+        "source": "any indicated source, none (empty object brackets) at onset, see notes",
+        "dataType": "Object",
+        "pseudoCode": "PP:some aggregate of Children;ST:entire Enrollment Object;SP: unknown"
+    },
+    "statusNotesArray": {
+        "key": "statusNotesArray",
+        "name": "Status Notes Array",
+        "source": "via utilites.jsw, instantiated then 'PENDING'",
+        "dataType": "Array",
+        "pseudoCode": "STATUS|YYYYYMMDDHHIISS|any note"
+    }
+}

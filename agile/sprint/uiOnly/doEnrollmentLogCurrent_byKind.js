@@ -1,7 +1,7 @@
 // ø <---------- <doEnrollmentLogCurrent>  ---------->
 export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
-    let kindSupportedArray = ['CODE','STEPS','DATA','CORE','OTHER','DDEFAULT'];
-    kind = kindSupportedArray.includes(kind) ? kind : 'DDEFUALT';
+    let kindSupportedArray = ['CODE','STEPS','DATA','CORE','UNACCOUNTED_FOR','DDEFAULT'];
+    kind = kindSupportedArray.includes(kind) ? kind : 'DDEFAULT';
     console.warn('kind: ' + kind);
 
     // ø <code Log for Current Enrollment> mostly for testing
@@ -15,6 +15,11 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
         logString += '\n' + "memory.getItem('ppRevision'): " + memory.getItem('ppRevision');
         logString += '\n' + "local.getItem('studentId'): " + local.getItem('studentId');
         logString += '\n' + "memory.getItem('stRevision'): " + memory.getItem('stRevision');
+        logString += '\n' + "local.getItem('ppFirst'): " + local.getItem('ppFirst');
+        logString += '\n' + "local.getItem('ppLast'): " + local.getItem('ppLast');
+        logString += '\n' + "local.getItem('stPreferredFirst'): " + local.getItem('stPreferredFirst');
+        logString += '\n' + "local.getItem('stLast'): " + local.getItem('stLast');
+        logString += '\n' + "local.getItem('comboName'): " + local.getItem('comboName');
     }//END if(kind === 'DATA' || kind === 'DDEFAULT')
     // ø </DATA>
     // ø <CODE>
@@ -64,9 +69,9 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
     }//END if(kind === 'DATA' || kind === 'DDEFAULT')
     // ø </CORE>
     // ø <UNACCOUNTED_FOR>
-    if(kind === 'UNACCOUNTED_FOR'){
-    // if(kind === 'UNACCOUNTED_FOR' || kind === 'DDEFAULT'){
-        if(kind === 'OTHERWISE_SUPPORTED'){
+    // if(kind === 'UNACCOUNTED_FOR'){
+    if(kind === 'UNACCOUNTED_FOR' || kind === 'DDEFAULT'){
+        if(kind !== 'UNACCOUNTED_FOR'){
             logString += '\n' + "local.getItem('ondeckEnrollmentJSON')" + local.getItem('ondeckEnrollmentJSON');
         }
         logString += '\n' + "memory.getItem('loopExitNow') ['memory' Dupe?]" + memory.getItem('loopExitNow');
@@ -76,6 +81,10 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
         logString += '\n' + "local.getItem('yyyymm') [where,how used?]" + local.getItem('yyyymm');
     }//END if(kind === 'UNACCOUNTED_FOR')
     // ø </UNACCOUNTED_FOR>
+    if(kind === 'MAN_IN_THE_HIGH_CASTLE' || kind === 'DDEFAULT'){
+        logString += '\n' + "kind || kind [~1501]";
+    }
+    logString += '\n' + "RETURN LOG STRING [~1503]";
     return logString;
     // ø </code Log for Current Enrollment>
 }

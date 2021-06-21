@@ -18,6 +18,8 @@ export async function stContactPrepJSON(){
     let contact = await steamdaGetContactFunction(local.getItem('studentId'));
     $w('#stContactResponseJSON').value = JSON.stringify(contact,undefined,4);
     memory.setItem('stRevision',(contact.revision).toString());
+    let stEmail = contact.emails[0].email;
+    let stPhone = contact.phones[0].phone;
 
     let paramObjectThis = {};
 	paramObjectThis.contactIdentifiers = {};
@@ -69,15 +71,14 @@ export async function stContactPrepJSON(){
         let roleLabelKey = 'custom.student';
         let memberLabelKey = 'custom.member-faux';
 
-        let declaredGender = enrollmentObject.family.student.declaredGender.trim().toLowerCase();
-        let assignedGenderKey = 'unreported'
-        let maleOptionArray = ['masculine','men','he','man','male','gentleman','boy','guy','fellow','gent','bloke','chap','lad'];
-        let femaleOptionArray = ['feminine','women','she','woman','female','lady','girl','gal','lass','lassie','bird'];
-        
-        assignedGenderKey = maleOptionArray.includes(declaredGender) ? 'male' : assignedGenderKey;
-        assignedGenderKey = femaleOptionArray.includes(declaredGender) ? 'female' : assignedGenderKey;
-        assignedGenderKey = assignedGenderKey === 'unreported' && declaredGender.length > 0 ? 'alternative' : assignedGenderKey;
-        let genderLabelKey = 'custom.gender-' + assignedGenderKey;
+        // let declaredGender = enrollmentObject.family.student.declaredGender.trim().toLowerCase();
+        // let assignedGenderKey = 'unreported'
+        // let maleOptionArray = ['masculine','men','he','man','male','gentleman','boy','guy','fellow','gent','bloke','chap','lad'];
+        // let femaleOptionArray = ['woman','female','lady','girl','lass','lassie','bird'];
+        // assignedGenderKey = maleOptionArray.includes(declaredGender) ? 'male' : assignedGenderKey;
+        // assignedGenderKey = femaleOptionArray.includes(declaredGender) ? 'female' : assignedGenderKey;
+        // assignedGenderKey = assignedGenderKey === 'unreported' && declaredGender.length > 0 ? 'alternative' : assignedGenderKey;
+        // let genderLabelKey = 'custom.gender-' + assignedGenderKey;
 
 
         // let idZZZToLableKeyArray = [[1,'custom.w1-2021060711'],[2,'custom.w2-2021061418'],[3,'custom.w3-2021062125'],[4,'custom.w4-2021062832'],[5,'custom.w5-2021071216'],[6,'custom.w6-2021071923'],[7,'custom.w7-2021072630'],[8,'custom.w8-2021080206'],[9,'custom.w9-2021080913'],['custom.w1-2021060711',1],['custom.w2-2021061418',2],['custom.w3-2021062125',3],['custom.w4-2021062832',4],['custom.w5-2021071216',5],['custom.w6-2021071923',6],['custom.w7-2021072630',7],['custom.w8-2021080206',8],['custom.w9-2021080913',9]];
@@ -117,7 +118,7 @@ export async function stContactPrepJSON(){
         }
         finalLabelKeyArray.push(roleLabelKey);
         finalLabelKeyArray.push(memberLabelKey);
-        finalLabelKeyArray.push(genderLabelKey);
+        // finalLabelKeyArray.push(genderLabelKey);
         // ! </FINAL>
 
 
@@ -135,7 +136,7 @@ export async function stContactPrepJSON(){
 
         student.contactInfo.company = enrollmentObject.family.student.currentSchool;
         student.contactInfo.jobTitle = enrollmentObject.family.student.currentGradeString;
-        student.contactInfo.birthdate = enrollmentObject.family.student.dob.date.substr(0,10);
+        // student.contactInfo.birthdate = enrollmentObject.family.student.dob.date.substr(0,10);
 
 
         // student.contactInfo.labelKeys = [];
@@ -160,7 +161,7 @@ export async function stContactPrepJSON(){
         // ø </ZXZ-TTESTING DISABLED>
         // enrollmentObject.family.emails[0].kind = "home";
         // ø <ZXZ-TTESTING DISABLED>
-        student.contactInfo.emails[0].email = enrollmentObject.family.emails[0].email;
+        student.contactInfo.emails[0].email = stEmail;
         student.contactInfo.emails[0].primary = "true";
         // ø </ZXZ-TTESTING DISABLED>
         // enrollmentObject.family.emails[0].role = "Primary Parent";
@@ -179,7 +180,7 @@ export async function stContactPrepJSON(){
         // // ø </ZXZ-TTESTING DISABLED>
         // // enrollmentObject.family.phones[0].kind = "cell";
         // // ø </ZXZ-TTESTING DISABLED>
-        student.contactInfo.phones[0].phone = enrollmentObject.family.phones[0].phone;
+        student.contactInfo.phones[0].phone = stPhone;
         student.contactInfo.phones[0].primary = "true";
         // ø <ZXZ-TTESTING DISABLED>
         // enrollmentObject.family.phones[0].role = "Primary Parent";
@@ -223,7 +224,7 @@ export async function stContactPrepJSON(){
         student.contactInfo.extendedFields['custom.current-region'] = currentRegion;
         student.contactInfo.extendedFields['custom.timezone-offset'] = timezoneOffest;
         student.contactInfo.extendedFields['custom.legal-first'] = enrollmentObject.family.student.name.first;
-        student.contactInfo.extendedFields['custom.grade'] = enrollmentObject.family.student.currentGrade;
+        // student.contactInfo.extendedFields['custom.grade'] = enrollmentObject.family.student.currentGrade;
         // ! </FINAL>
         // ø </ZXZ-TTESTING DISABLED>
         // student.contactInfo.extendedFields.custom['legal-first'] = "Elijah";

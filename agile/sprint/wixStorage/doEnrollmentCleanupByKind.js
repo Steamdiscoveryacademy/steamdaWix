@@ -3,7 +3,7 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     // ø <DO NOT REMOVE>
     // ! well, unless really final
     // ! do assign either true or false
-    let develTest = true;
+    let develTest = false;
     // ø </DO NOT REMOVE>
     let errorStringArray = [];
     let cleanupString = 'EEMPTY';//override where appropriate
@@ -15,7 +15,7 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     let kindArray = [];
     kindArray = kindKey === 'ABORT' ? /*kindSupportedArray*/['ZZZ'] : kindArray;
     kindArray = kindKey === 'ALL_INCLUDING_ENROLLMENT' ? ['CODE','STEPS','DATA','NEXT_ENROLLMENT'] : kindArray;
-    kindArray = kindKey === 'ALL_EXCEPT_ENROLLMENT' ? ['CODE','STEPS','DATA'] : kindArray;
+    kindArray = kindKey === 'ALL_EXCEPT_ENROLLMENT' ? ['CODE','STEPS','DATA','LOCAL_DATA'] : kindArray;
     kindArray = kindKey === 'CODE' ? ['CODE'] : kindArray
     kindArray = kindKey === 'STEPS' ? ['STEPS'] : kindArray
     kindArray = kindKey === 'DATA' ? ['DATA','NOT_LOCAL_DATA'] : kindArray
@@ -81,6 +81,11 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
         // memory.setItem('ppRevision', cleanupString);
         local.setItem('studentId', cleanupString);
         // memory.setItem('stRevision', cleanupString);
+        local.setItem('ppFirst', cleanupString);
+        local.setItem('ppLast', cleanupString);
+        local.setItem('stPreferredFirst', cleanupString);
+        local.setItem('stLast', cleanupString);
+        local.setItem('comboName', cleanupString);
     }//END if(kind === 'LOCAL_DATA' || kind === 'DDEFAULT')
     // ø </LOCAL_DATA>
     // ø <CODE>

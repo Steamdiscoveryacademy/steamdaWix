@@ -167,7 +167,7 @@
             },
             "jsonData": {
                 "key": "objectData",
-                "name": "Person Data JSON",
+                "name": "Person Data Object",
                 "source": "enrollmentObject record",
                 "usage": "holds the JSON of the superEnrollemntObject for the subset for this person",
                 "dataType": "Object",
@@ -179,7 +179,7 @@
             },
             "jsonCorollary": {
                 "key": "objectCorollary",
-                "name": "Corollary JSON",
+                "name": "Corollary Data Object",
                 "source": "any indicated source, none (empty object brackets) at onset, see notes",
                 "usage": "see notes",
                 "dataType": "Object",
@@ -191,8 +191,8 @@
                 ]
             },
             "jsonStatusNotes": {
-                "key": "jsonStatusNotes",
-                "name": "Status Notes JSON",
+                "key": "arrayStatusNotes",
+                "name": "Status Notes Array",
                 "source": "via utilites.jsw, instantiated then 'PENDING'",
                 "usage": "discrete values to describe the status of the Enrollment (and notes)",
                 "dataType": "Array",

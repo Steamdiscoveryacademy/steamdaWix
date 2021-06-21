@@ -1,10 +1,5 @@
-// ø <---------- <ppDatabasePrepJSON AS Step>  ---------->
-export function ppDatabasePrepJSON(toInsert){
-    // ø <CHECK FOR EXISTING>
-    // ! SEARCH 'personId' === local.getItem('familyId')
-    // ! IF then SKIP (every child needs to be as good as the first)
-    // !   ↪ circle-back with Student Full Object if needed
-    // ø </CHECK FOR EXISTING>
+// ø <---------- <stDatabasePrepJSON AS Step>  ---------->
+export function stDatabasePrepJSON(toInsert){
     let now = new Date();
     let timeDateString = ' [ on ' + now.toLocaleDateString() + ']';
     timeDateString = now.toLocaleTimeString('en-US') + timeDateString;
@@ -18,16 +13,16 @@ export function ppDatabasePrepJSON(toInsert){
     
     // ø <---------- <direct (or nearly)>  ---------->
     let enrollmentObject = JSON.parse(local.getItem('ondeckEnrollmentJSON'));
-    let lastFirst = local.getItem('ppLast') + ', ' + local.getItem('ppFirst');
+    let lastFirst = local.getItem('stLast') + ', ' + local.getItem('stPreferredFirst');
     let toInsert = {};
     toInsert.title = lastFirst;
-    toInsert.personId = local.getItem('familyId');
+    toInsert.personId = local.getItem('studentId');
     toInsert.familyId = local.getItem('familyId');
-    toInsert.role = local.getItem('parentPrimary');
-    toInsert.first = local.getItem('ppFirst');
-    toInsert.last = local.getItem('ppLast');
-    toInsert.firstLegal = local.getItem('ppFirst');
-    toInsert.fullName = local.getItem('ppFirst') + ' ' + local.getItem('ppLast');
+    toInsert.role = local.getItem('student');
+    toInsert.first = local.getItem('stPreferredFirst');
+    toInsert.last = local.getItem('stLast');
+    toInsert.firstLegal = enrollmentObject.family.student.first;
+    toInsert.fullName = local.getItem('stPreferredFirst') + ' ' + local.getItem('ppLast');
     toInsert.lastFirst = lastFirst;
     toInsert.comboName = local.getItem('comboName');
     toInsert.webhookId = local.getItem('wixWebhookId');
@@ -35,10 +30,12 @@ export function ppDatabasePrepJSON(toInsert){
     toInsert.idBL = local.getItem('familyId');
     toInsert.altPersonId = local.getItem('familyId');
     // ø <---------- </direct (or nearly)> ---------->
-    // let studentElement = {};
-    // studentElement.id = local.getItem('studentId');
-    // studentElement.courses_array = enrollmentObject.courses_array;
-    toInsert.objectData = JSON.stringify(enrollmentObject.family);
-    // toInsert.objectCorollary = JSON.stringify(enrollmentObject.courses_array);
+    toInsert.objectData = JSON.strinfiy(enrollmentObject);
+    let courseArray = enrollmentObject.courses_array;
+    courseArray.forEach(elementObject => {
+        console.log(elementObject);
+        delete elementObject.billing;
+    });
+    toInsert.objectCorollary = JSON.strinfiy(courseArray);
 }
-// ø <---------- </ppDatabasePrepJSON AS Step> ---------->
+// ø <---------- </stDatabasePrepJSON AS Step> ---------->

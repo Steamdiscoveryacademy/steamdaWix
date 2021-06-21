@@ -167,7 +167,7 @@
                 "dataType": "Text",
                 "notes": []
             },
-            "jsonData": {
+            "objectData": {
                 "key": "objectData",
                 "name": "Person Data Object",
                 "source": "enrollmentObject record",
@@ -179,7 +179,7 @@
                     "... however, it could be that some data needs to be gathered elsewhere, none at outset"
                 ]
             },
-            "jsonCorollary": {
+            "objectCorollary": {
                 "key": "objectCorollary",
                 "name": "Corollary Data Object",
                 "source": "any indicated source, none (empty object brackets) at onset, see notes",
@@ -228,7 +228,7 @@
                     "Same as Person ID UNLESS Member ID and Contact ID are different, "
                 ]
             },
-            "jsonStatusNotes": {
+            "statusNotesArray": {
                 "key": "statusNotesArray",
                 "name": "Status Notes Array",
                 "source": "via utilites.jsw, instantiated then 'PENDING'",

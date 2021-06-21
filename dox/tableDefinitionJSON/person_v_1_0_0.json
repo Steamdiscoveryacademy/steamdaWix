@@ -1,0 +1,155 @@
+{
+    "table": {
+        "name": "person",
+        "attributes": {
+            "title": {
+                "key": "title",
+                "name": "Title",
+                "source": "enrollmentObject record",
+                "dataType": "Text",
+                "pseudoCode": "Last, First; nearly direct local.getItem()"
+            },
+            "_id": {
+                "key": "_id",
+                "name": "ID",
+                "source": "WiX Velo",
+                "dataType": "Text",
+                "pseudoCode": "NA"
+            },
+            "_owner": {
+                "key": "_owner",
+                "name": "Owner",
+                "source": "WiX Velo",
+                "dataType": "Text",
+                "pseudoCode": "NA"
+            },
+            "_createdDate": {
+                "key": "_createdDate",
+                "name": "Created Date",
+                "source": "WiX Velo",
+                "dataType": "Date and Time",
+                "pseudoCode": "NA"
+            },
+            "_updatedDate": {
+                "key": "_updatedDate",
+                "name": "Updated Date",
+                "source": "WiX Velo",
+                "dataType": "Date and Time",
+                "pseudoCode": "NA"
+            },
+            "personId": {
+                "key": "personId",
+                "name": "Person ID",
+                "source": "the Individual Member/ContactID",
+                "dataType": "Text",
+                "pseudoCode": "direct"
+            },
+            "familyId": {
+                "key": "familyId",
+                "name": "Family ID",
+                "source": "Always the same as idPP",
+                "dataType": "Text",
+                "pseudoCode": "direct"
+            },
+            "role": {
+                "key": "role",
+                "name": "Role",
+                "source": "enrollmentObject record",
+                "dataType": "Text",
+                "pseudoCode": "literal in code, direct"
+            },
+            "first": {
+                "key": "first",
+                "name": "First",
+                "source": "enrollmentObject record",
+                "dataType": "Text",
+                "pseudoCode": "direct local.getItem(ppFirst|stPreferredFirst|spFirst)"
+            },
+            "last": {
+                "key": "last",
+                "name": "Last",
+                "source": "enrollmentObject record",
+                "dataType": "Text",
+                "pseudoCode": "direct local.getItem()"
+            },
+            "firstLegal": {
+                "key": "firstLegal",
+                "name": "First Legal",
+                "source": "enrollmentObject record",
+                "dataType": "Text",
+                "pseudoCode": "direct local.getItem(ppFirst|stFirst|spFirst)"
+            },
+            "fullName": {
+                "key": "fullName",
+                "name": "Full Name",
+                "source": "enrollmentObject record",
+                "dataType": "Text",
+                "pseudoCode": "almost direct local.getItem()"
+            },
+            "lastFirst": {
+                "key": "lastFirst",
+                "name": "Last First",
+                "source": "enrollmentObject record",
+                "dataType": "Text",
+                "pseudoCode": "almost direct local.getItem()"
+            },
+            "comboName": {
+                "key": "comboName",
+                "name": "Combo Name",
+                "source": "for Students 'preferredFirst Last (parentFirst {parentLastIfDifferent})'",
+                "dataType": "Text",
+                "pseudoCode": "direct local.getItem()"
+            },
+            "webhookId": {
+                "key": "webhookId",
+                "name": "Webhook ID",
+                "fullName": "Webhook Payload Record ID",
+                "source": "enrollmentObject record",
+                "dataType": "Text",
+                "pseudoCode": "direct local.getItem()"
+            },
+            "objectData": {
+                "key": "objectData",
+                "name": "Person Data Object",
+                "source": "enrollmentObject record",
+                "dataType": "Object",
+                "pseudoCode": "PP:parse to only family and course array;ST:parse to only student and course array (without financials);SP: unknown"
+            },
+            "objectCorollary": {
+                "key": "objectCorollary",
+                "name": "Corollary Data Object",
+                "source": "any indicated source, none (empty object brackets) at onset, see notes",
+                "dataType": "Object",
+                "pseudoCode": "PP:some aggregate of Children;ST:entire Enrollment Object;SP: unknown"
+            },
+            "idHH": {
+                "key": "idHH",
+                "name": "Household ID",
+                "source": "Always the same as idPP",
+                "dataType": "Text",
+                "pseudoCode": "direct local.getItem(familyId)"
+            },
+            "idBL": {
+                "key": "idBL",
+                "name": "Billing ID",
+                "source": "Always the same as idPP",
+                "dataType": "Text",
+                "pseudoCode": "direct local.getItem(familyId)"
+            },
+            "altPersonId": {
+                "key": "altPersonId",
+                "name": "Alt Person ID",
+                "source": "Member ID of the same Person.",
+                "dataType": "Text",
+                "pseudoCode": "direct (check done prior)"
+            },
+            "statusNotesArray": {
+                "key": "statusNotesArray",
+                "name": "Status Notes Array",
+                "source": "via utilites.jsw, instantiated then 'PENDING'",
+                "dataType": "Array",
+                "pseudoCode": "STATUS|YYYYYMMDDHHIISS|any note"
+            }
+        }
+    }
+}

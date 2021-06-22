@@ -83,6 +83,7 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
         // memory.setItem('stRevision', cleanupString);
         local.setItem('ppFirst', cleanupString);
         local.setItem('ppLast', cleanupString);
+        local.setItem('stFirst', cleanupString);
         local.setItem('stPreferredFirst', cleanupString);
         local.setItem('stLast', cleanupString);
         local.setItem('comboName', cleanupString);

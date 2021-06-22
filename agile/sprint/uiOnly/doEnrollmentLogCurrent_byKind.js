@@ -17,6 +17,7 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
         logString += '\n' + "memory.getItem('stRevision'): " + memory.getItem('stRevision');
         logString += '\n' + "local.getItem('ppFirst'): " + local.getItem('ppFirst');
         logString += '\n' + "local.getItem('ppLast'): " + local.getItem('ppLast');
+        logString += '\n' + "local.getItem('stFirst'): " + local.getItem('stFirst');
         logString += '\n' + "local.getItem('stPreferredFirst'): " + local.getItem('stPreferredFirst');
         logString += '\n' + "local.getItem('stLast'): " + local.getItem('stLast');
         logString += '\n' + "local.getItem('comboName'): " + local.getItem('comboName');

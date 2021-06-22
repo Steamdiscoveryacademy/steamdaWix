@@ -29,6 +29,7 @@ export function stDatabasePrepJSON(toInsert){
     toInsert.idHH = local.getItem('familyId');
     toInsert.idBL = local.getItem('familyId');
     toInsert.altPersonId = local.getItem('familyId');
+    toInsert.termID = local.getItem('termId');
     // ø <---------- </direct (or nearly)> ---------->
     toInsert.objectData = JSON.strinfiy(enrollmentObject);
     let courseArray = enrollmentObject.courses_array;

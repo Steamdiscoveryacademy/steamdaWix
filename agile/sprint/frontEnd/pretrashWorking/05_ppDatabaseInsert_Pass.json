@@ -1,0 +1,22 @@
+{
+    "title": "Partridge, Shirley",
+    "personId": "zzzza0c0-8ccf-42df-b53f-59dbd08d731e",
+    "familyId": "zzzza0c0-8ccf-42df-b53f-59dbd08d731e",
+    "role": "Primary",
+    "first": "Shirley",
+    "last": "Partridge",
+    "firstLegal": "Shirley",
+    "fullName": "Shirley Partridge",
+    "lastFirst": "Partridge, Shirley",
+    "comboName": "Danny Partridge (Shirley)",
+    "webhookId": "32f6a3c5-743d-4ddb-89d4-f758f42d33c2",
+    "idHH": "zzzza0c0-8ccf-42df-b53f-59dbd08d731e",
+    "idBL": "zzzza0c0-8ccf-42df-b53f-59dbd08d731e",
+    "altPersonId": "zzzza0c0-8ccf-42df-b53f-59dbd08d731e",
+    "termId": 202106,
+    "objectData": "{\"phones\":[{\"phone\":\"(612) 287-2578\",\"role\":\"Primary Parent\",\"who\":\"Shirley\",\"kind\":\"cell\",\"usage\":\"Personal\"},{\"phone\":\"(218) 287-2578\",\"role\":\"Home\",\"who\":\"family\",\"kind\":\"landline\",\"usage\":\"Family\"},{\"phone\":\"(212) 287-2578\",\"role\":\"Secondary Parent\",\"who\":\"Ruben\",\"kind\":\"cell\",\"usage\":\"Personal\"}],\"emails\":[{\"email\":\"qiqgroup+danny@gmail.com\",\"role\":\"Primary Parent\",\"who\":\"Shirley\",\"kind\":\"home\",\"usage\":\"Personal\"}],\"messages\":{\"dox\":[\"only messages you want the Whole Family to see\"]},\"student\":{\"photoRelease\":true,\"name\":{\"first\":\"Daniel\",\"last\":\"Partridge\",\"preferred\":\"Danny\",\"studentParentCombo\":\"Danny Partridge (Shirley)\",\"lastFirst\":\"Partridge, Danny\",\"fullName\":\"Danny Partridge\"},\"declaredGender\":\"gentleman\",\"studentStatement\":\"I want to be a radio DJ\",\"messages\":{\"dox\":[\"messages you want the Student only to see\"]},\"dobString\":\"06/28/2011\",\"currentSchool\":\"Bonaducci Hight School\",\"currentGrade\":5,\"currentGradeString\":\"Fifth Grade\",\"currentGradeLevel\":\"3-5\",\"dob\":{\"date\":\"2011-06-28T05:00:00.000Z\",\"month\":6,\"day\":28,\"year\":2011}},\"parent\":{\"messages\":{\"dox\":[\"messages you want Both Parents to see\"]},\"primary\":{\"memberId\":\"INSTANTIATE\",\"messages\":{\"dox\":[\"messages you want the Primary Parent/Web Account Holder only to see\"]},\"last\":\"Partridge\",\"first\":\"Shirley\",\"fullName\":\"Shirley Partridge\",\"lastFirst\":\"Partridge, Shirley\"},\"secondary\":{\"first\":\"Ruben\",\"last\":\"Kincaid\"}},\"addresses\":[{\"kind\":\"mailing\",\"address\":{\"streetAddress\":{\"number\":\"123\",\"name\":\"Old Bus Way\"},\"city\":\"Tuluca Lake\",\"streetAddress2\":\"Upper Level\",\"state\":\"CA\",\"postalCode\":\"90210\",\"country\":\"US\",\"subdivision\":\"CA\",\"location\":{\"latitude\":null,\"longitue\":null},\"formatted\":\"123 Old Bus Way, Upper Level, Tuluca Lake, CA 90210, USA\"}}]}",
+    "_id": "42747999-ec73-428e-a3d2-f0bf45b86486",
+    "_owner": "a8bfc307-51ba-49c2-91da-d4d859b94123",
+    "_createdDate": "2021-06-23T00:23:57.999Z",
+    "_updatedDate": "2021-06-23T00:23:57.999Z"
+}

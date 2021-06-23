@@ -20,6 +20,8 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
         logString += '\n' + "local.getItem('stFirst'): " + local.getItem('stFirst');
         logString += '\n' + "local.getItem('stPreferredFirst'): " + local.getItem('stPreferredFirst');
         logString += '\n' + "local.getItem('stLast'): " + local.getItem('stLast');
+        logString += '\n' + "local.getItem('spFirst'): " + local.getItem('stFirst');
+        logString += '\n' + "local.getItem('spLast'): " + local.getItem('stLast');
         logString += '\n' + "local.getItem('comboName'): " + local.getItem('comboName');
     }//END if(kind === 'DATA' || kind === 'DDEFAULT')
     // ø </DATA>

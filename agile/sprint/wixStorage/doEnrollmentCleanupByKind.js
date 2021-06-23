@@ -86,6 +86,8 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
         local.setItem('stFirst', cleanupString);
         local.setItem('stPreferredFirst', cleanupString);
         local.setItem('stLast', cleanupString);
+        local.setItem('spFirst', cleanupString);
+        local.setItem('spLast', cleanupString);
         local.setItem('comboName', cleanupString);
     }//END if(kind === 'LOCAL_DATA' || kind === 'DDEFAULT')
     // ø </LOCAL_DATA>

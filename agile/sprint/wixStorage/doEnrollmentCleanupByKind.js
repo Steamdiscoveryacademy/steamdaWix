@@ -68,6 +68,9 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
         cleanupString = develTest === true ? 'DATA' : cleanupString;
         // local.setItem('staffIdentifiedFamilyId', cleanupString);
         // local.setItem('familyId', cleanupString);
+        memory.setItem('ppAction', cleanupString);
+        memory.setItem('stAction', cleanupString);
+        memory.setItem('spAction', cleanupString);
         memory.setItem('ppRevision', cleanupString);
         // local.setItem('studentId', cleanupString);
         memory.setItem('stRevision', cleanupString);
@@ -80,6 +83,7 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
         local.setItem('familyId', cleanupString);
         // memory.setItem('ppRevision', cleanupString);
         local.setItem('studentId', cleanupString);
+        local.setItem('secondaryId', cleanupString);
         // memory.setItem('stRevision', cleanupString);
         local.setItem('ppFirst', cleanupString);
         local.setItem('ppLast', cleanupString);

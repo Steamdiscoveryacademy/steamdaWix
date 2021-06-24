@@ -10,10 +10,14 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
     // ø <DATA>
     if(kind === 'DATA' || kind === 'DDEFAULT'){
         // console.log(kind);
+        logString += '\n' + "memory.getItem('ppAction'): " + memory.getItem('ppAction');
+        logString += '\n' + "memory.getItem('stAction'): " + memory.getItem('stAction');
+        logString += '\n' + "memory.getItem('spAction'): " + memory.getItem('spAction');
         logString += '\n' + "local.getItem('staffIdentifiedFamilyId'): " + local.getItem('staffIdentifiedFamilyId');
         logString += '\n' + "local.getItem('familyId'): " + local.getItem('familyId');
         logString += '\n' + "memory.getItem('ppRevision'): " + memory.getItem('ppRevision');
         logString += '\n' + "local.getItem('studentId'): " + local.getItem('studentId');
+        logString += '\n' + "local.getItem('secondaryId'): " + local.getItem('secondaryId');
         logString += '\n' + "memory.getItem('stRevision'): " + memory.getItem('stRevision');
         logString += '\n' + "local.getItem('ppFirst'): " + local.getItem('ppFirst');
         logString += '\n' + "local.getItem('ppLast'): " + local.getItem('ppLast');

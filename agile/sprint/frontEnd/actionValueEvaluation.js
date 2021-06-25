@@ -51,7 +51,7 @@ export async function actionValueEvaluation(){
             .eq("role", 'Secondary')
             .eq("termId", termId)
             .count();
-            spAction = spExistsCount > 0 ? "NA|SKIP|SKIP" : spAction;
+        spAction = spExistsCount > 0 ? "NA|SKIP|SKIP" : spAction;
         }
     }
     // ø </spAction>
@@ -65,8 +65,11 @@ export async function actionValueEvaluation(){
         spAction = "ALERT|ALERT|ALERT";
     }
 
-    local.setItem('ppAction', ppAction);
-    local.setItem('stAction', stAction);
-    local.setItem('spAction', spAction);
+    // local.setItem('ppAction', '');
+    // local.setItem('stAction', '');
+    // local.setItem('spAction', '');
+    memory.setItem('ppAction', ppAction);
+    memory.setItem('stAction', stAction);
+    memory.setItem('spAction', spAction);
 }
 // ø <---------- </actionValueEvaluation of IINSTANTIATE> ---------->

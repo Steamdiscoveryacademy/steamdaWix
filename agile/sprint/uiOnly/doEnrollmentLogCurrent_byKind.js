@@ -28,6 +28,7 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
         logString += '\n' + "local.getItem('spFirst'): " + local.getItem('stFirst');
         logString += '\n' + "local.getItem('spLast'): " + local.getItem('stLast');
         logString += '\n' + "local.getItem('comboName'): " + local.getItem('comboName');
+        logString += '\n' + "[CORE]local.getItem('termId'): " + local.getItem('termId');
     }//END if(kind === 'DATA' || kind === 'DDEFAULT')
     // ø </DATA>
     // ø <CODE>

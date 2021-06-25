@@ -68,6 +68,7 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
         cleanupString = develTest === true ? 'DATA' : cleanupString;
         // local.setItem('staffIdentifiedFamilyId', cleanupString);
         // local.setItem('familyId', cleanupString);
+        local.setItem('superEnrollmentStatus', cleanupString);
         memory.setItem('ppAction', cleanupString);
         memory.setItem('stAction', cleanupString);
         memory.setItem('spAction', cleanupString);

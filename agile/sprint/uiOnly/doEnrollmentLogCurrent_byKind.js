@@ -10,6 +10,7 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
     // ø <DATA>
     if(kind === 'DATA' || kind === 'DDEFAULT'){
         // console.log(kind);
+        logString += '\n' + "local.getItem('superEnrollmentStatus'): " + local.getItem('superEnrollmentStatus');
         logString += '\n' + "memory.getItem('ppAction'): " + memory.getItem('ppAction');
         logString += '\n' + "memory.getItem('stAction'): " + memory.getItem('stAction');
         logString += '\n' + "memory.getItem('spAction'): " + memory.getItem('spAction');

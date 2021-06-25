@@ -39,12 +39,13 @@ export async function actionValueEvaluation(){
     // ø </stAction>
     
     // ø <spAction>
+    let checkSecondaryParent = (local.getItem('spFirst')).length === 0 && (local.getItem('spLast')).length === 0 ? false : true;
+    checkSecondaryParent = ppAction.indexOf('SKIP') >= 0 ? false : checkSecondaryParent;
+    spAction = !checkSecondaryParent ? "NA|SKIP|SKIP" : spAction;
     if(staffMatch){
         // let spCount = Number(memory.setItem('SQL','SELECT count from person
         // where familyId = familyId AND termId = 202106 AND role =
         // Secondary'));
-        let checkSecondaryParent = (local.getItem('spFirst')).length === 0 && (local.getItem('spLast')).length === 0 ? false : true;
-        spAction = !checkSecondaryParent ? "NA|SKIP|SKIP" : spAction;
         if (checkSecondaryParent) {
             let spExistsCount = await wixData.query("person")
             .eq("familyId", familyId)
@@ -71,5 +72,12 @@ export async function actionValueEvaluation(){
     memory.setItem('ppAction', ppAction);
     memory.setItem('stAction', stAction);
     memory.setItem('spAction', spAction);
+    
+    let allActionStrings = memory.getItem('ppAction') + memory.getItem('stAction') + memory.getItem('spAction');
+    let superEnrollmentStatus = local.getItem('superEnrollmentStatus');
+    superEnrollmentStatus = allActionStrings.indexOf('SKIP') >= 0 && allActionStrings.indexOf('SKIP') < 12 ? 'SKIP' : superEnrollmentStatus;
+    superEnrollmentStatus = allActionStrings.indexOf('ALERT') >= 0 ? 'ALERT' : superEnrollmentStatus;
+    
+    local.setItem('superEnrollmentStatus',superEnrollmentStatus);
 }
 // ø <---------- </actionValueEvaluation of IINSTANTIATE> ---------->

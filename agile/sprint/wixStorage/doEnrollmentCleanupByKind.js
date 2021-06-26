@@ -146,6 +146,7 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     if(kindArray.includes('UI')){
         local.setItem('lastErrorString', cleanupString);
         local.setItem('logString', cleanupString);
+        memory.setItem('lastStamp', cleanupString);
     }
     // ø </UI>
     // ø <NEXT_ENROLLMENT>

@@ -95,6 +95,7 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
     // ø <LOG>
     if(kind === 'LOG' || kind === 'DDEFAULT'){
         logString += '\n' + "local.getItem('logString'): " + local.getItem('logString');
+        logString += '\n' + "memory.getItem('lastStamp'): " + memory.getItem('lastStamp');
     }
     // ø </LOG>
     // ø <ERROR>

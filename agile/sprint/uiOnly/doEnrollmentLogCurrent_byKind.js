@@ -67,6 +67,8 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
     // ø <CORE>
     if(kind === 'CORE' || kind === 'DDEFAULT'){
         console.log(kind);
+        logString += '\n' + "local.getItem('timezoneOffset'): " + local.getItem('timezoneOffset');
+        logString += '\n' + "local.getItem('tzAbbrv'): " + local.getItem('tzAbbrv');
         logString += '\n' + "local.getItem('yyyymm'): " + local.getItem('yyyymm');
         logString += '\n' + "local.getItem('termId'): " + local.getItem('termId');
         logString += '\n' + "local.getItem('termBeginMMDD')" + local.getItem('termBeginMMDD');

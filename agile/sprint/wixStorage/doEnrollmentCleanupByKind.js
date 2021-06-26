@@ -133,6 +133,8 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     if(kindArray.includes('CORE')){
         cleanupString = develTest === true ? 'CORE' : cleanupString;
         local.setItem('yyyymm', cleanupString);//was included in Deprecated version
+        local.setItem('timezoneOffset', cleanupString);
+        local.setItem('tzAbbrv', cleanupString);
         local.setItem('termId', cleanupString);
         local.setItem('termBeginMMDD', cleanupString);
         local.setItem('termEndMMDD', cleanupString);

@@ -67,7 +67,7 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
     // ø <CORE>
     if(kind === 'CORE' || kind === 'DDEFAULT'){
         console.log(kind);
-        logString += '\n' + "memory.getItem('yyyymm'): " + local.getItem('yyyymm');
+        logString += '\n' + "local.getItem('yyyymm'): " + local.getItem('yyyymm');
         logString += '\n' + "local.getItem('termId'): " + local.getItem('termId');
         logString += '\n' + "local.getItem('termBeginMMDD')" + local.getItem('termBeginMMDD');
         logString += '\n' + "local.getItem('termEndMMDD')" + local.getItem('termEndMMDD');
@@ -90,6 +90,16 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
         logString += '\n' + "local.getItem('yyyymm') [where,how used?]" + local.getItem('yyyymm');
     }//END if(kind === 'UNACCOUNTED_FOR')
     // ø </UNACCOUNTED_FOR>
+    // ø <LOG>
+    if(kind === 'LOG' || kind === 'DDEFAULT'){
+        logString += '\n' + "local.getItem('logString'): " + local.getItem('logString');
+    }
+    // ø </LOG>
+    // ø <ERROR>
+    if(kind === 'ERROR' || kind === 'DDEFAULT'){
+        logString += '\n' + "local.getItem('lastErrorString'): " + local.getItem('lastErrorString');
+    }
+    // ø </ERROR>
     if(kind === 'MAN_IN_THE_HIGH_CASTLE' || kind === 'DDEFAULT'){
         logString += '\n' + "kind || kind [~1501]";
     }

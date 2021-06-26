@@ -7,15 +7,15 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     // ø </DO NOT REMOVE>
     let errorStringArray = [];
     let cleanupString = 'EEMPTY';//override where appropriate
-    let kindKeySupportedArray = ['CURRENT','CODE','STEPS','DATA','CORE','OTHER','MEMORY_ALL','LOCAL_TEMP','ALL_EXCEPT_ENROLLMENT','ALL_INCLUDING_ENROLLMENT','ABORT'];
+    let kindKeySupportedArray = ['CURRENT','CODE','STEPS','DATA','CORE','OTHER','MEMORY_ALL','LOCAL_TEMP','ALL_EXCEPT_ENROLLMENT','ALL_INCLUDING_ENROLLMENT','ABORT','LOG','EEROR'];
     // let kindKeySupportedArray = ['CODE','STEPS','DATA','NOT_LOCAL_DATA','NOT_CORE','OTHER','MEMORY_ALL','LOCAL_TEMP','ALL_EXCEPT_ENROLLMENT','ALL_INCLUDING_ENROLLMENT','ABORT'];
     let kindSupportedArray = ['CODE','STEPS','DATA','CORE','OTHER','NEXT_ENROLLMENT'];
     kindKey = kindKeySupportedArray.includes(kindKey) ? kindKey : 'DDEFUALT';
     console.warn('kindKey: ' + kindKey);
     let kindArray = [];
     kindArray = kindKey === 'ABORT' ? /*kindSupportedArray*/['ZZZ'] : kindArray;
-    kindArray = kindKey === 'ALL_INCLUDING_ENROLLMENT' ? ['CODE','STEPS','DATA','NEXT_ENROLLMENT'] : kindArray;
-    kindArray = kindKey === 'ALL_EXCEPT_ENROLLMENT' ? ['CODE','STEPS','DATA','LOCAL_DATA'] : kindArray;
+    kindArray = kindKey === 'ALL_INCLUDING_ENROLLMENT' ? ['CODE','STEPS','DATA','NEXT_ENROLLMENT','UI'] : kindArray;
+    kindArray = kindKey === 'ALL_EXCEPT_ENROLLMENT' ? ['CODE','STEPS','DATA','LOCAL_DATA','UI'] : kindArray;
     kindArray = kindKey === 'CODE' ? ['CODE'] : kindArray
     kindArray = kindKey === 'STEPS' ? ['STEPS'] : kindArray
     kindArray = kindKey === 'DATA' ? ['DATA','NOT_LOCAL_DATA'] : kindArray
@@ -24,7 +24,7 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     kindArray = kindKey === 'MEMORY_ALL' ? ['MEMORY_ALL'] : kindArray
     kindArray = kindKey === 'LOCAL_TEMP' ? ['LOCAL_TEMP'] : kindArray
     // ø <Deprecated Use kindKey = 'CURRENT'>
-    kindArray = kindKey === 'CURRENT' ? ['DATA','CODE','STEPS'] : kindArray;
+    kindArray = kindKey === 'CURRENT' ? ['DATA','CODE','STEPS','UI'] : kindArray;
     // ø </Deprecated Use kindKey = 'CURRENT'>
     
     // ø <VALIDATION HERE>
@@ -140,6 +140,12 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
         local.setItem('weekIdToLabelKeyJSON', cleanupString);
     }//END if(kind === 'DATA' || kind === 'DDEFAULT')
     // ø </CORE>
+    // ø <UI>
+    if(kindArray.includes('UI')){
+        local.setItem('lastErrorString', cleanupString);
+        local.setItem('logString', cleanupString);
+    }
+    // ø </UI>
     // ø <NEXT_ENROLLMENT>
     if(kindArray.includes('NEXT_ENROLLMENT')){
         cleanupString = develTest === true ? 'NEXT_ENROLLMENT' : cleanupString;

@@ -11,27 +11,6 @@ export async function spContactPrepJSON() {
     memory.setItem('stepStampArray', JSON.stringify(stepStampArrayObject));
     // ø <---------- stepStampArray ---------->
 
-    // let wixContactInfo = {};
-    // wixContactInfo.contactInfo = {};
-    // wixContactInfo.contactInfo.source = "PPENDING";
-
-    // let contact = await steamdaGetContactFunction(local.getItem('familyId'));
-    // $w('#spContactResponseJSON').value = JSON.stringify(contact,undefined,4);
-    // memory.setItem('spRevision',(contact.revision).toString());
-
-    // paramObjectThis.contactIdentifiers = {};
-    // if(contact._id === local.getItem('familyId')){
-    //     paramObjectThis.contactIdentifiers.contactId = contact._id;
-    //     paramObjectThis.contactIdentifiers.revision = contact.revision;
-    //     // paramObjectThis.contactInfo = wixContactInfo.contactInfo;
-    // }else{
-    //     paramObjectThis.contactIdentifiers.contactId = "EERROR";
-    //     paramObjectThis.contactIdentifiers.errorContactId = contact._id;
-    //     paramObjectThis.contactIdentifiers.errorMemberId = local.getItem('familyId');
-    //     paramObjectThis.contactIdentifiers.revision = contact.revision;
-    //     // paramObjectThis.contactInfo = wixContactInfo.contactInfo;
-    //     paramObjectThis.errorString = "Member ID !== Contact ID";
-    // }
     //spAction: NA|INSERT|INSERT
     let spActionArray = memory.getItem('spAction').split('|');
     let spActionContact = spActionArray[1];
@@ -39,77 +18,16 @@ export async function spContactPrepJSON() {
     if (spActionContact === 'INSERT') {
         let enrollmentObject = JSON.parse(local.getItem('ondeckEnrollmentJSON'));
 
-        // let secondaryParent = {};
-        // secondaryParent.contactInfo = {};
-        // secondaryParent.contactInfo.source = "PPENDING";
-        // ø <---------- <doPrimaryParentContactInfo()>  ---------->
-        // ø if messy this could become its own function
-        // ø @path: steamdaWixLocal/steamdaWix/agile/sprint/objectToExpressionStringArray_Examples/secondaryParentContactInfo_fromEnrollmentApplication.js
-
         // ! <FINAL>
         let lastupdateDATE = new Date();
         let lastupdate = lastupdateDATE.getFullYear().toString() + '-' + (lastupdateDATE.getMonth() + 1).toString() + '-' + lastupdateDATE.getDate().toString()
         let currentRegion = "Charlottesville";
         let timezoneOffest = "-4:00";
 
-        //enrollmentObject.
-        // enrollmentObject.family.student.dob.month = 2;
-        // enrollmentObject.family.student.dob.day = 7;
-        // let studentBDAY = ("00" + enrollmentObject.family.student.dob.month).substr(-2) + ("00" + enrollmentObject.family.student.dob.day).substr(-2);
-
-        // console.log("studentBDAY: " + studentBDAY);
-        // console.log("termBeginMMDD: " + local.getItem('termBeginMMDD'));
-        // console.log("termEndMMDD: " + local.getItem('termEndMMDD'));
-
-        // let tBDAY = studentBDAY < local.getItem('termBeginMMDD') ? false : true;
-        // tBDAY = studentBDAY > local.getItem('termEndMMDD') ? false : tBDAY;
-        // // tBDAY = false;
-        // console.log('tBDAY: ' + tBDAY);
-
-
-        // Member Active [custom.member-active]
-        // Primary Parent [custom.primary-parent]
         let roleLabelKey = 'custom.secondary-parent';
-        // let memberLabelKey = 'custom.member-active';
 
-
-        // let idZZZToLableKeyArray = [[1,'custom.w1-2021060711'],[2,'custom.w2-2021061418'],[3,'custom.w3-2021062125'],[4,'custom.w4-2021062832'],[5,'custom.w5-2021071216'],[6,'custom.w6-2021071923'],[7,'custom.w7-2021072630'],[8,'custom.w8-2021080206'],[9,'custom.w9-2021080913'],['custom.w1-2021060711',1],['custom.w2-2021061418',2],['custom.w3-2021062125',3],['custom.w4-2021062832',4],['custom.w5-2021071216',5],['custom.w6-2021071923',6],['custom.w7-2021072630',7],['custom.w8-2021080206',8],['custom.w9-2021080913',9]];
-        // let idZZZToLableKeyArray = [['custom.w0-2021010102','0101','0102'],['custom.w1-2021060711','0607','0611'],['custom.w2-2021061418','0614','0618'],['custom.w3-2021062125','0621','0625'],['custom.w4-2021062832','0628','0702'],['custom.w5-2021071216','0712','0716'],['custom.w6-2021071923','0719','0723'],['custom.w7-2021072630','0726','0730'],['custom.w8-2021080206','0802','0806'],['custom.w9-2021080913','0809','0813']];
-        // let weekIdToLabelKeyJSON  = local.getItem('weekIdToLabelKeyJSON');
-        // let weekIdToLabelKeyJSON = [['custom.w0-2021010102', '0101', '0102'], ['custom.w1-2021060711', '0607', '0611'], ['custom.w2-2021061418', '0614', '0618'], ['custom.w3-2021062125', '0621', '0625'], ['custom.w4-2021062832', '0628', '0702'], ['custom.w5-2021071216', '0712', '0716'], ['custom.w6-2021071923', '0719', '0723'], ['custom.w7-2021072630', '0726', '0730'], ['custom.w8-2021080206', '0802', '0806'], ['custom.w9-2021080913', '0809', '0813']];
-        // let weekIdToLabelKeyArray  = JSON.parse(weekIdToLabelKeyJSON);
-        // let courseArray = enrollmentObject.courses_array;
         let finalLabelKeyArray = [];
-        // let labelKeyRow = [];
-        // let beginBDAY = "";
-        // let endBDAY = "";
-        // let wkBDAY = false;
-        // for (let index = 0; index < courseArray.length; index++) {
-        //     let element = courseArray[index];
-        //     // console.log('['+element.weekId+']element:');
-        //     // console.log(element);
-        //     let labelKeyRow = weekIdToLabelKeyJSON[element.weekId];
-        //     console.log('[' + element.weekId + ']labelKeyRow:');
-        //     console.log(labelKeyRow);
-        //     if (!finalLabelKeyArray.includes(labelKeyRow[0])) {
-        //         finalLabelKeyArray.push(labelKeyRow[0]);
-        //     }
-        //     beginBDAY = labelKeyRow[1];
-        //     endBDAY = labelKeyRow[2];
-        //     wkBDAY = studentBDAY < beginBDAY ? false : true;
-        //     wkBDAY = studentBDAY > endBDAY ? false : wkBDAY;
-        //     wkBDAY = finalLabelKeyArray.includes(labelKeyRow[0] + 'bday') ? false : wkBDAY;
-        //     if (wkBDAY) {
-        //         finalLabelKeyArray.push(labelKeyRow[0] + 'bday');
-        //     }
-        // }
-        // finalLabelKeyArray.push(local.getItem('termLabelKey'));
-
-        // if (tBDAY) {
-        //     finalLabelKeyArray.push(local.getItem('termLabelKey') + 'bday')
-        // }
         finalLabelKeyArray.push(roleLabelKey);
-        // finalLabelKeyArray.push(memberLabelKey);
         // ! </FINAL>
 
 
@@ -124,16 +42,6 @@ export async function spContactPrepJSON() {
         secondaryParent.contactInfo.locale = "en-US";
         // ø </ZXZ-TTESTING DISABLED>
         // ! </FINAL>
-
-        // secondaryParent.contactInfo.company = "Forest Associates";
-        // secondaryParent.contactInfo.jobTitle = "Human Resources";
-        // secondaryParent.contactInfo.birthdate = "1991-08-01";
-
-
-        // secondaryParent.contactInfo.labelKeys = [];
-        // secondaryParent.contactInfo.labelKeys[0] = "custom.gender-male";
-        // secondaryParent.contactInfo.labelKeys[1] = "custom.t202106";
-        // secondaryParent.contactInfo.labelKeys[2] = "custom.primary-parent";
 
         // ø <ZXZ-TTESTING DISABLED>
         secondaryParent.contactInfo.labelKeys = [];
@@ -216,10 +124,6 @@ export async function spContactPrepJSON() {
         secondaryParent.contactInfo.extendedFields['custom.timezone-offset'] = timezoneOffest;
         // ! </FINAL>
         // ø </ZXZ-TTESTING DISABLED>
-        // secondaryParent.contactInfo.extendedFields.custom['legal-first'] = "Elijah";
-        // enrollmentObject.family.student.name.preferred = "Danny";
-
-        // secondaryParent.contactInfo.extendedFields.custom.seed = "b53333aa164cc0b1";
 
         // ø <---------- </doPrimaryParentContactInfo()> ---------->
 
@@ -231,8 +135,5 @@ export async function spContactPrepJSON() {
     }//END if (spActionContact === 'INSERT')
     let paramJSON = JSON.stringify(paramObjectThis);
     memory.setItem('spContactPrepJSON', paramJSON);
-    // if(paramJSON.length > 50){
-
-    // }
 }
 // ø <---------- </spContactPrepJSON AS Step-Function> ---------->

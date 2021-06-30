@@ -1,15 +1,15 @@
-// ø <---------- <ppContactPrepJSON AS Step>  ---------->
+// ø <---------- <ppContactPrepJSON AS Step-Function>  ---------->
 export async function ppContactPrepJSON(){
-    let now = new Date();
-    let timeDateString = ' [ on ' + now.toLocaleDateString() + ']';
-    timeDateString = now.toLocaleTimeString('en-US') + timeDateString;
+    memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
+    local.setItem('logString', local.getItem('logString') + '\n[~680] Entering ppContactPrepJSON() at ' + memory.getItem('lastStamp'));
+
     let stepStampArrayObject = JSON.parse(memory.getItem('stepStampArray'));
     let stampArrayElementObject = {};
     stampArrayElementObject.step = memory.getItem('enrollmentStepCurrent');
-    stampArrayElementObject.stamp = timeDateString;
+    stampArrayElementObject.stamp = memory.getItem('lastStamp');
     stepStampArrayObject.stampArray.push(stampArrayElementObject);
     memory.setItem('stepStampArray',JSON.stringify(stepStampArrayObject));    
-    // ø <---------- timeDateString ---------->
+    // ø <---------- stepStampArray ---------->
 
     // let wixContactInfo = {};
     // wixContactInfo.contactInfo = {};
@@ -225,4 +225,4 @@ export async function ppContactPrepJSON(){
     let paramJSON = JSON.stringify(paramObjectThis);
     memory.setItem('ppContactPrepJSON',paramJSON);
 }
-// ø <---------- </ppContactPrepJSON AS Step> ---------->
+// ø <---------- </ppContactPrepJSON AS Step-Function> ---------->

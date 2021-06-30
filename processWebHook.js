@@ -21,6 +21,10 @@ $w.onReady(function () {
     // let totalCount = $w("#dsWebhookPayload").getTotalCount();
     // console.log('totalCount: ' + totalCount);
     // $w('#moreItems').text = totalCount - repeaterLimit > 0 ? 'plus ' + Number(totalCount - repeaterLimit) + ' additional items' : '';
+
+    $w('#txtPayloadTitleAlert').text = local.getItem("ondeckEnrollmentJSON").length > 20 ? 'ALERT: There is an On-Deck Enrollment to Post' : '';//45characters
+    // console.log(local.getItem("ondeckEnrollmentJSON"));
+
     console.log(
         "%cReally Emphatic Console Log for Debugging [Line ~18]",
         `color: #fff;
@@ -31,25 +35,100 @@ $w.onReady(function () {
         );
 
     sessionInstantiateDevelJSON();
-    $w('#displayDevelJSON').value = session.getItem("develJSON")
+    $w('#displayDevelJSON').value = session.getItem("develJSON");
 
+    let logString = 'TESTING APPLICATIONS HIDDEN\n===========================';
+    logString += '\n • Partridge, Keith on Mar 31 @ -5:10AM ~15';
+    logString += '\n • Partridge, Laurie on Mar 15 @ 12:17PM ~20';
+    logString += '\n • Partridge, Keith on Mar 15 @ 12:15PM ~20';
+    logString += '\n • Partridge, Laurie on Mar 8 @ 5:45PM ~22';
+    logString += '\n • Partridge, Keith on Mar 7 @ 1:35PM ~23';
+    logString += '\n • Partridge, Keith on Mar 7 @ 12:46PM ~23';
+    logString += '\n • Cyrus, Miley on Mar 5 @ 8:38AM ~24';
+    logString += '\n • Partridge, Keith on Mar 5 @ -6:34AM ~25';
+    logString += '\n • Partridge, Keith on Mar 4 @ 4:17PM ~25';
+    logString += '\n • Partridge, Keith on Mar 4 @ 1:43PM ~25';
+    logString += '\n • Partridge, Keith on Mar 4 @ 1:19PM ~25';
+    logString += '\n • Partridge, Keith on Mar 4 @ 10:33AM ~25';
+
+    $w('#thisPayload').value = logString;
+
+
+    let totalCount = $w("#dsWebhookPayload").getTotalCount();
+    console.log('[~52]totalCount: ' + totalCount)
+    memory.setItem('noFilterTotalCount',totalCount);
+
+    wixData.query("webhookPayload")
+        .count()
+        .then( (num) => {
+            memory.setItem('noFilterTotalCount',num.toString());
+        } )
+        .catch( (error) => {
+            let errorMsg = error.message;
+            let code = error.code;
+        } );
+    
+    $w('#dropdownFilter').value = 'UNRESOLVED';
+    dropdownFilter_change();
 });
 //0402errorNOT: HOLDER is a vallid string
 //0402errorMAYBE: 
 export function rptrTitle_click(event, $w) {
+    let status = local.getItem("ondeckEnrollmentJSON").length > 20 ? 'ALERT' : 'CONTINUE';
+    $w('#txtPayloadTitleAlert').text = status === 'ALERT' ? 'ALERT: There is an On-Deck Enrollment to Post' : '';
+    if(status === 'ALERT'){
+        // $w('#txtPayloadTitleAlert').text = 'ALERT2';
+        $w('#txtPayloadTitleAlert').hide();
+        $w('#txtPayloadTitleAlert').show('puff',{"duration":4000,"delay": 0});
+        console.log('puff');
+        return;
+    }
+
     let $item = $w.at(event.context);
     $item("#rptrButton").show();
     let targetItem = $w("#dsWebhookPayload").getCurrentItem();
+    console.log(targetItem);
     let wixId = targetItem["_id"];
-    $w('#thisKey').value = wixId;
-    $w('#thisTitle').value = targetItem['title'];
     let webhookId = targetItem['webhookId'];
+    $w('#thisKey').value = wixId;
+    let title = targetItem['title'];
+    let payload = JSON.parse(targetItem['payload']);
+    console.log(payload);
+    // console.log(payload.student_name);
+    let name = 'Davis, Chester';
+    let applicationSummerIndex = -777;
+    if(webhookId === '4223065'){
+        name = payload.student_name.last + ', ' + payload.student_name.first;
+        applicationSummerIndex = title.indexOf('Application Summer');
+        
+    }
+    title = title.replace('Application Summer', name);
+    title = title.replace('freeLessonRequest', 'FREE! Lesson Requet ');
+    if(webhookId === '4262311' || applicationSummerIndex >= 0){
+        $w("#dsWebhookPayload").setFieldValue("title", title);
+        $w("#dsWebhookPayload").save();
+    }
+    $w('#thisTitle').value = title;
+    // let webhookId = targetItem['webhookId'];
     let source = targetItem['source'];
     $w('#thisSource').value = targetItem['source'];
     $w('#thisPayload').value = targetItem['payload'];
     $w('#thisWebhookId').value = targetItem['webhookId'];
     $w('#thisPayloadId').value = targetItem['payloadId'];
     $w('#thisCurrentStatus').value = targetItem['currentStatus'];
+    let _createdDate = targetItem['_createdDate'];
+    let createdDateString = '';
+    let mons = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    createdDateString += mons[_createdDate.getMonth()];
+    createdDateString += ' ' + _createdDate.getDate() + ' @ ';
+    let hours = _createdDate.getHours();
+    createdDateString += _createdDate.getHours() === 12 ? '12' : (_createdDate.getHours() % 12).toString();
+    createdDateString += ':' + ('00' + _createdDate.getMinutes().toString()).substr(-2);
+    createdDateString += hours > 11 ? 'pm':'am';
+    console.log('typeof _createdDate: ' + typeof _createdDate);
+    console.log("_createdDate.toLocaleDateString('en-US')")
+    console.log(_createdDate.toLocaleDateString('en-US'))
+    console.log('createdDateString: ' + createdDateString)
     let currentStatusStamp = targetItem['currentStatusStamp'].toString();
     currentStatusStamp = currentStatusStamp.substr(0, currentStatusStamp.search(" GMT"))
     $w('#thisCurrentStatusStamp').value = currentStatusStamp;
@@ -256,7 +335,6 @@ export function btnConfirmClasses_click(event) {
     console.log(returnObjectArrayObject);
     $w("#superObjectHolder").value = JSON.stringify(returnObjectArrayObject, undefined, 4);
     console.log(runningTotalObject);
-    $w("#btnEnroll").show();
 }
 
 export function instantiateEnrollment (returnObjectArrayObject) {
@@ -651,19 +729,6 @@ export function btnMemberMatch_click(event, $w) {
     $w("#thisMemberId").value = targetItem._id;
     $w("#btnConfirmClasses").show();
 
-}
-
-export function btnEnroll_click(event,returnObjectArrayObject) {
-	// export function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-	// Add your code for this event here: 
-    let isValid = validateEnrollment(returnObjectArrayObject);
-    if (!isValid) {
-        return false;
-    }
-    return true; 
-    //create courses Checked Courses
-    //create invoice for Courses to Stripe
-    // etc., etc., etc.
 }
 
 export function validateEnrollment(returnObjectArrayObject){
@@ -1450,20 +1515,25 @@ export function insertEnrollmentRecord() {
 
 
 export function postEnrollment_click(event) {
-    gotoPostEnrollemnt()
+    doPostEnrollemnt()
 	// cleanUp();
     // insertEnrollmentRecord()
 	// resolveSelectedWebHook();
 }
 
-export function gotoPostEnrollemnt(){
+export function doPostEnrollemnt(){
     let jsonEnrollmentPretty = $w('#superEnrollmentObject').value;
+    let webhookId = $w('#thisKey').value;
+    let webhookStatus = $w('#thisCurrentStatus').value;
     let objectEnrollment = JSON.parse(jsonEnrollmentPretty);
     let jsonErnollment = JSON.stringify(objectEnrollment);
     local.setItem("ondeckEnrollmentJSON",jsonErnollment);
+    local.setItem('wixWebhookId',webhookId);
+    local.setItem('wixWebhookStatus',webhookStatus);
     console.log('local.getItem("ondeckEnrollmentJSON"): ');
     console.log(local.getItem("ondeckEnrollmentJSON"));
-
+    $w('#btnGoToPostEnrollment').show();
+    $w('#postEnrollment').hide();
     // wixLocation.to("/post-enrollment");
 }
 

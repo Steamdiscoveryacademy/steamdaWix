@@ -7,7 +7,9 @@
 import {local, session, memory} from 'wix-storage';
 import wixUsers from 'wix-users';
 import { getUser } from 'backend/userReference.jsw'
+import { updateUserFields } from 'backend/userReference.jsw'
 import { steamdaGetContactFunction } from 'backend/crmModule.jsw'
+import { steamdaCreateContactFunction } from 'backend/contactReference.jsw'
 import { streamdaUpdateContactFunction } from 'backend/contactReference.jsw'
 import { nowISO } from 'backend/utility.jsw'
 import wixData from 'wix-data';
@@ -55,11 +57,11 @@ export async function doPeformNextStep(){
 	local.setItem('loopExitAfterStep', $w('#ddExitAfterStep').value);
 	await doStepLoopSwitch();
 	// /*PRETTIER*/$w('#sessionEnrollmentJSON').value = stepsDisplayStatusAsReturnString("After Completed: " + memory.getItem('enrollmentStepCompleted'))
-    local.setItem('logString', local.getItem('logString') + '\n[~55]After Completed: ' + memory.getItem('enrollmentStepCompleted'))
+    local.setItem('logString', local.getItem('logString') + '\n[~58]After Completed: ' + memory.getItem('enrollmentStepCompleted'))
 }
 // ø <---------- <doStepLoopSwitch>  ---------->
 export async function doStepLoopSwitch() {
-    local.setItem('logString', local.getItem('logString') + '\n[~59]entering: ' + 'doStepLoopSwitch()')
+    local.setItem('logString', local.getItem('logString') + '\n[~62]entering: ' + 'doStepLoopSwitch()')
     let stepKey = 'PPENDING';
     let stepArray = memory.getItem('enrollmentStepList').split(',');
     for (let stepArrayIndex = 0; stepArrayIndex < stepArray.length; stepArrayIndex++) {
@@ -68,11 +70,11 @@ export async function doStepLoopSwitch() {
         let errorString = '';
         switch (stepKey) {
             case 'IINSTANTIATE':
-				doInstantiateLoopSwitchStep();
+				await doInstantiateLoopSwitchStep();
                 console.log('Step: ' + stepKey)
                 break;
             case 'PREP_ppMember':
-                ppMemberPrepJSON()
+                await ppMemberPrepJSON()
                 console.log('Step: ' + stepKey)
                 break;
             case 'EXECUTE_ppMember':
@@ -80,7 +82,7 @@ export async function doStepLoopSwitch() {
                 console.log('Step: ' + stepKey)
                 break;
             case 'PREP_stMember':
-                stMemberPrepJSON()
+                await stMemberPrepJSON()
                 console.log('Step: ' + stepKey)
                 break;
             case 'EXECUTE_stMember':
@@ -88,7 +90,7 @@ export async function doStepLoopSwitch() {
                 console.log('Step: ' + stepKey)
                 break;
             case 'PREP_ppContact':
-                ppContactPrepJSON()
+                await ppContactPrepJSON()
                 console.log('Step: ' + stepKey)
                 break;
             case 'PREP_ppDatabase':
@@ -96,7 +98,7 @@ export async function doStepLoopSwitch() {
                 console.log('Step: ' + stepKey)
                 break;
             case 'PREP_stContact':
-                stContactPrepJSON()
+                await stContactPrepJSON()
                 console.log('Step: ' + stepKey)
                 break;
             case 'PREP_stDatabase':
@@ -104,35 +106,39 @@ export async function doStepLoopSwitch() {
                 console.log('Step: ' + stepKey)
                 break;
             case 'PREP_spContact':
-                spContactPrepJSON()
+                await spContactPrepJSON()
                 console.log('Step: ' + stepKey)
                 break;
             case 'PREP_spDatabase':
-                spDatabasePrepJSON()
+                // await spDatabasePrepJSON()
+                await spDatabaseExecuteUpsert()
                 console.log('Step: ' + stepKey)
+                local.setItem('logString', local.getItem('logString') + '\n' + 'Step: ' + stepKey + '; [~116]Function-Swapped to ppDatabaseExecuteUpsert()')
                 break;
             case 'EXECUTE_ppContact':
-                ppContactExecuteUpsert()
+                await ppContactExecuteUpsert()
                 console.log('Step: ' + stepKey)
                 break;
             case 'EXECUTE_ppDatabase':
-                ppDatabaseExecuteUpsert()
+                await ppDatabaseExecuteUpsert()
                 console.log('Step: ' + stepKey)
                 break;
             case 'EXECUTE_stContact':
-                stContactExecuteUpsert()
+                await stContactExecuteUpsert()
                 console.log('Step: ' + stepKey)
                 break;
             case 'EXECUTE_stDatabase':
-                stDatabaseExecuteUpsert()
+                await stDatabaseExecuteUpsert()
                 console.log('Step: ' + stepKey)
                 break;
             case 'EXECUTE_spContact':
-                spContactExecuteUpsert()
+                await spContactExecuteUpsert()
                 console.log('Step: ' + stepKey)
                 break;
             case 'EXECUTE_spDatabase':
-                spDatabaseExecuteUpsert()
+                await spDatabasePrepJSON()
+                local.setItem('logString', local.getItem('logString') + '\n' + 'Step: ' + stepKey + '; [~133]Function-Swapped to await spDatabasePrepJSON()')
+                // spDatabaseExecuteUpsert()
                 console.log('Step: ' + stepKey)
                 break;
             case 'CCOMPLETE':
@@ -147,7 +153,7 @@ export async function doStepLoopSwitch() {
         // ø <ExitAfter Switch Check>
         doCheckExitAfter();
         if (memory.getItem('loopExitNow') !== 'FFALSE') {
-            local.setItem('logString', local.getItem('logString') + '\n[~59]exiting (Break Loop is Exit): ' + 'doStepLoopSwitch()')
+            local.setItem('logString', local.getItem('logString') + '\n[~150]exiting (Break Loop is Exit): ' + 'doStepLoopSwitch()')
             break;//(Break Loop is Exit)
         }
         // ø </ExitAfter Switch Check>
@@ -190,6 +196,37 @@ export async function doUpdateContact(paramObjectThis) {
 }
 // ø <----------- </doUpdateContact() Front-End> ----------->
 
+// ø <----------- <doSecondaryParentCreateContact Front-End>  ----------->
+export async function doSecondaryParentCreateContact() {
+    local.setItem('logString', local.getItem('logString') + '\n[~197]entering: ' + 'doSecondaryParentCreateContact()');
+
+    // let wixContactInfo = JSON.parse(memory.getItem('spContactPrepJSON'));
+    // let paramObjectThis = {};
+    let paramObjectThis = JSON.parse(memory.getItem('spContactPrepJSON'));
+    // paramObjectThis.contactInfo = wixContactInfo.contactInfo;
+	console.log("[~LINE 200]paramObjectThis.contactInfo: ")
+	// console.log(paramObjectThis)
+	// console.log(paramObjectThis.contactInfo)
+	let wixContact = await steamdaCreateContactFunction(paramObjectThis);
+    if(typeof wixContact._id === 'string'){
+        local.setItem('secondaryId',wixContact._id)
+        console.log('[~LINE 204]wixContact: ');
+        console.log(wixContact);
+        memory.setItem('spContactExecuteUpsert',JSON.stringify(wixContact));
+    }else{
+        memory.setItem('spContactExecuteUpsert','doSecondaryParentCreateContact() FAIL');
+        local.setItem('logString', local.getItem('logString') + '\n[~217]exiting: ' + 'doSecondaryParentCreateContact() FAIL');
+    }
+	// $w('#crmContactId').value = wixContact._id;
+	// $w('#inputRevision').value = wixContact.revision;
+	// $w('#contactCurrent').value = JSON.stringify(wixContact,undefined,4);
+	// $w('#contactJSON').value = JSON.stringify(wixContact,undefined,4);
+	// $w('#responseKind').value = "Contact";
+	// $w('#responseHeader').text = "'Create Contact' Response";
+    local.setItem('logString', local.getItem('logString') + '\n[~216]exiting: ' + 'doSecondaryParentCreateContact()');
+}
+// ø <----------- </doSecondaryParentCreateContact Front-End> ----------->
+
 // ! ====================================================================================================
 // ! ====================                 </Front-End Code Calling Back-End Code>          ==============
 // ! ====================================================================================================
@@ -198,7 +235,7 @@ export async function doUpdateContact(paramObjectThis) {
 
 
 
-// ø <---------- <steamdaMemberRegistration>  ---------->
+// ø <---------- <steamdaMemberRegistration Front-End (no backend)>  ---------->
 export async function steamdaMemberRegistration(paramObjectParam = {}) {
     // ø <expected that paramObject will be gathered from memory.getItem(JSON)>
 	let paramObject = {};
@@ -231,7 +268,12 @@ export async function steamdaMemberRegistration(paramObjectParam = {}) {
     
     return memberResponse;
 }
-// ø <---------- </steamdaMemberRegistration> ---------->
+// ø <---------- </steamdaMemberRegistration Front-End (no backend)> ---------->
+// ø <---------- <steamdaMemberUpdate Front-End>  ---------->
+// ø <PRETTY CLOSE> - no need to uncomment before all the rest has been tested
+//export async function steamdaMemberUpdate(paramObjectParam = {let memberResponse = await updateUserFields(userId, firstName, lastName, email, phone)}) {}
+// ø </PRETTY CLOSE>
+// ø <---------- </steamdaMemberUpdate Front-End> ---------->
 
 // ! ====================================================================================================
 // ! ====================                 <Front-End Code Calling Back-End Code>           ==============
@@ -286,22 +328,20 @@ export function ppMemberBuildOnDeckJSONZZZ(){
 // ø <---------- <manually added Step Functions>  ---------->
 // ø <---------- <doInstantiateLoopSwitchStep>  ---------->
 export async function doInstantiateLoopSwitchStep(){
-    local.setItem('logString', local.getItem('logString') + '\n[~286]entering: ' + 'doInstantiateLoopSwitchStep()')
+    memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
+    local.setItem('logString', local.getItem('logString') + '\n[~319]entering: ' + 'doInstantiateLoopSwitchStep() at ' + memory.getItem('lastStamp'))
+
     local.setItem('superEnrollmentStatus','CONTINUE');
+    
     let stepStampArrayObject = {};
     stepStampArrayObject.stampArray = [];
-    let now = new Date();
-    let yyyymm = now.getFullYear() * 100 + now.getMonth() + 1;
-    let yyyymmddhhiiss = now.getFullYear().toString() + (now.getMonth() + 1).toString;
-    memory.setItem('yyyymm',yyyymm.toString());
-    let timeDateString = ' [ on ' + now.toLocaleDateString() + ']';
-    timeDateString = now.toLocaleTimeString('en-US') + timeDateString;
+    
     let stampArrayElementObject = {};
     stampArrayElementObject.step = memory.getItem('enrollmentStepCurrent');
-    stampArrayElementObject.stamp = timeDateString;
+    stampArrayElementObject.stamp = memory.getItem('lastStamp');
     stepStampArrayObject.stampArray.push(stampArrayElementObject);
     memory.setItem('stepStampArray',JSON.stringify(stepStampArrayObject));
-    // ø <---------- timeDateString ---------->
+    // ø <---------- stepStampArray ---------->
 
 	let enrollmentObject = JSON.parse(local.getItem('ondeckEnrollmentJSON'));
     let memberId = enrollmentObject.family.parent.primary.memberId
@@ -318,6 +358,16 @@ export async function doInstantiateLoopSwitchStep(){
     if((local.getItem('spLast')).length === 0 && (local.getItem('spFirst')).length > 0){
         local.setItem('spLast',local.getItem('ppLast'));
     }
+
+    let tempStamp = await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')); 
+    local.setItem('logString', local.getItem('logString') + '\n[~322]about to call: ' + 'actionValueEvaluation() at ' + tempStamp);
+    await actionValueEvaluation();
+    tempStamp = await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')); 
+    local.setItem('logString', local.getItem('logString') + '\n[~324]just called: ' + 'actionValueEvaluation() at ' + tempStamp);
+    local.setItem('logString', local.getItem('logString') + '\nppAction: ' + memory.getItem('ppAction'))
+    local.setItem('logString', local.getItem('logString') + '\nstAction: ' + memory.getItem('stAction'))
+    local.setItem('logString', local.getItem('logString') + '\nspAction: ' + memory.getItem('spAction'))
+
     //preferredFirst Last (parentFirst {parentLastIfDifferent})
     let comboName = local.getItem('stLast') === local.getItem('ppLast') ? '' : ' ' + local.getItem('ppLast'); 
     comboName = local.getItem('stPreferredFirst').trim() + ' ' + local.getItem('stLast').trim() + ' (' + local.getItem('ppFirst') + comboName + ')';
@@ -335,13 +385,15 @@ export async function doInstantiateLoopSwitchStep(){
 
     let result = await wixData.get("webhookPayload", webhookId, options);
     local.setItem('wixWebhookStatus', result.currentStatus);
+    local.setItem('logString', local.getItem('logString') + '\nwixWebhookStatus: ' + local.getItem('wixWebhookStatus'))
     local.setItem('logString', local.getItem('logString') + '\n[~334]exiting: ' + 'doInstantiateLoopSwitchStep()')
 }
 // ø <---------- </doInstantiateLoopSwitchStep> ---------->
 
 // ø <---------- <actionValueEvaluation of IINSTANTIATE>  ---------->
 export async function actionValueEvaluation(){
-    local.setItem('logString', local.getItem('logString') + 'LAUNCH\n[~332] Entering actionValueEvaluation()');
+    let tempStamp = await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')); 
+    local.setItem('logString', local.getItem('logString') + '\nLAUNCH\n[~332] Entering actionValueEvaluation() at ' + tempStamp);
     let ppAction = "INSERT|UPDATE|INSERT";
     let stAction = "INSERT|UPDATE|INSERT";
     let spAction = "NA|INSERT|INSERT";
@@ -439,17 +491,17 @@ export async function actionValueEvaluation(){
 // ø <---------- </actionValueEvaluation of IINSTANTIATE> ---------->
 
 // ø <---------- </manually added Step Functions> ---------->
-export function ppMemberPrepJSON(){
-    let now = new Date();
-    let timeDateString = ' [ on ' + now.toLocaleDateString() + ']';
-    timeDateString = now.toLocaleTimeString('en-US') + timeDateString;
+export async function ppMemberPrepJSON(){
+    memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
+    local.setItem('logString', local.getItem('logString') + '\n[~483]entering: ' + 'ppMemberPrepJSON() at ' + memory.getItem('lastStamp'))
+
     let stepStampArrayObject = JSON.parse(memory.getItem('stepStampArray'));
     let stampArrayElementObject = {};
     stampArrayElementObject.step = memory.getItem('enrollmentStepCurrent');
-    stampArrayElementObject.stamp = timeDateString;
+    stampArrayElementObject.stamp = memory.getItem('lastStamp');
     stepStampArrayObject.stampArray.push(stampArrayElementObject);
     memory.setItem('stepStampArray',JSON.stringify(stepStampArrayObject));    
-    // ø <---------- timeDateString ---------->
+    // ø <---------- stepStampArray ---------->
     let enrollmentObject = JSON.parse(local.getItem("ondeckEnrollmentJSON"));
 
     if(local.getItem('staffIdentifiedFamilyId') === 'INSTANTIATE'){
@@ -482,51 +534,65 @@ export function ppMemberPrepJSON(){
 		paramObject.phone = enrollmentObject.family.phones[ppPhoneIndex].phone;
 		memory.setItem("ppMemberPrepJSON", JSON.stringify(paramObject));    
     }else{
-        memory.setItem('ppMemberPrepJSON','ppMemberPrepJSON' + ' UPDATE PREPPED on ' + timeDateString);
+        memory.setItem('ppMemberPrepJSON','ppMemberPrepJSON' + ' UPDATE PREPPED on ' + memory.getItem('lastStamp'));
     }
 }
 
 export async function ppMemberExecuteUpsert(){
-    let now = new Date();
-    let timeDateString = ' [ on ' + now.toLocaleDateString() + ']';
-    timeDateString = now.toLocaleTimeString('en-US') + timeDateString;
+    memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
+    local.setItem('logString', local.getItem('logString') + '\n[~530] Entering ppMemberExecuteUpsert() at ' + memory.getItem('lastStamp'));
+
     let stepStampArrayObject = JSON.parse(memory.getItem('stepStampArray'));
     let stampArrayElementObject = {};
     stampArrayElementObject.step = memory.getItem('enrollmentStepCurrent');
-    stampArrayElementObject.stamp = timeDateString;
+    stampArrayElementObject.stamp = memory.getItem('lastStamp');
     stepStampArrayObject.stampArray.push(stampArrayElementObject);
     memory.setItem('stepStampArray',JSON.stringify(stepStampArrayObject));    
-    // ø <---------- timeDateString ---------->
+    // ø <---------- stepStampArray ---------->
+
+    let ppActionArray = memory.getItem('ppAction').split('|');
+    let ppActionMember = ppActionArray[0];
+    local.setItem('logString', local.getItem('logString') + '\n[~546]ppActionMember: ' + ppActionMember);
+
+
+
+
     // memory.setItem('ppMemberExecuteUpsert','ppMemberExecuteUpsert' + ' EXECUTED on ' + timeDateString);
-    if(local.getItem('staffIdentifiedFamilyId') === 'INSTANTIATE'){
-        let paramObjectParam = {};
-        paramObjectParam.memoryKey = "ppMemberPrepJSON";
+    let paramObjectParam = {};
+    paramObjectParam.memoryKey = "ppMemberPrepJSON";
+    if(ppActionMember === 'INSERT'){
         let ppMemberResponse = await steamdaMemberRegistration(paramObjectParam);
         local.setItem('familyId',ppMemberResponse.user.id);
         // memory.setItem('ppMemberExecuteUpsert','ppMemberExecuteUpsert' + ' INSERT EXECUTED on ' + timeDateString);
         memory.setItem('ppMemberExecuteUpsert', JSON.stringify(ppMemberResponse));
-    }else{
-        memory.setItem('ppMemberExecuteUpsert','ppMemberExecuteUpsert' + ' UPDATE EXECUTED on ' + timeDateString);
     }
-    if(local.getItem('staffIdentifiedFamilyId') === 'INSTANTIATE'){
-        // let memberResponseObject = JSON.parse(memory.getItem('ppMemberExecuteUpsert');
-        memory.setItem('HHOLDER',timeDateString);
-    }else{
+    if(ppActionMember === 'UPDATE'){
+        let paramObjectThis = JSON.parse(memory.getItem('ppMemberPrepJSON'));
+
+        let ppMemberUpdateResponse = updateUserFields(local.getItem('staffIdentifiedFamilyId'), paramObjectThis.firstName, paramObjectThis.lastName, paramObjectThis.email, paramObjectThis.phone);
+        memory.setItem('ppMemberExecuteUpsert',JSON.stringify(ppMemberUpdateResponse));
         local.setItem('familyId',local.getItem('staffIdentifiedFamilyId'));
     }
+    // if(local.getItem('staffIdentifiedFamilyId') === 'INSTANTIATE'){
+    //     // let memberResponseObject = JSON.parse(memory.getItem('ppMemberExecuteUpsert');
+    // }else{
+    // }
+    // memory.setItem('HHOLDER',tempStamp);
+    local.setItem('logString', local.getItem('logString') + '\n[~569] Exiting ppMemberExecuteUpsert()');
 }
 
-export function stMemberPrepJSON(){
-    let now = new Date();
-    let timeDateString = ' [ on ' + now.toLocaleDateString() + ']';
-    timeDateString = now.toLocaleTimeString('en-US') + timeDateString;
+export async function stMemberPrepJSON(){
+    memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
+    local.setItem('logString', local.getItem('logString') + '\n[~573] Entering stMemberPrepJSON() at ' + memory.getItem('lastStamp'));
+
     let stepStampArrayObject = JSON.parse(memory.getItem('stepStampArray'));
     let stampArrayElementObject = {};
     stampArrayElementObject.step = memory.getItem('enrollmentStepCurrent');
-    stampArrayElementObject.stamp = timeDateString;
+    stampArrayElementObject.stamp = memory.getItem('lastStamp');
     stepStampArrayObject.stampArray.push(stampArrayElementObject);
     memory.setItem('stepStampArray',JSON.stringify(stepStampArrayObject));    
-    // ø <---------- timeDateString ---------->
+    // ø <---------- stepStampArray ---------->
+
     let enrollmentObject = JSON.parse(local.getItem("ondeckEnrollmentJSON"));
     // ø <KLUDGE> there will need to be a more robust query
     if(memory.getItem('yyyymm') > "202108"){
@@ -587,21 +653,22 @@ export function stMemberPrepJSON(){
 		paramObject.phone = phone;
 		memory.setItem("stMemberPrepJSON", JSON.stringify(paramObject));    
     }else{
-        memory.setItem('stMemberPrepJSON','stMemberPrepJSON' + ' UPDATE PREPPED on ' + timeDateString);
+        memory.setItem('stMemberPrepJSON','stMemberPrepJSON' + ' UPDATE PREPPED on ' + memory.getItem('lastStamp'));
     }
 }
 
 export async function stMemberExecuteUpsert(){
-    let now = new Date();
-    let timeDateString = ' [ on ' + now.toLocaleDateString() + ']';
-    timeDateString = now.toLocaleTimeString('en-US') + timeDateString;
+    memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
+    local.setItem('logString', local.getItem('logString') + '\n[~649] Entering stMemberExecuteUpsert() at ' + memory.getItem('lastStamp'));
+
     let stepStampArrayObject = JSON.parse(memory.getItem('stepStampArray'));
     let stampArrayElementObject = {};
     stampArrayElementObject.step = memory.getItem('enrollmentStepCurrent');
-    stampArrayElementObject.stamp = timeDateString;
+    stampArrayElementObject.stamp = memory.getItem('lastStamp');
     stepStampArrayObject.stampArray.push(stampArrayElementObject);
     memory.setItem('stepStampArray',JSON.stringify(stepStampArrayObject));    
-    // ø <---------- timeDateString ---------->
+    // ø <---------- stepStampArray ---------->
+
     // memory.setItem('stMemberExecuteUpsert','stMemberExecuteUpsert' + ' EXECUTED on ' + timeDateString);
     if(local.getItem('studentId') === 'INSTANTIATE'){
         // local.setItem('studentId','888888');
@@ -617,21 +684,22 @@ export async function stMemberExecuteUpsert(){
         //stMemberExecuteUpsert
 
     }else{
-        memory.setItem('stMemberExecuteUpsert','stMemberExecuteUpsert' + ' UPDATE EXECUTED on ' + timeDateString);
+        memory.setItem('stMemberExecuteUpsert','stMemberExecuteUpsert' + ' UPDATE EXECUTED on ' + memory.getItem('lastStamp'));
     }
 }
 
+// ø <---------- <ppContactPrepJSON AS Step-Function>  ---------->
 export async function ppContactPrepJSON(){
-    let now = new Date();
-    let timeDateString = ' [ on ' + now.toLocaleDateString() + ']';
-    timeDateString = now.toLocaleTimeString('en-US') + timeDateString;
+    memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
+    local.setItem('logString', local.getItem('logString') + '\n[~680] Entering ppContactPrepJSON() at ' + memory.getItem('lastStamp'));
+
     let stepStampArrayObject = JSON.parse(memory.getItem('stepStampArray'));
     let stampArrayElementObject = {};
     stampArrayElementObject.step = memory.getItem('enrollmentStepCurrent');
-    stampArrayElementObject.stamp = timeDateString;
+    stampArrayElementObject.stamp = memory.getItem('lastStamp');
     stepStampArrayObject.stampArray.push(stampArrayElementObject);
     memory.setItem('stepStampArray',JSON.stringify(stepStampArrayObject));    
-    // ø <---------- timeDateString ---------->
+    // ø <---------- stepStampArray ---------->
 
     // let wixContactInfo = {};
     // wixContactInfo.contactInfo = {};
@@ -639,7 +707,12 @@ export async function ppContactPrepJSON(){
 
     let contact = await steamdaGetContactFunction(local.getItem('familyId'));
     $w('#ppContactResponseJSON').value = JSON.stringify(contact,undefined,4);
-    memory.setItem('ppRevision',(contact.revision).toString());
+    if (typeof contact.revision === 'number' && contact.revision > 0) {
+        memory.setItem('ppRevision',(contact.revision).toString());
+    }else{
+        local.setItem('logString', local.getItem('logString') + "\n[703] Failure of `steamdaGetContactFunction(local.getItem('familyId'))'");
+        return;   
+    }
 
     let paramObjectThis = {};
 	paramObjectThis.contactIdentifiers = {};
@@ -846,27 +919,66 @@ export async function ppContactPrepJSON(){
     }
     let paramJSON = JSON.stringify(paramObjectThis);
     memory.setItem('ppContactPrepJSON',paramJSON);
+    local.setItem('logString', local.getItem('logString') + '\n[~907] Exiting ppContactPrepJSON()');
 }
+// ø <---------- </ppContactPrepJSON AS Step-Function> ---------->
+
 // ø <---------- <ppDatabasePrepJSON AS Step-Function>  ---------->
 export async function ppDatabasePrepJSON(){
+    memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
+    local.setItem('logString', local.getItem('logString') + '\n[~907] Entering ppDatabasePrepJSON() at ' + memory.getItem('lastStamp'));
+    local.setItem('logString', local.getItem('logString') + "\n    \\_ is acually 'INSERT' (or 'SKIP') as the code is so direct");
+
+    let stepStampArrayObject = JSON.parse(memory.getItem('stepStampArray'));
+    let stampArrayElementObject = {};
+    stampArrayElementObject.step = memory.getItem('enrollmentStepCurrent');
+    stampArrayElementObject.stamp = memory.getItem('lastStamp');
+    stepStampArrayObject.stampArray.push(stampArrayElementObject);
+    memory.setItem('stepStampArray',JSON.stringify(stepStampArrayObject));    
+    // ø <---------- stepStampArray ---------->
+
+    let ppActionArray = memory.getItem('ppAction').split('|');
+    let ppActionDbase = ppActionArray[2];
+    local.setItem('logString', local.getItem('logString') + '\n[~890]ppActionDbase: ' + ppActionDbase);
+
+    let logString = '';
+    if(ppActionDbase === 'SKIP'){
+        logString = "based on action'" + ppActionDbase + "' no further action in this Step-Function";
+        memory.setItem('ppDatabasePrepJSON',logString);
+        local.setItem('logString', local.getItem('logString') + "\n" + logString);
+        local.setItem('logString', local.getItem('logString') + '\n[~896]exiting: ppDatabasePrepJSON()');
+        return;
+    }
+    if(ppActionDbase !== 'INSERT'){
+        logString = "this ppActionDbase, '" + ppActionDbase + "', is NOT supported and is an error [see local.getItem('lastErrorString')]";
+        memory.setItem('ppDatabasePrepJSON',logString);
+        local.setItem('logString', local.getItem('logString') + "\n" + logString);
+        local.setItem('logString', local.getItem('logString') + "\nbased on action'" + ppActionDbase + "' no further action in this Step-Function");
+        local.setItem('lastErrorString',"ppActionDbase, '" + ppActionDbase + "', is NOT supported. Only 'INSERT' and 'SKIP' are supported. Please convey this message to the Developer Immediately");
+        local.setItem('logString', local.getItem('logString') + '\n[~896]exiting: ppDatabasePrepJSON()');
+        local.setItem('superEnrollmentStatus','ALERT');
+        return;
+    }
+
+
     //ppDatabaseINSERT - actually, but renaming not worth it
     // console.log("[~734]ppDatabaseINSERT - actually, but renaming not worth it")
     
     // let familyId = local.getItem('familyId');
-    let familyId = $w('#txtFamilyId').value;
-    //let termId = Number(local.getItem('termId'));
-    let termId = Number($w('#txtTermId').value);
+    // let familyId = $w('#txtFamilyId').value;
+    // //let termId = Number(local.getItem('termId'));
+    // let termId = Number($w('#txtTermId').value);
 
-    // ø <CHECK FOR EXISTING>
-    let ppExistsCount = await wixData.query("person")
-        .eq("personId", familyId)
-        .eq("termId", termId)
-        .count();
+    // // ø <CHECK FOR EXISTING>
+    // let ppExistsCount = await wixData.query("person")
+    //     .eq("personId", familyId)
+    //     .eq("termId", termId)
+    //     .count();
 
-    if (ppExistsCount > 0) {
-        memory.setItem('ppDatabasePrepJSON',"primaryParent person exists for this term");
-        return;
-    }
+    // if (ppExistsCount > 0) {
+    //     memory.setItem('ppDatabasePrepJSON',"primaryParent person exists for this term");
+    //     return;
+    // }
     // ø </CHECK FOR EXISTING>
 
     // ø <---------- <direct (or nearly)>  ---------->
@@ -874,26 +986,26 @@ export async function ppDatabasePrepJSON(){
     let lastFirst = local.getItem('ppLast') + ', ' + local.getItem('ppFirst');
     let toInsert = {};
     toInsert.title = lastFirst;
-    // toInsert.personId = local.getItem('familyId');
-    toInsert.personId = familyId;
-    // toInsert.familyId = local.getItem('familyId');
-    toInsert.familyId = familyId;
+    toInsert.personId = local.getItem('familyId');
+    // toInsert.personId = familyId;
+    toInsert.familyId = local.getItem('familyId');
+    // toInsert.familyId = familyId;
     toInsert.role = 'Primary';
     toInsert.first = local.getItem('ppFirst');
     toInsert.last = local.getItem('ppLast');
-    toInsert.firstLegal = local.getItem('ppFirst');
+    toInsert.firstLegal = 'NA';
     toInsert.fullName = local.getItem('ppFirst') + ' ' + local.getItem('ppLast');
     toInsert.lastFirst = lastFirst;
     toInsert.comboName = local.getItem('comboName');
     toInsert.webhookId = local.getItem('wixWebhookId');
-    // toInsert.idHH = local.getItem('familyId');
-    toInsert.idHH = familyId;
-    // toInsert.idBL = local.getItem('familyId');
-    toInsert.idBL = familyId;
-    // toInsert.altPersonId = local.getItem('familyId');
-    toInsert.altPersonId = familyId;
-    // toInsert.termId = local.getItem('termId');
-    toInsert.termId = termId;
+    toInsert.idHH = local.getItem('familyId');
+    // toInsert.idHH = familyId;
+    toInsert.idBL = local.getItem('familyId');
+    // toInsert.idBL = familyId;
+    toInsert.altPersonId = local.getItem('familyId');
+    // toInsert.altPersonId = familyId;
+    toInsert.termId = local.getItem('termId');
+    // toInsert.termId = termId;
     // ø <---------- </direct (or nearly)> ---------->
     // ø <---------- <complex>  ---------->
     // ø <---------- <complex Test with Direct>  ---------->
@@ -906,36 +1018,38 @@ export async function ppDatabasePrepJSON(){
     // ø <---------- </INSERT> ---------->
 
     memory.setItem('ppDatabasePrepJSON',JSON.stringify(ppInsertResult));
+    local.setItem('logString', local.getItem('logString') + '\n[~896]exiting: ppDatabasePrepJSON() [see results at memory.getItem(ppDatabasePrepJSON)]');
     return;
 
 }
 // ø <---------- </ppDatabasePrepJSON AS Step-Function> ---------->
+
 export function ppDatabasePrepJSON_DEP(){
-    let now = new Date();
-    let timeDateString = ' [ on ' + now.toLocaleDateString() + ']';
-    timeDateString = now.toLocaleTimeString('en-US') + timeDateString;
+    // let now = new Date();
+    // let timeDateString = ' [ on ' + now.toLocaleDateString() + ']';
+    // timeDateString = now.toLocaleTimeString('en-US') + timeDateString;
     let stepStampArrayObject = JSON.parse(memory.getItem('stepStampArray'));
     let stampArrayElementObject = {};
     stampArrayElementObject.step = memory.getItem('enrollmentStepCurrent');
-    stampArrayElementObject.stamp = timeDateString;
+    // stampArrayElementObject.stamp = timeDateString;
     stepStampArrayObject.stampArray.push(stampArrayElementObject);
     memory.setItem('stepStampArray',JSON.stringify(stepStampArrayObject));    
-    // ø <---------- timeDateString ---------->
+    // ø <---------- timeDEPDateString ---------->
 
 }
 
 // ø <---------- <stContactPrepJSON AS Step>  ---------->
 export async function stContactPrepJSON(){
-    let now = new Date();
-    let timeDateString = ' [ on ' + now.toLocaleDateString() + ']';
-    timeDateString = now.toLocaleTimeString('en-US') + timeDateString;
+    memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
+    local.setItem('logString', local.getItem('logString') + '\n[~1021] Entering stContactPrepJSON() at ' + memory.getItem('lastStamp'));
+
     let stepStampArrayObject = JSON.parse(memory.getItem('stepStampArray'));
     let stampArrayElementObject = {};
     stampArrayElementObject.step = memory.getItem('enrollmentStepCurrent');
-    stampArrayElementObject.stamp = timeDateString;
+    stampArrayElementObject.stamp = memory.getItem('lastStamp');
     stepStampArrayObject.stampArray.push(stampArrayElementObject);
     memory.setItem('stepStampArray',JSON.stringify(stepStampArrayObject));    
-    // ø <---------- timeDateString ---------->
+    // ø <---------- stepStampArray ---------->
 
     // let wixContactInfo = {};
     // wixContactInfo.contactInfo = {};
@@ -1170,31 +1284,66 @@ export async function stContactPrepJSON(){
 // ø <---------- </stContactPrepJSON AS Step> ---------->
 // ø <---------- <stDatabasePrepJSON AS Step-Function>  ---------->
 export async function stDatabasePrepJSON(){
-    //stDatabaseINSERT - actually, but renaming not worth it
-    // console.log("[~1054]stDatabaseINSERT - actually, but renaming not worth it")
-    
-    let familyId = $w('#txtFamilyId').value;
-    //let familyId = local.getItem('familyId');
-    let termId = Number($w('#txtTermId').value);
-    //let termId = Number(local.getItem('termId'));
+    memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
+    local.setItem('logString', local.getItem('logString') + '\n[~1265] Entering stDatabasePrepJSON() at ' + memory.getItem('lastStamp'));
+    local.setItem('logString', local.getItem('logString') + "\n    \\_ is acually 'INSERT' (or 'SKIP') as the code is so direct");
 
-    // let studentId = local.getItem('studentId');
-    let studentId = $w('#txStudentId').value;
+    let stepStampArrayObject = JSON.parse(memory.getItem('stepStampArray'));
+    let stampArrayElementObject = {};
+    stampArrayElementObject.step = memory.getItem('enrollmentStepCurrent');
+    stampArrayElementObject.stamp = memory.getItem('lastStamp');
+    stepStampArrayObject.stampArray.push(stampArrayElementObject);
+    memory.setItem('stepStampArray',JSON.stringify(stepStampArrayObject));    
+    // ø <---------- stepStampArray ---------->
 
-    // let studentLegalFirst = local.getItem('stFirst');
-    let studentLegalFirst = $w('#txStudentLegalFirst').value;
+    local.setItem('logString', local.getItem('logString') + '\n[~1242]entering: ' + 'stDatabasePrepJSON()');
+    local.setItem('logString', local.getItem('logString') + "\n    \\_ is acually 'INSERT' (or 'SKIP') as the code is so direct");
+    let stActionArray = memory.getItem('stAction').split('|');
+    let stActionDbase = stActionArray[2];
+    local.setItem('logString', local.getItem('logString') + '\n[~1246]stActionDbase: ' + stActionDbase);
 
-    // ø <CHECK FOR EXISTING>
-    let stExistsCount = await wixData.query("person")
-        .eq("familyId", familyId)
-        .eq("firstLegal", studentLegalFirst)
-        .eq("termId", termId)
-        .count();
-
-    if (stExistsCount > 0) {
-        memory.setItem('stDatabasePrepJSON',"Student person exists for this familyId, legalFirstName and termId");
+    let logString = '';
+    if(stActionDbase === 'SKIP'){
+        logString = "based on action'" + stActionDbase + "' no further action in this Step-Function";
+        memory.setItem('ppDatabasePrepJSON',logString);
+        local.setItem('logString', local.getItem('logString') + "\n" + logString);
+        local.setItem('logString', local.getItem('logString') + '\n[~1253]exiting: ppDatabasePrepJSON()');
         return;
     }
+    if(stActionDbase !== 'INSERT'){
+        logString = "this stActionDbase, '" + stActionDbase + "', is NOT supported and is an error [see local.getItem('lastErrorString')]";
+        memory.setItem('ppDatabasePrepJSON',logString);
+        local.setItem('logString', local.getItem('logString') + "\n" + logString);
+        local.setItem('logString', local.getItem('logString') + "\nbased on action'" + stActionDbase + "' no further action in this Step-Function");
+        local.setItem('lastErrorString',"stActionDbase, '" + stActionDbase + "', is NOT supported. Only 'INSERT' and 'SKIP' are supported. Please convey this message to the Developer Immediately");
+        local.setItem('logString', local.getItem('logString') + '\n[~1262]exiting: ppDatabasePrepJSON()');
+        local.setItem('superEnrollmentStatus','ALERT');
+        return;
+    }
+
+
+    // let familyId = $w('#txtFamilyId').value;
+    // let familyId = local.getItem('familyId');
+    // let termId = Number($w('#txtTermId').value);
+    // let termId = Number(local.getItem('termId'));
+
+    // let studentId = $w('#txStudentId').value;
+    // let studentId = local.getItem('studentId');
+
+    // let studentLegalFirst = $w('#txStudentLegalFirst').value;
+    // let studentLegalFirst = local.getItem('stFirst');
+
+    // ø <CHECK FOR EXISTING>
+    // let stExistsCount = await wixData.query("person")
+    //     .eq("familyId", familyId)
+    //     .eq("firstLegal", studentLegalFirst)
+    //     .eq("termId", termId)
+    //     .count();
+
+    // if (stExistsCount > 0) {
+    //     memory.setItem('stDatabasePrepJSON',"Student person exists for this familyId, legalFirstName and termId");
+    //     return;
+    // }
     // ø </CHECK FOR EXISTING>
 
     // ø <---------- <direct (or nearly)>  ---------->
@@ -1202,10 +1351,10 @@ export async function stDatabasePrepJSON(){
     let lastFirst = local.getItem('stLast') + ', ' + local.getItem('stPreferredFirst');
     let toInsert = {};
     toInsert.title = lastFirst;
-    // toInsert.personId = local.getItem('studentId');
-    toInsert.personId = studentId;
-    // toInsert.familyId = local.getItem('familyId');
-    toInsert.familyId = familyId;
+    toInsert.personId = local.getItem('studentId');
+    // toInsert.personId = studentId;
+    toInsert.familyId = local.getItem('familyId');
+    // toInsert.familyId = familyId;
     toInsert.role = 'Student';
     toInsert.first = local.getItem('stPreferredFirst');
     toInsert.last = local.getItem('stLast');
@@ -1214,14 +1363,14 @@ export async function stDatabasePrepJSON(){
     toInsert.lastFirst = lastFirst;
     toInsert.comboName = local.getItem('comboName');
     toInsert.webhookId = local.getItem('wixWebhookId');
-    // toInsert.idHH = local.getItem('familyId');
-    toInsert.idHH = familyId;
-    // toInsert.idBL = local.getItem('familyId');
-    toInsert.idBL = familyId;
-    // toInsert.altPersonId = local.getItem('studentId');
-    toInsert.altPersonId = studentId;
-    // toInsert.termId = local.getItem('termId');
-    toInsert.termId = termId;
+    toInsert.idHH = local.getItem('familyId');
+    // toInsert.idHH = familyId;
+    toInsert.idBL = local.getItem('familyId');
+    // toInsert.idBL = familyId;
+    toInsert.altPersonId = local.getItem('studentId');
+    // toInsert.altPersonId = studentId;
+    toInsert.termId = Number(local.getItem('termId'));
+    // toInsert.termId = termId;
     // ø <---------- </direct (or nearly)> ---------->
     // ø <---------- <complex>  ---------->
     // ø <---------- <complex Test with Direct>  ---------->
@@ -1238,33 +1387,288 @@ export async function stDatabasePrepJSON(){
 
 }
 // ø <---------- </stDatabasePrepJSON AS Step-Function> ---------->
-export function stDatabasePrepJSON_DEP(){
-    let now = new Date();
-    let timeDateString = ' [ on ' + now.toLocaleDateString() + ']';
-    timeDateString = now.toLocaleTimeString('en-US') + timeDateString;
-    memory.setItem('stDatabasePrepJSON','stDatabasePrepJSON' + ' PREPPED on ' + timeDateString);
+export async function stDatabasePrepJSON_DEP(){
+    memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
+    local.setItem('logString', local.getItem('logString') + '\n[~1369] Entering stDatabasePrepJSON() at ' + memory.getItem('lastStamp'));
+
+    let stepStampArrayObject = JSON.parse(memory.getItem('stepStampArray'));
+    let stampArrayElementObject = {};
+    stampArrayElementObject.step = memory.getItem('enrollmentStepCurrent');
+    stampArrayElementObject.stamp = memory.getItem('lastStamp');
+    stepStampArrayObject.stampArray.push(stampArrayElementObject);
+    memory.setItem('stepStampArray',JSON.stringify(stepStampArrayObject));    
+    // ø <---------- stepDEPStampArray ---------->
+
+    memory.setItem('stDatabasePrepJSON','stDatabasePrepJSON' + ' PREPPED on ' + memory.getItem('lastStamp'));
 }
 
-export function spContactPrepJSON(){
-    let now = new Date();
-    let timeDateString = ' [ on ' + now.toLocaleDateString() + ']';
-    timeDateString = now.toLocaleTimeString('en-US') + timeDateString;
-    memory.setItem('spContactPrepJSON','spContactPrepJSON' + ' PREPPED on ' + timeDateString);
-}
+// ø <---------- <spContactPrepJSON AS Step-Function>  ---------->
+export async function spContactPrepJSON() {
+    memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'), local.getItem('tzAbbrv')));
+    local.setItem('logString', local.getItem('logString') + '\n[~1398] Entering spContactPrepJSON() at ' + memory.getItem('lastStamp'));
 
-export function spDatabasePrepJSON(){
-    let now = new Date();
-    let timeDateString = ' [ on ' + now.toLocaleDateString() + ']';
-    timeDateString = now.toLocaleTimeString('en-US') + timeDateString;
-    memory.setItem('spDatabasePrepJSON','spDatabasePrepJSON' + ' PREPPED on ' + timeDateString);
+    let stepStampArrayObject = JSON.parse(memory.getItem('stepStampArray'));
+    let stampArrayElementObject = {};
+    stampArrayElementObject.step = memory.getItem('enrollmentStepCurrent');
+    stampArrayElementObject.stamp = memory.getItem('lastStamp');
+    stepStampArrayObject.stampArray.push(stampArrayElementObject);
+    memory.setItem('stepStampArray', JSON.stringify(stepStampArrayObject));
+    // ø <---------- stepStampArray ---------->
+    
+    //spAction: NA|INSERT|INSERT
+    let spActionArray = memory.getItem('spAction').split('|');
+    let spActionContact = spActionArray[1];
+    let paramObjectThis = {};
+   
+    // ø <CATCH Else (decoupling) Actions>
+    let logString = '';
+    if(spActionContact === 'SKIP'){
+        logString = "based on action'" + spActionContact + "' no further action in this Step-Function";
+        // memory.setItem('spContactPrepJSON',logString);
+        local.setItem('logString', local.getItem('logString') + "\n" + logString);
+        local.setItem('logString', local.getItem('logString') + '\n[~1419]exiting: spDatabasePrepJSON()');
+        paramObjectThis.spActionContact = spActionContact;
+        paramObjectThis.log = 'NO ACTION INDICATED';
+        memory.setItem('spContactPrepJSON', JSON.stringify(paramObjectThis));
+        return;
+    }
+    if(spActionContact !== 'INSERT'){
+        logString = "this spActionContact, '" + spActionContact + "', is NOT supported and is an error [see local.getItem('lastErrorString')]";
+        // memory.setItem('spContactPrepJSON',logString);
+        local.setItem('logString', local.getItem('logString') + "\n" + logString);
+        local.setItem('logString', local.getItem('logString') + "\nbased on action'" + spActionContact + "' no further action in this Step-Function");
+        local.setItem('lastErrorString',"spActionDbase, '" + spActionContact + "', is NOT supported. Only 'INSERT' and 'SKIP' are supported. Please convey this message to the Developer Immediately");
+        local.setItem('logString', local.getItem('logString') + '\n[~1431]exiting: spDatabasePrepJSON()');
+        local.setItem('superEnrollmentStatus','ALERT');
+        paramObjectThis.spActionContact = spActionContact;
+        paramObjectThis.log = 'NO ACTION INDICATED';
+        memory.setItem('spContactPrepJSON', JSON.stringify(paramObjectThis));
+        return;
+    }
+    // ø </CATCH Else (decoupling) Actions>
+
+    // ø <DO THEN (upsert)  Actions>
+
+    // let paramObjectThis = {};
+    if (spActionContact === 'INSERT') {
+        let enrollmentObject = JSON.parse(local.getItem('ondeckEnrollmentJSON'));
+
+        // ! <FINAL>
+        let lastupdateDATE = new Date();
+        let lastupdate = lastupdateDATE.getFullYear().toString() + '-' + (lastupdateDATE.getMonth() + 1).toString() + '-' + lastupdateDATE.getDate().toString()
+        let currentRegion = "Charlottesville";
+        let timezoneOffest = "-4:00";
+
+        let roleLabelKey = 'custom.secondary-parent';
+
+        let finalLabelKeyArray = [];
+        finalLabelKeyArray.push(roleLabelKey);
+        // ! </FINAL>
+
+
+        //Final Code: 
+        // ! <FINAL>
+        let secondaryParent = {};
+        secondaryParent.contactInfo = {};
+        // ø <ZXZ-TTESTING DISABLED>
+        secondaryParent.contactInfo.name = {};
+        secondaryParent.contactInfo.name.first = enrollmentObject.family.parent.secondary.first;
+        secondaryParent.contactInfo.name.last = enrollmentObject.family.parent.secondary.last;
+        secondaryParent.contactInfo.locale = "en-US";
+        // ø </ZXZ-TTESTING DISABLED>
+        // ! </FINAL>
+
+        // ø <ZXZ-TTESTING DISABLED>
+        secondaryParent.contactInfo.labelKeys = [];
+        finalLabelKeyArray.forEach(element => {
+            // console.log(element);
+            secondaryParent.contactInfo.labelKeys.push(element);
+        });
+        // ø </ZXZ-TTESTING DISABLED>
+
+
+
+        // ø <ZXZ-TTESTING DISABLED>
+        // secondaryParent.contactInfo.emails = [];
+        // secondaryParent.contactInfo.emails[0] = {};
+        // secondaryParent.contactInfo.emails[0].tag = "MAIN";
+        // // ø </ZXZ-TTESTING DISABLED>
+        // // enrollmentObject.family.emails[0].kind = "home";
+        // // ø <ZXZ-TTESTING DISABLED>
+        // secondaryParent.contactInfo.emails[0].email = enrollmentObject.family.emails[0].email;
+        // secondaryParent.contactInfo.emails[0].primary = "true";
+        // ø </ZXZ-TTESTING DISABLED>
+        // enrollmentObject.family.emails[0].role = "Primary Parent";
+        // enrollmentObject.family.emails[0].who = "Shirley";
+        // enrollmentObject.family.emails[0].usage = "Personal";
+
+        // secondaryParent.contactInfo.emails[1] = {};
+        // secondaryParent.contactInfo.emails[1].tag = "MAIN";
+        // secondaryParent.contactInfo.emails[1].email = "qiqgroup+eli9375@gmail.com";
+        // secondaryParent.contactInfo.emails[1].primary = "true";
+
+        // ø <ZXZ-TTESTING DISABLED>
+        secondaryParent.contactInfo.phones = [];
+        secondaryParent.contactInfo.phones[0] = {};
+        secondaryParent.contactInfo.phones[0].tag = "MOBILE";
+        // // ø </ZXZ-TTESTING DISABLED>
+        // // enrollmentObject.family.phones[0].kind = "cell";
+        // // ø </ZXZ-TTESTING DISABLED>
+        secondaryParent.contactInfo.phones[0].phone = enrollmentObject.family.phones[0].phone;
+        secondaryParent.contactInfo.phones[0].primary = "true";
+        // ø <ZXZ-TTESTING DISABLED>
+        // enrollmentObject.family.phones[0].role = "Primary Parent";
+        // enrollmentObject.family.phones[0].who = "Shirley";
+        // enrollmentObject.family.phones[0].usage = "Personal";
+
+        // secondaryParent.contactInfo.phones[1] = {};
+        // secondaryParent.contactInfo.phones[1].tag = "HOME";
+        // secondaryParent.contactInfo.phones[1].phone = "(579)-264-8376";
+
+
+        // ø <ZXZ-TTESTING DISABLED>
+        secondaryParent.contactInfo.addresses = [];
+        secondaryParent.contactInfo.addresses[0] = {};
+        secondaryParent.contactInfo.addresses[0].tag = "HOME";
+        secondaryParent.contactInfo.addresses[0].address = {};
+        secondaryParent.contactInfo.addresses[0].address.streetAddress = {};
+        secondaryParent.contactInfo.addresses[0].address.streetAddress.number = enrollmentObject.family.addresses[0].address.streetAddress.number;
+        secondaryParent.contactInfo.addresses[0].address.streetAddress.name = enrollmentObject.family.addresses[0].address.streetAddress.name;
+
+        secondaryParent.contactInfo.addresses[0].address.addressLine2 = enrollmentObject.family.addresses[0].address.streetAddress2;
+        secondaryParent.contactInfo.addresses[0].address.city = enrollmentObject.family.addresses[0].address.city;
+        secondaryParent.contactInfo.addresses[0].address.subdivision = enrollmentObject.family.addresses[0].address.subdivision;
+        secondaryParent.contactInfo.addresses[0].address.postalCode = enrollmentObject.family.addresses[0].address.postalCode;
+        secondaryParent.contactInfo.addresses[0].address.country = enrollmentObject.family.addresses[0].address.country;
+        let assignLocation = true;
+        assignLocation = enrollmentObject.family.addresses[0].address.location.latitude === null ? false : assignLocation;
+        assignLocation = enrollmentObject.family.addresses[0].address.location.longitue === null ? false : assignLocation;
+        if (assignLocation) {
+            secondaryParent.contactInfo.addresses[0].address.location = {};
+            secondaryParent.contactInfo.addresses[0].address.location.latitude = enrollmentObject.family.addresses[0].address.location.latitude;
+            secondaryParent.contactInfo.addresses[0].address.location.longitude = enrollmentObject.family.addresses[0].address.location.longitue;
+        }
+        // ø </ZXZ-TTESTING DISABLED>
+
+
+        // ø <ZXZ-TTESTING DISABLED>
+        secondaryParent.contactInfo.extendedFields = {};
+        // ! <FINAL>
+        secondaryParent.contactInfo.extendedFields['custom.last-update'] = lastupdate;
+        secondaryParent.contactInfo.extendedFields['custom.current-region'] = currentRegion;
+        secondaryParent.contactInfo.extendedFields['custom.timezone-offset'] = timezoneOffest;
+        // ! </FINAL>
+        // ø </ZXZ-TTESTING DISABLED>
+
+        // ø <---------- </doPrimaryParentContactInfo()> ---------->
+
+        paramObjectThis.contactInfo = secondaryParent.contactInfo;
+    }//END if (spActionContact === 'INSERT')
+    let paramJSON = JSON.stringify(paramObjectThis);
+    memory.setItem('spContactPrepJSON', paramJSON);
+    local.setItem('logString', local.getItem('logString') + '\n[~1559]exiting: spDatabasePrepJSON()');
 }
+// ø <---------- </spContactPrepJSON AS Step-Function> ---------->
+
+// ø <---------- <spDatabasePrepJSON AS Step-Function>  ---------->
+export async function spDatabasePrepJSON(){
+    memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
+    local.setItem('logString', local.getItem('logString') + '\n[~907] Entering spDatabasePrepJSON() at ' + memory.getItem('lastStamp'));
+    local.setItem('logString', local.getItem('logString') + "\n    \\_ is acually 'INSERT' (or 'SKIP') as the code is so direct");
+
+    let stepStampArrayObject = JSON.parse(memory.getItem('stepStampArray'));
+    let stampArrayElementObject = {};
+    stampArrayElementObject.step = memory.getItem('enrollmentStepCurrent');
+    stampArrayElementObject.stamp = memory.getItem('lastStamp');
+    stepStampArrayObject.stampArray.push(stampArrayElementObject);
+    memory.setItem('stepStampArray',JSON.stringify(stepStampArrayObject));    
+    // ø <---------- stepStampArray ---------->
+
+    let spActionArray = memory.getItem('spAction').split('|');
+    let spActionDbase = spActionArray[2];
+    local.setItem('logString', local.getItem('logString') + '\n[~890]spActionDbase: ' + spActionDbase);
+
+    let logString = '';
+    // ø <CATCH Else (decoupling) Actions>
+    if(spActionDbase === 'SKIP'){
+        logString = "based on action'" + spActionDbase + "' no further action in this Step-Function";
+        memory.setItem('spDatabasePrepJSON',logString);
+        local.setItem('logString', local.getItem('logString') + "\n" + logString);
+        local.setItem('logString', local.getItem('logString') + '\n[~896]exiting: spDatabasePrepJSON()');
+        return;
+    }
+    if(spActionDbase !== 'INSERT'){
+        logString = "this spActionDbase, '" + spActionDbase + "', is NOT suzzorted and is an error [see local.getItem('lastErrorString')]";
+        memory.setItem('spDatabasePrepJSON',logString);
+        local.setItem('logString', local.getItem('logString') + "\n" + logString);
+        local.setItem('logString', local.getItem('logString') + "\nbased on action'" + spActionDbase + "' no further action in this Step-Function");
+        local.setItem('lastErrorString',"spActionDbase, '" + spActionDbase + "', is NOT suzzorted. Only 'INSERT' and 'SKIP' are suzzorted. Please convey this message to the Developer Immediately");
+        local.setItem('logString', local.getItem('logString') + '\n[~896]exiting: spDatabasePrepJSON()');
+        local.setItem('superEnrollmentStatus','ALERT');
+        return;
+    }
+    // ø </CATCH Else (decoupling) Actions>
+
+    // ø <DO THEN (upsert)  Actions>
+    // ! ONLY 'INSERT' for Database for the foreseeable future
+
+    // ø <---------- <direct (or nearly)>  ---------->
+    let enrollmentObject = JSON.parse(local.getItem('ondeckEnrollmentJSON'));
+    let lastFirst = local.getItem('spLast') + ', ' + local.getItem('spFirst');
+    let toInsert = {};
+    toInsert.title = lastFirst;
+    toInsert.personId = local.getItem('secondaryId');
+    // toInsert.personId = familyId;
+    toInsert.familyId = local.getItem('familyId');
+    // toInsert.familyId = familyId;
+    toInsert.role = 'Secondary';
+    toInsert.first = local.getItem('spFirst');
+    toInsert.last = local.getItem('spLast');
+    toInsert.firstLegal = 'NA';
+    toInsert.fullName = local.getItem('spFirst') + ' ' + local.getItem('spLast');
+    toInsert.lastFirst = lastFirst;
+    toInsert.comboName = local.getItem('comboName');
+    toInsert.webhookId = local.getItem('wixWebhookId');
+    toInsert.idHH = local.getItem('familyId');
+    // toInsert.idHH = familyId;
+    toInsert.idBL = local.getItem('familyId');
+    // toInsert.idBL = familyId;
+    toInsert.altPersonId = local.getItem('secondaryId');
+    // toInsert.altPersonId = familyId;
+    toInsert.termId = local.getItem('termId');
+    // toInsert.termId = termId;
+    // ø <---------- </direct (or nearly)> ---------->
+    // ø <---------- <complex>  ---------->
+    // ø <---------- <complex Test with Direct>  ---------->
+    // toInsert.objectData = JSONx.stringify(enrollmentObject.family);
+    // ø <---------- </complex Test with Direct> ---------->
+    // ø <---------- </complex> ---------->
+
+    // ø <---------- <INSERT>  ---------->
+    let spInsertResult  = await wixData.insert("person", toInsert)
+    // ø <---------- </INSERT> ---------->
+
+    memory.setItem('spDatabasePrepJSON',JSON.stringify(spInsertResult));
+    local.setItem('logString', local.getItem('logString') + '\n[~896]exiting: spDatabasePrepJSON() [see results at memory.getItem(spDatabasePrepJSON)]');
+    return;
+
+}
+// ø <---------- </spDatabasePrepJSON AS Step-Function> ---------->
+
 
 export async function ppContactExecuteUpsert(){
-    let now = new Date();
-    let timeDateString = ' [ on ' + now.toLocaleDateString() + ']';
-    timeDateString = now.toLocaleTimeString('en-US') + timeDateString;
-    memory.setItem('ppContactExecuteUpsert','ppContactExecuteUpsert' + ' EXECUTED on ' + timeDateString);
-    // ø <---------- timeDateString ---------->
+    memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
+    local.setItem('logString', local.getItem('logString') + '\n[~1415] Entering ppContactExecuteUpsert() at ' + memory.getItem('lastStamp'));
+
+    let stepStampArrayObject = JSON.parse(memory.getItem('stepStampArray'));
+    let stampArrayElementObject = {};
+    stampArrayElementObject.step = memory.getItem('enrollmentStepCurrent');
+    stampArrayElementObject.stamp = memory.getItem('lastStamp');
+    stepStampArrayObject.stampArray.push(stampArrayElementObject);
+    memory.setItem('stepStampArray',JSON.stringify(stepStampArrayObject));    
+    // ø <---------- stepStampArray ---------->
+
+    // memory.setItem('ppContactExecuteUpsert','ppContactExecuteUpsert' + ' EXECUTED on ' + memory.getItem('lastStamp'));
 
     let ppContactParamObject = JSON.parse(memory.getItem('ppContactPrepJSON'));
     // console.log('[~971]ppContactParamObject:');
@@ -1272,19 +1676,34 @@ export async function ppContactExecuteUpsert(){
     await doUpdateContact(ppContactParamObject);
 }
 
-export function ppDatabaseExecuteUpsert(){
-    let now = new Date();
-    let timeDateString = ' [ on ' + now.toLocaleDateString() + ']';
-    timeDateString = now.toLocaleTimeString('en-US') + timeDateString;
-    memory.setItem('ppDatabaseExecuteUpsert','ppDatabaseExecuteUpsert' + ' EXECUTED on ' + timeDateString);
+export async function ppDatabaseExecuteUpsert(){
+    memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
+    local.setItem('logString', local.getItem('logString') + '\n[~1435] Entering ppDatabaseExecuteUpsert() at ' + memory.getItem('lastStamp'));
+
+    let stepStampArrayObject = JSON.parse(memory.getItem('stepStampArray'));
+    let stampArrayElementObject = {};
+    stampArrayElementObject.step = memory.getItem('enrollmentStepCurrent');
+    stampArrayElementObject.stamp = memory.getItem('lastStamp');
+    stepStampArrayObject.stampArray.push(stampArrayElementObject);
+    memory.setItem('stepStampArray',JSON.stringify(stepStampArrayObject));    
+    // ø <---------- stepStampArray ---------->
+
+    memory.setItem('ppDatabaseExecuteUpsert','ppDatabaseExecuteUpsert: Upsert Executed in Prep' + '[separation of PREP & EXECUTE seems overkill, but this separation exist for reconsideration later]' + ' EXECUTED on ' + memory.getItem('lastStamp'));
 }
 
 export async function stContactExecuteUpsert(){
-    let now = new Date();
-    let timeDateString = ' [ on ' + now.toLocaleDateString() + ']';
-    timeDateString = now.toLocaleTimeString('en-US') + timeDateString;
-    memory.setItem('stContactExecuteUpsert','stContactExecuteUpsert' + ' EXECUTED on ' + timeDateString);
-    // ø <---------- timeDateString ---------->
+    memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
+    local.setItem('logString', local.getItem('logString') + '\n[~1450] Entering stContactExecuteUpsert() at ' + memory.getItem('lastStamp'));
+
+    let stepStampArrayObject = JSON.parse(memory.getItem('stepStampArray'));
+    let stampArrayElementObject = {};
+    stampArrayElementObject.step = memory.getItem('enrollmentStepCurrent');
+    stampArrayElementObject.stamp = memory.getItem('lastStamp');
+    stepStampArrayObject.stampArray.push(stampArrayElementObject);
+    memory.setItem('stepStampArray',JSON.stringify(stepStampArrayObject));    
+    // ø <---------- stepStampArray ---------->
+
+    memory.setItem('stContactExecuteUpsert','stContactExecuteUpsert' + ' EXECUTED on ' + memory.getItem('lastStamp'));
 
     console.log("[~990]memory.getItem('stContactPrepJSON'):");
     console.log(memory.getItem('stContactPrepJSON'));
@@ -1294,25 +1713,57 @@ export async function stContactExecuteUpsert(){
     await doUpdateContact(stContactParamObject);
 }
 
-export function stDatabaseExecuteUpsert(){
-    let now = new Date();
-    let timeDateString = ' [ on ' + now.toLocaleDateString() + ']';
-    timeDateString = now.toLocaleTimeString('en-US') + timeDateString;
-    memory.setItem('stDatabaseExecuteUpsert','stDatabaseExecuteUpsert' + ' EXECUTED on ' + timeDateString);
+export async function stDatabaseExecuteUpsert(){
+    memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
+    local.setItem('logString', local.getItem('logString') + '\n[~1472] Entering stDatabaseExecuteUpsert() at ' + memory.getItem('lastStamp'));
+
+    let stepStampArrayObject = JSON.parse(memory.getItem('stepStampArray'));
+    let stampArrayElementObject = {};
+    stampArrayElementObject.step = memory.getItem('enrollmentStepCurrent');
+    stampArrayElementObject.stamp = memory.getItem('lastStamp');
+    stepStampArrayObject.stampArray.push(stampArrayElementObject);
+    memory.setItem('stepStampArray',JSON.stringify(stepStampArrayObject));    
+    // ø <---------- stepStampArray ---------->
+
+    memory.setItem('stDatabaseExecuteUpsert','stDatabaseExecuteUpsert: Upsert Executed in Prep' + '[separation of PREP & EXECUTE seems overkill, but this separation exist for reconsideration later]' + ' EXECUTED on ' + memory.getItem('lastStamp'));
 }
 
-export function spContactExecuteUpsert(){
-    let now = new Date();
-    let timeDateString = ' [ on ' + now.toLocaleDateString() + ']';
-    timeDateString = now.toLocaleTimeString('en-US') + timeDateString;
-    memory.setItem('spContactExecuteUpsert','spContactExecuteUpsert' + ' EXECUTED on ' + timeDateString);
+export async function spContactExecuteUpsert(){
+    memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
+    local.setItem('logString', local.getItem('logString') + '\n[~1565] Entering spContactExecuteUpsert() Base-Step at ' + memory.getItem('lastStamp'));
+
+    let stepStampArrayObject = JSON.parse(memory.getItem('stepStampArray'));
+    let stampArrayElementObject = {};
+    stampArrayElementObject.step = memory.getItem('enrollmentStepCurrent');
+    stampArrayElementObject.stamp = memory.getItem('lastStamp');
+    stepStampArrayObject.stampArray.push(stampArrayElementObject);
+    memory.setItem('stepStampArray',JSON.stringify(stepStampArrayObject));    
+    // ø <---------- stepStampArray ---------->
+
+    // memory.setItem('spContactExecuteUpsert','spContactExecuteUpsert' + ' EXECUTED on ' + memory.getItem('lastStamp'));
+
+    // console.log("[~990]memory.getItem('stContactPrepJSON'):");
+    // console.log(memory.getItem('stContactPrepJSON'));
+    // let stContactParamObject = JSON.parse(memory.getItem('stContactPrepJSON'));
+    // console.log('[~993]stContactParamObject:');
+    // console.log(stContactParamObject);
+    await doSecondaryParentCreateContact();
+    local.setItem('logString', local.getItem('logString') + '\n[~1583]exiting: ' + 'spContactExecuteUpsert() Base-Step');
 }
 
-export function spDatabaseExecuteUpsert(){
-    let now = new Date();
-    let timeDateString = ' [ on ' + now.toLocaleDateString() + ']';
-    timeDateString = now.toLocaleTimeString('en-US') + timeDateString;
-    memory.setItem('spDatabaseExecuteUpsert','spDatabaseExecuteUpsert' + ' EXECUTED on ' + timeDateString);
+export async function spDatabaseExecuteUpsert(){
+    memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
+    local.setItem('logString', local.getItem('logString') + '\n[~1509] Entering spDatabaseExecuteUpsert() at ' + memory.getItem('lastStamp'));
+
+    let stepStampArrayObject = JSON.parse(memory.getItem('stepStampArray'));
+    let stampArrayElementObject = {};
+    stampArrayElementObject.step = memory.getItem('enrollmentStepCurrent');
+    stampArrayElementObject.stamp = memory.getItem('lastStamp');
+    stepStampArrayObject.stampArray.push(stampArrayElementObject);
+    memory.setItem('stepStampArray',JSON.stringify(stepStampArrayObject));    
+    // ø <---------- stepStampArray ---------->
+
+    memory.setItem('spDatabaseExecuteUpsert','spDatabaseExecuteUpsert: Upsert Executed in Prep' + '[separation of PREP & EXECUTE seems overkill, but this separation exist for reconsideration later]' + ' EXECUTED on ' + memory.getItem('lastStamp'));
 }
 // ø <---------- </all the Step Functions> ---------->
 
@@ -1652,6 +2103,8 @@ export function displaySteps(){
 // ø <---------- <doEnrollmentCleanupCurrent>  ---------->
 // ø <DEPRECATED for 'doEnrollmentCleanupByKind' two below>
 export function doEnrollmentCleanupCurrent() {
+    local.setItem('logString', '[~1859]entering: ' + 'doEnrollmentCleanupCurrent()')
+    local.setItem('logString', local.getItem('logString') + '\n' + "DEPRECATED for 'doEnrollmentCleanupByKind'")
     // ø <code Cleanup for Current Enrollment> mostly for testing
     /*Not CURRENT*///local.setItem('ondeckEnrollmentJSON','EEMPTY');
     // local.setItem('staffIdentifiedFamilyId', 'EEMPTY');
@@ -1761,6 +2214,8 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
     if(kind === 'CORE' || kind === 'DDEFAULT'){
         console.log(kind);
         logString += '\n' + "local.getItem('yyyymm'): " + local.getItem('yyyymm');
+        logString += '\n' + "local.getItem('timezoneOffset'): " + local.getItem('timezoneOffset');
+        logString += '\n' + "local.getItem('tzAbbrv'): " + local.getItem('tzAbbrv');
         logString += '\n' + "local.getItem('termId'): " + local.getItem('termId');
         logString += '\n' + "local.getItem('termBeginMMDD')" + local.getItem('termBeginMMDD');
         logString += '\n' + "local.getItem('termEndMMDD')" + local.getItem('termEndMMDD');
@@ -1786,6 +2241,7 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
     // ø <LOG>
     if(kind === 'LOG' || kind === 'DDEFAULT'){
         logString += '\n' + "local.getItem('logString'): " + local.getItem('logString');
+        logString += '\n' + "memory.getItem('lastStamp'): " + memory.getItem('lastStamp');
     }
     // ø </LOG>
     // ø <ERROR>
@@ -1808,9 +2264,13 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     // ø <DO NOT REMOVE>
     // ! well, unless really final
     // ! do assign either true or false
+    // memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
+    local.setItem('logString', local.getItem('logString') + '\n[~2019]entering: ' + 'doEnrollmentCleanupByKind() at ' + memory.getItem('lastStamp'))
+    local.setItem('logString', local.getItem('logString') + '\nkindKey: ' + kindKey)
+
     let develTest = false;
     // ø </DO NOT REMOVE>
-    let errorStringArray = [];
+    // let errorStringArray = [];
     let cleanupString = 'EEMPTY';//override where appropriate
     let kindKeySupportedArray = ['CURRENT','CODE','STEPS','DATA','CORE','OTHER','MEMORY_ALL','LOCAL_TEMP','ALL_EXCEPT_ENROLLMENT','ALL_INCLUDING_ENROLLMENT','ABORT','LOG','EEROR'];
     // let kindKeySupportedArray = ['CODE','STEPS','DATA','NOT_LOCAL_DATA','NOT_CORE','OTHER','MEMORY_ALL','LOCAL_TEMP','ALL_EXCEPT_ENROLLMENT','ALL_INCLUDING_ENROLLMENT','ABORT'];
@@ -1834,33 +2294,43 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     
     // ø <VALIDATION HERE>
     if(kindArray.length === 0){
-        errorStringArray.push("The function 'doEnrollmentCleanupByKind()' with the parameter '"+kindKey+"' is not vallid.");
+        // errorStringArray.push("The function 'doEnrollmentCleanupByKind()' with the parameter '"+kindKey+"' is not vallid.");
+        local.setItem('logString', local.getItem('logString') + '\n[~2051]: ' + "The function 'doEnrollmentCleanupByKind()' with the parameter '"+kindKey+"' is not vallid.")
     }
     if(kindArray.length === 1 && kindArray[0] === 'ZZZ'){
-        errorStringArray.push("The function 'doEnrollmentCleanupByKind()' with the parameter '"+kindKey+"' is not enabled at this time.");
+        // errorStringArray.push("The function 'doEnrollmentCleanupByKind()' with the parameter '"+kindKey+"' is not enabled at this time.");
+        local.setItem('logString', local.getItem('logString') + '\n[~2051]: ' + "The function 'doEnrollmentCleanupByKind()' with the parameter '"+kindKey+"' is not enabled at this time.")
     }
     if(kindArray.includes('NEXT_ENROLLMENT')){
         if(typeof develTest !== 'boolean' || develTest !== true){
-            if(typeof local.getItem('wixWebhookStatus') !== 'string' || local.getItem('wixWebhookStatus') !== 'RESOLVED'){
-                errorStringArray.push("'Next Enrollment' rquires that the current Webhook Payload have a status of 'Resolved'")
+            if ($w('#sessionEnrollmentJSON').value !== 'BACKDOORROODKCAB') {
+                if(typeof local.getItem('wixWebhookStatus') !== 'string' || local.getItem('wixWebhookStatus') !== 'RESOLVED'){
+                    // errorStringArray.push("'Next Enrollment' rquires that the current Webhook Payload have a status of 'Resolved'")
+                    local.setItem('logString', local.getItem('logString') + '\n[~2057]: ' + "'Next Enrollment' rquires that the current Webhook Payload have a status of 'Resolved'")
+
+                }
             }
         }
     }
+    local.setItem('logString', local.getItem('logString') + '\n[~2068]kindArray: ' + kindArray.toString())
+
     // ø </VALIDATION HERE>
     
     // ø <VALIDATION EXIT IFF>
-    let lineFeed = '';
-    if(errorStringArray.length > 0){
-        let errorStringLog = '';
-        errorStringArray.forEach(errorString => {
-            // console.log(errorString); 
-            errorStringLog += lineFeed + ' • ' + errorString; 
-            lineFeed = '\n';
-        });
-        console.warn('errorStringLog: ');
-        console.warn(errorStringLog);
-        return errorStringLog;
-    }
+    // ! <PRETRASH>
+    // let lineFeed = '';
+    // if(errorStringArray.length > 0){
+    //     let errorStringLog = '';
+    //     errorStringArray.forEach(errorString => {
+    //         // console.log(errorString); 
+    //         errorStringLog += lineFeed + ' • ' + errorString; 
+    //         lineFeed = '\n';
+    //     });
+    //     console.warn('errorStringLog: ');
+    //     console.warn(errorStringLog);
+    //     return errorStringLog;
+    // }
+    // ! </PRETRASH>
     // ø </VALIDATION EXIT IFF>
 
     // ø <code Log for Current Enrollment> mostly for testing
@@ -1938,6 +2408,8 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     if(kindArray.includes('CORE')){
         cleanupString = develTest === true ? 'CORE' : cleanupString;
         local.setItem('yyyymm', cleanupString);//was included in Deprecated version
+        local.setItem('timezoneOffset', cleanupString);
+        local.setItem('tzAbbrv', cleanupString);
         local.setItem('termId', cleanupString);
         local.setItem('termBeginMMDD', cleanupString);
         local.setItem('termEndMMDD', cleanupString);
@@ -1948,7 +2420,11 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     // ø <UI>
     if(kindArray.includes('UI')){
         local.setItem('lastErrorString', cleanupString);
-        local.setItem('logString', cleanupString);
+        //! <NOT included in cleanup>
+        //! just depends on its use resetting it as appropriate, no need to cleanup
+        // local.setItem('logString', cleanupString);
+        // memory.setItem('lastStamp', cleanupString);
+        //! </NOT included in cleanup>
     }
     // ø </UI>
     // ø <NEXT_ENROLLMENT>
@@ -1992,6 +2468,11 @@ export function doUserInterfaceCleanupCurrent(){
     label += Number(memory.getItem('stRevision')) > 0 ? ' [' + memory.getItem('stRevision') + ']' : ''; 
 	// $w("#btnUiStudentID").label = "Student ID: " + local.getItem('studentId');
 	$w("#btnUiStudentID").label = label;
+    label = "Secondary ID: ";
+    label += local.getItem('secondaryId') !== "EEMPTY" ? local.getItem('secondaryId') : '';
+    // label += Number(memory.getItem('spRevision')) > 0 ? ' [' + memory.getItem('stRevision') + ']' : ''; 
+	// $w("#btnUiStudentID").label = "Student ID: " + local.getItem('studentId');
+	$w("#btnUiSecondaryID").label = label;
     let step = memory.getItem('enrollmentStepCompleted') === null ? false : true;
     step = memory.getItem('enrollmentStepCompleted') === "EEMPTY" ? false : step;
     step = memory.getItem('enrollmentStepCompleted') === "NNOT_AAPPLICABLE" ? false : step;
@@ -2006,15 +2487,17 @@ export function doUserInterfaceCleanupCurrent(){
         label = 'Webhook ID: ';
         label += local.getItem('wixWebhookId');
         label += ' [' + local.getItem('wixWebhookStatus') + ']';
+    }else if(typeof webhookId === 'string' && webhookId === 'EEMPTY'){
+        label = 'Webhook ID: [empty]';
     }else{
-        label = 'Webhook ID: [invalid';
+        label = 'Webhook ID: [invalid]';
     }
     $w('#btnWebhookData').label = label;
     if(local.getItem('wixWebhookStatus') === 'RESOLVED'){
-        $w('#grpCleanUpAllIncludingEnrJSON').show();
-        $w('#grpWebhookResolve').hide();
+        // $w('#grpCleanUpAllIncludingEnrJSON').show();
+        // $w('#grpWebhookResolve').hide();
     }else{
-        $w('#grpCleanUpAllIncludingEnrJSON').hide();
+        // $w('#grpCleanUpAllIncludingEnrJSON').hide();
         $w('#grpWebhookResolve').show();
     }
 }
@@ -2149,12 +2632,30 @@ export async function updateStatuWebhookPayloadThis(getOnly = false){
     let webhookId = local.getItem('wixWebhookId');
 
     let updateObject = await wixData.get("webhookPayload", webhookId, options);
+    let doUserInterfaceUpdate = false;
     if(getOnly){
       	local.setItem('lastResponseObject', JSON.stringify(updateObject));
+        if(updateObject.currentStatus === "RESOLVED"){
+            if(updateObject.resolvedStatus === "RESOLVED"){
+                local.setItem('wixWebhookStatus',"RESOLVED");
+                doUserInterfaceUpdate = true;
+            }else{
+                local.setItem('lastErrorString',"current WebhookPayload 'currentStatus' and 'resolvedStatus' are Out-Of-Sync");
+            }
+        }
+        if(updateObject.currentStatus !== local.getItem('wixWebhookStatus')){
+            local.setItem('wixWebhookStatus',updateObject.currentStatus)
+            doUserInterfaceUpdate = true;
+        }
         $w('#sessionEnrollmentJSON').value = JSON.stringify(updateObject,undefined,4);
-        console.log("[~1686]About to Return with 'getOnly' Webhook Payload")
+        if(doUserInterfaceUpdate){
+            doUserInterfaceCleanupCurrent();
+            console.log("[~2276]'getOnly' Webhook Payload && doUserInterfaceCleanupCurrent()");
+        }
+        console.log("[~2278]About to Return with 'getOnly' Webhook Payload");
         return;
     }
+    // doUserInterfaceUpdate = true;
 
 	let now = new Date();
 	let nowISO = now.toISOString();
@@ -2186,9 +2687,14 @@ export async function updateStatuWebhookPayloadThis(getOnly = false){
 export function btnGetEnrollmentJSON_click(event) {
 	// console.log('local.getItem("ondeckEnrollmentJSON"): ');
     // console.log(local.getItem("ondeckEnrollmentJSON"));
-	let enrollmentObject = JSON.parse(local.getItem('ondeckEnrollmentJSON'))
+    if(local.getItem('ondeckEnrollmentJSON').length < 20){
+        $w('#sessionEnrollmentJSON').value = "'local.getItem('ondeckEnrollmentJSON')' seems not to be actively set to an Enrollment Application to Post.\n\nYou may travel to 'Process Webhooks' to process any remaining Appliations.";
+
+    }else{
+        let enrollmentObject = JSON.parse(local.getItem('ondeckEnrollmentJSON'))
+        $w('#sessionEnrollmentJSON').value = JSON.stringify(enrollmentObject,undefined,4);
+    }
 	// local.setItem('familyId', enrollmentObject.family.parent.primary.memberId);
-	$w('#sessionEnrollmentJSON').value = JSON.stringify(enrollmentObject,undefined,4);
 }
 
 export function btnGetCode_click(event) {
@@ -2260,34 +2766,60 @@ export function btnDisplayCurrentState_click(event) {
 	$w('#sessionEnrollmentJSON').value = doEnrollmentLogCurrent(kind);
 }
 
-export function btnCleanupCurrentState_click(event) {
+export async function btnCleanupCurrentState_click(event) {
 	if($w('#radioAreYouSure').value === 'YES'){
 		// $w('#sessionEnrollmentJSON').value = doEnrollmentCleanupCurrent();
-		$w('#sessionEnrollmentJSON').value = doEnrollmentCleanupByKind('CURRENT')
+		// let responseCleanupCurrentState = doEnrollmentCleanupByKind('CURRENT');
+        memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
+        local.setItem('logString','enter btnCleanupCurrentState_click(event): YES');
+		local.setItem('logString', local.getItem('logString') + '\nTest of Clean Tags BEGIN Man in the High Castle<clean>');
+		doEnrollmentCleanupByKind('CURRENT')
+		// local.setItem('logString', local.getItem('logString') + '\nresponseCleanupCurrentState: ' + responseCleanupCurrentState);
+        // memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
 		doUserInterfaceCleanupCurrent();
 		// instantiateLoopSwitchEnrollmentSteps();
 		// $w('#sessionEnrollmentJSON').value = stepsDisplayStatusAsReturnString('init');
 	}else{
-		$w('#sessionEnrollmentJSON').value = "'Clean Up' is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.";
+        local.setItem('logString','enter btnCleanupCurrentState_click(event): NO');
+		local.setItem('logString', local.getItem('logString') + '\nTest of Clean Tags BEGIN The Plot Against America<clean>');
+        memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
+		// $w('#sessionEnrollmentJSON').value = "'Clean Up' is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.";
+		local.setItem('logString', local.getItem('logString') + '\n' + "'Clean Up' is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.");
 	}
 	$w("#radioAreYouSure").value = 'NO';
 	// $w("#radioAreYouSure").resetValidityIndication();
+    local.setItem('logString', local.getItem('logString') + '\n</clean>Marvelous Mrs. Maisel END Test of Clean Tags');
+    local.setItem('logString', local.getItem('logString') + '\n[~2534]exit btnCleanupCurrentState_click(event) nowISO: ' + memory.getItem('lastStamp'));
+    // let logStringClean = local.getItem('logString');
+    // if(logStringClean.indexOf('</clean>') >= 0){
+    //     // console.log('logStringClean.indexOf(</clean>):' + logStringClean.indexOf('</clean>'))
+    //     logStringClean = logStringClean.substr(0,logStringClean.indexOf('</clean>'));
+    // }
+    // if(logStringClean.indexOf('<clean>') >= 0){
+    //     console.log('logStringClean.indexOf(<clean>):' + logStringClean.indexOf('<clean>'))
+    //     logStringClean = logStringClean.substr(logStringClean.indexOf('<clean>') + 7);
+    // }
+    // memory.setItem('logStringClean',logStringClean);
+	$w('#sessionEnrollmentJSON').value = local.getItem('logString');
+	// $w('#sessionEnrollmentJSON').value += '\n\n---\n\n[Proof of Concept]\n(line-feeds are tricky)\nCLEAN VERSION OF ABOVE\n======================\n';
+	// $w('#sessionEnrollmentJSON').value += memory.getItem('logStringClean');
 }
 
 export async function btnPeformNextStep_click(event) {
     local.setItem('logString','enter btnPeformNextStep_click(event)');
-    local.setItem('logString', local.getItem('logString') + '\n[~2278]Next (current) Step: ' + memory.getItem('enrollmentStepCurrent'))
+    local.setItem('logString', local.getItem('logString') + '\n[~2444]Next (current) Step: ' + memory.getItem('enrollmentStepCurrent'))
 	await doPeformNextStep();
 	$w('#ddDisplayKind').value = 'STEPS';
 	// $w('#sessionEnrollmentJSON').value = doEnrollmentLogCurrent('CODE');
 	displaySteps();
     doUserInterfaceCleanupCurrent()
-    local.setItem('logString', local.getItem('logString') + '\n[~2284]exit btnPeformNextStep_click(event) nowISO: ' + await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')))
+    local.setItem('logString', local.getItem('logString') + '\n[~2450]exit btnPeformNextStep_click(event) nowISO: ' + memory.getItem('lastStamp'));
 	$w('#sessionEnrollmentJSON').value = local.getItem('logString');
 }
 
 export async function btnSkipNextStep_click(event) {
     local.setItem('logString','enter btnSkipNextStep_click(event)');
+    memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
 	if($w('#radioAreYouSure').value !== 'YES'){
 		// $w('#sessionEnrollmentJSON').value = "'Skip Next Step' is so critical that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.";
 		local.setItem('logString', local.getItem('logString') + '\n[~2293]: ' + "'Skip Next Step' is so critical that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.");
@@ -2301,7 +2833,7 @@ export async function btnSkipNextStep_click(event) {
         local.setItem('logString', local.getItem('logString') + '\n[~2301]stepSkipped: ' + memory.getItem('enrollmentStepCompleted'));
 	}
     $w("#radioAreYouSure").value = 'NO';
-    local.setItem('logString', local.getItem('logString') + '\n[~2304]exit btnSkipNextStep_click(event) nowISO: ' + await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')))
+    local.setItem('logString', local.getItem('logString') + '\n[~2304]exit btnSkipNextStep_click(event) nowISO: ' + memory.getItem('lastStamp'));
     $w('#sessionEnrollmentJSON').value = local.getItem('logString');
 }
 
@@ -2321,9 +2853,14 @@ export function btnToggleBoxStateToo_click(event) {
 	toggleBoxState(); 
 }
 
-export function btCleanUpAllExceptEnrJSON_click(event) {
+export async function btCleanUpAllExceptEnrJSON_click(event) {
 	if($w('#radioAreYouSure').value === 'YES'){
-		$w('#sessionEnrollmentJSON').value = "'Clean Up All – Except Enrollment JSON' is NOT Enabled at this time.\n\nNo action taken. \nPlease try again or ask for assistance.";
+        memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
+        local.setItem('logString','[~2595]entering btCleanUpAllExceptEnrJSON_click:YES');
+		// $w('#sessionEnrollmentJSON').value = "'Clean Up All – Except Enrollment JSON' is NOT Enabled at this time.\n\nNo action taken. \nPlease try again or ask for assistance.";
+        let responseCleanupCurrentState = doEnrollmentCleanupByKind('ALL_EXCEPT_ENROLLMENT');
+        local.setItem('logString',local.getItem('logString') + '\n[~2601]exiting btCleanUpAllExceptEnrJSON_click:YES');
+		$w('#sessionEnrollmentJSON').value = local.getItem(('logString'));
 	}else{
 		$w('#sessionEnrollmentJSON').value = "'Clean Up All – Except Enrollment JSON' is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.";
 	}
@@ -2331,9 +2868,15 @@ export function btCleanUpAllExceptEnrJSON_click(event) {
 	// $w("#radioAreYouSure").resetValidityIndication();
 }
 
-export function btCleanUpAllIncludingnrJSON_click(event) {
+export async function btCleanUpAllIncludingnrJSON_click(event) {
 	if($w('#radioAreYouSure').value === 'YES'){
-		$w('#sessionEnrollmentJSON').value = "'Clean Up All – Including Enrollment JSON' is NOT Enabled at this time.\n\nNo action taken. \nPlease try again or ask for assistance.";
+		// $w('#sessionEnrollmentJSON').value = "'Clean Up All – Including Enrollment JSON' is NOT Enabled at this time.\n\nNo action taken. \nPlease try again or ask for assistance.";
+        memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
+        local.setItem('logString','[~2595]entering btCleanUpAllIncludingnrJSON_click:YES');
+        let responseCleanupCurrentState = doEnrollmentCleanupByKind('ALL_INCLUDING_ENROLLMENT');
+		// $w('#sessionEnrollmentJSON').value = responseCleanupCurrentState;
+        local.setItem('logString',local.getItem('logString') + '\n[~2621]exiting btCleanUpAllIncludingnrJSON_click:YES');
+		$w('#sessionEnrollmentJSON').value = local.getItem(('logString'));
 	}else{
 		$w('#sessionEnrollmentJSON').value = "'Clean Up All – Including Enrollment JSON' is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.";
 	}
@@ -2371,14 +2914,14 @@ export function btnClearPpDbase_click(event) {
 }
 
 export function btnKludgeClearPpStSpIDs_click(event) {
-	local.setItem('familyId','EEMPTY');
-    memory.setItem('ppRevision','EEMPTY');
-    local.setItem('studentId','EEMPTY');
-    memory.setItem('stRevision','EEMPTY');
-    local.setItem('secondaryId','EEMPTY');
-    memory.setItem('spRevision','EEMPTY');
+	// local.setItem('familyId','EEMPTY');
+    // memory.setItem('ppRevision','EEMPTY');
+    // local.setItem('studentId','EEMPTY');
+    // memory.setItem('stRevision','EEMPTY');
+    // local.setItem('secondaryId','EEMPTY');
+    // memory.setItem('spRevision','EEMPTY');
     doUserInterfaceCleanupCurrent();
-    $w('#sessionEnrollmentJSON').value = 'Kludge-Clear has removed all Primary-Parent, Student, and Secondary-Parent ID Values from Storage.'
+    $w('#sessionEnrollmentJSON').value = 'DEPRECATED: Kludge-Clear has removed all Primary-Parent, Student, and Secondary-Parent ID Values from Storage.'
 }
 
 /**
@@ -2525,17 +3068,38 @@ export function btnCleanUpDEP_click(event) {
  *	Adds an event handler that runs when the element is clicked.
  *	 @param {$w.MouseEvent} event
  */
-export function btnCleanUpByKindTEST_click(event) {
+export async function btnCleanUpByKindTEST_click(event) {
 	if($w('#radioAreYouSure').value === 'YES'){
+        memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
+        local.setItem('logString','[~2817]entering btnCleanUpByKindTEST_click:YES');
+        local.setItem('logString',local.getItem('logString') + '\nddCleanupByKind: ' + $w('#ddCleanupByKind').value);
+        local.setItem('logString', local.getItem('logString') + '\nTest of Clean Tags BEGIN Man in the High Castle<clean>');
         let kindKey = $w('#ddCleanupByKind').value;
-        $w('#sessionEnrollmentJSON').value = doEnrollmentCleanupByKind(kindKey);
+        doEnrollmentCleanupByKind(kindKey);
+        local.setItem('logString', local.getItem('logString') + '\n</clean>Marvelous Mrs. Maisel END Test of Clean Tags');
+        local.setItem('logString',local.getItem('logString') + '\nexiting btnCleanUpByKindTEST_click');
+        $w('#sessionEnrollmentJSON').value = local.getItem('logString');
 		// doUserInterfaceCleanupCurrent();
         // $w('#sessionEnrollmentJSON').value = doEnrollmentLogCurrent()
-		$w('#sessionEnrollmentJSON').value = "'Clean Up by Kind' was just executed";
+		// $w('#sessionEnrollmentJSON').value = "'Clean Up by Kind' was just executed";
 	}else{
-		$w('#sessionEnrollmentJSON').value = "'Clean Up by Kind' is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.";
+		// $w('#sessionEnrollmentJSON').value = "'Clean Up by Kind' is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.";
+        local.setItem('logString',"'Clean Up by zKind' is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.");
 	}
 	$w("#radioAreYouSure").value = 'NO';
+    let logStringClean = local.getItem('logString');
+    if(logStringClean.indexOf('</clean>') >= 0){
+        // console.log('logStringClean.indexOf(</clean>):' + logStringClean.indexOf('</clean>'))
+        logStringClean = logStringClean.substr(0,logStringClean.indexOf('</clean>'));
+    }
+    if(logStringClean.indexOf('<clean>') >= 0){
+        console.log('logStringClean.indexOf(<clean>):' + logStringClean.indexOf('<clean>'))
+        logStringClean = logStringClean.substr(logStringClean.indexOf('<clean>') + 7);
+    }
+    memory.setItem('logStringClean',logStringClean);
+	$w('#sessionEnrollmentJSON').value = local.getItem('logString');
+	$w('#sessionEnrollmentJSON').value += '\n\n---\n\n[Proof of Concept]\n(line-feeds are tricky)\nCLEAN VERSION OF ABOVE\n======================\n';
+	$w('#sessionEnrollmentJSON').value += memory.getItem('logStringClean');
 }
 
 /**
@@ -3079,4 +3643,28 @@ export function btnLocalLastError_click(event) {
 export function btnLocalLogString_click(event) {
     //UI Candy (so as not to have to use Drop-Down)
 	$w('#sessionEnrollmentJSON').value = doEnrollmentLogCurrent('LOG');
+}
+
+/**
+ *	Adds an event handler that runs when the element is clicked.
+ *	 @param {$w.MouseEvent} event
+ */
+export function btnAppendToPreTrashLog_click(event) {
+	$w('#preTrashLog').value += '\n\n---\n\n'; 
+	$w('#preTrashLog').value += $w('#sessionEnrollmentJSON').value; 
+}
+
+/**
+ *	Adds an event handler that runs when the element is clicked.
+ *	 @param {$w.MouseEvent} event
+ */
+export function btnKludgeClearPpStSpIDs_click_1(event) {
+    //see Oringial: btnKludgeClearPpStSpIDs_click
+    // local.setItem('secondaryId','EEMPTY');
+    // memory.setItem('spRevision','EEMPTY');
+    // doUserInterfaceCleanupCurrent();
+    // $w('#sessionEnrollmentJSON').value = 'DISABLED: Kludge-Clear has removed all Secondary-Parent ID Values from Storage.'
+    $w('#sessionEnrollmentJSON').value = 'DISABLED: Kludge-Clear has disabled.\n\nNo actiontake.\nPlease try again or ask for assistance.'
+	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+	// Add your code for this event here: 
 }

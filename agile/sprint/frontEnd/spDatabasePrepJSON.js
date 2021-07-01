@@ -17,6 +17,7 @@ export async function spDatabasePrepJSON(){
     local.setItem('logString', local.getItem('logString') + '\n[~890]spActionDbase: ' + spActionDbase);
 
     let logString = '';
+    // ø <CATCH Else (decoupling) Actions>
     if(spActionDbase === 'SKIP'){
         logString = "based on action'" + spActionDbase + "' no further action in this Step-Function";
         memory.setItem('spDatabasePrepJSON',logString);
@@ -34,7 +35,10 @@ export async function spDatabasePrepJSON(){
         local.setItem('superEnrollmentStatus','ALERT');
         return;
     }
+    // ø </CATCH Else (decoupling) Actions>
 
+    // ø <DO THEN (upsert)  Actions>
+    // ! ONLY 'INSERT' for Database for the foreseeable future
 
     // ø <---------- <direct (or nearly)>  ---------->
     let enrollmentObject = JSON.parse(local.getItem('ondeckEnrollmentJSON'));

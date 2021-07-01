@@ -10,10 +10,39 @@ export async function spContactPrepJSON() {
     stepStampArrayObject.stampArray.push(stampArrayElementObject);
     memory.setItem('stepStampArray', JSON.stringify(stepStampArrayObject));
     // ø <---------- stepStampArray ---------->
-
+    
     //spAction: NA|INSERT|INSERT
     let spActionArray = memory.getItem('spAction').split('|');
     let spActionContact = spActionArray[1];
+    
+    // ø <CATCH Else (decoupling) Actions>
+    if(spActionContact === 'SKIP'){
+        logString = "based on action'" + spActionDbase + "' no further action in this Step-Function";
+        memory.setItem('spDatabasePrepJSON',logString);
+        local.setItem('logString', local.getItem('logString') + "\n" + logString);
+        local.setItem('logString', local.getItem('logString') + '\n[~896]exiting: spDatabasePrepJSON()');
+        paramObjectThis.spActionContact = spActionContact;
+        paramObjectThis.log = 'NO ACTION INDICATED';
+        memory.setItem('spContactPrepJSON', JSON.stringify(paramObjectThis));
+        return;
+    }
+    if(spActionContact !== 'INSERT'){
+        logString = "this spActionDbase, '" + spActionDbase + "', is NOT supported and is an error [see local.getItem('lastErrorString')]";
+        memory.setItem('spDatabasePrepJSON',logString);
+        local.setItem('logString', local.getItem('logString') + "\n" + logString);
+        local.setItem('logString', local.getItem('logString') + "\nbased on action'" + spActionDbase + "' no further action in this Step-Function");
+        local.setItem('lastErrorString',"spActionDbase, '" + spActionDbase + "', is NOT supported. Only 'INSERT' and 'SKIP' are supported. Please convey this message to the Developer Immediately");
+        local.setItem('logString', local.getItem('logString') + '\n[~896]exiting: spDatabasePrepJSON()');
+        local.setItem('superEnrollmentStatus','ALERT');
+        paramObjectThis.spActionContact = spActionContact;
+        paramObjectThis.log = 'NO ACTION INDICATED';
+        memory.setItem('spContactPrepJSON', JSON.stringify(paramObjectThis));
+        return;
+    }
+    // ø </CATCH Else (decoupling) Actions>
+
+    // ø <DO THEN (upsert)  Actions>
+
     let paramObjectThis = {};
     if (spActionContact === 'INSERT') {
         let enrollmentObject = JSON.parse(local.getItem('ondeckEnrollmentJSON'));
@@ -128,10 +157,6 @@ export async function spContactPrepJSON() {
         // ø <---------- </doPrimaryParentContactInfo()> ---------->
 
         paramObjectThis.contactInfo = secondaryParent.contactInfo;
-    }else{
-        paramObjectThis.spActionContact = spActionContact;
-        paramObjectThis.log = 'NO ACTION INDICATED';
-
     }//END if (spActionContact === 'INSERT')
     let paramJSON = JSON.stringify(paramObjectThis);
     memory.setItem('spContactPrepJSON', paramJSON);

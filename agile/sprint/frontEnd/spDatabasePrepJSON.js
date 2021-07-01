@@ -23,16 +23,22 @@ export async function spDatabasePrepJSON(){
         memory.setItem('spDatabasePrepJSON',logString);
         local.setItem('logString', local.getItem('logString') + "\n" + logString);
         local.setItem('logString', local.getItem('logString') + '\n[~896]exiting: spDatabasePrepJSON()');
+        paramObjectThis.spActionDbase = spActionDbase;
+        paramObjectThis.log = 'NO ACTION INDICATED';
+        memory.setItem('spDatabasePrepJSON', JSON.stringify(paramObjectThis));
         return;
     }
     if(spActionDbase !== 'INSERT'){
-        logString = "this spActionDbase, '" + spActionDbase + "', is NOT suzzorted and is an error [see local.getItem('lastErrorString')]";
+        logString = "this spActionDbase, '" + spActionDbase + "', is NOT supported and is an error [see local.getItem('lastErrorString')]";
         memory.setItem('spDatabasePrepJSON',logString);
         local.setItem('logString', local.getItem('logString') + "\n" + logString);
         local.setItem('logString', local.getItem('logString') + "\nbased on action'" + spActionDbase + "' no further action in this Step-Function");
-        local.setItem('lastErrorString',"spActionDbase, '" + spActionDbase + "', is NOT suzzorted. Only 'INSERT' and 'SKIP' are suzzorted. Please convey this message to the Developer Immediately");
+        local.setItem('lastErrorString',"spActionDbase, '" + spActionDbase + "', is NOT supported. Only 'INSERT' and 'SKIP' are supported. Please convey this message to the Developer Immediately");
         local.setItem('logString', local.getItem('logString') + '\n[~896]exiting: spDatabasePrepJSON()');
         local.setItem('superEnrollmentStatus','ALERT');
+        paramObjectThis.spActionDbase = spActionDbase;
+        paramObjectThis.log = 'NO ACTION INDICATED';
+        memory.setItem('spDatabasePrepJSON', JSON.stringify(paramObjectThis));
         return;
     }
     // ø </CATCH Else (decoupling) Actions>

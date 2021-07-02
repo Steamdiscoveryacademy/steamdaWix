@@ -1,6 +1,6 @@
 // ø <---------- <doEnrollmentLogCurrent>  ---------->
 export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
-    let kindSupportedArray = ['CODE','STEPS','DATA','CORE','LOG','ERROR','UNACCOUNTED_FOR','DDEFAULT'];
+    let kindSupportedArray = ['CODE','STEPS','DATA','CORE','NONPERSISTENT','LOG','ERROR','UNACCOUNTED_FOR','DDEFAULT'];
     kind = kindSupportedArray.includes(kind) ? kind : 'DDEFAULT';
     console.warn('kind: ' + kind);
 
@@ -92,6 +92,36 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
         logString += '\n' + "local.getItem('yyyymm') [where,how used?]" + local.getItem('yyyymm');
     }//END if(kind === 'UNACCOUNTED_FOR')
     // ø </UNACCOUNTED_FOR>
+    // ø <NONPERSISTENT>
+    if(kind === 'NONPERSISTENT'){
+        // Not '|| DDEFAULT' because it's purposely redundant
+
+        logString += '\n' + "local.getItem('superEnrollmentStatus'): " + local.getItem('superEnrollmentStatus');
+        logString += '\n' + "memory.getItem('ppAction'): " + memory.getItem('ppAction');
+        logString += '\n' + "memory.getItem('stAction'): " + memory.getItem('stAction');
+        logString += '\n' + "memory.getItem('spAction'): " + memory.getItem('spAction');
+        logString += '\n' + "local.getItem('staffIdentifiedFamilyId'): " + local.getItem('staffIdentifiedFamilyId');
+        logString += '\n' + "local.getItem('familyId'): " + local.getItem('familyId');
+        logString += '\n' + "memory.getItem('ppRevision'): " + memory.getItem('ppRevision');
+        logString += '\n' + "local.getItem('studentId'): " + local.getItem('studentId');
+        logString += '\n' + "local.getItem('secondaryId'): " + local.getItem('secondaryId');
+        logString += '\n' + "memory.getItem('stRevision'): " + memory.getItem('stRevision');
+        logString += '\n' + "local.getItem('ppFirst'): " + local.getItem('ppFirst');
+        logString += '\n' + "local.getItem('ppLast'): " + local.getItem('ppLast');
+        logString += '\n' + "local.getItem('stFirst'): " + local.getItem('stFirst');
+        logString += '\n' + "local.getItem('stPreferredFirst'): " + local.getItem('stPreferredFirst');
+        logString += '\n' + "local.getItem('stLast'): " + local.getItem('stLast');
+        logString += '\n' + "local.getItem('spFirst'): " + local.getItem('stFirst');
+        logString += '\n' + "local.getItem('spLast'): " + local.getItem('stLast');
+        logString += '\n' + "local.getItem('comboName'): " + local.getItem('comboName');
+        logString += '\n' + "<---------->";
+        
+        logString += '\n' + "local.getItem('wixWebhookId'): " + local.getItem('wixWebhookId');
+        logString += '\n' + "local.getItem('wixWebhookStatus'): " + local.getItem('wixWebhookStatus');
+        logString += '\n' + "<---------->";
+        logString += '\n' + "local.getItem('ondeckEnrollmentJSON').length === " + local.getItem('ondeckEnrollmentJSON').length;
+    }
+    // ø </NONPERSISTENT>
     // ø <LOG>
     if(kind === 'LOG' || kind === 'DDEFAULT'){
         logString += '\n' + "local.getItem('logString'): " + local.getItem('logString');

@@ -2146,7 +2146,7 @@ export function doEnrollmentCleanupCurrent() {
 
 // ø <---------- <doEnrollmentLogCurrent>  ---------->
 export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
-    let kindSupportedArray = ['CODE','STEPS','DATA','CORE','LOG','ERROR','UNACCOUNTED_FOR','DDEFAULT'];
+    let kindSupportedArray = ['CODE','STEPS','DATA','CORE','NONPERSISTENT','LOG','ERROR','UNACCOUNTED_FOR','DDEFAULT'];
     kind = kindSupportedArray.includes(kind) ? kind : 'DDEFAULT';
     console.warn('kind: ' + kind);
 
@@ -2213,9 +2213,9 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
     // ø <CORE>
     if(kind === 'CORE' || kind === 'DDEFAULT'){
         console.log(kind);
-        logString += '\n' + "local.getItem('yyyymm'): " + local.getItem('yyyymm');
         logString += '\n' + "local.getItem('timezoneOffset'): " + local.getItem('timezoneOffset');
         logString += '\n' + "local.getItem('tzAbbrv'): " + local.getItem('tzAbbrv');
+        logString += '\n' + "local.getItem('yyyymm'): " + local.getItem('yyyymm');
         logString += '\n' + "local.getItem('termId'): " + local.getItem('termId');
         logString += '\n' + "local.getItem('termBeginMMDD')" + local.getItem('termBeginMMDD');
         logString += '\n' + "local.getItem('termEndMMDD')" + local.getItem('termEndMMDD');
@@ -2238,6 +2238,36 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
         logString += '\n' + "local.getItem('yyyymm') [where,how used?]" + local.getItem('yyyymm');
     }//END if(kind === 'UNACCOUNTED_FOR')
     // ø </UNACCOUNTED_FOR>
+    // ø <NONPERSISTENT>
+    if(kind === 'NONPERSISTENT'){
+        // Not '|| DDEFAULT' because it's purposely redundant
+
+        logString += '\n' + "local.getItem('superEnrollmentStatus'): " + local.getItem('superEnrollmentStatus');
+        logString += '\n' + "memory.getItem('ppAction'): " + memory.getItem('ppAction');
+        logString += '\n' + "memory.getItem('stAction'): " + memory.getItem('stAction');
+        logString += '\n' + "memory.getItem('spAction'): " + memory.getItem('spAction');
+        logString += '\n' + "local.getItem('staffIdentifiedFamilyId'): " + local.getItem('staffIdentifiedFamilyId');
+        logString += '\n' + "local.getItem('familyId'): " + local.getItem('familyId');
+        logString += '\n' + "memory.getItem('ppRevision'): " + memory.getItem('ppRevision');
+        logString += '\n' + "local.getItem('studentId'): " + local.getItem('studentId');
+        logString += '\n' + "local.getItem('secondaryId'): " + local.getItem('secondaryId');
+        logString += '\n' + "memory.getItem('stRevision'): " + memory.getItem('stRevision');
+        logString += '\n' + "local.getItem('ppFirst'): " + local.getItem('ppFirst');
+        logString += '\n' + "local.getItem('ppLast'): " + local.getItem('ppLast');
+        logString += '\n' + "local.getItem('stFirst'): " + local.getItem('stFirst');
+        logString += '\n' + "local.getItem('stPreferredFirst'): " + local.getItem('stPreferredFirst');
+        logString += '\n' + "local.getItem('stLast'): " + local.getItem('stLast');
+        logString += '\n' + "local.getItem('spFirst'): " + local.getItem('stFirst');
+        logString += '\n' + "local.getItem('spLast'): " + local.getItem('stLast');
+        logString += '\n' + "local.getItem('comboName'): " + local.getItem('comboName');
+        logString += '\n' + "<---------->";
+        
+        logString += '\n' + "local.getItem('wixWebhookId'): " + local.getItem('wixWebhookId');
+        logString += '\n' + "local.getItem('wixWebhookStatus'): " + local.getItem('wixWebhookStatus');
+        logString += '\n' + "<---------->";
+        logString += '\n' + "local.getItem('ondeckEnrollmentJSON').length === " + local.getItem('ondeckEnrollmentJSON').length;
+    }
+    // ø </NONPERSISTENT>
     // ø <LOG>
     if(kind === 'LOG' || kind === 'DDEFAULT'){
         logString += '\n' + "local.getItem('logString'): " + local.getItem('logString');
@@ -2252,7 +2282,6 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
     if(kind === 'MAN_IN_THE_HIGH_CASTLE' || kind === 'DDEFAULT'){
         logString += '\n' + "kind || kind [~1501]";
     }
-    // logString += '\n' + 'nowISO: ' + nowISO;
     logString += '\n' + "RETURN LOG STRING [~1503]";
     return logString;
     // ø </code Log for Current Enrollment>
@@ -2279,7 +2308,7 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     console.warn('kindKey: ' + kindKey);
     let kindArray = [];
     kindArray = kindKey === 'ABORT' ? /*kindSupportedArray*/['ZZZ'] : kindArray;
-    kindArray = kindKey === 'ALL_INCLUDING_ENROLLMENT' ? ['CODE','STEPS','DATA','NEXT_ENROLLMENT','UI'] : kindArray;
+    kindArray = kindKey === 'ALL_INCLUDING_ENROLLMENT' ? ['CODE','STEPS','DATA','LOCAL_DATA','NEXT_ENROLLMENT','UI'] : kindArray;
     kindArray = kindKey === 'ALL_EXCEPT_ENROLLMENT' ? ['CODE','STEPS','DATA','LOCAL_DATA','UI'] : kindArray;
     kindArray = kindKey === 'CODE' ? ['CODE'] : kindArray
     kindArray = kindKey === 'STEPS' ? ['STEPS'] : kindArray
@@ -3031,13 +3060,14 @@ export function btnClearSpDbase_click(event) {
 
 /**
  *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
  */
 export function btnWebhookResolve_click(event) {
     if($w('#radioAreYouSure').value === 'YES'){
 		// $w('#sessionEnrollmentJSON').value = "'Resolve Webhook' is NOT Enabled at this time.\n\nNo action taken. \nPlease try again or ask for assistance.";
         let statusThis = $w('#ddCurrentStatusUpdate').value;
         doUpdateThisWebhookPayload(statusThis);
+    	// updateStatuWebhookPayloadThis(true); 
+        doUserInterfaceCleanupCurrent();
 	}else{
 		$w('#sessionEnrollmentJSON').value = "'Resolve Webhook' is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.";
 	}
@@ -3667,4 +3697,12 @@ export function btnKludgeClearPpStSpIDs_click_1(event) {
     $w('#sessionEnrollmentJSON').value = 'DISABLED: Kludge-Clear has disabled.\n\nNo actiontake.\nPlease try again or ask for assistance.'
 	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
 	// Add your code for this event here: 
+}
+
+/**
+ *	Adds an event handler that runs when the element is clicked.
+ *	 @param {$w.MouseEvent} event
+ */
+export function btnUIrefresh_click(event) {
+	doUserInterfaceCleanupCurrent();
 }

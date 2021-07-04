@@ -1,0 +1,806 @@
+[
+    {
+        "_createdDate": "2021-04-16T01:03:47.000Z",
+        "displayName": "Adventure STEAM",
+        "key": "custom.adventure-steam",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-04-16T01:03:47.000Z"
+    },
+    {
+        "_createdDate": "2021-04-02T19:15:21.000Z",
+        "displayName": "Spring Break Camp - April 6",
+        "key": "custom.spring-break-camp-april-6",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-04-02T19:15:21.000Z"
+    },
+    {
+        "_createdDate": "2021-04-02T18:16:15.000Z",
+        "displayName": "Spring Break Camp - April 5",
+        "key": "custom.spring-break-camp-april-5",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-04-02T18:16:15.000Z"
+    },
+    {
+        "_createdDate": "2021-03-29T13:27:46.000Z",
+        "displayName": "March 29-April 2, 2021",
+        "key": "custom.march-29-april-2-2021",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-03-29T13:27:46.000Z"
+    },
+    {
+        "_createdDate": "2021-03-19T13:09:50.000Z",
+        "displayName": "Spring Break Camp - April 7",
+        "key": "custom.spring-break-camp-april-7",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-03-31T18:19:01.000Z"
+    },
+    {
+        "_createdDate": "2021-03-17T13:31:21.000Z",
+        "displayName": "STEAM Test Lab",
+        "key": "custom.steam-test-lab",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-03-17T13:31:21.000Z"
+    },
+    {
+        "_createdDate": "2021-03-10T15:08:44.000Z",
+        "displayName": "March 15-19, 2021",
+        "key": "custom.march-15-19-2021",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-03-10T15:08:44.000Z"
+    },
+    {
+        "_createdDate": "2021-03-09T15:16:50.000Z",
+        "displayName": "SciArt",
+        "key": "custom.sciart",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-03-09T15:16:50.000Z"
+    },
+    {
+        "_createdDate": "2021-03-07T18:45:21.000Z",
+        "displayName": "March 8-12, 2021",
+        "key": "custom.march-8-12-2021",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-03-07T18:45:21.000Z"
+    },
+    {
+        "_createdDate": "2021-03-01T19:17:45.000Z",
+        "displayName": "Creative Character Journeys",
+        "key": "custom.creative-character-journeys",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-03-01T19:17:45.000Z"
+    },
+    {
+        "_createdDate": "2021-02-03T19:17:33.000Z",
+        "displayName": "Summer21",
+        "key": "custom.summer21",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-02-03T19:17:33.000Z"
+    },
+    {
+        "_createdDate": "2021-01-24T14:29:06.000Z",
+        "displayName": "January 25-29, 2021",
+        "key": "custom.january-25-29-2021",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-01-24T14:29:06.000Z"
+    },
+    {
+        "_createdDate": "2021-01-13T16:38:17.000Z",
+        "displayName": "January 18-22, 2021",
+        "key": "custom.january-18-22-2021",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-01-13T16:38:17.000Z"
+    },
+    {
+        "_createdDate": "2021-01-11T18:38:22.000Z",
+        "displayName": "School's Out Day Camp - April 2",
+        "key": "custom.schools-out-day-camp-jan-15",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-02-19T21:52:07.000Z"
+    },
+    {
+        "_createdDate": "2021-01-10T14:18:02.000Z",
+        "displayName": "STEAM Camp Friday",
+        "key": "custom.steam-camp-friday",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-02-19T21:46:52.000Z"
+    },
+    {
+        "_createdDate": "2021-01-03T18:17:58.000Z",
+        "displayName": "January 4-9, 2021",
+        "key": "custom.january-4-9-2021",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-01-03T18:17:58.000Z"
+    },
+    {
+        "_createdDate": "2021-01-02T17:42:06.000Z",
+        "displayName": "Subscribers",
+        "key": "custom.subscribers",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-01-02T17:42:06.000Z"
+    },
+    {
+        "_createdDate": "2020-12-31T15:09:26.000Z",
+        "displayName": "Kidpreneur",
+        "key": "custom.kidpreneur",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-02-19T21:46:52.000Z"
+    },
+    {
+        "_createdDate": "2020-12-23T17:52:47.000Z",
+        "displayName": "Science & Engineering",
+        "key": "custom.science-engineering",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-02-19T21:46:52.000Z"
+    },
+    {
+        "_createdDate": "2020-12-15T15:10:27.000Z",
+        "displayName": "STEAM Day Camp",
+        "key": "custom.schools-out-camp-february-15",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-03-03T15:01:15.000Z"
+    },
+    {
+        "_createdDate": "2020-12-15T15:07:32.000Z",
+        "displayName": "School's Out Camp - March 5",
+        "key": "custom.schools-out-camp-jan-18",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-03-03T14:49:57.000Z"
+    },
+    {
+        "_createdDate": "2020-12-13T16:22:33.000Z",
+        "displayName": "School's Out Camp - March 12",
+        "key": "custom.teacher-workday-jan-4",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-02-19T21:50:27.000Z"
+    },
+    {
+        "_createdDate": "2020-12-12T18:35:01.000Z",
+        "displayName": "Storytelling & Science",
+        "key": "custom.storytelling-science",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-02-19T21:46:52.000Z"
+    },
+    {
+        "_createdDate": "2020-12-12T15:01:49.000Z",
+        "displayName": "December 14-18, 2020",
+        "key": "custom.december-14-18-2020",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-12-23T14:28:17.000Z"
+    },
+    {
+        "_createdDate": "2020-12-06T15:46:05.000Z",
+        "displayName": "December 7-11, 2020",
+        "key": "custom.december-7-11-2020",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-12-07T22:19:58.000Z"
+    },
+    {
+        "_createdDate": "2020-12-06T00:26:15.000Z",
+        "displayName": "School's Out Camp - March 1",
+        "key": "custom.schools-out-full-day-camp-dec-18",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-02-19T21:50:55.000Z"
+    },
+    {
+        "_createdDate": "2020-12-01T02:13:25.000Z",
+        "displayName": "Winter Break Camp - December 29",
+        "key": "custom.winter-break-camp-december-29",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-01-02T19:28:51.000Z"
+    },
+    {
+        "_createdDate": "2020-12-01T02:12:44.000Z",
+        "displayName": "Winter Break Camp - December 28",
+        "key": "custom.winter-break-camp-december-28",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-01-02T19:28:47.000Z"
+    },
+    {
+        "_createdDate": "2020-12-01T02:12:07.000Z",
+        "displayName": "Winter Break Camp - December 22",
+        "key": "custom.winter-break-camp-december-22",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-01-02T19:28:45.000Z"
+    },
+    {
+        "_createdDate": "2020-12-01T02:11:13.000Z",
+        "displayName": "Winter Break Camp - December 21",
+        "key": "custom.winter-break-camp-december-21",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-01-02T19:28:44.000Z"
+    },
+    {
+        "_createdDate": "2020-11-29T16:50:12.000Z",
+        "displayName": "November 30-December 4",
+        "key": "custom.november-30-december-4",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-12-07T22:19:54.000Z"
+    },
+    {
+        "_createdDate": "2020-11-29T14:24:04.000Z",
+        "displayName": "School's Out Camp - March 11",
+        "key": "custom.schools-out-half-day-camp-dec-18",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-02-19T21:50:37.000Z"
+    },
+    {
+        "_createdDate": "2020-11-14T16:53:23.000Z",
+        "displayName": "STEAM Escape Room",
+        "key": "custom.steam-escape-room",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-11-14T16:53:23.000Z"
+    },
+    {
+        "_createdDate": "2020-11-13T20:44:36.000Z",
+        "displayName": "November 16-20, 2020",
+        "key": "custom.november-16-20-2020",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-11-13T20:44:36.000Z"
+    },
+    {
+        "_createdDate": "2020-11-12T16:33:22.000Z",
+        "displayName": "Tech Lab",
+        "key": "custom.tech-lab",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-12-12T17:21:18.000Z"
+    },
+    {
+        "_createdDate": "2020-11-11T23:42:55.000Z",
+        "displayName": "School Closure Camp - Nov 24",
+        "key": "custom.school-closure-camp-nov-24",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-11-25T16:10:14.000Z"
+    },
+    {
+        "_createdDate": "2020-11-11T23:40:56.000Z",
+        "displayName": "School's Out Camp - Nov 23",
+        "key": "custom.schools-out-camp-nov-23",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-11-25T16:10:13.000Z"
+    },
+    {
+        "_createdDate": "2020-11-09T13:06:46.000Z",
+        "displayName": "STEAM Study Hall - Wednesdays",
+        "key": "custom.steam-study-hall-wednesdays",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-11-25T19:48:29.000Z"
+    },
+    {
+        "_createdDate": "2020-11-09T13:05:32.000Z",
+        "displayName": "STEAM Study Hall - Thursdays",
+        "key": "custom.steam-study-hall-thursdays",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-11-09T13:05:32.000Z"
+    },
+    {
+        "_createdDate": "2020-11-09T13:03:08.000Z",
+        "displayName": "STEAM Study Hall - Tuesdays",
+        "key": "custom.steam-study-hall-tuesdays",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-11-25T16:10:12.000Z"
+    },
+    {
+        "_createdDate": "2020-11-04T14:41:29.000Z",
+        "displayName": "Teacher Work Half Day Camp - Nov 5",
+        "key": "custom.teacher-work-half-day-camp-nov-5",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-11-11T18:22:14.000Z"
+    },
+    {
+        "_createdDate": "2020-11-03T15:58:20.000Z",
+        "displayName": "Holiday Gift Workshop",
+        "key": "custom.holiday-gift-workshop",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-12-12T17:51:14.000Z"
+    },
+    {
+        "_createdDate": "2020-11-03T01:08:44.000Z",
+        "displayName": "STEAM Study Hall",
+        "key": "custom.steam-study-hall",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-02-19T00:05:11.000Z"
+    },
+    {
+        "_createdDate": "2020-11-02T22:43:03.000Z",
+        "displayName": "Teacher Work Day Camp - Nov 6",
+        "key": "custom.teacher-work-day-camp-nov-6",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-11-11T18:22:11.000Z"
+    },
+    {
+        "_createdDate": "2020-11-02T01:57:02.000Z",
+        "displayName": "Fall2020",
+        "key": "custom.fall2020",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-11-02T01:57:02.000Z"
+    },
+    {
+        "_createdDate": "2020-10-31T21:14:47.000Z",
+        "displayName": "Robotics Lab!",
+        "key": "custom.robotics-lab",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-02-19T00:05:02.000Z"
+    },
+    {
+        "_createdDate": "2020-10-31T19:59:52.000Z",
+        "displayName": "Music & Science Lab",
+        "key": "custom.music-science-lab",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-02-19T21:46:52.000Z"
+    },
+    {
+        "_createdDate": "2020-10-31T19:55:36.000Z",
+        "displayName": "Stop Motion Animation",
+        "key": "custom.stop-motion-animation",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-12-12T17:29:01.000Z"
+    },
+    {
+        "_createdDate": "2020-10-31T18:15:26.000Z",
+        "displayName": "Science Lab!",
+        "key": "custom.science-lab",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-02-19T21:46:53.000Z"
+    },
+    {
+        "_createdDate": "2020-10-31T14:29:17.000Z",
+        "displayName": "Creativity Lab",
+        "key": "custom.creativity-lab",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-12-12T17:50:32.000Z"
+    },
+    {
+        "_createdDate": "2020-10-30T23:36:03.000Z",
+        "displayName": "School Closure Camp - Nov 3",
+        "key": "custom.school-closure-camp-nov-3",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-11-11T18:22:16.000Z"
+    },
+    {
+        "_createdDate": "2020-10-22T14:15:14.000Z",
+        "displayName": "Teacher Work Day Camp - Oct 30",
+        "key": "custom.teacher-work-day-camp-oct-30",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-11-11T18:22:21.000Z"
+    },
+    {
+        "_createdDate": "2020-10-14T15:13:10.000Z",
+        "displayName": "Teacher Work Day Camp - Oct 19",
+        "key": "custom.teacher-work-day-camp-oct-19",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-10-25T16:56:34.000Z"
+    },
+    {
+        "_createdDate": "2020-10-11T20:50:37.000Z",
+        "displayName": "Math in Art",
+        "key": "custom.math-in-art-1",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-11-25T16:10:12.000Z"
+    },
+    {
+        "_createdDate": "2020-10-11T20:50:05.000Z",
+        "displayName": "Computer Programming",
+        "key": "custom.computer-programming",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-11-01T23:47:46.000Z"
+    },
+    {
+        "_createdDate": "2020-10-11T20:46:21.000Z",
+        "displayName": "Teacher Work Day Camp - Oct 12",
+        "key": "custom.teacher-work-day-camp-oct-12",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-10-25T16:56:29.000Z"
+    },
+    {
+        "_createdDate": "2020-10-10T18:09:29.000Z",
+        "displayName": "Science Fair Start-Up",
+        "key": "custom.science-fair-start-up",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-01-25T22:23:23.000Z"
+    },
+    {
+        "_createdDate": "2020-10-03T20:44:00.000Z",
+        "displayName": "Teacher Work Day Camp - Oct 5",
+        "key": "custom.teacher-work-day-camp-oct-5",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-10-25T16:56:25.000Z"
+    },
+    {
+        "_createdDate": "2020-10-02T20:05:20.000Z",
+        "displayName": "Simple Machines",
+        "key": "custom.simple-machines-1",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-10-27T16:05:55.000Z"
+    },
+    {
+        "_createdDate": "2020-10-02T19:59:40.000Z",
+        "displayName": "Virtual Support & STEAM - School Day",
+        "key": "custom.virtual-support-steam-school-day",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-10-02T19:59:40.000Z"
+    },
+    {
+        "_createdDate": "2020-09-28T02:43:48.000Z",
+        "displayName": "STEAM Design Lab",
+        "key": "custom.steam-design-lab",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-02-19T00:04:43.000Z"
+    },
+    {
+        "_createdDate": "2020-09-28T02:42:15.000Z",
+        "displayName": "Technology in World History",
+        "key": "custom.technology-in-world-history",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-11-25T16:10:13.000Z"
+    },
+    {
+        "_createdDate": "2020-09-25T15:34:03.000Z",
+        "displayName": "6 Weekly Sessions",
+        "key": "custom.6-weekly-sessions",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-09-25T15:34:03.000Z"
+    },
+    {
+        "_createdDate": "2020-09-15T10:40:12.000Z",
+        "displayName": "Earth Science",
+        "key": "custom.earth-science",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-09-20T16:34:47.000Z"
+    },
+    {
+        "_createdDate": "2020-09-12T16:20:26.000Z",
+        "displayName": "Prospects",
+        "key": "custom.prospects",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-09-12T16:20:26.000Z"
+    },
+    {
+        "_createdDate": "2020-09-11T16:48:11.000Z",
+        "displayName": "Circuitry and Robots",
+        "key": "custom.circuitry-and-robots",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-09-11T16:48:11.000Z"
+    },
+    {
+        "_createdDate": "2020-08-27T23:30:03.000Z",
+        "displayName": "Chemistry",
+        "key": "custom.chemistry",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-08-27T23:30:03.000Z"
+    },
+    {
+        "_createdDate": "2020-08-21T17:29:45.000Z",
+        "displayName": "Simple Machines - 6 Sessions",
+        "key": "custom.simple-machines-6-sessions",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-10-04T23:08:16.000Z"
+    },
+    {
+        "_createdDate": "2020-08-21T17:26:17.000Z",
+        "displayName": "Space Science - 6 Sessions",
+        "key": "custom.space-science-6-sessions",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-09-01T21:56:53.000Z"
+    },
+    {
+        "_createdDate": "2020-08-18T15:03:57.000Z",
+        "displayName": "Architecture & Math - 6 Sessions",
+        "key": "custom.architecture-math-6-sessions",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-10-25T16:44:31.000Z"
+    },
+    {
+        "_createdDate": "2020-08-18T15:02:08.000Z",
+        "displayName": "Technology & Storytelling - 6 Sessions",
+        "key": "custom.technology-storytelling-6-sessions",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-09-20T16:30:16.000Z"
+    },
+    {
+        "_createdDate": "2020-08-17T16:21:32.000Z",
+        "displayName": "Girls In Tech - 6 Sessions",
+        "key": "custom.girls-in-tech-6-sessions",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-10-04T23:33:57.000Z"
+    },
+    {
+        "_createdDate": "2020-08-17T14:49:58.000Z",
+        "displayName": "Technology - 6 Sessions",
+        "key": "custom.technology-6-sessions",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-10-04T23:08:16.000Z"
+    },
+    {
+        "_createdDate": "2020-08-17T11:05:00.000Z",
+        "displayName": "Reading & Science - 6 Sessions",
+        "key": "custom.reading-science-6-sessions",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-09-01T21:56:49.000Z"
+    },
+    {
+        "_createdDate": "2020-08-14T22:42:09.000Z",
+        "displayName": "Architecture & Math -12 Sessions",
+        "key": "custom.architecture-math-12-sessions-1",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-11-11T22:10:33.000Z"
+    },
+    {
+        "_createdDate": "2020-08-12T03:43:01.000Z",
+        "displayName": "Technology in World History - 6 Session",
+        "key": "custom.technology-in-world-history-6-session",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-11-25T16:10:13.000Z"
+    },
+    {
+        "_createdDate": "2020-08-12T03:40:52.000Z",
+        "displayName": "STEAM Design Lab - 6 Sessions",
+        "key": "custom.steam-design-lab-6-sessions",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-10-04T23:34:03.000Z"
+    },
+    {
+        "_createdDate": "2020-08-11T17:41:32.000Z",
+        "displayName": "Virtual Support & STEAM Full Day",
+        "key": "custom.virtual-support-steam-enrichment",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-09-03T21:15:04.000Z"
+    },
+    {
+        "_createdDate": "2020-08-10T01:38:47.000Z",
+        "displayName": "Inventing",
+        "key": "custom.inventing",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-11-25T16:10:12.000Z"
+    },
+    {
+        "_createdDate": "2020-08-07T23:15:15.000Z",
+        "displayName": "Computer Programming - 6 Sessions",
+        "key": "custom.computer-programming-6-sessions",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-10-26T17:14:43.000Z"
+    },
+    {
+        "_createdDate": "2020-08-07T23:12:00.000Z",
+        "displayName": "Math in Art - 6 Sessions",
+        "key": "custom.math-in-art-6-sessions",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-11-01T23:47:49.000Z"
+    },
+    {
+        "_createdDate": "2020-07-29T20:09:08.000Z",
+        "displayName": "STEAM Imagineers!",
+        "key": "custom.steam-imagineers",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-11-25T16:10:14.000Z"
+    },
+    {
+        "_createdDate": "2020-07-29T17:32:40.000Z",
+        "displayName": "Architecture & Math - 12 Sessions",
+        "key": "custom.architecture-math-12-sessions",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-09-01T22:53:42.000Z"
+    },
+    {
+        "_createdDate": "2020-07-28T00:25:36.000Z",
+        "displayName": "STEAM Design Lab - 12 Sessions",
+        "key": "custom.steam-design-lab-12-sessions",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-11-11T22:10:31.000Z"
+    },
+    {
+        "_createdDate": "2020-07-24T13:14:21.000Z",
+        "displayName": "Lead with STEAM",
+        "key": "custom.lead-with-steam",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-11-25T16:10:14.000Z"
+    },
+    {
+        "_createdDate": "2020-07-23T22:22:30.000Z",
+        "displayName": "STEAM: As Seen On TV Competition Camp!",
+        "key": "custom.steam-as-seen-on-tv-competition-camp",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-11-25T16:10:14.000Z"
+    },
+    {
+        "_createdDate": "2020-07-22T19:43:56.000Z",
+        "displayName": "Technology & Storytelling - 12 Sessions",
+        "key": "custom.technology-storytelling",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-11-11T22:10:30.000Z"
+    },
+    {
+        "_createdDate": "2020-07-22T19:34:30.000Z",
+        "displayName": "Construction Kids - 12 Sessions",
+        "key": "custom.construction-kids",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-11-11T22:10:05.000Z"
+    },
+    {
+        "_createdDate": "2020-07-22T17:49:34.000Z",
+        "displayName": "Simple Machines - 12 Sessions",
+        "key": "custom.simple-machines",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-09-01T22:52:45.000Z"
+    },
+    {
+        "_createdDate": "2020-07-22T15:46:04.000Z",
+        "displayName": "STEAM Fall 2020 Reg Form",
+        "key": "custom.steam-registration-form-2",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-08-24T13:17:41.000Z"
+    },
+    {
+        "_createdDate": "2020-07-21T19:07:49.000Z",
+        "displayName": "Game Making",
+        "key": "custom.game-making",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-09-07T20:02:31.000Z"
+    },
+    {
+        "_createdDate": "2020-07-21T19:06:03.000Z",
+        "displayName": "Technology - 12 Sessions",
+        "key": "custom.technology",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-11-11T22:10:07.000Z"
+    },
+    {
+        "_createdDate": "2020-07-21T18:12:44.000Z",
+        "displayName": "Reading & Science - 12 Sessions",
+        "key": "custom.reading-science",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-09-01T21:43:40.000Z"
+    },
+    {
+        "_createdDate": "2020-07-17T18:10:07.000Z",
+        "displayName": "Math in Art - 12 Sessions",
+        "key": "custom.math-in-art",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-11-11T22:10:08.000Z"
+    },
+    {
+        "_createdDate": "2020-07-17T18:02:20.000Z",
+        "displayName": "Space Science - 12 Sessions",
+        "key": "custom.space-science",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-09-01T21:47:51.000Z"
+    },
+    {
+        "_createdDate": "2020-07-17T13:58:40.000Z",
+        "displayName": "STEAM Registration",
+        "key": "custom.multistep-registration",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-07-17T14:40:33.000Z"
+    },
+    {
+        "_createdDate": "2020-06-04T23:35:35.000Z",
+        "displayName": "Week1Contacts",
+        "key": "custom.week1contacts",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-07-14T18:08:15.000Z"
+    },
+    {
+        "_createdDate": "2020-03-23T13:08:32.000Z",
+        "displayName": "STEAM Virtual Open House 4/17/21 9:53 AM",
+        "key": "custom.event-1",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2021-04-17T13:49:04.000Z"
+    },
+    {
+        "_createdDate": "2020-03-23T13:08:28.000Z",
+        "displayName": "Contact",
+        "key": "custom.contact",
+        "labelType": "USER_DEFINED",
+        "namespace": "custom",
+        "_updatedDate": "2020-07-14T18:08:15.000Z"
+    },
+    {
+        "displayName": "Customers",
+        "key": "contacts.customers",
+        "labelType": "SYSTEM",
+        "namespace": "contacts"
+    },
+    {
+        "displayName": "Contacted Me",
+        "key": "contacts.contacted-me",
+        "labelType": "SYSTEM",
+        "namespace": "contacts"
+    }
+]

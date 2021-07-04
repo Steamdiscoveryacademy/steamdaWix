@@ -4,7 +4,10 @@ paramObjectThis.doLog = true;
 // paramObjectThis.doCleanup = true;
 paramObjectThis.doInstantiate = true;
 // paramObjectThis.doInstantiateValueArray = ["PPENDING","0","0","0","0"];
-paramObjectThis.doInstantiateValueArray = "KoNsTaNt";
+// ø <first Three> from: 20210702113700_toDelete_LabelKeys.json
+paramObjectThis.doInstantiateValueArray = [`[{"_createdDate":"2021-04-16T01:03:47.000Z","displayName":"Adventure STEAM","key":"custom.adventure-steam","labelType":"USER_DEFINED","namespace":"custom","_updatedDate":"2021-04-16T01:03:47.000Z"},{"_createdDate":"2021-04-02T19:15:21.000Z","displayName":"Spring Break Camp - April 6","key":"custom.spring-break-camp-april-6","labelType":"USER_DEFINED","namespace":"custom","_updatedDate":"2021-04-02T19:15:21.000Z"},{"_createdDate":"2021-04-02T18:16:15.000Z","displayName":"Spring Break Camp - April 5","key":"custom.spring-break-camp-april-5","labelType":"USER_DEFINED","namespace":"custom","_updatedDate":"2021-04-02T18:16:15.000Z"}]`,"0","0","0","0"];
+// ø </first Three>
+// paramObjectThis.doInstantiateValueArray = "KoNsTaNt";
 let logStringResult = wixStorageCleanupLog(paramObjectThis);
 console.warn('logStringResult: ' + logStringResult);
 console.warn('paramObjectThis: ');
@@ -52,6 +55,7 @@ export function wixStorageCleanupLog(paramObject = {}) {
         let logString = `Both 'doCleanup' and 'doInstantiate' were set to 'true'. As this is invalid, out of an abundance of caution, both were set to 'false' and process aborted.`;
         return /*TEST ONLY*/ logString;
     }
+    let nextIndexByAlgorithm = "999";
     let storageType = '';
     let storageKey = '';
     let getString = '';
@@ -59,14 +63,15 @@ export function wixStorageCleanupLog(paramObject = {}) {
     let setString = '';
     let cleanupString = 'EEMPTY';
     let index = 0;
+    let doInstantiateThis = doInstantiate;
     keyArray.forEach(key => {
-
+        
         storageType = key.split('.')[0];
         storageKey = key.split('.')[1];
         setStringValue = 'EEROR';
         setStringValue = doInstantiate ? doInstantiateValueArray[index] : setStringValue;
         setStringValue = doCleanup ? cleanupString : setStringValue;
-
+        doInstantiateThis = setStringValue === 'SELF' ? false : doInstantiate;
         getString = `${storageType}.getItem('${storageKey}')`;
         setString = `${storageType}.setItem('${storageKey}','${setStringValue}')`;
 

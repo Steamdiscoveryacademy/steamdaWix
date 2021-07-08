@@ -3,9 +3,13 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     // ø <DO NOT REMOVE>
     // ! well, unless really final
     // ! do assign either true or false
+    // memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
+    local.setItem('logString', local.getItem('logString') + '\n[~2019]entering: ' + 'doEnrollmentCleanupByKind() at ' + memory.getItem('lastStamp'))
+    local.setItem('logString', local.getItem('logString') + '\nkindKey: ' + kindKey)
+
     let develTest = false;
     // ø </DO NOT REMOVE>
-    let errorStringArray = [];
+    // let errorStringArray = [];
     let cleanupString = 'EEMPTY';//override where appropriate
     let kindKeySupportedArray = ['CURRENT','CODE','STEPS','DATA','CORE','OTHER','MEMORY_ALL','LOCAL_TEMP','ALL_EXCEPT_ENROLLMENT','ALL_INCLUDING_ENROLLMENT','ABORT','LOG','EEROR'];
     // let kindKeySupportedArray = ['CODE','STEPS','DATA','NOT_LOCAL_DATA','NOT_CORE','OTHER','MEMORY_ALL','LOCAL_TEMP','ALL_EXCEPT_ENROLLMENT','ALL_INCLUDING_ENROLLMENT','ABORT'];
@@ -14,7 +18,7 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     console.warn('kindKey: ' + kindKey);
     let kindArray = [];
     kindArray = kindKey === 'ABORT' ? /*kindSupportedArray*/['ZZZ'] : kindArray;
-    kindArray = kindKey === 'ALL_INCLUDING_ENROLLMENT' ? ['CODE','STEPS','DATA','NEXT_ENROLLMENT','UI'] : kindArray;
+    kindArray = kindKey === 'ALL_INCLUDING_ENROLLMENT' ? ['CODE','STEPS','DATA','LOCAL_DATA','NEXT_ENROLLMENT','UI'] : kindArray;
     kindArray = kindKey === 'ALL_EXCEPT_ENROLLMENT' ? ['CODE','STEPS','DATA','LOCAL_DATA','UI'] : kindArray;
     kindArray = kindKey === 'CODE' ? ['CODE'] : kindArray
     kindArray = kindKey === 'STEPS' ? ['STEPS'] : kindArray
@@ -28,34 +32,51 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     // ø </Deprecated Use kindKey = 'CURRENT'>
     
     // ø <VALIDATION HERE>
+    let abort = false;
     if(kindArray.length === 0){
-        errorStringArray.push("The function 'doEnrollmentCleanupByKind()' with the parameter '"+kindKey+"' is not vallid.");
+        // errorStringArray.push("The function 'doEnrollmentCleanupByKind()' with the parameter '"+kindKey+"' is not vallid.");
+        local.setItem('logString', local.getItem('logString') + '\n[~2051]: ' + "The function 'doEnrollmentCleanupByKind()' with the parameter '"+kindKey+"' is not vallid.")
+        abort = true;
     }
     if(kindArray.length === 1 && kindArray[0] === 'ZZZ'){
-        errorStringArray.push("The function 'doEnrollmentCleanupByKind()' with the parameter '"+kindKey+"' is not enabled at this time.");
+        // errorStringArray.push("The function 'doEnrollmentCleanupByKind()' with the parameter '"+kindKey+"' is not enabled at this time.");
+        local.setItem('logString', local.getItem('logString') + '\n[~2051]: ' + "The function 'doEnrollmentCleanupByKind()' with the parameter '"+kindKey+"' is not enabled at this time.")
+        abort = true;
     }
     if(kindArray.includes('NEXT_ENROLLMENT')){
         if(typeof develTest !== 'boolean' || develTest !== true){
-            if(typeof local.getItem('wixWebhookStatus') !== 'string' || local.getItem('wixWebhookStatus') !== 'RESOLVED'){
-                errorStringArray.push("'Next Enrollment' rquires that the current Webhook Payload have a status of 'Resolved'")
+            if ($w('#sessionEnrollmentJSON').value !== 'BACKDOORROODKCAB') {
+                if(typeof local.getItem('wixWebhookStatus') !== 'string' || local.getItem('wixWebhookStatus') !== 'RESOLVED'){
+                    // errorStringArray.push("'Next Enrollment' rquires that the current Webhook Payload have a status of 'Resolved'")
+                    local.setItem('logString', local.getItem('logString') + '\n[~2057]: ' + "'Next Enrollment' rquires that the current Webhook Payload have a status of 'Resolved'")
+                    abort = true;
+
+                }
             }
         }
     }
+    if (abort) {
+        return;        
+    }
+    local.setItem('logString', local.getItem('logString') + '\n[~2068]kindArray: ' + kindArray.toString())
+
     // ø </VALIDATION HERE>
     
     // ø <VALIDATION EXIT IFF>
-    let lineFeed = '';
-    if(errorStringArray.length > 0){
-        let errorStringLog = '';
-        errorStringArray.forEach(errorString => {
-            // console.log(errorString); 
-            errorStringLog += lineFeed + ' • ' + errorString; 
-            lineFeed = '\n';
-        });
-        console.warn('errorStringLog: ');
-        console.warn(errorStringLog);
-        return errorStringLog;
-    }
+    // ! <PRETRASH>
+    // let lineFeed = '';
+    // if(errorStringArray.length > 0){
+    //     let errorStringLog = '';
+    //     errorStringArray.forEach(errorString => {
+    //         // console.log(errorString); 
+    //         errorStringLog += lineFeed + ' • ' + errorString; 
+    //         lineFeed = '\n';
+    //     });
+    //     console.warn('errorStringLog: ');
+    //     console.warn(errorStringLog);
+    //     return errorStringLog;
+    // }
+    // ! </PRETRASH>
     // ø </VALIDATION EXIT IFF>
 
     // ø <code Log for Current Enrollment> mostly for testing
@@ -145,8 +166,11 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     // ø <UI>
     if(kindArray.includes('UI')){
         local.setItem('lastErrorString', cleanupString);
-        local.setItem('logString', cleanupString);
-        memory.setItem('lastStamp', cleanupString);
+        //! <NOT included in cleanup>
+        //! just depends on its use resetting it as appropriate, no need to cleanup
+        // local.setItem('logString', cleanupString);
+        // memory.setItem('lastStamp', cleanupString);
+        //! </NOT included in cleanup>
     }
     // ø </UI>
     // ø <NEXT_ENROLLMENT>

@@ -8,7 +8,7 @@ paramObjectThis.doInstantiate = true;
 paramObjectThis.doInstantiateValueArray = [`[{"_createdDate":"2021-04-16T01:03:47.000Z","displayName":"Adventure STEAM","key":"custom.adventure-steam","labelType":"USER_DEFINED","namespace":"custom","_updatedDate":"2021-04-16T01:03:47.000Z"},{"_createdDate":"2021-04-02T19:15:21.000Z","displayName":"Spring Break Camp - April 6","key":"custom.spring-break-camp-april-6","labelType":"USER_DEFINED","namespace":"custom","_updatedDate":"2021-04-02T19:15:21.000Z"},{"_createdDate":"2021-04-02T18:16:15.000Z","displayName":"Spring Break Camp - April 5","key":"custom.spring-break-camp-april-5","labelType":"USER_DEFINED","namespace":"custom","_updatedDate":"2021-04-02T18:16:15.000Z"}]`,"0","0","0","0"];
 // ø </first Three>
 // paramObjectThis.doInstantiateValueArray = "KoNsTaNt";
-let logStringResult = wixStorageCleanupLog(paramObjectThis);
+let logStringResult = wixStorageManager(paramObjectThis);
 console.warn('logStringResult: ' + logStringResult);
 console.warn('paramObjectThis: ');
 console.warn(paramObjectThis);
@@ -25,8 +25,8 @@ console.warn(paramObjectThis);
 // ø <---------- <>  ---------->
 // ø <---------- </> ---------->
 
-// ø <---------- <wixStorageCleanupLog() POC for Overall>  ---------->
-export function wixStorageCleanupLog(paramObject = {}) {
+// ø <---------- <wixStorageManager() POC for Overall>  ---------->
+export function wixStorageManager(paramObject = {}) {
     let keyArray = [
         'local.forEachArraySource',
         'local.forEachNextIndex',
@@ -64,6 +64,7 @@ export function wixStorageCleanupLog(paramObject = {}) {
     let cleanupString = 'EEMPTY';
     let index = 0;
     let doInstantiateThis = doInstantiate;
+    paramObject.develLog ='';
     keyArray.forEach(key => {
         
         storageType = key.split('.')[0];
@@ -74,16 +75,20 @@ export function wixStorageCleanupLog(paramObject = {}) {
         doInstantiateThis = setStringValue === 'SELF' ? false : doInstantiate;
         getString = `${storageType}.getItem('${storageKey}')`;
         setString = `${storageType}.setItem('${storageKey}','${setStringValue}')`;
+        
+        if(doCleanup || doInstantiateThis){eval(setString)}
 
         // console.warn('getString: ' + getString);
-        logString += doLog ? '\n' + getString :'';
-        logString += doLog ? '\n' + setString :'';
+        logString += doLog ? '\n' + eval(getString) :'';
+        paramObject.develLog += '\n' + setString
+        paramObject.develLog += '\n' + getString
+        // logString += doLog ? '\n' + setString :'';
         index++;
     });
 
     return /*TEST ONLY*/ logString;
 }
-// ø <---------- </wixStorageCleanupLog() POC for Overall> ---------->
+// ø <---------- </wixStorageManager() POC for Overall> ---------->
 
 
 // ! ====================================================================================================

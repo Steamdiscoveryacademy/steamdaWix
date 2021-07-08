@@ -1,4 +1,5 @@
 // ø <---------- <doEnrollmentLogCurrent>  ---------->
+// ø <---------- <doEnrollmentLogCurrent_byKind.js filename>  ---------->
 export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
     let kindSupportedArray = ['CODE','STEPS','DATA','CORE','NONPERSISTENT','LOG','ERROR','UNACCOUNTED_FOR','DDEFAULT'];
     kind = kindSupportedArray.includes(kind) ? kind : 'DDEFAULT';
@@ -20,6 +21,9 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
         logString += '\n' + "local.getItem('studentId'): " + local.getItem('studentId');
         logString += '\n' + "local.getItem('secondaryId'): " + local.getItem('secondaryId');
         logString += '\n' + "memory.getItem('stRevision'): " + memory.getItem('stRevision');
+        logString += '\n' + "local.getItem('familyEmail'): " + local.getItem('familyEmail');
+        logString += '\n' + "local.getItem('studentEmail'): " + local.getItem('studentEmail');
+        logString += '\n' + "local.getItem('secondaryEmail'): " + local.getItem('secondaryEmail');
         logString += '\n' + "local.getItem('ppFirst'): " + local.getItem('ppFirst');
         logString += '\n' + "local.getItem('ppLast'): " + local.getItem('ppLast');
         logString += '\n' + "local.getItem('stFirst'): " + local.getItem('stFirst');

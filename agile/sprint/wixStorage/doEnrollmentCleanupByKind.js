@@ -106,10 +106,10 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
         // memory.setItem('ppRevision', cleanupString);
         local.setItem('studentId', cleanupString);
         local.setItem('secondaryId', cleanupString);
+        // memory.setItem('stRevision', cleanupString);
         local.setItem('familyEmail', cleanupString);
         local.setItem('studentEmail', cleanupString);
         local.setItem('secondaryEmail', cleanupString);
-        // memory.setItem('stRevision', cleanupString);
         local.setItem('ppFirst', cleanupString);
         local.setItem('ppLast', cleanupString);
         local.setItem('stFirst', cleanupString);

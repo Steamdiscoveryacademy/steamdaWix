@@ -31,5 +31,4 @@ export async function steamdaGetContactByEmailFunction(emailToFind) {
         returnObject.results = results;
         return returnObject;
     }
-    
     // ø <---------- </steamdaGetContactByEmailFunction> ---------->

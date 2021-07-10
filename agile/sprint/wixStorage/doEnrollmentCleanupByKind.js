@@ -102,6 +102,7 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     if(kindArray.includes('LOCAL_DATA')){
         cleanupString = develTest === true ? 'LOCAL_DATA' : cleanupString;
         local.setItem('staffIdentifiedFamilyId', cleanupString);
+        local.setItem('familySeed', cleanupString);
         local.setItem('familyId', cleanupString);
         // memory.setItem('ppRevision', cleanupString);
         local.setItem('studentId', cleanupString);

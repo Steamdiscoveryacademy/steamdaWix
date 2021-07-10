@@ -16,6 +16,7 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
         logString += '\n' + "memory.getItem('stAction'): " + memory.getItem('stAction');
         logString += '\n' + "memory.getItem('spAction'): " + memory.getItem('spAction');
         logString += '\n' + "local.getItem('staffIdentifiedFamilyId'): " + local.getItem('staffIdentifiedFamilyId');
+        logString += '\n' + "local.getItem('familySeed'): " + local.getItem('familySeed');
         logString += '\n' + "local.getItem('familyId'): " + local.getItem('familyId');
         logString += '\n' + "memory.getItem('ppRevision'): " + memory.getItem('ppRevision');
         logString += '\n' + "local.getItem('studentId'): " + local.getItem('studentId');

@@ -33,8 +33,8 @@ export async function getContactByEmailAndNotIdFunction(emailToFind = 'invalid E
         local.setItem('logString', logString);
         return;
     }
+    let idToDelete = queryRresults.results._items[0]._id//GUESS, needs verification
     if (count === 1) {
-        let idToDelete = queryRresults.results._items[0]._id//GUESS, needs verification
         logString += `\nThe Count is One, this is the BUG exist in the form of the Contact with ID: ${idToDelete}`;
         logString += `\ndiagnosticOnly: ${diagnosticOnly}: Meaning the found Contact will `;
         logString += diagnosticOnly ? 'NOT ' : '';

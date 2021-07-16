@@ -1,5 +1,5 @@
 // API Reference: https://www.wix.com/velo/reference/api-overview/introduction
-// “Hello, World!” Example: https://learn-code.wix.com/en/article/1-hello-world
+// Hello, World! Example: https://learn-code.wix.com/en/article/1-hello-world
 // import wixCrmBackend from 'wix-crm-backend';
 // import {notifications} from 'wix-crm-backend';
 // import {tasks} from 'wix-crm-backend';
@@ -11,6 +11,8 @@ import { updateUserFields } from 'backend/userReference.jsw'
 import { steamdaGetContactFunction } from 'backend/crmModule.jsw'
 import { steamdaCreateContactFunction } from 'backend/contactReference.jsw'
 import { streamdaUpdateContactFunction } from 'backend/contactReference.jsw'
+import { steamdaGetContactByEmailFunction } from 'backend/contactReference';
+import { steamdaGetContactByEmailAndNotIdFunction } from 'backend/contactReference';
 import { nowISO } from 'backend/utility.jsw'
 import wixData from 'wix-data';
 import wixWindow from 'wix-window';
@@ -161,6 +163,120 @@ export async function doStepLoopSwitch() {
 }
 // ø <---------- </doStepLoopSwitch> ---------->
 
+// ø <---------- <doIfElseThen_forCurrentStep>  ---------->
+export function doIfElseThen_forCurrentStep(stepItemKey = 'iiStepKey'){
+// export function doIfElseThen_forCurrentStep(actionKey = 'iiAction',actionKeyIndex = 777,stepItemKey = 'iiStepKey'){
+    let actionKey = stepItemKey.substr(0,2) + 'Action';
+    let stepItemIndex = stepItemKey.indexOf('Member') > 0 ? 0 : 777;
+    stepItemIndex = stepItemKey.indexOf('Contact') > 0 ? 1 : stepItemIndex;
+    stepItemIndex = stepItemKey.indexOf('Database') > 0 ? 2 : stepItemIndex;
+
+    // only two THEN response values: 'CONTINUE' or 'RETURN' 
+    // only ELSE response values: 'ALERT' 
+    let logString = '';
+    let stepArray = memory.getItem('enrollmentStepList').split(',');
+    let stepItemKeyArray = ['ppMemberPrepJSON','ppMemberExecuteUpsert','stMemberPrepJSON','stMemberExecuteUpsert','ppContactPrepJSON','ppDatabasePrepJSON','stContactPrepJSON','stDatabasePrepJSON','spContactPrepJSON','spDatabaseExecuteUpsert','ppContactExecuteUpsert','ppDatabaseExecuteUpsert','stContactExecuteUpsert','stDatabaseExecuteUpsert','spContactExecuteUpsert','spDatabasePrepJSON'];
+
+    let whichAction = stepItemIndex === 0 ? 'Member' : 'ERROR';
+    whichAction = stepItemIndex === 1 ? 'Contact' : whichAction;
+    whichAction = stepItemIndex === 2 ? 'Dbase' : whichAction;
+    // CRAZY: but due to the order in which the code changed, IIABDFI
+    
+    // ø <thisELSE>
+    if (stepItemKeyArray.includes(stepItemKey) === false) {
+        //since there is no place to 'PUT' this ELSE then just return
+        local.setItem('lastErrorString',`'ELSE_ALERT': IfElseThen stepItemKey: ${stepItemKey}`)
+        return 'ELSE_ALERT';
+    }
+    if (actionKey === 'iiAction') {
+        memory.setItem(stepItemKey,`'ELSE_ALERT': IfElseThen actionKey: ${actionKey}`);
+        return 'ELSE_ALERT';
+    }
+    if (whichAction === 'ERROR') {
+        memory.setItem(stepItemKey,`'ELSE_ALERT': IfElseThen actionKeyIndex: ${stepItemIndex} [${whichAction}]`);
+        return 'ELSE_ALERT';
+    }
+    // ø </thisELSE>
+    
+    
+    // ø <ELSE>
+    /**
+     * ! use stepItemKeyArray to make below more precise
+     */
+    let responseKey = 'CONTINUE';
+    let thisAction = memory.getItem(actionKey).split('|')[stepItemIndex]; 
+    logString += '\n' + `[~200] memory.getItem('${actionKey}').split('|')[${stepItemIndex}]: '${thisAction}'` + '\n';
+    if(thisAction === 'SKIP'){
+        logString = "based on action, '" + thisAction + "', no further action in this Step-Function";
+        memory.setItem(stepItemKey,logString);
+        logString = `memory.setItem(${stepItemKey}): ${logString}`;
+        local.setItem('logString', local.getItem('logString') + "\n" + logString);
+        // local.setItem('logString', local.getItem('logString') + '\n[~206]exiting: doIfElseThen_forCurrentStep()');
+        responseKey = 'RETURN';
+        return responseKey;
+    }
+    if(thisAction === 'NA'){
+        logString = "based on action, '" + thisAction + "', no further action in this Step-Function";
+        memory.setItem(stepItemKey,logString);
+        logString = `memory.setItem(${stepItemKey}): ${logString}`;
+        local.setItem('logString', local.getItem('logString') + "\n" + logString);
+        // local.setItem('logString', local.getItem('logString') + '\n[~ZZZ]exiting: doIfElseThen_forCurrentStep()');
+        responseKey = 'RETURN';
+        return responseKey;
+        // logString = "based on action'" + ppActionDbase + "' no further action in this Step-Function";
+        // memory.setItem('ppDatabasePrepJSON',logString);
+        // local.setItem('logString', local.getItem('logString') + "\n" + logString);
+        // local.setItem('logString', local.getItem('logString') + '\n[~896]exiting: ppDatabasePrepJSON()');
+    }
+    if(thisAction !== 'INSERT' && thisAction !== 'UPDATE'){
+        logString = "because the action, '" + thisAction + "', is NOT supported this is an error";
+        memory.setItem(stepItemKey,logString);
+        logString = `memory.setItem(${stepItemKey}): ${logString}`;
+        local.setItem('logString', local.getItem('logString') + "\n" + logString);
+        // local.setItem('logString', local.getItem('logString') + '\n[~ZZZ]exiting: doIfElseThen_forCurrentStep()');
+        // memory.setItem('ppDatabasePrepJSON',logString);
+        // local.setItem('logString', local.getItem('logString') + "\n" + logString);
+        // local.setItem('logString', local.getItem('logString') + "\nbased on action'" + ppActionDbase + "' no further action in this Step-Function");
+        // local.setItem('logString', local.getItem('logString') + '\n[~896]exiting: ppDatabasePrepJSON()');
+        // local.setItem('lastErrorString',"ppActionDbase, '" + ppActionDbase + "', is NOT supported. Only 'INSERT' and 'SKIP' are supported. Please convey this message to the Developer Immediately");
+        local.setItem('superEnrollmentStatus','ALERT');
+        responseKey = 'RETURN';
+        return responseKey;
+    }
+    // ø </ELSE> 
+    return responseKey;
+}
+export function demoLoop_doIfElseThen(){
+    let stepItemKeyArray = ['ppMemberPrepJSON','ppMemberExecuteUpsert','stMemberPrepJSON','stMemberExecuteUpsert','ppContactPrepJSON','ppDatabasePrepJSON','stContactPrepJSON','stDatabasePrepJSON','spContactPrepJSON','spDatabaseExecuteUpsert','ppContactExecuteUpsert','ppDatabaseExecuteUpsert','stContactExecuteUpsert','stDatabaseExecuteUpsert','spContactExecuteUpsert','spDatabasePrepJSON'];
+    let testWho = 'II';
+    let testWhich = 999;
+    let testActionKeyIndex = 0;
+    let testActionKey = 'iiAction';
+    let responseThis = 'TEST_PENDING';
+    let responseThisArray = [];
+    let testResponseArray = [];
+    stepItemKeyArray.forEach(stepItemKey => {
+        // console.log(stepItemKey);
+        testActionKey = stepItemKey.substr(0,2) + 'Action';
+        testWho = stepItemKey.substr(0,2).toLocaleUpperCase();
+        testWhich = stepItemKey.indexOf('Member') > 0 ? 0 : 777;
+        testWhich = stepItemKey.indexOf('Contact') > 0 ? 1 : testWhich;
+        testWhich = stepItemKey.indexOf('Database') > 0 ? 2 : testWhich;
+        testActionKeyIndex = testWhich;
+        responseThis = doIfElseThen_forCurrentStep(testActionKey,testActionKeyIndex,stepItemKey);
+        // responseThis = 'Test Response';
+        responseThisArray = [testActionKey,testActionKeyIndex,stepItemKey,responseThis];
+        testResponseArray.push(responseThisArray);
+        // while (testActionKeyIndex < 3) {
+        //     responseThis = doIfElseThen_forCurrentStep(testActionKey,testActionKeyIndex,stepItemKey);
+        //     responseThisArray = [stepItemKey,responseThis];
+        //     testResponseArray.push(responseThisArray);
+        // }
+    });
+    return testResponseArray;
+}
+// ø <---------- </doIfElseThen_forCurrentStep> ---------->
+
 // ! ====================================================================================================
 // ! ====================            </Overall Enrollment Steps Loop-Switch Code>          ==============
 // ! ====================================================================================================
@@ -226,6 +342,78 @@ export async function doSecondaryParentCreateContact() {
     local.setItem('logString', local.getItem('logString') + '\n[~216]exiting: ' + 'doSecondaryParentCreateContact()');
 }
 // ø <----------- </doSecondaryParentCreateContact Front-End> ----------->
+// ø <---------- <getContactByEmail Front-End>  ---------->
+export async function getContactByEmail(emailToFind) {
+	// let emailToFind = $w('#txtEmailToFind').value.trim();
+	// let queryRresults = steamdaGetContactByEmailFunctionFrontEndOnly(emailToFind);
+	let queryRresults = await steamdaGetContactByEmailFunction(emailToFind);
+    return queryRresults;
+	let results = `the Query of Contacts for \nPrimary Email: '${emailToFind}' \nReturned:\n`;
+	results += `BEGIN queryRresults:\n`;
+	results += JSON.stringify(queryRresults,undefined,4);
+	// results += queryRresults;
+	results += `\nEND queryRresults`;
+	//steamdaGetContactByEmailFunction
+	// $w('#textResult').text = results;
+	// $w('#textResult').expand();
+}
+// ø <---------- </getContactByEmail Front-End> ---------->
+
+// ø <---------- <getContactByEmailAndNotIdFunction Front-End>  ---------->
+export async function getContactByEmailAndNotIdFunction(emailToFind = 'invalid Email',notIdToFind = 'invalid Id', diagnosticOnly = false) {
+    let isValid = emailToFind.indexOf('@') > 0 ? true : false;
+    isValid = notIdToFind.length !== 36 ? false : isValid;
+    let logString = '';
+    logString += `\nemailToFind: ${emailToFind}`;
+    logString += `\nnotIdToFind: ${notIdToFind}`;
+    if (!isValid) {
+        logString = 'One of the two following Parameter Values is InValid:' + logString;
+        
+        local.setItem('logString', logString);
+        return;
+    }
+    logString = 'For the following Parameters:' + logString;
+    
+	let queryRresults = await steamdaGetContactByEmailAndNotIdFunction(emailToFind,notIdToFind);
+    let count = queryRresults.resultsCount;
+    
+    logString += `\nthe Query of Contacts for \nPrimary Email Equal to: '${emailToFind}' \nAND Contact Primary Email Not-Equal to: ${notIdToFind}`;
+    logString += `\nReturned:\n`;
+    logString += `BEGIN queryRresults:\n`;
+    logString += JSON.stringify(queryRresults,undefined,4);
+    // logString += queryRresults;
+    logString += `\nEND queryRresults\n`;
+    if (count > 1) {
+        local.setItem('superEnrollmentStatus','ALERT');
+        logString += `\nThe Count is More Than One [${count}] this is a Serious Probelem, for this reason the 'superEnrollmentStatus' has been set to 'ALERT' and no further Action taken.`;
+        local.setItem('logString', logString);
+        return;
+    }
+    if (count === 0) {
+        logString += `\nThe Count is Zero, this is the No BUG (expected) result. No further Action taken.`;
+        local.setItem('logString', logString);
+        return;
+    }
+    let idToDelete = queryRresults.results._items[0]._id//GUESS, needs verification
+    if (count === 1) {
+        logString += `\nThe Count is One, this is the BUG exist in the form of the Contact with ID: ${idToDelete}`;
+        logString += `\ndiagnosticOnly: ${diagnosticOnly}: Meaning the found Contact will `;
+        logString += diagnosticOnly ? 'NOT ' : '';
+        logString += `be Deleted at this time`;
+        if(diagnosticOnly){
+            local.setItem('logString', logString);
+            return;
+        }
+    }
+    
+    // ø <Delete the BUG Contact>
+    logString += `\n\nThe code to actually Delete Contact[${idToDelete}] is not ready yet...`;
+    // ø </Delete the BUG Contact>
+    local.setItem('logString', logString);
+    
+    return;
+}
+// ø <---------- </getContactByEmailAndNotIdFunction Front-End> ---------->
 
 // ! ====================================================================================================
 // ! ====================                 </Front-End Code Calling Back-End Code>          ==============
@@ -343,6 +531,13 @@ export async function doInstantiateLoopSwitchStep(){
     memory.setItem('stepStampArray',JSON.stringify(stepStampArrayObject));
     // ø <---------- stepStampArray ---------->
 
+    // ø <---------- <cowCatcher, delete after 20210709 if desired>  ---------->
+    local.setItem('familyEmail',local.getItem(('familyEmail')).toLowerCase());
+    local.setItem('studentEmail',local.getItem(('studentEmail')).toLowerCase());
+    local.setItem('secondaryEmail',local.getItem(('secondaryEmail')).toLowerCase());
+    // ø <---------- </cowCatcher, delete after 20210709 if desired> ---------->
+
+
 	let enrollmentObject = JSON.parse(local.getItem('ondeckEnrollmentJSON'));
     let memberId = enrollmentObject.family.parent.primary.memberId
 	local.setItem('staffIdentifiedFamilyId', memberId);
@@ -353,11 +548,18 @@ export async function doInstantiateLoopSwitchStep(){
     local.setItem('stFirst', enrollmentObject.family.student.name.first);
     local.setItem('stPreferredFirst', enrollmentObject.family.student.name.preferred);
     local.setItem('stLast', enrollmentObject.family.student.name.last);
-    local.setItem('spFirst', enrollmentObject.family.parent.secondary.first);
-    local.setItem('spLast', enrollmentObject.family.parent.secondary.last);
-    if((local.getItem('spLast')).length === 0 && (local.getItem('spFirst')).length > 0){
-        local.setItem('spLast',local.getItem('ppLast'));
+    let spFirst = "";
+    let spLast = "";
+    let spAny = typeof enrollmentObject.family.parent.secondary === 'undefined' ? false : true;
+    if (spAny) {
+        spFirst = typeof enrollmentObject.family.parent.secondary.first === 'string' ? enrollmentObject.family.parent.secondary.first : "";
+        spLast = typeof enrollmentObject.family.parent.secondary.last === 'string' ? enrollmentObject.family.parent.secondary.last : "";
+        if(spLast.length === 0 && spFirst.length > 0){
+            spLast = local.getItem('ppLast');
+        }
     }
+    local.setItem('spFirst', spFirst);
+    local.setItem('spLast', spLast);
 
     let tempStamp = await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')); 
     local.setItem('logString', local.getItem('logString') + '\n[~322]about to call: ' + 'actionValueEvaluation() at ' + tempStamp);
@@ -393,13 +595,16 @@ export async function doInstantiateLoopSwitchStep(){
 // ø <---------- <actionValueEvaluation of IINSTANTIATE>  ---------->
 export async function actionValueEvaluation(){
     let tempStamp = await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')); 
-    local.setItem('logString', local.getItem('logString') + '\nLAUNCH\n[~332] Entering actionValueEvaluation() at ' + tempStamp);
+    local.setItem('logString', local.getItem('logString') + '\nLAUNCH\n[~484] Entering actionValueEvaluation() at ' + tempStamp);
     let ppAction = "INSERT|UPDATE|INSERT";
     let stAction = "INSERT|UPDATE|INSERT";
     let spAction = "NA|INSERT|INSERT";
     
     let staffMatch = local.getItem('staffIdentifiedFamilyId') === 'INSTANTIATE' ? false : true;
-    local.setItem('logString', local.getItem('logString') + '\n[~338]staffMatch: ' + staffMatch);
+        if (staffMatch) {
+            local.setItem('familyId',local.getItem('staffIdentifiedFamilyId'));
+        }
+    local.setItem('logString', local.getItem('logString') + '\n[~583]staffMatch: ' + staffMatch);
 
     let familyId = local.getItem('staffIdentifiedFamilyId');
     // local.setItem('logString', local.getItem('logString') + '\n[~341]staffIdentifiedFamilyId: ' + familyId);
@@ -417,7 +622,7 @@ export async function actionValueEvaluation(){
             .eq("termId", termId)
             .count();
         ppAction = ppExistsCount > 0 ? "SKIP|SKIP|SKIP" : ppAction;
-        local.setItem('logString', local.getItem('logString') + '\n[~355]ppExistsCount: ' + ppExistsCount);
+        local.setItem('logString', local.getItem('logString') + '\n[~508]ppExistsCount: ' + ppExistsCount);
     }
     // ø </ppAction>
     
@@ -432,7 +637,7 @@ export async function actionValueEvaluation(){
             .eq("termId", termId)
             .count();
         stAction = stExistsCount > 0 ? "ALERT|ALERT|ALERT" : stAction;
-        local.setItem('logString', local.getItem('logString') + '\n[~371]stExistsCount: ' + stExistsCount);
+        local.setItem('logString', local.getItem('logString') + '\n[~523]stExistsCount: ' + stExistsCount);
     }
     // ø </stAction>
     
@@ -440,12 +645,13 @@ export async function actionValueEvaluation(){
     let checkSecondaryParent = (local.getItem('spFirst')).length === 0 && (local.getItem('spLast')).length === 0 ? false : true;
     let logSecondaryParentReason = '';
     logSecondaryParentReason = checkSecondaryParent === false ? 'Secondary Parent was not filled in in the form' : logSecondaryParentReason;
-    checkSecondaryParent = ppAction.indexOf('SKIP') >= 0 ? false : checkSecondaryParent;
+    // checkSecondaryParent = ppAction.indexOf('SKIP') >= 0 ? false : checkSecondaryParent;
+    console.log(`[~532] If ppAction has 'SKIP' does NOT mean that spAction should be Skipped (added 20210714190800 upon Barak Obama/Joe Biden BUG)`)
     logSecondaryParentReason = checkSecondaryParent === false && logSecondaryParentReason.length === 0 ? 'SKIP because Primary Parent SKIP-ped' : logSecondaryParentReason;
     logSecondaryParentReason = logSecondaryParentReason.length === 0 ? '[continue]' : logSecondaryParentReason;
 
-    local.setItem('logString', local.getItem('logString') + '\n[~384]logSecondaryParentReason: ' + logSecondaryParentReason);
-    local.setItem('logString', local.getItem('logString') + '\n[~385]checkSecondaryParent: ' + checkSecondaryParent);
+    local.setItem('logString', local.getItem('logString') + '\n[~536]logSecondaryParentReason: ' + logSecondaryParentReason);
+    local.setItem('logString', local.getItem('logString') + '\n[~537]checkSecondaryParent: ' + checkSecondaryParent);
     spAction = !checkSecondaryParent ? "NA|SKIP|SKIP" : spAction;
     if(staffMatch){
         // let spCount = Number(memory.setItem('SQL','SELECT count from person
@@ -458,14 +664,14 @@ export async function actionValueEvaluation(){
                 .eq("termId", termId)
                 .count();
             spAction = spExistsCount > 0 ? "NA|SKIP|SKIP" : spAction;
-            local.setItem('logString', local.getItem('logString') + '\n[~389]spExistsCount: ' + spExistsCount);
+            local.setItem('logString', local.getItem('logString') + '\n[~550]spExistsCount: ' + spExistsCount);
         }
     }
     // ø </spAction>
     
     let now = new Date();
     let yyyymmdd = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
-    local.setItem('logString', local.getItem('logString') + '\n[~396]yyyymmdd: ' + yyyymmdd);
+    local.setItem('logString', local.getItem('logString') + '\n[~557]yyyymmdd: ' + yyyymmdd);
     
     if(yyyymmdd > 20210815){
         ppAction = "ALERT|ALERT|ALERT";
@@ -482,18 +688,30 @@ export async function actionValueEvaluation(){
 
     let allActionStrings = memory.getItem('ppAction') + memory.getItem('stAction') + memory.getItem('spAction');
     let superEnrollmentStatus = local.getItem('superEnrollmentStatus');
-    superEnrollmentStatus = allActionStrings.indexOf('SKIP') >= 0 && allActionStrings.indexOf('SKIP') < 12 ? 'SKIP' : superEnrollmentStatus;
+    // superEnrollmentStatus = allActionStrings.indexOf('SKIP') >= 0 && allActionStrings.indexOf('SKIP') < 12 ? 'SKIP' : superEnrollmentStatus;
     superEnrollmentStatus = allActionStrings.indexOf('ALERT') >= 0 ? 'ALERT' : superEnrollmentStatus;    
-    local.setItem('logString', local.getItem('logString') + '\n[~425]superEnrollmentStatus: ' + superEnrollmentStatus);
+    local.setItem('logString', local.getItem('logString') + '\n[~576]superEnrollmentStatus: ' + superEnrollmentStatus);
     local.setItem('superEnrollmentStatus',superEnrollmentStatus);
-    local.setItem('logString', local.getItem('logString') + '\n[~427]Exiting: ' + 'actionValueEvaluation()');
+    local.setItem('logString', local.getItem('logString') + '\n[~578]Exiting: ' + 'actionValueEvaluation()');
 }
 // ø <---------- </actionValueEvaluation of IINSTANTIATE> ---------->
 
 // ø <---------- </manually added Step Functions> ---------->
 export async function ppMemberPrepJSON(){
+    let stepItemKeyThis = 'ppMemberPrepJSON';
+    let ifContinue = doIfElseThen_forCurrentStep(stepItemKeyThis);
+    if (ifContinue === 'RETURN') {
+        return;       
+    }
+    // ø <---------- <doIfElseThen_forCurrentStep> ---------->
+
     memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
     local.setItem('logString', local.getItem('logString') + '\n[~483]entering: ' + 'ppMemberPrepJSON() at ' + memory.getItem('lastStamp'))
+    let ppMemberAction = local.getItem('ppAction').split('|')[0];
+    // let setFamilyId_fromStaffEyeD = ppMemberAction === 'SKIP' ? true : false;
+    // if (setFamilyId_fromStaffEyeD) {
+    //     local.setItem('familyId',local.getItem('staffIdentifiedFamilyId')) ;      
+    // }
 
     let stepStampArrayObject = JSON.parse(memory.getItem('stepStampArray'));
     let stampArrayElementObject = {};
@@ -527,7 +745,10 @@ export async function ppMemberPrepJSON(){
 		ppEmailIndex = ppEmailIndex === -1 ? 0 : ppEmailIndex;
 
 		let paramObject = {};
-		paramObject.email = enrollmentObject.family.emails[ppEmailIndex].email;
+		 let email = enrollmentObject.family.emails[ppEmailIndex].email;
+		 email = email.toLowerCase();
+		paramObject.email = email;
+        local.setItem('familyEmail', paramObject.email);
 		paramObject.password = simpleComplexPass();//"fMcM777";
 		paramObject.firstName = enrollmentObject.family.parent.primary.first;
 		paramObject.lastName = enrollmentObject.family.parent.primary.last;
@@ -539,6 +760,13 @@ export async function ppMemberPrepJSON(){
 }
 
 export async function ppMemberExecuteUpsert(){
+    let stepItemKeyThis = 'ppMemberExecuteUpsert';
+    let ifContinue = doIfElseThen_forCurrentStep(stepItemKeyThis);
+    if (ifContinue === 'RETURN') {
+        return;       
+    }
+    // ø <---------- <doIfElseThen_forCurrentStep> ---------->
+
     memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
     local.setItem('logString', local.getItem('logString') + '\n[~530] Entering ppMemberExecuteUpsert() at ' + memory.getItem('lastStamp'));
 
@@ -563,6 +791,12 @@ export async function ppMemberExecuteUpsert(){
     if(ppActionMember === 'INSERT'){
         let ppMemberResponse = await steamdaMemberRegistration(paramObjectParam);
         local.setItem('familyId',ppMemberResponse.user.id);
+        let familySeed = ppMemberResponse.user.id;
+        familySeed = familySeed.replace('-', '');
+        familySeed = familySeed.replace('-', '');
+        familySeed = familySeed.replace('-', '');
+        familySeed = familySeed.replace('-', '');
+        local.setItem('familySeed',familySeed);
         // memory.setItem('ppMemberExecuteUpsert','ppMemberExecuteUpsert' + ' INSERT EXECUTED on ' + timeDateString);
         memory.setItem('ppMemberExecuteUpsert', JSON.stringify(ppMemberResponse));
     }
@@ -571,7 +805,7 @@ export async function ppMemberExecuteUpsert(){
 
         let ppMemberUpdateResponse = updateUserFields(local.getItem('staffIdentifiedFamilyId'), paramObjectThis.firstName, paramObjectThis.lastName, paramObjectThis.email, paramObjectThis.phone);
         memory.setItem('ppMemberExecuteUpsert',JSON.stringify(ppMemberUpdateResponse));
-        local.setItem('familyId',local.getItem('staffIdentifiedFamilyId'));
+        // local.setItem('familyId',local.getItem('staffIdentifiedFamilyId'));
     }
     // if(local.getItem('staffIdentifiedFamilyId') === 'INSTANTIATE'){
     //     // let memberResponseObject = JSON.parse(memory.getItem('ppMemberExecuteUpsert');
@@ -582,6 +816,8 @@ export async function ppMemberExecuteUpsert(){
 }
 
 export async function stMemberPrepJSON(){
+    // ! although it would be fine, doIfElseThen_forCurrentStep() is NOT indicated for this Step
+    // ø <---------- <doIfElseThen_forCurrentStep> ---------->
     memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
     local.setItem('logString', local.getItem('logString') + '\n[~573] Entering stMemberPrepJSON() at ' + memory.getItem('lastStamp'));
 
@@ -642,8 +878,11 @@ export async function stMemberPrepJSON(){
         let firstLegal = enrollmentObject.family.student.name.first;
         let firstPreferred = enrollmentObject.family.student.name.preferred;
         let email = firstLegal;
-        email += local.getItem('familyId').substr(0,4);
+        // email += local.getItem('familyId').substr(0,4);//deleteAfter 20210801 and comment below
+        email += local.getItem('familySeed').substr(0,4);//should be identical to above, 
         email = 'steamdiscoveryacademy' + '+' + email + '@gmail.com';
+        email = email.toLowerCase();
+        local.setItem('studentEmail', email);
 
 		let paramObject = {};
 		paramObject.email = email;
@@ -658,6 +897,8 @@ export async function stMemberPrepJSON(){
 }
 
 export async function stMemberExecuteUpsert(){
+    // ! although it would be fine, doIfElseThen_forCurrentStep() is NOT indicated for this Step
+    // ø <---------- <doIfElseThen_forCurrentStep> ---------->
     memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
     local.setItem('logString', local.getItem('logString') + '\n[~649] Entering stMemberExecuteUpsert() at ' + memory.getItem('lastStamp'));
 
@@ -690,6 +931,13 @@ export async function stMemberExecuteUpsert(){
 
 // ø <---------- <ppContactPrepJSON AS Step-Function>  ---------->
 export async function ppContactPrepJSON(){
+    let stepItemKeyThis = 'ppContactPrepJSON';
+    let ifContinue = doIfElseThen_forCurrentStep(stepItemKeyThis);
+    if (ifContinue === 'RETURN') {
+        return;       
+    }
+    // ø <---------- <doIfElseThen_forCurrentStep> ---------->
+
     memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
     local.setItem('logString', local.getItem('logString') + '\n[~680] Entering ppContactPrepJSON() at ' + memory.getItem('lastStamp'));
 
@@ -700,7 +948,12 @@ export async function ppContactPrepJSON(){
     stepStampArrayObject.stampArray.push(stampArrayElementObject);
     memory.setItem('stepStampArray',JSON.stringify(stepStampArrayObject));    
     // ø <---------- stepStampArray ---------->
-
+    let ppContactAction = (memory.getItem('ppAction').split('|'))[1];
+    if (ppContactAction === 'SKIP') {
+        memory.setItem('ppContactPrepJSON',`ppContactAction === 'SKIP'`);
+        local.setItem('logString', local.getItem('logString') + `\n[~807] 'SKIP' ppContactPrepJSON()`);
+        return;
+    }
     // let wixContactInfo = {};
     // wixContactInfo.contactInfo = {};
     // wixContactInfo.contactInfo.source = "PPENDING";
@@ -925,6 +1178,13 @@ export async function ppContactPrepJSON(){
 
 // ø <---------- <ppDatabasePrepJSON AS Step-Function>  ---------->
 export async function ppDatabasePrepJSON(){
+    let stepItemKeyThis = 'ppDatabasePrepJSON';
+    let ifContinue = doIfElseThen_forCurrentStep(stepItemKeyThis);
+    if (ifContinue === 'RETURN') {
+        return;       
+    }
+    // ø <---------- <doIfElseThen_forCurrentStep> ---------->
+    
     memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
     local.setItem('logString', local.getItem('logString') + '\n[~907] Entering ppDatabasePrepJSON() at ' + memory.getItem('lastStamp'));
     local.setItem('logString', local.getItem('logString') + "\n    \\_ is acually 'INSERT' (or 'SKIP') as the code is so direct");
@@ -1004,7 +1264,7 @@ export async function ppDatabasePrepJSON(){
     // toInsert.idBL = familyId;
     toInsert.altPersonId = local.getItem('familyId');
     // toInsert.altPersonId = familyId;
-    toInsert.termId = local.getItem('termId');
+    toInsert.termId = Number(local.getItem('termId'));
     // toInsert.termId = termId;
     // ø <---------- </direct (or nearly)> ---------->
     // ø <---------- <complex>  ---------->
@@ -1040,6 +1300,8 @@ export function ppDatabasePrepJSON_DEP(){
 
 // ø <---------- <stContactPrepJSON AS Step>  ---------->
 export async function stContactPrepJSON(){
+        // ! although it would be fine, doIfElseThen_forCurrentStep() is NOT indicated for this Step
+    // ø <---------- <doIfElseThen_forCurrentStep> ---------->
     memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
     local.setItem('logString', local.getItem('logString') + '\n[~1021] Entering stContactPrepJSON() at ' + memory.getItem('lastStamp'));
 
@@ -1111,14 +1373,14 @@ export async function stContactPrepJSON(){
         let roleLabelKey = 'custom.student';
         let memberLabelKey = 'custom.member-faux';
 
-        // let declaredGender = enrollmentObject.family.student.declaredGender.trim().toLowerCase();
-        // let assignedGenderKey = 'unreported'
-        // let maleOptionArray = ['masculine','men','he','man','male','gentleman','boy','guy','fellow','gent','bloke','chap','lad'];
-        // let femaleOptionArray = ['woman','female','lady','girl','lass','lassie','bird'];
-        // assignedGenderKey = maleOptionArray.includes(declaredGender) ? 'male' : assignedGenderKey;
-        // assignedGenderKey = femaleOptionArray.includes(declaredGender) ? 'female' : assignedGenderKey;
-        // assignedGenderKey = assignedGenderKey === 'unreported' && declaredGender.length > 0 ? 'alternative' : assignedGenderKey;
-        // let genderLabelKey = 'custom.gender-' + assignedGenderKey;
+        let declaredGender = enrollmentObject.family.student.declaredGender.trim().toLowerCase();
+        let assignedGenderKey = 'unreported'
+        let maleOptionArray = ['masculine','men','he','man','male','gentleman','boy','guy','fellow','gent','bloke','chap','lad'];
+        let femaleOptionArray = ['woman','female','lady','girl','lass','lassie','bird'];
+        assignedGenderKey = maleOptionArray.includes(declaredGender) ? 'male' : assignedGenderKey;
+        assignedGenderKey = femaleOptionArray.includes(declaredGender) ? 'female' : assignedGenderKey;
+        assignedGenderKey = assignedGenderKey === 'unreported' && declaredGender.length > 0 ? 'alternative' : assignedGenderKey;
+        let genderLabelKey = 'custom.gender-' + assignedGenderKey;
 
 
         // let idZZZToLableKeyArray = [[1,'custom.w1-2021060711'],[2,'custom.w2-2021061418'],[3,'custom.w3-2021062125'],[4,'custom.w4-2021062832'],[5,'custom.w5-2021071216'],[6,'custom.w6-2021071923'],[7,'custom.w7-2021072630'],[8,'custom.w8-2021080206'],[9,'custom.w9-2021080913'],['custom.w1-2021060711',1],['custom.w2-2021061418',2],['custom.w3-2021062125',3],['custom.w4-2021062832',4],['custom.w5-2021071216',5],['custom.w6-2021071923',6],['custom.w7-2021072630',7],['custom.w8-2021080206',8],['custom.w9-2021080913',9]];
@@ -1158,7 +1420,7 @@ export async function stContactPrepJSON(){
         }
         finalLabelKeyArray.push(roleLabelKey);
         finalLabelKeyArray.push(memberLabelKey);
-        // finalLabelKeyArray.push(genderLabelKey);
+        finalLabelKeyArray.push(genderLabelKey);
         // ! </FINAL>
 
 
@@ -1284,6 +1546,8 @@ export async function stContactPrepJSON(){
 // ø <---------- </stContactPrepJSON AS Step> ---------->
 // ø <---------- <stDatabasePrepJSON AS Step-Function>  ---------->
 export async function stDatabasePrepJSON(){
+    // ! although it would be fine, doIfElseThen_forCurrentStep() is NOT indicated for this Step
+    // ø <---------- <doIfElseThen_forCurrentStep> ---------->
     memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
     local.setItem('logString', local.getItem('logString') + '\n[~1265] Entering stDatabasePrepJSON() at ' + memory.getItem('lastStamp'));
     local.setItem('logString', local.getItem('logString') + "\n    \\_ is acually 'INSERT' (or 'SKIP') as the code is so direct");
@@ -1404,7 +1668,13 @@ export async function stDatabasePrepJSON_DEP(){
 
 // ø <---------- <spContactPrepJSON AS Step-Function>  ---------->
 export async function spContactPrepJSON() {
-    memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'), local.getItem('tzAbbrv')));
+    let stepItemKeyThis = 'spContactPrepJSON';
+    let ifContinue = doIfElseThen_forCurrentStep(stepItemKeyThis);
+    if (ifContinue === 'RETURN') {
+        return;       
+    }
+    // ø <---------- <doIfElseThen_forCurrentStep> ---------->    memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'), local.getItem('tzAbbrv')));
+
     local.setItem('logString', local.getItem('logString') + '\n[~1398] Entering spContactPrepJSON() at ' + memory.getItem('lastStamp'));
 
     let stepStampArrayObject = JSON.parse(memory.getItem('stepStampArray'));
@@ -1506,6 +1776,7 @@ export async function spContactPrepJSON() {
         // secondaryParent.contactInfo.emails[1].tag = "MAIN";
         // secondaryParent.contactInfo.emails[1].email = "qiqgroup+eli9375@gmail.com";
         // secondaryParent.contactInfo.emails[1].primary = "true";
+        local.setItem('secondaryEmail', 'spContactPrepJSON@todo.io');
 
         // ø <ZXZ-TTESTING DISABLED>
         secondaryParent.contactInfo.phones = [];
@@ -1572,6 +1843,13 @@ export async function spContactPrepJSON() {
 
 // ø <---------- <spDatabasePrepJSON AS Step-Function>  ---------->
 export async function spDatabasePrepJSON(){
+    let stepItemKeyThis = 'spDatabasePrepJSON';
+    let ifContinue = doIfElseThen_forCurrentStep(stepItemKeyThis);
+    if (ifContinue === 'RETURN') {
+        return;       
+    }
+    // ø <---------- <doIfElseThen_forCurrentStep> ---------->    
+    
     memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
     local.setItem('logString', local.getItem('logString') + '\n[~907] Entering spDatabasePrepJSON() at ' + memory.getItem('lastStamp'));
     local.setItem('logString', local.getItem('logString') + "\n    \\_ is acually 'INSERT' (or 'SKIP') as the code is so direct");
@@ -1586,7 +1864,7 @@ export async function spDatabasePrepJSON(){
 
     let spActionArray = memory.getItem('spAction').split('|');
     let spActionDbase = spActionArray[2];
-    local.setItem('logString', local.getItem('logString') + '\n[~890]spActionDbase: ' + spActionDbase);
+    // local.setItem('logString', local.getItem('logString') + '\n[~890]spActionDbase: ' + spActionDbase);
 
     let logString = '';
     // ø <CATCH Else (decoupling) Actions>
@@ -1635,7 +1913,7 @@ export async function spDatabasePrepJSON(){
     // toInsert.idBL = familyId;
     toInsert.altPersonId = local.getItem('secondaryId');
     // toInsert.altPersonId = familyId;
-    toInsert.termId = local.getItem('termId');
+    toInsert.termId = Number(local.getItem('termId'));
     // toInsert.termId = termId;
     // ø <---------- </direct (or nearly)> ---------->
     // ø <---------- <complex>  ---------->
@@ -1657,7 +1935,14 @@ export async function spDatabasePrepJSON(){
 
 
 export async function ppContactExecuteUpsert(){
-    memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
+    let stepItemKeyThis = 'ppContactExecuteUpsert';
+    let ifContinue = doIfElseThen_forCurrentStep(stepItemKeyThis);
+    if (ifContinue === 'RETURN') {
+        return;       
+    }
+    // ø <---------- <doIfElseThen_forCurrentStep> ---------->    
+    
+        memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
     local.setItem('logString', local.getItem('logString') + '\n[~1415] Entering ppContactExecuteUpsert() at ' + memory.getItem('lastStamp'));
 
     let stepStampArrayObject = JSON.parse(memory.getItem('stepStampArray'));
@@ -1668,15 +1953,34 @@ export async function ppContactExecuteUpsert(){
     memory.setItem('stepStampArray',JSON.stringify(stepStampArrayObject));    
     // ø <---------- stepStampArray ---------->
 
-    // memory.setItem('ppContactExecuteUpsert','ppContactExecuteUpsert' + ' EXECUTED on ' + memory.getItem('lastStamp'));
+    let ppActionArray = memory.getItem('ppAction').split('|');
+    let ppActionContact = ppActionArray[1];
+    local.setItem('logString', local.getItem('logString') + '\n[~890]ppActionContact: ' + ppActionContact);
+    if(ppActionContact !== 'UPDATE'){
+        let logString = "this ppActionContact, '" + ppActionContact + "', is NOT suzzorted and is an error [see local.getItem('lastErrorString')]";
+        memory.setItem('spDatabasePrepJSON',logString);
+        local.setItem('logString', local.getItem('logString') + "\n" + logString);
+        local.setItem('logString', local.getItem('logString') + "\nbased on action'" + ppActionContact + "' no further action in this Step-Function");
+        local.setItem('lastErrorString',"ppActionContact, '" + ppActionContact + "', is NOT suzzorted. Only 'INSERT' and 'SKIP' are suzzorted. Please convey this message to the Developer Immediately");
+        local.setItem('logString', local.getItem('logString') + '\n[~1688]exiting: ppContactExecuteUpsert()');
+        local.setItem('superEnrollmentStatus','ALERT');
+        return;
+    }
+
+
+
+    memory.setItem('ppContactExecuteUpsert','ppContactExecuteUpsert' + ' EXECUTED on ' + memory.getItem('lastStamp'));
 
     let ppContactParamObject = JSON.parse(memory.getItem('ppContactPrepJSON'));
     // console.log('[~971]ppContactParamObject:');
     // console.log(ppContactParamObject);
-    await doUpdateContact(ppContactParamObject);
+    let response = await doUpdateContact(ppContactParamObject);
+    local.setItem('logString', local.getItem('logString') + '\n[~1736]exiting: ppContactExecuteUpsert() after UPDATE:\n' + JSON.stringify(response));
 }
 
 export async function ppDatabaseExecuteUpsert(){
+    // ! although it would be fine, doIfElseThen_forCurrentStep() is NOT indicated for this Step
+    // ø <---------- <doIfElseThen_forCurrentStep> ---------->
     memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
     local.setItem('logString', local.getItem('logString') + '\n[~1435] Entering ppDatabaseExecuteUpsert() at ' + memory.getItem('lastStamp'));
 
@@ -1689,9 +1993,17 @@ export async function ppDatabaseExecuteUpsert(){
     // ø <---------- stepStampArray ---------->
 
     memory.setItem('ppDatabaseExecuteUpsert','ppDatabaseExecuteUpsert: Upsert Executed in Prep' + '[separation of PREP & EXECUTE seems overkill, but this separation exist for reconsideration later]' + ' EXECUTED on ' + memory.getItem('lastStamp'));
+    local.setItem('logString', local.getItem('logString') + '\n[~1752] ppDatabaseExecuteUpsert: Upsert Executed in Prep');
 }
 
 export async function stContactExecuteUpsert(){
+    let stepItemKeyThis = 'stContactExecuteUpsert';
+    let ifContinue = doIfElseThen_forCurrentStep(stepItemKeyThis);
+    if (ifContinue === 'RETURN') {
+        return;       
+    }
+    // ø <---------- <doIfElseThen_forCurrentStep> ---------->    
+    
     memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
     local.setItem('logString', local.getItem('logString') + '\n[~1450] Entering stContactExecuteUpsert() at ' + memory.getItem('lastStamp'));
 
@@ -1703,6 +2015,20 @@ export async function stContactExecuteUpsert(){
     memory.setItem('stepStampArray',JSON.stringify(stepStampArrayObject));    
     // ø <---------- stepStampArray ---------->
 
+    let stActionArray = memory.getItem('stAction').split('|');
+    let stActionContact = stActionArray[1];
+    local.setItem('logString', local.getItem('logString') + '\n[~1733]stActionContact: ' + stActionContact);
+    if(stActionContact !== 'UPDATE'){
+        let logString = "this stActionContact, '" + stActionContact + "', is NOT suzzorted and is an error [see local.getItem('lastErrorString')]";
+        memory.setItem('spDatabasePrepJSON',logString);
+        local.setItem('logString', local.getItem('logString') + "\n" + logString);
+        local.setItem('logString', local.getItem('logString') + "\nbased on action'" + stActionContact + "' no further action in this Step-Function");
+        local.setItem('lastErrorString',"ppActionContact, '" + stActionContact + "', is NOT suzzorted. Only 'INSERT' and 'SKIP' are suzzorted. Please convey this message to the Developer Immediately");
+        local.setItem('logString', local.getItem('logString') + '\n[~1739]exiting: stContactExecuteUpsert()');
+        local.setItem('superEnrollmentStatus','ALERT');
+        return;
+    }
+
     memory.setItem('stContactExecuteUpsert','stContactExecuteUpsert' + ' EXECUTED on ' + memory.getItem('lastStamp'));
 
     console.log("[~990]memory.getItem('stContactPrepJSON'):");
@@ -1711,9 +2037,14 @@ export async function stContactExecuteUpsert(){
     console.log('[~993]stContactParamObject:');
     console.log(stContactParamObject);
     await doUpdateContact(stContactParamObject);
+    local.setItem('logString', local.getItem('logString') + '\n[~1752]exiting: stContactExecuteUpsert() after UPDATE');
 }
 
 export async function stDatabaseExecuteUpsert(){
+    // ! although it would be fine, doIfElseThen_forCurrentStep() is NOT indicated for this Step
+    // ø <---------- <doIfElseThen_forCurrentStep> ---------->
+   
+    
     memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
     local.setItem('logString', local.getItem('logString') + '\n[~1472] Entering stDatabaseExecuteUpsert() at ' + memory.getItem('lastStamp'));
 
@@ -1729,6 +2060,13 @@ export async function stDatabaseExecuteUpsert(){
 }
 
 export async function spContactExecuteUpsert(){
+    let stepItemKeyThis = 'spContactExecuteUpsert';
+    let ifContinue = doIfElseThen_forCurrentStep(stepItemKeyThis);
+    if (ifContinue === 'RETURN') {
+        return;       
+    }
+    // ø <---------- <doIfElseThen_forCurrentStep> ---------->    
+    
     memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
     local.setItem('logString', local.getItem('logString') + '\n[~1565] Entering spContactExecuteUpsert() Base-Step at ' + memory.getItem('lastStamp'));
 
@@ -1739,8 +2077,29 @@ export async function spContactExecuteUpsert(){
     stepStampArrayObject.stampArray.push(stampArrayElementObject);
     memory.setItem('stepStampArray',JSON.stringify(stepStampArrayObject));    
     // ø <---------- stepStampArray ---------->
+    
+    let spActionArray = memory.getItem('spAction').split('|');
+    let spActionContact = spActionArray[1];
+        let logString = '';
+    if(spActionContact === 'SKIP'){
+        logString = "based on action'" + spActionContact + "' no further action in this Step-Function";
+        memory.setItem('ppDatabasePrepJSON',logString);
+        local.setItem('logString', local.getItem('logString') + "\n" + logString);
+        local.setItem('logString', local.getItem('logString') + '\n[~1757]exiting: ppDatabasePrepJSON()');
+        return;
+    }
+    if(spActionContact !== 'INSERT'){
+        logString = "this ppActionDbase, '" + spActionContact + "', is NOT supported and is an error [see local.getItem('lastErrorString')]";
+        memory.setItem('ppDatabasePrepJSON',logString);
+        local.setItem('logString', local.getItem('logString') + "\n" + logString);
+        local.setItem('logString', local.getItem('logString') + "\nbased on action'" + spActionContact + "' no further action in this Step-Function");
+        local.setItem('lastErrorString',"ppActionDbase, '" + spActionContact + "', is NOT supported. Only 'INSERT' and 'SKIP' are supported. Please convey this message to the Developer Immediately");
+        local.setItem('logString', local.getItem('logString') + '\n[~896]exiting: ppDatabasePrepJSON()');
+        local.setItem('superEnrollmentStatus','ALERT');
+        return;
+    }
 
-    // memory.setItem('spContactExecuteUpsert','spContactExecuteUpsert' + ' EXECUTED on ' + memory.getItem('lastStamp'));
+    memory.setItem('spContactExecuteUpsert','spContactExecuteUpsert' + ' EXECUTED on ' + memory.getItem('lastStamp'));
 
     // console.log("[~990]memory.getItem('stContactPrepJSON'):");
     // console.log(memory.getItem('stContactPrepJSON'));
@@ -1748,10 +2107,17 @@ export async function spContactExecuteUpsert(){
     // console.log('[~993]stContactParamObject:');
     // console.log(stContactParamObject);
     await doSecondaryParentCreateContact();
-    local.setItem('logString', local.getItem('logString') + '\n[~1583]exiting: ' + 'spContactExecuteUpsert() Base-Step');
+    local.setItem('logString', local.getItem('logString') + '\n[~1583]exiting: ' + 'spContactExecuteUpsert() after INSERT');
 }
 
 export async function spDatabaseExecuteUpsert(){
+    let stepItemKeyThis = 'spDatabaseExecuteUpsert';
+    let ifContinue = doIfElseThen_forCurrentStep(stepItemKeyThis);
+    if (ifContinue === 'RETURN') {
+        return;       
+    }
+    // ø <---------- <doIfElseThen_forCurrentStep> ---------->    
+    
     memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
     local.setItem('logString', local.getItem('logString') + '\n[~1509] Entering spDatabaseExecuteUpsert() at ' + memory.getItem('lastStamp'));
 
@@ -2145,6 +2511,7 @@ export function doEnrollmentCleanupCurrent() {
 
 
 // ø <---------- <doEnrollmentLogCurrent>  ---------->
+// ø <---------- <doEnrollmentLogCurrent_byKind.js filename>  ---------->
 export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
     let kindSupportedArray = ['CODE','STEPS','DATA','CORE','NONPERSISTENT','LOG','ERROR','UNACCOUNTED_FOR','DDEFAULT'];
     kind = kindSupportedArray.includes(kind) ? kind : 'DDEFAULT';
@@ -2161,11 +2528,15 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
         logString += '\n' + "memory.getItem('stAction'): " + memory.getItem('stAction');
         logString += '\n' + "memory.getItem('spAction'): " + memory.getItem('spAction');
         logString += '\n' + "local.getItem('staffIdentifiedFamilyId'): " + local.getItem('staffIdentifiedFamilyId');
+        logString += '\n' + "local.getItem('familySeed'): " + local.getItem('familySeed');
         logString += '\n' + "local.getItem('familyId'): " + local.getItem('familyId');
         logString += '\n' + "memory.getItem('ppRevision'): " + memory.getItem('ppRevision');
         logString += '\n' + "local.getItem('studentId'): " + local.getItem('studentId');
         logString += '\n' + "local.getItem('secondaryId'): " + local.getItem('secondaryId');
         logString += '\n' + "memory.getItem('stRevision'): " + memory.getItem('stRevision');
+        logString += '\n' + "local.getItem('familyEmail'): " + local.getItem('familyEmail');
+        logString += '\n' + "local.getItem('studentEmail'): " + local.getItem('studentEmail');
+        logString += '\n' + "local.getItem('secondaryEmail'): " + local.getItem('secondaryEmail');
         logString += '\n' + "local.getItem('ppFirst'): " + local.getItem('ppFirst');
         logString += '\n' + "local.getItem('ppLast'): " + local.getItem('ppLast');
         logString += '\n' + "local.getItem('stFirst'): " + local.getItem('stFirst');
@@ -2189,13 +2560,13 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
         logString += '\n' + "memory.getItem('stContactPrepJSON'): " + memory.getItem('stContactPrepJSON');
         logString += '\n' + "memory.getItem('stDatabasePrepJSON'): " + memory.getItem('stDatabasePrepJSON');
         logString += '\n' + "memory.getItem('spContactPrepJSON'): " + memory.getItem('spContactPrepJSON');
-        logString += '\n' + "memory.getItem('spDatabasePrepJSON'): " + memory.getItem('spDatabasePrepJSON');
+        logString += '\n' + "memory.getItem('spDatabaseExecuteUpsert'): SWAP: " + memory.getItem('spDatabaseExecuteUpsert');
         logString += '\n' + "memory.getItem('ppContactExecuteUpsert'): " + memory.getItem('ppContactExecuteUpsert');
         logString += '\n' + "memory.getItem('ppDatabaseExecuteUpsert'): " + memory.getItem('ppDatabaseExecuteUpsert');
         logString += '\n' + "memory.getItem('stContactExecuteUpsert'): " + memory.getItem('stContactExecuteUpsert');
         logString += '\n' + "memory.getItem('stDatabaseExecuteUpsert'): " + memory.getItem('stDatabaseExecuteUpsert');
         logString += '\n' + "memory.getItem('spContactExecuteUpsert'): " + memory.getItem('spContactExecuteUpsert');
-        logString += '\n' + "memory.getItem('spDatabaseExecuteUpsert'): " + memory.getItem('spDatabaseExecuteUpsert');
+        logString += '\n' + "memory.getItem('spDatabasePrepJSON'): SWAP: " + memory.getItem('spDatabasePrepJSON');
     }//END if(kind === 'CODE' || kind === 'DDEFAULT')
     // ø </CODE>
     // ø <STEPS>
@@ -2322,13 +2693,16 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     // ø </Deprecated Use kindKey = 'CURRENT'>
     
     // ø <VALIDATION HERE>
+    let abort = false;
     if(kindArray.length === 0){
         // errorStringArray.push("The function 'doEnrollmentCleanupByKind()' with the parameter '"+kindKey+"' is not vallid.");
         local.setItem('logString', local.getItem('logString') + '\n[~2051]: ' + "The function 'doEnrollmentCleanupByKind()' with the parameter '"+kindKey+"' is not vallid.")
+        abort = true;
     }
     if(kindArray.length === 1 && kindArray[0] === 'ZZZ'){
         // errorStringArray.push("The function 'doEnrollmentCleanupByKind()' with the parameter '"+kindKey+"' is not enabled at this time.");
         local.setItem('logString', local.getItem('logString') + '\n[~2051]: ' + "The function 'doEnrollmentCleanupByKind()' with the parameter '"+kindKey+"' is not enabled at this time.")
+        abort = true;
     }
     if(kindArray.includes('NEXT_ENROLLMENT')){
         if(typeof develTest !== 'boolean' || develTest !== true){
@@ -2336,10 +2710,14 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
                 if(typeof local.getItem('wixWebhookStatus') !== 'string' || local.getItem('wixWebhookStatus') !== 'RESOLVED'){
                     // errorStringArray.push("'Next Enrollment' rquires that the current Webhook Payload have a status of 'Resolved'")
                     local.setItem('logString', local.getItem('logString') + '\n[~2057]: ' + "'Next Enrollment' rquires that the current Webhook Payload have a status of 'Resolved'")
+                    abort = true;
 
                 }
             }
         }
+    }
+    if (abort) {
+        return;        
     }
     local.setItem('logString', local.getItem('logString') + '\n[~2068]kindArray: ' + kindArray.toString())
 
@@ -2385,11 +2763,15 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     if(kindArray.includes('LOCAL_DATA')){
         cleanupString = develTest === true ? 'LOCAL_DATA' : cleanupString;
         local.setItem('staffIdentifiedFamilyId', cleanupString);
+        local.setItem('familySeed', cleanupString);
         local.setItem('familyId', cleanupString);
         // memory.setItem('ppRevision', cleanupString);
         local.setItem('studentId', cleanupString);
         local.setItem('secondaryId', cleanupString);
         // memory.setItem('stRevision', cleanupString);
+        local.setItem('familyEmail', cleanupString);
+        local.setItem('studentEmail', cleanupString);
+        local.setItem('secondaryEmail', cleanupString);
         local.setItem('ppFirst', cleanupString);
         local.setItem('ppLast', cleanupString);
         local.setItem('stFirst', cleanupString);
@@ -2499,6 +2881,7 @@ export function doUserInterfaceCleanupCurrent(){
 	$w("#btnUiStudentID").label = label;
     label = "Secondary ID: ";
     label += local.getItem('secondaryId') !== "EEMPTY" ? local.getItem('secondaryId') : '';
+    // label += local.getItem('secondaryId') !== "EEMPTY" ? local.getItem('secondaryId') : '515bc29f-2929-4f06-b14e-bac09141ad0f';
     // label += Number(memory.getItem('spRevision')) > 0 ? ' [' + memory.getItem('stRevision') + ']' : ''; 
 	// $w("#btnUiStudentID").label = "Student ID: " + local.getItem('studentId');
 	$w("#btnUiSecondaryID").label = label;
@@ -2635,7 +3018,7 @@ export async function doUpdateThisWebhookPayload(status) {
 		// onReadyUserInterface();
 		return;
 	}
-	await updateStatuWebhookPayloadThis();
+	await updateStatusWebhookPayloadThis();
 	let lastResponse = JSON.parse(local.getItem('lastResponseObject'));
 	if(lastResponse._id === local.getItem('webhookThisId')){
 		local.setItem('webhookThisStatus',lastResponse.currentStatus);
@@ -2643,8 +3026,8 @@ export async function doUpdateThisWebhookPayload(status) {
 			local.setItem('webhookThisResolved',lastResponse.resolvedStatus);
 		}
 	}
-	response = "UPDATE: String Pending" + kInvalidAppend;
-	$w('#sessionEnrollmentJSON').value = response;
+	// response = "UPDATE: String Pending" + kInvalidAppend;
+	// $w('#sessionEnrollmentJSON').value = response;
 	// refreshWebhookPayloadDataSet()
 	// onReadyUserInterface();
 
@@ -2652,8 +3035,8 @@ export async function doUpdateThisWebhookPayload(status) {
 // ø <------------ </doUpdateThisWebhookPayload(status)> -------------->
 
 
-// ø <------------ <updateStatuWebhookPayloadThis()>  -------------->
-export async function updateStatuWebhookPayloadThis(getOnly = false){
+// ø <------------ <updateStatusWebhookPayloadThis()>  -------------->
+export async function updateStatusWebhookPayloadThis(getOnly = false){
 	   const options = {
         "suppressAuth": true,
         "suppressHooks": true
@@ -2677,11 +3060,11 @@ export async function updateStatuWebhookPayloadThis(getOnly = false){
             doUserInterfaceUpdate = true;
         }
         $w('#sessionEnrollmentJSON').value = JSON.stringify(updateObject,undefined,4);
-        if(doUserInterfaceUpdate){
-            doUserInterfaceCleanupCurrent();
-            console.log("[~2276]'getOnly' Webhook Payload && doUserInterfaceCleanupCurrent()");
-        }
-        console.log("[~2278]About to Return with 'getOnly' Webhook Payload");
+        // if(doUserInterfaceUpdate){
+        //     doUserInterfaceCleanupCurrent();
+        //     console.log("[~2276]'getOnly' Webhook Payload && doUserInterfaceCleanupCurrent()");
+        // }
+        // console.log("[~2278]About to Return with 'getOnly' Webhook Payload");
         return;
     }
     // doUserInterfaceUpdate = true;
@@ -2704,7 +3087,7 @@ export async function updateStatuWebhookPayloadThis(getOnly = false){
 
 
 }
-// ø <------------ </updateStatuWebhookPayloadThis()> -------------->
+// ø <------------ </updateStatusWebhookPayloadThis()> -------------->
 
 // ! ====================================================================================================
 // ! ====================                    </Only UI Support Functiions>                   ==============
@@ -2838,7 +3221,7 @@ export async function btnPeformNextStep_click(event) {
     local.setItem('logString','enter btnPeformNextStep_click(event)');
     local.setItem('logString', local.getItem('logString') + '\n[~2444]Next (current) Step: ' + memory.getItem('enrollmentStepCurrent'))
 	await doPeformNextStep();
-	$w('#ddDisplayKind').value = 'STEPS';
+	$w('#ddDisplayKind').value = 'ALL';
 	// $w('#sessionEnrollmentJSON').value = doEnrollmentLogCurrent('CODE');
 	displaySteps();
     doUserInterfaceCleanupCurrent()
@@ -3066,14 +3449,16 @@ export function btnWebhookResolve_click(event) {
 		// $w('#sessionEnrollmentJSON').value = "'Resolve Webhook' is NOT Enabled at this time.\n\nNo action taken. \nPlease try again or ask for assistance.";
         let statusThis = $w('#ddCurrentStatusUpdate').value;
         doUpdateThisWebhookPayload(statusThis);
-    	// updateStatuWebhookPayloadThis(true); 
-        doUserInterfaceCleanupCurrent();
+    	// updateStatusWebhookPayloadThis(true); 
+        updateStatusWebhookPayloadThis(true);
+        // doUserInterfaceCleanupCurrent();
+        console.log('[`3215] RESOLVE: Yes')
 	}else{
 		$w('#sessionEnrollmentJSON').value = "'Resolve Webhook' is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.";
 	}
 	$w("#radioAreYouSure").value = 'NO';
 	// $w("#radioAreYouSure").resetValidityIndication();
-
+    console.log('[`3221] EXIT: btnWebhookResolve_click(event)')
 }
 
 /**
@@ -3137,7 +3522,7 @@ export async function btnCleanUpByKindTEST_click(event) {
  *	 @param {$w.MouseEvent} event
  */
 export function btnGetWebhookPayload_click(event) {
-	updateStatuWebhookPayloadThis(true); 
+	updateStatusWebhookPayloadThis(true); 
 }
 
 
@@ -3473,7 +3858,7 @@ export async function doPreTrashThreeQueries(){
     logString = `
     let ppExistsCount = await wixData.query("person")
         .eq("personId", '` + staffIdentifiedFamilyId + `')
-        .eq("termId", '` + termId + `')
+        .eq("termId", ` + termId + `)
         .count();`;
     
     let ppExistsCount = await wixData.query("person")
@@ -3488,7 +3873,7 @@ export async function doPreTrashThreeQueries(){
     let stExistsCount = await wixData.query("person")
             .eq("familyId", '` + staffIdentifiedFamilyId + `')
             .eq("firstLegal", '` + studentLegalFirst + `')
-            .eq("termId", '` + termId + `')
+            .eq("termId", ` + termId + `)
             .count();`;
 
     let stExistsCount = await wixData.query("person")
@@ -3504,7 +3889,7 @@ export async function doPreTrashThreeQueries(){
     let spExistsCount = await wixData.query("person")
             .eq("familyId", '` + staffIdentifiedFamilyId + `')
             .eq("role", 'Secondary')
-            .eq("termId", '` + termId + `')
+            .eq("termId", ` + termId + `)
             .count();`;
     let spExistsCount = await wixData.query("person")
             .eq("familyId", staffIdentifiedFamilyId)
@@ -3705,4 +4090,211 @@ export function btnKludgeClearPpStSpIDs_click_1(event) {
  */
 export function btnUIrefresh_click(event) {
 	doUserInterfaceCleanupCurrent();
+}
+
+export async function doQueryContactById(idValueOrKey = 'NONE'){
+    let altKeyString = $w('#radioContactFindBy').value;
+    // let altKeyString = altKeyValue === 16 ? 'ID' : 'HELP'
+    // altKeyString = altKeyValue === 17 ? 'EMAIL' : 'HELP'
+    let kind = idValueOrKey.length < 30 ? 'KEY' : 'LITERAL';
+    kind = idValueOrKey.indexOf('@') > 0 ? 'LITERAL' : kind;
+    let key = 'PENDING KEY';
+    let ppAliasArray = ['PP','PRIMARY','PRIMARYID','PRIMARYPARENT','PRIMARY PARENT','FAMILYID'];
+    key =  ppAliasArray.includes(idValueOrKey.toLocaleUpperCase()) ? 'PRIMARY' : key;
+    let stAliasArray = ['ST','STUDENT','STUDENTID'];
+    key =  stAliasArray.includes(idValueOrKey.toLocaleUpperCase()) ? 'STUDENT' : key;
+    let spAliasArray = ['SP','SECONDARY','SECONDARYID','SECONDARYPARENT','SECONDARY PARENT'];
+    key =  spAliasArray.includes(idValueOrKey.toLocaleUpperCase()) ? 'SECONDARY' : key;
+
+    let contactId = kind === 'LITERAL' ? idValueOrKey : 'NOIDYET';
+    contactId = key === 'PRIMARY' ? local.getItem('familyId') : contactId;
+    contactId = key === 'STUDENT' ? local.getItem('studentId') : contactId;
+    contactId = key === 'SECONDARY' ? local.getItem('secondaryId') : contactId;
+
+    let isValidId = contactId.length > 30 ? true : false;//minimal, but...//also replaced when original edited to isValidEmail
+
+    let contactEmail = kind === 'LITERAL' ? idValueOrKey : 'NOEMAILYET';
+    contactEmail = key === 'PRIMARY' ? local.getItem('familyEmail') : contactEmail;
+    contactEmail = key === 'STUDENT' ? local.getItem('studentEmail') : contactEmail;
+    contactEmail = key === 'SECONDARY' ? local.getItem('secondaryEmail') : contactEmail;
+    contactEmail = contactEmail.toLowerCase();//cowCatcher, delete after 20210709 if desired
+
+    let isValidEmail = contactEmail.indexOf('@') > 0 ? true : false;//minimal, but...
+
+    let logString = `PRETTY STRING about to execute:`;
+    logString += '\n' + `Including: memory.getItem('activeModifierKeys'): ` + memory.getItem('activeModifierKeys');
+    logString += '\n' + `For: '${altKeyString}'`;
+    logString += '\n' + `steamdaGetContactFunction('${idValueOrKey}')`;
+    if (altKeyString === 'ID') {
+        logString += '\n' + `RESOLVED AS steamdaGetContactFunction('${key}')`;
+        logString += '\n' + `RESOLVED AS steamdaGetContactFunction('${contactId}')`;
+    }
+
+    if (altKeyString === 'EMAIL') {
+        logString += '\n' + `RESOLVED AS steamdaGetContactFunction('${contactEmail}')`;
+        // logString += '\n' + `RESOLVED AS steamdaGetContactFunction('${contactId}')`;
+    }
+
+    if (altKeyString === 'ID' && !isValidId) {
+        logString +=  '\n\n<---------- <Invalid ID Parameter> ---------->\n\n';       
+        logString +=  'Query Aborted';       
+        logString +=  local.getItem('kAppendString'); 
+        local.setItem('logString',logString); 
+        $w('#sessionEnrollmentJSON').value = logString;
+        return;    
+    }
+
+    if (altKeyString === 'EMAIL' && !isValidEmail) {
+        logString +=  '\n\n<---------- <Invalid EMAIL Parameter> ---------->\n\n';       
+        logString +=  'Query Aborted';       
+        logString +=  local.getItem('kAppendString');       
+        local.setItem('logString',logString);     
+        $w('#sessionEnrollmentJSON').value = logString;
+        return;    
+    }
+
+
+
+
+
+
+    if (altKeyString === 'ID') {
+
+        let contact = await steamdaGetContactFunction(contactId);
+        logString += '\n\n<---------- <queryResponse> ---------->\n\n';
+        logString += JSON.stringify(contact,undefined,4);
+        local.setItem('logString',logString);     
+        $w('#sessionEnrollmentJSON').value = logString;
+        // if (typeof contact.revision === 'number' && contact.revision > 0) {
+        //     memory.setItem('ppRevision',(contact.revision).toString());
+        // }else{
+        //     local.setItem('logString', local.getItem('logString') + "\n[703] Failure of `steamdaGetContactFunction(local.getItem('familyId'))'");
+        //     return;   
+        // }
+        return;
+    }
+
+    if (altKeyString === 'EMAIL') {
+
+        let contact = await getContactByEmail(contactEmail);
+        logString += '\n\n<---------- <queryResponse> ---------->\n\n';
+        // logString += JSON.stringify(contact,undefined,4);
+        // $w('#sessionEnrollmentJSON').value = logString;
+        // if (typeof contact.revision === 'number' && contact.revision > 0) {
+        //     memory.setItem('ppRevision',(contact.revision).toString());
+        // }else{
+        //     local.setItem('logString', local.getItem('logString') + "\n[703] Failure of `steamdaGetContactFunction(local.getItem('familyId'))'");
+        //     return;   
+        // }
+        logString += `the Query of Contacts for \nPrimary Email: '${contactEmail}' \nReturned:\n`;
+        logString += `BEGIN queryResults:\n`;
+        logString += JSON.stringify(contact,undefined,4);
+        // logString += queryResults;
+        logString += `\nEND queryResults`;
+        local.setItem('logString',logString);     
+        $w('#sessionEnrollmentJSON').value = logString;
+
+        return;
+    }
+
+
+
+
+   
+    logString +=  '\n\n<---------- <Force Abort for Testing> ---------->\n\n';       
+    $w('#sessionEnrollmentJSON').value = logString;
+    return;
+}
+
+export function btnPPGetContact_click(event) {
+    let paramIdOrKey = 'Marais'
+    let ppAliasArray = ['PP','PRIMARYID','PRIMARYPARENT','PRIMARY PARENT','FAMILYID'];//'PRIMARY',
+    paramIdOrKey = ppAliasArray[Math.floor(Math.random() * ppAliasArray.length)]
+	doQueryContactById(paramIdOrKey); 
+}
+
+export function btnSTGetContact_click(event) {
+    let paramIdOrKey = 'Marais'
+    let stAliasArray = ['ST','STUDENTID'];//'STUDENT',
+    paramIdOrKey = stAliasArray[Math.floor(Math.random() * stAliasArray.length)]
+	doQueryContactById(paramIdOrKey); 
+}
+
+export function btnSPGetContact_click(event) {
+    let paramIdOrKey = $w('#txtGetContactLiteral').value;
+    paramIdOrKey = paramIdOrKey.trim();
+	doQueryContactById(paramIdOrKey); 
+}
+export function btnLITGetContact_click(event) {
+    let paramIdOrKey = $w('#txtGetContactLiteral').value;
+    paramIdOrKey = paramIdOrKey.trim();
+	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+	// Add your code for this event here: 
+	doQueryContactById(paramIdOrKey); 
+    $w('#txtGetContactLiteral').value = '';
+}
+
+export function btnGetContactByParam_click(event) {
+	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+	// Add your code for this event here: 
+}
+export function btnStepAppend_click(event) {
+    $w('#preTrashLog').value += '\n\n---\n\n'; 
+	$w('#preTrashLog').value += $w('#sessionEnrollmentJSON').value; 
+}
+
+export function btnStepLogAll_click(event) {
+	$w('#sessionEnrollmentJSON').value = doEnrollmentLogCurrent('ALL');
+}
+
+export function btnStepCopy_click(event) {
+	uiCopyTextElementThis('sessionEnrollmentJSON');
+}
+
+export async function btnExtraContactPrimary_click(event) {
+    let diagnosticOnlyThis = false;
+    if($w('#radioAreYouSure').value === 'YES'){
+        diagnosticOnlyThis = true;
+    }
+	await getContactByEmailAndNotIdFunction(local.getItem('familyEmail'),local.getItem('familyId'),diagnosticOnlyThis);
+	$w('#sessionEnrollmentJSON').value = local.getItem('logString');
+}
+
+export async function btnExtraContactStudent_click(event) {
+    let diagnosticOnlyThis = false;
+    if($w('#radioAreYouSure').value === 'YES'){
+        diagnosticOnlyThis = true;
+    }
+	await getContactByEmailAndNotIdFunction(local.getItem('studentEmail'),local.getItem('studentId'),diagnosticOnlyThis);
+	$w('#sessionEnrollmentJSON').value = local.getItem('logString');
+}
+
+/**
+ *	Adds an event handler that runs when the element is clicked.
+ *	 @param {$w.MouseEvent} event
+ */
+export function btnDemoIfElseThen_click(event) {
+    let beforeString = `entering 'btnDemoIfElseThen_click'\n`;
+    beforeString += '\n' + "local.getItem('superEnrollmentStatus'): " + local.getItem('superEnrollmentStatus');
+    beforeString += '\n' + "[At Line: ~670]: WAS superEnrollmentStatus to SKIP if Any, that was removed 7/15/2021";
+    beforeString += '\n' + "memory.getItem('ppAction'): " + memory.getItem('ppAction');
+    beforeString += '\n' + "memory.getItem('stAction'): " + memory.getItem('stAction');
+    beforeString += '\n' + "memory.getItem('spAction'): " + memory.getItem('spAction');
+    beforeString += '\n\n==========\n';
+
+	$w('#preTrashLog').value = beforeString;
+    // let demoResponse = [['Feather',12,'1967'],['Marcy',14,'1988'],['Chester',14,'2005'],['Marais',11,'2010']]; 
+    let demoResponse = demoLoop_doIfElseThen(); 
+    // demoResponse += demoLoop_doIfElseThen(); 
+    let demoResponseToString = '[';
+    demoResponse.forEach(responseRow => {
+        demoResponseToString += '\n[' + responseRow.toString() + ']';
+    })
+    demoResponseToString += '\n]\n==========\n';
+    let afterString = `\nexiting 'btnDemoIfElseThen_click'`;
+    demoResponseToString = beforeString + demoResponseToString + afterString;
+    demoResponseToString += doEnrollmentLogCurrent('CODE');
+    demoResponseToString += afterString;
+
+	$w('#preTrashLog').value = demoResponseToString;
 }

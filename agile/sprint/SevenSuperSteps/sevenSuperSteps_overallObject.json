@@ -1,0 +1,45 @@
+{
+        "stepObjectArray": [
+            {
+                "titleKey": "zero",
+                "title": "ZERO",
+                "longTitle": "ZERO"
+            },
+            {
+                "titleKey": "instantiate",
+                "title": "Instantiate",
+                "longTitle": "Instantiate Enrollment"
+            },
+            {
+                "titleKey": "memberConfirm",
+                "title": "Member Confirm",
+                "longTitle": "Confirm Members for Primary and Student"
+            },
+            {
+                "titleKey": "dupeDelete",
+                "title": "Dupe Delete",
+                "longTitle": "Delete any Duplicate Contacts (known bug)"
+            },
+            {
+                "titleKey": "databaseForPrimaryAndStudent",
+                "title": "Database for Primary and Student",
+                "longTitle": "Insert Records into the Person Database for Primary and Student"
+            },
+            {
+                "titleKey": "contactForPrimaryAndStudent",
+                "title": "Contact for Primary and Student",
+                "longTitle": "Update Contacts for Primary and Student with Complex Enrollment Data"
+            },
+            {
+                "titleKey": "contactAmdDatabaseForSecondary",
+                "title": "Contact amd Database for Secondary",
+                "longTitle": "Upsert Contact and Insert Record into Person database for Secondary"
+            },
+            {
+                "titleKey": "resolveAndDestroy",
+                "title": "Resolve and Destroy",
+                "longTitle": "Resolve the Application Record of Webhook Payload Database and Off-Ramp the Post Enrollment Process"
+            }
+        ]
+    }
+    

@@ -25,10 +25,19 @@ export function doBootstrapMessage(key,txtColor = '#007bff',bgColor = '#FFFFFF')
 	txtColor = key === 'primary' ? '#007bff' : txtColor;
 	txtColor = key === 'success' ? '#28a745' : txtColor;
 	// ! <only txtColor setting at this time>
-	txtColor = key === 'warning' ? '#ffc107' : txtColor;
+	// txtColor = key === 'warning' ? '#ffc107' : txtColor;
+	// bgColor = key === 'warning' ? '#000000' : bgColor;
+	// ! OR
+	txtColor = key === 'warning' ? '#000000' : txtColor;
+	bgColor = key === 'warning' ? '#ffc107' : bgColor;
 	// ! </only txtColor setting at this time>
-	bgColor = key === 'warning' ? '#000000' : bgColor;
-	txtColor = key === 'danger' ? '#dc3545' : txtColor;
+    // ! <could apply to all, but especially the two negative respoinses>
+	// txtColor = key === 'danger' ? '#dc3545' : txtColor;
+	// bgColor = key === 'danger' ? '#FFFFFF' : bgColor;
+	// ! OR
+	txtColor = key === 'danger' ? '#FFFFFF' : txtColor;
+	bgColor = key === 'danger' ? '#dc3545' : bgColor;
+	// ! </could apply to all, but especially the two negative respoinses>
 	txtColor = key === 'info' ? '#17a2b8' : txtColor;
 	txtColor = key === 'devel' ? '#6610f2' : txtColor;
 
@@ -47,7 +56,8 @@ export function doBootstrapMessage(key,txtColor = '#007bff',bgColor = '#FFFFFF')
 
 	// ø below: use something other than <p>?
 	let html = `<p style="${style}">` + messageThis + `</p>`;
-	$w('#txtBootstrap').html = html;
-	$w('#txtBootstrap').expand();
+	// $w('#txtBootstrap').html = html;
+	// $w('#txtBootstrap').expand();
+    return html;
 }
 // ø <---------- </doBootstrapMessage UI> ---------->

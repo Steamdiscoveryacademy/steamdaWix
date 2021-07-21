@@ -150,19 +150,23 @@ export function psSevenIntegrateSteps(peSevenObject) {
     let firstStepArray = [];
     let lastStepArray = [];
     let allNotesStepArray = [];
+    let allPanelNotesBeforeStepArray = [];
+    let allPanelNotesAfterStepArray = [];
     let allStepThis = [];
     let allStepThisForShift = [];
     let allStepThisForPop = [];
     let firstStepThis = '';
     let lastStepThis = '';
     let notesStepArrayThis = [];
+    let panelNotesBeforeStepArrayThis = ['Tell them what you are going to do'];
+    let panelNotesAfterStepArrayThis = ['Tell them you did it'];
 
 
     // ø <Zeroth Step Manual>
     // ø <wixStorage for stateOnramp>
     confirmState = 'stateOnramp';
     allConfirmStateStepArray.push(confirmState);
-    allStepThis = ['ZERO'];
+    allStepThis = ['VALIDATE_staffEyeD'];
     allStepThisForShift = [...allStepThis];
     allStepThisForPop = [...allStepThis];
     allStepArray = allStepArray.concat([allStepThis]);
@@ -170,8 +174,12 @@ export function psSevenIntegrateSteps(peSevenObject) {
     firstStepArray.push(firstStepThis);
     lastStepThis = allStepThisForPop.pop();
     lastStepArray.push(lastStepThis);
-    notesStepArrayThis = ['taken care of by onReady()'];
+    notesStepArrayThis = ['otherise taken care of by onReady()'];
     allNotesStepArray.push(notesStepArrayThis);
+    panelNotesBeforeStepArrayThis = ['Tell them what you are going to do','including about Staff-Eye-D'];
+    allPanelNotesBeforeStepArray.push(panelNotesBeforeStepArrayThis);
+    panelNotesAfterStepArrayThis = ['Tell them you did it','messaging about Staff-Eye-D results'];
+    allPanelNotesAfterStepArray.push(panelNotesAfterStepArrayThis);
     // ø </Zeroth Step Manual>
     // ø <First Step Manual>
     // ø <wixStorage for stateInstantiate>
@@ -187,6 +195,10 @@ export function psSevenIntegrateSteps(peSevenObject) {
     lastStepArray.push(lastStepThis);
     notesStepArrayThis = ['may need to manually confirm Staff-Eye-D Member if automatic is not conclusive'];
     allNotesStepArray.push(notesStepArrayThis);
+    panelNotesBeforeStepArrayThis = ['Tell them what you are going to do','IFF Staff-Eye-D Confirmation Input'];
+    allPanelNotesBeforeStepArray.push(panelNotesBeforeStepArrayThis);
+    panelNotesAfterStepArrayThis = ['Tell them you did it','superEnrollmentStatus','ppAction','stAction','spAction'];
+    allPanelNotesAfterStepArray.push(panelNotesAfterStepArrayThis);
     // ø </First Step Manual>
     // ø <Second Step Manual>
     // ø <wixStorage for stateMemberConfirm>
@@ -202,6 +214,10 @@ export function psSevenIntegrateSteps(peSevenObject) {
     lastStepArray.push(lastStepThis);
     notesStepArrayThis = [];
     allNotesStepArray.push(notesStepArrayThis);
+    panelNotesBeforeStepArrayThis = ['Tell them what you are going to do'];
+    allPanelNotesBeforeStepArray.push(panelNotesBeforeStepArrayThis);
+    panelNotesAfterStepArrayThis = ['Tell them you did it'];
+    allPanelNotesAfterStepArray.push(panelNotesAfterStepArrayThis);
     // ø </Second Step Manual>
     // ø <Third Step Manual>
     // ø <wixStorage for stateDupeDelete>
@@ -217,6 +233,10 @@ export function psSevenIntegrateSteps(peSevenObject) {
     lastStepArray.push(lastStepThis);
     notesStepArrayThis = [];
     allNotesStepArray.push(notesStepArrayThis);
+    panelNotesBeforeStepArrayThis = ['Tell them what you are going to do'];
+    allPanelNotesBeforeStepArray.push(panelNotesBeforeStepArrayThis);
+    panelNotesAfterStepArrayThis = ['Tell them you did it'];
+    allPanelNotesAfterStepArray.push(panelNotesAfterStepArrayThis);
     // ø </Third Step Manual>
     // ø <Fourth Step Manual>
     // ø <wixStorage for stateDatabaseForPrimaryAndStudent>
@@ -232,6 +252,10 @@ export function psSevenIntegrateSteps(peSevenObject) {
     lastStepArray.push(lastStepThis);
     notesStepArrayThis = [];
     allNotesStepArray.push(notesStepArrayThis);
+    panelNotesBeforeStepArrayThis = ['Tell them what you are going to do'];
+    allPanelNotesBeforeStepArray.push(panelNotesBeforeStepArrayThis);
+    panelNotesAfterStepArrayThis = ['Tell them you did it'];
+    allPanelNotesAfterStepArray.push(panelNotesAfterStepArrayThis);
     // ø </Fourth Step Manual>
     // ø <Fifth Step Manual>
     // ø <wixStorage for stateContactForPrimaryAndStudent>
@@ -247,6 +271,10 @@ export function psSevenIntegrateSteps(peSevenObject) {
     lastStepArray.push(lastStepThis);
     notesStepArrayThis = [];
     allNotesStepArray.push(notesStepArrayThis);
+    panelNotesBeforeStepArrayThis = ['Tell them what you are going to do'];
+    allPanelNotesBeforeStepArray.push(panelNotesBeforeStepArrayThis);
+    panelNotesAfterStepArrayThis = ['Tell them you did it'];
+    allPanelNotesAfterStepArray.push(panelNotesAfterStepArrayThis);
     // ø </Fifth Step Manual>
     // ø <Sixth Step Manual>
     // ø <wixStorage for stateContactAndDatabaseForSecondary>
@@ -262,6 +290,10 @@ export function psSevenIntegrateSteps(peSevenObject) {
     lastStepArray.push(lastStepThis);
     notesStepArrayThis = [];
     allNotesStepArray.push(notesStepArrayThis);
+    panelNotesBeforeStepArrayThis = ['Tell them what you are going to do'];
+    allPanelNotesBeforeStepArray.push(panelNotesBeforeStepArrayThis);
+    panelNotesAfterStepArrayThis = ['Tell them you did it'];
+    allPanelNotesAfterStepArray.push(panelNotesAfterStepArrayThis);
     // ø </Sixth Step Manual>
     // ø <Seventh Step Manual>
     // ø <wixStorage for stateResolveAndDestroy>
@@ -277,6 +309,10 @@ export function psSevenIntegrateSteps(peSevenObject) {
     lastStepArray.push(lastStepThis);
     notesStepArrayThis = ["ouside of Loop-Switch execute ¿Resolve WebHook?", "ouside of Loop-Switch execute ¿Destroy? wixStorage"];
     allNotesStepArray.push(notesStepArrayThis);
+    panelNotesBeforeStepArrayThis = ['Tell them what you are going to do'];
+    allPanelNotesBeforeStepArray.push(panelNotesBeforeStepArrayThis);
+    panelNotesAfterStepArrayThis = ['Tell them you did it'];
+    allPanelNotesAfterStepArray.push(panelNotesAfterStepArrayThis);
     // ø </Seventh Step Manual>
     // ø <Eighth Step Manual>
     // ø <wixStorage for stateOfframp>
@@ -292,6 +328,10 @@ export function psSevenIntegrateSteps(peSevenObject) {
     lastStepArray.push(lastStepThis);
     notesStepArrayThis = ["return to ¿Process Web Hooks?"];
     allNotesStepArray.push(notesStepArrayThis);
+    panelNotesBeforeStepArrayThis = ['Tell them what you are going to do'];
+    allPanelNotesBeforeStepArray.push(panelNotesBeforeStepArrayThis);
+    panelNotesAfterStepArrayThis = ['Tell them you did it'];
+    allPanelNotesAfterStepArray.push(panelNotesAfterStepArrayThis);
     // ø </Eighth Step Manual>
 
     let arrayCountManualValidation = 9;
@@ -302,6 +342,8 @@ export function psSevenIntegrateSteps(peSevenObject) {
     isValid = firstStepArray.length !== arrayCountManualValidation ? false : isValid;
     isValid = lastStepArray.length !== arrayCountManualValidation ? false : isValid;
     isValid = allNotesStepArray.length !== arrayCountManualValidation ? false : isValid;
+    isValid = allPanelNotesBeforeStepArray.length !== arrayCountManualValidation ? false : isValid;
+    isValid = allPanelNotesAfterStepArray.length !== arrayCountManualValidation ? false : isValid;
 
 
     if (!isValid) {
@@ -314,6 +356,8 @@ export function psSevenIntegrateSteps(peSevenObject) {
             peSevenObject.stepObjects[objectKey]['origSteps']['confirmState'] = allConfirmStateStepArray[index];
             peSevenObject.stepObjects[objectKey]['origSteps']['allStepArray'] = allStepArray[index];
             peSevenObject.stepObjects[objectKey]['origSteps']['notes'] = allNotesStepArray[index];
+            peSevenObject.stepObjects[objectKey]['origSteps']['panelBeforeStepNotes'] = allPanelNotesBeforeStepArray[index];
+            peSevenObject.stepObjects[objectKey]['origSteps']['panelAfterStepNotes'] = allPanelNotesAfterStepArray[index];
             peSevenObject.stepObjects[objectKey]['origSteps']['firstStep'] = firstStepArray[index];
             peSevenObject.stepObjects[objectKey]['origSteps']['lastStep'] = lastStepArray[index];
 

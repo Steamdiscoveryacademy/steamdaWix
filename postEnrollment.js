@@ -1,11 +1,7 @@
 // API Reference: https://www.wix.com/velo/reference/api-overview/introduction
-// Hello, World! Example: https://learn-code.wix.com/en/article/1-hello-world
-// import wixCrmBackend from 'wix-crm-backend';
-// import {notifications} from 'wix-crm-backend';
-// import {tasks} from 'wix-crm-backend';
-// import {workflows} from 'wix-crm-backend';
 import {local, session, memory} from 'wix-storage';
 import wixUsers from 'wix-users';
+import wixLocation from 'wix-location';
 import { getUser } from 'backend/userReference.jsw'
 import { updateUserFields } from 'backend/userReference.jsw'
 import { steamdaGetContactFunction } from 'backend/crmModule.jsw'
@@ -13,26 +9,47 @@ import { steamdaCreateContactFunction } from 'backend/contactReference.jsw'
 import { streamdaUpdateContactFunction } from 'backend/contactReference.jsw'
 import { steamdaGetContactByEmailFunction } from 'backend/contactReference';
 import { steamdaGetContactByEmailAndNotIdFunction } from 'backend/contactReference';
+import { steamdaDeleteContactById } from 'backend/contactReference';
 import { nowISO } from 'backend/utility.jsw'
 import wixData from 'wix-data';
 import wixWindow from 'wix-window';
 
 
 $w.onReady(function () {
-	// Wix.Features.isSupported(Wix.Features.Types.RESIZE_COMPONENT, function(data) {console.log(data)})
 	onReadyPostEnrollment();
     doUserInterfaceCleanupCurrent()
     // $w('#anchorPreTrash').scrollTo();
+    $w('#anchorTestProcess').scrollTo();
+    // goToState()
+    console.log('[ready]Next');
+    let responseObject = {};
+    responseObject.TEST = true;
+    responseObject.button = 'NEXT';
+    responseObject.messageKey = 'primary';
+    memory.setItem('msboxLastState','stateZero')
+    // let messageKeyArray= ["success","warning","danger","info","devel"];
+    // responseObject.messageKey = messageKeyArray[Math.floor(Math.random() * messageKeyArray.length)];
+    mxboxPostEnrollmentSevenAnyAction(responseObject);
+    // ø <UNIVERSAL - Devel Notes>
+    let develString = `mxboxPostEnrollmentSeven 'Next-Kludge' working`;
+    if (typeof develString === 'string' && develString.length > 0) {
+        develString = 'develNotes:\n===========\n' + develString;
+        let html = doBootstrapMessage('devel',develString,18); 
+        $w('#txtOnReadyDevelHMTL').html = html;
+        $w('#txtOnReadyDevelHMTL').expand();
+    }
+    // ø </UNIVERSAL - Devel Notes>
 });
 
+/**
+ * ! QICK-FIND UniqueID's for Blocks
+ * ! ===============================
+ * ø superSeven202107 = the entire UI/Logic block 
+ */
+
 export function onReadyPostEnrollment(){
-	// $w('#sessionEnrollmentJSON').value = local.getItem("ondeckEnrollmentJSON");
-	// $w('#anchorEnrollmentJSON').scrollTo()
     let now = new Date();
     let ISO = now.getFullYear() + ("00" +(now.getMonth() + 1)).substr(-2) + ("00" + now.getDate()).substr(-2) + ("00" + now.getHours()).substr(-2) + ("00" + now.getMinutes()).substr(-2) + ("00" + now.getSeconds()).substr(-2);
-    // console.log(ISO + ' < "20210814235959"');
-    // let beforeEndOfSummer2021 = Number(ISO) < Number("20210814235959");
-    // console.log('beforeEndOfSummer2021: ' + beforeEndOfSummer2021);
     if(Number(ISO) < Number("20210814235959")){
         local.setItem('timezoneOffset',-4);
         local.setItem('tzAbbrv', 'EDT');
@@ -40,7 +57,6 @@ export function onReadyPostEnrollment(){
         local.setItem('termLabelKey','custom.t202106');
         let weekIdToLabelKeyArray = [['custom.w0-2021010102','0101','0102'],['custom.w1-2021060711','0607','0611'],['custom.w2-2021061418','0614','0618'],['custom.w3-2021062125','0621','0625'],['custom.w4-2021062832','0628','0702'],['custom.w5-2021071216','0712','0716'],['custom.w6-2021071923','0719','0723'],['custom.w7-2021072630','0726','0730'],['custom.w8-2021080206','0802','0806'],['custom.w9-2021080913','0809','0813']];
         let weekIdToLabelKeyJSON = JSON.stringify(weekIdToLabelKeyArray);
-        // local.setItem('weekIdToLabelKeyJSON',`[['custom.w0-2021010102','0101','0102'],['custom.w1-2021060711','0607','0611'],['custom.w2-2021061418','0614','0618'],['custom.w3-2021062125','0621','0625'],['custom.w4-2021062832','0628','0702'],['custom.w5-2021071216','0712','0716'],['custom.w6-2021071923','0719','0723'],['custom.w7-2021072630','0726','0730'],['custom.w8-2021080206','0802','0806'],['custom.w9-2021080913','0809','0813']];`);
         local.setItem('weekIdToLabelKeyJSON',weekIdToLabelKeyJSON);
         local.setItem('termBeginMMDD','0607');
         local.setItem('termEndMMDD','0813');
@@ -58,7 +74,6 @@ export async function doPeformNextStep(){
 	$w('#txtCodeLabel').text = 'doPerformNextStep';
 	local.setItem('loopExitAfterStep', $w('#ddExitAfterStep').value);
 	await doStepLoopSwitch();
-	// /*PRETTIER*/$w('#sessionEnrollmentJSON').value = stepsDisplayStatusAsReturnString("After Completed: " + memory.getItem('enrollmentStepCompleted'))
     local.setItem('logString', local.getItem('logString') + '\n[~58]After Completed: ' + memory.getItem('enrollmentStepCompleted'))
 }
 // ø <---------- <doStepLoopSwitch>  ---------->
@@ -91,6 +106,14 @@ export async function doStepLoopSwitch() {
                 await stMemberExecuteUpsert()
                 console.log('Step: ' + stepKey)
                 break;
+
+            case 'dedupePpStContact':
+                await ppStContactDedupe()
+                console.log('Step: ' + stepKey)
+                break;
+
+
+
             case 'PREP_ppContact':
                 await ppContactPrepJSON()
                 console.log('Step: ' + stepKey)
@@ -165,14 +188,13 @@ export async function doStepLoopSwitch() {
 
 // ø <---------- <doIfElseThen_forCurrentStep>  ---------->
 export function doIfElseThen_forCurrentStep(stepItemKey = 'iiStepKey'){
-// export function doIfElseThen_forCurrentStep(actionKey = 'iiAction',actionKeyIndex = 777,stepItemKey = 'iiStepKey'){
     let actionKey = stepItemKey.substr(0,2) + 'Action';
     let stepItemIndex = stepItemKey.indexOf('Member') > 0 ? 0 : 777;
     stepItemIndex = stepItemKey.indexOf('Contact') > 0 ? 1 : stepItemIndex;
     stepItemIndex = stepItemKey.indexOf('Database') > 0 ? 2 : stepItemIndex;
 
     // only two THEN response values: 'CONTINUE' or 'RETURN' 
-    // only ELSE response values: 'ALERT' 
+    // only ELSE response value: 'ALERT' 
     let logString = '';
     let stepArray = memory.getItem('enrollmentStepList').split(',');
     let stepItemKeyArray = ['ppMemberPrepJSON','ppMemberExecuteUpsert','stMemberPrepJSON','stMemberExecuteUpsert','ppContactPrepJSON','ppDatabasePrepJSON','stContactPrepJSON','stDatabasePrepJSON','spContactPrepJSON','spDatabaseExecuteUpsert','ppContactExecuteUpsert','ppDatabaseExecuteUpsert','stContactExecuteUpsert','stDatabaseExecuteUpsert','spContactExecuteUpsert','spDatabasePrepJSON'];
@@ -211,7 +233,6 @@ export function doIfElseThen_forCurrentStep(stepItemKey = 'iiStepKey'){
         memory.setItem(stepItemKey,logString);
         logString = `memory.setItem(${stepItemKey}): ${logString}`;
         local.setItem('logString', local.getItem('logString') + "\n" + logString);
-        // local.setItem('logString', local.getItem('logString') + '\n[~206]exiting: doIfElseThen_forCurrentStep()');
         responseKey = 'RETURN';
         return responseKey;
     }
@@ -220,25 +241,14 @@ export function doIfElseThen_forCurrentStep(stepItemKey = 'iiStepKey'){
         memory.setItem(stepItemKey,logString);
         logString = `memory.setItem(${stepItemKey}): ${logString}`;
         local.setItem('logString', local.getItem('logString') + "\n" + logString);
-        // local.setItem('logString', local.getItem('logString') + '\n[~ZZZ]exiting: doIfElseThen_forCurrentStep()');
         responseKey = 'RETURN';
         return responseKey;
-        // logString = "based on action'" + ppActionDbase + "' no further action in this Step-Function";
-        // memory.setItem('ppDatabasePrepJSON',logString);
-        // local.setItem('logString', local.getItem('logString') + "\n" + logString);
-        // local.setItem('logString', local.getItem('logString') + '\n[~896]exiting: ppDatabasePrepJSON()');
     }
     if(thisAction !== 'INSERT' && thisAction !== 'UPDATE'){
         logString = "because the action, '" + thisAction + "', is NOT supported this is an error";
         memory.setItem(stepItemKey,logString);
         logString = `memory.setItem(${stepItemKey}): ${logString}`;
         local.setItem('logString', local.getItem('logString') + "\n" + logString);
-        // local.setItem('logString', local.getItem('logString') + '\n[~ZZZ]exiting: doIfElseThen_forCurrentStep()');
-        // memory.setItem('ppDatabasePrepJSON',logString);
-        // local.setItem('logString', local.getItem('logString') + "\n" + logString);
-        // local.setItem('logString', local.getItem('logString') + "\nbased on action'" + ppActionDbase + "' no further action in this Step-Function");
-        // local.setItem('logString', local.getItem('logString') + '\n[~896]exiting: ppDatabasePrepJSON()');
-        // local.setItem('lastErrorString',"ppActionDbase, '" + ppActionDbase + "', is NOT supported. Only 'INSERT' and 'SKIP' are supported. Please convey this message to the Developer Immediately");
         local.setItem('superEnrollmentStatus','ALERT');
         responseKey = 'RETURN';
         return responseKey;
@@ -256,7 +266,6 @@ export function demoLoop_doIfElseThen(){
     let responseThisArray = [];
     let testResponseArray = [];
     stepItemKeyArray.forEach(stepItemKey => {
-        // console.log(stepItemKey);
         testActionKey = stepItemKey.substr(0,2) + 'Action';
         testWho = stepItemKey.substr(0,2).toLocaleUpperCase();
         testWhich = stepItemKey.indexOf('Member') > 0 ? 0 : 777;
@@ -264,14 +273,8 @@ export function demoLoop_doIfElseThen(){
         testWhich = stepItemKey.indexOf('Database') > 0 ? 2 : testWhich;
         testActionKeyIndex = testWhich;
         responseThis = doIfElseThen_forCurrentStep(testActionKey,testActionKeyIndex,stepItemKey);
-        // responseThis = 'Test Response';
         responseThisArray = [testActionKey,testActionKeyIndex,stepItemKey,responseThis];
         testResponseArray.push(responseThisArray);
-        // while (testActionKeyIndex < 3) {
-        //     responseThis = doIfElseThen_forCurrentStep(testActionKey,testActionKeyIndex,stepItemKey);
-        //     responseThisArray = [stepItemKey,responseThis];
-        //     testResponseArray.push(responseThisArray);
-        // }
     });
     return testResponseArray;
 }
@@ -292,8 +295,6 @@ export async function getUserFrontEnd(memberId) {
 	console.log('thisUserData: ');
 	console.log(thisUserData);
     return thisUserData;
-	// $w('#gotContact').value = JSON.stringify(thisUserData,undefined,4);
-	// $w('#gotContact').value = JSON.stringify(thisUserData.undefined,4);
 }
 // ø <---------- </getUserFrontEnd Front-End> ---------->
 
@@ -306,8 +307,6 @@ export async function doUpdateContact(paramObjectThis) {
 	let wixContact = await streamdaUpdateContactFunction(paramObjectThis);
 	console.log('[~LINE 174]wixContact: ');
 	console.log(wixContact);
-	// $w('#crmContactId').value = wixContact._id;
-	// memory.setItem('ppRevision',wixContact.revision);
 	$w('#ppContactResponseJSON').value = JSON.stringify(wixContact,undefined,4);
 }
 // ø <----------- </doUpdateContact() Front-End> ----------->
@@ -316,13 +315,8 @@ export async function doUpdateContact(paramObjectThis) {
 export async function doSecondaryParentCreateContact() {
     local.setItem('logString', local.getItem('logString') + '\n[~197]entering: ' + 'doSecondaryParentCreateContact()');
 
-    // let wixContactInfo = JSON.parse(memory.getItem('spContactPrepJSON'));
-    // let paramObjectThis = {};
     let paramObjectThis = JSON.parse(memory.getItem('spContactPrepJSON'));
-    // paramObjectThis.contactInfo = wixContactInfo.contactInfo;
 	console.log("[~LINE 200]paramObjectThis.contactInfo: ")
-	// console.log(paramObjectThis)
-	// console.log(paramObjectThis.contactInfo)
 	let wixContact = await steamdaCreateContactFunction(paramObjectThis);
     if(typeof wixContact._id === 'string'){
         local.setItem('secondaryId',wixContact._id)
@@ -333,29 +327,17 @@ export async function doSecondaryParentCreateContact() {
         memory.setItem('spContactExecuteUpsert','doSecondaryParentCreateContact() FAIL');
         local.setItem('logString', local.getItem('logString') + '\n[~217]exiting: ' + 'doSecondaryParentCreateContact() FAIL');
     }
-	// $w('#crmContactId').value = wixContact._id;
-	// $w('#inputRevision').value = wixContact.revision;
-	// $w('#contactCurrent').value = JSON.stringify(wixContact,undefined,4);
-	// $w('#contactJSON').value = JSON.stringify(wixContact,undefined,4);
-	// $w('#responseKind').value = "Contact";
-	// $w('#responseHeader').text = "'Create Contact' Response";
     local.setItem('logString', local.getItem('logString') + '\n[~216]exiting: ' + 'doSecondaryParentCreateContact()');
 }
 // ø <----------- </doSecondaryParentCreateContact Front-End> ----------->
 // ø <---------- <getContactByEmail Front-End>  ---------->
 export async function getContactByEmail(emailToFind) {
-	// let emailToFind = $w('#txtEmailToFind').value.trim();
-	// let queryRresults = steamdaGetContactByEmailFunctionFrontEndOnly(emailToFind);
 	let queryRresults = await steamdaGetContactByEmailFunction(emailToFind);
     return queryRresults;
 	let results = `the Query of Contacts for \nPrimary Email: '${emailToFind}' \nReturned:\n`;
 	results += `BEGIN queryRresults:\n`;
 	results += JSON.stringify(queryRresults,undefined,4);
-	// results += queryRresults;
 	results += `\nEND queryRresults`;
-	//steamdaGetContactByEmailFunction
-	// $w('#textResult').text = results;
-	// $w('#textResult').expand();
 }
 // ø <---------- </getContactByEmail Front-End> ---------->
 
@@ -381,7 +363,6 @@ export async function getContactByEmailAndNotIdFunction(emailToFind = 'invalid E
     logString += `\nReturned:\n`;
     logString += `BEGIN queryRresults:\n`;
     logString += JSON.stringify(queryRresults,undefined,4);
-    // logString += queryRresults;
     logString += `\nEND queryRresults\n`;
     if (count > 1) {
         local.setItem('superEnrollmentStatus','ALERT');
@@ -394,7 +375,8 @@ export async function getContactByEmailAndNotIdFunction(emailToFind = 'invalid E
         local.setItem('logString', logString);
         return;
     }
-    let idToDelete = queryRresults.results._items[0]._id//GUESS, needs verification
+    let idToDelete = queryRresults.results._items[0]._id
+    //verificatio:   queryRresults.results._items[0]._id
     if (count === 1) {
         logString += `\nThe Count is One, this is the BUG exist in the form of the Contact with ID: ${idToDelete}`;
         logString += `\ndiagnosticOnly: ${diagnosticOnly}: Meaning the found Contact will `;
@@ -407,7 +389,11 @@ export async function getContactByEmailAndNotIdFunction(emailToFind = 'invalid E
     }
     
     // ø <Delete the BUG Contact>
-    logString += `\n\nThe code to actually Delete Contact[${idToDelete}] is not ready yet...`;
+    logString += `\n\nThe code to actually Delete Contact[${idToDelete}] would look like this:`;
+    logString += `\nlet deleteResults = await steamdaDeleteContactById('${idToDelete}'')`;
+    let deleteResults = await steamdaDeleteContactById(idToDelete)
+    logString += `\n\ndeleteResults:\n==============\n`;
+    logString += deleteResults;
     // ø </Delete the BUG Contact>
     local.setItem('logString', logString);
     
@@ -420,9 +406,6 @@ export async function getContactByEmailAndNotIdFunction(emailToFind = 'invalid E
 // ! ====================================================================================================
 
 
-
-
-
 // ø <---------- <steamdaMemberRegistration Front-End (no backend)>  ---------->
 export async function steamdaMemberRegistration(paramObjectParam = {}) {
     // ø <expected that paramObject will be gathered from memory.getItem(JSON)>
@@ -431,7 +414,6 @@ export async function steamdaMemberRegistration(paramObjectParam = {}) {
 		paramObject = JSON.parse(memory.getItem(paramObjectParam.memoryKey))
         console.log('[~Line 152] paramObject: ');
         console.log(paramObject);
-        // return "Default"
 	}else{
     // ø <BUT still allows for Direct paramObject>
         paramObject = paramObjectParam;
@@ -450,10 +432,6 @@ export async function steamdaMemberRegistration(paramObjectParam = {}) {
             "phones": [phone]
         }
     })
-        // .then((result) => {
-        //     let resultStatus = result.status;
-        // });
-    
     return memberResponse;
 }
 // ø <---------- </steamdaMemberRegistration Front-End (no backend)> ---------->
@@ -466,8 +444,6 @@ export async function steamdaMemberRegistration(paramObjectParam = {}) {
 // ! ====================================================================================================
 // ! ====================                 <Front-End Code Calling Back-End Code>           ==============
 // ! ====================================================================================================
-
-
 
 
 // ! ====================================================================================================
@@ -570,7 +546,6 @@ export async function doInstantiateLoopSwitchStep(){
     local.setItem('logString', local.getItem('logString') + '\nstAction: ' + memory.getItem('stAction'))
     local.setItem('logString', local.getItem('logString') + '\nspAction: ' + memory.getItem('spAction'))
 
-    //preferredFirst Last (parentFirst {parentLastIfDifferent})
     let comboName = local.getItem('stLast') === local.getItem('ppLast') ? '' : ' ' + local.getItem('ppLast'); 
     comboName = local.getItem('stPreferredFirst').trim() + ' ' + local.getItem('stLast').trim() + ' (' + local.getItem('ppFirst') + comboName + ')';
     local.setItem('comboName', comboName);
@@ -602,21 +577,33 @@ export async function actionValueEvaluation(){
     
     let staffMatch = local.getItem('staffIdentifiedFamilyId') === 'INSTANTIATE' ? false : true;
         if (staffMatch) {
-            local.setItem('familyId',local.getItem('staffIdentifiedFamilyId'));
+            let staffMatchId = local.getItem('staffIdentifiedFamilyId');
+            let contact = await steamdaGetContactFunction(staffMatchId);
+            if(contact._id !== staffMatchId){
+                local.setItem('superEnrollmentStatus','ALERT');
+                local.setItem('logString', local.getItem('logString') + '\n[~548]Staff-Eye-D Does NOT Match Contact Found ID (probably none). AbortForNow');
+                return;
+            }
+            if($w('#radioConfirmStaffEyeD').value !== 'YES'){
+                if(contact.source.sourceType.toUpperCase().indexOf('MEMBER') < 0){
+                    local.setItem('logString',`ABORT: StaffEyeD Contact does not contain 'MEMBER' in sourceType`);
+                    return;
+                }
+            }
+            local.setItem('familyId',staffMatchId);
+            local.setItem('familyEmail',contact.primaryInfo.email);
+            local.setItem('logString', local.getItem('logString') + '\n[~547]staffMatchFoundContact: ' + JSON.stringify(contact,undefined,4));
+            ppAction = "SKIP|UPDATE|INSERT";
         }
     local.setItem('logString', local.getItem('logString') + '\n[~583]staffMatch: ' + staffMatch);
 
     let familyId = local.getItem('staffIdentifiedFamilyId');
-    // local.setItem('logString', local.getItem('logString') + '\n[~341]staffIdentifiedFamilyId: ' + familyId);
     let termId = Number(local.getItem('termId'));
     let studentLegalFirst = local.getItem('stFirst');
     
     // ø <ppAction>
-    ppAction = staffMatch ? "UPDATE|UPDATE|INSERT" : ppAction;
     // ppAction = staffMatch ? "UPDATE|UPDATE|INSERT" : ppAction;
     if(staffMatch){
-        // let ppCount = Number(memory.setItem('SQL','SELECT count from person
-        // where personId = familyId AND termId = 202106'));
         let ppExistsCount = await wixData.query("person")
             .eq("personId", familyId)
             .eq("termId", termId)
@@ -628,9 +615,6 @@ export async function actionValueEvaluation(){
     
     // ø <stAction>
     if(staffMatch){
-        // let stCount = Number(memory.setItem('SQL','SELECT count from person
-        // where familyId = familyId AND termId = 202106 AND legalFirst =
-        // stFirst'));
         let stExistsCount = await wixData.query("person")
             .eq("familyId", familyId)
             .eq("firstLegal", studentLegalFirst)
@@ -645,7 +629,6 @@ export async function actionValueEvaluation(){
     let checkSecondaryParent = (local.getItem('spFirst')).length === 0 && (local.getItem('spLast')).length === 0 ? false : true;
     let logSecondaryParentReason = '';
     logSecondaryParentReason = checkSecondaryParent === false ? 'Secondary Parent was not filled in in the form' : logSecondaryParentReason;
-    // checkSecondaryParent = ppAction.indexOf('SKIP') >= 0 ? false : checkSecondaryParent;
     console.log(`[~532] If ppAction has 'SKIP' does NOT mean that spAction should be Skipped (added 20210714190800 upon Barak Obama/Joe Biden BUG)`)
     logSecondaryParentReason = checkSecondaryParent === false && logSecondaryParentReason.length === 0 ? 'SKIP because Primary Parent SKIP-ped' : logSecondaryParentReason;
     logSecondaryParentReason = logSecondaryParentReason.length === 0 ? '[continue]' : logSecondaryParentReason;
@@ -654,9 +637,6 @@ export async function actionValueEvaluation(){
     local.setItem('logString', local.getItem('logString') + '\n[~537]checkSecondaryParent: ' + checkSecondaryParent);
     spAction = !checkSecondaryParent ? "NA|SKIP|SKIP" : spAction;
     if(staffMatch){
-        // let spCount = Number(memory.setItem('SQL','SELECT count from person
-        // where familyId = familyId AND termId = 202106 AND role =
-        // Secondary'));
         if (checkSecondaryParent) {
             let spExistsCount = await wixData.query("person")
                 .eq("familyId", familyId)
@@ -679,16 +659,12 @@ export async function actionValueEvaluation(){
         spAction = "ALERT|ALERT|ALERT";
     }
 
-    // local.setItem('ppAction', '');
-    // local.setItem('stAction', '');
-    // local.setItem('spAction', '');
     memory.setItem('ppAction', ppAction);
     memory.setItem('stAction', stAction);
     memory.setItem('spAction', spAction);
 
     let allActionStrings = memory.getItem('ppAction') + memory.getItem('stAction') + memory.getItem('spAction');
     let superEnrollmentStatus = local.getItem('superEnrollmentStatus');
-    // superEnrollmentStatus = allActionStrings.indexOf('SKIP') >= 0 && allActionStrings.indexOf('SKIP') < 12 ? 'SKIP' : superEnrollmentStatus;
     superEnrollmentStatus = allActionStrings.indexOf('ALERT') >= 0 ? 'ALERT' : superEnrollmentStatus;    
     local.setItem('logString', local.getItem('logString') + '\n[~576]superEnrollmentStatus: ' + superEnrollmentStatus);
     local.setItem('superEnrollmentStatus',superEnrollmentStatus);
@@ -708,10 +684,6 @@ export async function ppMemberPrepJSON(){
     memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
     local.setItem('logString', local.getItem('logString') + '\n[~483]entering: ' + 'ppMemberPrepJSON() at ' + memory.getItem('lastStamp'))
     let ppMemberAction = local.getItem('ppAction').split('|')[0];
-    // let setFamilyId_fromStaffEyeD = ppMemberAction === 'SKIP' ? true : false;
-    // if (setFamilyId_fromStaffEyeD) {
-    //     local.setItem('familyId',local.getItem('staffIdentifiedFamilyId')) ;      
-    // }
 
     let stepStampArrayObject = JSON.parse(memory.getItem('stepStampArray'));
     let stampArrayElementObject = {};
@@ -723,7 +695,6 @@ export async function ppMemberPrepJSON(){
     let enrollmentObject = JSON.parse(local.getItem("ondeckEnrollmentJSON"));
 
     if(local.getItem('staffIdentifiedFamilyId') === 'INSTANTIATE'){
-        // memory.setItem('ppMemberPrepJSON','ppMemberPrepJSON' + ' INSERT PREPPED on ' + timeDateString);
         	let ppPhoneIndex = -1;
 		for (let index = 0; index < enrollmentObject.family.phones.length; index++) {
 			let element = enrollmentObject.family.phones[index];
@@ -783,9 +754,6 @@ export async function ppMemberExecuteUpsert(){
     local.setItem('logString', local.getItem('logString') + '\n[~546]ppActionMember: ' + ppActionMember);
 
 
-
-
-    // memory.setItem('ppMemberExecuteUpsert','ppMemberExecuteUpsert' + ' EXECUTED on ' + timeDateString);
     let paramObjectParam = {};
     paramObjectParam.memoryKey = "ppMemberPrepJSON";
     if(ppActionMember === 'INSERT'){
@@ -797,7 +765,6 @@ export async function ppMemberExecuteUpsert(){
         familySeed = familySeed.replace('-', '');
         familySeed = familySeed.replace('-', '');
         local.setItem('familySeed',familySeed);
-        // memory.setItem('ppMemberExecuteUpsert','ppMemberExecuteUpsert' + ' INSERT EXECUTED on ' + timeDateString);
         memory.setItem('ppMemberExecuteUpsert', JSON.stringify(ppMemberResponse));
     }
     if(ppActionMember === 'UPDATE'){
@@ -805,13 +772,7 @@ export async function ppMemberExecuteUpsert(){
 
         let ppMemberUpdateResponse = updateUserFields(local.getItem('staffIdentifiedFamilyId'), paramObjectThis.firstName, paramObjectThis.lastName, paramObjectThis.email, paramObjectThis.phone);
         memory.setItem('ppMemberExecuteUpsert',JSON.stringify(ppMemberUpdateResponse));
-        // local.setItem('familyId',local.getItem('staffIdentifiedFamilyId'));
     }
-    // if(local.getItem('staffIdentifiedFamilyId') === 'INSTANTIATE'){
-    //     // let memberResponseObject = JSON.parse(memory.getItem('ppMemberExecuteUpsert');
-    // }else{
-    // }
-    // memory.setItem('HHOLDER',tempStamp);
     local.setItem('logString', local.getItem('logString') + '\n[~569] Exiting ppMemberExecuteUpsert()');
 }
 
@@ -866,19 +827,11 @@ export async function stMemberPrepJSON(){
         console.log('phone: ' + phone);
         // º </phone>
 
-		// let ppEmailIndex = -1;
-		// for (let index = 0; index < enrollmentObject.family.emails.length; index++) {
-		// 	let element = enrollmentObject.family.emails[index];
-		// 	if(element.role === "Primary Parent"){
-		// 		ppEmailIndex = index;
-		// 	}
-			
-		// }
-		// ppEmailIndex = ppEmailIndex === -1 ? 0 : ppEmailIndex;
         let firstLegal = enrollmentObject.family.student.name.first;
         let firstPreferred = enrollmentObject.family.student.name.preferred;
         let email = firstLegal;
-        // email += local.getItem('familyId').substr(0,4);//deleteAfter 20210801 and comment below
+        let firstSpace = email.indexOf(' ');
+        email = firstSpace > 0 ? email.substr(0,firstSpace) : email;
         email += local.getItem('familySeed').substr(0,4);//should be identical to above, 
         email = 'steamdiscoveryacademy' + '+' + email + '@gmail.com';
         email = email.toLowerCase();
@@ -910,24 +863,22 @@ export async function stMemberExecuteUpsert(){
     memory.setItem('stepStampArray',JSON.stringify(stepStampArrayObject));    
     // ø <---------- stepStampArray ---------->
 
-    // memory.setItem('stMemberExecuteUpsert','stMemberExecuteUpsert' + ' EXECUTED on ' + timeDateString);
     if(local.getItem('studentId') === 'INSTANTIATE'){
-        // local.setItem('studentId','888888');
-        // memory.setItem('stMemberExecuteUpsert','stMemberExecuteUpsert' + ' INSERT EXECUTED on ' + timeDateString);
         let paramObjectParam = {};
         paramObjectParam.memoryKey = "stMemberPrepJSON";
         let stMemberResponse = await steamdaMemberRegistration(paramObjectParam);
         console.log('[~LINE 408] stMemberResponse: ');
         console.log(stMemberResponse);
         local.setItem('studentId',stMemberResponse.user.id);
-        // memory.setItem('ppMemberExecuteUpsert','ppMemberExecuteUpsert' + ' INSERT EXECUTED on ' + timeDateString);
         memory.setItem('stMemberExecuteUpsert', JSON.stringify(stMemberResponse));
-        //stMemberExecuteUpsert
-
     }else{
         memory.setItem('stMemberExecuteUpsert','stMemberExecuteUpsert' + ' UPDATE EXECUTED on ' + memory.getItem('lastStamp'));
     }
 }
+
+// ø <---------- <ppStContactDedupe>  ---------->
+export async function ppStContactDedupe(){}
+// ø <---------- </ppStContactDedupe> ---------->
 
 // ø <---------- <ppContactPrepJSON AS Step-Function>  ---------->
 export async function ppContactPrepJSON(){
@@ -954,9 +905,6 @@ export async function ppContactPrepJSON(){
         local.setItem('logString', local.getItem('logString') + `\n[~807] 'SKIP' ppContactPrepJSON()`);
         return;
     }
-    // let wixContactInfo = {};
-    // wixContactInfo.contactInfo = {};
-    // wixContactInfo.contactInfo.source = "PPENDING";
 
     let contact = await steamdaGetContactFunction(local.getItem('familyId'));
     $w('#ppContactResponseJSON').value = JSON.stringify(contact,undefined,4);
@@ -972,21 +920,16 @@ export async function ppContactPrepJSON(){
     if(contact._id === local.getItem('familyId')){
         paramObjectThis.contactIdentifiers.contactId = contact._id;
         paramObjectThis.contactIdentifiers.revision = contact.revision;
-        // paramObjectThis.contactInfo = wixContactInfo.contactInfo;
     }else{
         paramObjectThis.contactIdentifiers.contactId = "EERROR";
         paramObjectThis.contactIdentifiers.errorContactId = contact._id;
         paramObjectThis.contactIdentifiers.errorMemberId = local.getItem('familyId');
         paramObjectThis.contactIdentifiers.revision = contact.revision;
-        // paramObjectThis.contactInfo = wixContactInfo.contactInfo;
         paramObjectThis.errorString = "Member ID !== Contact ID";
     }
     if(paramObjectThis.contactIdentifiers.contactId !== 'EERROR'){
         let enrollmentObject = JSON.parse(local.getItem('ondeckEnrollmentJSON'));
 
-        // let primaryParent = {};
-        // primaryParent.contactInfo = {};
-        // primaryParent.contactInfo.source = "PPENDING";
         // ø <---------- <doPrimaryParentContactInfo()>  ---------->
         // ø if messy this could become its own function
         // ø @path: steamdaWixLocal/steamdaWix/agile/sprint/objectToExpressionStringArray_Examples/primaryParentContactInfo_fromEnrollmentApplication.js
@@ -997,9 +940,6 @@ export async function ppContactPrepJSON(){
         let currentRegion = "Charlottesville";
         let timezoneOffest = "-4:00";
 
-        //enrollmentObject.
-        // enrollmentObject.family.student.dob.month = 2;
-        // enrollmentObject.family.student.dob.day = 7;
         let studentBDAY = ("00" + enrollmentObject.family.student.dob.month).substr(-2) + ("00" + enrollmentObject.family.student.dob.day).substr(-2);
 
         console.log("studentBDAY: " + studentBDAY);
@@ -1008,31 +948,21 @@ export async function ppContactPrepJSON(){
 
         let tBDAY = studentBDAY < local.getItem('termBeginMMDD') ? false : true;
         tBDAY = studentBDAY > local.getItem('termEndMMDD') ? false : tBDAY;
-        // tBDAY = false;
         console.log('tBDAY: ' + tBDAY);
 
 
-        // Member Active [custom.member-active]
-        // Primary Parent [custom.primary-parent]
         let roleLabelKey = 'custom.primary-parent';
         let memberLabelKey = 'custom.member-active';
 
 
-        // let idZZZToLableKeyArray = [[1,'custom.w1-2021060711'],[2,'custom.w2-2021061418'],[3,'custom.w3-2021062125'],[4,'custom.w4-2021062832'],[5,'custom.w5-2021071216'],[6,'custom.w6-2021071923'],[7,'custom.w7-2021072630'],[8,'custom.w8-2021080206'],[9,'custom.w9-2021080913'],['custom.w1-2021060711',1],['custom.w2-2021061418',2],['custom.w3-2021062125',3],['custom.w4-2021062832',4],['custom.w5-2021071216',5],['custom.w6-2021071923',6],['custom.w7-2021072630',7],['custom.w8-2021080206',8],['custom.w9-2021080913',9]];
-        // let idZZZToLableKeyArray = [['custom.w0-2021010102','0101','0102'],['custom.w1-2021060711','0607','0611'],['custom.w2-2021061418','0614','0618'],['custom.w3-2021062125','0621','0625'],['custom.w4-2021062832','0628','0702'],['custom.w5-2021071216','0712','0716'],['custom.w6-2021071923','0719','0723'],['custom.w7-2021072630','0726','0730'],['custom.w8-2021080206','0802','0806'],['custom.w9-2021080913','0809','0813']];
-        // let weekIdToLabelKeyJSON  = local.getItem('weekIdToLabelKeyJSON');
         let weekIdToLabelKeyJSON = [['custom.w0-2021010102','0101','0102'],['custom.w1-2021060711','0607','0611'],['custom.w2-2021061418','0614','0618'],['custom.w3-2021062125','0621','0625'],['custom.w4-2021062832','0628','0702'],['custom.w5-2021071216','0712','0716'],['custom.w6-2021071923','0719','0723'],['custom.w7-2021072630','0726','0730'],['custom.w8-2021080206','0802','0806'],['custom.w9-2021080913','0809','0813']];
-        // let weekIdToLabelKeyArray  = JSON.parse(weekIdToLabelKeyJSON);
         let courseArray = enrollmentObject.courses_array;
         let finalLabelKeyArray = [];
-        // let labelKeyRow = [];
         let beginBDAY = "";
         let endBDAY = "";
         let wkBDAY = false;
         for (let index = 0; index < courseArray.length; index++) {
             let element = courseArray[index];
-            // console.log('['+element.weekId+']element:');
-            // console.log(element);
             let labelKeyRow = weekIdToLabelKeyJSON[element.weekId];
             console.log('['+element.weekId+']labelKeyRow:');
             console.log(labelKeyRow);
@@ -1070,20 +1000,9 @@ export async function ppContactPrepJSON(){
         // ø </ZXZ-TTESTING DISABLED>
         // ! </FINAL>
 
-        // primaryParent.contactInfo.company = "Forest Associates";
-        // primaryParent.contactInfo.jobTitle = "Human Resources";
-        // primaryParent.contactInfo.birthdate = "1991-08-01";
-
-
-        // primaryParent.contactInfo.labelKeys = [];
-        // primaryParent.contactInfo.labelKeys[0] = "custom.gender-male";
-        // primaryParent.contactInfo.labelKeys[1] = "custom.t202106";
-        // primaryParent.contactInfo.labelKeys[2] = "custom.primary-parent";
-
         // ø <ZXZ-TTESTING DISABLED>
         primaryParent.contactInfo.labelKeys = [];
         finalLabelKeyArray.forEach(element => {
-            // console.log(element);
             primaryParent.contactInfo.labelKeys.push(element);
         });
         // ø </ZXZ-TTESTING DISABLED>
@@ -1095,19 +1014,10 @@ export async function ppContactPrepJSON(){
         primaryParent.contactInfo.emails[0] = {};
         primaryParent.contactInfo.emails[0].tag = "MAIN";
         // ø </ZXZ-TTESTING DISABLED>
-        // enrollmentObject.family.emails[0].kind = "home";
         // ø <ZXZ-TTESTING DISABLED>
         primaryParent.contactInfo.emails[0].email = enrollmentObject.family.emails[0].email;
         primaryParent.contactInfo.emails[0].primary = "true";
         // ø </ZXZ-TTESTING DISABLED>
-        // enrollmentObject.family.emails[0].role = "Primary Parent";
-        // enrollmentObject.family.emails[0].who = "Shirley";
-        // enrollmentObject.family.emails[0].usage = "Personal";
-
-        // primaryParent.contactInfo.emails[1] = {};
-        // primaryParent.contactInfo.emails[1].tag = "MAIN";
-        // primaryParent.contactInfo.emails[1].email = "qiqgroup+eli9375@gmail.com";
-        // primaryParent.contactInfo.emails[1].primary = "true";
 
         // ø <ZXZ-TTESTING DISABLED>
         primaryParent.contactInfo.phones = [];
@@ -1119,14 +1029,6 @@ export async function ppContactPrepJSON(){
         primaryParent.contactInfo.phones[0].phone = enrollmentObject.family.phones[0].phone;
         primaryParent.contactInfo.phones[0].primary = "true";
         // ø <ZXZ-TTESTING DISABLED>
-        // enrollmentObject.family.phones[0].role = "Primary Parent";
-        // enrollmentObject.family.phones[0].who = "Shirley";
-        // enrollmentObject.family.phones[0].usage = "Personal";
-
-        // primaryParent.contactInfo.phones[1] = {};
-        // primaryParent.contactInfo.phones[1].tag = "HOME";
-        // primaryParent.contactInfo.phones[1].phone = "(579)-264-8376";
-
 
         // ø <ZXZ-TTESTING DISABLED>
         primaryParent.contactInfo.addresses = [];
@@ -1161,10 +1063,6 @@ export async function ppContactPrepJSON(){
         primaryParent.contactInfo.extendedFields['custom.timezone-offset'] = timezoneOffest;
         // ! </FINAL>
         // ø </ZXZ-TTESTING DISABLED>
-        // primaryParent.contactInfo.extendedFields.custom['legal-first'] = "Elijah";
-        // enrollmentObject.family.student.name.preferred = "Danny";
-
-        // primaryParent.contactInfo.extendedFields.custom.seed = "b53333aa164cc0b1";
 
         // ø <---------- </doPrimaryParentContactInfo()> ---------->
 
@@ -1219,26 +1117,6 @@ export async function ppDatabasePrepJSON(){
         local.setItem('superEnrollmentStatus','ALERT');
         return;
     }
-
-
-    //ppDatabaseINSERT - actually, but renaming not worth it
-    // console.log("[~734]ppDatabaseINSERT - actually, but renaming not worth it")
-    
-    // let familyId = local.getItem('familyId');
-    // let familyId = $w('#txtFamilyId').value;
-    // //let termId = Number(local.getItem('termId'));
-    // let termId = Number($w('#txtTermId').value);
-
-    // // ø <CHECK FOR EXISTING>
-    // let ppExistsCount = await wixData.query("person")
-    //     .eq("personId", familyId)
-    //     .eq("termId", termId)
-    //     .count();
-
-    // if (ppExistsCount > 0) {
-    //     memory.setItem('ppDatabasePrepJSON',"primaryParent person exists for this term");
-    //     return;
-    // }
     // ø </CHECK FOR EXISTING>
 
     // ø <---------- <direct (or nearly)>  ---------->
@@ -1247,9 +1125,7 @@ export async function ppDatabasePrepJSON(){
     let toInsert = {};
     toInsert.title = lastFirst;
     toInsert.personId = local.getItem('familyId');
-    // toInsert.personId = familyId;
     toInsert.familyId = local.getItem('familyId');
-    // toInsert.familyId = familyId;
     toInsert.role = 'Primary';
     toInsert.first = local.getItem('ppFirst');
     toInsert.last = local.getItem('ppLast');
@@ -1259,13 +1135,9 @@ export async function ppDatabasePrepJSON(){
     toInsert.comboName = local.getItem('comboName');
     toInsert.webhookId = local.getItem('wixWebhookId');
     toInsert.idHH = local.getItem('familyId');
-    // toInsert.idHH = familyId;
     toInsert.idBL = local.getItem('familyId');
-    // toInsert.idBL = familyId;
     toInsert.altPersonId = local.getItem('familyId');
-    // toInsert.altPersonId = familyId;
     toInsert.termId = Number(local.getItem('termId'));
-    // toInsert.termId = termId;
     // ø <---------- </direct (or nearly)> ---------->
     // ø <---------- <complex>  ---------->
     // ø <---------- <complex Test with Direct>  ---------->
@@ -1280,18 +1152,13 @@ export async function ppDatabasePrepJSON(){
     memory.setItem('ppDatabasePrepJSON',JSON.stringify(ppInsertResult));
     local.setItem('logString', local.getItem('logString') + '\n[~896]exiting: ppDatabasePrepJSON() [see results at memory.getItem(ppDatabasePrepJSON)]');
     return;
-
 }
 // ø <---------- </ppDatabasePrepJSON AS Step-Function> ---------->
 
 export function ppDatabasePrepJSON_DEP(){
-    // let now = new Date();
-    // let timeDateString = ' [ on ' + now.toLocaleDateString() + ']';
-    // timeDateString = now.toLocaleTimeString('en-US') + timeDateString;
     let stepStampArrayObject = JSON.parse(memory.getItem('stepStampArray'));
     let stampArrayElementObject = {};
     stampArrayElementObject.step = memory.getItem('enrollmentStepCurrent');
-    // stampArrayElementObject.stamp = timeDateString;
     stepStampArrayObject.stampArray.push(stampArrayElementObject);
     memory.setItem('stepStampArray',JSON.stringify(stepStampArrayObject));    
     // ø <---------- timeDEPDateString ---------->
@@ -1313,10 +1180,6 @@ export async function stContactPrepJSON(){
     memory.setItem('stepStampArray',JSON.stringify(stepStampArrayObject));    
     // ø <---------- stepStampArray ---------->
 
-    // let wixContactInfo = {};
-    // wixContactInfo.contactInfo = {};
-    // wixContactInfo.contactInfo.source = "PPENDING";
-
     let contact = await steamdaGetContactFunction(local.getItem('studentId'));
     $w('#stContactResponseJSON').value = JSON.stringify(contact,undefined,4);
     memory.setItem('stRevision',(contact.revision).toString());
@@ -1328,21 +1191,16 @@ export async function stContactPrepJSON(){
     if(contact._id === local.getItem('studentId')){
         paramObjectThis.contactIdentifiers.contactId = contact._id;
         paramObjectThis.contactIdentifiers.revision = contact.revision;
-        // paramObjectThis.contactInfo = wixContactInfo.contactInfo;
     }else{
         paramObjectThis.contactIdentifiers.contactId = "EERROR";
         paramObjectThis.contactIdentifiers.errorContactId = contact._id;
         paramObjectThis.contactIdentifiers.errorMemberId = local.getItem('familyId');
         paramObjectThis.contactIdentifiers.revision = contact.revision;
-        // paramObjectThis.contactInfo = wixContactInfo.contactInfo;
         paramObjectThis.errorString = "Member ID !== Contact ID";
     }
     if(paramObjectThis.contactIdentifiers.contactId !== 'EERROR'){
         let enrollmentObject = JSON.parse(local.getItem('ondeckEnrollmentJSON'));
 
-        // let student = {};
-        // student.contactInfo = {};
-        // student.contactInfo.source = "PPENDING";
         // ø <---------- <dostudentContactInfo()>  ---------->
         // ø if messy this could become its own function
         // ø @path: steamdaWixLocal/steamdaWix/agile/sprint/objectToExpressionStringArray_Examples/studentContactInfo_fromEnrollmentApplication.js
@@ -1353,9 +1211,6 @@ export async function stContactPrepJSON(){
         let currentRegion = "Charlottesville";
         let timezoneOffest = "-4:00";
         
-        //enrollmentObject.
-        // enrollmentObject.family.student.dob.month = 2;
-        // enrollmentObject.family.student.dob.day = 7;
         let studentBDAY = ("00" + enrollmentObject.family.student.dob.month).substr(-2) + ("00" + enrollmentObject.family.student.dob.day).substr(-2);
         
         console.log("studentBDAY: " + studentBDAY);
@@ -1364,12 +1219,8 @@ export async function stContactPrepJSON(){
         
         let tBDAY = studentBDAY < local.getItem('termBeginMMDD') ? false : true;
         tBDAY = studentBDAY > local.getItem('termEndMMDD') ? false : tBDAY;
-        // tBDAY = false;
         console.log('tBDAY: ' + tBDAY);
         
-        
-        // Member Active [custom.member-active]
-        // Primary Parent [custom.primary-parent]
         let roleLabelKey = 'custom.student';
         let memberLabelKey = 'custom.member-faux';
 
@@ -1382,22 +1233,14 @@ export async function stContactPrepJSON(){
         assignedGenderKey = assignedGenderKey === 'unreported' && declaredGender.length > 0 ? 'alternative' : assignedGenderKey;
         let genderLabelKey = 'custom.gender-' + assignedGenderKey;
 
-
-        // let idZZZToLableKeyArray = [[1,'custom.w1-2021060711'],[2,'custom.w2-2021061418'],[3,'custom.w3-2021062125'],[4,'custom.w4-2021062832'],[5,'custom.w5-2021071216'],[6,'custom.w6-2021071923'],[7,'custom.w7-2021072630'],[8,'custom.w8-2021080206'],[9,'custom.w9-2021080913'],['custom.w1-2021060711',1],['custom.w2-2021061418',2],['custom.w3-2021062125',3],['custom.w4-2021062832',4],['custom.w5-2021071216',5],['custom.w6-2021071923',6],['custom.w7-2021072630',7],['custom.w8-2021080206',8],['custom.w9-2021080913',9]];
-        // let idZZZToLableKeyArray = [['custom.w0-2021010102','0101','0102'],['custom.w1-2021060711','0607','0611'],['custom.w2-2021061418','0614','0618'],['custom.w3-2021062125','0621','0625'],['custom.w4-2021062832','0628','0702'],['custom.w5-2021071216','0712','0716'],['custom.w6-2021071923','0719','0723'],['custom.w7-2021072630','0726','0730'],['custom.w8-2021080206','0802','0806'],['custom.w9-2021080913','0809','0813']];
-        // let weekIdToLabelKeyJSON  = local.getItem('weekIdToLabelKeyJSON');
         let weekIdToLabelKeyJSON = [['custom.w0-2021010102','0101','0102'],['custom.w1-2021060711','0607','0611'],['custom.w2-2021061418','0614','0618'],['custom.w3-2021062125','0621','0625'],['custom.w4-2021062832','0628','0702'],['custom.w5-2021071216','0712','0716'],['custom.w6-2021071923','0719','0723'],['custom.w7-2021072630','0726','0730'],['custom.w8-2021080206','0802','0806'],['custom.w9-2021080913','0809','0813']];
-        // let weekIdToLabelKeyArray  = JSON.parse(weekIdToLabelKeyJSON);
         let courseArray = enrollmentObject.courses_array;
         let finalLabelKeyArray = [];
-        // let labelKeyRow = [];
         let beginBDAY = "";
         let endBDAY = "";
         let wkBDAY = false;
         for (let index = 0; index < courseArray.length; index++) {
             let element = courseArray[index];
-            // console.log('['+element.weekId+']element:');
-            // console.log(element);
             let labelKeyRow = weekIdToLabelKeyJSON[element.weekId];
             console.log('['+element.weekId+']labelKeyRow:');
             console.log(labelKeyRow);
@@ -1438,61 +1281,32 @@ export async function stContactPrepJSON(){
 
         student.contactInfo.company = enrollmentObject.family.student.currentSchool;
         student.contactInfo.jobTitle = enrollmentObject.family.student.currentGradeString;
-        // student.contactInfo.birthdate = enrollmentObject.family.student.dob.date.substr(0,10);
-
-
-        // student.contactInfo.labelKeys = [];
-        // student.contactInfo.labelKeys[0] = "custom.gender-male";
-        // student.contactInfo.labelKeys[1] = "custom.t202106";
-        // student.contactInfo.labelKeys[2] = "custom.primary-parent";
 
         // ø <ZXZ-TTESTING DISABLED>
         student.contactInfo.labelKeys = [];
         finalLabelKeyArray.forEach(element => {
-            // console.log(element);
             student.contactInfo.labelKeys.push(element);
         });
         // ø </ZXZ-TTESTING DISABLED>
-        
-
 
         // ø <ZXZ-TTESTING DISABLED>
         student.contactInfo.emails = [];
         student.contactInfo.emails[0] = {};
         student.contactInfo.emails[0].tag = "MAIN";
         // ø </ZXZ-TTESTING DISABLED>
-        // enrollmentObject.family.emails[0].kind = "home";
         // ø <ZXZ-TTESTING DISABLED>
         student.contactInfo.emails[0].email = stEmail;
         student.contactInfo.emails[0].primary = "true";
         // ø </ZXZ-TTESTING DISABLED>
-        // enrollmentObject.family.emails[0].role = "Primary Parent";
-        // enrollmentObject.family.emails[0].who = "Shirley";
-        // enrollmentObject.family.emails[0].usage = "Personal";
-
-        // student.contactInfo.emails[1] = {};
-        // student.contactInfo.emails[1].tag = "MAIN";
-        // student.contactInfo.emails[1].email = "qiqgroup+eli9375@gmail.com";
-        // student.contactInfo.emails[1].primary = "true";
 
         // ø <ZXZ-TTESTING DISABLED>
         student.contactInfo.phones = [];
         student.contactInfo.phones[0] = {};
         student.contactInfo.phones[0].tag = "MOBILE";
-        // // ø </ZXZ-TTESTING DISABLED>
-        // // enrollmentObject.family.phones[0].kind = "cell";
-        // // ø </ZXZ-TTESTING DISABLED>
+
         student.contactInfo.phones[0].phone = stPhone;
         student.contactInfo.phones[0].primary = "true";
         // ø <ZXZ-TTESTING DISABLED>
-        // enrollmentObject.family.phones[0].role = "Primary Parent";
-        // enrollmentObject.family.phones[0].who = "Shirley";
-        // enrollmentObject.family.phones[0].usage = "Personal";
-
-        // student.contactInfo.phones[1] = {};
-        // student.contactInfo.phones[1].tag = "HOME";
-        // student.contactInfo.phones[1].phone = "(579)-264-8376";
-
 
         // ø <ZXZ-TTESTING DISABLED>
         student.contactInfo.addresses = [];
@@ -1526,13 +1340,8 @@ export async function stContactPrepJSON(){
         student.contactInfo.extendedFields['custom.current-region'] = currentRegion;
         student.contactInfo.extendedFields['custom.timezone-offset'] = timezoneOffest;
         student.contactInfo.extendedFields['custom.legal-first'] = enrollmentObject.family.student.name.first;
-        // student.contactInfo.extendedFields['custom.grade'] = enrollmentObject.family.student.currentGrade;
         // ! </FINAL>
         // ø </ZXZ-TTESTING DISABLED>
-        // student.contactInfo.extendedFields.custom['legal-first'] = "Elijah";
-        // enrollmentObject.family.student.name.preferred = "Danny";
-
-        // student.contactInfo.extendedFields.custom.seed = "b53333aa164cc0b1";
 
         // ø <---------- </dostudentContactInfo()> ---------->
 
@@ -1585,29 +1394,7 @@ export async function stDatabasePrepJSON(){
         return;
     }
 
-
-    // let familyId = $w('#txtFamilyId').value;
-    // let familyId = local.getItem('familyId');
-    // let termId = Number($w('#txtTermId').value);
-    // let termId = Number(local.getItem('termId'));
-
-    // let studentId = $w('#txStudentId').value;
-    // let studentId = local.getItem('studentId');
-
-    // let studentLegalFirst = $w('#txStudentLegalFirst').value;
-    // let studentLegalFirst = local.getItem('stFirst');
-
     // ø <CHECK FOR EXISTING>
-    // let stExistsCount = await wixData.query("person")
-    //     .eq("familyId", familyId)
-    //     .eq("firstLegal", studentLegalFirst)
-    //     .eq("termId", termId)
-    //     .count();
-
-    // if (stExistsCount > 0) {
-    //     memory.setItem('stDatabasePrepJSON',"Student person exists for this familyId, legalFirstName and termId");
-    //     return;
-    // }
     // ø </CHECK FOR EXISTING>
 
     // ø <---------- <direct (or nearly)>  ---------->
@@ -1616,9 +1403,7 @@ export async function stDatabasePrepJSON(){
     let toInsert = {};
     toInsert.title = lastFirst;
     toInsert.personId = local.getItem('studentId');
-    // toInsert.personId = studentId;
     toInsert.familyId = local.getItem('familyId');
-    // toInsert.familyId = familyId;
     toInsert.role = 'Student';
     toInsert.first = local.getItem('stPreferredFirst');
     toInsert.last = local.getItem('stLast');
@@ -1628,13 +1413,9 @@ export async function stDatabasePrepJSON(){
     toInsert.comboName = local.getItem('comboName');
     toInsert.webhookId = local.getItem('wixWebhookId');
     toInsert.idHH = local.getItem('familyId');
-    // toInsert.idHH = familyId;
     toInsert.idBL = local.getItem('familyId');
-    // toInsert.idBL = familyId;
     toInsert.altPersonId = local.getItem('studentId');
-    // toInsert.altPersonId = studentId;
     toInsert.termId = Number(local.getItem('termId'));
-    // toInsert.termId = termId;
     // ø <---------- </direct (or nearly)> ---------->
     // ø <---------- <complex>  ---------->
     // ø <---------- <complex Test with Direct>  ---------->
@@ -1685,7 +1466,6 @@ export async function spContactPrepJSON() {
     memory.setItem('stepStampArray', JSON.stringify(stepStampArrayObject));
     // ø <---------- stepStampArray ---------->
     
-    //spAction: NA|INSERT|INSERT
     let spActionArray = memory.getItem('spAction').split('|');
     let spActionContact = spActionArray[1];
     let paramObjectThis = {};
@@ -1694,7 +1474,6 @@ export async function spContactPrepJSON() {
     let logString = '';
     if(spActionContact === 'SKIP'){
         logString = "based on action'" + spActionContact + "' no further action in this Step-Function";
-        // memory.setItem('spContactPrepJSON',logString);
         local.setItem('logString', local.getItem('logString') + "\n" + logString);
         local.setItem('logString', local.getItem('logString') + '\n[~1419]exiting: spDatabasePrepJSON()');
         paramObjectThis.spActionContact = spActionContact;
@@ -1704,7 +1483,6 @@ export async function spContactPrepJSON() {
     }
     if(spActionContact !== 'INSERT'){
         logString = "this spActionContact, '" + spActionContact + "', is NOT supported and is an error [see local.getItem('lastErrorString')]";
-        // memory.setItem('spContactPrepJSON',logString);
         local.setItem('logString', local.getItem('logString') + "\n" + logString);
         local.setItem('logString', local.getItem('logString') + "\nbased on action'" + spActionContact + "' no further action in this Step-Function");
         local.setItem('lastErrorString',"spActionDbase, '" + spActionContact + "', is NOT supported. Only 'INSERT' and 'SKIP' are supported. Please convey this message to the Developer Immediately");
@@ -1719,7 +1497,6 @@ export async function spContactPrepJSON() {
 
     // ø <DO THEN (upsert)  Actions>
 
-    // let paramObjectThis = {};
     if (spActionContact === 'INSERT') {
         let enrollmentObject = JSON.parse(local.getItem('ondeckEnrollmentJSON'));
 
@@ -1751,7 +1528,6 @@ export async function spContactPrepJSON() {
         // ø <ZXZ-TTESTING DISABLED>
         secondaryParent.contactInfo.labelKeys = [];
         finalLabelKeyArray.forEach(element => {
-            // console.log(element);
             secondaryParent.contactInfo.labelKeys.push(element);
         });
         // ø </ZXZ-TTESTING DISABLED>
@@ -1759,43 +1535,16 @@ export async function spContactPrepJSON() {
 
 
         // ø <ZXZ-TTESTING DISABLED>
-        // secondaryParent.contactInfo.emails = [];
-        // secondaryParent.contactInfo.emails[0] = {};
-        // secondaryParent.contactInfo.emails[0].tag = "MAIN";
-        // // ø </ZXZ-TTESTING DISABLED>
-        // // enrollmentObject.family.emails[0].kind = "home";
-        // // ø <ZXZ-TTESTING DISABLED>
-        // secondaryParent.contactInfo.emails[0].email = enrollmentObject.family.emails[0].email;
-        // secondaryParent.contactInfo.emails[0].primary = "true";
         // ø </ZXZ-TTESTING DISABLED>
-        // enrollmentObject.family.emails[0].role = "Primary Parent";
-        // enrollmentObject.family.emails[0].who = "Shirley";
-        // enrollmentObject.family.emails[0].usage = "Personal";
-
-        // secondaryParent.contactInfo.emails[1] = {};
-        // secondaryParent.contactInfo.emails[1].tag = "MAIN";
-        // secondaryParent.contactInfo.emails[1].email = "qiqgroup+eli9375@gmail.com";
-        // secondaryParent.contactInfo.emails[1].primary = "true";
         local.setItem('secondaryEmail', 'spContactPrepJSON@todo.io');
 
         // ø <ZXZ-TTESTING DISABLED>
         secondaryParent.contactInfo.phones = [];
         secondaryParent.contactInfo.phones[0] = {};
         secondaryParent.contactInfo.phones[0].tag = "MOBILE";
-        // // ø </ZXZ-TTESTING DISABLED>
-        // // enrollmentObject.family.phones[0].kind = "cell";
-        // // ø </ZXZ-TTESTING DISABLED>
         secondaryParent.contactInfo.phones[0].phone = enrollmentObject.family.phones[0].phone;
         secondaryParent.contactInfo.phones[0].primary = "true";
         // ø <ZXZ-TTESTING DISABLED>
-        // enrollmentObject.family.phones[0].role = "Primary Parent";
-        // enrollmentObject.family.phones[0].who = "Shirley";
-        // enrollmentObject.family.phones[0].usage = "Personal";
-
-        // secondaryParent.contactInfo.phones[1] = {};
-        // secondaryParent.contactInfo.phones[1].tag = "HOME";
-        // secondaryParent.contactInfo.phones[1].phone = "(579)-264-8376";
-
 
         // ø <ZXZ-TTESTING DISABLED>
         secondaryParent.contactInfo.addresses = [];
@@ -1864,7 +1613,6 @@ export async function spDatabasePrepJSON(){
 
     let spActionArray = memory.getItem('spAction').split('|');
     let spActionDbase = spActionArray[2];
-    // local.setItem('logString', local.getItem('logString') + '\n[~890]spActionDbase: ' + spActionDbase);
 
     let logString = '';
     // ø <CATCH Else (decoupling) Actions>
@@ -1896,9 +1644,7 @@ export async function spDatabasePrepJSON(){
     let toInsert = {};
     toInsert.title = lastFirst;
     toInsert.personId = local.getItem('secondaryId');
-    // toInsert.personId = familyId;
     toInsert.familyId = local.getItem('familyId');
-    // toInsert.familyId = familyId;
     toInsert.role = 'Secondary';
     toInsert.first = local.getItem('spFirst');
     toInsert.last = local.getItem('spLast');
@@ -1908,17 +1654,12 @@ export async function spDatabasePrepJSON(){
     toInsert.comboName = local.getItem('comboName');
     toInsert.webhookId = local.getItem('wixWebhookId');
     toInsert.idHH = local.getItem('familyId');
-    // toInsert.idHH = familyId;
     toInsert.idBL = local.getItem('familyId');
-    // toInsert.idBL = familyId;
     toInsert.altPersonId = local.getItem('secondaryId');
-    // toInsert.altPersonId = familyId;
     toInsert.termId = Number(local.getItem('termId'));
-    // toInsert.termId = termId;
     // ø <---------- </direct (or nearly)> ---------->
     // ø <---------- <complex>  ---------->
     // ø <---------- <complex Test with Direct>  ---------->
-    // toInsert.objectData = JSONx.stringify(enrollmentObject.family);
     // ø <---------- </complex Test with Direct> ---------->
     // ø <---------- </complex> ---------->
 
@@ -1933,7 +1674,6 @@ export async function spDatabasePrepJSON(){
 }
 // ø <---------- </spDatabasePrepJSON AS Step-Function> ---------->
 
-
 export async function ppContactExecuteUpsert(){
     let stepItemKeyThis = 'ppContactExecuteUpsert';
     let ifContinue = doIfElseThen_forCurrentStep(stepItemKeyThis);
@@ -1942,7 +1682,7 @@ export async function ppContactExecuteUpsert(){
     }
     // ø <---------- <doIfElseThen_forCurrentStep> ---------->    
     
-        memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
+    memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
     local.setItem('logString', local.getItem('logString') + '\n[~1415] Entering ppContactExecuteUpsert() at ' + memory.getItem('lastStamp'));
 
     let stepStampArrayObject = JSON.parse(memory.getItem('stepStampArray'));
@@ -1967,13 +1707,9 @@ export async function ppContactExecuteUpsert(){
         return;
     }
 
-
-
     memory.setItem('ppContactExecuteUpsert','ppContactExecuteUpsert' + ' EXECUTED on ' + memory.getItem('lastStamp'));
 
     let ppContactParamObject = JSON.parse(memory.getItem('ppContactPrepJSON'));
-    // console.log('[~971]ppContactParamObject:');
-    // console.log(ppContactParamObject);
     let response = await doUpdateContact(ppContactParamObject);
     local.setItem('logString', local.getItem('logString') + '\n[~1736]exiting: ppContactExecuteUpsert() after UPDATE:\n' + JSON.stringify(response));
 }
@@ -2101,11 +1837,6 @@ export async function spContactExecuteUpsert(){
 
     memory.setItem('spContactExecuteUpsert','spContactExecuteUpsert' + ' EXECUTED on ' + memory.getItem('lastStamp'));
 
-    // console.log("[~990]memory.getItem('stContactPrepJSON'):");
-    // console.log(memory.getItem('stContactPrepJSON'));
-    // let stContactParamObject = JSON.parse(memory.getItem('stContactPrepJSON'));
-    // console.log('[~993]stContactParamObject:');
-    // console.log(stContactParamObject);
     await doSecondaryParentCreateContact();
     local.setItem('logString', local.getItem('logString') + '\n[~1583]exiting: ' + 'spContactExecuteUpsert() after INSERT');
 }
@@ -2144,9 +1875,7 @@ export function cycleStepsZZZ(){
 	}
 	let list = memory.getItem('enrollmentStepList');
 	let cycleThis = memory.getItem('enrollmentStepList').substr(0,memory.getItem('enrollmentStepList').indexOf(','));
-	// console.log('cycleThis: ' + cycleThis);
 	let newList = memory.getItem('enrollmentStepList').substr(memory.getItem('enrollmentStepList').indexOf(',') + 1);
-	// console.log('newList: ' + newList);
 	newList += ',' + cycleThis;
 	memory.setItem('enrollmentStepList',newList);
 }
@@ -2156,23 +1885,6 @@ export function cycleStepsZZZ(){
 // ! ====================================================================================================
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // ! ====================================================================================================
 // ! ====================                     <LoopSwitch Suppor Functiions>               ==============
 // ! ====================             ...core to the Enrollment Testing Process            ==============
@@ -2180,14 +1892,31 @@ export function cycleStepsZZZ(){
 
 
 // ø <---------- <instantiateLoopSwitchEnrollmentSteps>  ---------->
-export function instantiateLoopSwitchEnrollmentSteps(){
+export function instantiateLoopSwitchEnrollmentSteps(stepArrayParam = ['ORIG']){
     // let stepArrayOrig = [ 'IINSTANTIATE','PREP_ppMember','EXECUTE_ppMember','PREP_stMember','EXECUTE_stMember','PREP_ppContact','PREP_ppDatabase','PREP_stContact','PREP_stDatabase','PREP_spContact','PREP_spDatabase','EXECUTE_ppContact','EXECUTE_ppDatabase','EXECUTE_stContact','EXECUTE_stDatabase','EXECUTE_spContact','EXECUTE_spDatabase','CCOMPLETE' ];
-    let stepArrayOrig = [ 'IINSTANTIATE','PREP_ppMember','EXECUTE_ppMember','PREP_stMember','EXECUTE_stMember','PREP_ppContact','PREP_ppDatabase','PREP_stContact','PREP_stDatabase','PREP_spContact','PREP_spDatabase','EXECUTE_ppContact','EXECUTE_ppDatabase','EXECUTE_stContact','EXECUTE_stDatabase','EXECUTE_spContact','EXECUTE_spDatabase','CCOMPLETE' ];
+    // let stepArrayOrig = [ 'IINSTANTIATE','PREP_ppMember','EXECUTE_ppMember','PREP_stMember','EXECUTE_stMember','dedupePpStContact','PREP_stDatabase','PREP_spContact','PREP_spDatabase','EXECUTE_ppContact','EXECUTE_ppDatabase','EXECUTE_stContact','EXECUTE_stDatabase','EXECUTE_spContact','EXECUTE_spDatabase','CCOMPLETE' ];
+    console.log('[1898]stepArrayParam: ');
+    console.log(stepArrayParam);
+    if(stepArrayParam.length === 0){
+        stepArrayParam.push('EEMPTY');
+    }
+    let stepArrayOrig = stepArrayParam;
+    let stepArrayCheck = [ 'IINSTANTIATE','PREP_ppMember','EXECUTE_ppMember','PREP_stMember','EXECUTE_stMember','dedupePpStContact','PREP_ppContact','PREP_ppDatabase','PREP_stContact','PREP_stDatabase','PREP_spContact','PREP_spDatabase','EXECUTE_ppContact','EXECUTE_ppDatabase','EXECUTE_stContact','EXECUTE_stDatabase','EXECUTE_spContact','EXECUTE_spDatabase','CCOMPLETE' ];
+    if(stepArrayParam.length === 1 && stepArrayParam[0] === 'ORIG'){
+        stepArrayOrig = [ 'IINSTANTIATE','PREP_ppMember','EXECUTE_ppMember','PREP_stMember','EXECUTE_stMember','dedupePpStContact','PREP_ppContact','PREP_ppDatabase','PREP_stContact','PREP_stDatabase','PREP_spContact','PREP_spDatabase','EXECUTE_ppContact','EXECUTE_ppDatabase','EXECUTE_stContact','EXECUTE_stDatabase','EXECUTE_spContact','EXECUTE_spDatabase','CCOMPLETE' ];
+    }
+    if(stepArrayOrig.length === 1 || stepArrayOrig[stepArrayOrig.length - 1] !== 'CCOMPLETE'){
+        stepArrayOrig.push('CCOMPLETE');
+    }
+    console.log('[1904]stepArrayOrig: ');
+    console.log(stepArrayOrig);
     let stepList = stepArrayOrig.toString();
 	memory.setItem('enrollmentStepList',stepList);
 	memory.setItem('enrollmentStepCompleted','NNOT_AAPPLICABLE');
+    let isArray = Array.isArray(stepArrayOrig);
 	memory.setItem('enrollmentStepCurrent',stepArrayOrig[0]);
 	memory.setItem('enrollmentStepNext',stepArrayOrig[1]);
+    $w('#boxConfirmStaffEyeD').show();
 }
 // ø <---------- </instantiateLoopSwitchEnrollmentSteps> ---------->
 
@@ -2227,7 +1956,6 @@ export function stepsDisplayStatusAsConsoleWarn(tag = 'unknown tag'){
 
 // ø <---------- <stepsCycleSteps>  ---------->
 export function stepsCycleSteps(){
-    //memItemLIST will be replaced with memory.getItem()
     let funcStepArray = memory.getItem('enrollmentStepList').split(',');
     memory.setItem('enrollmentStepCompleted',funcStepArray[0]);
     memory.setItem('enrollmentStepCurrent',funcStepArray[1]);
@@ -2235,17 +1963,12 @@ export function stepsCycleSteps(){
     let cycleElement = funcStepArray.shift();
     funcStepArray.push(cycleElement);
     memory.setItem('enrollmentStepList',funcStepArray.toString());
-    // let funcMemItemCurrNxtLst = funcMemItemCURRENT + '|' + funcMemItemNEXT + '|' + funcMemItemLIST;
-    // return funcMemItemCurrNxtLst;
-    //memItemLIST, memItemCURRENT and memItemNEXT will be replaced with memory.getItem()
-    //thus, memItemCurrNxtList being returned and parsed upon return will be MOOT
 }
 // ø <---------- </stepsCycleSteps> ---------->
 
 // ø <---------- <doInstantiateExitAfter>  ---------->
 export function doInstantiateExitAfter(exitAfter = 'TTRUE_FUCNTION_DEFAULT'){
     let exitNow = 'FFALSE';
-    //exitNow = 'TTRUE_FORCE'; //Force: until logic below is ready
     exitNow = exitAfter === 'ALL' ? 'TTRUE_ALL' : exitNow;
     memory.setItem('loopExitAfterStep',exitAfter);
     memory.setItem('loopExitNow',exitNow);
@@ -2269,7 +1992,6 @@ export function doCheckExitAfter(){
 // ! ====================================================================================================
 
 
-
 // ! ====================================================================================================
 // ! ====================                    <Only UI Support Functiions>                   ==============
 // ! ====================             ...nothing core to the Enrollment Process            ==============
@@ -2283,7 +2005,6 @@ export function switchGetMemoryKey (action){
     timeDateString = now.toLocaleTimeString('en-US') + timeDateString;
 	let codeLabel = 'CODE LABLE DEFAULT' + timeDateString;
 	let memoryKey = who.toLowerCase() + code + 'OnDeckJSON';
-	// let enrollmentObject = JSON.parse(local.getItem("ondeckEnrollmentJSON"));
 	let buildObject = {};
 	buildObject.memoryKey = memoryKey;
 
@@ -2307,7 +2028,6 @@ export function switchGetMemoryKey (action){
 				memory.setItem(memoryKey, code);
 			}
 			$w("#radioAreYouSure").value = 'NO';
-			// $w("#radioAreYouSure").resetValidityIndication();
 			break;
 		case 'CLEAR':
 			if($w('#radioAreYouSure').value !== 'YES'){
@@ -2315,13 +2035,11 @@ export function switchGetMemoryKey (action){
 				action = 'GET';
 				break;
 			}
-			// console.log('memoryKey: ' + memoryKey);
 			codeLabel = "CLEARED: memory.setItem(" + memoryKey + ", {clearString})";
 			code = 'EEMPTY';
 			code = memoryKey === 'spMemberOnDeckJSON' ? 'NNOT_AAPPLICABLE' : code;
 			memory.setItem(memoryKey, code);
 			$w("#radioAreYouSure").value = 'NO';
-			// $w("#radioAreYouSure").resetValidityIndication();
 			break;
 	
 		case 'GET':
@@ -2358,10 +2076,6 @@ export function switchGetMemoryKey (action){
 				    logString += '\n\n' + "Execute:";
 					logString += '\n' + "memory.getItem('stDatabaseExecuteUpsert'): \n" + memory.getItem('stDatabaseExecuteUpsert');
 				}else if(who === 'SP' && code === 'Member'){
-				    // logString += '' + "Prep:";
-				    // logString += '\n' + "memory.getItem('spContactPrepJSON'): \n" + memory.getItem('spContactPrepJSON');
-				    // logString += '\n\n' + "Execute:";
-					// logString += '\n' + "memory.getItem('spContactExecuteUpsert'): \n" + memory.getItem('spContactExecuteUpsert');
 					logString += '' + "'Secordary Parent Member' is Not Applicable to the SteamDA Workflow";
 				}else if(who === 'SP' && code === 'Contact'){
 				    logString += '' + "Prep:";
@@ -2382,7 +2096,6 @@ export function switchGetMemoryKey (action){
 				action.toUpperCase();
 				$w('#sessionEnrollmentJSON').value = logString;				
 			}else{
-				// console.log('memoryKey: ' + memoryKey);
 				codeLabel = "GOTTEN: memory.getItem(" + memoryKey + ")";
 				action = typeof memory.getItem(memoryKey) === 'string' ? 'MAYBE' : action;	
 				action = action === 'MAYBE' && (memory.getItem(memoryKey)).length > 0  ? 'GETTABLE' : action;
@@ -2458,9 +2171,8 @@ export function displaySteps(){
 		newLine = "\n • ";
 	})
 	result = status === 'string' ? resultString : result;
-	// console.log('local.getItem("ondeckEnrollmentJSON"): ');
-    // console.log(result);
 	$w('#txtStepsList').text = result;
+	$w('#txtStepsListTwo').text = result;
 	doUserInterfaceCleanupCurrent();
 }
 //ø <---------- </displaySteps> ---------->
@@ -2472,11 +2184,7 @@ export function doEnrollmentCleanupCurrent() {
     local.setItem('logString', '[~1859]entering: ' + 'doEnrollmentCleanupCurrent()')
     local.setItem('logString', local.getItem('logString') + '\n' + "DEPRECATED for 'doEnrollmentCleanupByKind'")
     // ø <code Cleanup for Current Enrollment> mostly for testing
-    /*Not CURRENT*///local.setItem('ondeckEnrollmentJSON','EEMPTY');
-    // local.setItem('staffIdentifiedFamilyId', 'EEMPTY');
-    // local.setItem('familyId', 'EEMPTY');
     memory.setItem('ppRevision',"EEMPTY")
-    // local.setItem('studentId', 'EEMPTY');
     memory.setItem('stRevision',"EEMPTY")
     memory.setItem('ppMemberPrepJSON', 'EEMPTY');
     memory.setItem('ppMemberExecuteUpsert', 'EEMPTY');
@@ -2519,10 +2227,8 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
 
     // ø <code Log for Current Enrollment> mostly for testing
     let logString = '';
-    /*Not CURRENT*///logString += '\n' + "local.getItem('ondeckEnrollmentJSON'): " + local.getItem('ondeckEnrollmentJSON'); 
     // ø <DATA>
     if(kind === 'DATA' || kind === 'DDEFAULT'){
-        // console.log(kind);
         logString += '\n' + "local.getItem('superEnrollmentStatus'): " + local.getItem('superEnrollmentStatus');
         logString += '\n' + "memory.getItem('ppAction'): " + memory.getItem('ppAction');
         logString += '\n' + "memory.getItem('stAction'): " + memory.getItem('stAction');
@@ -2530,9 +2236,9 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
         logString += '\n' + "local.getItem('staffIdentifiedFamilyId'): " + local.getItem('staffIdentifiedFamilyId');
         logString += '\n' + "local.getItem('familySeed'): " + local.getItem('familySeed');
         logString += '\n' + "local.getItem('familyId'): " + local.getItem('familyId');
-        logString += '\n' + "memory.getItem('ppRevision'): " + memory.getItem('ppRevision');
         logString += '\n' + "local.getItem('studentId'): " + local.getItem('studentId');
         logString += '\n' + "local.getItem('secondaryId'): " + local.getItem('secondaryId');
+        logString += '\n' + "memory.getItem('ppRevision'): " + memory.getItem('ppRevision');
         logString += '\n' + "memory.getItem('stRevision'): " + memory.getItem('stRevision');
         logString += '\n' + "local.getItem('familyEmail'): " + local.getItem('familyEmail');
         logString += '\n' + "local.getItem('studentEmail'): " + local.getItem('studentEmail');
@@ -2550,7 +2256,19 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
     // ø </DATA>
     // ø <CODE>
     if(kind === 'CODE' || kind === 'DDEFAULT'){
-        // console.log(kind);
+        // ø <plus some DATA>
+        logString += '\n' + '[DATA]' + "local.getItem('superEnrollmentStatus'): " + local.getItem('superEnrollmentStatus');
+        logString += '\n' + '[DATA]' + "memory.getItem('ppAction'): " + memory.getItem('ppAction');
+        logString += '\n' + '[DATA]' + "memory.getItem('stAction'): " + memory.getItem('stAction');
+        logString += '\n' + '[DATA]' + "memory.getItem('spAction'): " + memory.getItem('spAction');
+        logString += '\n' + '[DATA]' + "local.getItem('staffIdentifiedFamilyId'): " + local.getItem('staffIdentifiedFamilyId');
+        logString += '\n' + '[DATA]' + "local.getItem('familyId'): " + local.getItem('familyId');
+        logString += '\n' + '[DATA]' + "local.getItem('studentId'): " + local.getItem('studentId');
+        logString += '\n' + '[DATA]' + "local.getItem('secondaryId'): " + local.getItem('secondaryId');
+        logString += '\n' + '[DATA]' + "local.getItem('familyEmail'): " + local.getItem('familyEmail');
+        logString += '\n' + '[DATA]' + "local.getItem('studentEmail'): " + local.getItem('studentEmail');
+        logString += '\n' + '[DATA]' + "local.getItem('secondaryEmail'): " + local.getItem('secondaryEmail');
+        // ø </plus some DATA>
         logString += '\n' + "memory.getItem('ppMemberPrepJSON'): " + memory.getItem('ppMemberPrepJSON');
         logString += '\n' + "memory.getItem('ppMemberExecuteUpsert'): " + memory.getItem('ppMemberExecuteUpsert');
         logString += '\n' + "memory.getItem('stMemberPrepJSON'): " + memory.getItem('stMemberPrepJSON');
@@ -2571,7 +2289,6 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
     // ø </CODE>
     // ø <STEPS>
     if(kind === 'STEPS' || kind === 'DDEFAULT'){
-        //console.log(kind);
         logString += '\n' + "memory.getItem('enrollmentStepList'): " + memory.getItem('enrollmentStepList');
         logString += '\n' + "memory.getItem('enrollmentStepCompleted'): " + memory.getItem('enrollmentStepCompleted');
         logString += '\n' + "memory.getItem('enrollmentStepCurrent'): " + memory.getItem('enrollmentStepCurrent');
@@ -2583,7 +2300,6 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
     // ø </STEPS>
     // ø <CORE>
     if(kind === 'CORE' || kind === 'DDEFAULT'){
-        console.log(kind);
         logString += '\n' + "local.getItem('timezoneOffset'): " + local.getItem('timezoneOffset');
         logString += '\n' + "local.getItem('tzAbbrv'): " + local.getItem('tzAbbrv');
         logString += '\n' + "local.getItem('yyyymm'): " + local.getItem('yyyymm');
@@ -2597,7 +2313,6 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
     }//END if(kind === 'DATA' || kind === 'DDEFAULT')
     // ø </CORE>
     // ø <UNACCOUNTED_FOR>
-    // if(kind === 'UNACCOUNTED_FOR'){
     if(kind === 'UNACCOUNTED_FOR' || kind === 'DDEFAULT'){
         if(kind !== 'UNACCOUNTED_FOR'){
             logString += '\n' + "local.getItem('ondeckEnrollmentJSON')" + local.getItem('ondeckEnrollmentJSON');
@@ -2664,16 +2379,13 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     // ø <DO NOT REMOVE>
     // ! well, unless really final
     // ! do assign either true or false
-    // memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
     local.setItem('logString', local.getItem('logString') + '\n[~2019]entering: ' + 'doEnrollmentCleanupByKind() at ' + memory.getItem('lastStamp'))
     local.setItem('logString', local.getItem('logString') + '\nkindKey: ' + kindKey)
 
     let develTest = false;
     // ø </DO NOT REMOVE>
-    // let errorStringArray = [];
     let cleanupString = 'EEMPTY';//override where appropriate
     let kindKeySupportedArray = ['CURRENT','CODE','STEPS','DATA','CORE','OTHER','MEMORY_ALL','LOCAL_TEMP','ALL_EXCEPT_ENROLLMENT','ALL_INCLUDING_ENROLLMENT','ABORT','LOG','EEROR'];
-    // let kindKeySupportedArray = ['CODE','STEPS','DATA','NOT_LOCAL_DATA','NOT_CORE','OTHER','MEMORY_ALL','LOCAL_TEMP','ALL_EXCEPT_ENROLLMENT','ALL_INCLUDING_ENROLLMENT','ABORT'];
     let kindSupportedArray = ['CODE','STEPS','DATA','CORE','OTHER','NEXT_ENROLLMENT'];
     kindKey = kindKeySupportedArray.includes(kindKey) ? kindKey : 'DDEFUALT';
     console.warn('kindKey: ' + kindKey);
@@ -2695,12 +2407,10 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     // ø <VALIDATION HERE>
     let abort = false;
     if(kindArray.length === 0){
-        // errorStringArray.push("The function 'doEnrollmentCleanupByKind()' with the parameter '"+kindKey+"' is not vallid.");
         local.setItem('logString', local.getItem('logString') + '\n[~2051]: ' + "The function 'doEnrollmentCleanupByKind()' with the parameter '"+kindKey+"' is not vallid.")
         abort = true;
     }
     if(kindArray.length === 1 && kindArray[0] === 'ZZZ'){
-        // errorStringArray.push("The function 'doEnrollmentCleanupByKind()' with the parameter '"+kindKey+"' is not enabled at this time.");
         local.setItem('logString', local.getItem('logString') + '\n[~2051]: ' + "The function 'doEnrollmentCleanupByKind()' with the parameter '"+kindKey+"' is not enabled at this time.")
         abort = true;
     }
@@ -2708,7 +2418,6 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
         if(typeof develTest !== 'boolean' || develTest !== true){
             if ($w('#sessionEnrollmentJSON').value !== 'BACKDOORROODKCAB') {
                 if(typeof local.getItem('wixWebhookStatus') !== 'string' || local.getItem('wixWebhookStatus') !== 'RESOLVED'){
-                    // errorStringArray.push("'Next Enrollment' rquires that the current Webhook Payload have a status of 'Resolved'")
                     local.setItem('logString', local.getItem('logString') + '\n[~2057]: ' + "'Next Enrollment' rquires that the current Webhook Payload have a status of 'Resolved'")
                     abort = true;
 
@@ -2723,39 +2432,15 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
 
     // ø </VALIDATION HERE>
     
-    // ø <VALIDATION EXIT IFF>
-    // ! <PRETRASH>
-    // let lineFeed = '';
-    // if(errorStringArray.length > 0){
-    //     let errorStringLog = '';
-    //     errorStringArray.forEach(errorString => {
-    //         // console.log(errorString); 
-    //         errorStringLog += lineFeed + ' • ' + errorString; 
-    //         lineFeed = '\n';
-    //     });
-    //     console.warn('errorStringLog: ');
-    //     console.warn(errorStringLog);
-    //     return errorStringLog;
-    // }
-    // ! </PRETRASH>
-    // ø </VALIDATION EXIT IFF>
-
     // ø <code Log for Current Enrollment> mostly for testing
-    // let logString = '';
-    // let memory = {};
-    // let local = {};
-    /*Not CURRENT*///logString += '\n' + "local.getItem('ondeckEnrollmentJSON'): " + local.setItem('ondeckEnrollmentJSON'); 
     // ø <DATA>
     if(kindArray.includes('DATA')){
         cleanupString = develTest === true ? 'DATA' : cleanupString;
-        // local.setItem('staffIdentifiedFamilyId', cleanupString);
-        // local.setItem('familyId', cleanupString);
         local.setItem('superEnrollmentStatus', cleanupString);
         memory.setItem('ppAction', cleanupString);
         memory.setItem('stAction', cleanupString);
         memory.setItem('spAction', cleanupString);
         memory.setItem('ppRevision', cleanupString);
-        // local.setItem('studentId', cleanupString);
         memory.setItem('stRevision', cleanupString);
     }//END if(kind === 'DATA' || kind === 'DDEFAULT')
     // ø </DATA>
@@ -2765,10 +2450,8 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
         local.setItem('staffIdentifiedFamilyId', cleanupString);
         local.setItem('familySeed', cleanupString);
         local.setItem('familyId', cleanupString);
-        // memory.setItem('ppRevision', cleanupString);
         local.setItem('studentId', cleanupString);
         local.setItem('secondaryId', cleanupString);
-        // memory.setItem('stRevision', cleanupString);
         local.setItem('familyEmail', cleanupString);
         local.setItem('studentEmail', cleanupString);
         local.setItem('secondaryEmail', cleanupString);
@@ -2831,11 +2514,6 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     // ø <UI>
     if(kindArray.includes('UI')){
         local.setItem('lastErrorString', cleanupString);
-        //! <NOT included in cleanup>
-        //! just depends on its use resetting it as appropriate, no need to cleanup
-        // local.setItem('logString', cleanupString);
-        // memory.setItem('lastStamp', cleanupString);
-        //! </NOT included in cleanup>
     }
     // ø </UI>
     // ø <NEXT_ENROLLMENT>
@@ -2851,7 +2529,6 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     // ø </NEXT_ENROLLMENT>
     // ø <UNACCOUNTED_FOR>
     if(kindArray.includes('UNACCOUNTED_FOR')){
-    // if(kind === 'UNACCOUNTED_FOR' || kind === 'DDEFAULT'){
         cleanupString = develTest === true ? 'UNACCOUNTED_FOR' : cleanupString;
         memory.setItem('loopExitNow', cleanupString);
         memory.setItem('ppMemberOnDeckJSON', cleanupString);
@@ -2859,40 +2536,33 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
         memory.setItem('loopExitAfterStep', cleanupString);
     }//END if(kind === 'UNACCOUNTED_FOR')
     // ø </UNACCOUNTED_FOR>
-    // return logString;
     // ø </code Log for Current Enrollment>
 }
 // ø <---------- </doEnrollmentCleanupByKind> ---------->
 
 export function doUserInterfaceCleanupCurrent(){
-	// $w("#btnUiPpId").label = "Staff ID PP: acee678e-76a6-49b1-96c3-a467b7a1acba";
-	// $w("#btnUiFamilyID").label = "Family ID: c2660053-903f-4bc5-b7b4-e4d7824a381f";
-	// $w("#btnUiStudentID").label = "Student ID: 955c303e-39ac-4308-b5ee-e3786234b70e";
 	$w("#btnUiPpId").label = "Staff ID PP: " + local.getItem('staffIdentifiedFamilyId');
     let label = "Family ID: ";
     label += local.getItem('familyId') !== "EEMPTY" ? local.getItem('familyId') : '';
     label += Number(memory.getItem('ppRevision')) > 0 ? ' [' + memory.getItem('ppRevision') + ']' : ''; 
 	$w("#btnUiFamilyID").label = label;
-	// $w("#btnUiStudentID").label = "Student ID: " + local.getItem('studentId');
     label = "Student ID: ";
     label += local.getItem('studentId') !== "EEMPTY" ? local.getItem('studentId') : '';
     label += Number(memory.getItem('stRevision')) > 0 ? ' [' + memory.getItem('stRevision') + ']' : ''; 
-	// $w("#btnUiStudentID").label = "Student ID: " + local.getItem('studentId');
 	$w("#btnUiStudentID").label = label;
     label = "Secondary ID: ";
     label += local.getItem('secondaryId') !== "EEMPTY" ? local.getItem('secondaryId') : '';
-    // label += local.getItem('secondaryId') !== "EEMPTY" ? local.getItem('secondaryId') : '515bc29f-2929-4f06-b14e-bac09141ad0f';
-    // label += Number(memory.getItem('spRevision')) > 0 ? ' [' + memory.getItem('stRevision') + ']' : ''; 
-	// $w("#btnUiStudentID").label = "Student ID: " + local.getItem('studentId');
 	$w("#btnUiSecondaryID").label = label;
     let step = memory.getItem('enrollmentStepCompleted') === null ? false : true;
     step = memory.getItem('enrollmentStepCompleted') === "EEMPTY" ? false : step;
     step = memory.getItem('enrollmentStepCompleted') === "NNOT_AAPPLICABLE" ? false : step;
 	$w("#btStepCompleted").label = step ?  memory.getItem('enrollmentStepCompleted') : '';
+	$w("#btStepCompletedTwo").label = step ?  memory.getItem('enrollmentStepCompleted') : '';
     step = memory.getItem('enrollmentStepCurrent') === null ? false : true;
     step = memory.getItem('enrollmentStepCurrent') === "EEMPTY" ? false : step;
     step = memory.getItem('enrollmentStepCurrent') === "NNOT_AAPPLICABLE" ? false : step;
 	$w("#btStepCurrent").label = step ?  memory.getItem('enrollmentStepCurrent') : '';
+	$w("#btStepCurrentTwo").label = step ?  memory.getItem('enrollmentStepCurrent') : '';
 	$w("#txtStudentDobString").value = local.getItem('uiStDobString');
     let webhookId = local.getItem('wixWebhookId')
     if(typeof webhookId === 'string' && webhookId.length > 20){
@@ -2924,10 +2594,6 @@ export function doUpdateStudentDOB(){
     let enrollmentObject = JSON.parse(local.getItem('ondeckEnrollmentJSON'));
 
     let dob = new Date($w("#txtStudentDobString").value);
-    // let YYYY = dob.getFullYear();
-    // let MM = dob.getMonth() + 1;
-    // let DD = dob.getDate();
-    // let dobString = ('00' + MM).substr(-2) + '/' + ('00' + DD).substr(-2) + '/' + YYYY;
     let dobString = ('00' + (dob.getMonth() + 1).toString()).substr(-2) + '/' + ('00' + dob.getDate().toString()).substr(-2) + '/' + dob.getFullYear().toString();
     local.setItem('uiStDobString',dobString);
     enrollmentObject.family.student.dobString = dobString;
@@ -2935,7 +2601,6 @@ export function doUpdateStudentDOB(){
     enrollmentObject.family.student.dob.month = dob.getMonth() + 1;
     enrollmentObject.family.student.dob.day = dob.getDate();
     enrollmentObject.family.student.dob.year = dob.getFullYear();
-    // $w("#sessionEnrollmentJSON").value = JSON.stringify(enrollmentObject,undefined,4);
     local.setItem('ondeckEnrollmentJSON',JSON.stringify(enrollmentObject));
     local.setItem('ondeckEnrollmentJSON',JSON.stringify(enrollmentObject));
     $w("#txtStudentDobString").value = dobString;
@@ -2950,7 +2615,6 @@ export async function doGetRecord(what,where){
     let kAppend = '\n\nNo Action Taken.\nPlease try again or ask for assistance.';
     let response = "'"+what+"' is Not Supported to be 'gotten' at this time." + kAppend;
     let responseObject = {};
-    // let memberID = 'ZXZ';
     let familyId = typeof local.getItem('familyId') === 'string' ? local.getItem('familyId') : 'ZZZ';
     let studentId = typeof local.getItem('studentId') === 'string' ? local.getItem('studentId') : 'ZZZ';
     let secondaryId = typeof local.getItem('secondaryId') === 'string' ? local.getItem('secondaryId') : 'ZZZ';
@@ -2999,7 +2663,6 @@ export function doClear(clearIdArray){
         $w(elementId).value = '';
     })
 
-
 }
 
 // ø <------------ <doUpdateThisWebhookPayload(status)>  -------------->
@@ -3009,13 +2672,11 @@ export async function doUpdateThisWebhookPayload(status) {
 	if(typeof local.getItem('wixWebhookId') !== 'string' || local.getItem('wixWebhookId').length < 20){
 		response = "Invalid 'WiX-Webhook-ID'" + kInvalidAppend;
 		$w('#sessionEnrollmentJSON').value = response;
-		// onReadyUserInterface();
 		return;
 	}
 	if($w('#ddCurrentStatusUpdate').value === local.getItem('wixWebhookStatus')){
 		response = "On-deck 'Webhook-Payload' Status is the same as the Drop-Down (update) Value. No Update Indicated" + kInvalidAppend;
 		$w('#sessionEnrollmentJSON').value = response;
-		// onReadyUserInterface();
 		return;
 	}
 	await updateStatusWebhookPayloadThis();
@@ -3026,10 +2687,6 @@ export async function doUpdateThisWebhookPayload(status) {
 			local.setItem('webhookThisResolved',lastResponse.resolvedStatus);
 		}
 	}
-	// response = "UPDATE: String Pending" + kInvalidAppend;
-	// $w('#sessionEnrollmentJSON').value = response;
-	// refreshWebhookPayloadDataSet()
-	// onReadyUserInterface();
 
 }
 // ø <------------ </doUpdateThisWebhookPayload(status)> -------------->
@@ -3060,19 +2717,11 @@ export async function updateStatusWebhookPayloadThis(getOnly = false){
             doUserInterfaceUpdate = true;
         }
         $w('#sessionEnrollmentJSON').value = JSON.stringify(updateObject,undefined,4);
-        // if(doUserInterfaceUpdate){
-        //     doUserInterfaceCleanupCurrent();
-        //     console.log("[~2276]'getOnly' Webhook Payload && doUserInterfaceCleanupCurrent()");
-        // }
-        // console.log("[~2278]About to Return with 'getOnly' Webhook Payload");
         return;
     }
-    // doUserInterfaceUpdate = true;
 
 	let now = new Date();
 	let nowISO = now.toISOString();
-	// let updateObject = {};
-	// updateObject._id = local.getItem('webhookThisId');
 	updateObject.currentStatus = $w('#ddCurrentStatusUpdate').value;
 	updateObject.currentStatusStamp = now;
 	if($w('#ddCurrentStatusUpdate').value === 'RESOLVED'){
@@ -3080,11 +2729,9 @@ export async function updateStatusWebhookPayloadThis(getOnly = false){
 		updateObject.resolvedStatusStamp = now;
 	}
 	local.setItem('lastParamObject', JSON.stringify(updateObject));
-	// $w('#txareaCodeBlock').value = JSON.stringify(updateObject,undefined,4);
 	let response = await wixData.update("webhookPayload", updateObject)
 	local.setItem('lastResponseObject', JSON.stringify(response));
 	$w('#sessionEnrollmentJSON').value = JSON.stringify(response,undefined,4);
-
 
 }
 // ø <------------ </updateStatusWebhookPayloadThis()> -------------->
@@ -3097,8 +2744,6 @@ export async function updateStatusWebhookPayloadThis(getOnly = false){
 // ! ====================.        <Only BUTTON_click Functiions Below Here>          ====================
 // ! ====================================================================================================
 export function btnGetEnrollmentJSON_click(event) {
-	// console.log('local.getItem("ondeckEnrollmentJSON"): ');
-    // console.log(local.getItem("ondeckEnrollmentJSON"));
     if(local.getItem('ondeckEnrollmentJSON').length < 20){
         $w('#sessionEnrollmentJSON').value = "'local.getItem('ondeckEnrollmentJSON')' seems not to be actively set to an Enrollment Application to Post.\n\nYou may travel to 'Process Webhooks' to process any remaining Appliations.";
 
@@ -3106,7 +2751,6 @@ export function btnGetEnrollmentJSON_click(event) {
         let enrollmentObject = JSON.parse(local.getItem('ondeckEnrollmentJSON'))
         $w('#sessionEnrollmentJSON').value = JSON.stringify(enrollmentObject,undefined,4);
     }
-	// local.setItem('familyId', enrollmentObject.family.parent.primary.memberId);
 }
 
 export function btnGetCode_click(event) {
@@ -3146,8 +2790,6 @@ export function btnGetStudentID_click(event) {
 	result = status === 'undefined' ? "local.getItem('studentId') is undefined at this time" : result;
 	result = status === 'empty' ? "local.getItem('studentId') is an empty string at this time" : result;
 	result = status === 'string' ? "the current value of local.getItem('studentId') is: " + local.getItem('studentId') : result;
-	// console.log('local.getItem("ondeckEnrollmentJSON"): ');
-    // console.log(result);
 	$w('#sessionEnrollmentJSON').value = result;
 }
 
@@ -3160,17 +2802,6 @@ export function btnResetSteps_click(event) {
 		$w('#sessionEnrollmentJSON').value = "'Reset Steps' is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.";
 	}
 	$w("#radioAreYouSure").value = 'NO';
-	// $w("#radioAreYouSure").resetValidityIndication();
-
-	// memory.setItem('enrollmentStepList','IINSTANTIATE,stepOne,stepTwo,stepThree,CCOMPLETE');
-	// memory.setItem('enrollmentStepList','IINSTANTIATE,PREP_ppMember,EXECUTE_ppMember,PREP_ppContact,EXECUTE_ppContact,PREP_ppDatabase,EXECUTE_ppDatabase,PREP_stMember,EXECUTE_stMember,PREP_stContact,EXECUTE_stContact,PREP_stDatabase,EXECUTE_stDatabase,PREP_spContact,EXECUTE_spContact,PREP_spDatabase,EXECUTE_spDatabase,CCOMPLETE');
-	// memory.setItem('enrollmentStepCurrent','PPENDING');
-	// let stepNext = memory.getItem('enrollmentStepList').substr(0,memory.getItem('enrollmentStepList').indexOf(','));
-	// memory.setItem('enrollmentStepNext',stepNext);
-	// stepNext = "Steps: \n" + memory.getItem('enrollmentStepList');
-	// stepNext += "\n\nStep Current: " + memory.getItem('enrollmentStepCurrent');
-	// stepNext += "\n\nStep Next: " + memory.getItem('enrollmentStepNext');
-	// $w('#sessionEnrollmentJSON').value = stepNext;
 }
 
 export function btnDisplayCurrentState_click(event) {
@@ -3180,41 +2811,21 @@ export function btnDisplayCurrentState_click(event) {
 
 export async function btnCleanupCurrentState_click(event) {
 	if($w('#radioAreYouSure').value === 'YES'){
-		// $w('#sessionEnrollmentJSON').value = doEnrollmentCleanupCurrent();
-		// let responseCleanupCurrentState = doEnrollmentCleanupByKind('CURRENT');
         memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
         local.setItem('logString','enter btnCleanupCurrentState_click(event): YES');
 		local.setItem('logString', local.getItem('logString') + '\nTest of Clean Tags BEGIN Man in the High Castle<clean>');
 		doEnrollmentCleanupByKind('CURRENT')
-		// local.setItem('logString', local.getItem('logString') + '\nresponseCleanupCurrentState: ' + responseCleanupCurrentState);
-        // memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
 		doUserInterfaceCleanupCurrent();
-		// instantiateLoopSwitchEnrollmentSteps();
-		// $w('#sessionEnrollmentJSON').value = stepsDisplayStatusAsReturnString('init');
 	}else{
         local.setItem('logString','enter btnCleanupCurrentState_click(event): NO');
 		local.setItem('logString', local.getItem('logString') + '\nTest of Clean Tags BEGIN The Plot Against America<clean>');
         memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
-		// $w('#sessionEnrollmentJSON').value = "'Clean Up' is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.";
 		local.setItem('logString', local.getItem('logString') + '\n' + "'Clean Up' is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.");
 	}
 	$w("#radioAreYouSure").value = 'NO';
-	// $w("#radioAreYouSure").resetValidityIndication();
     local.setItem('logString', local.getItem('logString') + '\n</clean>Marvelous Mrs. Maisel END Test of Clean Tags');
     local.setItem('logString', local.getItem('logString') + '\n[~2534]exit btnCleanupCurrentState_click(event) nowISO: ' + memory.getItem('lastStamp'));
-    // let logStringClean = local.getItem('logString');
-    // if(logStringClean.indexOf('</clean>') >= 0){
-    //     // console.log('logStringClean.indexOf(</clean>):' + logStringClean.indexOf('</clean>'))
-    //     logStringClean = logStringClean.substr(0,logStringClean.indexOf('</clean>'));
-    // }
-    // if(logStringClean.indexOf('<clean>') >= 0){
-    //     console.log('logStringClean.indexOf(<clean>):' + logStringClean.indexOf('<clean>'))
-    //     logStringClean = logStringClean.substr(logStringClean.indexOf('<clean>') + 7);
-    // }
-    // memory.setItem('logStringClean',logStringClean);
 	$w('#sessionEnrollmentJSON').value = local.getItem('logString');
-	// $w('#sessionEnrollmentJSON').value += '\n\n---\n\n[Proof of Concept]\n(line-feeds are tricky)\nCLEAN VERSION OF ABOVE\n======================\n';
-	// $w('#sessionEnrollmentJSON').value += memory.getItem('logStringClean');
 }
 
 export async function btnPeformNextStep_click(event) {
@@ -3222,26 +2833,23 @@ export async function btnPeformNextStep_click(event) {
     local.setItem('logString', local.getItem('logString') + '\n[~2444]Next (current) Step: ' + memory.getItem('enrollmentStepCurrent'))
 	await doPeformNextStep();
 	$w('#ddDisplayKind').value = 'ALL';
-	// $w('#sessionEnrollmentJSON').value = doEnrollmentLogCurrent('CODE');
 	displaySteps();
     doUserInterfaceCleanupCurrent()
     local.setItem('logString', local.getItem('logString') + '\n[~2450]exit btnPeformNextStep_click(event) nowISO: ' + memory.getItem('lastStamp'));
 	$w('#sessionEnrollmentJSON').value = local.getItem('logString');
+    $w('#boxConfirmStaffEyeD').hide();
 }
 
 export async function btnSkipNextStep_click(event) {
     local.setItem('logString','enter btnSkipNextStep_click(event)');
     memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
 	if($w('#radioAreYouSure').value !== 'YES'){
-		// $w('#sessionEnrollmentJSON').value = "'Skip Next Step' is so critical that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.";
 		local.setItem('logString', local.getItem('logString') + '\n[~2293]: ' + "'Skip Next Step' is so critical that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.");
 	}else if(memory.getItem('enrollmentStepCurrent') === 'IINSTANTIATE'){
-		// $w('#sessionEnrollmentJSON').value = "You cannot use 'Skip Next Step' to skip the 'IINSTANTIATE' step. Please proceed normally to execute the 'IINSTANTIATE' step.\n\nNo action taken. \nPlease try again or ask for assistance.";
 		local.setItem('logString', local.getItem('logString') + '\n[~2296]: ' + "You cannot use 'Skip Next Step' to skip the 'IINSTANTIATE' step. Please proceed normally to execute the 'IINSTANTIATE' step.\n\nNo action taken. \nPlease try again or ask for assistance.");
     }else{
         stepsCycleSteps();
 		displaySteps();
-        // $w('#sessionEnrollmentJSON').value = doEnrollmentLogCurrent('STEPS');
         local.setItem('logString', local.getItem('logString') + '\n[~2301]stepSkipped: ' + memory.getItem('enrollmentStepCompleted'));
 	}
     $w("#radioAreYouSure").value = 'NO';
@@ -3269,31 +2877,26 @@ export async function btCleanUpAllExceptEnrJSON_click(event) {
 	if($w('#radioAreYouSure').value === 'YES'){
         memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
         local.setItem('logString','[~2595]entering btCleanUpAllExceptEnrJSON_click:YES');
-		// $w('#sessionEnrollmentJSON').value = "'Clean Up All – Except Enrollment JSON' is NOT Enabled at this time.\n\nNo action taken. \nPlease try again or ask for assistance.";
         let responseCleanupCurrentState = doEnrollmentCleanupByKind('ALL_EXCEPT_ENROLLMENT');
         local.setItem('logString',local.getItem('logString') + '\n[~2601]exiting btCleanUpAllExceptEnrJSON_click:YES');
 		$w('#sessionEnrollmentJSON').value = local.getItem(('logString'));
 	}else{
-		$w('#sessionEnrollmentJSON').value = "'Clean Up All – Except Enrollment JSON' is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.";
+		$w('#sessionEnrollmentJSON').value = "'Clean Up All - Except Enrollment JSON' is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.";
 	}
 	$w("#radioAreYouSure").value = 'NO';
-	// $w("#radioAreYouSure").resetValidityIndication();
 }
 
 export async function btCleanUpAllIncludingnrJSON_click(event) {
 	if($w('#radioAreYouSure').value === 'YES'){
-		// $w('#sessionEnrollmentJSON').value = "'Clean Up All – Including Enrollment JSON' is NOT Enabled at this time.\n\nNo action taken. \nPlease try again or ask for assistance.";
         memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
         local.setItem('logString','[~2595]entering btCleanUpAllIncludingnrJSON_click:YES');
         let responseCleanupCurrentState = doEnrollmentCleanupByKind('ALL_INCLUDING_ENROLLMENT');
-		// $w('#sessionEnrollmentJSON').value = responseCleanupCurrentState;
         local.setItem('logString',local.getItem('logString') + '\n[~2621]exiting btCleanUpAllIncludingnrJSON_click:YES');
 		$w('#sessionEnrollmentJSON').value = local.getItem(('logString'));
 	}else{
-		$w('#sessionEnrollmentJSON').value = "'Clean Up All – Including Enrollment JSON' is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.";
+		$w('#sessionEnrollmentJSON').value = "'Clean Up All - Including Enrollment JSON' is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.";
 	}
 	$w("#radioAreYouSure").value = 'NO';
-	// $w("#radioAreYouSure").resetValidityIndication();
 }
 
 export function btnUpdateStudentDOB_click(event) {
@@ -3326,163 +2929,87 @@ export function btnClearPpDbase_click(event) {
 }
 
 export function btnKludgeClearPpStSpIDs_click(event) {
-	// local.setItem('familyId','EEMPTY');
-    // memory.setItem('ppRevision','EEMPTY');
-    // local.setItem('studentId','EEMPTY');
-    // memory.setItem('stRevision','EEMPTY');
-    // local.setItem('secondaryId','EEMPTY');
-    // memory.setItem('spRevision','EEMPTY');
     doUserInterfaceCleanupCurrent();
     $w('#sessionEnrollmentJSON').value = 'DEPRECATED: Kludge-Clear has removed all Primary-Parent, Student, and Secondary-Parent ID Values from Storage.'
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnGetStMember_click(event) {
 	doGetRecord('stMember','stMemberResponseJSON');
 }
 
-/**
- *	 @param {$w.MouseEvent} event
- *	Adds an estnt handler that runs when the element is clicked.
- *	Adds an estnt handler that runs when the element is clicked.
- */
 export function btnGetStCpntact_click(event) {
 	doGetRecord('stContact','stContactResponseJSON');
 }
 
-
-
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnGetStDbase_click(event) {
 	doGetRecord('stDbase','stDatabaseResponseJSON');
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnClearStMember_click(event) {
 	doClear('stMemberResponseJSON')
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnClearStContact_click(event) {
 	doClear('stContactResponseJSON')
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnClearStDbase_click(event) {
 	doClear('stDatabaseResponseJSON')
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnGetSpMember_click(event) {
 	doGetRecord('spMember','spMemberResponseJSON');
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnGetSpCpntact_click(event) {
 	doGetRecord('spContact','spContactResponseJSON');
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnGetSpDbase_click(event) {
 	doGetRecord('spDbase','spDatabaseResponseJSON');
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnClearSpMember_click(event) {
 	doClear('spMemberResponseJSON')
 	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
 	// Add your code for this event here: 
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnClearSpContact_click(event) {
 	doClear('spContactResponseJSON')
 	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
 	// Add your code for this event here: 
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnClearSpDbase_click(event) {
 	doClear('spDatabaseResponseJSON')
 	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
 	// Add your code for this event here: 
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- */
 export function btnWebhookResolve_click(event) {
     if($w('#radioAreYouSure').value === 'YES'){
-		// $w('#sessionEnrollmentJSON').value = "'Resolve Webhook' is NOT Enabled at this time.\n\nNo action taken. \nPlease try again or ask for assistance.";
         let statusThis = $w('#ddCurrentStatusUpdate').value;
         doUpdateThisWebhookPayload(statusThis);
-    	// updateStatusWebhookPayloadThis(true); 
         updateStatusWebhookPayloadThis(true);
-        // doUserInterfaceCleanupCurrent();
         console.log('[`3215] RESOLVE: Yes')
 	}else{
 		$w('#sessionEnrollmentJSON').value = "'Resolve Webhook' is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.";
 	}
 	$w("#radioAreYouSure").value = 'NO';
-	// $w("#radioAreYouSure").resetValidityIndication();
     console.log('[`3221] EXIT: btnWebhookResolve_click(event)')
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnCleanUpDEP_click(event) {
 	if($w('#radioAreYouSure').value === 'YES'){
 		$w('#sessionEnrollmentJSON').value = doEnrollmentCleanupCurrent();
 		doUserInterfaceCleanupCurrent();
-        // doEnrollmentCleanupByKind(kindKey = 'DDEFAULT')
-		// instantiateLoopSwitchEnrollmentSteps();
-		// $w('#sessionEnrollmentJSON').value = stepsDisplayStatusAsReturnString('init');
 	}else{
 		$w('#sessionEnrollmentJSON').value = "'Clean Up' is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.";
 	}
 	$w("#radioAreYouSure").value = 'NO';
-	// $w("#radioAreYouSure").resetValidityIndication();
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export async function btnCleanUpByKindTEST_click(event) {
 	if($w('#radioAreYouSure').value === 'YES'){
         memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv')));
@@ -3494,17 +3021,12 @@ export async function btnCleanUpByKindTEST_click(event) {
         local.setItem('logString', local.getItem('logString') + '\n</clean>Marvelous Mrs. Maisel END Test of Clean Tags');
         local.setItem('logString',local.getItem('logString') + '\nexiting btnCleanUpByKindTEST_click');
         $w('#sessionEnrollmentJSON').value = local.getItem('logString');
-		// doUserInterfaceCleanupCurrent();
-        // $w('#sessionEnrollmentJSON').value = doEnrollmentLogCurrent()
-		// $w('#sessionEnrollmentJSON').value = "'Clean Up by Kind' was just executed";
 	}else{
-		// $w('#sessionEnrollmentJSON').value = "'Clean Up by Kind' is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.";
         local.setItem('logString',"'Clean Up by zKind' is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.");
 	}
 	$w("#radioAreYouSure").value = 'NO';
     let logStringClean = local.getItem('logString');
     if(logStringClean.indexOf('</clean>') >= 0){
-        // console.log('logStringClean.indexOf(</clean>):' + logStringClean.indexOf('</clean>'))
         logStringClean = logStringClean.substr(0,logStringClean.indexOf('</clean>'));
     }
     if(logStringClean.indexOf('<clean>') >= 0){
@@ -3517,14 +3039,9 @@ export async function btnCleanUpByKindTEST_click(event) {
 	$w('#sessionEnrollmentJSON').value += memory.getItem('logStringClean');
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnGetWebhookPayload_click(event) {
 	updateStatusWebhookPayloadThis(true); 
 }
-
 
 
 // ! ====================================================================================================
@@ -3536,12 +3053,7 @@ export async function pretrashFindFamilyIdTermId(){
     let exceptionLogArray = [];
     
     let familyId = $w('#txtFamilyId').value;
-    // familyId = local.getItem('familyId');
-    // familyId = "123";
     let termId = Number($w('#txtTermId').value);
-    // termId = Number(local.getItem('termId'));
-    // termId = 202106;
-
 
     logString += '\n' + "local.getItem('familyId'): " + familyId;
     logString += '\n' + "local.getItem('termId'): " + termId;
@@ -3553,20 +3065,11 @@ export async function pretrashFindFamilyIdTermId(){
         .count();
 
     if (ppExistsCount > 0) {
-        // stampArrayElementObject.action = "abort";
-        // stampArrayElementObject.descr = "primaryParent person exists for this term";
-        // stampArrayElementObject.action = "abort";
         exceptionLogArray.push("primaryParent person exists for this term");
     }
 
 
     logString +='\n' + "ppExistsCount: " + ppExistsCount;
-    // logString += '\n' + "copyCode: " + JSON.stringify(copyCode,undefined,4);
-    // logString += '\n';// + "count: " + count;
-    // logString += '\n' + "copyCodeCount: " + copyCodeCount;
-    // logString += '\n' + "copyCodeCount: " + JSON.stringify(copyCodeCount,undefined,4);
-    // logString += '\n' + "result: " + JSON.stringify(result,undefined,4);
-    // logString += '\n' + "count: " + count;
 
     let exceptionLogBlock = '';
     exceptionLogArray.forEach(exceptionLog => {
@@ -3592,9 +3095,7 @@ EXCEPTION LOG BLOCK:
     let lastFirst = local.getItem('ppLast') + ', ' + local.getItem('ppFirst');
     let toInsert = {};
     toInsert.title = lastFirst;
-    // toInsert.personId = local.getItem('familyId');
     toInsert.personId = familyId;
-    // toInsert.familyId = local.getItem('familyId');
     toInsert.familyId = familyId;
     toInsert.role = 'Primary';
     toInsert.first = local.getItem('ppFirst');
@@ -3604,13 +3105,9 @@ EXCEPTION LOG BLOCK:
     toInsert.lastFirst = lastFirst;
     toInsert.comboName = local.getItem('comboName');
     toInsert.webhookId = local.getItem('wixWebhookId');
-    // toInsert.idHH = local.getItem('familyId');
     toInsert.idHH = familyId;
-    // toInsert.idBL = local.getItem('familyId');
     toInsert.idBL = familyId;
-    // toInsert.altPersonId = local.getItem('familyId');
     toInsert.altPersonId = familyId;
-    // toInsert.termId = local.getItem('termId');
     toInsert.termId = termId;
     // ø <---------- </direct (or nearly)> ---------->
     // ø <---------- <complex>  ---------->
@@ -3620,7 +3117,6 @@ EXCEPTION LOG BLOCK:
     let testObjectCorollary = {};
     testObjectCorollary.corollary = "course data";
     toInsert.objectData = local.getItem('ondeckEnrollmentJSON');
-    // toInsert.objectData = JSON.stringify(testObjectData);
     toInsert.objectCorollary = JSON.stringify(testObjectCorollary);
     // ø <---------- </complex Test with Direct> ---------->
     // ø <---------- </complex> ---------->
@@ -3644,11 +3140,7 @@ export async function pretrashFindStByFamilyIdLegalFirst(){
     let exceptionLogArray = [];
     
     let familyId = $w('#txtFamilyId').value;
-    // familyId = local.getItem('familyId');
-    // familyId = "123";
     let termId = Number($w('#txtTermId').value);
-    // termId = Number(local.getItem('termId'));
-    // termId = 202106;
 
     let studentId = $w('#txStudentId').value;
 
@@ -3665,20 +3157,11 @@ export async function pretrashFindStByFamilyIdLegalFirst(){
         .count();
 
     if (stExistsCount > 0) {
-        // stampArrayElementObject.action = "abort";
-        // stampArrayElementObject.descr = "primaryParent person exists for this term";
-        // stampArrayElementObject.action = "abort";
         exceptionLogArray.push("Student person exists for this familyId, legalFirstName and term");
     }
 
 
     logString +='\n' + "stExistsCount: " + stExistsCount;
-    // logString += '\n' + "copyCode: " + JSON.stringify(copyCode,undefined,4);
-    // logString += '\n';// + "count: " + count;
-    // logString += '\n' + "copyCodeCount: " + copyCodeCount;
-    // logString += '\n' + "copyCodeCount: " + JSON.stringify(copyCodeCount,undefined,4);
-    // logString += '\n' + "result: " + JSON.stringify(result,undefined,4);
-    // logString += '\n' + "count: " + count;
 
     let exceptionLogBlock = '';
     exceptionLogArray.forEach(exceptionLog => {
@@ -3705,9 +3188,7 @@ EXCEPTION LOG BLOCK:
     let lastFirst = local.getItem('stLast') + ', ' + local.getItem('stPreferredFirst');
     let toInsert = {};
     toInsert.title = lastFirst;
-    // toInsert.personId = local.getItem('familyId');
     toInsert.personId = studentId;
-    // toInsert.familyId = local.getItem('familyId');
     toInsert.familyId = familyId;
     toInsert.role = 'Student';
     toInsert.first = local.getItem('stPreferredFirst');
@@ -3717,13 +3198,9 @@ EXCEPTION LOG BLOCK:
     toInsert.lastFirst = lastFirst;
     toInsert.comboName = local.getItem('comboName');
     toInsert.webhookId = local.getItem('wixWebhookId');
-    // toInsert.idHH = local.getItem('familyId');
     toInsert.idHH = familyId;
-    // toInsert.idBL = local.getItem('familyId');
     toInsert.idBL = familyId;
-    // toInsert.altPersonId = local.getItem('familyId');
     toInsert.altPersonId = studentId;
-    // toInsert.termId = local.getItem('termId');
     toInsert.termId = termId;
     // ø <---------- </direct (or nearly)> ---------->
     // ø <---------- <complex>  ---------->
@@ -3733,7 +3210,6 @@ EXCEPTION LOG BLOCK:
     let testObjectCorollary = {};
     testObjectCorollary.corollary = "course data";
     toInsert.objectData = local.getItem('ondeckEnrollmentJSON');
-    // toInsert.objectData = JSON.stringify(testObjectData);
     toInsert.objectCorollary = JSON.stringify(testObjectCorollary);
     // ø <---------- </complex Test with Direct> ---------->
     // ø <---------- </complex> ---------->
@@ -3762,20 +3238,6 @@ export async function pretrashActionEvaluationTest(){
     local.setItem('stFirst', $w('#txStudentLegalFirst').value);
     local.setItem('spFirst', $w('#txtSecondaryFirst').value);
     local.setItem('spLast', $w('#txtSecondaryLast').value);
-    // local.setItem('staffIdentifiedFamilyId', cleanupString);
-    // local.setItem('familyId', cleanupString);
-    // // memory.setItem('ppRevision', cleanupString);
-    // local.setItem('studentId', cleanupString);
-    // local.setItem('secondaryId', cleanupString);
-    // // memory.setItem('stRevision', cleanupString);
-    // local.setItem('ppFirst', cleanupString);
-    // local.setItem('ppLast', cleanupString);
-    // local.setItem('stFirst', cleanupString);
-    // local.setItem('stPreferredFirst', cleanupString);
-    // local.setItem('stLast', cleanupString);
-    // local.setItem('spFirst', cleanupString);
-    // local.setItem('spLast', cleanupString);
-    // local.setItem('comboName', cleanupString);
     let now = new Date();
     let yyyymmddhhiiss = now.getFullYear() * 10000000000 + (now.getMonth() + 1) * 100000000 + now.getDate() * 1000000 + now.getHours() * 10000 + now.getMinutes() * 100 + now.getSeconds() * 1;
 
@@ -3800,7 +3262,6 @@ export async function pretrashActionEvaluationTest(){
 export function doPreTrashLogUI(){
     let now = new Date();
     let yyyymmddhhiiss = now.getFullYear() * 10000000000 + (now.getMonth() + 1) * 100000000 + now.getDate() * 1000000 + now.getHours() * 10000 + now.getMinutes() * 100 + now.getSeconds() * 1;
-    // let logString = 'LOG of Pre-Trash User Interface\n==============================';
     let logString = '';
     logString += '================================================================';
     logString += '\n===========     <LOG of Pre-Trash User Interface>    ===========';
@@ -3854,7 +3315,6 @@ export async function doPreTrashThreeQueries(){
         logString = logBeginString + logString + logEndString;
         return logString;
     }
-    // logString = 'HOLDER';
     logString = `
     let ppExistsCount = await wixData.query("person")
         .eq("personId", '` + staffIdentifiedFamilyId + `')
@@ -3903,9 +3363,6 @@ export async function doPreTrashThreeQueries(){
     logString = logBeginString + logString + logEndString;
 
 
-    // let familyId = local.getItem('staffIdentifiedFamilyId');
-    // let termId = local.getItem('termId');
-    // let studentLegalFirst = local.getItem('stFirst');
     return logString;
 }//END function doPreTrashThreeQueries()
 
@@ -3915,9 +3372,7 @@ export function uiCopyTextElementThis(elementId = ''){
         return;
     }
     elementId = elementId.substr(0,1) === '#' ? elementId : '#' + elementId;
-    // var copyText = document.getElementById("preTrashLog");
     wixWindow.copyToClipboard($w(elementId).value)
-    // wixWindow.copyToClipboard($w("#preTrashLog").value)
     .then( () => {
         // handle case where text was copied
     } )
@@ -3930,20 +3385,12 @@ export function uiCopyTextElementThis(elementId = ''){
 // ! ====================================================================================================
 
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export async function btnPreTrashDo_click(event) {
 	// pretrashFindFamilyIdTermId();
     await ppDatabasePrepJSON();
     $w('#preTrashLog').value = memory.getItem('ppDatabasePrepJSON');
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnPreTrashClear_click(event) {
 		doClear('preTrashLog')
 }
@@ -3953,46 +3400,24 @@ export function btnGetFamilyId_click(event) {
 }
 
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export async function btnPreTrashDoST_click(event) {
 	// pretrashFindStByFamilyIdLegalFirst();
     await stDatabasePrepJSON();
     $w('#preTrashLog').value = memory.getItem('stDatabasePrepJSON');
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnGetTermID_click(event) {
    $w('#txtTermId').value = local.getItem('termId');
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnGetStudentId_click(event) {
    $w('#txStudentId').value = local.getItem('studentId');
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnGetStudentLegalFirst_click(event) {
    $w('#txStudentLegalFirst').value = local.getItem('stFirst');
 }
 
-
-
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnPretrashGetStaffEyeD_click(event) {
     if($w('#txtStaffEyeD').value === $w('#txtFamilyId').value){
         $w('#txtStaffEyeD').value = 'INSTANTIATE';
@@ -4001,101 +3426,54 @@ export function btnPretrashGetStaffEyeD_click(event) {
     }
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export async function btnPreTrashActEval_click(event) {
 	await pretrashActionEvaluationTest();
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnGetSecondaryFirstLast_click(event) {
 	$w('#txtSecondaryFirst').value = local.getItem('spFirst');
 	$w('#txtSecondaryLast').value = local.getItem('spLast');
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnPreTrashLogUI_click(event) {
 	doPreTrashLogUI();
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export async function btnPreTrashThreeQueries_click(event) {
 	$w('#preTrashLog').value = await doPreTrashThreeQueries(); 
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnCopyPreTrashLog_click(event) {
 	uiCopyTextElementThis('preTrashLog');
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnCopySessionEnrollmentJSON_click(event) {
 	uiCopyTextElementThis('sessionEnrollmentJSON');
 }
 
 export function btnLocalLastError_click(event) {
-    //UI Candy (so as not to have to use Drop-Down)
 	$w('#sessionEnrollmentJSON').value = doEnrollmentLogCurrent('ERROR');
 }
 
 export function btnLocalLogString_click(event) {
-    //UI Candy (so as not to have to use Drop-Down)
 	$w('#sessionEnrollmentJSON').value = doEnrollmentLogCurrent('LOG');
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnAppendToPreTrashLog_click(event) {
 	$w('#preTrashLog').value += '\n\n---\n\n'; 
 	$w('#preTrashLog').value += $w('#sessionEnrollmentJSON').value; 
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnKludgeClearPpStSpIDs_click_1(event) {
-    //see Oringial: btnKludgeClearPpStSpIDs_click
-    // local.setItem('secondaryId','EEMPTY');
-    // memory.setItem('spRevision','EEMPTY');
-    // doUserInterfaceCleanupCurrent();
-    // $w('#sessionEnrollmentJSON').value = 'DISABLED: Kludge-Clear has removed all Secondary-Parent ID Values from Storage.'
     $w('#sessionEnrollmentJSON').value = 'DISABLED: Kludge-Clear has disabled.\n\nNo actiontake.\nPlease try again or ask for assistance.'
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-	// Add your code for this event here: 
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnUIrefresh_click(event) {
 	doUserInterfaceCleanupCurrent();
 }
 
 export async function doQueryContactById(idValueOrKey = 'NONE'){
     let altKeyString = $w('#radioContactFindBy').value;
-    // let altKeyString = altKeyValue === 16 ? 'ID' : 'HELP'
-    // altKeyString = altKeyValue === 17 ? 'EMAIL' : 'HELP'
     let kind = idValueOrKey.length < 30 ? 'KEY' : 'LITERAL';
     kind = idValueOrKey.indexOf('@') > 0 ? 'LITERAL' : kind;
     let key = 'PENDING KEY';
@@ -4154,10 +3532,6 @@ export async function doQueryContactById(idValueOrKey = 'NONE'){
     }
 
 
-
-
-
-
     if (altKeyString === 'ID') {
 
         let contact = await steamdaGetContactFunction(contactId);
@@ -4165,12 +3539,6 @@ export async function doQueryContactById(idValueOrKey = 'NONE'){
         logString += JSON.stringify(contact,undefined,4);
         local.setItem('logString',logString);     
         $w('#sessionEnrollmentJSON').value = logString;
-        // if (typeof contact.revision === 'number' && contact.revision > 0) {
-        //     memory.setItem('ppRevision',(contact.revision).toString());
-        // }else{
-        //     local.setItem('logString', local.getItem('logString') + "\n[703] Failure of `steamdaGetContactFunction(local.getItem('familyId'))'");
-        //     return;   
-        // }
         return;
     }
 
@@ -4178,18 +3546,9 @@ export async function doQueryContactById(idValueOrKey = 'NONE'){
 
         let contact = await getContactByEmail(contactEmail);
         logString += '\n\n<---------- <queryResponse> ---------->\n\n';
-        // logString += JSON.stringify(contact,undefined,4);
-        // $w('#sessionEnrollmentJSON').value = logString;
-        // if (typeof contact.revision === 'number' && contact.revision > 0) {
-        //     memory.setItem('ppRevision',(contact.revision).toString());
-        // }else{
-        //     local.setItem('logString', local.getItem('logString') + "\n[703] Failure of `steamdaGetContactFunction(local.getItem('familyId'))'");
-        //     return;   
-        // }
         logString += `the Query of Contacts for \nPrimary Email: '${contactEmail}' \nReturned:\n`;
         logString += `BEGIN queryResults:\n`;
         logString += JSON.stringify(contact,undefined,4);
-        // logString += queryResults;
         logString += `\nEND queryResults`;
         local.setItem('logString',logString);     
         $w('#sessionEnrollmentJSON').value = logString;
@@ -4197,10 +3556,6 @@ export async function doQueryContactById(idValueOrKey = 'NONE'){
         return;
     }
 
-
-
-
-   
     logString +=  '\n\n<---------- <Force Abort for Testing> ---------->\n\n';       
     $w('#sessionEnrollmentJSON').value = logString;
     return;
@@ -4228,8 +3583,6 @@ export function btnSPGetContact_click(event) {
 export function btnLITGetContact_click(event) {
     let paramIdOrKey = $w('#txtGetContactLiteral').value;
     paramIdOrKey = paramIdOrKey.trim();
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-	// Add your code for this event here: 
 	doQueryContactById(paramIdOrKey); 
     $w('#txtGetContactLiteral').value = '';
 }
@@ -4244,7 +3597,8 @@ export function btnStepAppend_click(event) {
 }
 
 export function btnStepLogAll_click(event) {
-	$w('#sessionEnrollmentJSON').value = doEnrollmentLogCurrent('ALL');
+	// $w('#sessionEnrollmentJSON').value = doEnrollmentLogCurrent('ALL');
+	$w('#sessionEnrollmentJSON').value = doEnrollmentLogCurrent('CODE');
 }
 
 export function btnStepCopy_click(event) {
@@ -4252,27 +3606,25 @@ export function btnStepCopy_click(event) {
 }
 
 export async function btnExtraContactPrimary_click(event) {
-    let diagnosticOnlyThis = false;
+    let diagnosticOnlyThis = true;
     if($w('#radioAreYouSure').value === 'YES'){
-        diagnosticOnlyThis = true;
+        diagnosticOnlyThis = false;
     }
 	await getContactByEmailAndNotIdFunction(local.getItem('familyEmail'),local.getItem('familyId'),diagnosticOnlyThis);
 	$w('#sessionEnrollmentJSON').value = local.getItem('logString');
+    $w('#radioAreYouSure').value = 'NO';
 }
 
 export async function btnExtraContactStudent_click(event) {
-    let diagnosticOnlyThis = false;
+    let diagnosticOnlyThis = true;
     if($w('#radioAreYouSure').value === 'YES'){
-        diagnosticOnlyThis = true;
+        diagnosticOnlyThis = false;
     }
 	await getContactByEmailAndNotIdFunction(local.getItem('studentEmail'),local.getItem('studentId'),diagnosticOnlyThis);
 	$w('#sessionEnrollmentJSON').value = local.getItem('logString');
+    $w('#radioAreYouSure').value = 'NO';
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnDemoIfElseThen_click(event) {
     let beforeString = `entering 'btnDemoIfElseThen_click'\n`;
     beforeString += '\n' + "local.getItem('superEnrollmentStatus'): " + local.getItem('superEnrollmentStatus');
@@ -4283,9 +3635,7 @@ export function btnDemoIfElseThen_click(event) {
     beforeString += '\n\n==========\n';
 
 	$w('#preTrashLog').value = beforeString;
-    // let demoResponse = [['Feather',12,'1967'],['Marcy',14,'1988'],['Chester',14,'2005'],['Marais',11,'2010']]; 
     let demoResponse = demoLoop_doIfElseThen(); 
-    // demoResponse += demoLoop_doIfElseThen(); 
     let demoResponseToString = '[';
     demoResponse.forEach(responseRow => {
         demoResponseToString += '\n[' + responseRow.toString() + ']';
@@ -4297,4 +3647,438 @@ export function btnDemoIfElseThen_click(event) {
     demoResponseToString += afterString;
 
 	$w('#preTrashLog').value = demoResponseToString;
+}
+
+// ! =========================================================================================================================
+// ! ==================================          <SEVENT-SUPER-STEPS with MultiStateBox>          ============================
+// ! ==================================                     <superSeven202107>                    ============================
+// ! =========================================================================================================================
+
+// ø <---------- <mxboxPostEnrollmentSeven AnyAction PerformStep NextState> ---------->
+// ø <----------         <'mxbox' typo of 'msbox' (multi-state-box)>        ---------->
+// ø <----------                 <refactor or live with it>                 ---------->
+
+// ø <---------- <mxboxPostEnrollmentSevenAnyAction>  ---------->
+// ø <---------- <superSeven202107>  ---------->
+export function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
+    console.log('[fnc]mxboxPostEnrollmentSevenAnyAction');
+    memory.setItem('msboxCurrentId','#mxboxPostEnrollmentSeven');
+
+    // $w('#spDatabaseResponseJSON').value = JSON.stringify(responseObject,undefined,4);
+
+    // responseObject.button = 'NEXT';
+    // responseObject.messageKey = 'primary';
+
+    let messageKey = responseObject.messageKey;
+    // ! <Pre-Trash> - even testing should come from the calling script/button
+    // let messageKey = 'primary';
+    // let messageKeyArray= ["success","warning","danger","info","devel"];
+    // messageKey = messageKeyArray[Math.floor(Math.random() * messageKeyArray.length)];
+    // ! </Pre-Trash>
+    // ø <ELSE>
+    if(responseObject.button !== 'CURRENT' && responseObject.button !== 'NEXT'){
+        // try it purposefully
+        return;
+    }
+    // ø </ELSE>
+    let peSevenStateCurrent = {};
+    let peSevenStateCurrentId = ''; // "state1"
+    if(responseObject.button === 'CURRENT'){
+        // ! <from PERFORM CURRENT STEP>
+        $w('#btnPeSevenNext').show();
+        $w('#btnPeSevenCurrent').hide();
+        // let id = 'abc';
+        peSevenStateCurrent = $w("#mxboxPostEnrollmentSeven").currentState;
+        peSevenStateCurrentId = peSevenStateCurrent.id; // "state1"
+        if (peSevenStateCurrentId === 'stateOfframp') {
+            wixLocation.to("/blank-3");
+            return;
+        }
+        // ! </from PERFORM CURRENT STEP>
+    }
+    if(responseObject.button === 'NEXT'){
+        // ! <from GO TO NEXT>
+        goToState();
+        $w('#btnPeSevenNext').hide();
+        $w('#btnPeSevenCurrent').show();
+        // ! </from GO TO NEXT>
+        // $w('#txtPeSevenTitle').text = 'Abort after NEXT goToState()'
+        // return;
+        // let peSevenStateCurrent = $w(memory.getItem('msboxCurrentId')).currentState;
+        peSevenStateCurrent = $w('#mxboxPostEnrollmentSeven').currentState;
+        peSevenStateCurrentId = peSevenStateCurrent.id; // "state1"
+        // peSevenStateCurrentId = memory.getItem('msboxLastState');
+        // ! MAYBE <Kludge Next State>
+        let statesArray = $w("#mxboxPostEnrollmentSeven").states.map(state => state.id);
+        let nextIndex = statesArray.indexOf(peSevenStateCurrentId) + 1;
+        peSevenStateCurrentId = statesArray[nextIndex];
+        memory.setItem('msboxLastState',peSevenStateCurrentId);
+        // ! MAYBE </Kludge Next State>
+
+    }
+    //parameters will mostly be wixStorage, but responseObject can be something
+    // ø <original from $w("#mxboxPostEnrollmentSeven").onChange>
+    let peSeventJSON = `{"stepObjects":{"stateOnramp":{"titleKey":"onramp","title":"On-Ramp","longTitle":"JSON WORKING! Long Title for On-Ramp","stateIdThis":"stateOnramp","origSteps":{"firstStep":"ZERO","lastStep":"ZERO","allStepArray":["ZERO"],"notes":[]}},"stateInstantiate":{"titleKey":"instantiate","title":"Instantiate","longTitle":"Instantiate Enrollment","stateIdThis":"stateInstantiate","origSteps":{"firstStep":"IINSTANTIATE","lastStep":"IINSTANTIATE","allStepArray":["IINSTANTIATE"],"notes":["Reset Steps need to be manually applied (or does it?)"]}},"stateMemberConfirm":{"titleKey":"memberConfirm","title":"Member Confirm","longTitle":"Confirm Members for Primary and Student","stateIdThis":"stateMemberConfirm","origSteps":{"firstStep":"PREP_ppMember","lastStep":"EXECUTE_stMember","allStepArray":["PREP_ppMember","EXECUTE_ppMember","PREP_stMember","EXECUTE_stMember"],"notes":[]}},"stateDupeDelete":{"titleKey":"dupeDelete","title":"Dupe Delete","longTitle":"Delete any Duplicate Contacts (known bug)","stateIdThis":"stateDupeDelete","origSteps":{"firstStep":"dedupePpStContact","lastStep":"dedupePpStContact","allStepArray":["dedupePpStContact"],"notes":[]}},"stateDatabaseForPrimaryAndStudent":{"titleKey":"databaseForPrimaryAndStudent","title":"Database for Primary and Student","longTitle":"Insert Records into the Person Database for Primary and Student","stateIdThis":"stateDatabaseForPrimaryAndStudent","origSteps":{"firstStep":"PREP_ppContact","lastStep":"PREP_stDatabase","allStepArray":["PREP_ppContact","PREP_ppDatabase","PREP_stContact","PREP_stDatabase"],"notes":[]}},"stateContactForPrimaryAndStudent":{"titleKey":"contactForPrimaryAndStudent","title":"Contact for Primary and Student","longTitle":"Update Contacts for Primary & Student with Complex Enrollment Data","stateIdThis":"stateContactForPrimaryAndStudent","origSteps":{"firstStep":"PREP_spContact","lastStep":"EXECUTE_stDatabase","allStepArray":["PREP_spContact","PREP_spDatabase","EXECUTE_ppContact","EXECUTE_ppDatabase","EXECUTE_stContact","EXECUTE_stDatabase"],"notes":[]}},"stateContactAndDatabaseForSecondary":{"titleKey":"contactAndDatabaseForSecondary","title":"Contact and Database for Secondary","longTitle":"Upsert Contact and Insert Person database Record for Secondary","stateIdThis":"stateContactAndDatabaseForSecondary","origSteps":{"firstStep":"EXECUTE_spContact","lastStep":"EXECUTE_spDatabase","allStepArray":["EXECUTE_spContact","EXECUTE_spDatabase"],"notes":[]}},"stateResolveAndDestroy":{"titleKey":"resolveAndDestroy","title":"Resolve and Destroy","longTitle":"Resolve Webhook Payload and Off-Ramp the Post Enrollment Process","stateIdThis":"stateResolveAndDestroy","origSteps":{"firstStep":"CCOMPLETE","lastStep":"CCOMPLETE","allStepArray":["CCOMPLETE"],"notes":["ouside of Loop-Switch execute 'Resolve WebHook'","ouside of Loop-Switch execute 'Destroy' wixStorage"]}},"stateOfframp":{"titleKey":"offramp","title":"Off-Ramp","longTitle":"Off-Ramp to Display Completion Data before taking Next Application","stateIdThis":"stateOfframp"}},"stateIdArray":["stateOnramp","stateInstantiate","stateMemberConfirm","stateDupeDelete","stateDatabaseForPrimaryAndStudent","stateContactForPrimaryAndStudent","stateContactAndDatabaseForSecondary","stateResolveAndDestroy","stateOfframp"],"messaging":{"hex":{"primary":"#007bff","devel":"#6610f2","danger":"#dc3545","warning":"#ffc107","success":"#28a745","info":"#17a2b8"}},"stepMessaging":{"stateOnramp":{"primary":"The primary message for 'stateOnramp'","devel":"The devel message for 'stateOnramp'","danger":"The danger message for 'stateOnramp'","warning":"The warning message for 'stateOnramp'","success":"The success message for 'stateOnramp'","info":"The info message for 'stateOnramp'"},"stateInstantiate":{"primary":"The primary message for 'stateInstantiate'","devel":"The devel message for 'stateInstantiate'","danger":"The danger message for 'stateInstantiate'","warning":"The warning message for 'stateInstantiate'","success":"The success message for 'stateInstantiate'","info":"The info message for 'stateInstantiate'"},"stateMemberConfirm":{"primary":"The primary message for 'stateMemberConfirm'","devel":"The devel message for 'stateMemberConfirm'","danger":"The danger message for 'stateMemberConfirm'","warning":"The warning message for 'stateMemberConfirm'","success":"The success message for 'stateMemberConfirm'","info":"The info message for 'stateMemberConfirm'"},"stateDupeDelete":{"primary":"The primary message for 'stateDupeDelete'","devel":"The devel message for 'stateDupeDelete'","danger":"The danger message for 'stateDupeDelete'","warning":"The warning message for 'stateDupeDelete'","success":"The success message for 'stateDupeDelete'","info":"The info message for 'stateDupeDelete'"},"stateDatabaseForPrimaryAndStudent":{"primary":"The primary message for 'stateDatabaseForPrimaryAndStudent'","devel":"The devel message for 'stateDatabaseForPrimaryAndStudent'","danger":"The danger message for 'stateDatabaseForPrimaryAndStudent'","warning":"The warning message for 'stateDatabaseForPrimaryAndStudent'","success":"The success message for 'stateDatabaseForPrimaryAndStudent'","info":"The info message for 'stateDatabaseForPrimaryAndStudent'"},"stateContactForPrimaryAndStudent":{"primary":"The primary message for 'stateContactForPrimaryAndStudent'","devel":"The devel message for 'stateContactForPrimaryAndStudent'","danger":"The danger message for 'stateContactForPrimaryAndStudent'","warning":"The warning message for 'stateContactForPrimaryAndStudent'","success":"The success message for 'stateContactForPrimaryAndStudent'","info":"The info message for 'stateContactForPrimaryAndStudent'"},"stateContactAndDatabaseForSecondary":{"primary":"The primary message for 'stateContactAndDatabaseForSecondary'","devel":"The devel message for 'stateContactAndDatabaseForSecondary'","danger":"The danger message for 'stateContactAndDatabaseForSecondary'","warning":"The warning message for 'stateContactAndDatabaseForSecondary'","success":"The success message for 'stateContactAndDatabaseForSecondary'","info":"The info message for 'stateContactAndDatabaseForSecondary'"},"stateResolveAndDestroy":{"primary":"The primary message for 'stateResolveAndDestroy'","devel":"The devel message for 'stateResolveAndDestroy'","danger":"The danger message for 'stateResolveAndDestroy'","warning":"The warning message for 'stateResolveAndDestroy'","success":"The success message for 'stateResolveAndDestroy'","info":"The info message for 'stateResolveAndDestroy'"},"stateOfframp":{"primary":"The primary message for 'stateOfframp'","devel":"The devel message for 'stateOfframp'","danger":"The danger message for 'stateOfframp'","warning":"The warning message for 'stateOfframp'","success":"The success message for 'stateOfframp'","info":"The info message for 'stateOfframp'"}}}`;
+    let peSeventObject = JSON.parse(peSeventJSON);
+    $w('#preTrashLog').value = JSON.stringify(peSeventObject,undefined,4);
+    // ! <'event.' dependent>
+    // let currentState = event.target.currentState.id; // "state2"
+    // ! </'event.' dependent>
+    // ø </original from $w("#mxboxPostEnrollmentSeven").onChange>
+
+    // ø <moved to msBox-OnChange> 20210720
+    // memory.setItem('msboxCurrentId','#mxboxPostEnrollmentSeven');
+    // $w('#stMemberResponseJSON').value = memory.getItem('msboxCurrentId');
+
+    // let peSevenStateCurrent = $w(memory.getItem('msboxCurrentId')).currentState;
+    // let peSevenStateCurrent = $w('#mxboxPostEnrollmentSeven').currentState;
+    // let peSevenStateCurrentId = peSevenStateCurrent.id; // "state1"
+    // let peSevenStateCurrentId = memory.getItem('msboxLastState');
+    // ø </moved to msBox-OnChange>
+    // $w('#stContactResponseJSON').value = JSON.stringify(peSevenStateCurrent,undefined,4);
+    $w('#ppMemberResponseJSON').value = responseObject.button + '\n' + peSevenStateCurrentId;
+    // ø <original from $w("#mxboxPostEnrollmentSeven").onChange>
+    // let currentStepObject = peSeventObject.stepObjects[currentState];
+    let currentStepObject = peSeventObject.stepObjects[peSevenStateCurrentId];
+    $w('#spContactResponseJSON').value = JSON.stringify(currentStepObject,undefined,4);
+    let currentStepMessagingObject = peSeventObject.stepMessaging[peSevenStateCurrentId];
+    $w('#spMemberResponseJSON').value = JSON.stringify(currentStepMessagingObject,undefined,4);
+    let currentStepOrigStepsObject = currentStepObject.origSteps;
+    $w('#stMemberResponseJSON').value = JSON.stringify(currentStepOrigStepsObject,undefined,4);
+    let originalStepsString = (currentStepOrigStepsObject.allStepArray).toString();
+    originalStepsString = 'origSteps:<br>==========<br>• ' + originalStepsString;
+    let cowCatherIndex = 0;
+    while(cowCatherIndex < 10 && originalStepsString.indexOf(',') > 0){
+        originalStepsString = originalStepsString.replace(',','<br>• ');
+        cowCatherIndex++;
+    }
+    let html = doBootstrapMessage('devel',originalStepsString,18);
+    $w('#txtOriginalStepsList').html = html;
+    let isValidTitle = typeof currentStepObject === 'object' ? true : false;
+    isValidTitle = isValidTitle && typeof currentStepObject.longString === 'string' ? true : isValidTitle;
+    let title = !isValidTitle ? 'currentStepObject.longTitle is not a String' : currentStepObject.longTitle;
+    // let title = longTitleJSON;
+    title = title.substr(0,66);
+    $w('#txtPeSevenTitle').text = title;
+    // ø </original from $w("#mxboxPostEnrollmentSeven").onChange>
+    
+    
+    let lastClicked = memory.getItem('msboxLastState') === peSevenStateCurrentId ? 'PERFORM_STEP' : 'NEXT_STATE';
+    // memory.setItem('msboxLastState',peSevenStateCurrentId);
+    // let messageThis = 'Test of messageThis Parameter';
+    
+    messageKey = 'primary';
+    let messageThis = currentStepMessagingObject[messageKey];
+    html = doBootstrapMessage(messageKey,messageThis);
+    $w('#txtBootstrapPrimary').html = html;
+    // $w('#txtBootstrapPrimary').expand();
+
+    if(responseObject.messageResponse === true){
+        messageKey = responseObject.messageKey;
+        let messageThis = currentStepMessagingObject[messageKey];
+        let html = doBootstrapMessage(messageKey,messageThis);
+        $w('#txtBootstrapResponse').html = html;
+        $w('#txtBootstrapResponse').expand();
+    }else{
+        $w('#txtBootstrapResponse').collapse();
+    }
+
+    if(responseObject.messageRandomInfo === true){
+        messageKey = 'info';
+        // ø <backward compatible for Single 'info' message>
+        if(responseObject.button === 'NEXT'){
+            let isValidPreStepInfo = currentStepMessagingObject.preStepInfo == null ? false : true;
+            isValidPreStepInfo = isValidPreStepInfo && typeof currentStepMessagingObject.preStepInfo === 'string' ? true : false;
+            if( isValidPreStepInfo){
+                messageKey = 'preStepInfo';
+            }
+        }
+        if(responseObject.button === 'CURRENT'){
+            let isValidPostStepInfo = currentStepMessagingObject.postStepInfo == null ? false : true;
+            isValidPostStepInfo = isValidPostStepInfo && typeof currentStepMessagingObject.postStepInfo === 'string' ? true : false;
+            if( isValidPostStepInfo){
+                messageKey = 'postStepInfo';
+            }
+        }
+        // ø </backward compatible for Single 'info' message>
+        if(responseObject.button === 'CURRENT'){}
+        // ø </backward compatible for Single 'info' message>
+
+        // messageKey = responseObject.messageKey;
+        messageThis = currentStepMessagingObject[messageKey];
+        if(messageThis.length > 0){
+            let html = doBootstrapMessage(messageKey,messageThis);
+            $w('#txtBootstrapInfo').html = html;
+            $w('#txtBootstrapInfo').expand();
+        }else{
+            $w('#txtBootstrapInfo').collapse();
+        }
+    }else{
+        $w('#txtBootstrapInfo').collapse();
+    }
+
+    $w('#spDatabaseResponseJSON').value = JSON.stringify(responseObject,undefined,4);
+
+    if(lastClicked === 'PERFORM_STEP'){
+        responseObject.currentStepOriginalStepsArray = currentStepOrigStepsObject.allStepArray;
+        mxboxPostEnrollmentSevenPerformStep(responseObject);
+    }
+    if(lastClicked === 'NEXT_STATE'){
+        mxboxPostEnrollmentSevenNextState(responseObject);
+    }
+}
+// ø <---------- </superSeven202107>  ---------->
+// ø <---------- </mxboxPostEnrollmentSevenAnyAction> ---------->
+
+// ! <Maybe Not>
+// ! <Pre-Trash>
+// $w("#mxboxPostEnrollmentSeven").onChange( (event) => {
+        // ø <moved from msBoxAnyChange - After-Next> 20210720
+        // memory.setItem('msboxCurrentId','#mxboxPostEnrollmentSeven');
+        // $w('#stMemberResponseJSON').value = memory.getItem('msboxCurrentId');
+        // let peSevenStateCurrent = $w('#mxboxPostEnrollmentSeven').currentState;
+        // let peSevenStateCurrentId = peSevenStateCurrent.id; // "state1"
+        // memory.setItem('msboxLastState',peSevenStateCurrentId)
+        // ø <moved from msBoxAnyChange - After-Next>
+//     // let longTitleJSON = JSON.parse(peSeventJSON).stepObjects.stateOnramp.longTitle;
+//     // let peSeventObject={stepObjects:{stateOnramp:{titleKey:"onramp",title:"On-Ramp",longTitle:"Long Title for On-Ramp",stateIdThis:"stateOnramp"},stateInstantiate:{titleKey:"instantiate",title:"Instantiate",longTitle:"Instantiate Enrollment",stateIdThis:"stateInstantiate"},stateMemberConfirm:{titleKey:"memberConfirm",title:"Member Confirm",longTitle:"Confirm Members for Primary and Student",stateIdThis:"stateMemberConfirm"},stateDupeDelete:{titleKey:"dupeDelete",title:"Dupe Delete",longTitle:"Delete any Duplicate Contacts (known bug)",stateIdThis:"stateDupeDelete"},stateDatabaseForPrimaryAndStudent:{titleKey:"databaseForPrimaryAndStudent",title:"Database for Primary and Student",longTitle:"Insert Records into the Person Database for Primary and Student",stateIdThis:"stateDatabaseForPrimaryAndStudent"},stateContactForPrimaryAndStudent:{titleKey:"contactForPrimaryAndStudent",title:"Contact for Primary and Student",longTitle:"Update Contacts for Primary & Student with Complex Enrollment Data",stateIdThis:"stateContactForPrimaryAndStudent"},stateContactAndDatabaseForSecondary:{titleKey:"contactAndDatabaseForSecondary",title:"Contact and Database for Secondary",longTitle:"Upsert Contact and Insert Person database Record for Secondary",stateIdThis:"stateContactAndDatabaseForSecondary"},stateResolveAndDestroy:{titleKey:"resolveAndDestroy",title:"Resolve and Destroy",longTitle:"Resolve Webhook Payload and Off-Ramp the Post Enrollment Process",stateIdThis:"stateResolveAndDestroy"},stateOfframp:{titleKey:"offramp",title:"Off-Ramp",longTitle:"Click 'Perform Current Step' to return to 'Process Web Hooks'",stateIdThis:"stateOfframp"}}};
+//     let peSeventJSON = `{"stepObjects":{"stateOnramp":{"titleKey":"onramp","title":"On-Ramp","longTitle":"JSON WORKING! Long Title for On-Ramp","stateIdThis":"stateOnramp","origSteps":{"firstStep":"ZERO","lastStep":"ZERO","allStepArray":["ZERO"],"notes":[]}},"stateInstantiate":{"titleKey":"instantiate","title":"Instantiate","longTitle":"Instantiate Enrollment","stateIdThis":"stateInstantiate","origSteps":{"firstStep":"IINSTANTIATE","lastStep":"IINSTANTIATE","allStepArray":["IINSTANTIATE"],"notes":["Reset Steps need to be manually applied (or does it?)"]}},"stateMemberConfirm":{"titleKey":"memberConfirm","title":"Member Confirm","longTitle":"Confirm Members for Primary and Student","stateIdThis":"stateMemberConfirm","origSteps":{"firstStep":"PREP_ppMember","lastStep":"EXECUTE_stMember","allStepArray":["PREP_ppMember","EXECUTE_ppMember","PREP_stMember","EXECUTE_stMember"],"notes":[]}},"stateDupeDelete":{"titleKey":"dupeDelete","title":"Dupe Delete","longTitle":"Delete any Duplicate Contacts (known bug)","stateIdThis":"stateDupeDelete","origSteps":{"firstStep":"dedupePpStContact","lastStep":"dedupePpStContact","allStepArray":["dedupePpStContact"],"notes":[]}},"stateDatabaseForPrimaryAndStudent":{"titleKey":"databaseForPrimaryAndStudent","title":"Database for Primary and Student","longTitle":"Insert Records into the Person Database for Primary and Student","stateIdThis":"stateDatabaseForPrimaryAndStudent","origSteps":{"firstStep":"PREP_ppContact","lastStep":"PREP_stDatabase","allStepArray":["PREP_ppContact","PREP_ppDatabase","PREP_stContact","PREP_stDatabase"],"notes":[]}},"stateContactForPrimaryAndStudent":{"titleKey":"contactForPrimaryAndStudent","title":"Contact for Primary and Student","longTitle":"Update Contacts for Primary & Student with Complex Enrollment Data","stateIdThis":"stateContactForPrimaryAndStudent","origSteps":{"firstStep":"PREP_spContact","lastStep":"EXECUTE_stDatabase","allStepArray":["PREP_spContact","PREP_spDatabase","EXECUTE_ppContact","EXECUTE_ppDatabase","EXECUTE_stContact","EXECUTE_stDatabase"],"notes":[]}},"stateContactAndDatabaseForSecondary":{"titleKey":"contactAndDatabaseForSecondary","title":"Contact and Database for Secondary","longTitle":"Upsert Contact and Insert Person database Record for Secondary","stateIdThis":"stateContactAndDatabaseForSecondary","origSteps":{"firstStep":"EXECUTE_spContact","lastStep":"EXECUTE_spDatabase","allStepArray":["EXECUTE_spContact","EXECUTE_spDatabase"],"notes":[]}},"stateResolveAndDestroy":{"titleKey":"resolveAndDestroy","title":"Resolve and Destroy","longTitle":"Resolve Webhook Payload and Off-Ramp the Post Enrollment Process","stateIdThis":"stateResolveAndDestroy","origSteps":{"firstStep":"CCOMPLETE","lastStep":"CCOMPLETE","allStepArray":["CCOMPLETE"],"notes":["ouside of Loop-Switch execute 'Resolve WebHook'","ouside of Loop-Switch execute 'Destroy' wixStorage"]}},"stateOfframp":{"titleKey":"offramp","title":"Off-Ramp","longTitle":"Off-Ramp to Display Completion Data before taking Next Application","stateIdThis":"stateOfframp"}},"stateIdArray":["stateOnramp","stateInstantiate","stateMemberConfirm","stateDupeDelete","stateDatabaseForPrimaryAndStudent","stateContactForPrimaryAndStudent","stateContactAndDatabaseForSecondary","stateResolveAndDestroy","stateOfframp"],"messaging":{"hex":{"primary":"#007bff","devel":"#6610f2","danger":"#dc3545","warning":"#ffc107","success":"#28a745","info":"#17a2b8"}},"stepMessaging":{"stateOnramp":{"primary":"The primary message for 'stateOnramp'","devel":"The devel message for 'stateOnramp'","danger":"The danger message for 'stateOnramp'","warning":"The warning message for 'stateOnramp'","success":"The success message for 'stateOnramp'","info":"The info message for 'stateOnramp'"},"stateInstantiate":{"primary":"The primary message for 'stateInstantiate'","devel":"The devel message for 'stateInstantiate'","danger":"The danger message for 'stateInstantiate'","warning":"The warning message for 'stateInstantiate'","success":"The success message for 'stateInstantiate'","info":"The info message for 'stateInstantiate'"},"stateMemberConfirm":{"primary":"The primary message for 'stateMemberConfirm'","devel":"The devel message for 'stateMemberConfirm'","danger":"The danger message for 'stateMemberConfirm'","warning":"The warning message for 'stateMemberConfirm'","success":"The success message for 'stateMemberConfirm'","info":"The info message for 'stateMemberConfirm'"},"stateDupeDelete":{"primary":"The primary message for 'stateDupeDelete'","devel":"The devel message for 'stateDupeDelete'","danger":"The danger message for 'stateDupeDelete'","warning":"The warning message for 'stateDupeDelete'","success":"The success message for 'stateDupeDelete'","info":"The info message for 'stateDupeDelete'"},"stateDatabaseForPrimaryAndStudent":{"primary":"The primary message for 'stateDatabaseForPrimaryAndStudent'","devel":"The devel message for 'stateDatabaseForPrimaryAndStudent'","danger":"The danger message for 'stateDatabaseForPrimaryAndStudent'","warning":"The warning message for 'stateDatabaseForPrimaryAndStudent'","success":"The success message for 'stateDatabaseForPrimaryAndStudent'","info":"The info message for 'stateDatabaseForPrimaryAndStudent'"},"stateContactForPrimaryAndStudent":{"primary":"The primary message for 'stateContactForPrimaryAndStudent'","devel":"The devel message for 'stateContactForPrimaryAndStudent'","danger":"The danger message for 'stateContactForPrimaryAndStudent'","warning":"The warning message for 'stateContactForPrimaryAndStudent'","success":"The success message for 'stateContactForPrimaryAndStudent'","info":"The info message for 'stateContactForPrimaryAndStudent'"},"stateContactAndDatabaseForSecondary":{"primary":"The primary message for 'stateContactAndDatabaseForSecondary'","devel":"The devel message for 'stateContactAndDatabaseForSecondary'","danger":"The danger message for 'stateContactAndDatabaseForSecondary'","warning":"The warning message for 'stateContactAndDatabaseForSecondary'","success":"The success message for 'stateContactAndDatabaseForSecondary'","info":"The info message for 'stateContactAndDatabaseForSecondary'"},"stateResolveAndDestroy":{"primary":"The primary message for 'stateResolveAndDestroy'","devel":"The devel message for 'stateResolveAndDestroy'","danger":"The danger message for 'stateResolveAndDestroy'","warning":"The warning message for 'stateResolveAndDestroy'","success":"The success message for 'stateResolveAndDestroy'","info":"The info message for 'stateResolveAndDestroy'"},"stateOfframp":{"primary":"The primary message for 'stateOfframp'","devel":"The devel message for 'stateOfframp'","danger":"The danger message for 'stateOfframp'","warning":"The warning message for 'stateOfframp'","success":"The success message for 'stateOfframp'","info":"The info message for 'stateOfframp'"}}}`;
+//     let peSeventObject = JSON.parse(peSeventJSON);
+//     let currentState = event.target.currentState.id; // "state2"
+//     let currentStepObject = peSeventObject.stepObjects[currentState];
+//     console.log('currentStepObject: ');
+//     console.log(currentStepObject);
+//     let title = currentStepObject.longTitle;
+//     // let title = longTitleJSON;
+//     title = title.substr(0,66);
+//     $w('#txtPeSevenTitle').text = title;
+// } );
+// ! </Pre-Trash>
+// ! </Maybe Not>
+
+// ø <---------- <mxboxPostEnrollmentSevenNextState>  ---------->
+export function mxboxPostEnrollmentSevenNextState(responseObject = {}){
+    // Display bootstrap-Primary
+    console.log('[fnc]mxboxPostEnrollmentSevenNextState');
+}
+// ø <---------- </superSeven202107>  ---------->
+// ø <---------- </mxboxPostEnrollmentSevenNextState> ---------->
+
+// ø <---------- <mxboxPostEnrollmentSevenPerformStep>  ---------->
+export function mxboxPostEnrollmentSevenPerformStep(responseObject = {}){
+    // Deal with Response
+    console.log('[fnc]mxboxPostEnrollmentSevenPerformStep')
+    instantiateLoopSwitchEnrollmentSteps(responseObject.currentStepOriginalStepsArray);
+    displaySteps();
+}
+// ø <---------- </superSeven202107>  ---------->
+// ø <---------- </mxboxPostEnrollmentSevenPerformStep> ---------->
+
+
+// ø <---------- </mxboxPostEnrollmentSeven AnyAction PerformStep NextState> ---------->
+
+// "stateOnramp"
+// "stateInstantiate"
+// "stateMemberConfirm"
+// "stateDupeDelete"
+// "stateDatabaseForPrimaryAndStudent"
+// "stateContactForPrimaryAndStudent"
+// "stateContactAndDatabaseForSecondary"
+// "stateResolveAndDestroy"
+// "stateOfframp"
+
+export function goToStateById(id){
+	// id = id.substr(0,1) === '#' ? id : '#' + id;
+	console.log('id: ' + id);
+	$w("#mxboxPostEnrollmentSeven").changeState(id);
+}
+
+// ø <---------- <superSeven202107>  ---------->
+export function goToState(direction = 'NEXT'){
+    direction = direction.toUpperCase();
+    let supportedAliasesForPREV = ['PREVIOUS','PREV'];
+    direction = supportedAliasesForPREV.indexOf(direction) >= 0 ? 'PREV' : 'NEXT';
+    //PREV is NOT SUPPORTED AT THIS TIME
+    // ø <NEXT or PREVIOUS>
+    let TTHIS = 'holder';
+    let peSevenStates = $w("#mxboxPostEnrollmentSeven").states;
+    // $w('#preTrashLog').value = JSON.stringify(peSevenStates,undefined,4);
+    // $w('#preTrashLog').value += `\n\n<==========>\n\n`;
+    let peSevenStatesIdArray = peSevenStates.map(a => a.id);
+    $w('#stDatabaseResponseJSON').value = peSevenStatesIdArray.toString();
+    let peSevenStateCurrent = $w("#mxboxPostEnrollmentSeven").currentState;
+    let peSevenStateCurrentId = peSevenStateCurrent.id; // "state1"
+    console.log('peSevenStates : ');
+    console.log(peSevenStates);
+    console.log('peSevenStatesIdArray : ');
+    console.log(peSevenStatesIdArray);
+    console.log('peSevenStateCurrent :' + peSevenStateCurrent);
+    console.log('peSevenStateCurrentId :' + peSevenStateCurrentId);
+    let length = peSevenStatesIdArray.length;
+    let currentIndex = peSevenStatesIdArray.indexOf(peSevenStateCurrentId);
+    console.log('length :' + length);
+    console.log('currentIndex :' + currentIndex);
+    // ø </NEXT or PREVIOUS>
+    // ø <NEXT Only>
+    let nextIndex = currentIndex + 1;
+    let nextId = nextIndex >= length ? 'AFTER_LAST' : peSevenStatesIdArray[nextIndex];
+    console.log('nextIndex :' + nextIndex);
+    console.log('nextId :' + nextId);
+    // ø </NEXT Only>
+    // ø <PREV Only>
+    let prevIndex = currentIndex - 1;
+    let prevId = prevIndex <= 0 ? 'BEFORE_FIRST' : peSevenStatesIdArray[prevIndex];
+    console.log('prevIndex :' + prevIndex);
+    console.log('prevId :' + prevId);
+    // ø </PREV Only>
+    let targetId = direction === 'NEXT' ? nextId : prevId;
+    if (targetId !== 'AFTER_LAST' && targetId !== 'BEFORE_FIRST') {
+        goToStateById(targetId);
+    }
+    //<Nope>
+    // else{
+    //     $w('#btnPeSevenNext').hide();
+    //     $w('#btnPeSevenCurrent').hide(); 
+    // }
+    //</Nope>
+}
+
+
+// ø <---------- <doBootstrapMessage UI>  ---------->
+// ø <---------- <superSeven202107>  ---------->
+export function doBootstrapMessage(key,messageThis = 'DEFAULT', fontSizeOverride = 7,txtColor = '#007bff',bgColor = '#FFFFFF'){
+	// console.log("[fnc]key: " + key)
+	let messages = [];
+	let messageMatchKey = {};
+	messageMatchKey.primary = "0";
+	messageMatchKey.success = "1";
+	messageMatchKey.warning = "2";
+	messageMatchKey.danger = "3";
+	messageMatchKey.info = "4";
+	messageMatchKey.devel = "5";
+	messageMatchKey['key0'] = "primary";
+	messageMatchKey['key0'] = "primary";
+	messageMatchKey['key1'] = "success";
+	messageMatchKey['key2'] = "warning";
+	messageMatchKey['key3'] = "danger";
+	messageMatchKey['key4'] = "info";
+	messageMatchKey['key5'] = "devel";
+	messages.push('This is the Primary test message.');
+	messages.push('This is the Success test message.');
+	messages.push('This is the Waarning test message.');
+	messages.push('This is the Danger test message.');
+	messages.push('This is the Info test message.');
+	messages.push('This is the Devel test message.');
+	
+	txtColor = key === 'primary' ? '#007bff' : txtColor;
+	txtColor = key === 'success' ? '#ffffff' : txtColor;
+	bgColor = key === 'success' ? '#28a745' : bgColor;
+	// ! <only txtColor setting at this time>
+	// txtColor = key === 'warning' ? '#ffc107' : txtColor;
+	// bgColor = key === 'warning' ? '#000000' : bgColor;
+	// ! OR
+	txtColor = key === 'warning' ? '#000000' : txtColor;
+	bgColor = key === 'warning' ? '#ffc107' : bgColor;
+	// ! </only txtColor setting at this time>
+    // ! <could apply to all, but especially the two negative respoinses>
+	// txtColor = key === 'danger' ? '#dc3545' : txtColor;
+	// bgColor = key === 'danger' ? '#FFFFFF' : bgColor;
+	// ! OR
+	txtColor = key === 'danger' ? '#FFFFFF' : txtColor;
+	bgColor = key === 'danger' ? '#dc3545' : bgColor;
+	// ! </could apply to all, but especially the two negative respoinses>
+	txtColor = key === 'info' ? '#17a2b8' : txtColor;
+	txtColor = key === 'devel' ? '#6610f2' : txtColor;
+
+	let indexThis = Number(messageMatchKey[key]);
+	messageThis = messageThis === 'DEFAULT' ? messages[indexThis] : messageThis;
+	
+	let length = messageThis.length;
+	// ! <make this meaningful by trial and error if it matters>
+	// ø below: use something more rigorous than a series of ternary operators, but it is nice an explicit as you are building
+	let pixelsByBreakPoint = '36';
+	pixelsByBreakPoint = length < 10 ? '36' : pixelsByBreakPoint;
+	pixelsByBreakPoint = length < 50 ? '36' : pixelsByBreakPoint;
+	pixelsByBreakPoint = length < 100 ? '36' : pixelsByBreakPoint;
+	pixelsByBreakPoint = fontSizeOverride === 7 ? pixelsByBreakPoint : fontSizeOverride.toString();
+
+	// ! </make this meaningful by trial and error if it matters>
+	let style = `font-size: ${pixelsByBreakPoint}px;font-family: Avenir, Arial, Helvetica, sans-serif;background-color:${bgColor};color:${txtColor};text-align:center;`
+
+	// ø below: use something other than <p>?
+	let html = `<p style="${style}">` + messageThis + `</p>`;
+	// $w('#txtBootstrapPrimary').html = html;
+	// $w('#txtBootstrapPrimary').expand();
+    return html;
+}
+// ø <---------- </doBootstrapMessage UI> ---------->
+
+// ! =========================================================================================================================
+// ! ==================================          </SEVENT-SUPER-STEPS with MultiStateBox>         ============================
+// ! ==================================                     </superSeven202107>                   ============================
+// ! =========================================================================================================================
+
+
+export function btnStateOnramp_click(event) {
+    let id = 'stateOnramp';
+    goToStateById(id);
+}
+
+export function btnStateOfframp_click(event) {
+    let id = 'stateOfframp';
+    goToStateById(id);
+}
+
+/**
+ *	Adds an event handler that runs when the element is clicked.
+ *	 @param {$w.MouseEvent} event
+ */
+export function btnPeSevenNext_click(event) {
+    console.log('[btn]Next');
+    let responseObject = {};
+    responseObject.TEST = true;
+    responseObject.button = 'NEXT';
+    responseObject.messageKey = 'primary';
+    responseObject.messageRandomInfo = Math.random() * 100 > 66 ? true : false;
+    responseObject.messageResponse = false;
+    // let messageKeyArray= ["success","warning","danger","info","devel"];
+    // responseObject.messageKey = messageKeyArray[Math.floor(Math.random() * messageKeyArray.length)];
+    mxboxPostEnrollmentSevenAnyAction(responseObject);
+	// goToState();
+    // $w('#btnPeSevenNext').hide();
+	// $w('#btnPeSevenCurrent').show();
+}
+
+export function btnPeSevenPrev_click(event) {
+    goToState('PREV');
+}
+
+export function btnPeSevenCurrent_click(event) {
+    //"Perform Current Step"
+    console.log('[btn]PerformCurrentStep');
+    let responseObject = {};
+    responseObject.TEST = true;
+    responseObject.button = 'CURRENT';
+    let messageKeyArray= ["success","success","warning","danger"];
+    responseObject.messageKey = messageKeyArray[Math.floor(Math.random() * messageKeyArray.length)];
+    responseObject.messageRandomInfo = Math.random() * 100 > 66 ? true : false;
+    responseObject.messageResponse = true;
+    mxboxPostEnrollmentSevenAnyAction(responseObject);
+	// $w('#btnPeSevenNext').show();
+	// $w('#btnPeSevenCurrent').hide();
+    // // let id = 'abc';
+    // let peSevenStateCurrent = $w("#mxboxPostEnrollmentSeven").currentState;
+    // let peSevenStateCurrentId = peSevenStateCurrent.id; // "state1"
+    // if (peSevenStateCurrentId === 'stateOfframp') {
+    //      wixLocation.to("/blank-3");
+    // }
+}
+
+export function btnGetStatesArray_click(event) {
+	 let superSevenStates = $w("#mxboxPostEnrollmentSeven").states;
+     $w('#spMemberResponseJSON').value = JSON.stringify(superSevenStates,undefined,4)
+    //  let statesArray = superSevenStates.map(state => {return state.id});
+    //  let statesArray = $w("#mxboxPostEnrollmentSeven").states.map(state => {return state.id});
+     let statesArray = $w("#mxboxPostEnrollmentSeven").states.map(state => state.id);
+     $w('#spContactResponseJSON').value = JSON.stringify(statesArray);
 }

@@ -405,7 +405,13 @@ export function stepMessagingBuildFromManual(peSevenObject){
 
 // ø <----------- <wixStorageByStep() for Encapsulation>  ----------->
 export function wixStorageByStep(peSevenObject){
+    let stateKeyThis = '';
+    let origStepArrayThis = [];
     // ø <wixStorage for stateOnramp>
+    stateKeyThis = 'stateOnramp'
+    origStepArrayThis = peSevenObject.stepObjects.stateOnramp.origSteps.allStepArray
+    console.warn('[wixStorageByStep]origStepArrayThis: ')
+    console.warn(origStepArrayThis)
     peSevenObject.stepObjects.stateOnramp.wixStorageArray = ['kind.key']
     // ø </wixStorage for stateOnramp>
 

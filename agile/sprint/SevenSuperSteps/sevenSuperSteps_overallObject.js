@@ -7,11 +7,12 @@ console.warn(JSON.stringify(peSevenObject,undefined,4));
 
 // ø <----------- <peSevenObjectBuilderOverall() for Encapsulation> ----------->
 export function peSevenObjectBuilderOverall(peSevenObject){
-    peSevenObject.test = 'Marais';
+    // peSevenObject.test = 'Marais';
     buildStepObjectArrayBase(peSevenObject);
     psSevenIntegrateSteps(peSevenObject)
     stepMessagingLogicColors(peSevenObject);
     stepMessagingBuildFromManual(peSevenObject);
+    wixStorageByStep(peSevenObject);
 }
 // ø <----------- </peSevenObjectBuilderOverall() for Encapsulation> ----------->
 
@@ -401,6 +402,46 @@ export function stepMessagingBuildFromManual(peSevenObject){
     peSevenObject.stepMessaging = stepMessaging;
 }
 // ø <----------- </stepMessagingBuildFromManual() for Encapsulation> ----------->
+
+// ø <----------- <wixStorageByStep() for Encapsulation>  ----------->
+export function wixStorageByStep(peSevenObject){
+    // ø <wixStorage for stateOnramp>
+    peSevenObject.stepObjects.stateOnramp.wixStorageArray = ['kind.key']
+    // ø </wixStorage for stateOnramp>
+
+    // ø <wixStorage for stateInstantiate>
+    peSevenObject.stepObjects.stateInstantiate.wixStorageArray = ['kind.key']
+    // ø </wixStorage for stateInstantiate>
+
+    // ø <wixStorage for stateMemberConfirm>
+    peSevenObject.stepObjects.stateMemberConfirm.wixStorageArray = ['kind.key']
+    // ø </wixStorage for stateMemberConfirm>
+
+    // ø <wixStorage for stateDupeDelete>
+    peSevenObject.stepObjects.stateDupeDelete.wixStorageArray = ['kind.key']
+    // ø </wixStorage for stateDupeDelete>
+
+    // ø <wixStorage for stateDatabaseForPrimaryAndStudent>
+    peSevenObject.stepObjects.stateDatabaseForPrimaryAndStudent.wixStorageArray = ['kind.key']
+    // ø </wixStorage for stateDatabaseForPrimaryAndStudent>
+
+    // ø <wixStorage for stateContactForPrimaryAndStudent>
+    peSevenObject.stepObjects.stateContactForPrimaryAndStudent.wixStorageArray = ['kind.key']
+    // ø </wixStorage for stateContactForPrimaryAndStudent>
+
+    // ø <wixStorage for stateContactAndDatabaseForSecondary>
+    peSevenObject.stepObjects.stateContactAndDatabaseForSecondary.wixStorageArray = ['kind.key']
+    // ø </wixStorage for stateContactAndDatabaseForSecondary>
+
+    // ø <wixStorage for stateResolveAndDestroy>
+    peSevenObject.stepObjects.stateResolveAndDestroy.wixStorageArray = ['kind.key']
+    // ø </wixStorage for stateResolveAndDestroy>
+
+    // ø <wixStorage for stateOfframp>
+    peSevenObject.stepObjects.stateOfframp.wixStorageArray = ['kind.key']
+    // ø </wixStorage for stateOfframp>
+}
+// ø <----------- </wixStorageByStep() for Encapsulation> ----------->
 
 
 

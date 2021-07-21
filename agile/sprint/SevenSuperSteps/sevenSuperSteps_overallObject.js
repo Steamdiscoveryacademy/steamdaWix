@@ -10,9 +10,9 @@ export function peSevenObjectBuilderOverall(peSevenObject) {
     // peSevenObject.test = 'Marais';
     buildStepObjectArrayBase(peSevenObject);
     psSevenIntegrateSteps(peSevenObject)
-    // stepMessagingLogicColors(peSevenObject);
-    // stepMessagingBuildFromManual(peSevenObject);
-    // wixStorageByStep(peSevenObject);
+    stepMessagingLogicColors(peSevenObject);
+    stepMessagingBuildFromManual(peSevenObject);
+    wixStorageByStep(peSevenObject);
 }
 // ø <----------- </peSevenObjectBuilderOverall() for Encapsulation> ----------->
 
@@ -28,7 +28,8 @@ export function peSevenObjectBuilderOverall(peSevenObject) {
 
 // ø <---------- <buildStepObjectArrayBase(peSevenObject)>  ----------->
 export function buildStepObjectArrayBase(peSevenObject) {
-    peSevenObject.stepObjects = {}
+    peSevenObject.errorStringArray = [];
+    peSevenObject.stepObjects = {};
     // ø <step titles manual>
     let titleArray = [];
     let longTitleArray = [];
@@ -142,6 +143,8 @@ export function psSevenIntegrateSteps(peSevenObject) {
         "offramp"
     ];
     let stepArrayOrig = ['IINSTANTIATE', 'PREP_ppMember', 'EXECUTE_ppMember', 'PREP_stMember', 'EXECUTE_stMember', 'dedupePpStContact', 'PREP_ppContact', 'PREP_ppDatabase', 'PREP_stContact', 'PREP_stDatabase', 'PREP_spContact', 'PREP_spDatabase', 'EXECUTE_ppContact', 'EXECUTE_ppDatabase', 'EXECUTE_stContact', 'EXECUTE_stDatabase', 'EXECUTE_spContact', 'EXECUTE_spDatabase', 'CCOMPLETE'];
+    let allConfirmStateStepArray = [];
+    let confirmState = '';
     let allStepArray = [];
     let holderforAllStepArray = [];
     let firstStepArray = [];
@@ -157,6 +160,8 @@ export function psSevenIntegrateSteps(peSevenObject) {
 
     // ø <Zeroth Step Manual>
     // ø <wixStorage for stateOnramp>
+    confirmState = 'stateOnramp';
+    allConfirmStateStepArray.push(confirmState);
     allStepThis = ['ZERO'];
     allStepThisForShift = [...allStepThis];
     allStepThisForPop = [...allStepThis];
@@ -165,11 +170,13 @@ export function psSevenIntegrateSteps(peSevenObject) {
     firstStepArray.push(firstStepThis);
     lastStepThis = allStepThisForPop.pop();
     lastStepArray.push(lastStepThis);
-    notesStepArrayThis = [];
+    notesStepArrayThis = ['taken care of by onReady()'];
     allNotesStepArray.push(notesStepArrayThis);
     // ø </Zeroth Step Manual>
     // ø <First Step Manual>
     // ø <wixStorage for stateInstantiate>
+    confirmState = 'stateInstantiate';
+    allConfirmStateStepArray.push(confirmState);
     allStepThis = ['IINSTANTIATE'];
     allStepThisForShift = [...allStepThis];
     allStepThisForPop = [...allStepThis];
@@ -178,11 +185,13 @@ export function psSevenIntegrateSteps(peSevenObject) {
     firstStepArray.push(firstStepThis);
     lastStepThis = allStepThisForPop.pop();
     lastStepArray.push(lastStepThis);
-    notesStepArrayThis = ['Reset Steps need to be manually applied (or does it?)'];
+    notesStepArrayThis = ['may need to manually confirm Staff-Eye-D Member if automatic is not conclusive'];
     allNotesStepArray.push(notesStepArrayThis);
     // ø </First Step Manual>
     // ø <Second Step Manual>
     // ø <wixStorage for stateMemberConfirm>
+    confirmState = 'stateMemberConfirm';
+    allConfirmStateStepArray.push(confirmState);
     allStepThis = ['PREP_ppMember', 'EXECUTE_ppMember', 'PREP_stMember', 'EXECUTE_stMember'];
     allStepThisForShift = [...allStepThis];
     allStepThisForPop = [...allStepThis];
@@ -196,6 +205,8 @@ export function psSevenIntegrateSteps(peSevenObject) {
     // ø </Second Step Manual>
     // ø <Third Step Manual>
     // ø <wixStorage for stateDupeDelete>
+    confirmState = 'stateDupeDelete';
+    allConfirmStateStepArray.push(confirmState);
     allStepThis = ['dedupePpStContact'];
     allStepThisForShift = [...allStepThis];
     allStepThisForPop = [...allStepThis];
@@ -209,6 +220,8 @@ export function psSevenIntegrateSteps(peSevenObject) {
     // ø </Third Step Manual>
     // ø <Fourth Step Manual>
     // ø <wixStorage for stateDatabaseForPrimaryAndStudent>
+    confirmState = 'stateDatabaseForPrimaryAndStudent';
+    allConfirmStateStepArray.push(confirmState);
     allStepThis = ['PREP_ppContact', 'PREP_ppDatabase', 'PREP_stContact', 'PREP_stDatabase'];
     allStepThisForShift = [...allStepThis];
     allStepThisForPop = [...allStepThis];
@@ -222,6 +235,8 @@ export function psSevenIntegrateSteps(peSevenObject) {
     // ø </Fourth Step Manual>
     // ø <Fifth Step Manual>
     // ø <wixStorage for stateContactForPrimaryAndStudent>
+    confirmState = 'stateContactForPrimaryAndStudent';
+    allConfirmStateStepArray.push(confirmState);
     allStepThis = ['PREP_spContact', 'PREP_spDatabase', 'EXECUTE_ppContact', 'EXECUTE_ppDatabase', 'EXECUTE_stContact', 'EXECUTE_stDatabase'];
     allStepThisForShift = [...allStepThis];
     allStepThisForPop = [...allStepThis];
@@ -235,6 +250,8 @@ export function psSevenIntegrateSteps(peSevenObject) {
     // ø </Fifth Step Manual>
     // ø <Sixth Step Manual>
     // ø <wixStorage for stateContactAndDatabaseForSecondary>
+    confirmState = 'stateContactAndDatabaseForSecondary';
+    allConfirmStateStepArray.push(confirmState);
     allStepThis = ['EXECUTE_spContact', 'EXECUTE_spDatabase'];
     allStepThisForShift = [...allStepThis];
     allStepThisForPop = [...allStepThis];
@@ -248,6 +265,8 @@ export function psSevenIntegrateSteps(peSevenObject) {
     // ø </Sixth Step Manual>
     // ø <Seventh Step Manual>
     // ø <wixStorage for stateResolveAndDestroy>
+    confirmState = 'stateResolveAndDestroy';
+    allConfirmStateStepArray.push(confirmState);
     allStepThis = ['EEMPTY'];
     allStepThisForShift = [...allStepThis];
     allStepThisForPop = [...allStepThis];
@@ -256,11 +275,13 @@ export function psSevenIntegrateSteps(peSevenObject) {
     firstStepArray.push(firstStepThis);
     lastStepThis = allStepThisForPop.pop();
     lastStepArray.push(lastStepThis);
-    notesStepArrayThis = ["ouside of Loop-Switch execute 'Resolve WebHook'", "ouside of Loop-Switch execute 'Destroy' wixStorage"];
+    notesStepArrayThis = ["ouside of Loop-Switch execute ¿Resolve WebHook?", "ouside of Loop-Switch execute ¿Destroy? wixStorage"];
     allNotesStepArray.push(notesStepArrayThis);
     // ø </Seventh Step Manual>
     // ø <Eighth Step Manual>
     // ø <wixStorage for stateOfframp>
+    confirmState = 'stateOfframp';
+    allConfirmStateStepArray.push(confirmState);
     allStepThis = ['EEMPTY'];
     allStepThisForShift = [...allStepThis];
     allStepThisForPop = [...allStepThis];
@@ -269,28 +290,36 @@ export function psSevenIntegrateSteps(peSevenObject) {
     firstStepArray.push(firstStepThis);
     lastStepThis = allStepThisForPop.pop();
     lastStepArray.push(lastStepThis);
-    notesStepArrayThis = ["return to 'Process Web Hooks"];
+    notesStepArrayThis = ["return to ¿Process Web Hooks?"];
     allNotesStepArray.push(notesStepArrayThis);
     // ø </Eighth Step Manual>
 
-    let arrayCountManualValidation = 8;
+    let arrayCountManualValidation = 9;
     let isValid = true;
-    isValid = peSevenObject.stateIdArray.length !== arrayCountManualValidation + 1 ? false : isValid;
+    isValid = peSevenObject.stateIdArray.length !== arrayCountManualValidation ? false : isValid;
+    isValid = allConfirmStateStepArray.length !== arrayCountManualValidation ? false : isValid;
     isValid = allStepArray.length !== arrayCountManualValidation ? false : isValid;
     isValid = firstStepArray.length !== arrayCountManualValidation ? false : isValid;
     isValid = lastStepArray.length !== arrayCountManualValidation ? false : isValid;
+    isValid = allNotesStepArray.length !== arrayCountManualValidation ? false : isValid;
 
+
+    if (!isValid) {
+        peSevenObject.errorStringArray.push('[psSevenIntegrateSteps] one or more invalid array counts to steps');
+    }
     if (isValid) {
         for (let index = 0; index < firstStepArray.length; index++) {
             let objectKey = peSevenObject.stateIdArray[index];
             peSevenObject.stepObjects[objectKey]['origSteps'] = {};
-            peSevenObject.stepObjects[objectKey]['origSteps']['firstStep'] = firstStepArray[index];
-            peSevenObject.stepObjects[objectKey]['origSteps']['lastStep'] = lastStepArray[index];
+            peSevenObject.stepObjects[objectKey]['origSteps']['confirmState'] = allConfirmStateStepArray[index];
             peSevenObject.stepObjects[objectKey]['origSteps']['allStepArray'] = allStepArray[index];
             peSevenObject.stepObjects[objectKey]['origSteps']['notes'] = allNotesStepArray[index];
+            peSevenObject.stepObjects[objectKey]['origSteps']['firstStep'] = firstStepArray[index];
+            peSevenObject.stepObjects[objectKey]['origSteps']['lastStep'] = lastStepArray[index];
 
         }
     }
+
 }
 // ø </superStep stepAray manual>
 // ø <---------- <psSevenIntegrateSteps(peSevenObject)>  ----------->
@@ -477,15 +506,14 @@ export function wixStorageByStep(peSevenObject) {
     peSevenObject.stepObjects.stateContactForPrimaryAndStudent.wixStorageArray = ['kind.key']
     // ø </wixStorage for stateContactForPrimaryAndStudent>
 
-    // // ø <wixStorage for stateContactForPrimaryAndStudent>
     // ø <wixStorage for stateContactAndDatabaseForSecondary>
     // let stateKeyThis = 'stateContactAndDatabaseForSecondary'
     peSevenObject.stepObjects.stateContactAndDatabaseForSecondary.wixStorageArray = ['kind.key']
     // ø </wixStorage for stateContactAndDatabaseForSecondary>
 
     // ø <wixStorage for stateResolveAndDestroy>
-    peSevenObject.stepObjects.stateResolveAndDestroy.wixStorageArray = ['kind.key']
     // let stateKeyThis = 'stateResolveAndDestroy'
+    peSevenObject.stepObjects.stateResolveAndDestroy.wixStorageArray = ['kind.key']
     // ø </wixStorage for stateResolveAndDestroy>
 
     // ø <wixStorage for stateOfframp>
@@ -495,8 +523,20 @@ export function wixStorageByStep(peSevenObject) {
 
     // ø <INTERNAL DOX>
     if (typeof stateKeyThis === 'string') {
+        let confirmStateThis = peSevenObject.stepObjects[stateKeyThis].origSteps.confirmState;
         let origStepArrayThis = peSevenObject.stepObjects[stateKeyThis].origSteps.allStepArray;
         let origStepNotesThese = peSevenObject.stepObjects[stateKeyThis].origSteps.notes;
+        
+        // let ZconfirmStateThis = peSevenObject.stepObjects[stateKeyThis];//.origSteps;//.confirmState;
+        // console.log(ZconfirmStateThis);
+        // let ZZconfirmStateThis = peSevenObject.stepObjects[stateKeyThis].origSteps;//.confirmState;
+        // console.log(ZZconfirmStateThis);
+        // let ZZZconfirmStateThis = peSevenObject.stepObjects[stateKeyThis].origSteps.confirmState;
+        // console.log(ZZZconfirmStateThis);
+        
+        console.log('[wixStorageByStep]INTERNAL DOX: ')
+        console.warn('[wixStorageByStep] => Confirm: \n'+ `${stateKeyThis} === ${confirmStateThis}`)
+        // console.warn(`${stateKeyThis} === ${confirmStateThis}`)
         console.warn('[wixStorageByStep]origStepArrayThis: ')
         console.warn(origStepArrayThis)
         console.warn('[wixStorageByStep]origStepNotesThese: ')

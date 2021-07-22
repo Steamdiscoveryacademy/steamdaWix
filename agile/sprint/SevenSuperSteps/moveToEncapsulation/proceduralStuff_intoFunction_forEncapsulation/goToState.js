@@ -1,7 +1,7 @@
 // ø <---------- <oToState>  ---------->
 // ø FIND superSeven202107
-export function goToState(responseObject, direction = 'NEXT'){
-    responseObject.logArrayDeveloper.push('{% mxboxPostEnrollmentSevenPerformStepDO %}');
+export async function goToState(responseObject, direction = 'NEXT'){
+    responseObject.logArrayDeveloper.push('{% goToState(responseObject, direction = NEXT) %}');
     direction = direction.toUpperCase();
     let supportedAliasesForPREV = ['PREVIOUS','PREV'];
     direction = supportedAliasesForPREV.indexOf(direction) >= 0 ? 'PREV' : 'NEXT';

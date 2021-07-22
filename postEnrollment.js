@@ -16,14 +16,22 @@ import wixWindow from 'wix-window';
 
 
 $w.onReady(function () {
+    // ø <UI Disable PP, ST & SP Buttons>
+    // $w('#btnStaffEyeD').disable();
+    // ø </UI Disable PP, ST & SP Buttons>
 	onReadyPostEnrollment();
     doUserInterfaceCleanupCurrent()
     // $w('#anchorPreTrash').scrollTo();
     $w('#anchorTestProcess').scrollTo();
     // goToState()
     console.log('[ready]Next');
+    
     let responseObject = {};
+    // local.getItem('timezoneOffset')
+    // local.getItem('tzAbbrv')
     responseObject.TEST = true;
+    responseObject.logArrayUserInterface = [];
+    responseObject.logArrayDeveloper = ['$w.onReady()'];
     responseObject.button = 'NEXT';
     responseObject.messageKey = 'primary';
     memory.setItem('msboxLastState','stateZero')
@@ -3660,9 +3668,14 @@ export function btnDemoIfElseThen_click(event) {
 
 // ø <---------- <mxboxPostEnrollmentSevenAnyAction>  ---------->
 // ø <---------- <superSeven202107>  ---------->
-export function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
+export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
     console.log('[fnc]mxboxPostEnrollmentSevenAnyAction');
     memory.setItem('msboxCurrentId','#mxboxPostEnrollmentSeven');
+    responseObject.stamp = await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv'));
+    responseObject.logArrayDeveloper.push('≈ 3675 ≈');
+    responseObject.logArrayDeveloper.push(responseObject.stamp);
+    responseObject.logArrayDeveloper.push('entering {% mxboxPostEnrollmentSevenAnyAction %}');
+
 
     // $w('#spDatabaseResponseJSON').value = JSON.stringify(responseObject,undefined,4);
 
@@ -3711,12 +3724,49 @@ export function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
         peSevenStateCurrent = $w('#mxboxPostEnrollmentSeven').currentState;
         peSevenStateCurrentId = peSevenStateCurrent.id; // "state1"
         // peSevenStateCurrentId = memory.getItem('msboxLastState');
-        // ! MAYBE <Kludge Next State>
+
+        // ! OnRamp <Kludge>
+        // ! shouldn't be _in_ OnReady, but these things are so necessary as suigeneris tasks
+        // ! if (when?) it gets too involved, make an mxboxPostEnrollmentSevenOnReadyKLUDGE() function
+        responseObject.logArrayDeveloper.push('≈ 3730 ≈');
+        responseObject.logArrayDeveloper.push('{% onReadyKLUDGE %}}');
+
+        let applicationObject = JSON.parse(local.getItem('ondeckEnrollmentJSON')) ;
+        let staffEyeD = applicationObject.family.parent.primary.memberId;
+        let secondaryExists = typeof applicationObject.family.parent.secondary === 'object' && typeof applicationObject.family.parent.secondary.first === 'string' && (applicationObject.family.parent.secondary.first).length > 0 ? true : false;
+        responseObject.logArrayDeveloper.push(`secondaryExists: ${secondaryExists}`);
+        let theseObjectKeys = Object.keys(applicationObject.family.parent);
+        // if(theseObjectKeys.includes('secondary')){
+        //     theseObjectKeys = Object.keys(applicationObject.family.parent.secondary);
+        //         if(theseObjectKeys.includes('first') && (applicationObject.family.parent.secondary.first).length > 0){
+        //             secondaryExists = true;
+        //         }
+        //     }
+        // }
+        if(!secondaryExists){
+            //btnSecondaryIdLabel
+            // $w('#btnSecondaryIdLabel').enable();
+            $w('#btnSecondaryIdLabel').disable();
+
+            //btnSecondaryId
+        }
+        if(staffEyeD === 'INSTANTIATE' || staffEyeD === 'IINSTANTIATE'){
+            responseObject.logArrayDeveloper.push('staffEyeD is IINSTANTIATE: hide-button');
+            $w('#btnStaffEyeD').hide();
+            $w('#btnStaffEyeDLabel').hide();
+        }else{
+            responseObject.logArrayDeveloper.push('staffEyeD is not IINSTANTIATE: enable-button');
+            local.setItem('staffIdentifiedFamilyId',staffEyeD);
+            $w("#btnStaffEyeD").label = local.getItem('staffIdentifiedFamilyId');
+            $w('#btnStaffEyeD').enable();
+            $w('#btnStaffEyeDLabel').enable();
+        }
+        // ! OnRamp </Kludge>
         let statesArray = $w("#mxboxPostEnrollmentSeven").states.map(state => state.id);
         let nextIndex = statesArray.indexOf(peSevenStateCurrentId) + 1;
         peSevenStateCurrentId = statesArray[nextIndex];
         memory.setItem('msboxLastState',peSevenStateCurrentId);
-        // ! MAYBE </Kludge Next State>
+        // ! OK </Kludge Next State>
 
     }
     //parameters will mostly be wixStorage, but responseObject can be something
@@ -3885,7 +3935,10 @@ export function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
 // ø <---------- <mxboxPostEnrollmentSevenNextState>  ---------->
 export function mxboxPostEnrollmentSevenNextState(responseObject = {}){
     // Display bootstrap-Primary
+    responseObject.logArrayDeveloper.push('{% mxboxPostEnrollmentSevenNextState %}');
     console.log('[fnc]mxboxPostEnrollmentSevenNextState');
+    // $w('#ppDatabaseResponseJSON').value = 
+    $w('#ppDatabaseResponseJSON').value = JSON.stringify(responseObject.logArrayDeveloper,undefined,4);
 }
 // ø <---------- </superSeven202107>  ---------->
 // ø <---------- </mxboxPostEnrollmentSevenNextState> ---------->
@@ -3893,9 +3946,11 @@ export function mxboxPostEnrollmentSevenNextState(responseObject = {}){
 // ø <---------- <mxboxPostEnrollmentSevenPerformStep>  ---------->
 export function mxboxPostEnrollmentSevenPerformStep(responseObject = {}){
     // Deal with Response
+    responseObject.logArrayDeveloper.push('{% mxboxPostEnrollmentSevenPerformStep %}');
     console.log('[fnc]mxboxPostEnrollmentSevenPerformStep')
     instantiateLoopSwitchEnrollmentSteps(responseObject.currentStepOriginalStepsArray);
     displaySteps();
+    $w('#ppDatabaseResponseJSON').value = JSON.stringify(responseObject.logArrayDeveloper,undefined,4);
 }
 // ø <---------- </superSeven202107>  ---------->
 // ø <---------- </mxboxPostEnrollmentSevenPerformStep> ---------->
@@ -4063,6 +4118,8 @@ export function btnPeSevenNext_click(event) {
     console.log('[btn]Next');
     let responseObject = {};
     responseObject.TEST = true;
+    responseObject.logArrayUserInterface = [];
+    responseObject.logArrayDeveloper = ['btnPeSevenNext_click'];
     responseObject.button = 'NEXT';
     responseObject.messageKey = 'primary';
     responseObject.messageRandomInfo = Math.random() * 100 > 66 ? true : false;
@@ -4084,6 +4141,8 @@ export function btnPeSevenCurrent_click(event) {
     console.log('[btn]PerformCurrentStep');
     let responseObject = {};
     responseObject.TEST = true;
+    responseObject.logArrayUserInterface = [];
+    responseObject.logArrayDeveloper = ['btnPeSevenCurrent_click'];
     responseObject.button = 'CURRENT';
     let messageKeyArray= ["success","success","warning","danger"];
     responseObject.messageKey = messageKeyArray[Math.floor(Math.random() * messageKeyArray.length)];

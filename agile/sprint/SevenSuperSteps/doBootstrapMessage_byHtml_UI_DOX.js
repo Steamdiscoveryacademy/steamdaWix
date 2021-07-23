@@ -1,3 +1,12 @@
+// ! ================================================
+// ! ================================================
+// ! as this is a separate DOX file, only the Dox-Block will be meticulously maintained
+// ! please use the DOX here and the CODE in the the main file
+// ! (same filename without '_DOX' appended)
+// ! there will be some effort to keep the code here up-to-date...
+// ! but Again, please use the DOX here and the CODE in the the main file
+// ! ================================================
+// ! ================================================
 // ø <---------- <doBootstrapMessage UI>  ---------->
 // ø FIND superSeven202107 BOOTSTRAP-MESSAGE
 // ! NOTE: perhaps this should be in 'backend/utility.jsw'
@@ -63,8 +72,32 @@ export function doBootstrapMessage(key,messageThis = 'DEFAULT', responsiveByLeng
 	
 	if(responsiveByLengthToFontSize2dArray.length > 0){
 		/**
-		 * see separate DOX file 
-		 * here: steamdaWixLocal/steamdaWix/agile/sprint/SevenSuperSteps/doBootstrapMessage_byHtml_UI_DOX.js
+		 * To Override 36 to a different _single_ font-size:
+		 * [[-1,18]]
+		 * example above would be fo 18px for all text
+		 */
+
+		/**
+		 * To use Responsively for a gradually smaller font as the length increases:
+		 * * the logic is the same as the manual version above
+		 * * if you fail to adhere to the paradigm 
+		 * *     that is, increasing length and decreasing font-size, then the logic  will fail
+		 * * *    as you _want_ the pixels (second value of the pair) 
+		 *        from the last pair where the length of 'messageThis' 
+		 *        is greater than the break-ppint (first value of the pair)
+		 * * always start with -1 for the initial length since _every_ length is greater than -1
+		 * [
+		 * [-1,60],
+		 * [25,48],
+		 * [50,36],
+		 * [75,24],
+		 * [100,12]
+		 * ]
+		 * * NOTE: example above NOT tested, will add a concrete exmple if I remember
+		 * * NOTE: this NOT intended to replace _true_ responsive design, 
+		 *         it is only for a very specific use case and could 
+		 *         currupt existing responive code 
+		 * * NOTE: needs testing... but it should be good other than bone-head and/or typo bugs
 		 */
 
 		let length = -1;

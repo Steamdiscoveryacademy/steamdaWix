@@ -57,7 +57,7 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
         // ! </from PERFORM CURRENT STEP>
         DOX = '</MAYBE_CURRENT_ACTION>'
     }
-    if(responseObject.button === 'NEXT'){
+    if(responseObject.button === 'NEXT' /*STATE*/){
         DOX = '<MAYBE_NEXT_ACTION>'
     // ø FIND superSeven202107 MAYBE_NEXT_ACTION if it's BELOW it belongs in NEXT subScript
         responseObject.logArrayDeveloper.push('≈ 3719 ≈');
@@ -94,13 +94,6 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
         let secondaryExists = typeof applicationObject.family.parent.secondary === 'object' && typeof applicationObject.family.parent.secondary.first === 'string' && (applicationObject.family.parent.secondary.first).length > 0 ? true : false;
         responseObject.logArrayDeveloper.push(`secondaryExists: ${secondaryExists}`);
         let theseObjectKeys = Object.keys(applicationObject.family.parent);
-        // if(theseObjectKeys.includes('secondary')){
-        //     theseObjectKeys = Object.keys(applicationObject.family.parent.secondary);
-        //         if(theseObjectKeys.includes('first') && (applicationObject.family.parent.secondary.first).length > 0){
-        //             secondaryExists = true;
-        //         }
-        //     }
-        // }
         if(!secondaryExists){
             //btnSecondaryIdLabel
             // $w('#btnSecondaryIdLabel').enable();

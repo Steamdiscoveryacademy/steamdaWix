@@ -1,7 +1,11 @@
-ø ADD New Action Script above AnyAction 
-ø Check if it Breaks
-ø DISABLE Buttons && ENABLE Action Scripts
-ø Check if it Breaks
+• ADD New Action Script above AnyAction 
+ø Check that it does NOT Break
+ø DISABLE $w.onReady STEPS && ENABLE Action Script within
+ø Check that it does NOT Break
+ø DISABLE NEXT Button && ENABLE Action Script - Next
+ø Check that it does NOT Break
+ø DISABLE Current Button && ENABLE Action Script - CURRENT
+ø Check that it does NOT Break
 
 ---
 
@@ -10,3 +14,4 @@
 • refactor find keys
 • refactor find responseObject.button to responseObject.actionKey
 ø ¿ refactor 'PostEnrollmentSeven' to 'PstEnrSeven' ? 
+ø use Drupal Logging ¿ OR ? create custom Dupal Log DB and use the API

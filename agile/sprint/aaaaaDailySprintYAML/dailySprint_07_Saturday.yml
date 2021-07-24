@@ -8,6 +8,14 @@
 • Check that it does NOT Break
 • DISABLE Current Button && ENABLE Action Script - CURRENT
 • Check that it does NOT Break
+• 20210724115900 Commit postEnrollment.js 
+• 20210724115900 Commit mxboxPostEnrollmentSevenAnyAction.js 
+ø Add Next DO to Next UI and call Next UI from ANY
+ø Check that it does NOT Break
+ø Add Perform DO to Perform UI and call Perfomr UI from ANY
+ø Check that it does NOT Break
+ø bring 'LOG ARRAY to UI field' to last step of 'ANY'
+
 
 ---
 

@@ -3738,7 +3738,7 @@ export async function mxboxPostEnrollmentSevenActionPerform(anyButtonLog = '{# n
 // ø <---------- </mxboxPostEnrollmentSevenActionScripts> ---------->
 
 // ø <---------- <mxboxPostEnrollmentSevenAnyAction>  ---------->
-// ø FIND pstEnrSevenCore202107 ANY-ACTION
+// ø FIND pstEnrSevenCore202107 ANY_ACTION
 export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
     console.log('[fnc]mxboxPostEnrollmentSevenAnyAction');
     memory.setItem('msboxCurrentId','#mxboxPostEnrollmentSeven');
@@ -3998,14 +3998,19 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
     if(lastClicked === 'PERFORM_STEP'){
         responseObject.logArrayDeveloper.push('◊ lastClicked === PERFORM_STEP ◊');
         responseObject.currentStepOriginalStepsArray = currentStepOrigStepsObject.allStepArray;
-        await mxboxPostEnrollmentSevenPerformStepDO(responseObject);
+        // await mxboxPostEnrollmentSevenPerformStepDO(responseObject);
+        await mxboxPostEnrollmentSevenPerformStepUI(responseObject);
     }
     if(lastClicked === 'NEXT_STATE'){
         responseObject.logArrayDeveloper.push('◊ lastClicked === NEXT_STATE ◊');
-        mxboxPostEnrollmentSevenNextStateDO(responseObject);
+        // await mxboxPostEnrollmentSevenNextStateDO(responseObject);
+        await mxboxPostEnrollmentSevenNextStateUI(responseObject);
     }
+    responseObject.logArrayDeveloper.push('≈ 4009 ≈');
+    responseObject.logArrayDeveloper.push('{# Back to ANY before posting this Log #}');
+    $w('#ppDatabaseResponseJSON').value = JSON.stringify(responseObject.logArrayDeveloper,undefined,4);
 }
-// ø FIND pstEnrSevenCore202107 END-ANY-ACTION
+// ø FIND pstEnrSevenCore202107 ANY_ACTION-END
 // ø <---------- </mxboxPostEnrollmentSevenAnyAction> ---------->
 
 
@@ -4021,7 +4026,7 @@ DOX = 'OKAY: maybe redundant since NextState is kida all-about UI, but better se
     // ø </Before DO-Script Called>
     mxboxPostEnrollmentSevenNextStateDO(responseObject);
     // ø <After DO-Script Called>
-    $w('#ppDatabaseResponseJSON').value = JSON.stringify(responseObject.logArrayDeveloper,undefined,4);
+    // $w('#ppDatabaseResponseJSON').value = JSON.stringify(responseObject.logArrayDeveloper,undefined,4);
     // ø </After DO-Script Called>
 }
 // ø FIND pstEnrSevenCore202107 NEXT_STATE_UI_END
@@ -4034,10 +4039,11 @@ export async function mxboxPostEnrollmentSevenPerformStepUI(responseObject = {})
     responseObject.logArrayDeveloper.push('{% mxboxPostEnrollmentSevenPerformStepUI %}');
     // ø <Before DO-Script Called>
     // ø </Before DO-Script Called>
+    mxboxPostEnrollmentSevenPerformStepDO(responseObject);
     // ø <After DO-Script Called>
-    instantiateLoopSwitchEnrollmentSteps(responseObject.currentStepOriginalStepsArray);
-    displaySteps();
-    $w('#ppDatabaseResponseJSON').value = JSON.stringify(responseObject.logArrayDeveloper,undefined,4);
+    // instantiateLoopSwitchEnrollmentSteps(responseObject.currentStepOriginalStepsArray);
+    // displaySteps();
+    // $w('#ppDatabaseResponseJSON').value = JSON.stringify(responseObject.logArrayDeveloper,undefined,4);
     // ø </After DO-Script Called>
 }
 // ø FIND pstEnrSevenCore202107 PERFORM_STEP_UI_END
@@ -4049,7 +4055,7 @@ export async function mxboxPostEnrollmentSevenPerformStepUI(responseObject = {})
 export async function mxboxPostEnrollmentSevenNextStateDO(responseObject = {}){
     // Display bootstrap-Primary 
     responseObject.logArrayDeveloper.push('{% mxboxPostEnrollmentSevenNextStateDO %}');
-    $w('#ppDatabaseResponseJSON').value = JSON.stringify(responseObject.logArrayDeveloper,undefined,4);
+    // $w('#ppDatabaseResponseJSON').value = JSON.stringify(responseObject.logArrayDeveloper,undefined,4);
 }
 // ø FIND pstEnrSevenCore202107 NEXT_STATE_DO_END
 // ø <---------- </mxboxPostEnrollmentSevenNextStateDO> ---------->
@@ -4061,7 +4067,7 @@ export async function mxboxPostEnrollmentSevenPerformStepDO(responseObject = {})
     responseObject.logArrayDeveloper.push('{% mxboxPostEnrollmentSevenPerformStepDO %}');
     instantiateLoopSwitchEnrollmentSteps(responseObject.currentStepOriginalStepsArray);
     displaySteps();
-    $w('#ppDatabaseResponseJSON').value = JSON.stringify(responseObject.logArrayDeveloper,undefined,4);
+    // $w('#ppDatabaseResponseJSON').value = JSON.stringify(responseObject.logArrayDeveloper,undefined,4);
 // ø FIND pstEnrSevenCore202107 PERFORM_STEP_DO_END
 }
 // ø <---------- </mxboxPostEnrollmentSevenPerformStepDO> ---------->

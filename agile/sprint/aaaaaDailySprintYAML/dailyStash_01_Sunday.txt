@@ -1,0 +1,15 @@
+↪
+
+$w('#HOLDER')
+
+4784.4200.0898.6626
+01/22-038
+
+https://webhook.site/191e8210-1ce6-4d05-8d72-e3a3a10cf0e4
+
+
+=========================================================
+Value is not accepted. Valid values: null, "aaron-bond.better-comments", "vscode.css-language-features", "vscode.html-language-features", "vscode.json-language-features", "vscode.markdown-language-features", "josee9988.minifyall", "vscode.php-language-features", "ms-vscode.references-view", "stkb.rewrap", "vscode.search-result", "vscode.typescript-language-features", "kaiwood.center-editor-window", "naumovs.color-highlight", "vscode.configuration-editing", "vscode.debug-auto-launch", "vscode.debug-server-ready", "msjsdiag.debugger-for-chrome", "vscode.emmet", "vscode.extension-editing", "oleg-shilo.favorites", "vscode.git", "vscode.github", "vscode.github-authentication", "nhoizey.gremlins", "vscode.grunt", "vscode.gulp", "vscode.image-preview", "vscode.jake", "ms-vscode.js-debug", "ms-vscode.js-debug-companion", "ritwickdey.LiveServer", "vscode.markdown-math", "PKief.material-icon-theme", "vscode.merge-conflict", "vscode.microsoft-authentication", "ms-vscode.node-debug", "ms-vscode.node-debug2", "vscode.npm", "quicktype.quicktype", "WallabyJs.quokka-vscode", "vscode.simple-browser", "paz1987.stash-tabs", "vscode.testing-editor-contributions", "vscode-icons-team.vscode-icons", "ms-vscode.vscode-js-profile-table", "jtr.vscode-position".(1)
+Defines a default formatter which takes precedence over all other formatter settings. Must be the identifier of an extension contributing a formatter.
+
+No quick fixes available

@@ -1,17 +1,17 @@
+• refactor find keys
+• refactor find responseObject.button to responseObject.actionKey
 • ADD New Action Script above AnyAction 
-ø Check that it does NOT Break
-ø DISABLE $w.onReady STEPS && ENABLE Action Script within
-ø Check that it does NOT Break
-ø DISABLE NEXT Button && ENABLE Action Script - Next
-ø Check that it does NOT Break
-ø DISABLE Current Button && ENABLE Action Script - CURRENT
-ø Check that it does NOT Break
+• Check that it does NOT Break
+• DISABLE $w.onReady STEPS && ENABLE Action Script within
+• Check that it does NOT Break
+• DISABLE NEXT Button && ENABLE Action Script - Next
+• Check that it does NOT Break
+• DISABLE Current Button && ENABLE Action Script - CURRENT
+• Check that it does NOT Break
 
 ---
 
 ø add the DO subscripts get code OUT of _click's
 ø refactor mxbox to msbox
-• refactor find keys
-• refactor find responseObject.button to responseObject.actionKey
 ø ¿ refactor 'PostEnrollmentSeven' to 'PstEnrSeven' ? 
 ø use Drupal Logging ¿ OR ? create custom Dupal Log DB and use the API

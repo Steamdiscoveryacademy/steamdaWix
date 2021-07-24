@@ -10,7 +10,7 @@ export async function mxboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# n
     responseObject.TEST = true;
     responseObject.logArrayUserInterface = [];
     responseObject.logArrayDeveloper = [];
-    responseObject.logArrayDeveloper.push('$w.onReady()');
+    responseObject.logArrayDeveloper.push(anyButtonLog);
     responseObject.button = 'NEXT';
     responseObject.messageKey = 'primary';
     memory.setItem('msboxLastState','stateZero')
@@ -25,7 +25,8 @@ export async function mxboxPostEnrollmentSevenActionNext(anyButtonLog = '{# no b
     let responseObject = {};
     responseObject.TEST = true;
     responseObject.logArrayUserInterface = [];
-    responseObject.logArrayDeveloper = ['btnPeSevenNext_click'];
+    responseObject.logArrayDeveloper = [];
+    responseObject.logArrayDeveloper.push(anyButtonLog);
     responseObject.button = 'NEXT';
     responseObject.messageKey = 'primary';
     responseObject.messageRandomInfo = Math.random() * 100 > 66 ? true : false;
@@ -33,7 +34,6 @@ export async function mxboxPostEnrollmentSevenActionNext(anyButtonLog = '{# no b
     // let messageKeyArray= ["success","warning","danger","info","devel"];
     // responseObject.messageKey = messageKeyArray[Math.floor(Math.random() * messageKeyArray.length)];
     mxboxPostEnrollmentSevenAnyAction(responseObject);
-    
 }
 // ø <---------- </mxboxPostEnrollmentSevenActionNext - NEXT_STATE> ---------->
 
@@ -43,7 +43,8 @@ export async function mxboxPostEnrollmentSevenActionPerform(anyButtonLog = '{# n
     let responseObject = {};
     responseObject.TEST = true;
     responseObject.logArrayUserInterface = [];
-    responseObject.logArrayDeveloper = ['btnPeSevenCurrent_click'];
+    responseObject.logArrayDeveloper = [];
+    responseObject.logArrayDeveloper.push(anyButtonLog);
     responseObject.button = 'CURRENT';
     let messageKeyArray= ["success","success","warning","danger"];
     responseObject.messageKey = messageKeyArray[Math.floor(Math.random() * messageKeyArray.length)];

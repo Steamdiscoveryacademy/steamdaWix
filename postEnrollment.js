@@ -15,6 +15,15 @@ import wixData from 'wix-data';
 import wixWindow from 'wix-window';
 
 
+/**
+ * ! QICK-FIND UniqueID's for Blocks
+ * ! ===============================
+ // ø YIKES = something that needs attention do keep here even if none (well one, this) at atthis time
+ // ø pstEnrSevenCore202107 = pstEnrSeven  Core Logic of PERFORM & NEXT 
+ // ø pstEnrSevenUtility202107 = work surrounding pstEnrSeven
+ */
+
+
 $w.onReady(function () {
     // ø <UI Disable PP, ST & SP Buttons>
     // $w('#btnStaffEyeD').disable();
@@ -26,34 +35,36 @@ $w.onReady(function () {
     // goToState()
     console.log('[ready]Next');
     
-    let responseObject = {};
-    // local.getItem('timezoneOffset')
-    // local.getItem('tzAbbrv')
-    responseObject.TEST = true;
-    responseObject.logArrayUserInterface = [];
-    responseObject.logArrayDeveloper = ['$w.onReady()'];
-    responseObject.button = 'NEXT';
-    responseObject.messageKey = 'primary';
-    memory.setItem('msboxLastState','stateZero')
-    // let messageKeyArray= ["success","warning","danger","info","devel"];
-    // responseObject.messageKey = messageKeyArray[Math.floor(Math.random() * messageKeyArray.length)];
-    mxboxPostEnrollmentSevenAnyAction(responseObject);
+    // ø <NEW>
+    let initLog = '$w.onReady() NEW';
+    mxboxPostEnrollmentSevenActionOnReady(initLog)
+    // ø </NEW>
+    // ø <OLD>
+    // let responseObject = {};
+    // // local.getItem('timezoneOffset')
+    // // local.getItem('tzAbbrv')
+    // responseObject.TEST = true;
+    // responseObject.logArrayUserInterface = [];
+    // responseObject.logArrayDeveloper = [];
+    // responseObject.logArrayDeveloper.push('$w.onReady()');
+    // responseObject.button = 'NEXT';
+    // responseObject.messageKey = 'primary';
+    // memory.setItem('msboxLastState','stateZero')
+    // // let messageKeyArray= ["success","warning","danger","info","devel"];
+    // // responseObject.messageKey = messageKeyArray[Math.floor(Math.random() * messageKeyArray.length)];
+    // mxboxPostEnrollmentSevenAnyAction(responseObject);
+    // ø </OLD>
     // ø <UNIVERSAL - Devel Notes>
     let develString = `mxboxPostEnrollmentSeven 'Next-Kludge' working`;
     if (typeof develString === 'string' && develString.length > 0) {
         develString = 'develNotes:\n===========\n' + develString;
-        let html = doBootstrapMessage('devel',develString,18); 
+        let html = doBootstrapMessage('devel',develString,[[-1,18]]); 
         $w('#txtOnReadyDevelHMTL').html = html;
         $w('#txtOnReadyDevelHMTL').expand();
     }
     // ø </UNIVERSAL - Devel Notes>
 });
 
-/**
- * ! QICK-FIND UniqueID's for Blocks
- * ! ===============================
- * ø superSeven202107 = the entire UI/Logic block 
- */
 
 export function onReadyPostEnrollment(){
     let now = new Date();
@@ -3659,22 +3670,84 @@ export function btnDemoIfElseThen_click(event) {
 
 // ! =========================================================================================================================
 // ! ==================================          <SEVENT-SUPER-STEPS with MultiStateBox>          ============================
-// ! ==================================                     <superSeven202107>                    ============================
+// ! ==================================                     FIND pstEnrSevenCore202107                    ============================
 // ! =========================================================================================================================
 
 // ø <---------- <mxboxPostEnrollmentSeven AnyAction PerformStep NextState> ---------->
 // ø <----------         <'mxbox' typo of 'msbox' (multi-state-box)>        ---------->
 // ø <----------                 <refactor or live with it>                 ---------->
 
+// ø <---------- <mxboxPostEnrollmentSevenActionScripts>  ---------->
+// ø FIND pstEnrSevenCore202107 ACTION_SCRIPT-ALL
+
+// ø <---------- <mxboxPostEnrollmentSevenActionOnReady - [within $w.onReady(function ())]>  ---------->
+// ø FIND pstEnrSevenCore202107 ACTION_SCRIPT
+export async function mxboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# no button log #}'){
+    let responseObject = {};
+    // local.getItem('timezoneOffset')
+    // local.getItem('tzAbbrv')
+    responseObject.TEST = true;
+    responseObject.logArrayUserInterface = [];
+    responseObject.logArrayDeveloper = [];
+    responseObject.logArrayDeveloper.push(anyButtonLog);
+    responseObject.button = 'NEXT';
+    responseObject.messageKey = 'primary';
+    memory.setItem('msboxLastState','stateZero')
+    // let messageKeyArray= ["success","warning","danger","info","devel"];
+    // responseObject.messageKey = messageKeyArray[Math.floor(Math.random() * messageKeyArray.length)];
+    mxboxPostEnrollmentSevenAnyAction(responseObject);
+}
+// ø <---------- </mxboxPostEnrollmentSevenActionOnReady - [within $w.onReady(function ())]> ---------->
+// ø <---------- <mxboxPostEnrollmentSevenActionNext - NEXT_STATE>  ---------->
+// ø FIND pstEnrSevenCore202107 ACTION_SCRIPT
+export async function mxboxPostEnrollmentSevenActionNext(anyButtonLog = '{# no button log #}'){
+    let responseObject = {};
+    responseObject.TEST = true;
+    responseObject.logArrayUserInterface = [];
+    responseObject.logArrayDeveloper = [];
+    responseObject.logArrayDeveloper.push(anyButtonLog);
+    responseObject.button = 'NEXT';
+    responseObject.messageKey = 'primary';
+    responseObject.messageRandomInfo = Math.random() * 100 > 66 ? true : false;
+    responseObject.messageResponse = false;
+    // let messageKeyArray= ["success","warning","danger","info","devel"];
+    // responseObject.messageKey = messageKeyArray[Math.floor(Math.random() * messageKeyArray.length)];
+    mxboxPostEnrollmentSevenAnyAction(responseObject);
+    
+}
+// ø <---------- </mxboxPostEnrollmentSevenActionNext - NEXT_STATE> ---------->
+
+// ø <---------- <mxboxPostEnrollmentSevenActionPerform - PERFORM_STATE_SCRIPTS>  ---------->
+// ø FIND pstEnrSevenCore202107 ACTION_SCRIPT
+export async function mxboxPostEnrollmentSevenActionPerform(anyButtonLog = '{# no button log #}'){
+    let responseObject = {};
+    responseObject.TEST = true;
+    responseObject.logArrayUserInterface = [];
+    responseObject.logArrayDeveloper = [];
+    responseObject.logArrayDeveloper.push(anyButtonLog);
+    responseObject.button = 'CURRENT';
+    let messageKeyArray= ["success","success","warning","danger"];
+    responseObject.messageKey = messageKeyArray[Math.floor(Math.random() * messageKeyArray.length)];
+    responseObject.messageRandomInfo = Math.random() * 100 > 66 ? true : false;
+    responseObject.messageResponse = true;
+    mxboxPostEnrollmentSevenAnyAction(responseObject);
+}
+// ø <---------- </mxboxPostEnrollmentSevenActionPerform - PERFORM_STATE_SCRIPTS> ---------->
+
+// ø FIND pstEnrSevenCore202107 ACTION_SCRIPT-ALL_END
+// ø <---------- </mxboxPostEnrollmentSevenActionScripts> ---------->
+
 // ø <---------- <mxboxPostEnrollmentSevenAnyAction>  ---------->
-// ø <---------- <superSeven202107>  ---------->
+// ø FIND pstEnrSevenCore202107 ANY-ACTION
 export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
     console.log('[fnc]mxboxPostEnrollmentSevenAnyAction');
     memory.setItem('msboxCurrentId','#mxboxPostEnrollmentSeven');
     responseObject.stamp = await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv'));
-    responseObject.logArrayDeveloper.push('≈ 3675 ≈');
+    responseObject.logArrayDeveloper.push('≈ 3678 ≈');
     responseObject.logArrayDeveloper.push(responseObject.stamp);
     responseObject.logArrayDeveloper.push('entering {% mxboxPostEnrollmentSevenAnyAction %}');
+
+    let DOX = 'JUST FOR VISIBLE DOX IN WIX'
 
 
     // $w('#spDatabaseResponseJSON').value = JSON.stringify(responseObject,undefined,4);
@@ -3682,22 +3755,32 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
     // responseObject.button = 'NEXT';
     // responseObject.messageKey = 'primary';
 
-    let messageKey = responseObject.messageKey;
     // ! <Pre-Trash> - even testing should come from the calling script/button
     // let messageKey = 'primary';
     // let messageKeyArray= ["success","warning","danger","info","devel"];
     // messageKey = messageKeyArray[Math.floor(Math.random() * messageKeyArray.length)];
     // ! </Pre-Trash>
     // ø <ELSE>
+    DOX = '<YES_ANY_ACTION>'
+    let messageKey = responseObject.messageKey;
     if(responseObject.button !== 'CURRENT' && responseObject.button !== 'NEXT'){
         // try it purposefully
         return;
     }
     // ø </ELSE>
+// ø FIND pstEnrSevenCore202107 YES_ANY_ACTION if it's HERE it belongs in Any Action
+    DOX = '</YES_ANY_ACTION>'
+
+    // ø <Pre-Trash but innocuous>
     let peSevenStateCurrent = {};
     let peSevenStateCurrentId = ''; // "state1"
     let panelNotesKey = 'PPENDING';
+    // ø </Pre-Trash but innocuous>
     if(responseObject.button === 'CURRENT'){
+        DOX = '<MAYBE_CURRENT_ACTION>'
+    // ø FIND pstEnrSevenCore202107 MAYBE_CURRENT_ACTION if it's BELOW it belongs in NEXT subScript
+        responseObject.logArrayDeveloper.push('≈ 3702 ≈');
+        responseObject.logArrayDeveloper.push('<'+responseObject.button + ' === PPENDING>');
         panelNotesKey = 'panelAfterStepNotes';
         // ! <from PERFORM CURRENT STEP>
         $w('#btnPeSevenNext').show();
@@ -3709,20 +3792,34 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
             wixLocation.to("/blank-3");
             return;
         }
+        responseObject.logArrayDeveloper.push('</'+responseObject.button + ' === PPENDING>');
         // ! </from PERFORM CURRENT STEP>
+        DOX = '</MAYBE_CURRENT_ACTION>'
     }
     if(responseObject.button === 'NEXT'){
+        DOX = '<MAYBE_NEXT_ACTION>'
+    // ø FIND pstEnrSevenCore202107 MAYBE_NEXT_ACTION if it's BELOW it belongs in NEXT subScript
+        responseObject.logArrayDeveloper.push('≈ 3719 ≈');
+        responseObject.logArrayDeveloper.push('<'+responseObject.button + ' === NEXT>');
         panelNotesKey = 'panelBeforeStepNotes';
         // ! <from GO TO NEXT>
-        goToState();
+        responseObject.logArrayDeveloper.push('<preTrash Logs>');
+        responseObject.logArrayDeveloper.push('≈ 3738 ≈');
+        responseObject.logArrayDeveloper.push('{# about to call goToState(responseObject) #}');
+        await goToState(responseObject);
+        let lastLogDeveloper = responseObject.logArrayDeveloper[responseObject.logArrayDeveloper.length - 1];
+        responseObject.logArrayDeveloper.push('∆ lastLogDeveloper: ' + lastLogDeveloper + ' ∆}');
+        responseObject.logArrayDeveloper.push('</preTrash Logs>');
         $w('#btnPeSevenNext').hide();
         $w('#btnPeSevenCurrent').show();
         // ! </from GO TO NEXT>
         // $w('#txtPeSevenTitle').text = 'Abort after NEXT goToState()'
         // return;
-        // let peSevenStateCurrent = $w(memory.getItem('msboxCurrentId')).currentState;
-        peSevenStateCurrent = $w('#mxboxPostEnrollmentSeven').currentState;
+        responseObject.logArrayDeveloper.push('≈ 3744 ≈');
+        let peSevenStateCurrent = $w(memory.getItem('msboxCurrentId')).currentState;
+        // peSevenStateCurrent = $w('#mxboxPostEnrollmentSeven').currentState;
         peSevenStateCurrentId = peSevenStateCurrent.id; // "state1"
+        responseObject.logArrayDeveloper.push('{¿ '+peSevenStateCurrentId+' is valid by wixStorage ?}');
         // peSevenStateCurrentId = memory.getItem('msboxLastState');
 
         // ! OnRamp <Kludge>
@@ -3767,7 +3864,8 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
         peSevenStateCurrentId = statesArray[nextIndex];
         memory.setItem('msboxLastState',peSevenStateCurrentId);
         // ! OK </Kludge Next State>
-
+        responseObject.logArrayDeveloper.push('</'+responseObject.button + ' === NEXT>');
+        DOX = '</MAYBE_NEXT_ACTION>'
     }
     //parameters will mostly be wixStorage, but responseObject can be something
     // ø <original from $w("#mxboxPostEnrollmentSeven").onChange>
@@ -3777,7 +3875,7 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
     // let peSeventJSON = /*[20210721114500ø]*/ `{"errorStringArray":[],"stepObjects":{"stateOnramp":{"titleKey":"onramp","title":"On-Ramp","longTitle":"Long Title for On-Ramp","stateIdThis":"stateOnramp","origSteps":{"confirmState":"stateOnramp","allStepArray":["VALIDATE_staffEyeD"],"notes":["otherise taken care of by onReady()"],"firstStep":"VALIDATE_staffEyeD","lastStep":"VALIDATE_staffEyeD"},"wixStorageArray":["kind.key"]},"stateInstantiate":{"titleKey":"instantiate","title":"Instantiate","longTitle":"Instantiate Enrollment","stateIdThis":"stateInstantiate","origSteps":{"confirmState":"stateInstantiate","allStepArray":["IINSTANTIATE"],"notes":["may need to manually confirm Staff-Eye-D Member if automatic is not conclusive"],"firstStep":"IINSTANTIATE","lastStep":"IINSTANTIATE"},"wixStorageArray":["kind.key"]},"stateMemberConfirm":{"titleKey":"memberConfirm","title":"Member Confirm","longTitle":"Confirm Members for Primary and Student","stateIdThis":"stateMemberConfirm","origSteps":{"confirmState":"stateMemberConfirm","allStepArray":["PREP_ppMember","EXECUTE_ppMember","PREP_stMember","EXECUTE_stMember"],"notes":[],"firstStep":"PREP_ppMember","lastStep":"EXECUTE_stMember"},"wixStorageArray":["kind.key"]},"stateDupeDelete":{"titleKey":"dupeDelete","title":"Dupe Delete","longTitle":"Delete any Duplicate Contacts (known bug)","stateIdThis":"stateDupeDelete","origSteps":{"confirmState":"stateDupeDelete","allStepArray":["dedupePpStContact"],"notes":[],"firstStep":"dedupePpStContact","lastStep":"dedupePpStContact"},"wixStorageArray":["kind.key"]},"stateDatabaseForPrimaryAndStudent":{"titleKey":"databaseForPrimaryAndStudent","title":"Database for Primary and Student","longTitle":"Insert Records into the Person Database for Primary and Student","stateIdThis":"stateDatabaseForPrimaryAndStudent","origSteps":{"confirmState":"stateDatabaseForPrimaryAndStudent","allStepArray":["PREP_ppContact","PREP_ppDatabase","PREP_stContact","PREP_stDatabase"],"notes":[],"firstStep":"PREP_ppContact","lastStep":"PREP_stDatabase"},"wixStorageArray":["kind.key"]},"stateContactForPrimaryAndStudent":{"titleKey":"contactForPrimaryAndStudent","title":"Contact for Primary and Student","longTitle":"Update Contacts for Primary & Student with Complex Enrollment Data","stateIdThis":"stateContactForPrimaryAndStudent","origSteps":{"confirmState":"stateContactForPrimaryAndStudent","allStepArray":["PREP_spContact","PREP_spDatabase","EXECUTE_ppContact","EXECUTE_ppDatabase","EXECUTE_stContact","EXECUTE_stDatabase"],"notes":[],"firstStep":"PREP_spContact","lastStep":"EXECUTE_stDatabase"},"wixStorageArray":["kind.key"]},"stateContactAndDatabaseForSecondary":{"titleKey":"contactAndDatabaseForSecondary","title":"Contact and Database for Secondary","longTitle":"Upsert Contact and Insert Person database Record for Secondary","stateIdThis":"stateContactAndDatabaseForSecondary","origSteps":{"confirmState":"stateContactAndDatabaseForSecondary","allStepArray":["EXECUTE_spContact","EXECUTE_spDatabase"],"notes":[],"firstStep":"EXECUTE_spContact","lastStep":"EXECUTE_spDatabase"},"wixStorageArray":["kind.key"]},"stateResolveAndDestroy":{"titleKey":"resolveAndDestroy","title":"Resolve and Destroy","longTitle":"Resolve Webhook Payload and Off-Ramp the Post Enrollment Process","stateIdThis":"stateResolveAndDestroy","origSteps":{"confirmState":"stateResolveAndDestroy","allStepArray":["EEMPTY"],"notes":["ouside of Loop-Switch execute ¿Resolve WebHook?","ouside of Loop-Switch execute ¿Destroy? wixStorage"],"firstStep":"EEMPTY","lastStep":"EEMPTY"},"wixStorageArray":["kind.key"]},"stateOfframp":{"titleKey":"offramp","title":"Off-Ramp","longTitle":"Off-Ramp to Display Completion Data before taking Next Application","stateIdThis":"stateOfframp","origSteps":{"confirmState":"stateOfframp","allStepArray":["EEMPTY"],"notes":["return to ¿Process Web Hooks?"],"firstStep":"EEMPTY","lastStep":"EEMPTY"},"wixStorageArray":["kind.key"]}},"stateIdArray":["stateOnramp","stateInstantiate","stateMemberConfirm","stateDupeDelete","stateDatabaseForPrimaryAndStudent","stateContactForPrimaryAndStudent","stateContactAndDatabaseForSecondary","stateResolveAndDestroy","stateOfframp"],"messaging":{"hex":{"primary":"#007bff","devel":"#6610f2","danger":"#dc3545","warning":"#ffc107","success":"#28a745","info":"#17a2b8"}},"stepMessaging":{"stateOnramp":{"primary":"The primary message for stateOnramp","devel":"The devel message for stateOnramp","danger":"The danger message for stateOnramp","warning":"The warning message for stateOnramp","success":"The success message for stateOnramp","info":"The info message for stateOnramp"},"stateInstantiate":{"primary":"The primary message for stateInstantiate","devel":"The devel message for stateInstantiate","danger":"The danger message for stateInstantiate","warning":"The warning message for stateInstantiate","success":"The success message for stateInstantiate","info":"The info message for stateInstantiate"},"stateMemberConfirm":{"primary":"The primary message for stateMemberConfirm","devel":"The devel message for stateMemberConfirm","danger":"The danger message for stateMemberConfirm","warning":"The warning message for stateMemberConfirm","success":"The success message for stateMemberConfirm","info":"The info message for stateMemberConfirm"},"stateDupeDelete":{"primary":"The primary message for stateDupeDelete","devel":"The devel message for stateDupeDelete","danger":"The danger message for stateDupeDelete","warning":"The warning message for stateDupeDelete","success":"The success message for stateDupeDelete","info":"The info message for stateDupeDelete"},"stateDatabaseForPrimaryAndStudent":{"primary":"The primary message for stateDatabaseForPrimaryAndStudent","devel":"The devel message for stateDatabaseForPrimaryAndStudent","danger":"The danger message for stateDatabaseForPrimaryAndStudent","warning":"The warning message for stateDatabaseForPrimaryAndStudent","success":"The success message for stateDatabaseForPrimaryAndStudent","info":"The info message for stateDatabaseForPrimaryAndStudent"},"stateContactForPrimaryAndStudent":{"primary":"The primary message for stateContactForPrimaryAndStudent","devel":"The devel message for stateContactForPrimaryAndStudent","danger":"The danger message for stateContactForPrimaryAndStudent","warning":"The warning message for stateContactForPrimaryAndStudent","success":"The success message for stateContactForPrimaryAndStudent","info":"The info message for stateContactForPrimaryAndStudent"},"stateContactAndDatabaseForSecondary":{"primary":"The primary message for stateContactAndDatabaseForSecondary","devel":"The devel message for stateContactAndDatabaseForSecondary","danger":"The danger message for stateContactAndDatabaseForSecondary","warning":"The warning message for stateContactAndDatabaseForSecondary","success":"The success message for stateContactAndDatabaseForSecondary","info":"The info message for stateContactAndDatabaseForSecondary"},"stateResolveAndDestroy":{"primary":"The primary message for stateResolveAndDestroy","devel":"The devel message for stateResolveAndDestroy","danger":"The danger message for stateResolveAndDestroy","warning":"The warning message for stateResolveAndDestroy","success":"The success message for stateResolveAndDestroy","info":"The info message for stateResolveAndDestroy"},"stateOfframp":{"primary":"The primary message for stateOfframp","devel":"The devel message for stateOfframp","danger":"The danger message for stateOfframp","warning":"The warning message for stateOfframp","success":"The success message for stateOfframp","info":"The info message for stateOfframp"}}}`;
     let peSeventJSON = /*[20210721131500◊]*/ `{"errorStringArray":[],"stepObjects":{"stateOnramp":{"titleKey":"onramp","title":"On-Ramp","longTitle":"Long Title for On-Ramp","stateIdThis":"stateOnramp","origSteps":{"confirmState":"stateOnramp","allStepArray":["VALIDATE_staffEyeD"],"notes":["otherise taken care of by onReady()"],"panelBeforeStepNotes":["Tell them what you are going to do","including about Staff-Eye-D"],"panelAfterStepNotes":["Tell them you did it","messaging about Staff-Eye-D results"],"firstStep":"VALIDATE_staffEyeD","lastStep":"VALIDATE_staffEyeD"},"wixStorageArray":["kind.key"]},"stateInstantiate":{"titleKey":"instantiate","title":"Instantiate","longTitle":"Instantiate Enrollment","stateIdThis":"stateInstantiate","origSteps":{"confirmState":"stateInstantiate","allStepArray":["IINSTANTIATE"],"notes":["may need to manually confirm Staff-Eye-D Member if automatic is not conclusive"],"panelBeforeStepNotes":["Tell them what you are going to do","IFF Staff-Eye-D Confirmation Input"],"panelAfterStepNotes":["Tell them you did it","superEnrollmentStatus","ppAction","stAction","spAction"],"firstStep":"IINSTANTIATE","lastStep":"IINSTANTIATE"},"wixStorageArray":["kind.key"]},"stateMemberConfirm":{"titleKey":"memberConfirm","title":"Member Confirm","longTitle":"Confirm Members for Primary and Student","stateIdThis":"stateMemberConfirm","origSteps":{"confirmState":"stateMemberConfirm","allStepArray":["PREP_ppMember","EXECUTE_ppMember","PREP_stMember","EXECUTE_stMember"],"notes":[],"panelBeforeStepNotes":["Tell them what you are going to do"],"panelAfterStepNotes":["Tell them you did it"],"firstStep":"PREP_ppMember","lastStep":"EXECUTE_stMember"},"wixStorageArray":["kind.key"]},"stateDupeDelete":{"titleKey":"dupeDelete","title":"Dupe Delete","longTitle":"Delete any Duplicate Contacts (known bug)","stateIdThis":"stateDupeDelete","origSteps":{"confirmState":"stateDupeDelete","allStepArray":["dedupePpStContact"],"notes":[],"panelBeforeStepNotes":["Tell them what you are going to do"],"panelAfterStepNotes":["Tell them you did it"],"firstStep":"dedupePpStContact","lastStep":"dedupePpStContact"},"wixStorageArray":["kind.key"]},"stateDatabaseForPrimaryAndStudent":{"titleKey":"databaseForPrimaryAndStudent","title":"Database for Primary and Student","longTitle":"Insert Records into the Person Database for Primary and Student","stateIdThis":"stateDatabaseForPrimaryAndStudent","origSteps":{"confirmState":"stateDatabaseForPrimaryAndStudent","allStepArray":["PREP_ppContact","PREP_ppDatabase","PREP_stContact","PREP_stDatabase"],"notes":[],"panelBeforeStepNotes":["Tell them what you are going to do"],"panelAfterStepNotes":["Tell them you did it"],"firstStep":"PREP_ppContact","lastStep":"PREP_stDatabase"},"wixStorageArray":["kind.key"]},"stateContactForPrimaryAndStudent":{"titleKey":"contactForPrimaryAndStudent","title":"Contact for Primary and Student","longTitle":"Update Contacts for Primary & Student with Complex Enrollment Data","stateIdThis":"stateContactForPrimaryAndStudent","origSteps":{"confirmState":"stateContactForPrimaryAndStudent","allStepArray":["PREP_spContact","PREP_spDatabase","EXECUTE_ppContact","EXECUTE_ppDatabase","EXECUTE_stContact","EXECUTE_stDatabase"],"notes":[],"panelBeforeStepNotes":["Tell them what you are going to do"],"panelAfterStepNotes":["Tell them you did it"],"firstStep":"PREP_spContact","lastStep":"EXECUTE_stDatabase"},"wixStorageArray":["kind.key"]},"stateContactAndDatabaseForSecondary":{"titleKey":"contactAndDatabaseForSecondary","title":"Contact and Database for Secondary","longTitle":"Upsert Contact and Insert Person database Record for Secondary","stateIdThis":"stateContactAndDatabaseForSecondary","origSteps":{"confirmState":"stateContactAndDatabaseForSecondary","allStepArray":["EXECUTE_spContact","EXECUTE_spDatabase"],"notes":[],"panelBeforeStepNotes":["Tell them what you are going to do"],"panelAfterStepNotes":["Tell them you did it"],"firstStep":"EXECUTE_spContact","lastStep":"EXECUTE_spDatabase"},"wixStorageArray":["kind.key"]},"stateResolveAndDestroy":{"titleKey":"resolveAndDestroy","title":"Resolve and Destroy","longTitle":"Resolve Webhook Payload and Off-Ramp the Post Enrollment Process","stateIdThis":"stateResolveAndDestroy","origSteps":{"confirmState":"stateResolveAndDestroy","allStepArray":["EEMPTY"],"notes":["ouside of Loop-Switch execute ¿Resolve WebHook?","ouside of Loop-Switch execute ¿Destroy? wixStorage"],"panelBeforeStepNotes":["Tell them what you are going to do"],"panelAfterStepNotes":["Tell them you did it"],"firstStep":"EEMPTY","lastStep":"EEMPTY"},"wixStorageArray":["kind.key"]},"stateOfframp":{"titleKey":"offramp","title":"Off-Ramp","longTitle":"Off-Ramp to Display Completion Data before taking Next Application","stateIdThis":"stateOfframp","origSteps":{"confirmState":"stateOfframp","allStepArray":["EEMPTY"],"notes":["return to ¿Process Web Hooks?"],"panelBeforeStepNotes":["Tell them what you are going to do"],"panelAfterStepNotes":["Tell them you did it"],"firstStep":"EEMPTY","lastStep":"EEMPTY"},"wixStorageArray":["kind.key"]}},"stateIdArray":["stateOnramp","stateInstantiate","stateMemberConfirm","stateDupeDelete","stateDatabaseForPrimaryAndStudent","stateContactForPrimaryAndStudent","stateContactAndDatabaseForSecondary","stateResolveAndDestroy","stateOfframp"],"messaging":{"hex":{"primary":"#007bff","devel":"#6610f2","danger":"#dc3545","warning":"#ffc107","success":"#28a745","info":"#17a2b8"}},"stepMessaging":{"stateOnramp":{"primary":"The primary message for stateOnramp","devel":"The devel message for stateOnramp","danger":"The danger message for stateOnramp","warning":"The warning message for stateOnramp","success":"The success message for stateOnramp","info":"The info message for stateOnramp"},"stateInstantiate":{"primary":"The primary message for stateInstantiate","devel":"The devel message for stateInstantiate","danger":"The danger message for stateInstantiate","warning":"The warning message for stateInstantiate","success":"The success message for stateInstantiate","info":"The info message for stateInstantiate"},"stateMemberConfirm":{"primary":"The primary message for stateMemberConfirm","devel":"The devel message for stateMemberConfirm","danger":"The danger message for stateMemberConfirm","warning":"The warning message for stateMemberConfirm","success":"The success message for stateMemberConfirm","info":"The info message for stateMemberConfirm"},"stateDupeDelete":{"primary":"The primary message for stateDupeDelete","devel":"The devel message for stateDupeDelete","danger":"The danger message for stateDupeDelete","warning":"The warning message for stateDupeDelete","success":"The success message for stateDupeDelete","info":"The info message for stateDupeDelete"},"stateDatabaseForPrimaryAndStudent":{"primary":"The primary message for stateDatabaseForPrimaryAndStudent","devel":"The devel message for stateDatabaseForPrimaryAndStudent","danger":"The danger message for stateDatabaseForPrimaryAndStudent","warning":"The warning message for stateDatabaseForPrimaryAndStudent","success":"The success message for stateDatabaseForPrimaryAndStudent","info":"The info message for stateDatabaseForPrimaryAndStudent"},"stateContactForPrimaryAndStudent":{"primary":"The primary message for stateContactForPrimaryAndStudent","devel":"The devel message for stateContactForPrimaryAndStudent","danger":"The danger message for stateContactForPrimaryAndStudent","warning":"The warning message for stateContactForPrimaryAndStudent","success":"The success message for stateContactForPrimaryAndStudent","info":"The info message for stateContactForPrimaryAndStudent"},"stateContactAndDatabaseForSecondary":{"primary":"The primary message for stateContactAndDatabaseForSecondary","devel":"The devel message for stateContactAndDatabaseForSecondary","danger":"The danger message for stateContactAndDatabaseForSecondary","warning":"The warning message for stateContactAndDatabaseForSecondary","success":"The success message for stateContactAndDatabaseForSecondary","info":"The info message for stateContactAndDatabaseForSecondary"},"stateResolveAndDestroy":{"primary":"The primary message for stateResolveAndDestroy","devel":"The devel message for stateResolveAndDestroy","danger":"The danger message for stateResolveAndDestroy","warning":"The warning message for stateResolveAndDestroy","success":"The success message for stateResolveAndDestroy","info":"The info message for stateResolveAndDestroy"},"stateOfframp":{"primary":"The primary message for stateOfframp","devel":"The devel message for stateOfframp","danger":"The danger message for stateOfframp","warning":"The warning message for stateOfframp","success":"The success message for stateOfframp","info":"The info message for stateOfframp"}}}`;
     // PENDING /*[20210721HHII00◊]*/
-    // ø <---------- <superSeven202107>  ---------->
+    // ø FIND pstEnrSevenCore202107 JSON-PARSE
     let peSeventObject = JSON.parse(peSeventJSON);
     $w('#preTrashLog').value = JSON.stringify(peSeventObject,undefined,4);
     // ! <'event.' dependent>
@@ -3828,7 +3926,7 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
         originalStepsString = originalStepsString.replace(',','<br>• ');
         cowCatherIndex++;
     }
-    let html = doBootstrapMessage('devel',originalStepsString,18);
+    let html = doBootstrapMessage('devel',originalStepsString,[[-1,18]]);
     $w('#txtOriginalStepsList').html = html;
     let isValidTitle = typeof currentStepObject === 'object' ? true : false;
     isValidTitle = isValidTitle && typeof currentStepObject.longString === 'string' ? true : isValidTitle;
@@ -3838,8 +3936,10 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
     $w('#txtPeSevenTitle').text = title;
     // ø </original from $w("#mxboxPostEnrollmentSeven").onChange>
     
-    
+    responseObject.logArrayDeveloper.push('≈ 3847 ≈');
+    responseObject.logArrayDeveloper.push(memory.getItem('msboxLastState') + ' === ' + peSevenStateCurrentId);
     let lastClicked = memory.getItem('msboxLastState') === peSevenStateCurrentId ? 'PERFORM_STEP' : 'NEXT_STATE';
+    responseObject.logArrayDeveloper.push('∆ ' + lastClicked + ' ∆');
     // memory.setItem('msboxLastState',peSevenStateCurrentId);
     // let messageThis = 'Test of messageThis Parameter';
     
@@ -3896,65 +3996,75 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
     $w('#spDatabaseResponseJSON').value = JSON.stringify(responseObject,undefined,4);
 
     if(lastClicked === 'PERFORM_STEP'){
+        responseObject.logArrayDeveloper.push('◊ lastClicked === PERFORM_STEP ◊');
         responseObject.currentStepOriginalStepsArray = currentStepOrigStepsObject.allStepArray;
-        mxboxPostEnrollmentSevenPerformStep(responseObject);
+        await mxboxPostEnrollmentSevenPerformStepDO(responseObject);
     }
     if(lastClicked === 'NEXT_STATE'){
-        mxboxPostEnrollmentSevenNextState(responseObject);
+        responseObject.logArrayDeveloper.push('◊ lastClicked === NEXT_STATE ◊');
+        mxboxPostEnrollmentSevenNextStateDO(responseObject);
     }
 }
-// ø <---------- </superSeven202107>  ---------->
+// ø FIND pstEnrSevenCore202107 END-ANY-ACTION
 // ø <---------- </mxboxPostEnrollmentSevenAnyAction> ---------->
 
-// ! <Maybe Not>
-// ! <Pre-Trash>
-// $w("#mxboxPostEnrollmentSeven").onChange( (event) => {
-        // ø <moved from msBoxAnyChange - After-Next> 20210720
-        // memory.setItem('msboxCurrentId','#mxboxPostEnrollmentSeven');
-        // $w('#stMemberResponseJSON').value = memory.getItem('msboxCurrentId');
-        // let peSevenStateCurrent = $w('#mxboxPostEnrollmentSeven').currentState;
-        // let peSevenStateCurrentId = peSevenStateCurrent.id; // "state1"
-        // memory.setItem('msboxLastState',peSevenStateCurrentId)
-        // ø <moved from msBoxAnyChange - After-Next>
-//     // let longTitleJSON = JSON.parse(peSeventJSON).stepObjects.stateOnramp.longTitle;
-//     // let peSeventObject={stepObjects:{stateOnramp:{titleKey:"onramp",title:"On-Ramp",longTitle:"Long Title for On-Ramp",stateIdThis:"stateOnramp"},stateInstantiate:{titleKey:"instantiate",title:"Instantiate",longTitle:"Instantiate Enrollment",stateIdThis:"stateInstantiate"},stateMemberConfirm:{titleKey:"memberConfirm",title:"Member Confirm",longTitle:"Confirm Members for Primary and Student",stateIdThis:"stateMemberConfirm"},stateDupeDelete:{titleKey:"dupeDelete",title:"Dupe Delete",longTitle:"Delete any Duplicate Contacts (known bug)",stateIdThis:"stateDupeDelete"},stateDatabaseForPrimaryAndStudent:{titleKey:"databaseForPrimaryAndStudent",title:"Database for Primary and Student",longTitle:"Insert Records into the Person Database for Primary and Student",stateIdThis:"stateDatabaseForPrimaryAndStudent"},stateContactForPrimaryAndStudent:{titleKey:"contactForPrimaryAndStudent",title:"Contact for Primary and Student",longTitle:"Update Contacts for Primary & Student with Complex Enrollment Data",stateIdThis:"stateContactForPrimaryAndStudent"},stateContactAndDatabaseForSecondary:{titleKey:"contactAndDatabaseForSecondary",title:"Contact and Database for Secondary",longTitle:"Upsert Contact and Insert Person database Record for Secondary",stateIdThis:"stateContactAndDatabaseForSecondary"},stateResolveAndDestroy:{titleKey:"resolveAndDestroy",title:"Resolve and Destroy",longTitle:"Resolve Webhook Payload and Off-Ramp the Post Enrollment Process",stateIdThis:"stateResolveAndDestroy"},stateOfframp:{titleKey:"offramp",title:"Off-Ramp",longTitle:"Click 'Perform Current Step' to return to 'Process Web Hooks'",stateIdThis:"stateOfframp"}}};
-//     let peSeventJSON = `{"stepObjects":{"stateOnramp":{"titleKey":"onramp","title":"On-Ramp","longTitle":"JSON WORKING! Long Title for On-Ramp","stateIdThis":"stateOnramp","origSteps":{"firstStep":"ZERO","lastStep":"ZERO","allStepArray":["ZERO"],"notes":[]}},"stateInstantiate":{"titleKey":"instantiate","title":"Instantiate","longTitle":"Instantiate Enrollment","stateIdThis":"stateInstantiate","origSteps":{"firstStep":"IINSTANTIATE","lastStep":"IINSTANTIATE","allStepArray":["IINSTANTIATE"],"notes":["Reset Steps need to be manually applied (or does it?)"]}},"stateMemberConfirm":{"titleKey":"memberConfirm","title":"Member Confirm","longTitle":"Confirm Members for Primary and Student","stateIdThis":"stateMemberConfirm","origSteps":{"firstStep":"PREP_ppMember","lastStep":"EXECUTE_stMember","allStepArray":["PREP_ppMember","EXECUTE_ppMember","PREP_stMember","EXECUTE_stMember"],"notes":[]}},"stateDupeDelete":{"titleKey":"dupeDelete","title":"Dupe Delete","longTitle":"Delete any Duplicate Contacts (known bug)","stateIdThis":"stateDupeDelete","origSteps":{"firstStep":"dedupePpStContact","lastStep":"dedupePpStContact","allStepArray":["dedupePpStContact"],"notes":[]}},"stateDatabaseForPrimaryAndStudent":{"titleKey":"databaseForPrimaryAndStudent","title":"Database for Primary and Student","longTitle":"Insert Records into the Person Database for Primary and Student","stateIdThis":"stateDatabaseForPrimaryAndStudent","origSteps":{"firstStep":"PREP_ppContact","lastStep":"PREP_stDatabase","allStepArray":["PREP_ppContact","PREP_ppDatabase","PREP_stContact","PREP_stDatabase"],"notes":[]}},"stateContactForPrimaryAndStudent":{"titleKey":"contactForPrimaryAndStudent","title":"Contact for Primary and Student","longTitle":"Update Contacts for Primary & Student with Complex Enrollment Data","stateIdThis":"stateContactForPrimaryAndStudent","origSteps":{"firstStep":"PREP_spContact","lastStep":"EXECUTE_stDatabase","allStepArray":["PREP_spContact","PREP_spDatabase","EXECUTE_ppContact","EXECUTE_ppDatabase","EXECUTE_stContact","EXECUTE_stDatabase"],"notes":[]}},"stateContactAndDatabaseForSecondary":{"titleKey":"contactAndDatabaseForSecondary","title":"Contact and Database for Secondary","longTitle":"Upsert Contact and Insert Person database Record for Secondary","stateIdThis":"stateContactAndDatabaseForSecondary","origSteps":{"firstStep":"EXECUTE_spContact","lastStep":"EXECUTE_spDatabase","allStepArray":["EXECUTE_spContact","EXECUTE_spDatabase"],"notes":[]}},"stateResolveAndDestroy":{"titleKey":"resolveAndDestroy","title":"Resolve and Destroy","longTitle":"Resolve Webhook Payload and Off-Ramp the Post Enrollment Process","stateIdThis":"stateResolveAndDestroy","origSteps":{"firstStep":"CCOMPLETE","lastStep":"CCOMPLETE","allStepArray":["CCOMPLETE"],"notes":["ouside of Loop-Switch execute 'Resolve WebHook'","ouside of Loop-Switch execute 'Destroy' wixStorage"]}},"stateOfframp":{"titleKey":"offramp","title":"Off-Ramp","longTitle":"Off-Ramp to Display Completion Data before taking Next Application","stateIdThis":"stateOfframp"}},"stateIdArray":["stateOnramp","stateInstantiate","stateMemberConfirm","stateDupeDelete","stateDatabaseForPrimaryAndStudent","stateContactForPrimaryAndStudent","stateContactAndDatabaseForSecondary","stateResolveAndDestroy","stateOfframp"],"messaging":{"hex":{"primary":"#007bff","devel":"#6610f2","danger":"#dc3545","warning":"#ffc107","success":"#28a745","info":"#17a2b8"}},"stepMessaging":{"stateOnramp":{"primary":"The primary message for 'stateOnramp'","devel":"The devel message for 'stateOnramp'","danger":"The danger message for 'stateOnramp'","warning":"The warning message for 'stateOnramp'","success":"The success message for 'stateOnramp'","info":"The info message for 'stateOnramp'"},"stateInstantiate":{"primary":"The primary message for 'stateInstantiate'","devel":"The devel message for 'stateInstantiate'","danger":"The danger message for 'stateInstantiate'","warning":"The warning message for 'stateInstantiate'","success":"The success message for 'stateInstantiate'","info":"The info message for 'stateInstantiate'"},"stateMemberConfirm":{"primary":"The primary message for 'stateMemberConfirm'","devel":"The devel message for 'stateMemberConfirm'","danger":"The danger message for 'stateMemberConfirm'","warning":"The warning message for 'stateMemberConfirm'","success":"The success message for 'stateMemberConfirm'","info":"The info message for 'stateMemberConfirm'"},"stateDupeDelete":{"primary":"The primary message for 'stateDupeDelete'","devel":"The devel message for 'stateDupeDelete'","danger":"The danger message for 'stateDupeDelete'","warning":"The warning message for 'stateDupeDelete'","success":"The success message for 'stateDupeDelete'","info":"The info message for 'stateDupeDelete'"},"stateDatabaseForPrimaryAndStudent":{"primary":"The primary message for 'stateDatabaseForPrimaryAndStudent'","devel":"The devel message for 'stateDatabaseForPrimaryAndStudent'","danger":"The danger message for 'stateDatabaseForPrimaryAndStudent'","warning":"The warning message for 'stateDatabaseForPrimaryAndStudent'","success":"The success message for 'stateDatabaseForPrimaryAndStudent'","info":"The info message for 'stateDatabaseForPrimaryAndStudent'"},"stateContactForPrimaryAndStudent":{"primary":"The primary message for 'stateContactForPrimaryAndStudent'","devel":"The devel message for 'stateContactForPrimaryAndStudent'","danger":"The danger message for 'stateContactForPrimaryAndStudent'","warning":"The warning message for 'stateContactForPrimaryAndStudent'","success":"The success message for 'stateContactForPrimaryAndStudent'","info":"The info message for 'stateContactForPrimaryAndStudent'"},"stateContactAndDatabaseForSecondary":{"primary":"The primary message for 'stateContactAndDatabaseForSecondary'","devel":"The devel message for 'stateContactAndDatabaseForSecondary'","danger":"The danger message for 'stateContactAndDatabaseForSecondary'","warning":"The warning message for 'stateContactAndDatabaseForSecondary'","success":"The success message for 'stateContactAndDatabaseForSecondary'","info":"The info message for 'stateContactAndDatabaseForSecondary'"},"stateResolveAndDestroy":{"primary":"The primary message for 'stateResolveAndDestroy'","devel":"The devel message for 'stateResolveAndDestroy'","danger":"The danger message for 'stateResolveAndDestroy'","warning":"The warning message for 'stateResolveAndDestroy'","success":"The success message for 'stateResolveAndDestroy'","info":"The info message for 'stateResolveAndDestroy'"},"stateOfframp":{"primary":"The primary message for 'stateOfframp'","devel":"The devel message for 'stateOfframp'","danger":"The danger message for 'stateOfframp'","warning":"The warning message for 'stateOfframp'","success":"The success message for 'stateOfframp'","info":"The info message for 'stateOfframp'"}}}`;
-//     let peSeventObject = JSON.parse(peSeventJSON);
-//     let currentState = event.target.currentState.id; // "state2"
-//     let currentStepObject = peSeventObject.stepObjects[currentState];
-//     console.log('currentStepObject: ');
-//     console.log(currentStepObject);
-//     let title = currentStepObject.longTitle;
-//     // let title = longTitleJSON;
-//     title = title.substr(0,66);
-//     $w('#txtPeSevenTitle').text = title;
-// } );
-// ! </Pre-Trash>
-// ! </Maybe Not>
 
-// ø <---------- <mxboxPostEnrollmentSevenNextState>  ---------->
-export function mxboxPostEnrollmentSevenNextState(responseObject = {}){
-    // Display bootstrap-Primary
-    responseObject.logArrayDeveloper.push('{% mxboxPostEnrollmentSevenNextState %}');
-    console.log('[fnc]mxboxPostEnrollmentSevenNextState');
-    // $w('#ppDatabaseResponseJSON').value = 
+// ø <---------- <mxboxPostEnrollmentSevenNextStateUI>  ---------->
+// ø FIND pstEnrSevenCore202107 NEXT_STATE_UI
+export async function mxboxPostEnrollmentSevenNextStateUI(responseObject = {}){
+    // Display bootstrap-Primary 
+let DOX = 'So I can read these comments in WiX-Editor';
+DOX = 'OKAY: maybe redundant since NextState is kida all-about UI, but better separate _before_ it gets hairy than after';
+
+    responseObject.logArrayDeveloper.push('{% mxboxPostEnrollmentSevenNextStateUI %}');
+    // ø <Before DO-Script Called>
+    // ø </Before DO-Script Called>
+    mxboxPostEnrollmentSevenNextStateDO(responseObject);
+    // ø <After DO-Script Called>
     $w('#ppDatabaseResponseJSON').value = JSON.stringify(responseObject.logArrayDeveloper,undefined,4);
+    // ø </After DO-Script Called>
 }
-// ø <---------- </superSeven202107>  ---------->
-// ø <---------- </mxboxPostEnrollmentSevenNextState> ---------->
+// ø FIND pstEnrSevenCore202107 NEXT_STATE_UI_END
+// ø <---------- </mxboxPostEnrollmentSevenNextStateUI> ---------->
 
-// ø <---------- <mxboxPostEnrollmentSevenPerformStep>  ---------->
-export function mxboxPostEnrollmentSevenPerformStep(responseObject = {}){
+// ø <---------- <mxboxPostEnrollmentSevenPerformStepUI>  ---------->
+// ø FIND pstEnrSevenCore202107 PERFORM_STEP_UI
+export async function mxboxPostEnrollmentSevenPerformStepUI(responseObject = {}){
     // Deal with Response
-    responseObject.logArrayDeveloper.push('{% mxboxPostEnrollmentSevenPerformStep %}');
-    console.log('[fnc]mxboxPostEnrollmentSevenPerformStep')
+    responseObject.logArrayDeveloper.push('{% mxboxPostEnrollmentSevenPerformStepUI %}');
+    // ø <Before DO-Script Called>
+    // ø </Before DO-Script Called>
+    // ø <After DO-Script Called>
     instantiateLoopSwitchEnrollmentSteps(responseObject.currentStepOriginalStepsArray);
     displaySteps();
     $w('#ppDatabaseResponseJSON').value = JSON.stringify(responseObject.logArrayDeveloper,undefined,4);
+    // ø </After DO-Script Called>
 }
-// ø <---------- </superSeven202107>  ---------->
-// ø <---------- </mxboxPostEnrollmentSevenPerformStep> ---------->
+// ø FIND pstEnrSevenCore202107 PERFORM_STEP_UI_END
+// ø <---------- </mxboxPostEnrollmentSevenPerformStepUI> ---------->
 
+
+// ø <---------- <mxboxPostEnrollmentSevenNextStateDO>  ---------->
+// ø FIND pstEnrSevenCore202107 NEXT_STATE_DO
+export async function mxboxPostEnrollmentSevenNextStateDO(responseObject = {}){
+    // Display bootstrap-Primary 
+    responseObject.logArrayDeveloper.push('{% mxboxPostEnrollmentSevenNextStateDO %}');
+    $w('#ppDatabaseResponseJSON').value = JSON.stringify(responseObject.logArrayDeveloper,undefined,4);
+}
+// ø FIND pstEnrSevenCore202107 NEXT_STATE_DO_END
+// ø <---------- </mxboxPostEnrollmentSevenNextStateDO> ---------->
+
+// ø <---------- <mxboxPostEnrollmentSevenPerformStepDO>  ---------->
+// ø FIND pstEnrSevenCore202107 PERFORM_STEP_DO
+export async function mxboxPostEnrollmentSevenPerformStepDO(responseObject = {}){
+    // Deal with Response
+    responseObject.logArrayDeveloper.push('{% mxboxPostEnrollmentSevenPerformStepDO %}');
+    instantiateLoopSwitchEnrollmentSteps(responseObject.currentStepOriginalStepsArray);
+    displaySteps();
+    $w('#ppDatabaseResponseJSON').value = JSON.stringify(responseObject.logArrayDeveloper,undefined,4);
+// ø FIND pstEnrSevenCore202107 PERFORM_STEP_DO_END
+}
+// ø <---------- </mxboxPostEnrollmentSevenPerformStepDO> ---------->
 
 // ø <---------- </mxboxPostEnrollmentSeven AnyAction PerformStep NextState> ---------->
 
@@ -3974,8 +4084,10 @@ export function goToStateById(id){
 	$w("#mxboxPostEnrollmentSeven").changeState(id);
 }
 
-// ø <---------- <superSeven202107>  ---------->
-export function goToState(direction = 'NEXT'){
+// ø <---------- <oToState>  ---------->
+// ø FIND pstEnrSevenUtility202107
+export async function goToState(responseObject, direction = 'NEXT'){
+    responseObject.logArrayDeveloper.push('{% goToState(responseObject, direction = NEXT) %}');
     direction = direction.toUpperCase();
     let supportedAliasesForPREV = ['PREVIOUS','PREV'];
     direction = supportedAliasesForPREV.indexOf(direction) >= 0 ? 'PREV' : 'NEXT';
@@ -4023,12 +4135,17 @@ export function goToState(direction = 'NEXT'){
     // }
     //</Nope>
 }
+// ø <---------- </oToState> ---------->
 
 
 // ø <---------- <doBootstrapMessage UI>  ---------->
-// ø <---------- <superSeven202107>  ---------->
-export function doBootstrapMessage(key,messageThis = 'DEFAULT', fontSizeOverride = 7,txtColor = '#007bff',bgColor = '#FFFFFF'){
-	// console.log("[fnc]key: " + key)
+// ø FIND pstEnrSevenUtility202107 BOOTSTRAP-MESSAGE
+// ! NOTE: consider,INSTEAD, using 'backend/utility.jsw:renderBootstrapMarkdownString'
+// !           this is where all enhancements will be place
+// ! 20210723171500=>    at this time it _exists_ out there and hasn't broken anything
+// ! I WILL TRY TO KEEP UP, BUT CHECK THE FILE ITSELF, and/or git to be certain
+export function doBootstrapMessage(key,messageThis = 'DEFAULT', responsiveByLengthToFontSize2dArray = [],txtColor = '#007bff',bgColor = '#FFFFFF'){
+// console.log("[fnc]key: " + key)
 	let messages = [];
 	let messageMatchKey = {};
 	messageMatchKey.primary = "0";
@@ -4075,28 +4192,39 @@ export function doBootstrapMessage(key,messageThis = 'DEFAULT', fontSizeOverride
 	messageThis = messageThis === 'DEFAULT' ? messages[indexThis] : messageThis;
 	
 	let length = messageThis.length;
-	// ! <make this meaningful by trial and error if it matters>
-	// ø below: use something more rigorous than a series of ternary operators, but it is nice an explicit as you are building
-	let pixelsByBreakPoint = '36';
-	pixelsByBreakPoint = length < 10 ? '36' : pixelsByBreakPoint;
-	pixelsByBreakPoint = length < 50 ? '36' : pixelsByBreakPoint;
-	pixelsByBreakPoint = length < 100 ? '36' : pixelsByBreakPoint;
-	pixelsByBreakPoint = fontSizeOverride === 7 ? pixelsByBreakPoint : fontSizeOverride.toString();
+    let pixelsByBreakPoint = '36';//just a good value for the original use-case
+	if(responsiveByLengthToFontSize2dArray.length > 0){
+		/**
+		 * see separate DOX file 
+		 * here: steamdaWixLocal/steamdaWix/agile/sprint/SevenSuperSteps/doBootstrapMessage_byHtml_UI_DOX.js
+		 */
 
-	// ! </make this meaningful by trial and error if it matters>
+		let length = -1;
+		let fontSize = pixelsByBreakPoint;
+		 responsiveByLengthToFontSize2dArray.forEach(pair => {
+			// console.log(pair);
+			length = pair[0];
+			fontSize = pair[1];
+			if(messageThis.length > length){
+				pixelsByBreakPoint = fontSize;
+			}
+		});
+	}
+	
+    // ø <render STYLE>
 	let style = `font-size: ${pixelsByBreakPoint}px;font-family: Avenir, Arial, Helvetica, sans-serif;background-color:${bgColor};color:${txtColor};text-align:center;`
+    // ø </render STYLE>
 
-	// ø below: use something other than <p>?
+    // ø <render HTML>
 	let html = `<p style="${style}">` + messageThis + `</p>`;
-	// $w('#txtBootstrapPrimary').html = html;
-	// $w('#txtBootstrapPrimary').expand();
+    // ø </render HTML>
     return html;
 }
 // ø <---------- </doBootstrapMessage UI> ---------->
 
 // ! =========================================================================================================================
 // ! ==================================          </SEVENT-SUPER-STEPS with MultiStateBox>         ============================
-// ! ==================================                     </superSeven202107>                   ============================
+// ! ==================================                     FIND pstEnrSevenCore202107  pstEnrSevenUtility202107                ============================
 // ! =========================================================================================================================
 
 
@@ -4115,51 +4243,68 @@ export function btnStateOfframp_click(event) {
  *	 @param {$w.MouseEvent} event
  */
 export function btnPeSevenNext_click(event) {
-    console.log('[btn]Next');
-    let responseObject = {};
-    responseObject.TEST = true;
-    responseObject.logArrayUserInterface = [];
-    responseObject.logArrayDeveloper = ['btnPeSevenNext_click'];
-    responseObject.button = 'NEXT';
-    responseObject.messageKey = 'primary';
-    responseObject.messageRandomInfo = Math.random() * 100 > 66 ? true : false;
-    responseObject.messageResponse = false;
-    // let messageKeyArray= ["success","warning","danger","info","devel"];
-    // responseObject.messageKey = messageKeyArray[Math.floor(Math.random() * messageKeyArray.length)];
-    mxboxPostEnrollmentSevenAnyAction(responseObject);
-	// goToState();
-    // $w('#btnPeSevenNext').hide();
-	// $w('#btnPeSevenCurrent').show();
+    // ø pstEnrSevenCore202107 CLICK CURRENT
+    // console.log('[btn]Next');
+    // ø <NEW>
+    let initLog = 'btnPeSevenNext_click NEW';
+    mxboxPostEnrollmentSevenActionNext(initLog);
+    // ø </NEW>
+    // // ø <OLD>
+    // let responseObject = {};
+    // responseObject.TEST = true;
+    // responseObject.logArrayUserInterface = [];
+    // responseObject.logArrayDeveloper = ['btnPeSevenNext_click'];
+    // responseObject.button = 'NEXT';
+    // responseObject.messageKey = 'primary';
+    // responseObject.messageRandomInfo = Math.random() * 100 > 66 ? true : false;
+    // responseObject.messageResponse = false;
+    // // ø </OLD>
+    // // let messageKeyArray= ["success","warning","danger","info","devel"];
+    // // responseObject.messageKey = messageKeyArray[Math.floor(Math.random() * messageKeyArray.length)];
+    // mxboxPostEnrollmentSevenAnyAction(responseObject);
+	// // goToState();
+    // // $w('#btnPeSevenNext').hide();
+	// // $w('#btnPeSevenCurrent').show();
 }
 
 export function btnPeSevenPrev_click(event) {
-    goToState('PREV');
+    let responseObject = {};
+    responseObject.logArrayDeveloper = [];
+    goToState(responseObject,'PREV');
 }
 
 export function btnPeSevenCurrent_click(event) {
+    // ø pstEnrSevenCore202107 CLICK CURRENT
     //"Perform Current Step"
-    console.log('[btn]PerformCurrentStep');
-    let responseObject = {};
-    responseObject.TEST = true;
-    responseObject.logArrayUserInterface = [];
-    responseObject.logArrayDeveloper = ['btnPeSevenCurrent_click'];
-    responseObject.button = 'CURRENT';
-    let messageKeyArray= ["success","success","warning","danger"];
-    responseObject.messageKey = messageKeyArray[Math.floor(Math.random() * messageKeyArray.length)];
-    responseObject.messageRandomInfo = Math.random() * 100 > 66 ? true : false;
-    responseObject.messageResponse = true;
-    mxboxPostEnrollmentSevenAnyAction(responseObject);
-	// $w('#btnPeSevenNext').show();
-	// $w('#btnPeSevenCurrent').hide();
-    // // let id = 'abc';
-    // let peSevenStateCurrent = $w("#mxboxPostEnrollmentSeven").currentState;
-    // let peSevenStateCurrentId = peSevenStateCurrent.id; // "state1"
-    // if (peSevenStateCurrentId === 'stateOfframp') {
-    //      wixLocation.to("/blank-3");
+    // console.log('[btn]PerformCurrentStep');
+    // ø <NEW>
+    let initLog = 'btnPeSevenCurrent_click NEW';
+    mxboxPostEnrollmentSevenActionPerform(initLog);
+    // ø </NEW>
+    // ø <OLD>
+    // let responseObject = {};
+    // responseObject.TEST = true;
+    // responseObject.logArrayUserInterface = [];
+    // responseObject.logArrayDeveloper = ['btnPeSevenCurrent_click'];
+    // responseObject.button = 'CURRENT';
+    // let messageKeyArray= ["success","success","warning","danger"];
+    // responseObject.messageKey = messageKeyArray[Math.floor(Math.random() * messageKeyArray.length)];
+    // responseObject.messageRandomInfo = Math.random() * 100 > 66 ? true : false;
+    // responseObject.messageResponse = true;
+    // mxboxPostEnrollmentSevenAnyAction(responseObject);
+    // // ø </OLD>
+	// // $w('#btnPeSevenNext').show();
+	// // $w('#btnPeSevenCurrent').hide();
+    // // // let id = 'abc';
+    // // let peSevenStateCurrent = $w("#mxboxPostEnrollmentSeven").currentState;
+    // // let peSevenStateCurrentId = peSevenStateCurrent.id; // "state1"
+    // // if (peSevenStateCurrentId === 'stateOfframp') {
+    // //      wixLocation.to("/blank-3");
     // }
 }
 
 export function btnGetStatesArray_click(event) {
+    // ø pstEnrSevenUtility202107 CLICK DEV UTILITY
 	 let superSevenStates = $w("#mxboxPostEnrollmentSeven").states;
      $w('#spMemberResponseJSON').value = JSON.stringify(superSevenStates,undefined,4)
     //  let statesArray = superSevenStates.map(state => {return state.id});

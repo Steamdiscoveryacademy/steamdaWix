@@ -1,0 +1,12 @@
+ø ADD New Action Script above AnyAction 
+ø Check if it Breaks
+ø DISABLE Buttons && ENABLE Action Scripts
+ø Check if it Breaks
+
+---
+
+ø add the DO subscripts get code OUT of _click's
+ø refactor mxbox to msbox
+• refactor find keys
+• refactor find responseObject.button to responseObject.actionKey
+ø ¿ refactor 'PostEnrollmentSeven' to 'PstEnrSeven' ? 

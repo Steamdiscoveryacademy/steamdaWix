@@ -1,5 +1,5 @@
 // ø <---------- <oToState>  ---------->
-// ø FIND superSeven202107
+// ø FIND pstEnrSevenUtility202107
 export async function goToState(responseObject, direction = 'NEXT'){
     responseObject.logArrayDeveloper.push('{% goToState(responseObject, direction = NEXT) %}');
     direction = direction.toUpperCase();

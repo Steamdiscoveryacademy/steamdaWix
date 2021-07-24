@@ -8,7 +8,7 @@
 // ! ================================================
 // ! ================================================
 // ø <---------- <doBootstrapMessage UI>  ---------->
-// ø FIND superSeven202107 BOOTSTRAP-MESSAGE
+// ø FIND pstEnrSevenUtility202107 BOOTSTRAP-MESSAGE
 // ! NOTE: perhaps this should be in 'backend/utility.jsw'
 export function doBootstrapMessage(key,messageThis = 'DEFAULT', responsiveByLengthToFontSize2dArray = [],txtColor = '#007bff',bgColor = '#FFFFFF'){
 // console.log("[fnc]key: " + key)

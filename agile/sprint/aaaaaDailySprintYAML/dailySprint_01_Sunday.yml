@@ -1,0 +1,17 @@
+• <----- <last hunk from Saturday> ----->
+• DEPrecated AnyAction in vsCode
+• INSTANTiate AnyAction_soupToNuts
+• Clean soupToNuts - Comments & Blank-Lines ONLY
+• Replace in WiX
+• Check that it does NOT Break
+ø Complex-Clean soupToNuts
+ø Replace in WiX
+ø Check that it does NOT Break
+
+
+---
+
+ø refactor find responseObject.button to responseObject.actionKey
+ø refactor mxbox to msbox
+ø ¿ refactor 'PostEnrollmentSeven' to 'PstEnrSeven' ? 
+ø use Drupal Logging ¿ OR ? create custom Dupal Log DB and use the API

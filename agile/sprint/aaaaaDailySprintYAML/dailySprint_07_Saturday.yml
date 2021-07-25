@@ -17,14 +17,17 @@
 • Add Perform DO to Perform UI and call Perfomr UI from ANY
 • Check that it does NOT Break
 • bring 'LOG ARRAY to UI field' to last step of 'ANY'
-• backup 20210724142300_COMMIT_postEnrollment.js
+• backup 20210724142300_COMMIT_postEnrollment.js
 • backup 20210724142300_COMMIT_mxboxPostEnrollmentSevenAnyAction.js
-• commit postEnrollment.js
+• commit postEnrollment.js
 • commit mxboxPostEnrollmentSevenAnyAction.js
 • <----- </integrate DO-Scripts into UI-Scripts, Call UI only> ----->
-ø DEPrecated AnyAction in vsCode
-ø INSTANTiate AnyAction_soupToNuts
-ø Clean soupToNuts
+• DEPrecated AnyAction in vsCode
+• INSTANTiate AnyAction_soupToNuts
+• Clean soupToNuts - Comments & Blank-Lines ONLY
+• Replace in WiX
+• Check that it does NOT Break
+ø Complex-Clean soupToNuts
 ø Replace in WiX
 ø Check that it does NOT Break
 

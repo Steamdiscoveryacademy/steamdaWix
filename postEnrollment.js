@@ -2240,7 +2240,7 @@ export function doEnrollmentCleanupCurrent() {
 // ø <---------- <doEnrollmentLogCurrent>  ---------->
 // ø <---------- <doEnrollmentLogCurrent_byKind.js filename>  ---------->
 export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
-    let kindSupportedArray = ['CODE','STEPS','DATA','CORE','NONPERSISTENT','LOG','ERROR','UNACCOUNTED_FOR','DDEFAULT'];
+    let kindSupportedArray = ['CODE','STEPS','DATA','CORE','NONPERSISTENT','LOG','ERROR','UNACCOUNTED_FOR','STATE','DDEFAULT'];
     kind = kindSupportedArray.includes(kind) ? kind : 'DDEFAULT';
     console.warn('kind: ' + kind);
 
@@ -2343,6 +2343,21 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
         logString += '\n' + "local.getItem('yyyymm') [where,how used?]" + local.getItem('yyyymm');
     }//END if(kind === 'UNACCOUNTED_FOR')
     // ø </UNACCOUNTED_FOR>
+    // ø <STATE>
+    if(kind === 'STATE' || kind === 'ZZZ_DDEFAULT'){
+        // below depends upon memory.getItem(msboxLastState)
+        // memory.getItem('msboxLastState');
+        logString += '\n' + "memory.getItem('msboxCurrentId'): " + memory.getItem('msboxCurrentId');
+        logString += '\n' + "memory.getItem('msboxLastState'): " + memory.getItem('msboxLastState');
+
+        // cleanupString = develTest === true ? 'UNACCOUNTED_FOR' : cleanupString;
+        // memory.setItem('loopExitNow', cleanupString);
+        // memory.setItem('ppMemberOnDeckJSON', cleanupString);
+        // memory.setItem('HHOLDER', cleanupString);
+        // memory.setItem('loopExitAfterStep', cleanupString);
+    }//END if(kind === 'UNACCOUNTED_FOR')
+    // ø </STATE>
+    // ø <---------- <Alias Options>  ---------->
     // ø <NONPERSISTENT>
     if(kind === 'NONPERSISTENT'){
         // Not '|| DDEFAULT' because it's purposely redundant
@@ -2387,7 +2402,8 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
     if(kind === 'MAN_IN_THE_HIGH_CASTLE' || kind === 'DDEFAULT'){
         logString += '\n' + "kind || kind [~1501]";
     }
-    logString += '\n' + "RETURN LOG STRING [~1503]";
+    // ø <---------- </Alias Options> ---------->
+    logString += '\n' + "RETURN LOG STRING [~2392]";
     return logString;
     // ø </code Log for Current Enrollment>
 }
@@ -3410,7 +3426,7 @@ export async function btnPreTrashDo_click(event) {
     $w('#preTrashLog').value = memory.getItem('ppDatabasePrepJSON');
 }
 
-export function btnPreTrashClear_click(event) {
+export function btnPreTrashClear_click(event) {T
 		doClear('preTrashLog')
 }
 
@@ -3677,7 +3693,6 @@ export function btnDemoIfElseThen_click(event) {
 // ø <----------         <'mxbox' typo of 'msbox' (multi-state-box)>        ---------->
 // ø <----------                 <refactor or live with it>                 ---------->
 
-// ø <---------- <mxboxPstEnrSeven_soupToNuts>  ---------->
 // ø <---------- <mxboxPstEnrSeven_soupToNuts>  ---------->
 // ø FIND pstEnrSevenCore202107 SOUP_TO_NUTS
 
@@ -4031,7 +4046,6 @@ export async function mxboxPostEnrollmentSevenPerformStepDO(responseObject = {})
 
 // ø FIND pstEnrSevenCore202107 SOUP_TO_NUTS-END
 // ø <---------- </mxboxPstEnrSeven_soupToNuts> ---------->
-// ø <---------- </mxboxPstEnrSeven_soupToNuts> ---------->
 
 // "stateOnramp"
 // "stateInstantiate"
@@ -4203,33 +4217,9 @@ export function btnStateOfframp_click(event) {
     goToStateById(id);
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnPeSevenNext_click(event) {
-    // ø pstEnrSevenCore202107 CLICK CURRENT
-    // console.log('[btn]Next');
-    // ø <NEW>
     let initLog = 'btnPeSevenNext_click NEW';
     mxboxPostEnrollmentSevenActionNext(initLog);
-    // ø </NEW>
-    // // ø <OLD>
-    // let responseObject = {};
-    // responseObject.TEST = true;
-    // responseObject.logArrayUserInterface = [];
-    // responseObject.logArrayDeveloper = ['btnPeSevenNext_click'];
-    // responseObject.button = 'NEXT';
-    // responseObject.messageKey = 'primary';
-    // responseObject.messageRandomInfo = Math.random() * 100 > 66 ? true : false;
-    // responseObject.messageResponse = false;
-    // // ø </OLD>
-    // // let messageKeyArray= ["success","warning","danger","info","devel"];
-    // // responseObject.messageKey = messageKeyArray[Math.floor(Math.random() * messageKeyArray.length)];
-    // mxboxPostEnrollmentSevenAnyAction(responseObject);
-	// // goToState();
-    // // $w('#btnPeSevenNext').hide();
-	// // $w('#btnPeSevenCurrent').show();
 }
 
 export function btnPeSevenPrev_click(event) {
@@ -4239,41 +4229,43 @@ export function btnPeSevenPrev_click(event) {
 }
 
 export function btnPeSevenCurrent_click(event) {
-    // ø pstEnrSevenCore202107 CLICK CURRENT
-    //"Perform Current Step"
-    // console.log('[btn]PerformCurrentStep');
-    // ø <NEW>
     let initLog = 'btnPeSevenCurrent_click NEW';
     mxboxPostEnrollmentSevenActionPerform(initLog);
-    // ø </NEW>
-    // ø <OLD>
-    // let responseObject = {};
-    // responseObject.TEST = true;
-    // responseObject.logArrayUserInterface = [];
-    // responseObject.logArrayDeveloper = ['btnPeSevenCurrent_click'];
-    // responseObject.button = 'CURRENT';
-    // let messageKeyArray= ["success","success","warning","danger"];
-    // responseObject.messageKey = messageKeyArray[Math.floor(Math.random() * messageKeyArray.length)];
-    // responseObject.messageRandomInfo = Math.random() * 100 > 66 ? true : false;
-    // responseObject.messageResponse = true;
-    // mxboxPostEnrollmentSevenAnyAction(responseObject);
-    // // ø </OLD>
-	// // $w('#btnPeSevenNext').show();
-	// // $w('#btnPeSevenCurrent').hide();
-    // // // let id = 'abc';
-    // // let peSevenStateCurrent = $w("#mxboxPostEnrollmentSeven").currentState;
-    // // let peSevenStateCurrentId = peSevenStateCurrent.id; // "state1"
-    // // if (peSevenStateCurrentId === 'stateOfframp') {
-    // //      wixLocation.to("/blank-3");
-    // }
 }
 
 export function btnGetStatesArray_click(event) {
-    // ø pstEnrSevenUtility202107 CLICK DEV UTILITY
 	 let superSevenStates = $w("#mxboxPostEnrollmentSeven").states;
      $w('#spMemberResponseJSON').value = JSON.stringify(superSevenStates,undefined,4)
-    //  let statesArray = superSevenStates.map(state => {return state.id});
-    //  let statesArray = $w("#mxboxPostEnrollmentSeven").states.map(state => {return state.id});
      let statesArray = $w("#mxboxPostEnrollmentSeven").states.map(state => state.id);
-    //  $w('#spContactResponseJSON').value = JSON.stringify(statesArray);
+}
+
+export function btnLogStringSeven_click(event) {
+		$w('#ppDatabaseResponseJSON').value = doEnrollmentLogCurrent('LOG');
+}
+
+export function btnErrorStringSeven_click(event) {
+		$w('#ppDatabaseResponseJSON').value = doEnrollmentLogCurrent('ERROR');
+}
+
+export function btnThisStateSeven_click(event) {
+		$w('#ppDatabaseResponseJSON').value = doEnrollmentLogCurrent('STATE');
+}
+
+export function btnAllStatesSeven_click(event) {
+        let stateCurrent = $w(memory.getItem('msboxCurrentId')).currentState;
+        let stateCurrentObject = {};
+        stateCurrentObject.id = stateCurrent.id;
+        stateCurrentObject.rendered = stateCurrent.rendered;
+        stateCurrentObject.global = stateCurrent.global;
+        stateCurrentObject.parent = stateCurrent.parent;
+        let arrayStateIdAll = $w(memory.getItem('msboxCurrentId')).states.map(a => a.id);
+        stateCurrentObject.parentAllStatesIdArray = arrayStateIdAll;
+        stateCurrentObject.type = stateCurrent.type;
+        stateCurrentObject.background = stateCurrent.background;
+        stateCurrentObject.children = stateCurrent.children;
+		$w('#ppDatabaseResponseJSON').value = JSON.stringify(stateCurrentObject,undefined,4);
+}
+
+export function btnClearSeven_click(event) {
+		doClear('ppDatabaseResponseJSON')
 }

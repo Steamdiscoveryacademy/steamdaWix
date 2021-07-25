@@ -31,6 +31,7 @@ export async function mxboxPostEnrollmentSevenActionNext(anyButtonLog = '{# no b
     responseObject.messageRandomInfo = Math.random() * 100 > 66 ? true : false;
     responseObject.messageResponse = false;
     mxboxPostEnrollmentSevenAnyAction(responseObject);
+    
 }
 // ø <---------- </mxboxPostEnrollmentSevenActionNext - NEXT_STATE> ---------->
 
@@ -43,12 +44,10 @@ export async function mxboxPostEnrollmentSevenActionPerform(anyButtonLog = '{# n
     responseObject.logArrayDeveloper = [];
     responseObject.logArrayDeveloper.push(anyButtonLog);
     responseObject.button = 'CURRENT';
-    // ! <TEST MESSAGE KEY-INFO>
     let messageKeyArray= ["success","success","warning","danger"];
     responseObject.messageKey = messageKeyArray[Math.floor(Math.random() * messageKeyArray.length)];
     responseObject.messageRandomInfo = Math.random() * 100 > 66 ? true : false;
     responseObject.messageResponse = true;
-    // ! </TEST MESSAGE KEY-INFO>
     mxboxPostEnrollmentSevenAnyAction(responseObject);
 }
 // ø <---------- </mxboxPostEnrollmentSevenActionPerform - PERFORM_STATE_SCRIPTS> ---------->
@@ -76,13 +75,13 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
         return;
     }
     // ø </ELSE>
-    // ø FIND pstEnrSevenCore202107 YES_ANY_ACTION if it's HERE it belongs in Any Action
+// ø FIND pstEnrSevenCore202107 YES_ANY_ACTION if it's HERE it belongs in Any Action
     DOX = '</YES_ANY_ACTION>'
 
     // ø <Pre-Trash but innocuous>
-    // let peSevenStateCurrent = {};
-    // let peSevenStateCurrentId = ''; // "state1"
-    // let panelNotesKey = 'PPENDING';
+    let peSevenStateCurrent = {};
+    let peSevenStateCurrentId = ''; // "state1"
+    let panelNotesKey = 'PPENDING';
     // ø </Pre-Trash but innocuous>
     if(responseObject.button === 'CURRENT'){
         DOX = '<MAYBE_CURRENT_ACTION>'
@@ -93,7 +92,6 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
         // ! <from PERFORM CURRENT STEP>
         $w('#btnPeSevenNext').show();
         $w('#btnPeSevenCurrent').hide();
-        // let id = 'abc';
         peSevenStateCurrent = $w("#mxboxPostEnrollmentSeven").currentState;
         peSevenStateCurrentId = peSevenStateCurrent.id; // "state1"
         if (peSevenStateCurrentId === 'stateOfframp') {
@@ -106,7 +104,7 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
     }
     if(responseObject.button === 'NEXT'){
         DOX = '<MAYBE_NEXT_ACTION>'
-        // ø FIND pstEnrSevenCore202107 MAYBE_NEXT_ACTION if it's BELOW it belongs in NEXT subScript
+    // ø FIND pstEnrSevenCore202107 MAYBE_NEXT_ACTION if it's BELOW it belongs in NEXT subScript
         responseObject.logArrayDeveloper.push('≈ 3719 ≈');
         responseObject.logArrayDeveloper.push('<'+responseObject.button + ' === NEXT>');
         panelNotesKey = 'panelBeforeStepNotes';
@@ -123,9 +121,8 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
         // ! </from GO TO NEXT>
         responseObject.logArrayDeveloper.push('≈ 3744 ≈');
         let peSevenStateCurrent = $w(memory.getItem('msboxCurrentId')).currentState;
-        peSevenStateCurrentId = peSevenStateCurrent.id; // "state1"
+        peSevenStateCurrentId = peSevenStateCurrent.id;
         responseObject.logArrayDeveloper.push('{¿ '+peSevenStateCurrentId+' is valid by wixStorage ?}');
-        // peSevenStateCurrentId = memory.getItem('msboxLastState');
 
         // ! OnRamp <Kludge>
         // ! shouldn't be _in_ OnReady, but these things are so necessary as suigeneris tasks
@@ -138,7 +135,6 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
         let secondaryExists = typeof applicationObject.family.parent.secondary === 'object' && typeof applicationObject.family.parent.secondary.first === 'string' && (applicationObject.family.parent.secondary.first).length > 0 ? true : false;
         responseObject.logArrayDeveloper.push(`secondaryExists: ${secondaryExists}`);
         let theseObjectKeys = Object.keys(applicationObject.family.parent);
-
         if(!secondaryExists){
             $w('#btnSecondaryIdLabel').disable();
         }
@@ -209,6 +205,7 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
     let isValidTitle = typeof currentStepObject === 'object' ? true : false;
     isValidTitle = isValidTitle && typeof currentStepObject.longString === 'string' ? true : isValidTitle;
     let title = !isValidTitle ? 'currentStepObject.longTitle is not a String' : currentStepObject.longTitle;
+    // let title = longTitleJSON;
     title = title.substr(0,66);
     $w('#txtPeSevenTitle').text = title;
     // ø </original from $w("#mxboxPostEnrollmentSeven").onChange>
@@ -217,14 +214,11 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
     responseObject.logArrayDeveloper.push(memory.getItem('msboxLastState') + ' === ' + peSevenStateCurrentId);
     let lastClicked = memory.getItem('msboxLastState') === peSevenStateCurrentId ? 'PERFORM_STEP' : 'NEXT_STATE';
     responseObject.logArrayDeveloper.push('∆ ' + lastClicked + ' ∆');
-    // memory.setItem('msboxLastState',peSevenStateCurrentId);
-    // let messageThis = 'Test of messageThis Parameter';
     
     messageKey = 'primary';
     let messageThis = currentStepMessagingObject[messageKey];
     html = doBootstrapMessage(messageKey,messageThis);
     $w('#txtBootstrapPrimary').html = html;
-    // $w('#txtBootstrapPrimary').expand();
 
     if(responseObject.messageResponse === true){
         messageKey = responseObject.messageKey;
@@ -257,7 +251,6 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
         if(responseObject.button === 'CURRENT'){}
         // ø </backward compatible for Single 'info' message>
 
-        // messageKey = responseObject.messageKey;
         messageThis = currentStepMessagingObject[messageKey];
         if(messageThis.length > 0){
             let html = doBootstrapMessage(messageKey,messageThis);
@@ -275,12 +268,10 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
     if(lastClicked === 'PERFORM_STEP'){
         responseObject.logArrayDeveloper.push('◊ lastClicked === PERFORM_STEP ◊');
         responseObject.currentStepOriginalStepsArray = currentStepOrigStepsObject.allStepArray;
-        // await mxboxPostEnrollmentSevenPerformStepDO(responseObject);
         await mxboxPostEnrollmentSevenPerformStepUI(responseObject);
     }
     if(lastClicked === 'NEXT_STATE'){
         responseObject.logArrayDeveloper.push('◊ lastClicked === NEXT_STATE ◊');
-        // await mxboxPostEnrollmentSevenNextStateDO(responseObject);
         await mxboxPostEnrollmentSevenNextStateUI(responseObject);
     }
     responseObject.logArrayDeveloper.push('≈ 4009 ≈');
@@ -289,7 +280,6 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
     $w('#ppDatabaseResponseJSON').value = DOX;
     local.setItem('logString',DOX);
     DOX = "DON'T FORGET: local.getItem(lastErrorString)";
-    DOX += '\n' + "DON'T FORGET: memory.getItem(msboxLastState);";
     local.setItem('lastErrorString',DOX);
 }
 // ø FIND pstEnrSevenCore202107 END-ANY-ACTION
@@ -301,7 +291,7 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
 export async function mxboxPostEnrollmentSevenNextStateUI(responseObject = {}){
     let DOX = 'So I can read these comments in WiX-Editor';
     DOX = 'OKAY: maybe redundant since NextState is kida all-about UI, but better separate _before_ it gets hairy than after';
-    
+
     responseObject.logArrayDeveloper.push('{% mxboxPostEnrollmentSevenNextStateUI %}');
     // ø <Before DO-Script Called>
     // ø </Before DO-Script Called>
@@ -315,16 +305,11 @@ export async function mxboxPostEnrollmentSevenNextStateUI(responseObject = {}){
 // ø <---------- <mxboxPostEnrollmentSevenPerformStepUI>  ---------->
 // ø FIND pstEnrSevenCore202107 PERFORM_STEP_UI
 export async function mxboxPostEnrollmentSevenPerformStepUI(responseObject = {}){
-    let DOX = 'So I can read these comments in WiX-Editor';
     responseObject.logArrayDeveloper.push('{% mxboxPostEnrollmentSevenPerformStepUI %}');
     // ø <Before DO-Script Called>
-    instantiateLoopSwitchEnrollmentSteps(responseObject.currentStepOriginalStepsArray);
-    displaySteps();
     // ø </Before DO-Script Called>
     mxboxPostEnrollmentSevenPerformStepDO(responseObject);
     // ø <After DO-Script Called>
-    DOX = 'DEAL WITH RESPONSE';
-    DOX = 'including Bootstrap Response';
     // ø </After DO-Script Called>
 }
 // ø FIND pstEnrSevenCore202107 PERFORM_STEP_UI_END
@@ -343,10 +328,8 @@ export async function mxboxPostEnrollmentSevenNextStateDO(responseObject = {}){
 // ø FIND pstEnrSevenCore202107 PERFORM_STEP_DO
 export async function mxboxPostEnrollmentSevenPerformStepDO(responseObject = {}){
     responseObject.logArrayDeveloper.push('{% mxboxPostEnrollmentSevenPerformStepDO %}');
-    // ø <PRE-TRASH> See: Before DO-Script Called above
-    // instantiateLoopSwitchEnrollmentSteps(responseObject.currentStepOriginalStepsArray);
-    // displaySteps();
-    // ø </PRE-TRASH>
+    instantiateLoopSwitchEnrollmentSteps(responseObject.currentStepOriginalStepsArray);
+    displaySteps();
 // ø FIND pstEnrSevenCore202107 PERFORM_STEP_DO_END
 }
 // ø <---------- </mxboxPostEnrollmentSevenPerformStepDO> ---------->

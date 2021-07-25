@@ -8,8 +8,6 @@
 // ø FIND pstEnrSevenCore202107 ACTION_SCRIPT
 export async function mxboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# no button log #}'){
     let responseObject = {};
-    // local.getItem('timezoneOffset')
-    // local.getItem('tzAbbrv')
     responseObject.TEST = true;
     responseObject.logArrayUserInterface = [];
     responseObject.logArrayDeveloper = [];
@@ -17,8 +15,6 @@ export async function mxboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# n
     responseObject.button = 'NEXT';
     responseObject.messageKey = 'primary';
     memory.setItem('msboxLastState','stateZero')
-    // let messageKeyArray= ["success","warning","danger","info","devel"];
-    // responseObject.messageKey = messageKeyArray[Math.floor(Math.random() * messageKeyArray.length)];
     mxboxPostEnrollmentSevenAnyAction(responseObject);
 }
 // ø <---------- </mxboxPostEnrollmentSevenActionOnReady - [within $w.onReady(function ())]> ---------->
@@ -332,7 +328,10 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
     }
     responseObject.logArrayDeveloper.push('≈ 4009 ≈');
     responseObject.logArrayDeveloper.push('{# Back to ANY before posting this Log #}');
-    $w('#ppDatabaseResponseJSON').value = JSON.stringify(responseObject.logArrayDeveloper,undefined,4);
+    DOX = JSON.stringify(responseObject.logArrayDeveloper,undefined,4);
+    $w('#ppDatabaseResponseJSON').value = DOX;
+    local.setItem('logString',DOX);
+    local.setItem('lastErrorString',"DON'T FORGET: local.getItem(lastErrorString)");
 }
 // ø FIND pstEnrSevenCore202107 END-ANY-ACTION
 // ø <---------- </mxboxPostEnrollmentSevenAnyAction> ---------->

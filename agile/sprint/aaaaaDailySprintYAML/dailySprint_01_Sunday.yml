@@ -4,7 +4,10 @@
 • Clean soupToNuts - Comments & Blank-Lines ONLY
 • Replace in WiX
 • Check that it does NOT Break
-ø Complex-Clean soupToNuts
+• Complex-Clean soupToNuts
+• Replace in WiX
+• Check that it does NOT Break
+ø Complex-CleanTwo soupToNuts
 ø Replace in WiX
 ø Check that it does NOT Break
 

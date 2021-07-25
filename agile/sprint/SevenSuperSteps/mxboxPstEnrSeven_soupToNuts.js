@@ -323,8 +323,8 @@ export async function mxboxPostEnrollmentSevenPerformStepUI(responseObject = {})
     // ø </Before DO-Script Called>
     mxboxPostEnrollmentSevenPerformStepDO(responseObject);
     // ø <After DO-Script Called>
-    let DOX = 'DEAL WITH RESPONSE';
-    let DOX = 'including Bootstrap Response';
+    DOX = 'DEAL WITH RESPONSE';
+    DOX = 'including Bootstrap Response';
     // ø </After DO-Script Called>
 }
 // ø FIND pstEnrSevenCore202107 PERFORM_STEP_UI_END

@@ -15,6 +15,8 @@ export async function mxboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# n
     responseObject.button = 'NEXT';
     responseObject.messageKey = 'primary';
     memory.setItem('msboxLastState','stateZero')
+    responseObject.logArrayDeveloper.push('{# responseObject.button = NEXT #}');
+    responseObject.logArrayDeveloper.push('{# memory.setItem(msboxLastState,stateZero) #}');
     mxboxPostEnrollmentSevenAnyAction(responseObject);
 }
 // ø <---------- </mxboxPostEnrollmentSevenActionOnReady - [within $w.onReady(function ())]> ---------->
@@ -264,24 +266,31 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
     }
 
     $w('#spDatabaseResponseJSON').value = JSON.stringify(responseObject,undefined,4);
-
+    // ! <Call 'PERFORM' Sequence>
     if(lastClicked === 'PERFORM_STEP'){
         responseObject.logArrayDeveloper.push('◊ lastClicked === PERFORM_STEP ◊');
         responseObject.currentStepOriginalStepsArray = currentStepOrigStepsObject.allStepArray;
         await mxboxPostEnrollmentSevenPerformStepUI(responseObject);
     }
+    // ! </Call 'PERFORM' Sequence>
+    // ! <Call 'NEXT' Sequence>
     if(lastClicked === 'NEXT_STATE'){
         responseObject.logArrayDeveloper.push('◊ lastClicked === NEXT_STATE ◊');
         await mxboxPostEnrollmentSevenNextStateUI(responseObject);
     }
+    // ! </Call 'NEXT' Sequence>
+    // ! <NUTS! This really is the End of the Sequence>
     responseObject.logArrayDeveloper.push('≈ 4009 ≈');
     responseObject.logArrayDeveloper.push('{# Back to ANY before posting this Log #}');
     DOX = JSON.stringify(responseObject.logArrayDeveloper,undefined,4);
     $w('#ppDatabaseResponseJSON').value = DOX;
     local.setItem('logString',DOX);
     DOX = "DON'T FORGET: local.getItem(lastErrorString)";
+    DOX += '\n' + "DON'T FORGET: memory.getItem(msboxLastState)";
+    DOX += '\n' + "REMOVE: memory.getItem(msboxCurrentId)";
     local.setItem('lastErrorString',DOX);
 }
+// ! </NUTS! This really is the End of the Sequence>
 // ø FIND pstEnrSevenCore202107 END-ANY-ACTION
 // ø <---------- </mxboxPostEnrollmentSevenAnyAction> ---------->
 
@@ -320,6 +329,8 @@ export async function mxboxPostEnrollmentSevenPerformStepUI(responseObject = {})
 // ø FIND pstEnrSevenCore202107 NEXT_STATE_DO
 export async function mxboxPostEnrollmentSevenNextStateDO(responseObject = {}){
     responseObject.logArrayDeveloper.push('{% mxboxPostEnrollmentSevenNextStateDO %}');
+    responseObject.logArrayDeveloper.push('memory.getItem(msboxLastState) === ' + memory.getItem('msboxLastState'));
+    responseObject.logArrayDeveloper.push('memory.getItem(msboxCurrentId) === ' + memory.getItem('msboxCurrentId'));
 }
 // ø FIND pstEnrSevenCore202107 NEXT_STATE_DO_END
 // ø <---------- </mxboxPostEnrollmentSevenNextStateDO> ---------->
@@ -328,6 +339,8 @@ export async function mxboxPostEnrollmentSevenNextStateDO(responseObject = {}){
 // ø FIND pstEnrSevenCore202107 PERFORM_STEP_DO
 export async function mxboxPostEnrollmentSevenPerformStepDO(responseObject = {}){
     responseObject.logArrayDeveloper.push('{% mxboxPostEnrollmentSevenPerformStepDO %}');
+    responseObject.logArrayDeveloper.push('memory.getItem(msboxLastState) === ' + memory.getItem('msboxLastState'));
+    responseObject.logArrayDeveloper.push('memory.getItem(msboxCurrentId) === ' + memory.getItem('msboxCurrentId'));
     instantiateLoopSwitchEnrollmentSteps(responseObject.currentStepOriginalStepsArray);
     displaySteps();
 // ø FIND pstEnrSevenCore202107 PERFORM_STEP_DO_END

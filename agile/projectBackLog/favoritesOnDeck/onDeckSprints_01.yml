@@ -1,0 +1,21 @@
+If they're not too long, blocks here, if considerable use 2,3,4...
+---
+• <----- <WatchDog Emaulation to WiX> ----->
+• Gather Drupal 8.5 Schema from Drupal
+• Rewrite it as JSON
+• Write (base) Minify-To-Object JavaScript file
+• Enhance WatchDog to my preferences:
+  - add a column for the Word associated with Severity (by index these map to the Serverity Number)
+  - add bootstrap_word for Bootstrap Logic-Colors
+  - create 2d array mapping the two arrays above 
+ø pick an extremely simple existing table
+ø enable the API
+ø test in PostMan (or vsCode alternative)
+ø test in WiX (¿http-functions?)
+ø build the WatchDog table
+ø enable the API
+ø test in PostMan (or vsCode alternative)
+ø test in WiX (¿http-functions?)
+
+
+---

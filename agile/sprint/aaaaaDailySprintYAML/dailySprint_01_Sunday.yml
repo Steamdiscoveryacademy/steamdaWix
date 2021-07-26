@@ -7,9 +7,17 @@
 • Complex-Clean soupToNuts
 • Replace in WiX
 • Check that it does NOT Break
-ø Complex-CleanTwo soupToNuts
-ø Replace in WiX
-ø Check that it does NOT Break
+• Complex-CleanTwo soupToNuts
+• Replace in WiX
+• Check that it does NOT Break
+• Add UI for pstEnrSeven
+• Improve and Integrate better goToState
+• ONCE on 'stateZero' OnRamp KLUDGE
+• TRY ONCE on 'stateZero' Next-State KLUDGE
+• BACK-OUT [Failed on Process Web Hooks] ONCE on 'stateZero' Next-State KLUDGE
+• Final Commit
+ø TRY ONCE on 'stateZero' Next-State KLUDGE
+ø Take in Soup to Nuts
 
 
 ---

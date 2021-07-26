@@ -1,0 +1,16 @@
+• <----- <last hunk from Sunday> ----->
+• Improve and Integrate better goToState
+• ONCE on 'stateZero' OnRamp KLUDGE
+• TRY ONCE on 'stateZero' Next-State KLUDGE
+• BACK-OUT [Failed on Process Web Hooks] ONCE on 'stateZero' Next-State KLUDGE
+• Final Commit
+ø TRY ONCE on 'stateZero' Next-State KLUDGE
+ø Take in Soup to Nuts
+
+
+---
+
+ø refactor find responseObject.button to responseObject.actionKey
+ø refactor mxbox to msbox
+ø ¿ refactor 'PostEnrollmentSeven' to 'PstEnrSeven' ? 
+ø use Drupal Logging ¿ OR ? create custom Dupal Log DB and use the API

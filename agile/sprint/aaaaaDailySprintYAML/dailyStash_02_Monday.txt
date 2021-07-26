@@ -15,3 +15,9 @@ Added in SimpleText
 Added in vsCode
 
 Added in SimpleText with vsCode Open
+
+Added in SimpleText with No Changes in vsCode Since Commit
+
+Added in vsCode in order to Conflict with SimpleText
+
+Added in Simple Text to Conflict with vsCode

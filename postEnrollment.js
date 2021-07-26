@@ -3823,43 +3823,50 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
 
         // ø <ONCE for 'stateZero'>
         if(memory.getItem('msboxLastState') === 'stateZero'){
-        // ! OnRamp <Kludge>
-        // ! shouldn't be _in_ OnReady, but these things are so necessary as suigeneris tasks
-        // ! if (when?) it gets too involved, make an mxboxPostEnrollmentSevenOnReadyKLUDGE() function
-        responseObject.logArrayDeveloper.push('≈ 3829 ≈');
-        responseObject.logArrayDeveloper.push('{% onReadyKLUDGE %}}');
+            // ! OnRamp <Kludge>
+            // ! shouldn't be _in_ OnReady, but these things are so necessary as suigeneris tasks
+            // ! if (when?) it gets too involved, make an mxboxPostEnrollmentSevenOnReadyKLUDGE() function
+            responseObject.logArrayDeveloper.push('≈ 3829 ≈');
+            responseObject.logArrayDeveloper.push('{% onReadyKLUDGE %}');
 
-        let applicationObject = JSON.parse(local.getItem('ondeckEnrollmentJSON')) ;
-        let staffEyeD = applicationObject.family.parent.primary.memberId;
-        let secondaryExists = typeof applicationObject.family.parent.secondary === 'object' && typeof applicationObject.family.parent.secondary.first === 'string' && (applicationObject.family.parent.secondary.first).length > 0 ? true : false;
-        responseObject.logArrayDeveloper.push(`secondaryExists: ${secondaryExists}`);
-        let theseObjectKeys = Object.keys(applicationObject.family.parent);
-        if(!secondaryExists){
-            responseObject.logArrayDeveloper.push('!secondaryExists : disable buttons');
-            responseObject.logArrayDeveloper.push('{¿ ONCE for `stateZero` yes?: ' + memory.getItem('msboxLastState') + ' ?}');
-            $w('#btnSecondaryIdLabel').disable();
-        }
-        if(staffEyeD === 'INSTANTIATE' || staffEyeD === 'IINSTANTIATE'){
-            responseObject.logArrayDeveloper.push('staffEyeD is IINSTANTIATE: hide-buttons');
-            responseObject.logArrayDeveloper.push('{¿ ONCE for `stateZero` yes?: ' + memory.getItem('msboxLastState') + ' ?}');
-            $w('#btnStaffEyeD').hide();
-            $w('#btnStaffEyeDLabel').hide();
-        }else{
-            responseObject.logArrayDeveloper.push('staffEyeD is not IINSTANTIATE: enable-buttons');
-            responseObject.logArrayDeveloper.push('{¿ ONCE for `stateZero` yes?: ' + memory.getItem('msboxLastState') + ' ?}');
-            local.setItem('staffIdentifiedFamilyId',staffEyeD);
-            $w("#btnStaffEyeD").label = local.getItem('staffIdentifiedFamilyId');
-            $w('#btnStaffEyeD').enable();
-            $w('#btnStaffEyeDLabel').enable();
-        }
-        // ! OnRamp </Kludge>
+            let applicationObject = JSON.parse(local.getItem('ondeckEnrollmentJSON')) ;
+            let staffEyeD = applicationObject.family.parent.primary.memberId;
+            let secondaryExists = typeof applicationObject.family.parent.secondary === 'object' && typeof applicationObject.family.parent.secondary.first === 'string' && (applicationObject.family.parent.secondary.first).length > 0 ? true : false;
+            responseObject.logArrayDeveloper.push(`secondaryExists: ${secondaryExists}`);
+            let theseObjectKeys = Object.keys(applicationObject.family.parent);
+            if(!secondaryExists){
+                responseObject.logArrayDeveloper.push('!secondaryExists : disable buttons');
+                responseObject.logArrayDeveloper.push('{¿ ONCE for `stateZero` yes?: ' + memory.getItem('msboxLastState') + ' ?}');
+                $w('#btnSecondaryIdLabel').disable();
+            }
+            if(staffEyeD === 'INSTANTIATE' || staffEyeD === 'IINSTANTIATE'){
+                responseObject.logArrayDeveloper.push('staffEyeD is IINSTANTIATE: hide-buttons');
+                responseObject.logArrayDeveloper.push('{¿ ONCE for `stateZero` yes?: ' + memory.getItem('msboxLastState') + ' ?}');
+                $w('#btnStaffEyeD').hide();
+                $w('#btnStaffEyeDLabel').hide();
+            }else{
+                responseObject.logArrayDeveloper.push('staffEyeD is not IINSTANTIATE: enable-buttons');
+                responseObject.logArrayDeveloper.push('{¿ ONCE for `stateZero` yes?: ' + memory.getItem('msboxLastState') + ' ?}');
+                local.setItem('staffIdentifiedFamilyId',staffEyeD);
+                $w("#btnStaffEyeD").label = local.getItem('staffIdentifiedFamilyId');
+                $w('#btnStaffEyeD').enable();
+                $w('#btnStaffEyeDLabel').enable();
+            }
+            // ! OnRamp </Kludge>
         }
         // ø </ONCE for 'stateZero'>
-        let statesArray = $w("#mxboxPostEnrollmentSeven").states.map(state => state.id);
-        let nextIndex = statesArray.indexOf(peSevenStateCurrentId) + 1;
-        peSevenStateCurrentId = statesArray[nextIndex];
-        memory.setItem('msboxLastState',peSevenStateCurrentId);
-        // ! OK </Kludge Next State>
+        // ø TRY <ONCE for 'stateZero'>
+        if(memory.getItem('msboxLastState') !== 'ZZZ_stateZero'){
+            // ! OK <Kludge Next State>
+            responseObject.logArrayDeveloper.push('{% OK <Kludge Next State> %}');
+            responseObject.logArrayDeveloper.push('{¿ ONCE for `stateZero` yes?: ' + memory.getItem('msboxLastState') + ' ?}');
+            let statesArray = $w("#mxboxPostEnrollmentSeven").states.map(state => state.id);
+            let nextIndex = statesArray.indexOf(peSevenStateCurrentId) + 1;
+            peSevenStateCurrentId = statesArray[nextIndex];
+            memory.setItem('msboxLastState',peSevenStateCurrentId);
+            // ! OK </Kludge Next State>
+        }
+        // ø TRY </ONCE for 'stateZero'>
         responseObject.logArrayDeveloper.push('</'+responseObject.button + ' === NEXT>');
         DOX = '</MAYBE_NEXT_ACTION>'
     }
@@ -3986,8 +3993,9 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
     responseObject.logArrayDeveloper.push('≈ 3986 ≈');
     responseObject.logArrayDeveloper.push('{# Back to ANY before posting this Log #}');
     DOX = JSON.stringify(responseObject.logArrayDeveloper,undefined,4);
-    $w('#ppDatabaseResponseJSON').value = DOX;
     local.setItem('logString',DOX);
+    DOX += `\n---\n\n`;
+    $w('#ppDatabaseResponseJSON').value = DOX;
     DOX = "DON'T FORGET: local.getItem(lastErrorString)";
     DOX += '\n' + "DON'T FORGET: memory.getItem(msboxLastState)";
     DOX += '\n' + "REMOVE: memory.getItem(msboxCurrentId)";
@@ -4071,33 +4079,27 @@ export function goToStateById(id){
 	$w("#mxboxPostEnrollmentSeven").changeState(id);
 }
 
-// ø <---------- <oToState>  ---------->
+// ø <---------- <goToState>  ---------->
+// ø <---------- <goToState>  ---------->
 // ø FIND pstEnrSevenUtility202107
 export async function goToState(responseObject, direction = 'NEXT'){
-    responseObject.logArrayDeveloper.push('{% goToState(responseObject, direction = NEXT) %}');
+    responseObject.logArrayDeveloper.push(`{% goToState(responseObject, ${direction}) %}`);
     direction = direction.toUpperCase();
     let supportedAliasesForPREV = ['PREVIOUS','PREV'];
     direction = supportedAliasesForPREV.indexOf(direction) >= 0 ? 'PREV' : 'NEXT';
+    responseObject.logArrayDeveloper.push(`{% resolved direction: ${direction}) %}`);
     //PREV is NOT SUPPORTED AT THIS TIME
     // ø <NEXT or PREVIOUS>
     let TTHIS = 'holder';
+    // ø <good jucture to be Explicit>
     let peSevenStates = $w("#mxboxPostEnrollmentSeven").states;
-    // $w('#preTrashLog').value = JSON.stringify(peSevenStates,undefined,4);
-    // $w('#preTrashLog').value += `\n\n<==========>\n\n`;
     let peSevenStatesIdArray = peSevenStates.map(a => a.id);
-    $w('#stDatabaseResponseJSON').value = peSevenStatesIdArray.toString();
     let peSevenStateCurrent = $w("#mxboxPostEnrollmentSeven").currentState;
-    let peSevenStateCurrentId = peSevenStateCurrent.id; // "state1"
-    console.log('peSevenStates : ');
-    console.log(peSevenStates);
-    console.log('peSevenStatesIdArray : ');
-    console.log(peSevenStatesIdArray);
-    console.log('peSevenStateCurrent :' + peSevenStateCurrent);
-    console.log('peSevenStateCurrentId :' + peSevenStateCurrentId);
+    let peSevenStateCurrentId = peSevenStateCurrent.id; 
+    // ø </good jucture to be Explicit>
     let length = peSevenStatesIdArray.length;
     let currentIndex = peSevenStatesIdArray.indexOf(peSevenStateCurrentId);
-    console.log('length :' + length);
-    console.log('currentIndex :' + currentIndex);
+    responseObject.logArrayDeveloper.push(`{% state-index ${currentIndex} of ${length}: ${peSevenStateCurrentId}) %}`);
     // ø </NEXT or PREVIOUS>
     // ø <NEXT Only>
     let nextIndex = currentIndex + 1;
@@ -4113,16 +4115,14 @@ export async function goToState(responseObject, direction = 'NEXT'){
     // ø </PREV Only>
     let targetId = direction === 'NEXT' ? nextId : prevId;
     if (targetId !== 'AFTER_LAST' && targetId !== 'BEFORE_FIRST') {
+        responseObject.logArrayDeveloper.push(`{% goToStateById(${targetId}) %}`);
         goToStateById(targetId);
+    }else{
+        responseObject.logArrayDeveloper.push(`{% invalid targetId: ${targetId}) %}`);
     }
-    //<Nope>
-    // else{
-    //     $w('#btnPeSevenNext').hide();
-    //     $w('#btnPeSevenCurrent').hide(); 
-    // }
-    //</Nope>
 }
-// ø <---------- </oToState> ---------->
+// ø <---------- </goToState> ---------->
+// ø <---------- </goToState> ---------->
 
 
 // ø <---------- <doBootstrapMessage UI>  ---------->
@@ -4284,4 +4284,8 @@ export function btnClearSeven_click(event) {
  */
 export function btnCopySeven_click(event) {
 	uiCopyTextElementThis('ppDatabaseResponseJSON');
+}
+
+export function btnCopySevenBelow_click(event) {
+	uiCopyTextElementThis('ppDatabaseResponseJSON'); 
 }

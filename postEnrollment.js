@@ -3757,7 +3757,8 @@ export async function mxboxPostEnrollmentSevenActionPerform(anyButtonLog = '{# n
 export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
     console.log('[fnc]mxboxPostEnrollmentSevenAnyAction');
     memory.setItem('msboxCurrentId','#mxboxPostEnrollmentSeven');
-    responseObject.stamp = await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv'));
+    // responseObject.stamp = await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv'));
+    responseObject.stamp = await isoKLUDGE();
     responseObject.logArrayDeveloper.push('≈ 3761 ≈');
     responseObject.logArrayDeveloper.push(responseObject.stamp);
     responseObject.logArrayDeveloper.push('entering {% mxboxPostEnrollmentSevenAnyAction %}');
@@ -4288,4 +4289,43 @@ export function btnCopySeven_click(event) {
 
 export function btnCopySevenBelow_click(event) {
 	uiCopyTextElementThis('ppDatabaseResponseJSON'); 
+}
+
+export async function isoKLUDGE(){
+	let isoStampStringRaw = await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv'));
+	let isoStampStringCHOP = isoStampStringRaw;
+	let isoStampStringNEW = 'HOLDER' ;
+	isoStampStringCHOP = isoStampStringRaw.indexOf('-') < 0 ? isoStampStringCHOP : '20201231235959.599 [EDT]';
+	isoStampStringCHOP = isoStampStringCHOP.substr(0,14);
+	isoStampStringNEW = isoStampStringCHOP.substr(0,4) + '-' ;
+	isoStampStringNEW += isoStampStringCHOP.substr(4,2) + '-' ;
+	isoStampStringNEW += isoStampStringCHOP.substr(6,2) + 'T' ;
+	isoStampStringNEW += ('00' + (Number(isoStampStringCHOP.substr(8,2)) - 1)).substr(-2); //Central
+	isoStampStringNEW += ':' ;
+	isoStampStringNEW += isoStampStringCHOP.substr(10,2) + ':' ;
+	isoStampStringNEW += isoStampStringCHOP.substr(12,2);
+    return isoStampStringNEW;
+}
+
+export async function btnISOtestSeven_click(event) {
+	let isoStampStringRaw = await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv'));
+	let isoStampStringCHOP = isoStampStringRaw;
+	isoStampStringCHOP = isoStampStringRaw.indexOf('-') < 0 ? isoStampStringCHOP : '20201231235959.599 [EDT]';
+	isoStampStringCHOP = isoStampStringCHOP.substr(0,14);
+	let isoStampStringNEW = isoStampStringCHOP.substr(0,4) + '-' ;
+	isoStampStringNEW += isoStampStringCHOP.substr(4,2) + '-' ;
+	isoStampStringNEW += isoStampStringCHOP.substr(6,2) + 'T' ;
+	isoStampStringNEW += ('00' + (Number(isoStampStringCHOP.substr(8,2)) - 1)).substr(-2); //Central
+	isoStampStringNEW += ':' ;
+	isoStampStringNEW += isoStampStringCHOP.substr(10,2) + ':' ;
+	isoStampStringNEW += isoStampStringCHOP.substr(12,2);
+	let isoStampStringKludge = await isoKLUDGE();
+    isoStampStringCHOP = `ISO Testing:\n============\nisoStampStringRaw : ${isoStampStringRaw}\nisoStampStringCHOP: ${isoStampStringCHOP}\nisoStampStringNEW : ${isoStampStringNEW}\nisoKludge()       : ${isoStampStringKludge}`;
+    $w('#ppDatabaseResponseJSON').value = isoStampStringCHOP;
+}
+
+export async function btnKludgeISO_click(event) {
+	let isoCurrentCentralTime =  await isoKLUDGE(); 
+    $w('#ppDatabaseResponseJSON').value = `isoCurrentCentralTime:\n${isoCurrentCentralTime}`;
+    
 }

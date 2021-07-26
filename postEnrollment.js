@@ -36,7 +36,7 @@ $w.onReady(function () {
     console.log('[ready]Next');
     
     // ø <NEW>
-    let initLog = '$w.onReady() NEW';
+    let initLog = '$w.onReady() NEXT';
     mxboxPostEnrollmentSevenActionOnReady(initLog)
     // ø </NEW>
     // ø <OLD>
@@ -3758,7 +3758,7 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
     console.log('[fnc]mxboxPostEnrollmentSevenAnyAction');
     memory.setItem('msboxCurrentId','#mxboxPostEnrollmentSeven');
     responseObject.stamp = await nowISO(local.getItem('timezoneOffset'),local.getItem('tzAbbrv'));
-    responseObject.logArrayDeveloper.push('≈ 3678 ≈');
+    responseObject.logArrayDeveloper.push('≈ 3761 ≈');
     responseObject.logArrayDeveloper.push(responseObject.stamp);
     responseObject.logArrayDeveloper.push('entering {% mxboxPostEnrollmentSevenAnyAction %}');
 
@@ -3783,7 +3783,7 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
     if(responseObject.button === 'CURRENT'){
         DOX = '<MAYBE_CURRENT_ACTION>'
     // ø FIND pstEnrSevenCore202107 MAYBE_CURRENT_ACTION if it's BELOW it belongs in NEXT subScript
-        responseObject.logArrayDeveloper.push('≈ 3702 ≈');
+        responseObject.logArrayDeveloper.push('≈ 3786 ≈');
         responseObject.logArrayDeveloper.push('<'+responseObject.button + ' === PPENDING>');
         panelNotesKey = 'panelAfterStepNotes';
         // ! <from PERFORM CURRENT STEP>
@@ -3802,12 +3802,12 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
     if(responseObject.button === 'NEXT'){
         DOX = '<MAYBE_NEXT_ACTION>'
     // ø FIND pstEnrSevenCore202107 MAYBE_NEXT_ACTION if it's BELOW it belongs in NEXT subScript
-        responseObject.logArrayDeveloper.push('≈ 3719 ≈');
+        responseObject.logArrayDeveloper.push('≈ 3805 ≈');
         responseObject.logArrayDeveloper.push('<'+responseObject.button + ' === NEXT>');
         panelNotesKey = 'panelBeforeStepNotes';
         // ! <from GO TO NEXT>
         responseObject.logArrayDeveloper.push('<preTrash Logs>');
-        responseObject.logArrayDeveloper.push('≈ 3738 ≈');
+        responseObject.logArrayDeveloper.push('≈ 3810 ≈');
         responseObject.logArrayDeveloper.push('{# about to call goToState(responseObject) #}');
         await goToState(responseObject);
         let lastLogDeveloper = responseObject.logArrayDeveloper[responseObject.logArrayDeveloper.length - 1];
@@ -3816,15 +3816,17 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
         $w('#btnPeSevenNext').hide();
         $w('#btnPeSevenCurrent').show();
         // ! </from GO TO NEXT>
-        responseObject.logArrayDeveloper.push('≈ 3744 ≈');
+        responseObject.logArrayDeveloper.push('≈ 3819 ≈');
         let peSevenStateCurrent = $w(memory.getItem('msboxCurrentId')).currentState;
         peSevenStateCurrentId = peSevenStateCurrent.id;
         responseObject.logArrayDeveloper.push('{¿ '+peSevenStateCurrentId+' is valid by wixStorage ?}');
 
+        // ø <ONCE for 'stateZero'>
+        if(memory.getItem('msboxLastState') === 'stateZero'){
         // ! OnRamp <Kludge>
         // ! shouldn't be _in_ OnReady, but these things are so necessary as suigeneris tasks
         // ! if (when?) it gets too involved, make an mxboxPostEnrollmentSevenOnReadyKLUDGE() function
-        responseObject.logArrayDeveloper.push('≈ 3730 ≈');
+        responseObject.logArrayDeveloper.push('≈ 3829 ≈');
         responseObject.logArrayDeveloper.push('{% onReadyKLUDGE %}}');
 
         let applicationObject = JSON.parse(local.getItem('ondeckEnrollmentJSON')) ;
@@ -3833,20 +3835,26 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
         responseObject.logArrayDeveloper.push(`secondaryExists: ${secondaryExists}`);
         let theseObjectKeys = Object.keys(applicationObject.family.parent);
         if(!secondaryExists){
+            responseObject.logArrayDeveloper.push('!secondaryExists : disable buttons');
+            responseObject.logArrayDeveloper.push('{¿ ONCE for `stateZero` yes?: ' + memory.getItem('msboxLastState') + ' ?}');
             $w('#btnSecondaryIdLabel').disable();
         }
         if(staffEyeD === 'INSTANTIATE' || staffEyeD === 'IINSTANTIATE'){
-            responseObject.logArrayDeveloper.push('staffEyeD is IINSTANTIATE: hide-button');
+            responseObject.logArrayDeveloper.push('staffEyeD is IINSTANTIATE: hide-buttons');
+            responseObject.logArrayDeveloper.push('{¿ ONCE for `stateZero` yes?: ' + memory.getItem('msboxLastState') + ' ?}');
             $w('#btnStaffEyeD').hide();
             $w('#btnStaffEyeDLabel').hide();
         }else{
-            responseObject.logArrayDeveloper.push('staffEyeD is not IINSTANTIATE: enable-button');
+            responseObject.logArrayDeveloper.push('staffEyeD is not IINSTANTIATE: enable-buttons');
+            responseObject.logArrayDeveloper.push('{¿ ONCE for `stateZero` yes?: ' + memory.getItem('msboxLastState') + ' ?}');
             local.setItem('staffIdentifiedFamilyId',staffEyeD);
             $w("#btnStaffEyeD").label = local.getItem('staffIdentifiedFamilyId');
             $w('#btnStaffEyeD').enable();
             $w('#btnStaffEyeDLabel').enable();
         }
         // ! OnRamp </Kludge>
+        }
+        // ø </ONCE for 'stateZero'>
         let statesArray = $w("#mxboxPostEnrollmentSeven").states.map(state => state.id);
         let nextIndex = statesArray.indexOf(peSevenStateCurrentId) + 1;
         peSevenStateCurrentId = statesArray[nextIndex];
@@ -3907,7 +3915,7 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
     $w('#txtPeSevenTitle').text = title;
     // ø </original from $w("#mxboxPostEnrollmentSeven").onChange>
     
-    responseObject.logArrayDeveloper.push('≈ 3847 ≈');
+    responseObject.logArrayDeveloper.push('≈ 3918 ≈');
     responseObject.logArrayDeveloper.push(memory.getItem('msboxLastState') + ' === ' + peSevenStateCurrentId);
     let lastClicked = memory.getItem('msboxLastState') === peSevenStateCurrentId ? 'PERFORM_STEP' : 'NEXT_STATE';
     responseObject.logArrayDeveloper.push('∆ ' + lastClicked + ' ∆');
@@ -3975,7 +3983,7 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}){
     }
     // ! </Call 'NEXT' Sequence>
     // ! <NUTS! This really is the End of the Sequence>
-    responseObject.logArrayDeveloper.push('≈ 4009 ≈');
+    responseObject.logArrayDeveloper.push('≈ 3986 ≈');
     responseObject.logArrayDeveloper.push('{# Back to ANY before posting this Log #}');
     DOX = JSON.stringify(responseObject.logArrayDeveloper,undefined,4);
     $w('#ppDatabaseResponseJSON').value = DOX;
@@ -4218,7 +4226,7 @@ export function btnStateOfframp_click(event) {
 }
 
 export function btnPeSevenNext_click(event) {
-    let initLog = 'btnPeSevenNext_click NEW';
+    let initLog = 'btnPeSevenNext_click NEXT';
     mxboxPostEnrollmentSevenActionNext(initLog);
 }
 
@@ -4229,7 +4237,7 @@ export function btnPeSevenPrev_click(event) {
 }
 
 export function btnPeSevenCurrent_click(event) {
-    let initLog = 'btnPeSevenCurrent_click NEW';
+    let initLog = 'btnPeSevenCurrent_click PERFORM';
     mxboxPostEnrollmentSevenActionPerform(initLog);
 }
 
@@ -4268,4 +4276,12 @@ export function btnAllStatesSeven_click(event) {
 
 export function btnClearSeven_click(event) {
 		doClear('ppDatabaseResponseJSON')
+}
+
+/**
+ *	Adds an event handler that runs when the element is clicked.
+ *	 @param {$w.MouseEvent} event
+ */
+export function btnCopySeven_click(event) {
+	uiCopyTextElementThis('ppDatabaseResponseJSON');
 }

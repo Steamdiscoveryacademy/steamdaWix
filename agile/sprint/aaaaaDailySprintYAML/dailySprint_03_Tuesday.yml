@@ -1,0 +1,14 @@
+• <----- <last hunk from Sunday> ----->
+ø TRY ONCE on 'stateZero' Next-State KLUDGE
+ø Take in Soup to Nuts
+ø BEFORE && AFTER testing Paradigm
+ø Confirm BEFORE does Not Break anything
+ø ¿BEFORE && AFTER idean just not working?
+
+
+---
+
+ø refactor find responseObject.button to responseObject.actionKey
+ø refactor mxbox to msbox
+ø ¿ refactor 'PostEnrollmentSeven' to 'PstEnrSeven' ? 
+ø use Drupal Logging ¿ OR ? create custom Dupal Log DB and use the API

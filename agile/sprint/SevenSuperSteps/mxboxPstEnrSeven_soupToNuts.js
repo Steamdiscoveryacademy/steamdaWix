@@ -154,7 +154,7 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}) {
     // PENDING /*[20210721HHII00◊]*/
     // ø FIND pstEnrSevenCore202107 JSON-PARSE
     let peSeventObject = JSON.parse(peSeventJSON);
-    $w('#preTrashLog').value = JSON.stringify(peSeventObject, undefined, 4);
+    $w('#stDatabaseResponseJSON').value = JSON.stringify(peSeventObject, undefined, 4);
     // ø </original from $w("#mxboxPostEnrollmentSeven").onChange>
 
     $w('#ppMemberResponseJSON').value = responseObject.button + '\n' + peSevenStateCurrentId;
@@ -272,7 +272,7 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}) {
     // ! </Call 'NEXT' Sequence>
     // ! <NUTS! This really is the End of the Sequence>
     responseObject.logArrayDeveloper.push('≈ 3986 ≈');
-    responseObject.logArrayDeveloper.push('{# Back to ANY before posting this Log #}');
+    responseObject.logArrayDeveloper.push('{# Back to ANY before posting the Logs #}');
     DOX = JSON.stringify(responseObject.logArrayDeveloper, undefined, 4);
     local.setItem('logString', DOX);
     DOX += `\n---\n\n`;
@@ -281,6 +281,18 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}) {
     DOX += '\n' + "DON'T FORGET: memory.getItem(msboxLastState)";
     DOX += '\n' + "REMOVE: memory.getItem(msboxCurrentId)";
     local.setItem('lastErrorString', DOX);
+    
+    // ø <JSON> more powerful
+    let DOXobject = {};
+    let DOXobjectKey = memory.getItem('msboxLastState') + '_' + responseObject.action;
+    DOXobject[DOXobjectKey] = {};
+    DOXobject[DOXobjectKey]['logArrayDeveloper'] = responseObject.logArrayDeveloper;
+    delete responseObject.logArrayDeveloper;
+    DOXobject[DOXobjectKey]['responseObject'] = responseObject;
+    DOX = ($w('#preTrashLog').value).length > 0 ? ',\n' : '';
+    DOX += JSON.stringify(DOXobject,undefined,4);
+    $w('#preTrashLog').value += DOX;
+    
 }
 // ! </NUTS! This really is the End of the Sequence>
 // ø FIND pstEnrSevenCore202107 END-ANY-ACTION
@@ -360,7 +372,7 @@ export async function mxboxPostEnrollmentSevenPerformStepDO(responseObject = {})
 // ø FIND pstEnrSevenCore202107 ACTION_SCRIPT
 export async function mxboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# no button log #}') {
     let responseObject = {};
-    responseObject.TEST = true;
+    responseObject.action = 'ONREADY';
     responseObject.logArrayUserInterface = [];
     responseObject.logArrayDeveloper = [];
     responseObject.logArrayDeveloper.push(anyButtonLog);
@@ -376,7 +388,7 @@ export async function mxboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# n
 // ø FIND pstEnrSevenCore202107 ACTION_SCRIPT
 export async function mxboxPostEnrollmentSevenActionNext(anyButtonLog = '{# no button log #}') {
     let responseObject = {};
-    responseObject.TEST = true;
+    responseObject.action = 'NEXT';
     responseObject.logArrayUserInterface = [];
     responseObject.logArrayDeveloper = [];
     responseObject.logArrayDeveloper.push(anyButtonLog);
@@ -393,7 +405,7 @@ export async function mxboxPostEnrollmentSevenActionNext(anyButtonLog = '{# no b
 // ø FIND pstEnrSevenCore202107 ACTION_SCRIPT
 export async function mxboxPostEnrollmentSevenActionPerform(anyButtonLog = '{# no button log #}') {
     let responseObject = {};
-    responseObject.TEST = true;
+    responseObject.action = 'PERFROM';
     responseObject.logArrayUserInterface = [];
     responseObject.logArrayDeveloper = [];
     responseObject.logArrayDeveloper.push(anyButtonLog);

@@ -1,0 +1,16 @@
+• <----- <last hunk from Thursday> ----->
+• use Canine Consulting to test Collapse (I think it's about 'grouping')
+• apply what you learn to steamda and the Post-Enrollment Messaging
+• make sure it doesn't break
+• improve logShorthands.js to build an Object so that JSON can be harvested, and notes can be an array
+• add MDN dox for Array-Concat
+---
+• build WatchDog-Emulation Table
+ø commit down to dev (¿or up to live?)
+ø Try with PostMan to GET to get structure of POST
+ø Try with PostMan to POST there
+
+---
+ø refactor mxbox to msbox
+ø ¿ refactor 'PostEnrollmentSeven' to 'PstEnrSeven' ? 
+ø use Drupal Logging ¿ OR ? create custom Dupal Log DB and use the API

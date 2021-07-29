@@ -23,3 +23,5 @@ stDatabaseResponseJSON // use for Super (message) JSON
 blank-3
 
 DOXobject
+
+Note: 'severity' 'severity word' and 'bootstrap word' are all synced, in that posting logic should use the JSON appended to this table's schema to automatically gather the other two values from any of those offered, of course, allowing the end-user (as appropriate) to override with conflicts.

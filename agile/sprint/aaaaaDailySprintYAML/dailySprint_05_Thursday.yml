@@ -11,16 +11,20 @@
 • make sure it doesn't break
 • Ad button to Prepend and Append to make the comma separated JSON Objects into a JSON Object Array
 • make sure it doesn't break
-• taker the tasks above put them all, with a 'copy' and put them just prior to => wixLocation.to("/blank-3");
+• take the tasks above put them all, with a 'copy' and put them just prior to => wixLocation.to("/blank-3");
 • make sure it doesn't break
+• use Canine Consulting to test Collapse (I think it's about 'grouping')
+• apply what you learn to steamda and the Post-Enrollment Messaging
+• make sure it doesn't break
+• improve logShorthands.js to build an Object so that JSON can be harvested, and notes can be an array
+• add MDN dox for Array-Concat
 ---
-ø build WatchDog-Emulation Table
+• build WatchDog-Emulation Table
+ø commit down to dev (¿or up to live?)
 ø Try with PostMan to POST there
 
 
 ---
-
-ø refactor find responseObject.button to responseObject.actionKey
 ø refactor mxbox to msbox
 ø ¿ refactor 'PostEnrollmentSeven' to 'PstEnrSeven' ? 
 ø use Drupal Logging ¿ OR ? create custom Dupal Log DB and use the API

@@ -1,0 +1,26 @@
+• <----- <last hunk from Sunday> ----->
+ø TRY ONCE on 'stateZero' Next-State KLUDGE
+ø Take in Soup to Nuts
+ø BEFORE && AFTER testing Paradigm
+ø Confirm BEFORE does Not Break anything
+ø ¿BEFORE && AFTER idean just not working?
+---
+• better Logging (made object, include resolveObject)
+• test the Log
+• create a new State-Click 'Key' for the Log
+• make sure it doesn't break
+• Ad button to Prepend and Append to make the comma separated JSON Objects into a JSON Object Array
+• make sure it doesn't break
+• taker the tasks above put them all, with a 'copy' and put them just prior to => wixLocation.to("/blank-3");
+• make sure it doesn't break
+---
+ø build WatchDog-Emulation Table
+ø Try with PostMan to POST there
+
+
+---
+
+ø refactor find responseObject.button to responseObject.actionKey
+ø refactor mxbox to msbox
+ø ¿ refactor 'PostEnrollmentSeven' to 'PstEnrSeven' ? 
+ø use Drupal Logging ¿ OR ? create custom Dupal Log DB and use the API

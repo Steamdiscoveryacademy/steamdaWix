@@ -1,23 +1,14 @@
-• <----- <last hunk from Saturday> ----->
-• DEPrecated AnyAction in vsCode
-• INSTANTiate AnyAction_soupToNuts
-• Clean soupToNuts - Comments & Blank-Lines ONLY
-• Replace in WiX
-• Check that it does NOT Break
-• Complex-Clean soupToNuts
-• Replace in WiX
-• Check that it does NOT Break
-• Complex-CleanTwo soupToNuts
-• Replace in WiX
-• Check that it does NOT Break
-• Add UI for pstEnrSeven
-• Improve and Integrate better goToState
-• ONCE on 'stateZero' OnRamp KLUDGE
-• TRY ONCE on 'stateZero' Next-State KLUDGE
-• BACK-OUT [Failed on Process Web Hooks] ONCE on 'stateZero' Next-State KLUDGE
-• Final Commit of Sunday
-ø TRY ONCE on 'stateZero' Next-State KLUDGE
-ø Take in Soup to Nuts
+• refactor find keys
+• <----- <POC Dog Repeater from JSON>  ----->
+• Note: weekend project, off-task
+• DONE 
+• <----- </POC Dog Repeater from JSON> ----->
+• <----- <POC Course Repeater from Drupal API 2019>  ----->
+• Note: weekend project, off-task
+ø test FETCH singletonCourse
+ø test Fetch Views Courses by Week
+• <----- </POC Course Repeater from Drupal API 2019> ----->
+
 
 
 ---

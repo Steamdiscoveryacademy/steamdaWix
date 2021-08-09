@@ -8,6 +8,14 @@
 ø test FETCH singletonCourse
 ø test Fetch Views Courses by Week
 • <----- </POC Course Repeater from Drupal API 2019> ----->
+• <----- <PostEnrollment msbox VS mxbox  ----->
+• build parallel 'msboxPostEnrollmentSevenAnyAction(responseObject);'
+           ↪ WAS 'mxboxPostEnrollmentSevenAnyAction(responseObject);'
+• ADD show/hide to PEFROM
+• ADD hide/show to NEXT
+• LOG very end (starting with DOX) to msbox
+• NEXT DO logic simply Next
+• <----- </PostEnrollment msbox VS mxbox ----->
 
 
 

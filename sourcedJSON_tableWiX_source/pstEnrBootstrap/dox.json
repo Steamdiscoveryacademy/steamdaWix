@@ -1,0 +1,12 @@
+{
+    "staticCode": {
+        "path": "",
+        "git": false,
+        "notes":["probably, when stabalized should be git-ted, but not sure with DB & Versioning"]
+    },
+    "generatingCode": {
+        "path": "steamdaWixLocal/steamdaWix/agile/sprint/SevenSuperSteps/sevenSuperSteps_overallObject.js",
+        "git": true,
+        "notes":["checking now"]
+    }
+}

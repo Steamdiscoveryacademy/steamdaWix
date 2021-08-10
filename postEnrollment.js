@@ -48,7 +48,7 @@ $w.onReady(function () {
     // console.log('[ready]Next');
     
     // ø <NEW>
-    // ! <NOW BUTTON> btnPeSevenFauxOnReady_click(event) {}
+    // ! <NOW BUTTON> btnPeSevenFauxOnReady_click(event) {DEP}
     // let initLog = '$w.onReady() NEXT';
     // msboxPostEnrollmentSevenActionOnReady(initLog)
     // ! </NOW BUTTON>
@@ -470,7 +470,7 @@ export async function steamdaMemberRegistration(paramObjectParam = {}) {
 // ø <---------- </steamdaMemberRegistration Front-End (no backend)> ---------->
 // ø <---------- <steamdaMemberUpdate Front-End>  ---------->
 // ø <PRETTY CLOSE> - no need to uncomment before all the rest has been tested
-//export async function steamdaMemberUpdate(paramObjectParam = {let memberResponse = await updateUserFields(userId, firstName, lastName, email, phone)}) {}
+//export async function steamdaMemberUpdate(paramObjectParam = {let memberResponse = await updateUserFields(userId, firstName, lastName, email, phone)}) {PRETRASH}
 // ø </PRETTY CLOSE>
 // ø <---------- </steamdaMemberUpdate Front-End> ---------->
 
@@ -3710,7 +3710,7 @@ export function btnDemoIfElseThen_click(event) {
 // ø <---------- <mxboxPstEnrSeven_soupToNuts>  ---------->
 // ø FIND pstEnrSevenCore202107 SOUP_TO_NUTS
 
-// ø <---------- <mxboxPostEnrollmentSevenAnyAction>  ---------->
+// ø <---------- <msboxPostEnrollmentSevenAnyAction>  ---------->
 // ø FIND pstEnrSevenCore202107 ANY-ACTION
 export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}){
     // pstEnrSevenNEW202108 BEGIN
@@ -3773,6 +3773,9 @@ export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}){
     // ! <NUTS! This really is the End of the Sequence>
     // pstEnrSevenNEW202108 END
 }
+// ø <---------- </msboxPostEnrollmentSevenAnyAction> ---------->
+
+// ø <---------- <mxboxPostEnrollmentSevenAnyAction>  ---------->
 export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}) {
     // pstEnrSevenORIG202108 BEGIN
     // console.log('[fnc]mxboxPostEnrollmentSevenAnyAction');
@@ -4088,9 +4091,10 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}) {
 
 // ø <---------- <mxboxPostEnrollmentSevenNextStateUI>  ---------->
 // ø FIND pstEnrSevenCore202107 NEXT_STATE_UI
-export async function mxboxPostEnrollmentSevenNextStateUI(responseObject = {}) {}
-export async function msboxPostEnrollmentSevenNextStateUI(responseObject = {}) {
+export async function mxboxPostEnrollmentSevenNextStateUI(responseObject = {}) {
     // pstEnrSevenORIG202108 NEXT-UI BEGIN
+}
+export async function msboxPostEnrollmentSevenNextStateUI(responseObject = {}) {
     // pstEnrSevenNEW202108 NEXT-UI BEGIN
     let DOX = 'So I can read these comments in WiX-Editor';
     DOX = 'OKAY: maybe redundant since NextState is kida all-about UI, but better separate _before_ it gets hairy than after';
@@ -4112,10 +4116,11 @@ export async function msboxPostEnrollmentSevenNextStateUI(responseObject = {}) {
 
 // ø <---------- <mxboxPostEnrollmentSevenNextStateDO>  ---------->
 // ø FIND pstEnrSevenCore202107 NEXT_STATE_DO
-export async function mxboxPostEnrollmentSevenNextStateDO(responseObject = {}) {}
+export async function mxboxPostEnrollmentSevenNextStateDO(responseObject = {}) {
+    // pstEnrSevenORIG202108 NEXT-DO BEGIN
+}
 export async function msboxPostEnrollmentSevenNextStateDO(responseObject = {}) {
     responseObject.logArrayDeveloper.push('{% msboxPostEnrollmentSevenNextStateDO %}');
-    // pstEnrSevenORIG202108 NEXT-DO BEGIN
     // pstEnrSevenNEW202108 NEXT-DO BEGIN
     // $w(memory.getItem('msboxCurrentId')).changeState(targetState);
     $w(memory.getItem('msboxCurrentId')).changeState(memory.getItem('msboxNextStateId'));
@@ -4184,7 +4189,6 @@ export async function msboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# n
     memory.setItem('msboxLastState', 'stateZero')
     responseObject.logArrayDeveloper.push('{# responseObject.button = NEXT #}');
     responseObject.logArrayDeveloper.push('{# memory.setItem(msboxLastState,stateZero) #}');
-    // mxboxPostEnrollmentSevenAnyAction(responseObject);
     
     // <202108100800> pstEnrSevenNEW202108
     let key = "pstEnrBootstrap";
@@ -4192,7 +4196,6 @@ export async function msboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# n
     let jsonDataObject = JSON.parse(jsonDataJSON);
     memory.setItem('stepObjects',JSON.stringify(jsonDataObject.stepObjects));
     memory.setItem('stepMessaging',JSON.stringify(jsonDataObject.stepMessaging));
-    // mxboxPostEnrollmentSevenAnyAction(responseObject);
     msboxPostEnrollmentSevenAnyAction(responseObject);
     // </202108100800> pstEnrSevenNEW202108
 }
@@ -4209,7 +4212,6 @@ export async function msboxPostEnrollmentSevenActionNext(anyButtonLog = '{# no b
     responseObject.messageKey = 'primary';
     responseObject.messageRandomInfo = Math.random() * 100 > 66 ? true : false;
     responseObject.messageResponse = false;
-    // mxboxPostEnrollmentSevenAnyAction(responseObject);
     msboxPostEnrollmentSevenAnyAction(responseObject);
 
 }
@@ -4228,7 +4230,6 @@ export async function msboxPostEnrollmentSevenActionPerform(anyButtonLog = '{# n
     responseObject.messageKey = messageKeyArray[Math.floor(Math.random() * messageKeyArray.length)];
     responseObject.messageRandomInfo = Math.random() * 100 > 66 ? true : false;
     responseObject.messageResponse = true;
-    // mxboxPostEnrollmentSevenAnyAction(responseObject);
     msboxPostEnrollmentSevenAnyAction(responseObject);
 }
 // ø <---------- </msboxPostEnrollmentSevenActionPerform - PERFORM_STATE_SCRIPTS> ---------->

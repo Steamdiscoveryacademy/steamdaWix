@@ -50,7 +50,7 @@ $w.onReady(function () {
     // ø <NEW>
     // ! <NOW BUTTON> btnPeSevenFauxOnReady_click(event) {}
     // let initLog = '$w.onReady() NEXT';
-    // mxboxPostEnrollmentSevenActionOnReady(initLog)
+    // msboxPostEnrollmentSevenActionOnReady(initLog)
     // ! </NOW BUTTON>
     // ø </NEW>
     // ø <OLD>
@@ -4168,12 +4168,12 @@ export async function mxboxPostEnrollmentSevenPerformStepDO(responseObject = {})
 
 // ø <---------- </mxboxPostEnrollmentSeven AnyAction PerformStep NextState> ---------->
 
-// ø <---------- <mxboxPostEnrollmentSevenActionScripts>  ---------->
+// ø <---------- <msboxPostEnrollmentSevenActionScripts>  ---------->
 // ø FIND pstEnrSevenCore202107 ACTION_SCRIPT-ALL
 
-// ø <---------- <mxboxPostEnrollmentSevenActionOnReady - [within $w.onReady(function ())]>  ---------->
+// ø <---------- <msboxPostEnrollmentSevenActionOnReady - [within $w.onReady(function ())]>  ---------->
 // ø FIND pstEnrSevenCore202107 ACTION_SCRIPT
-export async function mxboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# no button log #}') {
+export async function msboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# no button log #}') {
     let responseObject = {};
     responseObject.action = 'ONREADY';
     responseObject.logArrayUserInterface = [];
@@ -4196,10 +4196,10 @@ export async function mxboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# n
     msboxPostEnrollmentSevenAnyAction(responseObject);
     // </202108100800> pstEnrSevenNEW202108
 }
-// ø <---------- </mxboxPostEnrollmentSevenActionOnReady - [within $w.onReady(function ())]> ---------->
-// ø <---------- <mxboxPostEnrollmentSevenActionNext - NEXT_STATE>  ---------->
+// ø <---------- </msboxPostEnrollmentSevenActionOnReady - [within $w.onReady(function ())]> ---------->
+// ø <---------- <msboxPostEnrollmentSevenActionNext - NEXT_STATE>  ---------->
 // ø FIND pstEnrSevenCore202107 ACTION_SCRIPT
-export async function mxboxPostEnrollmentSevenActionNext(anyButtonLog = '{# no button log #}') {
+export async function msboxPostEnrollmentSevenActionNext(anyButtonLog = '{# no button log #}') {
     let responseObject = {};
     responseObject.action = 'NEXT';
     responseObject.logArrayUserInterface = [];
@@ -4213,11 +4213,11 @@ export async function mxboxPostEnrollmentSevenActionNext(anyButtonLog = '{# no b
     msboxPostEnrollmentSevenAnyAction(responseObject);
 
 }
-// ø <---------- </mxboxPostEnrollmentSevenActionNext - NEXT_STATE> ---------->
+// ø <---------- </msboxPostEnrollmentSevenActionNext - NEXT_STATE> ---------->
 
-// ø <---------- <mxboxPostEnrollmentSevenActionPerform - PERFORM_STATE_SCRIPTS>  ---------->
+// ø <---------- <msboxPostEnrollmentSevenActionPerform - PERFORM_STATE_SCRIPTS>  ---------->
 // ø FIND pstEnrSevenCore202107 ACTION_SCRIPT
-export async function mxboxPostEnrollmentSevenActionPerform(anyButtonLog = '{# no button log #}') {
+export async function msboxPostEnrollmentSevenActionPerform(anyButtonLog = '{# no button log #}') {
     let responseObject = {};
     responseObject.action = 'PERFROM';
     responseObject.logArrayUserInterface = [];
@@ -4231,10 +4231,10 @@ export async function mxboxPostEnrollmentSevenActionPerform(anyButtonLog = '{# n
     // mxboxPostEnrollmentSevenAnyAction(responseObject);
     msboxPostEnrollmentSevenAnyAction(responseObject);
 }
-// ø <---------- </mxboxPostEnrollmentSevenActionPerform - PERFORM_STATE_SCRIPTS> ---------->
+// ø <---------- </msboxPostEnrollmentSevenActionPerform - PERFORM_STATE_SCRIPTS> ---------->
 
 // ø FIND pstEnrSevenCore202107 ACTION_SCRIPT-ALL_END
-// ø <---------- </mxboxPostEnrollmentSevenActionScripts> ---------->
+// ø <---------- </msboxPostEnrollmentSevenActionScripts> ---------->
 
 
 // ø FIND pstEnrSevenCore202107 SOUP_TO_NUTS-END
@@ -4420,7 +4420,7 @@ export function btnStateOfframp_click(event) {
 
 export function btnPeSevenNext_click(event) {
     let initLog = 'btnPeSevenNext_click NEXT';
-    mxboxPostEnrollmentSevenActionNext(initLog);
+    msboxPostEnrollmentSevenActionNext(initLog);
 }
 
 export function btnPeSevenPrev_click(event) {
@@ -4431,7 +4431,7 @@ export function btnPeSevenPrev_click(event) {
 
 export function btnPeSevenCurrent_click(event) {
     let initLog = 'btnPeSevenCurrent_click PERFORM';
-    mxboxPostEnrollmentSevenActionPerform(initLog);
+    msboxPostEnrollmentSevenActionPerform(initLog);
 }
 
 export function btnGetStatesArray_click(event) {
@@ -4528,7 +4528,7 @@ export async function btnKludgeISO_click(event) {
  */
 export function btnPeSevenFauxOnReady_click(event) {
     let initLog = 'FAUX $w.onReady() NEXT';
-    mxboxPostEnrollmentSevenActionOnReady(initLog);
+    msboxPostEnrollmentSevenActionOnReady(initLog);
     $w('#btnPeSevenFauxOnReady').hide();
 
 

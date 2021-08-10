@@ -3720,31 +3720,17 @@ export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}){
     responseObject.logArrayDeveloper.push(`{% memory.getItem('stepObjects').length === ${memory.getItem('stepObjects').length} %}`);
 
     DOX = '≈ 3722 ≈ ANY: <but used later>';
-    // ø <removed from NextDo>
     // ø just setting to memory-wixStorage
     let statesArray = memory.getItem('msboxAllStatesList').split(',');
-    // DOX += `memory.getItem('msboxCurrentId'): ${memory.getItem('msboxCurrentId')}`
     let targetState = ($w(memory.getItem('msboxCurrentId')).currentState).id;
     memory.setItem('msboxCurrentStateId',targetState)
-    // DOX += `\n` + `targetState: ${targetState}`;
-    // DOX += `\n` + `memory.getItem('msboxCurrentStateId'): ${memory.getItem('msboxCurrentStateId')}`
     let nextIndex = statesArray.indexOf(targetState) + 1;
     targetState = statesArray[nextIndex];
     memory.setItem('msboxNextStateId',targetState)
-    // DOX += `\n` + `targetState: ${targetState}`;
-    // DOX += `\n` + `memory.getItem('msboxNextStateId'): ${memory.getItem('msboxNextStateId')}`
-    // DOX += `\n` + `FORCE RETURN`;
-    // $w('#ppDatabaseResponseJSON').value = DOX;
-    // return;
-    responseObject.logArrayDeveloper.push(`≈ 3728 ≈ {% memory.getItem('msboxCurrentStateId'): ${memory.getItem('msboxCurrentStateId')} %}`);
-    responseObject.logArrayDeveloper.push(`≈ 3733 ≈ {% memory.getItem('msboxNextStateId'): ${memory.getItem('msboxNextStateId')} %}`);
-
-
-    // responseObject.logArrayDeveloper.push(`{◊ currentState: ${targetState} ◊}`);
-    // DOX = `\n` + `targetState: ${targetState}`
-    // targetState = statesArray[nextIndex];
-    // // ø </removed from NextDo>
+    responseObject.logArrayDeveloper.push(`≈ 3726 ≈ {% memory.getItem('msboxCurrentStateId'): ${memory.getItem('msboxCurrentStateId')} %}`);
+    responseObject.logArrayDeveloper.push(`≈ 3729 ≈ {% memory.getItem('msboxNextStateId'): ${memory.getItem('msboxNextStateId')} %}`);
     DOX = 'ANY: </but used later>';
+
     // ø <ELSE>
     DOX = '<YES_ANY_ACTION>'
     let messageKey = responseObject.messageKey;
@@ -3770,7 +3756,7 @@ export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}){
     if (responseObject.button === 'NEXT') {
         responseObject.logArrayDeveloper.push('≈ 3963 ≈ ◊ responseObject.button === NEXT ◊');
         responseObject.logArrayDeveloper.push('≈ 3963 ≈ ◊ PREV: lastClicked === NEXT_STATE ◊');
-        await mxboxPostEnrollmentSevenNextStateUI(responseObject);
+        await msboxPostEnrollmentSevenNextStateUI(responseObject);
     }
     // ! </Call 'NEXT' Sequence>
     // ø <LOG STEP IN UI>
@@ -4102,17 +4088,18 @@ export async function mxboxPostEnrollmentSevenAnyAction(responseObject = {}) {
 
 // ø <---------- <mxboxPostEnrollmentSevenNextStateUI>  ---------->
 // ø FIND pstEnrSevenCore202107 NEXT_STATE_UI
-export async function mxboxPostEnrollmentSevenNextStateUI(responseObject = {}) {
+export async function mxboxPostEnrollmentSevenNextStateUI(responseObject = {}) {}
+export async function msboxPostEnrollmentSevenNextStateUI(responseObject = {}) {
     // pstEnrSevenORIG202108 NEXT-UI BEGIN
     // pstEnrSevenNEW202108 NEXT-UI BEGIN
     let DOX = 'So I can read these comments in WiX-Editor';
     DOX = 'OKAY: maybe redundant since NextState is kida all-about UI, but better separate _before_ it gets hairy than after';
 
-    responseObject.logArrayDeveloper.push('{% mxboxPostEnrollmentSevenNextStateUI %}');
+    responseObject.logArrayDeveloper.push('{% msboxPostEnrollmentSevenNextStateUI %}');
     responseObject.logArrayDeveloper.push('{# NEXT_STATE_UI is, other than calling DO, is INERT #}');
     // ø <Before DO-Script Called>
     // ø </Before DO-Script Called>
-    mxboxPostEnrollmentSevenNextStateDO(responseObject);
+    msboxPostEnrollmentSevenNextStateDO(responseObject);
     // ø <After DO-Script Called>
     DOX = `After DO-Next - Within UI-Next: show btnCurrent/hide btnNext`;
     responseObject.logArrayDeveloper.push(`{% ${DOX} %}`);
@@ -4125,34 +4112,16 @@ export async function mxboxPostEnrollmentSevenNextStateUI(responseObject = {}) {
 
 // ø <---------- <mxboxPostEnrollmentSevenNextStateDO>  ---------->
 // ø FIND pstEnrSevenCore202107 NEXT_STATE_DO
-export async function mxboxPostEnrollmentSevenNextStateDO(responseObject = {}) {
+export async function mxboxPostEnrollmentSevenNextStateDO(responseObject = {}) {}
+export async function msboxPostEnrollmentSevenNextStateDO(responseObject = {}) {
+    responseObject.logArrayDeveloper.push('{% msboxPostEnrollmentSevenNextStateDO %}');
     // pstEnrSevenORIG202108 NEXT-DO BEGIN
     // pstEnrSevenNEW202108 NEXT-DO BEGIN
-    // ø <moved to AnyAction>
-    // // ø just setting to memory-wixStorage
-    // responseObject.logArrayDeveloper.push('{% mxboxPostEnrollmentSevenNextStateDO %}');
-    // // responseObject.logArrayDeveloper.push('memory.getItem(msboxLastState) === ' + memory.getItem('msboxLastState'));
-    // // responseObject.logArrayDeveloper.push('memory.getItem(msboxCurrentId) === ' + memory.getItem('msboxCurrentId'));
-    // // responseObject.logArrayDeveloper.push('{# NEXT_STATE_DO is, unless AFTER is evboked, is INERT #}');
-    // // ø <toNUTS> fromSoupToNuts
-    // let statesArray = memory.getItem('msboxAllStatesList').split(',');
-    // // let state = $w("#myStatebox").currentState;
-    // // let stateId = state.id; // "state1"
-    // let targetState = ($w(memory.getItem('msboxCurrentId')).currentState).id;
-    // responseObject.logArrayDeveloper.push(`{◊ currentState: ${targetState} ◊}`);
-    // // console.log('currentState: ' + targetState);
-    // let nextIndex = statesArray.indexOf(targetState) + 1;
-    // targetState = statesArray[nextIndex];
-    // // console.log('nextState: ' + targetState);
-    // ø </moved to AnyAction>
     // $w(memory.getItem('msboxCurrentId')).changeState(targetState);
-    $w(memory.getItem('msboxCurrentId')).changeState(memory.getItem('msboxNextId'));
-    responseObject.logArrayDeveloper.push(`{∆ nextState: ${memory.getItem('msboxNextId')} ∆}`);
-
-
-    // if (/*<AFTER>*/ responseObject.next.testingStampAsIfISO > responseObject.next.testingStampBorderISO) {
-    //     responseObject.logArrayDeveloper.push('{# NEXT_STATE_DO => AFTER is evboked, and is EMPTY #}');
-    // }
+    $w(memory.getItem('msboxCurrentId')).changeState(memory.getItem('msboxNextStateId'));
+    memory.setItem('msboxLastState', memory.getItem('msboxNextStateId'));
+    responseObject.logArrayDeveloper.push(`{∆ msboxNextStateId: ${memory.getItem('msboxNextStateId')} ∆}`);
+    responseObject.logArrayDeveloper.push(`{∆ msboxLastState: ${memory.getItem('msboxLastState')} ∆}`);
 }
 // ø </toNUTS>
 

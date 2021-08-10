@@ -1,9 +1,17 @@
-• <----- <last hunk from Sunday> ----->
-ø TRY ONCE on 'stateZero' Next-State KLUDGE
-ø Take in Soup to Nuts
-ø BEFORE && AFTER testing Paradigm
-ø Confirm BEFORE does Not Break anything
-ø ¿BEFORE && AFTER idean just not working?
+• <----- <daily Commits>  ----->
+ø Soup-To-Nuts
+ø postEnrollment
+• <----- </daily Commits> ----->
+
+• <----- <last hunk from Monday>  ----->
+• Improve and Integrate better goToState
+• <----- </last hunk from Monday> ----->
+
+• <----- <sourcedJSON Table and Queries>  ----->
+ø move bootstrapMessaging to OnReadyAction()
+• <----- </sourcedJSON Table and Queries> ----->
+
+
 
 
 ---

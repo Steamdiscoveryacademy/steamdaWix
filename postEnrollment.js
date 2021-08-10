@@ -3708,7 +3708,6 @@ export function btnDemoIfElseThen_click(event) {
 // ø <----------                 <refactor or live with it>                 ---------->
 
 // ø <---------- <mxboxPstEnrSeven_soupToNuts>  ---------->
-// ø <---------- <mxboxPstEnrSeven_soupToNuts>  ---------->
 // ø FIND pstEnrSevenCore202107 SOUP_TO_NUTS
 
 // ø <---------- <mxboxPostEnrollmentSevenAnyAction>  ---------->
@@ -3716,30 +3715,36 @@ export function btnDemoIfElseThen_click(event) {
 export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}){
     // pstEnrSevenNEW202108 BEGIN
     let DOX = 'JUST FOR VISIBLE DOX IN WIX';
+    responseObject.logArrayDeveloper.push(`≈ 3718 ≈ {% entering: msboxPostEnrollmentSevenAnyAction() %}`);
+    responseObject.logArrayDeveloper.push(`{% memory.getItem('stepMessaging').length === ${memory.getItem('stepMessaging').length} %}`);
+    responseObject.logArrayDeveloper.push(`{% memory.getItem('stepObjects').length === ${memory.getItem('stepObjects').length} %}`);
 
-    DOX = 'PUTATIVE: <gather BootStrapMessaging>';
-    // let pstEnrBootstrapDataJSON = '';
-    // let now = new Date();
-    // if(Number(memory.getItem('DateDOTgetDate')) + 0 === 0){
-    //     // ø PUTATIVE: <gather BootStrapMessaging>
-    //     DOX = 'eq: key: pstEnrBootstrap; lt: versionStampTxt: nowISO; descending: versionStampTxt; limit: 1';
-    //     let nowISO = now.toISOString();
-    //     console.log('nowISO: ' + nowISO);
-    //     let peSevenRECORD = await wixData.query("sourcedJSON")
-    //         .eq("key", "pstEnrBootstrap")
-    //         .lt("versionStampTxt", nowISO)
-    //         .descending("versionStampTxt")
-    //         .limit(1)
-    //         .find();
-    //     pstEnrBootstrapDataJSON = JSON.stringify(peSevenRECORD.items[0].jsonData);
-    //     memory.setItem('DateDOTgetDate',now.getDate().toString());
-    //     responseObject.logArrayDeveloper.push(`≈ 3735 ≈ {% pstEnrBootstrapDataJSON was SET' %}`);
-    //     // ø PUTATIVE: </gather BootStrapMessaging>
-    // }else{
-    //     $w('#ppDatabaseResponseJSON').value = pstEnrBootstrapDataJSON;
-    //     responseObject.logArrayDeveloper.push(`≈ 3738 ≈ {# memory.getItem('DateDOTgetDate') === '${memory.getItem('DateDOTgetDate')}' #}`);
-    // }
-    DOX = 'PUTATIVE: </gather BootStrapMessaging>';
+    DOX = '≈ 3722 ≈ ANY: <but used later>';
+    // ø <removed from NextDo>
+    // ø just setting to memory-wixStorage
+    let statesArray = memory.getItem('msboxAllStatesList').split(',');
+    // DOX += `memory.getItem('msboxCurrentId'): ${memory.getItem('msboxCurrentId')}`
+    let targetState = ($w(memory.getItem('msboxCurrentId')).currentState).id;
+    memory.setItem('msboxCurrentStateId',targetState)
+    // DOX += `\n` + `targetState: ${targetState}`;
+    // DOX += `\n` + `memory.getItem('msboxCurrentStateId'): ${memory.getItem('msboxCurrentStateId')}`
+    let nextIndex = statesArray.indexOf(targetState) + 1;
+    targetState = statesArray[nextIndex];
+    memory.setItem('msboxNextStateId',targetState)
+    // DOX += `\n` + `targetState: ${targetState}`;
+    // DOX += `\n` + `memory.getItem('msboxNextStateId'): ${memory.getItem('msboxNextStateId')}`
+    // DOX += `\n` + `FORCE RETURN`;
+    // $w('#ppDatabaseResponseJSON').value = DOX;
+    // return;
+    responseObject.logArrayDeveloper.push(`≈ 3728 ≈ {% memory.getItem('msboxCurrentStateId'): ${memory.getItem('msboxCurrentStateId')} %}`);
+    responseObject.logArrayDeveloper.push(`≈ 3733 ≈ {% memory.getItem('msboxNextStateId'): ${memory.getItem('msboxNextStateId')} %}`);
+
+
+    // responseObject.logArrayDeveloper.push(`{◊ currentState: ${targetState} ◊}`);
+    // DOX = `\n` + `targetState: ${targetState}`
+    // targetState = statesArray[nextIndex];
+    // // ø </removed from NextDo>
+    DOX = 'ANY: </but used later>';
     // ø <ELSE>
     DOX = '<YES_ANY_ACTION>'
     let messageKey = responseObject.messageKey;
@@ -4123,22 +4128,26 @@ export async function mxboxPostEnrollmentSevenNextStateUI(responseObject = {}) {
 export async function mxboxPostEnrollmentSevenNextStateDO(responseObject = {}) {
     // pstEnrSevenORIG202108 NEXT-DO BEGIN
     // pstEnrSevenNEW202108 NEXT-DO BEGIN
-    responseObject.logArrayDeveloper.push('{% mxboxPostEnrollmentSevenNextStateDO %}');
-    // responseObject.logArrayDeveloper.push('memory.getItem(msboxLastState) === ' + memory.getItem('msboxLastState'));
-    // responseObject.logArrayDeveloper.push('memory.getItem(msboxCurrentId) === ' + memory.getItem('msboxCurrentId'));
-    // responseObject.logArrayDeveloper.push('{# NEXT_STATE_DO is, unless AFTER is evboked, is INERT #}');
-    // ø <toNUTS> fromSoupToNuts
-    let statesArray = memory.getItem('msboxAllStatesList').split(',');
-    // let state = $w("#myStatebox").currentState;
-    // let stateId = state.id; // "state1"
-    let targetState = ($w(memory.getItem('msboxCurrentId')).currentState).id;
-    responseObject.logArrayDeveloper.push(`{◊ currentState: ${targetState} ◊}`);
-    // console.log('currentState: ' + targetState);
-    let nextIndex = statesArray.indexOf(targetState) + 1;
-    targetState = statesArray[nextIndex];
-    // console.log('nextState: ' + targetState);
-    $w(memory.getItem('msboxCurrentId')).changeState(targetState);
-    responseObject.logArrayDeveloper.push(`{∆ nextState: ${targetState} ∆}`);
+    // ø <moved to AnyAction>
+    // // ø just setting to memory-wixStorage
+    // responseObject.logArrayDeveloper.push('{% mxboxPostEnrollmentSevenNextStateDO %}');
+    // // responseObject.logArrayDeveloper.push('memory.getItem(msboxLastState) === ' + memory.getItem('msboxLastState'));
+    // // responseObject.logArrayDeveloper.push('memory.getItem(msboxCurrentId) === ' + memory.getItem('msboxCurrentId'));
+    // // responseObject.logArrayDeveloper.push('{# NEXT_STATE_DO is, unless AFTER is evboked, is INERT #}');
+    // // ø <toNUTS> fromSoupToNuts
+    // let statesArray = memory.getItem('msboxAllStatesList').split(',');
+    // // let state = $w("#myStatebox").currentState;
+    // // let stateId = state.id; // "state1"
+    // let targetState = ($w(memory.getItem('msboxCurrentId')).currentState).id;
+    // responseObject.logArrayDeveloper.push(`{◊ currentState: ${targetState} ◊}`);
+    // // console.log('currentState: ' + targetState);
+    // let nextIndex = statesArray.indexOf(targetState) + 1;
+    // targetState = statesArray[nextIndex];
+    // // console.log('nextState: ' + targetState);
+    // ø </moved to AnyAction>
+    // $w(memory.getItem('msboxCurrentId')).changeState(targetState);
+    $w(memory.getItem('msboxCurrentId')).changeState(memory.getItem('msboxNextId'));
+    responseObject.logArrayDeveloper.push(`{∆ nextState: ${memory.getItem('msboxNextId')} ∆}`);
 
 
     // if (/*<AFTER>*/ responseObject.next.testingStampAsIfISO > responseObject.next.testingStampBorderISO) {
@@ -4206,7 +4215,17 @@ export async function mxboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# n
     memory.setItem('msboxLastState', 'stateZero')
     responseObject.logArrayDeveloper.push('{# responseObject.button = NEXT #}');
     responseObject.logArrayDeveloper.push('{# memory.setItem(msboxLastState,stateZero) #}');
-    mxboxPostEnrollmentSevenAnyAction(responseObject);
+    // mxboxPostEnrollmentSevenAnyAction(responseObject);
+    
+    // <202108100800> pstEnrSevenNEW202108
+    let key = "pstEnrBootstrap";
+    let jsonDataJSON = await getSourcedJSON_byKey(key);
+    let jsonDataObject = JSON.parse(jsonDataJSON);
+    memory.setItem('stepObjects',JSON.stringify(jsonDataObject.stepObjects));
+    memory.setItem('stepMessaging',JSON.stringify(jsonDataObject.stepMessaging));
+    // mxboxPostEnrollmentSevenAnyAction(responseObject);
+    msboxPostEnrollmentSevenAnyAction(responseObject);
+    // </202108100800> pstEnrSevenNEW202108
 }
 // ø <---------- </mxboxPostEnrollmentSevenActionOnReady - [within $w.onReady(function ())]> ---------->
 // ø <---------- <mxboxPostEnrollmentSevenActionNext - NEXT_STATE>  ---------->
@@ -4250,7 +4269,6 @@ export async function mxboxPostEnrollmentSevenActionPerform(anyButtonLog = '{# n
 
 
 // ø FIND pstEnrSevenCore202107 SOUP_TO_NUTS-END
-// ø <---------- </mxboxPstEnrSeven_soupToNuts> ---------->
 // ø <---------- </mxboxPstEnrSeven_soupToNuts> ---------->
 
 // "stateOnramp"
@@ -4398,6 +4416,22 @@ export function doBootstrapMessage(key,messageThis = 'DEFAULT', responsiveByLeng
     return html;
 }
 // ø <---------- </doBootstrapMessage UI> ---------->
+
+// ø <---------- <getSourcedJSON_byKey UTILITY>  ---------->
+// pstEnrSevenNEW202108
+export async function getSourcedJSON_byKey(key) {
+    let now = new Date();
+    let nowISO = now.toISOString();
+    let recordSourcedJSON = await wixData.query("sourcedJSON")
+        .eq("key", key)
+        .lt("versionStampTxt", nowISO)
+        .descending("versionStampTxt")
+        .limit(1)
+        .find();
+    return JSON.stringify(recordSourcedJSON.items[0].jsonData);
+}
+// ø <---------- </getSourcedJSON_byKey UTILITY> ---------->
+
 
 // ! =========================================================================================================================
 // ! ==================================          </SEVENT-SUPER-STEPS with MultiStateBox>         ============================
@@ -4548,4 +4582,13 @@ export function btnPeSevenNextMANUAL_click(event) {
     responseObject.logArrayDeveloper = [];
     goToState(responseObject,'NEXT');
 
+}
+
+
+export function btnMessagingbject_click(event) {
+    $w('#ppDatabaseResponseJSON').value = memory.getItem('stepMessaging');
+}
+
+export function btnStepsObject_click(event) {
+    $w('#ppDatabaseResponseJSON').value = memory.getItem('stepObjects');
 }

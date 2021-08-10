@@ -11,7 +11,7 @@
 
 
 ---
-
+ø refactor msboxCurrentId to msboxCurrentStateId ( && Next)
 ø refactor find responseObject.button to responseObject.actionKey
 ø refactor mxbox to msbox
 ø ¿ refactor 'PostEnrollmentSeven' to 'PstEnrSeven' ? 

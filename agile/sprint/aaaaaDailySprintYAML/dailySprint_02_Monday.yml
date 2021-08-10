@@ -6,6 +6,16 @@
 • Final Commit of Sunday
 ø TRY ONCE on 'stateZero' Next-State KLUDGE
 ø Take in Soup to Nuts
+• <----- <sourcedJSON Table and Queries>  ----->
+• Build Table
+• Build Putative Records
+• Add Versioning-Stamp
+• Add Versioning-Stamp-Txt because nowISOnumber is too complicated
+• test and store code for wixData.get(byID) with actual 'pstEnrBootstrap';
+• test and store code for wixData.query(eq|key|"keyValue"; lt|versionStampTxt|nowISO; DESC|versionStampTxt; limit|1) with actual 'pstEnrBootstrap';
+• remove from SoupToNuts code (mostly)
+ø move bootstrapMessaging to OnReadyAction()
+• <----- </sourcedJSON Table and Queries> ----->
 
 
 ---

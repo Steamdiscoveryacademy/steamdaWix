@@ -3756,7 +3756,7 @@ export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}){
         responseObject.logArrayDeveloper.push('≈ 3955 ≈ ◊ responseObject.button === CURRENT ◊');
         responseObject.logArrayDeveloper.push('≈ 3955 ≈ ◊ PREV: lastClicked === PERFORM_STEP ◊');
         // responseObject.currentStepOriginalStepsArray = currentStepOrigStepsObject.allStepArray;
-        // pstEnrSeven202108STEP_P_02 ==> pstEnrSeven202108STEP_P_03
+        // pstEnrSeven202108STEP_P_02 ==> Call: PERFORM-UI ==> pstEnrSeven202108STEP_P_03
         await msboxPostEnrollmentSevenPerformStepUI(responseObject);
     }
     // ! </Call 'PERFORM' Sequence>
@@ -3764,7 +3764,7 @@ export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}){
     if (responseObject.button === 'NEXT') {
         responseObject.logArrayDeveloper.push('≈ 3963 ≈ ◊ responseObject.button === NEXT ◊');
         responseObject.logArrayDeveloper.push('≈ 3963 ≈ ◊ PREV: lastClicked === NEXT_STATE ◊');
-        // pstEnrSeven202108STEP_N_02 ==> pstEnrSeven202108STEP_N_03
+        // pstEnrSeven202108STEP_N_02 ==> Call: NEXT-UI ==> pstEnrSeven202108STEP_N_03
         await msboxPostEnrollmentSevenNextStateUI(responseObject);
     }
     // ! </Call 'NEXT' Sequence>
@@ -3784,8 +3784,8 @@ export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}){
     // ø </LOG STEP IN UI>
     // ! <NUTS! This really is the End of the Sequence>
     // pstEnrSevenNEW202108 END
-    // pstEnrSeven202108STEP_N_06 ANY-DONE ==> NEXT CLICK ==> pstEnrSeven202108STEP_P_01
-    // pstEnrSeven202108STEP_P_06 ANY-DONE ==> NEXT CLICK ==> pstEnrSeven202108STEP_N_01
+    // pstEnrSeven202108STEP_N_06 ==> Complete: ANY-DONE ==> NEXT CLICK ==> pstEnrSeven202108STEP_P_01
+    // pstEnrSeven202108STEP_P_06 ==> Complete: ANY-DONE ==> NEXT CLICK ==> pstEnrSeven202108STEP_N_01
 }
 // ø <---------- </msboxPostEnrollmentSevenAnyAction> ---------->
 
@@ -3801,7 +3801,7 @@ export async function msboxPostEnrollmentSevenNextStateUI(responseObject = {}) {
     responseObject.logArrayDeveloper.push('{# NEXT_STATE_UI is, other than calling DO, is INERT #}');
     // ø <Before DO-Script Called>
     // ø </Before DO-Script Called>
-    // pstEnrSeven202108STEP_N_03 ==> pstEnrSeven202108STEP_N_04
+    // pstEnrSeven202108STEP_N_03 ==> Call: NEXT-DO ==> pstEnrSeven202108STEP_N_04
     msboxPostEnrollmentSevenNextStateDO(responseObject);
     // pstEnrSeven202108STEP_N_05 NEXT-UI-AFTER BEGIN
     // ø <After DO-Script Called>
@@ -3810,7 +3810,7 @@ export async function msboxPostEnrollmentSevenNextStateUI(responseObject = {}) {
     $w('#btnPeSevenCurrent').show();
     $w('#btnPeSevenNext').hide();
     // ø </After DO-Script Called>
-    // pstEnrSeven202108STEP_N_05 ==> pstEnrSeven202108STEP_N_06
+    // pstEnrSeven202108STEP_N_05 ==> ReturnTo: ANY-AFTER ==> pstEnrSeven202108STEP_N_06
 }
 // ø FIND pstEnrSevenCore202107 NEXT_STATE_UI_END
 // ø <---------- </msboxPostEnrollmentSevenNextStateUI> ---------->
@@ -3827,7 +3827,7 @@ export async function msboxPostEnrollmentSevenNextStateDO(responseObject = {}) {
     memory.setItem('msboxLastState', memory.getItem('msboxNextStateId'));
     responseObject.logArrayDeveloper.push(`{∆ msboxNextStateId: ${memory.getItem('msboxNextStateId')} ∆}`);
     responseObject.logArrayDeveloper.push(`{∆ msboxLastState: ${memory.getItem('msboxLastState')} ∆}`);
-    // pstEnrSeven202108STEP_N_04 ==> pstEnrSeven202108STEP_N_05
+    // pstEnrSeven202108STEP_N_04 ==> Return-To: NEXT-UI ==> pstEnrSeven202108STEP_N_05
 }
 // ø </toNUTS>
 
@@ -3844,7 +3844,7 @@ export async function msboxPostEnrollmentSevenPerformStepUI(responseObject = {})
     responseObject.logArrayDeveloper.push('{# PERFORM_STEP_UI is, other than calling DO, is INERT #}');
     // ø <Before DO-Script Called>
     // ø </Before DO-Script Called>
-    // pstEnrSeven202108STEP_P_03 ==> pstEnrSeven202108STEP_P_04
+    // pstEnrSeven202108STEP_P_03 ==> Call: PERFORM-DO ==> pstEnrSeven202108STEP_P_04
     msboxPostEnrollmentSevenPerformStepDO(responseObject);
     // pstEnrSeven202108STEP_P_05 PERFORM-UI-AFTER BEGIN
     // ø <After DO-Script Called>
@@ -3853,7 +3853,7 @@ export async function msboxPostEnrollmentSevenPerformStepUI(responseObject = {})
     $w('#btnPeSevenCurrent').hide();
     $w('#btnPeSevenNext').show();
     // ø </After DO-Script Called>
-    // pstEnrSeven202108STEP_P_05 ==> pstEnrSeven202108STEP_P_06
+    // pstEnrSeven202108STEP_P_05 ==> ReturnTo: ANY-AFTER ==> pstEnrSeven202108STEP_P_06
 }
 
 // ø FIND pstEnrSevenCore202107 PERFORM_STEP_UI_END
@@ -3872,7 +3872,7 @@ export async function msboxPostEnrollmentSevenPerformStepDO(responseObject = {})
     displaySteps();
     responseObject.logArrayDeveloper.push('{# PERFORM_STEP_DO just performed instantiateSteps and Display #}');
     // ø FIND pstEnrSevenCore202107 PERFORM_STEP_DO_END
-    // pstEnrSeven202108STEP_P_04 ==> pstEnrSeven202108STEP_P_05
+    // pstEnrSeven202108STEP_P_04 ==> Return-To: PERFORM-UI ==> pstEnrSeven202108STEP_P_05
 }
 // ø <---------- </msboxPostEnrollmentSevenPerformStepDO> ---------->
 
@@ -3903,7 +3903,7 @@ export async function msboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# n
     let jsonDataObject = JSON.parse(jsonDataJSON);
     memory.setItem('stepObjects',JSON.stringify(jsonDataObject.stepObjects));
     memory.setItem('stepMessaging',JSON.stringify(jsonDataObject.stepMessaging));
-    // pstEnrSeven202108STEP_R_01 ==> pstEnrSeven202108STEP_RN_02
+    // pstEnrSeven202108STEP_R_01 ==> GoTo: AnyAction ==> pstEnrSeven202108STEP_RN_02
     msboxPostEnrollmentSevenAnyAction(responseObject);
     // </202108100800> pstEnrSevenNEW202108
 }
@@ -3922,7 +3922,7 @@ export async function msboxPostEnrollmentSevenActionNext(anyButtonLog = '{# no b
     responseObject.messageKey = 'primary';
     responseObject.messageRandomInfo = Math.random() * 100 > 66 ? true : false;
     responseObject.messageResponse = false;
-    // pstEnrSeven202108STEP_N_01 ==> pstEnrSeven202108STEP_N_02
+    // pstEnrSeven202108STEP_N_01 ==> Call: ANY-ACTION ==> pstEnrSeven202108STEP_N_02
     msboxPostEnrollmentSevenAnyAction(responseObject);
 
 }
@@ -3943,7 +3943,7 @@ export async function msboxPostEnrollmentSevenActionPerform(anyButtonLog = '{# n
     responseObject.messageKey = messageKeyArray[Math.floor(Math.random() * messageKeyArray.length)];
     responseObject.messageRandomInfo = Math.random() * 100 > 66 ? true : false;
     responseObject.messageResponse = true;
-    // pstEnrSeven202108STEP_P_01 ==> pstEnrSeven202108STEP_P_02
+    // pstEnrSeven202108STEP_P_01 ==> Call: ANY-ACTION ==> pstEnrSeven202108STEP_P_02
     msboxPostEnrollmentSevenAnyAction(responseObject);
 }
 // ø <---------- </msboxPostEnrollmentSevenActionPerform - PERFORM_STATE_SCRIPTS> ---------->

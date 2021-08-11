@@ -1,14 +1,33 @@
-• <----- <last hunk from Sunday> ----->
-ø TRY ONCE on 'stateZero' Next-State KLUDGE
-ø Take in Soup to Nuts
-ø BEFORE && AFTER testing Paradigm
-ø Confirm BEFORE does Not Break anything
-ø ¿BEFORE && AFTER idean just not working?
+• <----- <daily Commits>  ----->
+ø Soup-To-Nuts
+• postEnrollment (after midnight)
+• <----- </daily Commits> ----->
+
+• <----- <sourcedJSON Table and Queries>  ----->
+• move bootstrapMessaging to OnReadyAction()
+• confirm the extent of WiX-Storage
+      ↪ approx 50,000 Lines-of-Code for local. && session. (50 klocs)
+      ↪ approx 1,000,000 Lines-of-Code for memory. && session. (1,000 klocs)
+• <----- </sourcedJSON Table and Queries> ----->
+
+• <----- <use Messaging as Pseudo Coding Response>  ----->
+ø Get Steps-List side-bar working
+      ↪ as String to Primary within NEXT-UI && After-DO
+      ↪ as String to Response within PERFORM-UI && After-DO
+      ↪ as necessary change Response Break-Points for String Length
+• <----- </use Messaging as Pseudo Coding Response> ----->
+
+• <----- <Code Clean-Up>  ----->
+• Update the QUICK-FIND tags and 
+• Add a STEPS System 
+      ↪ a sequential CMD-F Tags mechanism to Step-Thru the Code-Flow
+ø Improve on STEPS System with DOX of where you are just prior to CMD-F
+• <----- </Code Clean-Up> ----->
+
+
 
 
 ---
-
 ø refactor find responseObject.button to responseObject.actionKey
-ø refactor mxbox to msbox
 ø ¿ refactor 'PostEnrollmentSeven' to 'PstEnrSeven' ? 
 ø use Drupal Logging ¿ OR ? create custom Dupal Log DB and use the API

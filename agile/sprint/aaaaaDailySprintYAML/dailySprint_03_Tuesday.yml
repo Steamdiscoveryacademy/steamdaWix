@@ -4,15 +4,29 @@
 • <----- </daily Commits> ----->
 
 • <----- <sourcedJSON Table and Queries>  ----->
-ø move bootstrapMessaging to OnReadyAction()
+• move bootstrapMessaging to OnReadyAction()
+• confirm the extent of WiX-Storage
+      ↪ approx 50,000 Lines-of-Code for local. && session. (50 klocs)
+      ↪ approx 1,000,000 Lines-of-Code for memory. && session. (1,000 klocs)
 • <----- </sourcedJSON Table and Queries> ----->
+
+• <----- <Code Clean-Up>  ----->
+• clean out mxsboxAnyAction[¡X!] now that mxsboxAnyAction[¡S!] is getting robust
+• refactor msboxCurrentId to msboxCurrentStateId ( && Next)
+• refactor mxbox[¡X!] to msbox[¡S!] all by duplication
+• check all calls to anything mxboz[¡X!]
+• refactor mxbox[¡X!] to msbox[¡S!] all by deletion
+• Commits && Testing Logs all the way
+• Update the QUICK-FIND tags and 
+• Add a STEPS System 
+      ↪ a sequential CMD-F Tags mechanism to Step-Thru the Code-Flow
+ø Improve on STEPS System with DOX of where you are just prior to CMD-F
+• <----- </Code Clean-Up> ----->
 
 
 
 
 ---
-ø refactor msboxCurrentId to msboxCurrentStateId ( && Next)
 ø refactor find responseObject.button to responseObject.actionKey
-ø refactor mxbox to msbox
 ø ¿ refactor 'PostEnrollmentSeven' to 'PstEnrSeven' ? 
 ø use Drupal Logging ¿ OR ? create custom Dupal Log DB and use the API

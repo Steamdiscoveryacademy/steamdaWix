@@ -10,18 +10,8 @@ https://webhook.site/191e8210-1ce6-4d05-8d72-e3a3a10cf0e4
 
 ===================================
 
-preTrashLog //big accrual
+// pstEnrSeven202108STEP_ESLS_01 ==> Return to pstEnrSeven ==> pstEnrSeven202108STEP_P_04RETURN
 
-ppDatabaseResponseJSON //big seven
+let html = doBootstrapMessage('devel',develString,[[-1,18]]); 
 
-ppDatabaseResponseJSON // response Object
-
-stDatabaseResponseJSON // use for Super (message) JSON
-
-
-
-blank-3
-
-DOXobject
-
-Note: 'severity' 'severity word' and 'bootstrap word' are all synced, in that posting logic should use the JSON appended to this table's schema to automatically gather the other two values from any of those offered, of course, allowing the end-user (as appropriate) to override with conflicts.
+eslsDoMessagingReponsesApply(responseObject = {}, paramObject = {})

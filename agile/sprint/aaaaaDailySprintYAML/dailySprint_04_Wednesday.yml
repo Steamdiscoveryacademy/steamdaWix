@@ -11,18 +11,36 @@
 • <----- </sourcedJSON Table and Queries> ----->
 
 • <----- <use Messaging as Pseudo Coding Response>  ----->
-ø Get Steps-List side-bar working
-      ↪ as String to Primary within NEXT-UI && After-DO
-      ↪ as String to Response within PERFORM-UI && After-DO
-      ↪ as necessary change Response Break-Points for String Length
+• Get Steps-List side-bar working
+•      ↪ as String to Primary within NEXT-UI && After-DO
+•      ↪ as String to Response within PERFORM-UI && After-DO
+•      ↪ as necessary change Response Break-Points for String Length
+• place currentStepObject into responseObject AnyAction
+•      ↪ Test/POC assign Title NEXT-UI AFTER
+• place currentMessagingObject into responseObject AnyAction
+•      ↪ Test/POC assign PrimaryHTML NEXT-UI AFTER
 • <----- </use Messaging as Pseudo Coding Response> ----->
 
 • <----- <Code Clean-Up>  ----->
 • Update the QUICK-FIND tags and 
 • Add a STEPS System 
-      ↪ a sequential CMD-F Tags mechanism to Step-Thru the Code-Flow
-ø Improve on STEPS System with DOX of where you are just prior to CMD-F
+•      ↪ a sequential CMD-F Tags mechanism to Step-Thru the Code-Flow
+•      ↪ improve on STEPS System with DOX of where you are just prior to CMD-F
 • <----- </Code Clean-Up> ----->
+
+• <----- <Drupal RestExport Views to sourcedJSON>  ----->
+• gather wix-week-fields data into sourcedJSON
+•      ↪ requires that Array be made into Object with Array
+•      ↪ arrayName = weeksArray
+•      ↪ needs sourcedJSON.jsonDox
+•      ↪ use Content Manager to Unpublish Old prior to gathering
+• gather wix-location-fields data into sourcedJSON
+•      ↪ requires that Array be made into Object with Array
+•      ↪ arrayName = locationsArray
+•      ↪ needs sourcedJSON.jsonDox
+•      ↪ use Content Manager to Publish only Active prior to gathering
+• Drupal View wix-course-fields data into sourcedJSON - LOTS of Twig Tweaking
+• <----- </Drupal RestExport Views to sourcedJSON> ----->
 
 
 

@@ -9,3 +9,18 @@ https://webhook.site/191e8210-1ce6-4d05-8d72-e3a3a10cf0e4
 
 
 ===================================
+
+memory.getItem('stepObjects')
+memory.getItem('stepMessaging')
+memory.getItem('msboxLastState')
+
+10 Academic
+11 Athletic
+260 Enrichment
+
+|date("Y-m-d\\TH:i:s", "America/New_York")
+
+
+FAIL: {{ field_crs_span__value|date("Y-m-d\\TH:i:s", "America/New_York") }} {{ field_crs_span_1__end_value|date("\\ZP",
+"America/New_York") }}
+

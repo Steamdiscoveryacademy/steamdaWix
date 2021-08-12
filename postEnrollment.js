@@ -16,7 +16,7 @@ import wixWindow from 'wix-window';
 
 
 /**
- * ! QICK-FIND UniqueID's for Blocks
+ * ! QUICK-FIND UniqueID's for Blocks
  * ! ===============================
  // ø YIKES = something that needs attention do keep here even if none (well one, this) at atthis time
  // ø pstEnrSevenCore202107 = pstEnrSeven  Core Logic of PERFORM & NEXT 
@@ -24,9 +24,11 @@ import wixWindow from 'wix-window';
  // ø pstEnrSevenNEW202108 = work surrounding pstEnrSeven
  // ø pstEnrSeven202108 for ALL
  // ø pstEnrSeven202108ACTION = Actions OnReady | Next | Perform 
+ // ø pstEnrSeven202108ANY = Actions OnReady | Next | Perform 
  // ø pstEnrSeven202108UI = UI Code for  Next && Perform
  // ø pstEnrSeven202108DO = DO Code  for  Next && Perform
- // ø pstEnrSeven202108STEP_R_01 = Starts with OnReadyAction
+ // ø pstEnrSeven202108ESLS = Do subset of Enrollment Step Loop-Switch (ESLS)
+ // ø QUICK-FIND Step-Thru ==> Starts with OnReadyAction ==> pstEnrSeven202108STEP_R_01
  */
 
 
@@ -106,6 +108,62 @@ export function onReadyPostEnrollment(){
 // ! ====================            <Overall Enrollment Steps Loop-Switch Code>           ==============
 // ! ====================        ...for Testing, Running, (perhaps later) Debugging        ==============
 // ! ====================================================================================================
+export async function eslsDoPeformStepArray(paramObject = { logArrayDeveloper: [] }){
+    // NOTE: using responseObject 'paradigm' but paramObject as 'Blood-Brain-Barrier'
+    // pstEnrSeven202108ESLS BEGIN
+    // pstEnrSeven202108STEP_ESLS_01 BEGIN
+    // let stepsArray = paramObject.stepsArray;
+    
+    //<TESTING ONE-BY-ONE>
+    let stepsArray = [];
+    let testIndex = 0;
+    let testBreakIndex = 1;
+    while (testIndex < testBreakIndex ) {
+        stepsArray.push(paramObject.stepsArray[0]);
+        testIndex++;
+    }
+    //<TESTING ONE-BY-ONE>
+
+    // ø <ELSE>
+    if(Array.isArray(stepsArray) === false || stepsArray.length < 1){
+        paramObject.logArrayDeveloper.push('{¡ paramObjects.stepsArray INVALID: Not Array or Empty !}');
+        return;
+    }
+    if((stepsArray[0]).length < 1){
+        paramObject.logArrayDeveloper.push('{¡ paramObjects.stepsArray[0] INVALID: length < 1 !}');
+        return;
+    }
+    if(stepsArray[0] === 'COMPLETE'){
+        paramObject.logArrayDeveloper.push(`{¡ First Step 'COMPLETE' [¿likely purposeful?] !}`);
+        return;
+    }
+    // ø </ELSE>
+    let key = 'PPENDING';
+    while (stepsArray[0] !== 'COMPLETE') {
+        key = stepsArray.shift()
+        stepsArray.push(key)
+        switch (key) {
+            case 'DELETEME_NOT_A_STEP':
+                key = 'COMPLETE';
+                break;
+        
+            default:
+                paramObject.logArrayDeveloper.push(`{# default: ${key} not supported in SWITCH [¿expected for testing?] #}`);
+                break;
+        }
+        // ! <USE_LOCAL_SKIP_FUNCTION>
+        // stepsCycleSteps();
+        // ø <ExitAfter Switch Check>
+        // doCheckExitAfter();
+        // if (memory.getItem('loopExitNow') !== 'FFALSE') {
+        //     local.setItem('logString', local.getItem('logString') + '\n[~150]exiting (Break Loop is Exit): ' + 'doStepLoopSwitch()')
+        //     break;//(Break Loop is Exit)
+        // }
+        // ! </USE_LOCAL_SKIP_FUNCTION>
+    }
+    // pstEnrSeven202108STEP_ESLS_01 ==> Return to pstEnrSeven ==> pstEnrSeven202108STEP_P_04RETURN
+}
+
 export async function doPeformNextStep(){
     local.setItem('logString', local.getItem('logString') + '\n[~50]entering: ' + 'doPeformNextStep()')
 	$w('#txtCodeLabel').text = 'doPerformNextStep';
@@ -3718,6 +3776,7 @@ export function btnDemoIfElseThen_click(event) {
 // ø FIND pstEnrSevenCore202107 ANY-ACTION
 export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}){
     // pstEnrSevenNEW202108 BEGIN
+    // pstEnrSeven202108ANY BEGIN
     // pstEnrSeven202108STEP_RN_02 ==> OnReadty-To-Next ==> pstEnrSeven202108STEP_N_02
     // pstEnrSeven202108STEP_N_02 ANY-BEFORE BEGIN
     // pstEnrSeven202108STEP_P_02 ANY-BEFORE BEGIN
@@ -3726,7 +3785,8 @@ export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}){
     responseObject.logArrayDeveloper.push(`{% memory.getItem('stepMessaging').length === ${memory.getItem('stepMessaging').length} %}`);
     responseObject.logArrayDeveloper.push(`{% memory.getItem('stepObjects').length === ${memory.getItem('stepObjects').length} %}`);
 
-    DOX = '≈ 3722 ≈ ANY: <but used later>';
+    DOX = '≈ 3729 ≈ {<ANY: but used later>}';
+    // ø <StatesArray from memory., Current State LIVE, memoryCurrentStateId, memoryNextStateId >
     // ø just setting to memory-wixStorage
     let statesArray = memory.getItem('msboxAllStatesList').split(',');
     let targetState = ($w(memory.getItem('msboxCurrentId')).currentState).id;
@@ -3734,9 +3794,26 @@ export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}){
     let nextIndex = statesArray.indexOf(targetState) + 1;
     targetState = statesArray[nextIndex];
     memory.setItem('msboxNextStateId',targetState)
-    responseObject.logArrayDeveloper.push(`≈ 3726 ≈ {% memory.getItem('msboxCurrentStateId'): ${memory.getItem('msboxCurrentStateId')} %}`);
-    responseObject.logArrayDeveloper.push(`≈ 3729 ≈ {% memory.getItem('msboxNextStateId'): ${memory.getItem('msboxNextStateId')} %}`);
-    DOX = 'ANY: </but used later>';
+    responseObject.logArrayDeveloper.push(`≈ 3740 ≈ {% memory.getItem('msboxCurrentStateId'): ${memory.getItem('msboxCurrentStateId')} %}`);
+    responseObject.logArrayDeveloper.push(`≈ 3741 ≈ {% memory.getItem('msboxNextStateId'): ${memory.getItem('msboxNextStateId')} %}`);
+    responseObject.logArrayDeveloper.push(`≈ 3742 ≈ {% memory.getItem('msboxLastState'): ${memory.getItem('msboxLastState')} %}`);
+    // ø </StatesArray from memory., Current State LIVE, memoryCurrentStateId, memoryNextStateId >
+    DOX = '{<POPULATE: responseObject .messagingObject, .stepObject by Above>}';
+    let tempObject = {};
+    let tempObjectJSON = '';
+    let tempKey = 'PPENDING';
+    // tempObjectJSON = memory.getItem('stepObjects');
+    tempKey = responseObject.button === 'NEXT' ? memory.getItem('msboxNextStateId') : memory.getItem('msboxCurrentStateId');
+    tempObject = JSON.parse(memory.getItem('stepObjects'));
+    responseObject.currentStepObject = tempObject[tempKey];
+    tempObject = JSON.parse(memory.getItem('stepMessaging'));
+    responseObject.currentMessagingObject = tempObject[tempKey];
+    responseObject.logArrayDeveloper.push(`≈ 3754 ≈ {% (responseObject.currentStepObject).length === ${(JSON.stringify(responseObject.currentStepObject)).length} %}`);
+    responseObject.logArrayDeveloper.push(`≈ 3755 ≈ {% (responseObject.currentMessagingObject).length === ${(JSON.stringify(responseObject.currentMessagingObject)).length} %}`);
+
+    // responseObject.messagingObject = memory.getItem('stepMessaging')[memory.getItem('msboxCurrentStateId')];
+    DOX = '{</POPULATE: responseObject .messagingObject, .stepObject by Above>}';
+    DOX = '{</ANY: but used later>}';
 
     // ø <ELSE>
     DOX = '<YES_ANY_ACTION>'
@@ -3766,6 +3843,8 @@ export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}){
         responseObject.logArrayDeveloper.push('≈ 3963 ≈ ◊ PREV: lastClicked === NEXT_STATE ◊');
         // pstEnrSeven202108STEP_N_02 ==> Call: NEXT-UI ==> pstEnrSeven202108STEP_N_03
         await msboxPostEnrollmentSevenNextStateUI(responseObject);
+        responseObject.logArrayDeveloper.push(`≈ 3782 ≈ {% AFTER-NEXT: memory.getItem('msboxLastState'): ${memory.getItem('msboxLastState')} %}`);
+
     }
     // ! </Call 'NEXT' Sequence>
 
@@ -3786,6 +3865,8 @@ export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}){
     // pstEnrSevenNEW202108 END
     // pstEnrSeven202108STEP_N_06 ==> Complete: ANY-DONE ==> NEXT CLICK ==> pstEnrSeven202108STEP_P_01
     // pstEnrSeven202108STEP_P_06 ==> Complete: ANY-DONE ==> NEXT CLICK ==> pstEnrSeven202108STEP_N_01
+    // pstEnrSeven202108ANY END
+
 }
 // ø <---------- </msboxPostEnrollmentSevenAnyAction> ---------->
 
@@ -3807,6 +3888,12 @@ export async function msboxPostEnrollmentSevenNextStateUI(responseObject = {}) {
     // ø <After DO-Script Called>
     DOX = `After DO-Next - Within UI-Next: show btnCurrent/hide btnNext`;
     responseObject.logArrayDeveloper.push(`{% ${DOX} %}`);
+    $w('#txtPeSevenTitle').text = responseObject.currentStepObject.title;
+    responseObject.logArrayDeveloper.push(`≈ 3835 ≈ {% POC stepObject: responseObject.currentStepObject.title: ${responseObject.currentStepObject.title} %}`);
+    $w('#txtBootstrapPrimary').html = doBootstrapMessage('primary',responseObject.currentMessagingObject.primary);
+    responseObject.logArrayDeveloper.push(`≈ 3837 ≈ {% POC messageObject: responseObject.currentMessagingObject.primary: ${responseObject.currentMessagingObject.primary} %}`);
+    instantiateLoopSwitchEnrollmentSteps(responseObject.currentStepObject.origSteps.allStepArray);
+    displaySteps();
     $w('#btnPeSevenCurrent').show();
     $w('#btnPeSevenNext').hide();
     // ø </After DO-Script Called>
@@ -3865,14 +3952,61 @@ export async function msboxPostEnrollmentSevenPerformStepDO(responseObject = {})
     // pstEnrSeven202108DO PERFORM-DO BEGIN
     // pstEnrSeven202108STEP_P_04 PERFORM-DO BEGIN
     responseObject.logArrayDeveloper.push('{% msboxPostEnrollmentSevenPerformStepDO %}');
-    responseObject.logArrayDeveloper.push('memory.getItem(msboxLastState) === ' + memory.getItem('msboxLastState'));
-    responseObject.logArrayDeveloper.push('memory.getItem(msboxCurrentId) === ' + memory.getItem('msboxCurrentId'));
-    responseObject.logArrayDeveloper.push('{# PERFORM_STEP_DO is, other than instantiateSteps and Display, is INERT #}');
-    instantiateLoopSwitchEnrollmentSteps(responseObject.currentStepOriginalStepsArray);
-    displaySteps();
+    // responseObject.logArrayDeveloper.push('memory.getItem(msboxLastState) === ' + memory.getItem('msboxLastState'));
+    // responseObject.logArrayDeveloper.push('memory.getItem(msboxCurrentId) === ' + memory.getItem('msboxCurrentId'));
+    
+    // responseObject.logArrayDeveloper.push('{# PERFORM_STEP_DO is, other than instantiateSteps and Display, is INERT #}');
+    // PERFORM
+
+
+    // instantiateLoopSwitchEnrollmentSteps(responseObject.currentStepOriginalStepsArray);
+    // displaySteps();
+
+    
     responseObject.logArrayDeveloper.push('{# PERFORM_STEP_DO just performed instantiateSteps and Display #}');
     // ø FIND pstEnrSevenCore202107 PERFORM_STEP_DO_END
-    // pstEnrSeven202108STEP_P_04 ==> Return-To: PERFORM-UI ==> pstEnrSeven202108STEP_P_05
+    let paramObject = {};
+    // paramObject.stepsArray = responseObject.;
+    paramObject.logArray = [];
+    paramObject.logArrayDeveloper = [];
+    paramObject.logArrayDeveloper.push('just prior to Call');
+    paramObject.messaging = {};
+    paramObject.messaging.primary = 'primaryFAUX';
+    paramObject.messaging.success = 'successFAUX';
+    paramObject.messaging.danger = 'dangerFAUX';
+    paramObject.messaging.warning = 'warningFAUX';
+    paramObject.messaging.info = 'infoFAUX';
+    paramObject.messaging.devel = 'develFAUX';
+    // pstEnrSeven202108ESLS
+    // pstEnrSeven202108STEP_P_04 ==> Pefrom Enrollment Steps Loop-Switch ==> pstEnrSeven202108STEP_ESLS_01
+    // eslsDoPeformStepArray(paramObject);
+
+    // eslsDoMessagingReponsesApply(responseObject, paramObject);
+        /*let holderKey = 'FAUX';
+        // ø <MAYBE A FUNCTION>
+        let response = 'EEMPTY';
+        // in decreasing eggregiousness so most eggregious is 'TAKEN'
+        holderKey = paramObject.messaging.danger !== 'dangerFAUX' ? 'danger' : holderKey;
+        holderKey = paramObject.messaging.warning !== 'warningFAUX' && holderKey === 'FAUX'? 'warning' : holderKey;
+        holderKey = paramObject.messaging.success !== 'successFAUX' && holderKey === 'FAUX'? 'success' : holderKey;
+        response = holderKey === 'FAUX' ? 'EEMPTY' : paramObject.messaging[holderKey];
+        responseObject.currentMessagingObject.responseKey = holderKey;
+        responseObject.currentMessagingObject.response = response;
+        
+        holderKey = 'FAUX';
+        holderKey = paramObject.messaging.primary === 'primaryFAUX' ? holderKey : 'primaryFAUX';
+        responseObject.currentMessagingObject.primary = holderKey === 'FAUX' ? responseObject.currentMessagingObject.primary : paramObject.messaging.primary;
+        holderKey = 'FAUX';
+        holderKey = paramObject.messaging.info === 'infoFAUX' ? holderKey : 'infoFAUX';
+        responseObject.currentMessagingObject.info = holderKey === 'FAUX' ? responseObject.currentMessagingObject.info : paramObject.messaging.info;
+        holderKey = 'FAUX';
+        holderKey = paramObject.messaging.devel === 'develFAUX' ? holderKey : 'develFAUX';
+        responseObject.currentMessagingObject.devel = holderKey === 'FAUX' ? responseObject.currentMessagingObject.devel : paramObject.messaging.devel;
+        // ø </MAYBE A FUNCTION>
+        */
+    Array.prototype.push.apply(responseObject.logArrayDeveloper,paramObject.logArrayDeveloper);
+    // pstEnrSeven202108STEP_P_04RETURN #return from esl
+    // pstEnrSeven202108STEP_P_04RETURN ==> Return-To: PERFORM-UI ==> pstEnrSeven202108STEP_P_05
 }
 // ø <---------- </msboxPostEnrollmentSevenPerformStepDO> ---------->
 
@@ -3919,9 +4053,11 @@ export async function msboxPostEnrollmentSevenActionNext(anyButtonLog = '{# no b
     responseObject.logArrayDeveloper = [];
     responseObject.logArrayDeveloper.push(anyButtonLog);
     responseObject.button = 'NEXT';
-    responseObject.messageKey = 'primary';
-    responseObject.messageRandomInfo = Math.random() * 100 > 66 ? true : false;
-    responseObject.messageResponse = false;
+    let DOX = '<more rigorous and belongs where PRIMARY Happens>'
+    // responseObject.messageKey = 'primary';
+    // responseObject.messageRandomInfo = Math.random() * 100 > 66 ? true : false;
+    // responseObject.messageResponse = false;
+    DOX = '</more rigorous and belongs where PRIMARY Happens>'
     // pstEnrSeven202108STEP_N_01 ==> Call: ANY-ACTION ==> pstEnrSeven202108STEP_N_02
     msboxPostEnrollmentSevenAnyAction(responseObject);
 
@@ -3939,11 +4075,13 @@ export async function msboxPostEnrollmentSevenActionPerform(anyButtonLog = '{# n
     responseObject.logArrayDeveloper = [];
     responseObject.logArrayDeveloper.push(anyButtonLog);
     responseObject.button = 'CURRENT';
-    let messageKeyArray = ["success", "success", "warning", "danger"];
-    responseObject.messageKey = messageKeyArray[Math.floor(Math.random() * messageKeyArray.length)];
-    responseObject.messageRandomInfo = Math.random() * 100 > 66 ? true : false;
-    responseObject.messageResponse = true;
+    let DOX = '<more rigorous and belongs where RESPONSE Happens>'
+    // let messageKeyArray = ["success", "success", "warning", "danger"];
+    // responseObject.messageKey = messageKeyArray[Math.floor(Math.random() * messageKeyArray.length)];
+    // responseObject.messageRandomInfo = Math.random() * 100 > 66 ? true : false;
+    // responseObject.messageResponse = true;
     // pstEnrSeven202108STEP_P_01 ==> Call: ANY-ACTION ==> pstEnrSeven202108STEP_P_02
+    DOX = '</more rigorous and belongs where RESPONSE Happens>'
     msboxPostEnrollmentSevenAnyAction(responseObject);
 }
 // ø <---------- </msboxPostEnrollmentSevenActionPerform - PERFORM_STATE_SCRIPTS> ---------->
@@ -4101,6 +4239,32 @@ export function doBootstrapMessage(key,messageThis = 'DEFAULT', responsiveByLeng
 }
 // ø <---------- </doBootstrapMessage UI> ---------->
 
+// ø <---------- <eslsDoMessagingReponsesApply UI>  ---------->
+export function eslsDoMessagingReponsesApply(responseObject = {}, paramObject = {}){
+    // ø <MAYBE A FUNCTION>
+    let holderKey = 'FAUX';
+    let response = 'EEMPTY';
+    // in decreasing eggregiousness so most eggregious is 'TAKEN'
+    holderKey = paramObject.messaging.danger !== 'dangerFAUX' ? 'danger' : holderKey;
+    holderKey = paramObject.messaging.warning !== 'warningFAUX' && holderKey === 'FAUX'? 'warning' : holderKey;
+    holderKey = paramObject.messaging.success !== 'successFAUX' && holderKey === 'FAUX'? 'success' : holderKey;
+    response = holderKey === 'FAUX' ? 'EEMPTY' : paramObject.messaging[holderKey];
+    responseObject.currentMessagingObject.responseKey = holderKey;
+    responseObject.currentMessagingObject.response = response;
+    
+    holderKey = 'FAUX';
+    holderKey = paramObject.messaging.primary === 'primaryFAUX' ? holderKey : 'primaryFAUX';
+    responseObject.currentMessagingObject.primary = holderKey === 'FAUX' ? responseObject.currentMessagingObject.primary : paramObject.messaging.primary;
+    holderKey = 'FAUX';
+    holderKey = paramObject.messaging.info === 'infoFAUX' ? holderKey : 'infoFAUX';
+    responseObject.currentMessagingObject.info = holderKey === 'FAUX' ? responseObject.currentMessagingObject.info : paramObject.messaging.info;
+    holderKey = 'FAUX';
+    holderKey = paramObject.messaging.devel === 'develFAUX' ? holderKey : 'develFAUX';
+    responseObject.currentMessagingObject.devel = holderKey === 'FAUX' ? responseObject.currentMessagingObject.devel : paramObject.messaging.devel;
+    // ø </MAYBE A FUNCTION>
+}
+// ø <---------- </eslsDoMessagingReponsesApply UI> ---------->
+// pstEnrSevenUtility202107 END
 // ø <---------- <getSourcedJSON_byKey UTILITY>  ---------->
 // pstEnrSevenNEW202108
 export async function getSourcedJSON_byKey(key) {

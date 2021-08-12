@@ -1,30 +1,51 @@
-• <----- <last hunk from Sunday> ----->
-ø TRY ONCE on 'stateZero' Next-State KLUDGE
-ø Take in Soup to Nuts
-ø BEFORE && AFTER testing Paradigm
-ø Confirm BEFORE does Not Break anything
-ø ¿BEFORE && AFTER idean just not working?
----
-• better Logging (made object, include resolveObject)
-• test the Log
-• create a new State-Click 'Key' for the Log
-• make sure it doesn't break
-• Ad button to Prepend and Append to make the comma separated JSON Objects into a JSON Object Array
-• make sure it doesn't break
-• take the tasks above put them all, with a 'copy' and put them just prior to => wixLocation.to("/blank-3");
-• make sure it doesn't break
-• use Canine Consulting to test Collapse (I think it's about 'grouping')
-• apply what you learn to steamda and the Post-Enrollment Messaging
-• make sure it doesn't break
-• improve logShorthands.js to build an Object so that JSON can be harvested, and notes can be an array
-• add MDN dox for Array-Concat
----
-• build WatchDog-Emulation Table
-ø commit down to dev (¿or up to live?)
-ø Try with PostMan to POST there
+• <----- <daily Commits>  ----->
+ø Soup-To-Nuts
+• postEnrollment (after midnight)
+• <----- </daily Commits> ----->
+
+• <----- <sourcedJSON Table and Queries>  ----->
+• move bootstrapMessaging to OnReadyAction()
+• confirm the extent of WiX-Storage
+      ↪ approx 50,000 Lines-of-Code for local. && session. (50 klocs)
+      ↪ approx 1,000,000 Lines-of-Code for memory. && session. (1,000 klocs)
+• <----- </sourcedJSON Table and Queries> ----->
+
+• <----- <use Messaging as Pseudo Coding Response>  ----->
+• Get Steps-List side-bar working
+•      ↪ as String to Primary within NEXT-UI && After-DO
+•      ↪ as String to Response within PERFORM-UI && After-DO
+•      ↪ as necessary change Response Break-Points for String Length
+• place currentStepObject into responseObject AnyAction
+•      ↪ Test/POC assign Title NEXT-UI AFTER
+• place currentMessagingObject into responseObject AnyAction
+•      ↪ Test/POC assign PrimaryHTML NEXT-UI AFTER
+• <----- </use Messaging as Pseudo Coding Response> ----->
+
+• <----- <Code Clean-Up>  ----->
+• Update the QUICK-FIND tags and 
+• Add a STEPS System 
+•      ↪ a sequential CMD-F Tags mechanism to Step-Thru the Code-Flow
+•      ↪ improve on STEPS System with DOX of where you are just prior to CMD-F
+• <----- </Code Clean-Up> ----->
+
+• <----- <Drupal RestExport Views to sourcedJSON>  ----->
+• gather wix-week-fields data into sourcedJSON
+•      ↪ requires that Array be made into Object with Array
+•      ↪ arrayName = weeksArray
+•      ↪ needs sourcedJSON.jsonDox
+•      ↪ use Content Manager to Unpublish Old prior to gathering
+• gather wix-location-fields data into sourcedJSON
+•      ↪ requires that Array be made into Object with Array
+•      ↪ arrayName = locationsArray
+•      ↪ needs sourcedJSON.jsonDox
+•      ↪ use Content Manager to Publish only Active prior to gathering
+• Drupal View wix-course-fields data into sourcedJSON - LOTS of Twig Tweaking
+• <----- </Drupal RestExport Views to sourcedJSON> ----->
+
+
 
 
 ---
-ø refactor mxbox to msbox
+ø refactor find responseObject.button to responseObject.actionKey
 ø ¿ refactor 'PostEnrollmentSeven' to 'PstEnrSeven' ? 
 ø use Drupal Logging ¿ OR ? create custom Dupal Log DB and use the API

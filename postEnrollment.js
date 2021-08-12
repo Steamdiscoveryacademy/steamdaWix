@@ -19,10 +19,8 @@ import wixWindow from 'wix-window';
  * ! QUICK-FIND UniqueID's for Blocks
  * ! ===============================
  // ø YIKES = something that needs attention do keep here even if none (well one, this) at atthis time
- // ø pstEnrSevenCore202107 = pstEnrSeven  Core Logic of PERFORM & NEXT 
- // ø pstEnrSevenUtility202107 = work surrounding pstEnrSeven
- // ø pstEnrSevenNEW202108 = work surrounding pstEnrSeven
- // ø pstEnrSeven202108 for ALL
+ // ø pstEnrSeven202108 =  for ALL (prefix of all below)
+ // ø pstEnrSeven202108UTILITY = Utilities for work surrounding pstEnrSeven
  // ø pstEnrSeven202108ACTION = Actions OnReady | Next | Perform 
  // ø pstEnrSeven202108ANY = Actions OnReady | Next | Perform 
  // ø pstEnrSeven202108UI = UI Code for  Next && Perform
@@ -3762,7 +3760,7 @@ export function btnDemoIfElseThen_click(event) {
 
 // ! =========================================================================================================================
 // ! ==================================          <SEVENT-SUPER-STEPS with MultiStateBox>          ============================
-// ! ==================================                     FIND pstEnrSevenCore202107                    ============================
+// ! ==================================                     FIND pstEnrSeven202108                    ============================
 // ! =========================================================================================================================
 
 // ø <---------- <msboxPostEnrollmentSeven AnyAction PerformStep NextState> ---------->
@@ -3770,12 +3768,10 @@ export function btnDemoIfElseThen_click(event) {
 // ø <----------                 <refactor or live with it>                 ---------->
 
 // ø <---------- <mxboxPstEnrSeven_soupToNuts>  ---------->
-// ø FIND pstEnrSevenCore202107 SOUP_TO_NUTS
+// ø FIND pstEnrSeven202108 SOUP_TO_NUTS
 
 // ø <---------- <msboxPostEnrollmentSevenAnyAction>  ---------->
-// ø FIND pstEnrSevenCore202107 ANY-ACTION
 export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}){
-    // pstEnrSevenNEW202108 BEGIN
     // pstEnrSeven202108ANY BEGIN
     // pstEnrSeven202108STEP_RN_02 ==> OnReadty-To-Next ==> pstEnrSeven202108STEP_N_02
     // pstEnrSeven202108STEP_N_02 ANY-BEFORE BEGIN
@@ -3823,7 +3819,7 @@ export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}){
         return;
     }
     // ø </ELSE>
-    // ø FIND pstEnrSevenCore202107 YES_ANY_ACTION if it's HERE it belongs in Any Action
+    // ø FIND pstEnrSeven202108 YES_ANY_ACTION if it's HERE it belongs in Any Action
     DOX = '</YES_ANY_ACTION>'
 
     // ! <Call 'PERFORM' Sequence>
@@ -3862,7 +3858,6 @@ export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}){
         $w('#preTrashLog').value += DOX;
     // ø </LOG STEP IN UI>
     // ! <NUTS! This really is the End of the Sequence>
-    // pstEnrSevenNEW202108 END
     // pstEnrSeven202108STEP_N_06 ==> Complete: ANY-DONE ==> NEXT CLICK ==> pstEnrSeven202108STEP_P_01
     // pstEnrSeven202108STEP_P_06 ==> Complete: ANY-DONE ==> NEXT CLICK ==> pstEnrSeven202108STEP_N_01
     // pstEnrSeven202108ANY END
@@ -3871,7 +3866,6 @@ export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}){
 // ø <---------- </msboxPostEnrollmentSevenAnyAction> ---------->
 
 // ø <---------- <msboxPostEnrollmentSevenNextStateUI>  ---------->
-// ø FIND pstEnrSevenCore202107 NEXT_STATE_UI
 export async function msboxPostEnrollmentSevenNextStateUI(responseObject = {}) {
     // pstEnrSeven202108UI NEXT-UI BEGIN
     // pstEnrSeven202108STEP_N_03 NEXT-UI-BEFORE BEGIN
@@ -3899,16 +3893,13 @@ export async function msboxPostEnrollmentSevenNextStateUI(responseObject = {}) {
     // ø </After DO-Script Called>
     // pstEnrSeven202108STEP_N_05 ==> ReturnTo: ANY-AFTER ==> pstEnrSeven202108STEP_N_06
 }
-// ø FIND pstEnrSevenCore202107 NEXT_STATE_UI_END
 // ø <---------- </msboxPostEnrollmentSevenNextStateUI> ---------->
 
 // ø <---------- <msboxPostEnrollmentSevenNextStateDO>  ---------->
-// ø FIND pstEnrSevenCore202107 NEXT_STATE_DO
 export async function msboxPostEnrollmentSevenNextStateDO(responseObject = {}) {
     // pstEnrSeven202108DO
     // pstEnrSeven202108STEP_N_04 NEXT-DO BEGIN
     responseObject.logArrayDeveloper.push('{% msboxPostEnrollmentSevenNextStateDO %}');
-    // pstEnrSevenNEW202108 NEXT-DO BEGIN
     // $w(memory.getItem('msboxCurrentId')).changeState(targetState);
     $w(memory.getItem('msboxCurrentId')).changeState(memory.getItem('msboxNextStateId'));
     memory.setItem('msboxLastState', memory.getItem('msboxNextStateId'));
@@ -3917,13 +3908,10 @@ export async function msboxPostEnrollmentSevenNextStateDO(responseObject = {}) {
     // pstEnrSeven202108STEP_N_04 ==> Return-To: NEXT-UI ==> pstEnrSeven202108STEP_N_05
 }
 // ø </toNUTS>
-
-// ø FIND pstEnrSevenCore202107 NEXT_STATE_DO_END
 // ø <---------- </msboxPostEnrollmentSevenNextStateDO> ---------->
 
 
 // ø <---------- <msboxPostEnrollmentSevenPerformStepUI>  ---------->
-// ø FIND pstEnrSevenCore202107 PERFORM_STEP_UI
 export async function msboxPostEnrollmentSevenPerformStepUI(responseObject = {}) {
     // pstEnrSeven202108UI PERFORM-UI BEGIN
     // pstEnrSeven202108STEP_P_03 PERFORM-UI-BEFORE BEGIN
@@ -3942,12 +3930,9 @@ export async function msboxPostEnrollmentSevenPerformStepUI(responseObject = {})
     // ø </After DO-Script Called>
     // pstEnrSeven202108STEP_P_05 ==> ReturnTo: ANY-AFTER ==> pstEnrSeven202108STEP_P_06
 }
-
-// ø FIND pstEnrSevenCore202107 PERFORM_STEP_UI_END
 // ø <---------- </msboxPostEnrollmentSevenPerformStepUI> ---------->
 
 // ø <---------- <msboxPostEnrollmentSevenPerformStepDO>  ---------->
-// ø FIND pstEnrSevenCore202107 PERFORM_STEP_DO
 export async function msboxPostEnrollmentSevenPerformStepDO(responseObject = {}) {
     // pstEnrSeven202108DO PERFORM-DO BEGIN
     // pstEnrSeven202108STEP_P_04 PERFORM-DO BEGIN
@@ -3963,8 +3948,6 @@ export async function msboxPostEnrollmentSevenPerformStepDO(responseObject = {})
     // displaySteps();
 
     
-    responseObject.logArrayDeveloper.push('{# PERFORM_STEP_DO just performed instantiateSteps and Display #}');
-    // ø FIND pstEnrSevenCore202107 PERFORM_STEP_DO_END
     let paramObject = {};
     // paramObject.stepsArray = responseObject.;
     paramObject.logArray = [];
@@ -3980,6 +3963,7 @@ export async function msboxPostEnrollmentSevenPerformStepDO(responseObject = {})
     // pstEnrSeven202108ESLS
     // pstEnrSeven202108STEP_P_04 ==> Pefrom Enrollment Steps Loop-Switch ==> pstEnrSeven202108STEP_ESLS_01
     // eslsDoPeformStepArray(paramObject);
+    responseObject.logArrayDeveloper.push('{# PERFORM_STEP_DO just performed instantiateSteps and Display #}');
 
     // eslsDoMessagingReponsesApply(responseObject, paramObject);
         /*let holderKey = 'FAUX';
@@ -4013,10 +3997,9 @@ export async function msboxPostEnrollmentSevenPerformStepDO(responseObject = {})
 // ø <---------- </msboxPostEnrollmentSeven AnyAction PerformStep NextState> ---------->
 
 // ø <---------- <msboxPostEnrollmentSevenActionScripts>  ---------->
-// ø FIND pstEnrSevenCore202107 ACTION_SCRIPT-ALL
+// pstEnrSeven202108ACTION ACTION_SCRIPT-ALL
 
 // ø <---------- <msboxPostEnrollmentSevenActionOnReady - [within $w.onReady(function ())]>  ---------->
-// ø FIND pstEnrSevenCore202107 ACTION_SCRIPT
 export async function msboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# no button log #}') {
     // pstEnrSeven202108ACTION
     // pstEnrSeven202108STEP_R_01 BEGIN (CLICK DURING DEV)
@@ -4031,7 +4014,7 @@ export async function msboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# n
     responseObject.logArrayDeveloper.push('{# responseObject.button = NEXT #}');
     responseObject.logArrayDeveloper.push('{# memory.setItem(msboxLastState,stateZero) #}');
     
-    // <202108100800> pstEnrSevenNEW202108
+    // <202108100800> 
     let key = "pstEnrBootstrap";
     let jsonDataJSON = await getSourcedJSON_byKey(key);
     let jsonDataObject = JSON.parse(jsonDataJSON);
@@ -4039,7 +4022,7 @@ export async function msboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# n
     memory.setItem('stepMessaging',JSON.stringify(jsonDataObject.stepMessaging));
     // pstEnrSeven202108STEP_R_01 ==> GoTo: AnyAction ==> pstEnrSeven202108STEP_RN_02
     msboxPostEnrollmentSevenAnyAction(responseObject);
-    // </202108100800> pstEnrSevenNEW202108
+    // </202108100800> 
 }
 // ø <---------- </msboxPostEnrollmentSevenActionOnReady - [within $w.onReady(function ())]> ---------->
 // ø <---------- <msboxPostEnrollmentSevenActionNext - NEXT_STATE>  ---------->
@@ -4065,7 +4048,6 @@ export async function msboxPostEnrollmentSevenActionNext(anyButtonLog = '{# no b
 // ø <---------- </msboxPostEnrollmentSevenActionNext - NEXT_STATE> ---------->
 
 // ø <---------- <msboxPostEnrollmentSevenActionPerform - PERFORM_STATE_SCRIPTS>  ---------->
-// ø FIND pstEnrSevenCore202107 ACTION_SCRIPT
 export async function msboxPostEnrollmentSevenActionPerform(anyButtonLog = '{# no button log #}') {
     // pstEnrSeven202108ACTION
     // pstEnrSeven202108STEP_P_01 ACTION-PERFORM BEGIN-CLICK
@@ -4086,11 +4068,11 @@ export async function msboxPostEnrollmentSevenActionPerform(anyButtonLog = '{# n
 }
 // ø <---------- </msboxPostEnrollmentSevenActionPerform - PERFORM_STATE_SCRIPTS> ---------->
 
-// ø FIND pstEnrSevenCore202107 ACTION_SCRIPT-ALL_END
+// pstEnrSeven202108ACTION ACTION_SCRIPT-ALL_END
 // ø <---------- </msboxPostEnrollmentSevenActionScripts> ---------->
 
 
-// ø FIND pstEnrSevenCore202107 SOUP_TO_NUTS-END
+// ø FIND pstEnrSeven202108 SOUP_TO_NUTS-END
 // ø <---------- </mxboxPstEnrSeven_soupToNuts> ---------->
 
 // "stateOnramp"
@@ -4111,8 +4093,8 @@ export function goToStateById(id){
 
 // ø <---------- <goToState>  ---------->
 // ø <---------- <goToState>  ---------->
-// ø FIND pstEnrSevenUtility202107
 export async function goToState(responseObject, direction = 'NEXT'){
+    // pstEnrSeven202108UTILITY BEGIN
     responseObject.logArrayDeveloper.push(`{% goToState(responseObject, ${direction}) %}`);
     direction = direction.toUpperCase();
     let supportedAliasesForPREV = ['PREVIOUS','PREV'];
@@ -4150,19 +4132,20 @@ export async function goToState(responseObject, direction = 'NEXT'){
     }else{
         responseObject.logArrayDeveloper.push(`{% invalid targetId: ${targetId}) %}`);
     }
+    // pstEnrSeven202108UTILITY END
 }
 // ø <---------- </goToState> ---------->
 // ø <---------- </goToState> ---------->
 
 
 // ø <---------- <doBootstrapMessage UI>  ---------->
-// ø FIND pstEnrSevenUtility202107 BOOTSTRAP-MESSAGE
 // ! NOTE: consider,INSTEAD, using 'backend/utility.jsw:renderBootstrapMarkdownString'
 // !           this is where all enhancements will be place
 // ! 20210723171500=>    at this time it _exists_ out there and hasn't broken anything
 // ! I WILL TRY TO KEEP UP, BUT CHECK THE FILE ITSELF, and/or git to be certain
 export function doBootstrapMessage(key,messageThis = 'DEFAULT', responsiveByLengthToFontSize2dArray = [],txtColor = '#007bff',bgColor = '#FFFFFF'){
-// console.log("[fnc]key: " + key)
+    // pstEnrSeven202108UTILITY BEGIN
+    // console.log("[fnc]key: " + key)
 	let messages = [];
 	let messageMatchKey = {};
 	messageMatchKey.primary = "0";
@@ -4236,11 +4219,13 @@ export function doBootstrapMessage(key,messageThis = 'DEFAULT', responsiveByLeng
 	let html = `<p style="${style}">` + messageThis + `</p>`;
     // ø </render HTML>
     return html;
+    // pstEnrSeven202108UTILITY END
 }
 // ø <---------- </doBootstrapMessage UI> ---------->
 
 // ø <---------- <eslsDoMessagingReponsesApply UI>  ---------->
 export function eslsDoMessagingReponsesApply(responseObject = {}, paramObject = {}){
+    // pstEnrSeven202108UTILITY BEGIN
     // ø <MAYBE A FUNCTION>
     let holderKey = 'FAUX';
     let response = 'EEMPTY';
@@ -4262,12 +4247,13 @@ export function eslsDoMessagingReponsesApply(responseObject = {}, paramObject = 
     holderKey = paramObject.messaging.devel === 'develFAUX' ? holderKey : 'develFAUX';
     responseObject.currentMessagingObject.devel = holderKey === 'FAUX' ? responseObject.currentMessagingObject.devel : paramObject.messaging.devel;
     // ø </MAYBE A FUNCTION>
+    // pstEnrSeven202108UTILITY END
 }
 // ø <---------- </eslsDoMessagingReponsesApply UI> ---------->
-// pstEnrSevenUtility202107 END
+
 // ø <---------- <getSourcedJSON_byKey UTILITY>  ---------->
-// pstEnrSevenNEW202108
 export async function getSourcedJSON_byKey(key) {
+    // pstEnrSeven202108UTILITY SHORT
     let now = new Date();
     let nowISO = now.toISOString();
     let recordSourcedJSON = await wixData.query("sourcedJSON")
@@ -4283,7 +4269,7 @@ export async function getSourcedJSON_byKey(key) {
 
 // ! =========================================================================================================================
 // ! ==================================          </SEVENT-SUPER-STEPS with MultiStateBox>         ============================
-// ! ==================================                     FIND pstEnrSevenCore202107  pstEnrSevenUtility202107                ============================
+// ! ==================================                     FIND pstEnrSeven202108 pstEnrSeven202108UTILITY                ============================
 // ! =========================================================================================================================
 
 

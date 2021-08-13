@@ -27,6 +27,7 @@ import wixWindow from 'wix-window';
  // ø pstEnrSeven202108DO = DO Code  for  Next && Perform
  // ø pstEnrSeven202108ESLS = Do subset of Enrollment Step Loop-Switch (ESLS)
  // ø QUICK-FIND Step-Thru ==> Starts with OnReadyAction ==> pstEnrSeven202108STEP_R_01
+ // ø pstEnrSeven202108EslsDoMessaging = maybe short-lived, just for Messaging Function
  */
 
 
@@ -47,7 +48,8 @@ $w.onReady(function () {
     // console.log(`memory.getItem('msboxAllStatesList')`);
     // console.log(memory.getItem('msboxAllStatesList'));
     memory.setItem('DateDOTgetDate','0');
-    $w('#anchorTestProcess').scrollTo();
+    // $w('#anchorTestProcess').scrollTo();
+    $w('#anchorDevOnReadtScroll').scrollTo();
     // goToState()
     // console.log('[ready]Next');
     
@@ -3884,7 +3886,7 @@ export async function msboxPostEnrollmentSevenNextStateUI(responseObject = {}) {
     responseObject.logArrayDeveloper.push(`{% ${DOX} %}`);
     $w('#txtPeSevenTitle').text = responseObject.currentStepObject.title;
     responseObject.logArrayDeveloper.push(`≈ 3835 ≈ {% POC stepObject: responseObject.currentStepObject.title: ${responseObject.currentStepObject.title} %}`);
-    $w('#txtBootstrapPrimary').html = doBootstrapMessage('primary',responseObject.currentMessagingObject.primary);
+    $w('#txtBootstrapPrimary').html = doBootstrapMessage('primary',responseObject.currentMessagingObject.primary,[[-1,36],[50,28]]);
     responseObject.logArrayDeveloper.push(`≈ 3837 ≈ {% POC messageObject: responseObject.currentMessagingObject.primary: ${responseObject.currentMessagingObject.primary} %}`);
     instantiateLoopSwitchEnrollmentSteps(responseObject.currentStepObject.origSteps.allStepArray);
     displaySteps();
@@ -3902,6 +3904,8 @@ export async function msboxPostEnrollmentSevenNextStateDO(responseObject = {}) {
     responseObject.logArrayDeveloper.push('{% msboxPostEnrollmentSevenNextStateDO %}');
     // $w(memory.getItem('msboxCurrentId')).changeState(targetState);
     $w(memory.getItem('msboxCurrentId')).changeState(memory.getItem('msboxNextStateId'));
+    $w('#txtBootstrapResponse').collapse()
+    $w('#txtBootstrapInfo').collapse()
     memory.setItem('msboxLastState', memory.getItem('msboxNextStateId'));
     responseObject.logArrayDeveloper.push(`{∆ msboxNextStateId: ${memory.getItem('msboxNextStateId')} ∆}`);
     responseObject.logArrayDeveloper.push(`{∆ msboxLastState: ${memory.getItem('msboxLastState')} ∆}`);
@@ -3936,6 +3940,7 @@ export async function msboxPostEnrollmentSevenPerformStepUI(responseObject = {})
 export async function msboxPostEnrollmentSevenPerformStepDO(responseObject = {}) {
     // pstEnrSeven202108DO PERFORM-DO BEGIN
     // pstEnrSeven202108STEP_P_04 PERFORM-DO BEGIN
+    let DOX = 'So I can read these comments in WiX-Editor';
     responseObject.logArrayDeveloper.push('{% msboxPostEnrollmentSevenPerformStepDO %}');
     // responseObject.logArrayDeveloper.push('memory.getItem(msboxLastState) === ' + memory.getItem('msboxLastState'));
     // responseObject.logArrayDeveloper.push('memory.getItem(msboxCurrentId) === ' + memory.getItem('msboxCurrentId'));
@@ -3951,6 +3956,8 @@ export async function msboxPostEnrollmentSevenPerformStepDO(responseObject = {})
     let paramObject = {};
     // paramObject.stepsArray = responseObject.;
     paramObject.logArray = [];
+
+    paramObject.testNumber = (new Date()).getSeconds();
     paramObject.logArrayDeveloper = [];
     paramObject.logArrayDeveloper.push('just prior to Call');
     paramObject.messaging = {};
@@ -3960,34 +3967,37 @@ export async function msboxPostEnrollmentSevenPerformStepDO(responseObject = {})
     paramObject.messaging.warning = 'warningFAUX';
     paramObject.messaging.info = 'infoFAUX';
     paramObject.messaging.devel = 'develFAUX';
-    // pstEnrSeven202108ESLS
+    paramObject.messaging.primaryDo = false;
+    paramObject.messaging.responseDo = 'FALSE';
+    paramObject.messaging.infoDo = false;
+    paramObject.messaging.develDo = false;
+
+
+    DOX = '<TESTING> Messaging Only';
+    // pstEnrSeven202108EslsDoMessaging TESTING
+    // paramObject.messaging.primary = 'Primary After DO: Thu 8/12 2pm seconds: ' + paramObject.testNumber;
+    // paramObject.messaging.primary = 'DEFAULT';
+    // paramObject.messaging.info = 'Info After DO: Thu 8/12 2pm seconds: ' + paramObject.testNumber;
+    // paramObject.messaging.info = 'The infoo message for stateDatabaseForPrimaryAndStudent';
+    // paramObject.messaging.info = '123456789 123456789 123456789 123456789 123456789 1';//TWO Lines
+    // paramObject.messaging.info = '123456789 123456789 123456789 123456789 1234567_50';//ONE Line
+    // paramObject.messaging.info = 'DEFAULT';
+    // paramObject.messaging.success = 'Success After DO: Thu 8/12 2pm seconds: ' + paramObject.testNumber;
+    // paramObject.messaging.success = 'DEFAULT';
+    // paramObject.messaging.warning = 'Warning After DO: Thu 8/12 2pm seconds: ' + paramObject.testNumber;
+    // paramObject.messaging.warning = 'DEFAULT';
+    // paramObject.messaging.danger = 'Danger After DO: Thu 8/12 2pm seconds: ' + paramObject.testNumber;
+    // paramObject.messaging.danger = 'DEFAULT';
+    DOX = '</TESTING> Messaging Only';
+
+
+    // pstEnrSeven202108Esls
     // pstEnrSeven202108STEP_P_04 ==> Pefrom Enrollment Steps Loop-Switch ==> pstEnrSeven202108STEP_ESLS_01
     // eslsDoPeformStepArray(paramObject);
     responseObject.logArrayDeveloper.push('{# PERFORM_STEP_DO just performed instantiateSteps and Display #}');
 
-    // eslsDoMessagingReponsesApply(responseObject, paramObject);
-        /*let holderKey = 'FAUX';
-        // ø <MAYBE A FUNCTION>
-        let response = 'EEMPTY';
-        // in decreasing eggregiousness so most eggregious is 'TAKEN'
-        holderKey = paramObject.messaging.danger !== 'dangerFAUX' ? 'danger' : holderKey;
-        holderKey = paramObject.messaging.warning !== 'warningFAUX' && holderKey === 'FAUX'? 'warning' : holderKey;
-        holderKey = paramObject.messaging.success !== 'successFAUX' && holderKey === 'FAUX'? 'success' : holderKey;
-        response = holderKey === 'FAUX' ? 'EEMPTY' : paramObject.messaging[holderKey];
-        responseObject.currentMessagingObject.responseKey = holderKey;
-        responseObject.currentMessagingObject.response = response;
-        
-        holderKey = 'FAUX';
-        holderKey = paramObject.messaging.primary === 'primaryFAUX' ? holderKey : 'primaryFAUX';
-        responseObject.currentMessagingObject.primary = holderKey === 'FAUX' ? responseObject.currentMessagingObject.primary : paramObject.messaging.primary;
-        holderKey = 'FAUX';
-        holderKey = paramObject.messaging.info === 'infoFAUX' ? holderKey : 'infoFAUX';
-        responseObject.currentMessagingObject.info = holderKey === 'FAUX' ? responseObject.currentMessagingObject.info : paramObject.messaging.info;
-        holderKey = 'FAUX';
-        holderKey = paramObject.messaging.devel === 'develFAUX' ? holderKey : 'develFAUX';
-        responseObject.currentMessagingObject.devel = holderKey === 'FAUX' ? responseObject.currentMessagingObject.devel : paramObject.messaging.devel;
-        // ø </MAYBE A FUNCTION>
-        */
+    // pstEnrSeven202108EslsDoMessaging CALL
+    eslsDoMessagingReponsesApply(responseObject, paramObject);
     Array.prototype.push.apply(responseObject.logArrayDeveloper,paramObject.logArrayDeveloper);
     // pstEnrSeven202108STEP_P_04RETURN #return from esl
     // pstEnrSeven202108STEP_P_04RETURN ==> Return-To: PERFORM-UI ==> pstEnrSeven202108STEP_P_05
@@ -4197,6 +4207,8 @@ export function doBootstrapMessage(key,messageThis = 'DEFAULT', responsiveByLeng
 		/**
 		 * see separate DOX file 
 		 * here: steamdaWixLocal/steamdaWix/agile/sprint/SevenSuperSteps/doBootstrapMessage_byHtml_UI_DOX.js
+         • force to 18: [[-1,18]]
+         • Breakpoint at 50: [[-1,36],[50,28]]
 		 */
 
 		let length = -1;
@@ -4225,29 +4237,77 @@ export function doBootstrapMessage(key,messageThis = 'DEFAULT', responsiveByLeng
 
 // ø <---------- <eslsDoMessagingReponsesApply UI>  ---------->
 export function eslsDoMessagingReponsesApply(responseObject = {}, paramObject = {}){
+    let DOX = 'JUST FOR VISIBLE DOX IN WIX'
     // pstEnrSeven202108UTILITY BEGIN
-    // ø <MAYBE A FUNCTION>
+    // pstEnrSeven202108EslsDoMessaging BEGIN
     let holderKey = 'FAUX';
     let response = 'EEMPTY';
+
+    let DOXkey = 'success'
+    let DOXkeyDo = DOXkey + 'Do'
+    // DOX = `${DOXkey.toUpperCase()} VALUES:\n============`;
+    // DOX += '\n\n ORIGINAL:';
+    // DOX += '\n' + `paramObject.messaging.${DOXkey}: ${paramObject.messaging[DOXkey]}`;
+    // DOX += '\n' + `paramObject.messaging.${DOXkeyDo}: ${paramObject.messaging[DOXkeyDo]}`;
+    // DOX += '\n' + `responseObject.currentMessagingObject.${DOXkey}: ${responseObject.currentMessagingObject[DOXkey]}`;
     // in decreasing eggregiousness so most eggregious is 'TAKEN'
+          
+    // <APPLY DEFAULTS>
+    //POdanger = POdanger === "DEFAULT" ? ROdanger : POdanger
+    paramObject.messaging.primary = paramObject.messaging.primary === "DEFAULT" ? responseObject.currentMessagingObject.primary : paramObject.messaging.primary;
+    paramObject.messaging.info = paramObject.messaging.info === "DEFAULT" ? responseObject.currentMessagingObject.info : paramObject.messaging.info;
+    paramObject.messaging.devel = paramObject.messaging.devel === "DEFAULT" ? responseObject.currentMessagingObject.devel : paramObject.messaging.devel;
+    paramObject.messaging.success = paramObject.messaging.success === "DEFAULT" ? responseObject.currentMessagingObject.success : paramObject.messaging.success;
+    paramObject.messaging.warning = paramObject.messaging.warning === "DEFAULT" ? responseObject.currentMessagingObject.warning : paramObject.messaging.warning;
+    paramObject.messaging.danger = paramObject.messaging.danger === "DEFAULT" ? responseObject.currentMessagingObject.danger : paramObject.messaging.danger;
+    // DOX += '\n\n AFTER DEFAULT CHECK:';
+    // DOX += '\n' + `paramObject.messaging.${DOXkey}: ${paramObject.messaging[DOXkey]}`;
+    // DOX += '\n' + `paramObject.messaging.${DOXkeyDo}: ${paramObject.messaging[DOXkeyDo]}`;
+    // DOX += '\n' + `responseObject.currentMessagingObject.${DOXkey}: ${responseObject.currentMessagingObject[DOXkey]}`;
+    // </APPLY DEFAULTS>
+             
     holderKey = paramObject.messaging.danger !== 'dangerFAUX' ? 'danger' : holderKey;
     holderKey = paramObject.messaging.warning !== 'warningFAUX' && holderKey === 'FAUX'? 'warning' : holderKey;
     holderKey = paramObject.messaging.success !== 'successFAUX' && holderKey === 'FAUX'? 'success' : holderKey;
+    response = paramObject.messaging.success === 'successFAUX' ? paramObject.messaging.responseDo : 'success';
     response = holderKey === 'FAUX' ? 'EEMPTY' : paramObject.messaging[holderKey];
     responseObject.currentMessagingObject.responseKey = holderKey;
     responseObject.currentMessagingObject.response = response;
-    
+    // ø <APPLY paramObject IFF>
     holderKey = 'FAUX';
     holderKey = paramObject.messaging.primary === 'primaryFAUX' ? holderKey : 'primaryFAUX';
+    paramObject.messaging.primaryDo = paramObject.messaging.primary === 'primaryFAUX' ? false : true;
     responseObject.currentMessagingObject.primary = holderKey === 'FAUX' ? responseObject.currentMessagingObject.primary : paramObject.messaging.primary;
     holderKey = 'FAUX';
     holderKey = paramObject.messaging.info === 'infoFAUX' ? holderKey : 'infoFAUX';
+    paramObject.messaging.infoDo = paramObject.messaging.info === 'infoFAUX' ? false : true;
     responseObject.currentMessagingObject.info = holderKey === 'FAUX' ? responseObject.currentMessagingObject.info : paramObject.messaging.info;
     holderKey = 'FAUX';
     holderKey = paramObject.messaging.devel === 'develFAUX' ? holderKey : 'develFAUX';
     responseObject.currentMessagingObject.devel = holderKey === 'FAUX' ? responseObject.currentMessagingObject.devel : paramObject.messaging.devel;
-    // ø </MAYBE A FUNCTION>
+    // DOX += '\n\n APPLY PARAM_OBJECT:';
+    // DOX += '\n' + `paramObject.messaging.${DOXkey}: ${paramObject.messaging[DOXkey]}`;
+    // DOX += '\n' + `paramObject.messaging.${DOXkeyDo}: ${paramObject.messaging[DOXkeyDo]}`;
+    // DOX += '\n' + `responseObject.currentMessagingObject.${DOXkey}: ${responseObject.currentMessagingObject[DOXkey]}`;
+    // ø </APPLY paramObject IFF>
+    
+
+    // ø <FINAL VALUES>
+    if(paramObject.messaging.primaryDo){$w('#txtBootstrapPrimary').html = doBootstrapMessage('primary',paramObject.messaging.primary,[[-1,36],[50,28]])}
+    if(paramObject.messaging.infoDo){$w('#txtBootstrapInfo').html = doBootstrapMessage('info',paramObject.messaging.info,[[-1,36],[50,28]]);$w('#txtBootstrapInfo').expand();}
+    if(responseObject.currentMessagingObject.response !== 'EEMPTY'){$w('#txtBootstrapResponse').html = doBootstrapMessage(responseObject.currentMessagingObject.responseKey,responseObject.currentMessagingObject.response,[[-1,36],[50,28]]);$w('#txtBootstrapResponse').expand();}
+    // DOX += '\n\n FINAL VALUES:';
+    // DOX += '\n' + `paramObject.messaging.${DOXkey}: ${paramObject.messaging[DOXkey]}`;
+    // DOX += '\n' + `paramObject.messaging.${DOXkeyDo}: ${paramObject.messaging[DOXkeyDo]}`;
+    // DOX += '\n' + `responseObject.currentMessagingObject.${DOXkey}: ${responseObject.currentMessagingObject[DOXkey]}`;
+    // DOX += '\n' + `rresponseObject.currentMessagingObject.responseKey: ${responseObject.currentMessagingObject.responseKey}`;
+    // DOX += '\n' + `rresponseObject.currentMessagingObject.response: ${responseObject.currentMessagingObject.response}`;
+    // $w('#ppDatabaseResponseJSON').value = DOX;
+    // ø </FINAL VALUES>
+
+
     // pstEnrSeven202108UTILITY END
+    // pstEnrSeven202108EslsDoMessaging END
 }
 // ø <---------- </eslsDoMessagingReponsesApply UI> ---------->
 
@@ -4395,8 +4455,7 @@ export function btnPeSevenFauxOnReady_click(event) {
     let initLog = 'FAUX $w.onReady() NEXT';
     msboxPostEnrollmentSevenActionOnReady(initLog);
     $w('#btnPeSevenFauxOnReady').hide();
-
-
+    $w('#anchorTestProcess').scrollTo();
 }
 
 /**

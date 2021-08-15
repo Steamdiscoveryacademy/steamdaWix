@@ -10,59 +10,13 @@ https://webhook.site/191e8210-1ce6-4d05-8d72-e3a3a10cf0e4
 
 ===================================
 
-blank-3
+// pstEnrSeven202108STEP_ESLS_01 ==> Return to pstEnrSeven ==> pstEnrSeven202108STEP_P_04RETURN
 
-DOXobject
+let html = doBootstrapMessage('devel',develString,[[-1,18]]); 
+let html = doBootstrapMessage('devel',develString,[[-1,36],[50,28]]); 
 
-
-The timeline is this: 
-• I cannot control that WiX behaves drastically differently 3 and a half months after I successfully build a mechanism
-to take webhook data. Because of this, I want to be the only person that touches the 'Final' version of the FormStack
-forms.
-
-• The steps process of 'Process Web Hooks' is working completely and accurately as best I can tell.
-
-• The process whereby the 18 steps from Confirmed Application to Fully Loaded Member, Contact and Database data is
-automatically populated is working.
-
-• as I was racing to perform the above steps for the Week 6 Roster there came a point where I realized taht I was not
-going to win that race, so as I documented in Google Chat, I switched to the (known, necessary task) of building a
-Robust, Extensible and User-Friendly (meaning you and any staff you hire) mechanism for achieving what was necessily a
-laborious task whereby I could watch every step, into an abreviated series of logically connected steps that gave ample
-opportunity to step through and watch the results as the steps pass. (As with anything, when the time is right I can add
-a "Let it Rip" button to do the entire task without steps, or more accurately, a single step.)
-
-• I did do work while in Boston, but obviously, it was here and there around wedding events so I didn't focus on this
-enourmous task. I got some other really good things done, important things, but I knew I was away from the focus.
-
-• I did do work while visiting with you in Charlottesville. As the focus was on learning and observing and interacting
-in a way that was special to being in Charlottesville so I didn't focus on this enourmous task. Again, I got some other really
-good things done. I tried to get back to the focus on Enrollment, by way of taking markers and a ruler and so on back to the hotel 
-
-
-• Timeline: I think I would have been done before the trip if the entire Web Hook mechanism didn't blow-up in my face,
-and then after taking the time to jump through the hoops that the help-desk set up for me they just curtly refused to take
-any responsibility for something that had been working for 3 1/2 months abruptly stopped working. Every single test I
-ran since then has taken another hunk of time where I had to manually send it to the webhook.site (site), manually
-gather it from there, and then post it to WiX via yet another tool, PostMan.
-
-• There is a problem with my code conveying the 
-
-• Yesterday, as I was getting back in the groove, you indicated that the Fall Schedule was your priority. That is the
-only time that my main focus has not been on the Enrollment Process (not just 'contacts' but Primary Parents, Students
-and Secondary Parents as Individuals and as a Family), above caveats excepted, of course.
-
-• Then I get a call from Mike telling me to ignore the Fall and get back to the Post Enrollment process. I finished the
-call saying, "Great, I'll get back to the Post Enrollment task."
-
-• Then mid late-morning (noon for you), I began Google-Chatting, and when it reached a point where I couldn't really
-accomplish anything without postpoining some of the things you were asking me to respond about, I let chat go.
-
-• Then as per our agreement, when you texted me the same message, I stopped what I was doing to compose this. 
-
-• Now, after I proof-read it and so on, I will Post it to Google-Chat and alert you via text that it is there for you.
-
-I hope this answers you questions.
-
-Regards,
-Brad
+eslsDoMessagingReponsesApply(responseObject = {}, paramObject = {})
+---
+    $w('#ppDatabaseResponseJSON').value = 'PerformStepDO:\n==============\n';
+    // $w('#ppDatabaseResponseJSON').value += JSON.parse(responseObject);
+    $w('#ppDatabaseResponseJSON').value += JSON.stringify(paramObject.currentStepObject);

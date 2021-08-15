@@ -1,115 +1,59 @@
-{
-    "postEnrollmentSeven": [
-        {
-            "stateOnramp_ONREADY": {
-                "logArrayDeveloper": [
-                    "FAUX $w.onReady() NEXT",
-                    "{# responseObject.button = NEXT #}",
-                    "{# memory.setItem(msboxLastState,stateZero) #}",
-                    "≈ 3718 ≈ {% entering: msboxPostEnrollmentSevenAnyAction() %}",
-                    "{% memory.getItem('stepMessaging').length === 3294 %}",
-                    "{% memory.getItem('stepObjects').length === 2994 %}",
-                    "≈ 3740 ≈ {% memory.getItem('msboxCurrentStateId'): stateZero %}",
-                    "≈ 3741 ≈ {% memory.getItem('msboxNextStateId'): stateOnramp %}",
-                    "≈ 3742 ≈ {% memory.getItem('msboxLastState'): stateZero %}",
-                    "≈ 3754 ≈ {% (responseObject.currentStepObject).length === 190 %}",
-                    "≈ 3755 ≈ {% (responseObject.currentMessagingObject).length === 277 %}",
-                    "≈ 3953 ≈ ◊ responseObject.button === NEXT ◊",
-                    "≈ 3963 ≈ ◊ responseObject.button === NEXT ◊",
-                    "≈ 3963 ≈ ◊ PREV: lastClicked === NEXT_STATE ◊",
-                    "{% msboxPostEnrollmentSevenNextStateUI %}",
-                    "{# NEXT_STATE_UI is, other than calling DO, is INERT #}",
-                    "{% msboxPostEnrollmentSevenNextStateDO %}",
-                    "{∆ msboxNextStateId: stateOnramp ∆}",
-                    "{∆ msboxLastState: stateOnramp ∆}",
-                    "{% After DO-Next - Within UI-Next: show btnCurrent/hide btnNext %}",
-                    "≈ 3835 ≈ {% POC stepObject: responseObject.currentStepObject.title: On-Ramp %}",
-                    "≈ 3837 ≈ {% POC messageObject: responseObject.currentMessagingObject.primary: The primary message for stateOnramp %}",
-                    "≈ 3782 ≈ {% AFTER-NEXT: memory.getItem('msboxLastState'): stateOnramp %}"
-                ],
-                "responseObject": {
-                    "action": "ONREADY",
-                    "logArrayUserInterface": [],
-                    "button": "NEXT",
-                    "messageKey": "primary",
-                    "currentStepObject": {
-                        "origSteps": {
-                            "firstStep": "ZERO",
-                            "lastStep": "ZERO",
-                            "allStepArray": [
-                                "ZERO",
-                                "CCOMPLETE"
-                            ],
-                            "notes": []
-                        },
-                        "stateIdThis": "stateOnramp",
-                        "title": "On-Ramp",
-                        "longTitle": "Long Title for On-Ramp",
-                        "titleKey": "onramp"
-                    },
-                    "currentMessagingObject": {
-                        "devel": "The devel message for stateOnramp",
-                        "success": "The success message for stateOnramp",
-                        "warning": "The warning message for stateOnramp",
-                        "info": "The info message for stateOnram'",
-                        "primary": "The primary message for stateOnramp",
-                        "danger": "The danger message for stateOnramp"
-                    }
-                }
-            }
-        },
-        {
-            "stateOnramp_PERFROM": {
-                "logArrayDeveloper": [
-                    "btnPeSevenCurrent_click PERFORM",
-                    "≈ 3718 ≈ {% entering: msboxPostEnrollmentSevenAnyAction() %}",
-                    "{% memory.getItem('stepMessaging').length === 3294 %}",
-                    "{% memory.getItem('stepObjects').length === 2994 %}",
-                    "≈ 3740 ≈ {% memory.getItem('msboxCurrentStateId'): stateOnramp %}",
-                    "≈ 3741 ≈ {% memory.getItem('msboxNextStateId'): stateInstantiate %}",
-                    "≈ 3742 ≈ {% memory.getItem('msboxLastState'): stateOnramp %}",
-                    "≈ 3754 ≈ {% (responseObject.currentStepObject).length === 190 %}",
-                    "≈ 3755 ≈ {% (responseObject.currentMessagingObject).length === 277 %}",
-                    "≈ 3953 ≈ ◊ responseObject.button === CURRENT ◊",
-                    "≈ 3955 ≈ ◊ responseObject.button === CURRENT ◊",
-                    "≈ 3955 ≈ ◊ PREV: lastClicked === PERFORM_STEP ◊",
-                    "{% msboxPostEnrollmentSevenPerformStepUI %}",
-                    "{# PERFORM_STEP_UI is, other than calling DO, is INERT #}",
-                    "{% msboxPostEnrollmentSevenPerformStepDO %}",
-                    "{# PERFORM_STEP_DO just performed instantiateSteps and Display #}",
-                    "just prior to Call",
-                    "{% After DO-Perform - Within UI-Perform: hide btnCurrent/show btnNext %}"
-                ],
-                "responseObject": {
-                    "action": "PERFROM",
-                    "logArrayUserInterface": [],
-                    "button": "CURRENT",
-                    "currentStepObject": {
-                        "origSteps": {
-                            "firstStep": "ZERO",
-                            "lastStep": "ZERO",
-                            "allStepArray": [
-                                "ZERO"
-                            ],
-                            "notes": []
-                        },
-                        "stateIdThis": "stateOnramp",
-                        "title": "On-Ramp",
-                        "longTitle": "Long Title for On-Ramp",
-                        "titleKey": "onramp"
-                    },
-                    "currentMessagingObject": {
-                        "devel": "The devel message for stateOnramp",
-                        "success": "The success message for stateOnramp",
-                        "warning": "The warning message for stateOnramp",
-                        "info": "The info message for stateOnram'",
-                        "primary": "Primary After DO: Thu 8/12 1pm seconds: 2",
-                        "danger": "The danger message for stateOnramp",
-                        "responseKey": "FAUX",
-                        "response": "EEMPTY"
-                    }
-                }
-            }
-        }
-    ]
-}
+• <----- <daily Commits>  ----->
+ø Soup-To-Nuts
+• postEnrollment (after midnight)
+• <----- </daily Commits> ----->
+
+• <----- <sourcedJSON Table and Queries>  ----->
+• move bootstrapMessaging to OnReadyAction()
+• confirm the extent of WiX-Storage
+      ↪ approx 50,000 Lines-of-Code for local. && session. (50 klocs)
+      ↪ approx 1,000,000 Lines-of-Code for memory. && session. (1,000 klocs)
+• <----- </sourcedJSON Table and Queries> ----->
+
+• <----- <use Messaging as Pseudo Coding Response>  ----->
+• Get Steps-List side-bar working
+•      ↪ as String to Primary within NEXT-UI && After-DO
+•      ↪ as String to Response within PERFORM-UI && After-DO
+•      ↪ as necessary change Response Break-Points for String Length
+• place currentStepObject into responseObject AnyAction
+•      ↪ Test/POC assign Title NEXT-UI AFTER
+• place currentMessagingObject into responseObject AnyAction
+•      ↪ Test/POC assign PrimaryHTML NEXT-UI AFTER
+ø TEST/POC messaging upon eslsDO return (FAUX)
+ø      ↪ Test Response ==> Success
+ø      ↪ Test Response ==> Warning (override Success T/F)
+ø      ↪ Test Response ==> Danger  (override Success-Warning T/F-T/F)
+ø      ↪ Test create/overload Info
+ø      ↪ Test overload Primary
+ø      ↪ Test Devel
+• <----- </use Messaging as Pseudo Coding Response> ----->
+
+• <----- <Code Clean-Up>  ----->
+• Update the QUICK-FIND tags and 
+• Add a STEPS System 
+•      ↪ a sequential CMD-F Tags mechanism to Step-Thru the Code-Flow
+•      ↪ improve on STEPS System with DOX of where you are just prior to CMD-F
+• REMOVE all 202107 QUICK-FIND tags after confirming that they are not only Deprecated but Redundant
+• <----- </Code Clean-Up> ----->
+
+• <----- <Drupal RestExport Views to sourcedJSON>  ----->
+• gather wix-week-fields data into sourcedJSON
+•      ↪ requires that Array be made into Object with Array
+•      ↪ arrayName = weeksArray
+•      ↪ needs sourcedJSON.jsonDox
+•      ↪ use Content Manager to Unpublish Old prior to gathering
+• gather wix-location-fields data into sourcedJSON
+•      ↪ requires that Array be made into Object with Array
+•      ↪ arrayName = locationsArray
+•      ↪ needs sourcedJSON.jsonDox
+•      ↪ use Content Manager to Publish only Active prior to gathering
+• Drupal View wix-course-fields data into sourcedJSON - LOTS of Twig Tweaking
+• <----- </Drupal RestExport Views to sourcedJSON> ----->
+
+
+
+
+---
+ø refactor find responseObject.button to responseObject.actionKey
+ø ¿ refactor 'PostEnrollmentSeven' to 'PstEnrSeven' ? 
+ø use Drupal Logging ¿ OR ? create custom Dupal Log DB and use the API

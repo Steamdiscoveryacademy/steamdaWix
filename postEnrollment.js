@@ -97,8 +97,8 @@ export function onReadyPostEnrollment() {
 
 
 // ! ====================================================================================================
-// ! ====================            <Overall Enrollment Steps Loop-Switch Code>           ==============
-// ! ====================        ...for Testing, Running, (perhaps later) Debugging        ==============
+// ! ====================                <pstEnrSeven doLoop && switchOnly>                ==============
+// ! ====================                                ...20210816                       ==============
 // ! ====================================================================================================
 export async function eslsDoPeformStepArray(paramObject = { logArrayDeveloper: [] }) {
     // NOTE: using responseObject 'paradigm' but paramObject as 'Blood-Brain-Barrier'
@@ -142,8 +142,19 @@ export async function eslsDoPeformStepArray(paramObject = { logArrayDeveloper: [
     $w('#ppDatabaseResponseJSON').value += $w('#txtPeSevenTitle').text + ` ==> validateCCOMPLETE: ${validateCCOMPLETE}`;
     // paramObject.messaging.success = 'Success ESLS: Thu 8/13 Afternoon seconds: ' + paramObject.testNumber;
     paramObject.messaging.success = (paramObject.currentStepObject.origSteps.allStepArray).toString() + ': Thu 8/13 Afternoon seconds: ' + paramObject.testNumber;
-    let stepKey = 'DEVEL';
-    doStepSwitch(stepKey);
+    
+
+
+
+    
+    
+    // let stepKey = 'DEVEL';
+    // doStepSwitch(stepKey);
+
+
+
+
+
 
     // let responseString = local.getItem('logString');
     // $w('#spDatabaseResponseJSON').value = responseArray;
@@ -177,9 +188,11 @@ export async function eslsDoPeformStepArray(paramObject = { logArrayDeveloper: [
     // bootstrap2dArray.push(cowCatcherIndex);
     $w('#stDatabaseResponseJSON').value = JSON.stringify(bootstrap2dArray,undefined,4);
     
-    return;
+    // return;
 
     // pstEnrSeven202108STEP_ESLS_01 BEGIN
+    let DOX = 'DOX';
+    local.setItem('logString', local.getItem('logString') + '\n ' + DOX);
     // let stepsArray = paramObject.stepsArray;
 
     //<TESTING ONE-BY-ONE>
@@ -187,7 +200,7 @@ export async function eslsDoPeformStepArray(paramObject = { logArrayDeveloper: [
     let testIndex = 0;
     let testBreakIndex = 1;
     while (testIndex < testBreakIndex) {
-        stepsArray.push(paramObject.stepsArray[0]);
+        stepsArray.push(paramObject.stepsArray[testIndex]);
         testIndex++;
     }
     //<TESTING ONE-BY-ONE>
@@ -206,22 +219,46 @@ export async function eslsDoPeformStepArray(paramObject = { logArrayDeveloper: [
         return;
     }
     // ø </ELSE>
-    let key = 'PPENDING';
+    // ! <NEW -- rewrite of below>
+    let stepThis = 'PPENDING';
+    let stepsArrayCompleted = []
+    while (stepsArray[0] !== 'CCOMPLETE') {
+        stepThis = stepsArray.shift();
+        stepsArrayCompleted.push(stepThis);
+
+
+
+
+
+    // let stepKey = 'DEVEL';
+    doStepSwitch(stepThis);
+
+
+
+    
+
+
+
+    }
+    // ! </NEW -- rewrite of below>
+    // ! <MIGHT BE FINE -- rewrite above anyway>
+    // let key = 'PPENDING';
     let exitLoopHere = false;
     exitLoopHere = stepsArray[0] === 'CCOMPLETE' ? true : exitLoopHere;
     exitLoopHere = stepsArray[0] === 'ZERO' ? true : exitLoopHere;
-    while (stepsArray[0] !== 'COMPLETE') {
+    while (stepsArray[0] !== 'CCOMPLETE') {
         key = stepsArray.shift()
         stepsArray.push(key)
         switch (key) {
             case 'DELETEME_NOT_A_STEP':
                 key = 'COMPLETE';
                 break;
-
-            default:
-                paramObject.logArrayDeveloper.push(`{# default: ${key} not supported in SWITCH [¿expected for testing?] #}`);
-                break;
-        }
+                
+                default:
+                    paramObject.logArrayDeveloper.push(`{# default: ${key} not supported in SWITCH [¿expected for testing?] #}`);
+                    break;
+                }
+                // ! </MIGHT BE FINE -- rewrite above anyway>
         // ! <USE_LOCAL_SKIP_FUNCTION>
         // stepsCycleSteps();
         // ø <ExitAfter Switch Check>
@@ -233,7 +270,17 @@ export async function eslsDoPeformStepArray(paramObject = { logArrayDeveloper: [
         // ! </USE_LOCAL_SKIP_FUNCTION>
     }
     // pstEnrSeven202108STEP_ESLS_01 ==> Return to pstEnrSeven ==> pstEnrSeven202108STEP_P_04RETURN
+    DOX = 'DOX';
+    local.setItem('logString', local.getItem('logString') + '\n ' + DOX);
 }
+// ! ====================================================================================================
+// ! ====================                </pstEnrSeven doLoop && switchOnly>               ==============
+// ! ====================                                ...20210816                       ==============
+// ! ====================================================================================================
+// ! ====================================================================================================
+// ! ====================            <Overall Enrollment Steps Loop-Switch Code>           ==============
+// ! ====================        ...for Testing, Running, (perhaps later) Debugging        ==============
+// ! ====================================================================================================
 
 export async function doPeformNextStep() {
     local.setItem('logString', local.getItem('logString') + '\n[~50]entering: ' + 'doPeformNextStep()')
@@ -3953,9 +4000,11 @@ export function btnDemoIfElseThen_click(event) {
 export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}) {
     // pstEnrSeven202108ANY BEGIN
     // pstEnrSeven202108STEP_RN_02 ==> OnReadty-To-Next ==> pstEnrSeven202108STEP_N_02
+    let DOX = 'DOX';
+    local.setItem('logString', local.getItem('logString') + '\n ' + DOX);
     // pstEnrSeven202108STEP_N_02 ANY-BEFORE BEGIN
     // pstEnrSeven202108STEP_P_02 ANY-BEFORE BEGIN
-    let DOX = 'JUST FOR VISIBLE DOX IN WIX';
+    DOX = 'JUST FOR VISIBLE DOX IN WIX';
     responseObject.logArrayDeveloper.push(`≈ 3718 ≈ {% entering: msboxPostEnrollmentSevenAnyAction() %}`);
     responseObject.logArrayDeveloper.push(`{% memory.getItem('stepMessaging').length === ${memory.getItem('stepMessaging').length} %}`);
     responseObject.logArrayDeveloper.push(`{% memory.getItem('stepObjects').length === ${memory.getItem('stepObjects').length} %}`);
@@ -4009,6 +4058,8 @@ export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}) {
         responseObject.logArrayDeveloper.push('≈ 3955 ≈ ◊ PREV: lastClicked === PERFORM_STEP ◊');
         // responseObject.currentStepOriginalStepsArray = currentStepOrigStepsObject.allStepArray;
         // pstEnrSeven202108STEP_P_02 ==> Call: PERFORM-UI ==> pstEnrSeven202108STEP_P_03
+        DOX = 'DOX';
+        local.setItem('logString', local.getItem('logString') + '\n ' + DOX);
         await msboxPostEnrollmentSevenPerformStepUI(responseObject);
     }
     // ! </Call 'PERFORM' Sequence>
@@ -4017,6 +4068,8 @@ export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}) {
         responseObject.logArrayDeveloper.push('≈ 3963 ≈ ◊ responseObject.button === NEXT ◊');
         responseObject.logArrayDeveloper.push('≈ 3963 ≈ ◊ PREV: lastClicked === NEXT_STATE ◊');
         // pstEnrSeven202108STEP_N_02 ==> Call: NEXT-UI ==> pstEnrSeven202108STEP_N_03
+        DOX = 'DOX';
+        local.setItem('logString', local.getItem('logString') + '\n ' + DOX);
         await msboxPostEnrollmentSevenNextStateUI(responseObject);
         responseObject.logArrayDeveloper.push(`≈ 3782 ≈ {% AFTER-NEXT: memory.getItem('msboxLastState'): ${memory.getItem('msboxLastState')} %}`);
 
@@ -4024,6 +4077,8 @@ export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}) {
     // ! </Call 'NEXT' Sequence>
 
     // pstEnrSeven202108STEP_N_06 ANY-AFTER BEGIN
+    DOX = 'DOX';
+    local.setItem('logString', local.getItem('logString') + '\n ' + DOX);
     // pstEnrSeven202108STEP_P_06 ANY-AFTER BEGIN
     // ø <LOG STEP IN UI>
     let DOXobject = {};
@@ -4039,6 +4094,8 @@ export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}) {
     // ! <NUTS! This really is the End of the Sequence>
     // pstEnrSeven202108STEP_N_06 ==> Complete: ANY-DONE ==> NEXT CLICK ==> pstEnrSeven202108STEP_P_01
     // pstEnrSeven202108STEP_P_06 ==> Complete: ANY-DONE ==> NEXT CLICK ==> pstEnrSeven202108STEP_N_01
+    DOX = 'DOX';
+    local.setItem('logString', local.getItem('logString') + '\n ' + DOX);
     // pstEnrSeven202108ANY END
 
 }
@@ -4048,7 +4105,9 @@ export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}) {
 export async function msboxPostEnrollmentSevenNextStateUI(responseObject = {}) {
     // pstEnrSeven202108UI NEXT-UI BEGIN
     // pstEnrSeven202108STEP_N_03 NEXT-UI-BEFORE BEGIN
-    let DOX = 'So I can read these comments in WiX-Editor';
+    let DOX = 'DOX';
+    local.setItem('logString', local.getItem('logString') + '\n ' + DOX);
+    DOX = 'So I can read these comments in WiX-Editor';
     DOX = 'OKAY: maybe redundant since NextState is kida all-about UI, but better separate _before_ it gets hairy than after';
 
     responseObject.logArrayDeveloper.push('{% msboxPostEnrollmentSevenNextStateUI %}');
@@ -4056,8 +4115,12 @@ export async function msboxPostEnrollmentSevenNextStateUI(responseObject = {}) {
     // ø <Before DO-Script Called>
     // ø </Before DO-Script Called>
     // pstEnrSeven202108STEP_N_03 ==> Call: NEXT-DO ==> pstEnrSeven202108STEP_N_04
+    DOX = 'DOX';
+    local.setItem('logString', local.getItem('logString') + '\n ' + DOX);
     msboxPostEnrollmentSevenNextStateDO(responseObject);
     // pstEnrSeven202108STEP_N_05 NEXT-UI-AFTER BEGIN
+    DOX = 'DOX';
+    local.setItem('logString', local.getItem('logString') + '\n ' + DOX);
     // ø <After DO-Script Called>
     DOX = `After DO-Next - Within UI-Next: show btnCurrent/hide btnNext`;
     responseObject.logArrayDeveloper.push(`{% ${DOX} %}`);
@@ -4071,6 +4134,8 @@ export async function msboxPostEnrollmentSevenNextStateUI(responseObject = {}) {
     $w('#btnPeSevenNext').hide();
     // ø </After DO-Script Called>
     // pstEnrSeven202108STEP_N_05 ==> ReturnTo: ANY-AFTER ==> pstEnrSeven202108STEP_N_06
+    DOX = 'DOX';
+    local.setItem('logString', local.getItem('logString') + '\n ' + DOX);
 }
 // ø <---------- </msboxPostEnrollmentSevenNextStateUI> ---------->
 
@@ -4078,6 +4143,8 @@ export async function msboxPostEnrollmentSevenNextStateUI(responseObject = {}) {
 export async function msboxPostEnrollmentSevenNextStateDO(responseObject = {}) {
     // pstEnrSeven202108DO
     // pstEnrSeven202108STEP_N_04 NEXT-DO BEGIN
+    let DOX = 'DOX';
+    local.setItem('logString', local.getItem('logString') + '\n ' + DOX);
     responseObject.logArrayDeveloper.push('{% msboxPostEnrollmentSevenNextStateDO %}');
     // $w(memory.getItem('msboxCurrentId')).changeState(targetState);
     $w(memory.getItem('msboxCurrentId')).changeState(memory.getItem('msboxNextStateId'));
@@ -4087,6 +4154,8 @@ export async function msboxPostEnrollmentSevenNextStateDO(responseObject = {}) {
     responseObject.logArrayDeveloper.push(`{∆ msboxNextStateId: ${memory.getItem('msboxNextStateId')} ∆}`);
     responseObject.logArrayDeveloper.push(`{∆ msboxLastState: ${memory.getItem('msboxLastState')} ∆}`);
     // pstEnrSeven202108STEP_N_04 ==> Return-To: NEXT-UI ==> pstEnrSeven202108STEP_N_05
+    DOX = 'DOX';
+    local.setItem('logString', local.getItem('logString') + '\n ' + DOX);
 }
 // ø </toNUTS>
 // ø <---------- </msboxPostEnrollmentSevenNextStateDO> ---------->
@@ -4096,20 +4165,28 @@ export async function msboxPostEnrollmentSevenNextStateDO(responseObject = {}) {
 export async function msboxPostEnrollmentSevenPerformStepUI(responseObject = {}) {
     // pstEnrSeven202108UI PERFORM-UI BEGIN
     // pstEnrSeven202108STEP_P_03 PERFORM-UI-BEFORE BEGIN
+    let DOX = 'DOX';
+    local.setItem('logString', local.getItem('logString') + '\n ' + DOX);
     responseObject.logArrayDeveloper.push('{% msboxPostEnrollmentSevenPerformStepUI %}');
     responseObject.logArrayDeveloper.push('{# PERFORM_STEP_UI is, other than calling DO, is INERT #}');
     // ø <Before DO-Script Called>
     // ø </Before DO-Script Called>
     // pstEnrSeven202108STEP_P_03 ==> Call: PERFORM-DO ==> pstEnrSeven202108STEP_P_04
+    DOX = 'DOX';
+    local.setItem('logString', local.getItem('logString') + '\n ' + DOX);
     msboxPostEnrollmentSevenPerformStepDO(responseObject);
     // pstEnrSeven202108STEP_P_05 PERFORM-UI-AFTER BEGIN
+    DOX = 'DOX';
+    local.setItem('logString', local.getItem('logString') + '\n ' + DOX);
     // ø <After DO-Script Called>
-    let DOX = `After DO-Perform - Within UI-Perform: hide btnCurrent/show btnNext`;
+    DOX = `After DO-Perform - Within UI-Perform: hide btnCurrent/show btnNext`;
     responseObject.logArrayDeveloper.push(`{% ${DOX} %}`);
     $w('#btnPeSevenCurrent').hide();
     $w('#btnPeSevenNext').show();
     // ø </After DO-Script Called>
     // pstEnrSeven202108STEP_P_05 ==> ReturnTo: ANY-AFTER ==> pstEnrSeven202108STEP_P_06
+    DOX = 'DOX';
+    local.setItem('logString', local.getItem('logString') + '\n ' + DOX);
 }
 // ø <---------- </msboxPostEnrollmentSevenPerformStepUI> ---------->
 
@@ -4117,7 +4194,9 @@ export async function msboxPostEnrollmentSevenPerformStepUI(responseObject = {})
 export async function msboxPostEnrollmentSevenPerformStepDO(responseObject = {}) {
     // pstEnrSeven202108DO PERFORM-DO BEGIN
     // pstEnrSeven202108STEP_P_04 PERFORM-DO BEGIN
-    let DOX = 'So I can read these comments in WiX-Editor';
+    let DOX = 'DOX';
+    local.setItem('logString', local.getItem('logString') + '\n ' + DOX);
+    DOX = 'So I can read these comments in WiX-Editor';
     responseObject.logArrayDeveloper.push('{% msboxPostEnrollmentSevenPerformStepDO %}');
     // responseObject.logArrayDeveloper.push('memory.getItem(msboxLastState) === ' + memory.getItem('msboxLastState'));
     // responseObject.logArrayDeveloper.push('memory.getItem(msboxCurrentId) === ' + memory.getItem('msboxCurrentId'));
@@ -4173,6 +4252,8 @@ export async function msboxPostEnrollmentSevenPerformStepDO(responseObject = {})
 
     // pstEnrSeven202108Esls CALL
     // pstEnrSeven202108STEP_P_04 ==> Pefrom Enrollment Steps Loop-Switch ==> pstEnrSeven202108STEP_ESLS_01
+    DOX = 'DOX';
+    local.setItem('logString', local.getItem('logString') + '\n ' + DOX);
 
     eslsDoPeformStepArray(paramObject);
     $w('#ppDatabaseResponseJSON').value = JSON.stringify(paramObject, undefined, 4);
@@ -4199,6 +4280,8 @@ export async function msboxPostEnrollmentSevenPerformStepDO(responseObject = {})
     // console.log(`≈ 4047 ≈ {% logArrayUserInterface ==> index: ${index} %}`)
     // pstEnrSeven202108STEP_P_04RETURN #return from esl
     // pstEnrSeven202108STEP_P_04RETURN ==> Return-To: PERFORM-UI ==> pstEnrSeven202108STEP_P_05
+    DOX = 'DOX';
+    local.setItem('logString', local.getItem('logString') + '\n ' + DOX);
 }
 // ø <---------- </msboxPostEnrollmentSevenPerformStepDO> ---------->
 
@@ -4211,6 +4294,8 @@ export async function msboxPostEnrollmentSevenPerformStepDO(responseObject = {})
 export async function msboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# no button log #}') {
     // pstEnrSeven202108ACTION
     // pstEnrSeven202108STEP_R_01 BEGIN (CLICK DURING DEV)
+    let DOX = 'pstEnrSeven202108STEP_R_01 BEGIN (CLICK DURING DEV)';
+    local.setItem('logString',DOX)
     let responseObject = {};
     responseObject.action = 'ONREADY';
     responseObject.logArrayUserInterface = [];
@@ -4229,6 +4314,8 @@ export async function msboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# n
     memory.setItem('stepObjects', JSON.stringify(jsonDataObject.stepObjects));
     memory.setItem('stepMessaging', JSON.stringify(jsonDataObject.stepMessaging));
     // pstEnrSeven202108STEP_R_01 ==> GoTo: AnyAction ==> pstEnrSeven202108STEP_RN_02
+    DOX = 'DOX';
+    local.setItem('logString', local.getItem('logString') + '\n ' + DOX);
     msboxPostEnrollmentSevenAnyAction(responseObject);
     // </202108100800> 
 }
@@ -4238,18 +4325,22 @@ export async function msboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# n
 export async function msboxPostEnrollmentSevenActionNext(anyButtonLog = '{# no button log #}') {
     //  pstEnrSeven202108ACTION
     // pstEnrSeven202108STEP_N_01 ACTION-NEXT BEGIN-CLICK
+    let DOX = 'DOX';
+    local.setItem('logString', local.getItem('logString') + '\n ' + DOX);
     let responseObject = {};
     responseObject.action = 'NEXT';
     responseObject.logArrayUserInterface = [];
     responseObject.logArrayDeveloper = [];
     responseObject.logArrayDeveloper.push(anyButtonLog);
     responseObject.button = 'NEXT';
-    let DOX = '<more rigorous and belongs where PRIMARY Happens>'
+    DOX = '<more rigorous and belongs where PRIMARY Happens>'
     // responseObject.messageKey = 'primary';
     // responseObject.messageRandomInfo = Math.random() * 100 > 66 ? true : false;
     // responseObject.messageResponse = false;
     DOX = '</more rigorous and belongs where PRIMARY Happens>'
     // pstEnrSeven202108STEP_N_01 ==> Call: ANY-ACTION ==> pstEnrSeven202108STEP_N_02
+    DOX = 'DOX';
+    local.setItem('logString', local.getItem('logString') + '\n ' + DOX);
     msboxPostEnrollmentSevenAnyAction(responseObject);
 
 }
@@ -4259,18 +4350,23 @@ export async function msboxPostEnrollmentSevenActionNext(anyButtonLog = '{# no b
 export async function msboxPostEnrollmentSevenActionPerform(anyButtonLog = '{# no button log #}') {
     // pstEnrSeven202108ACTION
     // pstEnrSeven202108STEP_P_01 ACTION-PERFORM BEGIN-CLICK
+    let DOX = 'DOX';
+    local.setItem('logString', local.getItem('logString') + '\n ' + DOX);
+    local.setItem('logString','EEMPTY')
     let responseObject = {};
     responseObject.action = 'PERFROM';
     responseObject.logArrayUserInterface = [];
     responseObject.logArrayDeveloper = [];
     responseObject.logArrayDeveloper.push(anyButtonLog);
     responseObject.button = 'CURRENT';
-    let DOX = '<more rigorous and belongs where RESPONSE Happens>'
+     DOX = '<more rigorous and belongs where RESPONSE Happens>'
     // let messageKeyArray = ["success", "success", "warning", "danger"];
     // responseObject.messageKey = messageKeyArray[Math.floor(Math.random() * messageKeyArray.length)];
     // responseObject.messageRandomInfo = Math.random() * 100 > 66 ? true : false;
     // responseObject.messageResponse = true;
     // pstEnrSeven202108STEP_P_01 ==> Call: ANY-ACTION ==> pstEnrSeven202108STEP_P_02
+    DOX = 'DOX';
+    local.setItem('logString', local.getItem('logString') + '\n ' + DOX)
     DOX = '</more rigorous and belongs where RESPONSE Happens>'
     msboxPostEnrollmentSevenAnyAction(responseObject);
 }

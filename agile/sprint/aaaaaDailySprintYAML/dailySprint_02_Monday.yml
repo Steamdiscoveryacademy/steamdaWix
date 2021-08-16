@@ -1,6 +1,6 @@
 • <----- <daily Commits>  ----->
 ø Soup-To-Nuts
-• postEnrollment (after midnight)
+ø postEnrollment (after midnight)
 • <----- </daily Commits> ----->
 
 • <----- <sourcedJSON Table and Queries>  ----->
@@ -12,32 +12,28 @@
 
 • <----- <use Messaging as Pseudo Coding Response>  ----->
 • Get Steps-List side-bar working
-•      ↪ as String to Primary within NEXT-UI && After-DO
-•      ↪ as String to Response within PERFORM-UI && After-DO
-•      ↪ as necessary change Response Break-Points for String Length
-• place currentStepObject into responseObject AnyAction
-•      ↪ Test/POC assign Title NEXT-UI AFTER
-• place currentMessagingObject into responseObject AnyAction
-•      ↪ Test/POC assign PrimaryHTML NEXT-UI AFTER
-• TEST/POC messaging upon eslsDO return (FAUX)
-• ADD 'DEFUALT' for using JSON Object Messages (library)
-•      ↪ Test Response ==> Success
-•      ↪ Test Response ==> Warning (override Success T/F)
-•      ↪ Test Response ==> Danger  (override Success-Warning T/F-T/F)
-•      ↪ Test create/overload Info
-•      ↪ Test overload Primary
 ø      ↪ Test Devel
-•      ↪ Turn Off TEST paramObject, but left in place
-•      ↪ Turn Off DOX of values at steps
 •      ↪ added Responsive Array: [[-1,36],[50,28]]
 • <----- </use Messaging as Pseudo Coding Response> ----->
 
-• <----- <test of eslsDO>  ----->
+• <----- <pstEnrSeven202108RETOOL_TO_ORIG_ESLS>  ----->
 ø Test return of Messaging in Object
 ø      ↪ should be trivial extension of above but, OOAAOC
 ø      ↪ make Success the stepArray.toString()
 ø      ↪ extend _new_ Loop-Switch to accomodate, ¿what, three enrPostSeven Steps?
-• <----- </test of eslsDO> ----->
+ø Add RETOOL TO Block
+ø Add RETOOL TO Quick-Find
+ø Retool Steps
+ø      ↪ ≈ 121 ≈ Equivalent of 'Reset Steps' button
+ø      ↪ ≈ 121 ≈ instantiateLoopSwitchEnrollmentSteps(paramObject.currentStepObject.origSteps.allStepArray)
+• NOT  ↪ ≈ 2099 ≈ DEP-recate doInstantiateExitAfter() with 'return;'
+•      ↪ ≈ 212 ≈ DEP-recate local.setItem('loopExitAfterStep', $w('#ddExitAfterStep').value) with form value within 'doPeformNextStep()'
+•      ↪ ≈ 116 ≈ replecate doInstantiateExitAfter() with literal 'memory.setItem()'' calls
+•      ↪ ≈ 116 ≈ exitAfter ==> paramObject.currentStepObject.origSteps.lastStep
+ø      ↪ ≈ ??? ≈ manual check for ExitAfter
+ø      ↪ ≈ ??? ≈ manual check for Current = 'CCOMPLETE' [as Cow-Catcher]
+ø      ↪ ≈ ??? ≈ manual check for Current = 'ZERO' [as Cow-Catcher]
+• <----- </pstEnrSeven202108RETOOL_TO_ORIG_ESLS> ----->
 
 
 • <----- <Code Clean-Up>  ----->

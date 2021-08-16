@@ -40,6 +40,17 @@ $w.onReady(function () {
     doUserInterfaceCleanupCurrent()
     // $w('#anchorPreTrash').scrollTo();
     memory.setItem('msboxCurrentId', '#mxboxPostEnrollmentSeven');
+    let uniqueWatchdogBootstrapKeyArray = ["EMERGENCY","CRITICAL","ERROR","ALERT","WARNING","NOTICE","success","primary","info","secondary","devel"];
+    let uniqueWatchdogBootstrapKeyArrayString = '';
+    let comma = '';
+    uniqueWatchdogBootstrapKeyArray.forEach(element => {
+        uniqueWatchdogBootstrapKeyArrayString += comma + element.toUpperCase();
+        comma = ',';
+    });
+    local.setItem('uniqueWatchdogBootstrapKeyArray',uniqueWatchdogBootstrapKeyArrayString);
+    $w('#spDatabaseResponseJSON').value = 'ONLY OnReady:\n=============\n';
+    $w('#spDatabaseResponseJSON').value += local.getItem('uniqueWatchdogBootstrapKeyArray');
+
     // console.log('All States Array: ')
     let allStates = $w(memory.getItem('msboxCurrentId')).states;
     let allStatesArray = allStates.map(state => {
@@ -114,8 +125,8 @@ export async function eslsDoPeformStepArray(paramObject = { logArrayDeveloper: [
         validateCCOMPLETE = paramObject.currentStepObject.origSteps.allStepArray.pop();
     }
     // ø <ELSE>
-    // if((validateCCOMPLETE !== 'C÷COMPLETE'){
-    if ((validateCCOMPLETE !== 'CCOMPLETE' || paramObject.currentStepObject.origSteps.allStepArray).length === 1) {
+    if(validateCCOMPLETE !== 'CCOMPLETE'){
+    // if ((validateCCOMPLETE !== 'CCOMPLETE' || paramObject.currentStepObject.origSteps.allStepArray).length === 1) {
         paramObject.messaging.danger = `This Step's Task-Array is InValid`;
         paramObject.logArrayDeveloper.push(`ESLS: Invalid validateCCOMPLETE: ${validateCCOMPLETE}`)
         paramObject.messaging.danger = `FORCE ERROR: This Step's Task-Array is InValid`;
@@ -131,6 +142,41 @@ export async function eslsDoPeformStepArray(paramObject = { logArrayDeveloper: [
     $w('#ppDatabaseResponseJSON').value += $w('#txtPeSevenTitle').text + ` ==> validateCCOMPLETE: ${validateCCOMPLETE}`;
     // paramObject.messaging.success = 'Success ESLS: Thu 8/13 Afternoon seconds: ' + paramObject.testNumber;
     paramObject.messaging.success = (paramObject.currentStepObject.origSteps.allStepArray).toString() + ': Thu 8/13 Afternoon seconds: ' + paramObject.testNumber;
+    let stepKey = 'DEVEL';
+    doStepSwitch(stepKey);
+
+    // let responseString = local.getItem('logString');
+    // $w('#spDatabaseResponseJSON').value = responseArray;
+    let responseString = local.getItem('logString');
+    responseString = responseString.replace(/\n/g, ",");
+    // let cowCatcherIndex = 0;
+    // let lineFeed = '\\n';
+    // while(responseString.indexOf(lineFeed) >= 0 && cowCatcherIndex < 1000){
+    //     responseString.replace(lineFeed,',');
+    //     cowCatcherIndex++;
+    // }
+    let responseArray = responseString.split(',');
+    $w('#spDatabaseResponseJSON').value = JSON.stringify(responseArray);
+
+    let bootstrap2dArray = [];
+    let bootstrapList = local.getItem('uniqueWatchdogBootstrapKeyArray');
+    let isBootstrap = false;
+    let bootstapArray = [];
+    let keyBootstrap = 'HOLDER';
+    responseArray.forEach(element => {
+        isBootstrap = element.indexOf('|') >= 0 ? true : false;
+        if(isBootstrap){
+            bootstapArray = element.split('|');
+            keyBootstrap = (bootstapArray[0]).toUpperCase();
+            isBootstrap = bootstrapList.indexOf(keyBootstrap) >= 0 ? true : false;
+            if(isBootstrap){
+                bootstrap2dArray.push(bootstapArray);
+            }
+        }
+    });
+    // bootstrap2dArray.push(cowCatcherIndex);
+    $w('#stDatabaseResponseJSON').value = JSON.stringify(bootstrap2dArray,undefined,4);
+    
     return;
 
     // pstEnrSeven202108STEP_ESLS_01 BEGIN
@@ -192,7 +238,7 @@ export async function eslsDoPeformStepArray(paramObject = { logArrayDeveloper: [
 export async function doPeformNextStep() {
     local.setItem('logString', local.getItem('logString') + '\n[~50]entering: ' + 'doPeformNextStep()')
     $w('#txtCodeLabel').text = 'doPerformNextStep';
-    // DEP20210816081900 local.setItem('loopExitAfterStep', $w('#ddExitAfterStep').value);
+    local.setItem('loopExitAfterStep', $w('#ddExitAfterStep').value);
     await doStepLoopSwitch();
     local.setItem('logString', local.getItem('logString') + '\n[~58]After Completed: ' + memory.getItem('enrollmentStepCompleted'))
 }
@@ -202,7 +248,9 @@ export async function doPeformNextStep() {
 // ø <---------- <doStepSwitch>  ---------->
 // pstEnrSeven202108RETOOL_TO_ORIG_ESLS
 export async function doStepSwitch(stepKey = 'PPENDING') {
-    local.setItem('logString', local.getItem('logString') + '\n[~62]entering: ' + 'doStepLoopSwitch()')
+    local.setItem('logString', local.getItem('logString') + '\n[~208]entering: ' + 'doStepSwitch()');
+    local.setItem('logString', local.getItem('logString') + '\n' + `INFO|entering: doStepSwitch(${stepKey})`);
+    return;
     let errorString = '';
     switch (stepKey) {
         case 'IINSTANTIATE':

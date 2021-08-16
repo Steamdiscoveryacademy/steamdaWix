@@ -116,15 +116,15 @@
                     "danger"
                 ],
                 [
-                    "ALERT",
-                    "danger"
-                ],
-                [
                     "CRITICAL",
                     "danger"
                 ],
                 [
                     "ERROR",
+                    "danger"
+                ],
+                [
+                    "ALERT",
                     "warning"
                 ],
                 [
@@ -137,11 +137,7 @@
                 ],
                 [
                     "INFO",
-                    "info"
-                ],
-                [
-                    "INFO",
-                    "secondary"
+                    "success"
                 ],
                 [
                     "INFO",
@@ -149,7 +145,11 @@
                 ],
                 [
                     "INFO",
-                    "success"
+                    "info"
+                ],
+                [
+                    "INFO",
+                    "secondary"
                 ],
                 [
                     "DEBUG",

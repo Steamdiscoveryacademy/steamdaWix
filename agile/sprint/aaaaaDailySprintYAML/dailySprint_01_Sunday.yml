@@ -1,27 +1,71 @@
-• refactor find keys
-• <----- <POC Dog Repeater from JSON>  ----->
-• Note: weekend project, off-task
-• DONE 
-• <----- </POC Dog Repeater from JSON> ----->
-• <----- <POC Course Repeater from Drupal API 2019>  ----->
-• Note: weekend project, off-task
-ø test FETCH singletonCourse
-ø test Fetch Views Courses by Week
-• <----- </POC Course Repeater from Drupal API 2019> ----->
-• <----- <PostEnrollment msbox VS mxbox  ----->
-• build parallel 'msboxPostEnrollmentSevenAnyAction(responseObject);'
-           ↪ WAS 'mxboxPostEnrollmentSevenAnyAction(responseObject);'
-• ADD show/hide to PEFROM
-• ADD hide/show to NEXT
-• LOG very end (starting with DOX) to msbox
-• NEXT DO logic simply Next
-• <----- </PostEnrollment msbox VS mxbox ----->
+• <----- <daily Commits>  ----->
+ø Soup-To-Nuts
+• postEnrollment (after midnight)
+• <----- </daily Commits> ----->
+
+• <----- <sourcedJSON Table and Queries>  ----->
+• move bootstrapMessaging to OnReadyAction()
+• confirm the extent of WiX-Storage
+      ↪ approx 50,000 Lines-of-Code for local. && session. (50 klocs)
+      ↪ approx 1,000,000 Lines-of-Code for memory. && session. (1,000 klocs)
+• <----- </sourcedJSON Table and Queries> ----->
+
+• <----- <use Messaging as Pseudo Coding Response>  ----->
+• Get Steps-List side-bar working
+•      ↪ as String to Primary within NEXT-UI && After-DO
+•      ↪ as String to Response within PERFORM-UI && After-DO
+•      ↪ as necessary change Response Break-Points for String Length
+• place currentStepObject into responseObject AnyAction
+•      ↪ Test/POC assign Title NEXT-UI AFTER
+• place currentMessagingObject into responseObject AnyAction
+•      ↪ Test/POC assign PrimaryHTML NEXT-UI AFTER
+• TEST/POC messaging upon eslsDO return (FAUX)
+• ADD 'DEFUALT' for using JSON Object Messages (library)
+•      ↪ Test Response ==> Success
+•      ↪ Test Response ==> Warning (override Success T/F)
+•      ↪ Test Response ==> Danger  (override Success-Warning T/F-T/F)
+•      ↪ Test create/overload Info
+•      ↪ Test overload Primary
+ø      ↪ Test Devel
+•      ↪ Turn Off TEST paramObject, but left in place
+•      ↪ Turn Off DOX of values at steps
+•      ↪ added Responsive Array: [[-1,36],[50,28]]
+• <----- </use Messaging as Pseudo Coding Response> ----->
+
+• <----- <test of eslsDO>  ----->
+ø Test return of Messaging in Object
+ø      ↪ should be trivial extension of above but, OOAAOC
+ø      ↪ make Success the stepArray.toString()
+ø      ↪ extend _new_ Loop-Switch to accomodate, ¿what, three enrPostSeven Steps?
+• <----- </test of eslsDO> ----->
+
+
+• <----- <Code Clean-Up>  ----->
+• Update the QUICK-FIND tags and 
+• Add a STEPS System 
+•      ↪ a sequential CMD-F Tags mechanism to Step-Thru the Code-Flow
+•      ↪ improve on STEPS System with DOX of where you are just prior to CMD-F
+• REMOVE all 202107 QUICK-FIND tags after confirming that they are not only Deprecated but Redundant
+• <----- </Code Clean-Up> ----->
+
+• <----- <Drupal RestExport Views to sourcedJSON>  ----->
+• gather wix-week-fields data into sourcedJSON
+•      ↪ requires that Array be made into Object with Array
+•      ↪ arrayName = weeksArray
+•      ↪ needs sourcedJSON.jsonDox
+•      ↪ use Content Manager to Unpublish Old prior to gathering
+• gather wix-location-fields data into sourcedJSON
+•      ↪ requires that Array be made into Object with Array
+•      ↪ arrayName = locationsArray
+•      ↪ needs sourcedJSON.jsonDox
+•      ↪ use Content Manager to Publish only Active prior to gathering
+• Drupal View wix-course-fields data into sourcedJSON - LOTS of Twig Tweaking
+• <----- </Drupal RestExport Views to sourcedJSON> ----->
+
 
 
 
 ---
-
 ø refactor find responseObject.button to responseObject.actionKey
-ø refactor mxbox to msbox
 ø ¿ refactor 'PostEnrollmentSeven' to 'PstEnrSeven' ? 
 ø use Drupal Logging ¿ OR ? create custom Dupal Log DB and use the API

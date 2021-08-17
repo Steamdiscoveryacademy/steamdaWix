@@ -33,6 +33,12 @@
 ø      ↪ ≈ ??? ≈ manual check for ExitAfter
 ø      ↪ ≈ ??? ≈ manual check for Current = 'CCOMPLETE' [as Cow-Catcher]
 ø      ↪ ≈ ??? ≈ manual check for Current = 'ZERO' [as Cow-Catcher]
+ø Step-Thru ==> Starts with OnReadyAction ==> pstEnrSeven202108STEP_R_01
+•      ↪ add all Steps to DOX = '' String
+•      ↪ Z-remove all Steps original Comment Steps
+ø      ↪ fully-remove all Steps original Comment Steps
+•      ↪ Append DOX via local.setItem('logString', ',' + local.getItem('logString') + DOX)
+ø      ↪ STUCK - pstEnrSeven202108STEP_SALS_01 while (<TESTING ONE-BY-ONE>)
 • <----- </pstEnrSeven202108RETOOL_TO_ORIG_ESLS> ----->
 
 

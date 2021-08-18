@@ -39,6 +39,7 @@
 ø      ↪ fully-remove all Steps original Comment Steps
 •      ↪ Append DOX via local.setItem('logString', ',' + local.getItem('logString') + DOX)
 ø      ↪ STUCK - pstEnrSeven202108STEP_SALS_01 while (<TESTING ONE-BY-ONE>)
+ø DOX - words = words.replace(/\n/g, " ");
 • <----- </pstEnrSeven202108RETOOL_TO_ORIG_ESLS> ----->
 
 

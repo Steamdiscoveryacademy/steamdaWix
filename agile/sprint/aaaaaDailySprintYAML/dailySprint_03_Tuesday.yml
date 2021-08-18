@@ -1,6 +1,6 @@
 • <----- <daily Commits>  ----->
-• Soup-To-Nuts
-• postEnrollment
+ø Soup-To-Nuts
+ø postEnrollment (after midnight)
 • <----- </daily Commits> ----->
 
 • <----- <sourcedJSON Table and Queries>  ----->
@@ -10,18 +10,60 @@
       ↪ approx 1,000,000 Lines-of-Code for memory. && session. (1,000 klocs)
 • <----- </sourcedJSON Table and Queries> ----->
 
+• <----- <use Messaging as Pseudo Coding Response>  ----->
+• Get Steps-List side-bar working
+ø      ↪ Test Devel
+•      ↪ added Responsive Array: [[-1,36],[50,28]]
+• <----- </use Messaging as Pseudo Coding Response> ----->
+
+• <----- <pstEnrSeven202108RETOOL_TO_ORIG_ESLS>  ----->
+ø Test return of Messaging in Object
+ø      ↪ should be trivial extension of above but, OOAAOC
+ø      ↪ make Success the stepArray.toString()
+ø      ↪ extend _new_ Loop-Switch to accomodate, ¿what, three enrPostSeven Steps?
+ø Add RETOOL TO Block
+ø Add RETOOL TO Quick-Find
+ø Retool Steps
+ø      ↪ ≈ 121 ≈ Equivalent of 'Reset Steps' button
+ø      ↪ ≈ 121 ≈ instantiateLoopSwitchEnrollmentSteps(paramObject.currentStepObject.origSteps.allStepArray)
+• NOT  ↪ ≈ 2099 ≈ DEP-recate doInstantiateExitAfter() with 'return;'
+•      ↪ ≈ 212 ≈ DEP-recate local.setItem('loopExitAfterStep', $w('#ddExitAfterStep').value) with form value within 'doPeformNextStep()'
+•      ↪ ≈ 116 ≈ replecate doInstantiateExitAfter() with literal 'memory.setItem()'' calls
+•      ↪ ≈ 116 ≈ exitAfter ==> paramObject.currentStepObject.origSteps.lastStep
+ø      ↪ ≈ ??? ≈ manual check for ExitAfter
+ø      ↪ ≈ ??? ≈ manual check for Current = 'CCOMPLETE' [as Cow-Catcher]
+ø      ↪ ≈ ??? ≈ manual check for Current = 'ZERO' [as Cow-Catcher]
+ø Step-Thru ==> Starts with OnReadyAction ==> pstEnrSeven202108STEP_R_01
+•      ↪ add all Steps to DOX = '' String
+•      ↪ Z-remove all Steps original Comment Steps
+ø      ↪ fully-remove all Steps original Comment Steps
+•      ↪ Append DOX via local.setItem('logString', ',' + local.getItem('logString') + DOX)
+ø      ↪ STUCK - pstEnrSeven202108STEP_SALS_01 while (<TESTING ONE-BY-ONE>)
+ø DOX - words = words.replace(/\n/g, " ");
+• <----- </pstEnrSeven202108RETOOL_TO_ORIG_ESLS> ----->
+
+
 • <----- <Code Clean-Up>  ----->
-• clean out mxsboxAnyAction[¡X!] now that mxsboxAnyAction[¡S!] is getting robust
-• refactor msboxCurrentId to msboxCurrentStateId ( && Next)
-• refactor mxbox[¡X!] to msbox[¡S!] all by duplication
-• check all calls to anything mxboz[¡X!]
-• refactor mxbox[¡X!] to msbox[¡S!] all by deletion
-• Commits && Testing Logs all the way
 • Update the QUICK-FIND tags and 
 • Add a STEPS System 
-      ↪ a sequential CMD-F Tags mechanism to Step-Thru the Code-Flow
-ø Improve on STEPS System with DOX of where you are just prior to CMD-F
+•      ↪ a sequential CMD-F Tags mechanism to Step-Thru the Code-Flow
+•      ↪ improve on STEPS System with DOX of where you are just prior to CMD-F
+• REMOVE all 202107 QUICK-FIND tags after confirming that they are not only Deprecated but Redundant
 • <----- </Code Clean-Up> ----->
+
+• <----- <Drupal RestExport Views to sourcedJSON>  ----->
+• gather wix-week-fields data into sourcedJSON
+•      ↪ requires that Array be made into Object with Array
+•      ↪ arrayName = weeksArray
+•      ↪ needs sourcedJSON.jsonDox
+•      ↪ use Content Manager to Unpublish Old prior to gathering
+• gather wix-location-fields data into sourcedJSON
+•      ↪ requires that Array be made into Object with Array
+•      ↪ arrayName = locationsArray
+•      ↪ needs sourcedJSON.jsonDox
+•      ↪ use Content Manager to Publish only Active prior to gathering
+• Drupal View wix-course-fields data into sourcedJSON - LOTS of Twig Tweaking
+• <----- </Drupal RestExport Views to sourcedJSON> ----->
 
 
 

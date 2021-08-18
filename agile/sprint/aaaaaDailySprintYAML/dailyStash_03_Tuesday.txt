@@ -9,10 +9,23 @@ https://webhook.site/191e8210-1ce6-4d05-8d72-e3a3a10cf0e4
 
 
 ===================================
-pstEnrSevenACTION202108
+steamdaWixLocal/steamdaWix/agile/sprint/SevenSuperSteps/sevenSuperSteps_overallObject.js
 
-pstEnrSeven202108UI
+paramObject.currentStepObject.origSteps.allStepArray
 
-pstEnrSeven202108DO
+paramObject.currentStepObject.origSteps.lastStep
 
-pstEnrSeven202108STEP_R_01
+
+responseObject.currentStepObject = tempObject[tempKey]
+
+//instantiateLoopSwitchEnrollmentSteps();
+    if (stepArrayParam.length === 1 && stepArrayParam[0] === 'ORIG') {
+        stepArrayOrig = ['IINSTANTIATE', 'PREP_ppMember', 'EXECUTE_ppMember', 'PREP_stMember', 'EXECUTE_stMember', 'dedupePpStContact', 'PREP_ppContact', 'PREP_ppDatabase', 'PREP_stContact', 'PREP_stDatabase', 'PREP_spContact', 'PREP_spDatabase', 'EXECUTE_ppContact', 'EXECUTE_ppDatabase', 'EXECUTE_stContact', 'EXECUTE_stDatabase', 'EXECUTE_spContact', 'EXECUTE_spDatabase', 'CCOMPLETE'];
+    }
+    if (stepArrayOrig.length === 1 || stepArrayOrig[stepArrayOrig.length - 1] !== 'CCOMPLETE') {
+        stepArrayOrig.push('CCOMPLETE');
+    }
+    console.log('[1904]stepArrayOrig: ');
+    console.log(stepArrayOrig);
+    let stepList = stepArrayOrig.toString();
+    memory.setItem('enrollmentStepList', stepList);

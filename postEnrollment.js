@@ -290,30 +290,36 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
         $w('#stContactResponseJSON').value += '\nSwitchB4ZZZ|' + local.getItem('enrollmentStepCompletedListAll') + ';';
 
         previouslyCompleted = Math.sign((local.getItem('enrollmentStepCompletedListAll')).indexOf(stepThis) + 1);
-
+        console.log(`≈NNN≈ (${local.getItem('enrollmentStepCompletedListAll')}).indexOf(${stepThis}): ` + (local.getItem('enrollmentStepCompletedListAll')).indexOf(stepThis));
+        console.log(`≈NNN≈ previouslyCompleted: ${previouslyCompleted}`);
         switch (stepThis) {
             // pstEnrSeven202108STEP_SALS_01SWITCH
             case 'ZERO':
-                DOX = `≈NNN≈ ≈i${testIndex}≈ case '${stepThis}': RAW: case-handled thisStep ZERO as Null`;
+                DOX = previouslyCompleted ? `≈NNN≈ previouslyCompleted: ${stepThis}` : `≈NNN≈ ≈i${testIndex}≈ case '${stepThis}': RAW: case-handled thisStep ZERO as Null`;
+                paramObject.messaging.info = DOX;
                 local.setItem('logString', local.getItem('logString') + ',' + DOX);
                 break;
         
             case 'ResolveAndDestroy':
-                DOX = `≈NNN≈ ≈i${testIndex}≈ case '${stepThis}': RAW: case-handled thisStep ResolveAndDestroy as CleanUp`;
+                DOX = previouslyCompleted ? `≈NNN≈ previouslyCompleted: ${stepThis}` : `≈NNN≈ ≈i${testIndex}≈ case '${stepThis}': RAW: case-handled thisStep ResolveAndDestroy as CleanUp`;
+                paramObject.messaging.info = DOX;
                 local.setItem('logString', local.getItem('logString') + ',' + DOX);
                 local.setItem('enrollmentStepCompletedListAll','ResolveAndDestroy');
                 break;
         
             default:
                 if (previouslyCompleted) {
-                    DOX = `≈NNN≈ ≈i${testIndex}≈ TODO stepThis === '${stepThis}': RAW: un-handled TBD`;
+                    DOX = `≈NNN≈ previouslyCompleted: ${stepThis}`;
+                    paramObject.messaging.info = DOX;
                     local.setItem('logString', local.getItem('logString') + ',' + DOX);
                 }else if(doStepSwitchSupportedStepArray.includes(stepThis)){
                     DOX = `≈NNN≈ ≈i${testIndex}≈ doStepSwitch('${stepThis}'): RAW: will be handled by doStepSwitch(stepThis);`;
+                    paramObject.messaging.info = DOX;
                     local.setItem('logString', local.getItem('logString') + ',' + DOX);
                     // doStepSwitch(stepThis);
                 }else{
                     DOX = `≈NNN≈ ≈i${testIndex}≈ TODO stepThis === '${stepThis}': RAW: un-handled TBD`;
+                    paramObject.messaging.info = DOX;
                     local.setItem('logString', local.getItem('logString') + ',' + DOX);
                 }
                 break;
@@ -322,8 +328,8 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
         
         if(previouslyCompleted === 0){
             stepsArrayCompleted.push(stepThis);
+            local.setItem('enrollmentStepCompletedListAll', local.getItem('enrollmentStepCompletedListAll') + ',' + stepThis );
         }
-        local.setItem('enrollmentStepCompletedListAll', local.getItem('enrollmentStepCompletedListAll') + ',' + stepThis );
         $w('#stContactResponseJSON').value += '\nSwitchAfter|' + local.getItem('enrollmentStepCompletedListAll') + ';';
 
 
@@ -4454,7 +4460,7 @@ export async function msboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# n
         local.setItem('enrollmentStepCompletedListAll','OnReadyReset')
         $w('#stContactResponseJSON').value += '\n,OnReadyZZZZ|' + local.getItem('enrollmentStepCompletedListAll') + ';';
     }else{
-        local.setItem('enrollmentStepCompletedListAll',',' + 'OnReadyResetContinue')
+        local.setItem('enrollmentStepCompletedListAll', local.getItem('enrollmentStepCompletedListAll') + ',' + 'OnReadyResetContinue')
         $w('#stContactResponseJSON').value += '\n,OnReadyZZZZ|' + local.getItem('enrollmentStepCompletedListAll') + ';';
     }
     // $w('#stDatabaseResponseJSON').value = JSON.stringify(stepArrayOrig);
@@ -4956,4 +4962,13 @@ export function btnMessagingbject_click(event) {
 
 export function btnStepsObject_click(event) {
     $w('#ppDatabaseResponseJSON').value = memory.getItem('stepObjects');
+}
+
+/**
+ *	Adds an event handler that runs when the element is clicked.
+ *	 @param {$w.MouseEvent} event
+ */
+export function btnGetCompleteList_click(event) {
+	$w('#spContactResponseJSON').value = local.getItem('enrollmentStepCompletedListAll');
+    uiCopyTextElementThis('spContactResponseJSON');
 }

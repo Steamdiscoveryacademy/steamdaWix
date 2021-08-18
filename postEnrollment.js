@@ -19,7 +19,7 @@ import wixWindow from 'wix-window';
  * ! QUICK-FIND UniqueID's for Blocks
  * ! ===============================
  // ø YIKES = something that needs attention do keep here even if none (well one, this) at atthis time
- // ø PRE-TRASH: pstEnrSeven202108SALSDoMessaging = maybe short-lived, just for Messaging Function
+ // ø PRE_TRASH: pstEnrSeven202108SALSDoMessaging = maybe short-lived, just for Messaging Function
  // ø pstEnrSeven202108 =  for ALL (prefix of all below)
  // ø pstEnrSeven202108UTILITY = Utilities for work surrounding pstEnrSeven
  // ø pstEnrSeven202108ACTION = Actions OnReady | Next | Perform 
@@ -29,6 +29,7 @@ import wixWindow from 'wix-window';
  // ø pstEnrSeven202108SALS = Do subset of Enrollment Step Loop-Switch (SALS)
  // ø pstEnrSeven202108STEPS_ARRAY_LOOP_SWITCH = Step through ORIG and RETOOL TO individual pstEnrSeven
  // ø pstEnrSeven202108STEP_SALS_01WHILE || // pstEnrSeven202108STEP_SALS_01SWITCH
+ // ø ≈NNN≈ UnResolve Line Numbers - an indication that that area is fast-moving
  // ø QUICK-FIND Step-Thru ==> Starts with OnReadyAction ==> pstEnrSeven202108STEP_R_01
  */
 
@@ -108,7 +109,7 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
     let DOX = 'pstEnrSeven202108STEP_SALS_01 BEGIN';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
     
-    DOX = '≈ 110 ≈ aramObject.currentStepObject AT pstEnrSeven202108STEP_SALS_01 BEGIN';
+    DOX = '≈110≈ aramObject.currentStepObject AT pstEnrSeven202108STEP_SALS_01 BEGIN';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
     $w('#ppMemberResponseJSON').value += '\n\n' + `paramObject.currentStepObject\npstEnrSeven202108STEP_SALS_01 BEGIN\n=====================\n`;
     $w('#ppMemberResponseJSON').value += JSON.stringify(paramObject.currentStepObject,undefined,4);
@@ -123,7 +124,7 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
     // </replecate doInstantiateExitAfter() with literal 'memory.setItem()' calls>
 
     // instantiateLoopSwitchEnrollmentSteps(paramObject.currentStepObject.origSteps.allStepArray);
-    // DOX = ' ≈ 118 ≈ MAYBE MOOT instantiateLoopSwitchEnrollmentSteps(allStepArray)';
+    // DOX = '≈118≈ MAYBE MOOT instantiateLoopSwitchEnrollmentSteps(allStepArray)';
     // local.setItem('logString', local.getItem('logString') + ',' + DOX);
 
     // pstEnrSeven202108STEPS_ARRAY_LOOP_SWITCH END
@@ -150,7 +151,7 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
         local.setItem('logString', local.getItem('logString') + ',' + DOX);
         return;
     }
-    DOX = '≈ 152 ≈ paramObject.currentStepObject JUST AFTER validateCCOMPLETE pop()-ed off the final step';
+    DOX = '≈152≈ paramObject.currentStepObject JUST AFTER validateCCOMPLETE pop()-ed off the final step';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
     $w('#ppMemberResponseJSON').value += '\n\n' + `paramObject.currentStepObject\nJUST AFTER validateCCOMPLETE pop()-ed off the final step\n=====================\n`;
     $w('#ppMemberResponseJSON').value += JSON.stringify(paramObject.currentStepObject,undefined,4);
@@ -221,11 +222,11 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
     
     let stepsArray = paramObject.currentStepObject.origSteps.allStepArray;
-    // DOX = ` ≈ 211 ≈ stepsArray.toString(): ${stepsArray.toString()}`;
+    // DOX = `≈211≈ stepsArray.toString(): ${stepsArray.toString()}`;
     $w('#ppMemberResponseJSON').value += '\n\n' + `paramObject...allSteArraystepsArray ==> stepsArray\npstEnrSeven202108STEP_SALS_01\n=====================\n`;
     // $w('#ppMemberResponseJSON').value += JSON.stringify(paramObject.currentStepObject,undefined,4);
     $w('#ppMemberResponseJSON').value += JSON.stringify(stepsArray,undefined,4);
-    DOX = '≈ 214 ≈ Is-Good: stepsArray within pstEnrSeven202108STEP_SALS_01 [confirm in Student-Member code-block]';
+    DOX = '≈214≈ ';// + 'Is-Good: stepsArray within pstEnrSeven202108STEP_SALS_01 [confirm in Student-Member code-block]';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
     // let stepsArray = [];
@@ -245,19 +246,19 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
     // ø <ELSE>
     if (Array.isArray(stepsArray) === false || stepsArray.length < 1) {
         paramObject.logArrayDeveloper.push('{¡ paramObjects.stepsArray INVALID: Not Array or Empty !}');
-        DOX = ` ≈ 220 ≈ pstEnrSeven202108STEP_SALS_01: if (Array.isArray(stepsArray) === false || stepsArray.length < 1)`;
+        DOX = `≈220≈ pstEnrSeven202108STEP_SALS_01: if (Array.isArray(stepsArray) === false || stepsArray.length < 1)`;
         local.setItem('logString', local.getItem('logString') + ',' + DOX);
         return;
     }
     if ((stepsArray[0]).length < 1) {
         paramObject.logArrayDeveloper.push('{¡ paramObjects.stepsArray[0] INVALID: length < 1 !}');
-        DOX = ` ≈ 226 ≈ pstEnrSeven202108STEP_SALS_01: if ((stepsArray[0]).length < 1) [stepsArray[0]: ${stepsArray[0]}]`;
+        DOX = `≈226≈ pstEnrSeven202108STEP_SALS_01: if ((stepsArray[0]).length < 1) [stepsArray[0]: ${stepsArray[0]}]`;
         local.setItem('logString', local.getItem('logString') + ',' + DOX);
         return;
     }
     if (stepsArray[0] === 'COMPLETE') {
         paramObject.logArrayDeveloper.push(`{¡ First Step 'COMPLETE' [¿likely purposeful?] !}`);
-        DOX = ` ≈ 232 ≈ pstEnrSeven202108STEP_SALS_01: if (stepsArray[0] === 'COMPLETE') [stepsArray[0]: ${stepsArray[0]}]`;
+        DOX = `≈232≈ pstEnrSeven202108STEP_SALS_01: if (stepsArray[0] === 'COMPLETE') [stepsArray[0]: ${stepsArray[0]}]`;
         local.setItem('logString', local.getItem('logString') + ',' + DOX);
         return;
     }
@@ -267,60 +268,75 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
     let stepThis = 'PPENDING';
     let stepsArrayCompleted = [];
-    DOX = ` ≈ 234 ≈ pstEnrSeven202108STEP_SALS_01: while (${stepsArray[0]} !== 'CCOMPLETE')`;
+    DOX = `≈234≈ `;// + `pstEnrSeven202108STEP_SALS_01: while (${stepsArray[0]} !== 'CCOMPLETE')`;
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
 
 
     testIndex = 0;
-    testBreakIndex = 1;
+    testBreakIndex = 777;//leave this here at 777 in order to Backward-DeBug
     let doStepSwitchSupportedStepArray = local.getItem('enrollmentStepListAll').split(',');
     $w('#ppContactResponseJSON').value = JSON.stringify(doStepSwitchSupportedStepArray,undefined,4)
+    let previouslyCompleted = 0;
     while (stepsArray.length > 0 && testIndex < testBreakIndex) {
         // pstEnrSeven202108STEP_SALS_01WHILE
         stepThis = stepsArray.shift();
-        stepsArrayCompleted.push(stepThis);
 
-        DOX = ` ≈ 262 ≈ stepsArray.toString(): ${stepsArray.toString()}`;
+        DOX = `≈262≈ `;// + `stepsArray.toString(): ${stepsArray.toString()}`;
         local.setItem('logString', local.getItem('logString') + ',' + DOX);
 
-        DOX = ` ≈ 265 ≈ stepsArrayCompleted.toString(): ${stepsArrayCompleted.toString()}`;
+        DOX = `≈265≈ `;// + `stepsArrayCompleted.toString(): ${stepsArrayCompleted.toString()}`;
         local.setItem('logString', local.getItem('logString') + ',' + DOX);
 
+        $w('#stContactResponseJSON').value += '\nSwitchB4ZZZ|' + local.getItem('enrollmentStepCompletedListAll') + ';';
+
+        previouslyCompleted = Math.sign((local.getItem('enrollmentStepCompletedListAll')).indexOf(stepThis) + 1);
 
         switch (stepThis) {
             // pstEnrSeven202108STEP_SALS_01SWITCH
             case 'ZERO':
-                DOX = ` ≈ 290 ≈ case '${stepThis}': RAW: case-handled thisStep ZERO as Null`;
+                DOX = `≈NNN≈ ≈i${testIndex}≈ case '${stepThis}': RAW: case-handled thisStep ZERO as Null`;
                 local.setItem('logString', local.getItem('logString') + ',' + DOX);
                 break;
         
             case 'ResolveAndDestroy':
-                DOX = ` ≈ 290 ≈ case '${stepThis}': RAW: case-handled thisStep ResolveAndDestroy as CleanUp`;
+                DOX = `≈NNN≈ ≈i${testIndex}≈ case '${stepThis}': RAW: case-handled thisStep ResolveAndDestroy as CleanUp`;
                 local.setItem('logString', local.getItem('logString') + ',' + DOX);
+                local.setItem('enrollmentStepCompletedListAll','ResolveAndDestroy');
                 break;
         
             default:
-                if(doStepSwitchSupportedStepArray.includes(stepThis)){
-                    DOX = ` ≈ 296 ≈ stepThis === '${stepThis}': RAW: will be handled by doStepSwitch(stepThis);`;
+                if (previouslyCompleted) {
+                    DOX = `≈NNN≈ ≈i${testIndex}≈ TODO stepThis === '${stepThis}': RAW: un-handled TBD`;
                     local.setItem('logString', local.getItem('logString') + ',' + DOX);
+                }else if(doStepSwitchSupportedStepArray.includes(stepThis)){
+                    DOX = `≈NNN≈ ≈i${testIndex}≈ doStepSwitch('${stepThis}'): RAW: will be handled by doStepSwitch(stepThis);`;
+                    local.setItem('logString', local.getItem('logString') + ',' + DOX);
+                    // doStepSwitch(stepThis);
                 }else{
-                    DOX = ` ≈ 299 ≈ stepThis === '${stepThis}': RAW: un-handled TBD`;
+                    DOX = `≈NNN≈ ≈i${testIndex}≈ TODO stepThis === '${stepThis}': RAW: un-handled TBD`;
                     local.setItem('logString', local.getItem('logString') + ',' + DOX);
                 }
                 break;
             // pstEnrSeven202108STEP_SALS_01SWITCH
         }
-
+        
+        if(previouslyCompleted === 0){
+            stepsArrayCompleted.push(stepThis);
+        }
+        local.setItem('enrollmentStepCompletedListAll', local.getItem('enrollmentStepCompletedListAll') + ',' + stepThis );
+        $w('#stContactResponseJSON').value += '\nSwitchAfter|' + local.getItem('enrollmentStepCompletedListAll') + ';';
 
 
 
 
         // let stepKey = 'DEVEL';
+        // <PRE_TRASH>
         DOX = 'pstEnrSeven202108STEP_SALS_01 DO';
         local.setItem('logString', local.getItem('logString') + ',' + DOX);
-        DOX = `doStepSwitch(${stepThis}): DO`;
+        DOX = `≈ZZZ≈ doStepSwitch(${stepThis}): DO => PRE_TRASH NO! WITHIN THE SWITCH DEFAULT ABOVE`;
         local.setItem('logString', local.getItem('logString') + ',' + DOX);
-        // doStepSwitch(stepThis);
+        // MOVED AVOVE: doStepSwitch(stepThis);
+        // </PRE_TRASH>
 
 
 
@@ -388,7 +404,7 @@ export async function doPeformNextStep() {
 // ø <---------- <doStepSwitch>  ---------->
 // pstEnrSeven202108STEPS_ARRAY_LOOP_SWITCH
 export async function doStepSwitch(stepKey = 'PPENDING') {
-    local.setItem('logString', local.getItem('logString') + `, ≈ 305 ≈ entering: ' + 'doStepSwitch(${stepKey})`);
+    local.setItem('logString', local.getItem('logString') + `,≈ 305≈ entering: ' + 'doStepSwitch(${stepKey})`);
     local.setItem('logString', local.getItem('logString') + ', ' + `INFO|entering: doStepSwitch(${stepKey})`);
     return;
     let errorString = '';
@@ -3691,7 +3707,7 @@ export function doPreTrashLogUI() {
     let yyyymmddhhiiss = now.getFullYear() * 10000000000 + (now.getMonth() + 1) * 100000000 + now.getDate() * 1000000 + now.getHours() * 10000 + now.getMinutes() * 100 + now.getSeconds() * 1;
     let logString = '';
     logString += '================================================================';
-    logString += '\n===========     <LOG of Pre-Trash User Interface>    ===========';
+    logString += '\n===========     <LOG of PRE_TRASH User Interface>    ===========';
     logString += '\n========      (no current data unless loade by UI)      ========';
     logString += '\n================================================================\n';
 
@@ -3706,7 +3722,7 @@ export function doPreTrashLogUI() {
 
     logString += '\n\n================================================================';
     logString += '\n===========              ' + yyyymmddhhiiss + '               ==========';
-    logString += '\n===========    </LOG of Pre-Trash User Interface>    ===========';
+    logString += '\n===========    </LOG of PRE_TRASH User Interface>    ===========';
     logString += '\n================================================================';
 
     $w('#preTrashLog').value = logString;
@@ -4101,11 +4117,11 @@ export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}) {
     DOX = responseObject.button === 'CURRENT' ? 'pstEnrSeven202108STEP_P_02 ANY-BEFORE BEGIN': DOX;
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
     DOX = 'JUST FOR VISIBLE DOX IN WIX';
-    responseObject.logArrayDeveloper.push(`≈ 3718 ≈ {% entering: msboxPostEnrollmentSevenAnyAction() %}`);
+    responseObject.logArrayDeveloper.push(`≈3718≈ {% entering: msboxPostEnrollmentSevenAnyAction() %}`);
     responseObject.logArrayDeveloper.push(`{% memory.getItem('stepMessaging').length === ${memory.getItem('stepMessaging').length} %}`);
     responseObject.logArrayDeveloper.push(`{% memory.getItem('stepObjects').length === ${memory.getItem('stepObjects').length} %}`);
 
-    DOX = '≈ 3729 ≈ {<ANY: but used later>}';
+    DOX = '≈3729≈ {<ANY: but used later>}';
     // ø <StatesArray from memory., Current State LIVE, memoryCurrentStateId, memoryNextStateId >
     // ø just setting to memory-wixStorage
     let statesArray = memory.getItem('msboxAllStatesList').split(',');
@@ -4114,9 +4130,9 @@ export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}) {
     let nextIndex = statesArray.indexOf(targetState) + 1;
     targetState = statesArray[nextIndex];
     memory.setItem('msboxNextStateId', targetState)
-    responseObject.logArrayDeveloper.push(`≈ 3740 ≈ {% memory.getItem('msboxCurrentStateId'): ${memory.getItem('msboxCurrentStateId')} %}`);
-    responseObject.logArrayDeveloper.push(`≈ 3741 ≈ {% memory.getItem('msboxNextStateId'): ${memory.getItem('msboxNextStateId')} %}`);
-    responseObject.logArrayDeveloper.push(`≈ 3742 ≈ {% memory.getItem('msboxLastState'): ${memory.getItem('msboxLastState')} %}`);
+    responseObject.logArrayDeveloper.push(`≈3740≈ {% memory.getItem('msboxCurrentStateId'): ${memory.getItem('msboxCurrentStateId')} %}`);
+    responseObject.logArrayDeveloper.push(`≈3741≈ {% memory.getItem('msboxNextStateId'): ${memory.getItem('msboxNextStateId')} %}`);
+    responseObject.logArrayDeveloper.push(`≈3742≈ {% memory.getItem('msboxLastState'): ${memory.getItem('msboxLastState')} %}`);
     // ø </StatesArray from memory., Current State LIVE, memoryCurrentStateId, memoryNextStateId >
     DOX = '{<POPULATE: responseObject .messagingObject, .stepObject by Above>}';
     let tempObject = {};
@@ -4130,8 +4146,8 @@ export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}) {
     responseObject.currentStepObject = tempObject[tempKey];
     tempObject = JSON.parse(memory.getItem('stepMessaging'));
     responseObject.currentMessagingObject = tempObject[tempKey];
-    responseObject.logArrayDeveloper.push(`≈ 3754 ≈ {% (responseObject.currentStepObject).length === ${(JSON.stringify(responseObject.currentStepObject)).length} %}`);
-    responseObject.logArrayDeveloper.push(`≈ 3755 ≈ {% (responseObject.currentMessagingObject).length === ${(JSON.stringify(responseObject.currentMessagingObject)).length} %}`);
+    responseObject.logArrayDeveloper.push(`≈3754≈ {% (responseObject.currentStepObject).length === ${(JSON.stringify(responseObject.currentStepObject)).length} %}`);
+    responseObject.logArrayDeveloper.push(`≈3755≈ {% (responseObject.currentMessagingObject).length === ${(JSON.stringify(responseObject.currentMessagingObject)).length} %}`);
 
     // responseObject.messagingObject = memory.getItem('stepMessaging')[memory.getItem('msboxCurrentStateId')];
     DOX = '{</POPULATE: responseObject .messagingObject, .stepObject by Above>}';
@@ -4149,11 +4165,11 @@ export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}) {
     DOX = '</YES_ANY_ACTION>'
 
     // ! <Call 'PERFORM' Sequence>
-    responseObject.logArrayDeveloper.push(`≈ 3953 ≈ ◊ responseObject.button === ${responseObject.button} ◊`);
+    responseObject.logArrayDeveloper.push(`≈3953≈ ◊ responseObject.button === ${responseObject.button} ◊`);
     // $w('#spDatabaseResponseJSON').value = JSON.stringify(responseObject,undefined,4);
     if (responseObject.button === 'CURRENT') {
-        responseObject.logArrayDeveloper.push('≈ 3955 ≈ ◊ responseObject.button === CURRENT ◊');
-        responseObject.logArrayDeveloper.push('≈ 3955 ≈ ◊ PREV: lastClicked === PERFORM_STEP ◊');
+        responseObject.logArrayDeveloper.push('≈3955≈ ◊ responseObject.button === CURRENT ◊');
+        responseObject.logArrayDeveloper.push('≈3955≈ ◊ PREV: lastClicked === PERFORM_STEP ◊');
         // responseObject.currentStepOriginalStepsArray = currentStepOrigStepsObject.allStepArray;
         // pstZEnrSeven202108STEP_P_02 ==> Call: PERFORM-UI ==> pstZEnrSeven202108STEP_P_03
         DOX = 'pstEnrSeven202108STEP_P_02 ==> Call: PERFORM-UI ==> pstEnrSeven202108STEP_P_03';
@@ -4163,13 +4179,13 @@ export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}) {
     // ! </Call 'PERFORM' Sequence>
     // ! <Call 'NEXT' Sequence>
     if (responseObject.button === 'NEXT') {
-        responseObject.logArrayDeveloper.push('≈ 3963 ≈ ◊ responseObject.button === NEXT ◊');
-        responseObject.logArrayDeveloper.push('≈ 3963 ≈ ◊ PREV: lastClicked === NEXT_STATE ◊');
+        responseObject.logArrayDeveloper.push('≈3963≈ ◊ responseObject.button === NEXT ◊');
+        responseObject.logArrayDeveloper.push('≈3963≈ ◊ PREV: lastClicked === NEXT_STATE ◊');
         // pstZEnrSeven202108STEP_N_02 ==> Call: NEXT-UI ==> pstZEnrSeven202108STEP_N_03
         DOX = 'pstEnrSeven202108STEP_N_02 ==> Call: NEXT-UI ==> pstEnrSeven202108STEP_N_03';
         local.setItem('logString', local.getItem('logString') + ',' + DOX);
         await msboxPostEnrollmentSevenNextStateUI(responseObject);
-        responseObject.logArrayDeveloper.push(`≈ 3782 ≈ {% AFTER-NEXT: memory.getItem('msboxLastState'): ${memory.getItem('msboxLastState')} %}`);
+        responseObject.logArrayDeveloper.push(`≈3782≈ {% AFTER-NEXT: memory.getItem('msboxLastState'): ${memory.getItem('msboxLastState')} %}`);
 
     }
     // ! </Call 'NEXT' Sequence>
@@ -4213,6 +4229,7 @@ export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}) {
     let responseArray = responseString.split(',');
     let comma = ($w('#spDatabaseResponseJSON').value).length === 0 ? '' : ',';
     $w('#spDatabaseResponseJSON').value += ',' + JSON.stringify(responseArray);
+    $w('#anchorPrimaryMessage').scrollTo();
     // pstEnrSeven202108ANY END
 
 }
@@ -4242,9 +4259,9 @@ export async function msboxPostEnrollmentSevenNextStateUI(responseObject = {}) {
     DOX = `After DO-Next - Within UI-Next: show btnCurrent/hide btnNext`;
     responseObject.logArrayDeveloper.push(`{% ${DOX} %}`);
     $w('#txtPeSevenTitle').text = responseObject.currentStepObject.title;
-    responseObject.logArrayDeveloper.push(`≈ 3835 ≈ {% POC stepObject: responseObject.currentStepObject.title: ${responseObject.currentStepObject.title} %}`);
+    responseObject.logArrayDeveloper.push(`≈3835≈ {% POC stepObject: responseObject.currentStepObject.title: ${responseObject.currentStepObject.title} %}`);
     $w('#txtBootstrapPrimary').html = doBootstrapMessage('primary', responseObject.currentMessagingObject.primary, [[-1, 36], [50, 28]]);
-    responseObject.logArrayDeveloper.push(`≈ 3837 ≈ {% POC messageObject: responseObject.currentMessagingObject.primary: ${responseObject.currentMessagingObject.primary} %}`);
+    responseObject.logArrayDeveloper.push(`≈3837≈ {% POC messageObject: responseObject.currentMessagingObject.primary: ${responseObject.currentMessagingObject.primary} %}`);
     instantiateLoopSwitchEnrollmentSteps(responseObject.currentStepObject.origSteps.allStepArray);
     displaySteps();
     $w('#btnPeSevenCurrent').show();
@@ -4350,7 +4367,7 @@ export async function msboxPostEnrollmentSevenPerformStepDO(responseObject = {})
 
     $w('#ppMemberResponseJSON').value += '\n\n' + `paramObject.currentStepObject\n${responseObject.button}\n=====================\n`;
     $w('#ppMemberResponseJSON').value += JSON.stringify(paramObject.currentStepObject,undefined,4);
-    DOX = '≈ 4303 ≈ Is-Good: paramObject.currentStepObject.origSteps.allStepArray [confirm in Student-Member code-block]';
+    DOX = '≈4303≈ Is-Good: paramObject.currentStepObject.origSteps.allStepArray [confirm in Student-Member code-block]';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
 
     DOX = '<TESTING> Messaging Only';
@@ -4392,7 +4409,7 @@ export async function msboxPostEnrollmentSevenPerformStepDO(responseObject = {})
         element = paramObject.logArrayDeveloper[index];
         responseObject.logArrayDeveloper.push(element);
     }
-    // console.log(`≈ 4040 ≈ {% logArrayDeveloper ==> index: ${index} %}`)
+    // console.log(`≈4040≈ {% logArrayDeveloper ==> index: ${index} %}`)
     // Array.prototype.push.apply(responseObject.logArrayUserInterface,paramObject.logArrayUserInterface);
     $w('#spMemberResponseJSON').value = 'paramObject.logArrayUserInterface;\n==================================';
     $w('#spMemberResponseJSON').value += '\n' + JSON.stringify(paramObject.logArrayUserInterface);
@@ -4401,7 +4418,7 @@ export async function msboxPostEnrollmentSevenPerformStepDO(responseObject = {})
         element = paramObject.logArrayUserInterface[index];
         responseObject.logArrayUserInterface.push(element);
     }
-    // console.log(`≈ 4047 ≈ {% logArrayUserInterface ==> index: ${index} %}`)
+    // console.log(`≈4047≈ {% logArrayUserInterface ==> index: ${index} %}`)
     // pstZEnrSeven202108STEP_P_04RETURN #return from esl
     // pstZEnrSeven202108STEP_P_04RETURN ==> Return-To: PERFORM-UI ==> pstZEnrSeven202108STEP_P_05
     DOX = 'pstEnrSeven202108STEP_P_04RETURN ==> Return-To: PERFORM-UI ==> pstEnrSeven202108STEP_P_05';
@@ -4424,13 +4441,24 @@ export async function msboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# n
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
     // $w('#spDatabaseResponseJSON').value = 'msboxPostEnrollmentSevenActionOnReady(CLICK)';
 
-
     // <OBVIATE: instantiateLoopSwitchEnrollmentSteps()>
     // VIA: 'Really Do It' ==> Reset Steps [button]
     let stepArrayOrig = ['IINSTANTIATE', 'PREP_ppMember', 'EXECUTE_ppMember', 'PREP_stMember', 'EXECUTE_stMember', 'dedupePpStContact', 'PREP_ppContact', 'PREP_ppDatabase', 'PREP_stContact', 'PREP_stDatabase', 'PREP_spContact', 'PREP_spDatabase', 'EXECUTE_ppContact', 'EXECUTE_ppDatabase', 'EXECUTE_stContact', 'EXECUTE_stDatabase', 'EXECUTE_spContact', 'EXECUTE_spDatabase', 'CCOMPLETE'];
     let stepList = stepArrayOrig.toString();
     local.setItem('enrollmentStepListAll', stepList);
-    $w('#stDatabaseResponseJSON').value = JSON.stringify(stepArrayOrig);
+    let doReset = (local.getItem('enrollmentStepCompletedListAll')).length === 0 ? true : false;
+    doReset = (local.getItem('enrollmentStepCompletedListAll')).indexOf('ResolveAndDestroy') >= 0 ? true : false;
+    doReset = $w('#radioOnReadyFullReset').value === 'FULL_RESET' ? true : doReset;
+    if(doReset){
+        // $w('#stContactResponseJSON').value = '\nOnReadyBefore|' + local.getItem('enrollmentStepCompletedListAll') + ',';
+        local.setItem('enrollmentStepCompletedListAll','OnReadyReset')
+        $w('#stContactResponseJSON').value += '\n,OnReadyZZZZ|' + local.getItem('enrollmentStepCompletedListAll') + ';';
+    }else{
+        local.setItem('enrollmentStepCompletedListAll',',' + 'OnReadyResetContinue')
+        $w('#stContactResponseJSON').value += '\n,OnReadyZZZZ|' + local.getItem('enrollmentStepCompletedListAll') + ';';
+    }
+    // $w('#stDatabaseResponseJSON').value = JSON.stringify(stepArrayOrig);
+    $w('#spDatabaseResponseJSON').value = JSON.stringify(stepArrayOrig);
     // </OBVIATE: instantiateLoopSwitchEnrollmentSteps()>
 
 

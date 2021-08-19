@@ -28,7 +28,7 @@ import wixWindow from 'wix-window';
  // ø pstEnrSeven202108DO = DO Code  for  Next && Perform
  // ø pstEnrSeven202108SALS = Do subset of Enrollment Step Loop-Switch (SALS)
  // ø pstEnrSeven202108STEPS_ARRAY_LOOP_SWITCH = Step through ORIG and RETOOL TO individual pstEnrSeven
- // ø pstEnrSeven202108STEP_SALS_01WHILE || // pstEnrSeven202108STEP_SALS_01SWITCH
+ // ø pstEnrSeven202108STEP_SALS_Z01WHILE || // pstEnrSeven202108STEP_SALS_Z01SWITCH
  // ø ≈NNN≈ UnResolve Line Numbers - an indication that that area is fast-moving
  // ø QUICK-FIND Step-Thru ==> Starts with OnReadyAction ==> pstEnrSeven202108STEP_R_01
  */
@@ -104,14 +104,17 @@ export function onReadyPostEnrollment() {
 // ! ====================================================================================================
 export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDeveloper: [] }) {
     // NOTE: using responseObject 'paradigm' but paramObject as 'Blood-Brain-Barrier'
-    // pstEnrSeven202108STEPS_ARRAY_LOOP_SWITCH BEGIN
+    // pstZEnrSeven202108STEP_SALS_LOOP FUNCTION BEGIN
+    // pstZEnrSeven202108STEP_SALS_LOOP  ==> OR Step-byStep ==> pstEnrSeven202108STEP_SALS_01
+    // pstZEnrSeven202108STEP_SALS_LOOP  ==> OR Step-byStep ==> pstZEnrSeven202108STEP_SALS_1BY1
     // <replecate doInstantiateExitAfter() with literal 'memory.setItem()' calls>
-    let DOX = 'pstEnrSeven202108STEP_SALS_01 BEGIN';
+    let DOX = 'pstEnrSeven202108STEP_SALS_LOOP FUNCTION BEGIN [continue to while()]';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
+    DOX = 'pstEnrSeven202108STEP_SALS_LOOP  ==> OR Step-byStep ==> pstEnrSeven202108STEP_SALS_1BY1';
     
-    DOX = '≈110≈ aramObject.currentStepObject AT pstEnrSeven202108STEP_SALS_01 BEGIN';
+    DOX = '≈110≈ aramObject.currentStepObject AT pstEnrSeven202108STEP_SALS_1BY1 BEGIN';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
-    $w('#ppMemberResponseJSON').value += '\n\n' + `paramObject.currentStepObject\npstEnrSeven202108STEP_SALS_01 BEGIN\n=====================\n`;
+    $w('#ppMemberResponseJSON').value += '\n\n' + `paramObject.currentStepObject\npstEnrSeven202108STEP_SALS_1BY1 BEGIN\n=====================\n`;
     $w('#ppMemberResponseJSON').value += JSON.stringify(paramObject.currentStepObject,undefined,4);
 
 
@@ -218,15 +221,15 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
     // let stepsArray = paramObject.stepsArray;
 
     //<TESTING ONE-BY-ONE>
-    DOX = 'pstEnrSeven202108STEP_SALS_01: while (<TESTING ONE-BY-ONE>)';
+    DOX = 'pstEnrSeven202108STEP_SALS_1BY1: while (<TESTING ONE-BY-ONE>)';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
     
     let stepsArray = paramObject.currentStepObject.origSteps.allStepArray;
     // DOX = `≈211≈ stepsArray.toString(): ${stepsArray.toString()}`;
-    $w('#ppMemberResponseJSON').value += '\n\n' + `paramObject...allSteArraystepsArray ==> stepsArray\npstEnrSeven202108STEP_SALS_01\n=====================\n`;
+    $w('#ppMemberResponseJSON').value += '\n\n' + `paramObject...allSteArraystepsArray ==> stepsArray\npstEnrSeven202108STEP_SALS_1BY1\n=====================\n`;
     // $w('#ppMemberResponseJSON').value += JSON.stringify(paramObject.currentStepObject,undefined,4);
     $w('#ppMemberResponseJSON').value += JSON.stringify(stepsArray,undefined,4);
-    DOX = '≈214≈ ';// + 'Is-Good: stepsArray within pstEnrSeven202108STEP_SALS_01 [confirm in Student-Member code-block]';
+    DOX = '≈214≈ ';// + 'Is-Good: stepsArray within pstEnrSeven202108STEP_SALS_1BY1 [confirm in Student-Member code-block]';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
     // let stepsArray = [];
@@ -240,35 +243,35 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
     //     testIndex++;
     // }
     //<TESTING ONE-BY-ONE>
-    DOX = 'pstEnrSeven202108STEP_SALS_01: 228';
+    DOX = 'pstEnrSeven202108STEP_SALS_1BY1: 228';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
 
     // ø <ELSE>
     if (Array.isArray(stepsArray) === false || stepsArray.length < 1) {
         paramObject.logArrayDeveloper.push('{¡ paramObjects.stepsArray INVALID: Not Array or Empty !}');
-        DOX = `≈220≈ pstEnrSeven202108STEP_SALS_01: if (Array.isArray(stepsArray) === false || stepsArray.length < 1)`;
+        DOX = `≈220≈ pstEnrSeven202108STEP_SALS_1BY1: if (Array.isArray(stepsArray) === false || stepsArray.length < 1)`;
         local.setItem('logString', local.getItem('logString') + ',' + DOX);
         return;
     }
     if ((stepsArray[0]).length < 1) {
         paramObject.logArrayDeveloper.push('{¡ paramObjects.stepsArray[0] INVALID: length < 1 !}');
-        DOX = `≈226≈ pstEnrSeven202108STEP_SALS_01: if ((stepsArray[0]).length < 1) [stepsArray[0]: ${stepsArray[0]}]`;
+        DOX = `≈226≈ pstEnrSeven202108STEP_SALS_1BY1: if ((stepsArray[0]).length < 1) [stepsArray[0]: ${stepsArray[0]}]`;
         local.setItem('logString', local.getItem('logString') + ',' + DOX);
         return;
     }
     if (stepsArray[0] === 'COMPLETE') {
         paramObject.logArrayDeveloper.push(`{¡ First Step 'COMPLETE' [¿likely purposeful?] !}`);
-        DOX = `≈232≈ pstEnrSeven202108STEP_SALS_01: if (stepsArray[0] === 'COMPLETE') [stepsArray[0]: ${stepsArray[0]}]`;
+        DOX = `≈232≈ pstEnrSeven202108STEP_SALS_1BY1: if (stepsArray[0] === 'COMPLETE') [stepsArray[0]: ${stepsArray[0]}]`;
         local.setItem('logString', local.getItem('logString') + ',' + DOX);
         return;
     }
     // ø </ELSE>
     // ! <NEW -- rewrite of below>
-    DOX = 'pstEnrSeven202108STEP_SALS_01: <NEW -- rewrite of below>';
+    DOX = 'pstEnrSeven202108STEP_SALS_1BY1: <NEW -- rewrite of below>';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
     let stepThis = 'PPENDING';
     let stepsArrayCompleted = [];
-    DOX = `≈234≈ `;// + `pstEnrSeven202108STEP_SALS_01: while (${stepsArray[0]} !== 'CCOMPLETE')`;
+    DOX = `≈234≈ `;// + `pstEnrSeven202108STEP_SALS_1BY1: while (${stepsArray[0]} !== 'CCOMPLETE')`;
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
 
 
@@ -277,8 +280,15 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
     let doStepSwitchSupportedStepArray = local.getItem('enrollmentStepListAll').split(',');
     $w('#ppContactResponseJSON').value = JSON.stringify(doStepSwitchSupportedStepArray,undefined,4)
     let previouslyCompleted = 0;
+
+
+
     while (stepsArray.length > 0 && testIndex < testBreakIndex) {
-        // pstEnrSeven202108STEP_SALS_01WHILE
+        // pstZEnrSeven202108STEP_SALS_LOOP BEGIN ==> pstZEnrSeven202108STEP_SALS_SWITCH
+        // pstZEnrSeven202108STEP_SALS_1BY1 LOOP BEGIN
+        DOX = 'pstEnrSeven202108STEP_SALS_LOOP BEGIN ==> Jump To ==> pstEnrSeven202108STEP_SALS_SWITCH';
+        local.setItem('logString', local.getItem('logString') + ',' + DOX);
+        DOX = 'pstEnrSeven202108STEP_SALS_1BY1 LOOP BEGIN';
         stepThis = stepsArray.shift();
 
         DOX = `≈262≈ `;// + `stepsArray.toString(): ${stepsArray.toString()}`;
@@ -292,8 +302,12 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
         previouslyCompleted = Math.sign((local.getItem('enrollmentStepCompletedListAll')).indexOf(stepThis) + 1);
         console.log(`≈NNN≈ (${local.getItem('enrollmentStepCompletedListAll')}).indexOf(${stepThis}): ` + (local.getItem('enrollmentStepCompletedListAll')).indexOf(stepThis));
         console.log(`≈NNN≈ previouslyCompleted: ${previouslyCompleted}`);
+        // pstZEnrSeven202108STEP_SALS_SWITCH ==> Begin SWITCH
+        // pstZEnrSeven202108STEP_SALS_1BY1 SWITCH BEGIN
+        DOX = `pstEnrSeven202108STEP_SALS_SWITCH ==> Begin SWITCH`;
+        local.setItem('logString', local.getItem('logString') + ',' + DOX);
+        DOX = `pstEnrSeven202108STEP_SALS_1BY1 SWITCH BEGIN`;
         switch (stepThis) {
-            // pstEnrSeven202108STEP_SALS_01SWITCH
             case 'ZERO':
                 DOX = previouslyCompleted ? `≈NNN≈ previouslyCompleted: ${stepThis}` : `≈NNN≈ ≈i${testIndex}≈ case '${stepThis}': RAW: case-handled thisStep ZERO as Null`;
                 paramObject.messaging.info = DOX;
@@ -323,8 +337,12 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
                     local.setItem('logString', local.getItem('logString') + ',' + DOX);
                 }
                 break;
-            // pstEnrSeven202108STEP_SALS_01SWITCH
         }
+        // pstZEnrSeven202108STEP_SALS_1BY1 SWITCH END
+        // pstZEnrSeven202108STEP_SALS_SWITCH ==> End SWITCH ==> pstZEnrSeven202108STEP_SALS_LOOP
+        DOX = 'pstEnrSeven202108STEP_SALS_1BY1 SWITCH END';
+        DOX = 'pstEnrSeven202108STEP_SALS_SWITCH ==> End SWITCH ==> Continue with LOOP ==> pstEnrSeven202108STEP_SALS_LOOP';
+        local.setItem('logString', local.getItem('logString') + ',' + DOX);
         
         if(previouslyCompleted === 0){
             stepsArrayCompleted.push(stepThis);
@@ -337,7 +355,7 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
 
         // let stepKey = 'DEVEL';
         // <PRE_TRASH>
-        DOX = 'pstEnrSeven202108STEP_SALS_01 DO';
+        DOX = 'pstEnrSeven202108STEP_SALS_1BY1 DO';
         local.setItem('logString', local.getItem('logString') + ',' + DOX);
         DOX = `≈ZZZ≈ doStepSwitch(${stepThis}): DO => PRE_TRASH NO! WITHIN THE SWITCH DEFAULT ABOVE`;
         local.setItem('logString', local.getItem('logString') + ',' + DOX);
@@ -349,8 +367,10 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
     
 
 
-    testIndex++;
-    // pstEnrSeven202108STEP_SALS_01WHILE
+        testIndex++;
+        // pstZEnrSeven202108STEP_SALS_LOOP END
+        DOX = 'pstEnrSeven202108STEP_SALS_LOOP ==> LOOP END ==> Continue with FUNCTION';
+        local.setItem('logString', local.getItem('logString') + ',' + DOX);
     }
     // ! </NEW -- rewrite of below>
     // ! <MIGHT BE FINE -- rewrite above anyway>
@@ -384,8 +404,10 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
         // }
         // ! </USE_LOCAL_SKIP_FUNCTION>
     // }
-    // pstZEnrSeven202108STEP_SALS_01 ==> Return to pstEnrSeven ==> pstZEnrSeven202108STEP_P_04RETURN
-    DOX = 'pstEnrSeven202108STEP_SALS_01 ==> Return to pstEnrSeven ==> pstEnrSeven202108STEP_P_04RETURN';
+    // pstZEnrSeven202108STEP_SALS_1BY1 ==> Return to pstEnrSeven ==> pstZEnrSeven202108STEP_P_04RETURN
+    // pstZEnrSeven202108STEP_SALS_LOOP FUNCTION END
+    DOX = 'pstEnrSeven202108STEP_SALS_1BY1 ==> FUNCTION END ==> Return to pstEnrSeven ==> pstEnrSeven202108STEP_P_04RETURN';
+    DOX = 'pstEnrSeven202108STEP_SALS_LOOP ==> FUNCTION END ==> Return to pstEnrSeven ==> pstEnrSeven202108STEP_P_04RETURN';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
 }
 // ! ====================================================================================================
@@ -4395,7 +4417,7 @@ export async function msboxPostEnrollmentSevenPerformStepDO(responseObject = {})
 
 
     // pstEnrSeven202108SALS CALL
-    DOX = 'pstEnrSeven202108STEP_P_04 ==> Pefrom Array Steps Loop-Switch ==> pstEnrSeven202108STEP_SALS_01';
+    DOX = 'pstEnrSeven202108STEP_P_04 ==> Pefrom Array Steps Loop-Switch ==> pstEnrSeven202108STEP_SALS_LOOP';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
 
     pstErnSevenStepsArraySwitchLoop(paramObject);
@@ -4409,21 +4431,28 @@ export async function msboxPostEnrollmentSevenPerformStepDO(responseObject = {})
     // pstEnrSeven202108SALSDoMessaging CALL
     salsDoMessagingReponsesApply(responseObject, paramObject);
     // Array.prototype.push.apply(responseObject.logArrayDeveloper,paramObject.logArrayDeveloper);
+
+    // ø <APPEND paramObject.logArrayDeveloper ONTO responseObject.logArrayDeveloper>
+    // THIS: Did Not Work: Array.prototype.push.apply(responseObject.logArrayUserInterface,paramObject.logArrayUserInterface);
     let element = '';
     let index = 777;
     for (index = 0; index < paramObject.logArrayDeveloper.length; index++) {
         element = paramObject.logArrayDeveloper[index];
         responseObject.logArrayDeveloper.push(element);
     }
-    // console.log(`≈4040≈ {% logArrayDeveloper ==> index: ${index} %}`)
-    // Array.prototype.push.apply(responseObject.logArrayUserInterface,paramObject.logArrayUserInterface);
-    $w('#spMemberResponseJSON').value = 'paramObject.logArrayUserInterface;\n==================================';
-    $w('#spMemberResponseJSON').value += '\n' + JSON.stringify(paramObject.logArrayUserInterface);
+    // ø </APPEND paramObject.logArrayDeveloper ONTO responseObject.logArrayDeveloper>
+
+    // ø <APPEND paramObject.logArrayUserInterface ONTO responseObject.logArrayUserInterface>
     index = 777;
     for (index = 0; index < paramObject.logArrayUserInterface.length; index++) {
         element = paramObject.logArrayUserInterface[index];
         responseObject.logArrayUserInterface.push(element);
     }
+    // ø </APPEND paramObject.logArrayUserInterface ONTO responseObject.logArrayUserInterface>
+
+    // console.log(`≈4040≈ {% logArrayDeveloper ==> index: ${index} %}`)
+    $w('#spMemberResponseJSON').value = 'paramObject.logArrayUserInterface;\n==================================';
+    $w('#spMemberResponseJSON').value += '\n' + JSON.stringify(paramObject.logArrayUserInterface);
     // console.log(`≈4047≈ {% logArrayUserInterface ==> index: ${index} %}`)
     // pstZEnrSeven202108STEP_P_04RETURN #return from esl
     // pstZEnrSeven202108STEP_P_04RETURN ==> Return-To: PERFORM-UI ==> pstZEnrSeven202108STEP_P_05

@@ -28,7 +28,7 @@ import wixWindow from 'wix-window';
  // ø pstEnrSeven202108DO = DO Code  for  Next && Perform
  // ø pstEnrSeven202108SALS = Do subset of Enrollment Step Loop-Switch (SALS)
  // ø pstEnrSeven202108STEPS_ARRAY_LOOP_SWITCH = Step through ORIG and RETOOL TO individual pstEnrSeven
- // ø pstEnrSeven202108STEP_SALS_Z01WHILE || // pstEnrSeven202108STEP_SALS_Z01SWITCH
+ // ø pstEnrSeven202108STEP_SALS_ZLOOP || // pstEnrSeven202108STEP_SALS_ZSWITCH
  // ø ≈NNN≈ UnResolve Line Numbers - an indication that that area is fast-moving
  // ø QUICK-FIND Step-Thru ==> Starts with OnReadyAction ==> pstEnrSeven202108STEP_R_01
  */
@@ -44,12 +44,22 @@ $w.onReady(function () {
     memory.setItem('msboxCurrentId', '#mxboxPostEnrollmentSeven');
     let uniqueWatchdogBootstrapKeyArray = ["EMERGENCY","CRITICAL","ERROR","ALERT","WARNING","NOTICE","success","primary","info","secondary","devel"];
     let uniqueWatchdogBootstrapKeyArrayString = '';
+    let sufficientWatchdogBootstrapKeyArray = ["EMERGENCY","CRITICAL","ERROR","danger","ALERT","WARNING","NOTICE","success","primary","info","secondary","devel","DEBUG"];
+    let sufficientWatchdogBootstrapKeyArrayString = '';
     let comma = '';
     uniqueWatchdogBootstrapKeyArray.forEach(element => {
         uniqueWatchdogBootstrapKeyArrayString += comma + element.toUpperCase();
         comma = ',';
     });
+    comma = '';
+    sufficientWatchdogBootstrapKeyArray.forEach(element => {
+        sufficientWatchdogBootstrapKeyArrayString += comma + element.toUpperCase();
+        comma = ',';
+    });
+    // <EVENTUALLY: local.removeItem() one of them>
     local.setItem('uniqueWatchdogBootstrapKeyArray',uniqueWatchdogBootstrapKeyArrayString);
+    local.setItem('sufficientWatchdogBootstrapKeyArray',sufficientWatchdogBootstrapKeyArrayString);
+    // </EVENTUALLY: local.removeItem() one of them>
     // $w('#spDatabaseResponseJSON').value = 'ONLY OnReady:\n=============\n';
     // $w('#spDatabaseResponseJSON').value += local.getItem('uniqueWatchdogBootstrapKeyArray');
 
@@ -282,7 +292,7 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
     let previouslyCompleted = 0;
 
 
-
+    memory.setItem('stepLogString','');// Will Catch All Messages in a pstEnrSeven Group, but can back-up later
     while (stepsArray.length > 0 && testIndex < testBreakIndex) {
         // pstZEnrSeven202108STEP_SALS_LOOP BEGIN ==> pstZEnrSeven202108STEP_SALS_SWITCH
         // pstZEnrSeven202108STEP_SALS_1BY1 LOOP BEGIN
@@ -330,7 +340,12 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
                     DOX = `≈NNN≈ ≈i${testIndex}≈ doStepSwitch('${stepThis}'): RAW: will be handled by doStepSwitch(stepThis);`;
                     paramObject.messaging.info = DOX;
                     local.setItem('logString', local.getItem('logString') + ',' + DOX);
-                    // doStepSwitch(stepThis);
+                    // DOX = `pstEnrSeven202108STEP_SALS_SWITCH ==> Actual Orig SWITCH ==> pstEnrSeven202108STEPS_ARRAY_LOOP_SWITCH`;
+                    DOX = `pstEnrSeven202108STEP_SALS_SWITCH ==> Actual Orig SWITCH ==> pstEnrSeven202108STEP_SALS_EXE_SWITCH`;
+                    local.setItem('logString', local.getItem('logString') + ',' + DOX);
+                    doStepSwitch(stepThis);
+                    DOX = `pstEnrSeven202108STEP_SALS_SWITCH ==> Actual Orig SWITCH ==> pstEnrSeven202108STEPS_ARRAY_LOOP_SWITCH`;
+                    local.setItem('logString', local.getItem('logString') + ',' + DOX);
                 }else{
                     DOX = `≈NNN≈ ≈i${testIndex}≈ TODO stepThis === '${stepThis}': RAW: un-handled TBD`;
                     paramObject.messaging.info = DOX;
@@ -432,8 +447,13 @@ export async function doPeformNextStep() {
 // ø <---------- <doStepSwitch>  ---------->
 // pstEnrSeven202108STEPS_ARRAY_LOOP_SWITCH
 export async function doStepSwitch(stepKey = 'PPENDING') {
-    local.setItem('logString', local.getItem('logString') + `,≈ 305≈ entering: ' + 'doStepSwitch(${stepKey})`);
-    local.setItem('logString', local.getItem('logString') + ', ' + `INFO|entering: doStepSwitch(${stepKey})`);
+    let DOX = `≈450≈ pstEnrSeven202108STEP_SALS_EXE_SWITCH BEGIN`;
+    local.setItem('logString', local.getItem('logString') + ',' + DOX);
+    
+    memory.setItem('stepLogString',memory.getItem('stepLogString') + `info=doStepSwitch(${stepKey})=454|`);
+
+    DOX = ` ==> pstEnrSeven202108STEP_SALS_EXE_SWITCH ==> Return to pstEnrSeven SWITCH ==> pstEnrSeven202108STEP_SALS_SWITCH`;
+    local.setItem('logString', local.getItem('logString') + ',' + DOX);
     return;
     let errorString = '';
     switch (stepKey) {
@@ -4429,7 +4449,11 @@ export async function msboxPostEnrollmentSevenPerformStepDO(responseObject = {})
     responseObject.logArrayDeveloper.push('{# PERFORM_STEP_DO just performed instantiateSteps and Display #}');
 
     // pstEnrSeven202108SALSDoMessaging CALL
+    DOX = 'pstEnrSeven202108STEP_P_04RETURN ==> Do Messaging {#extra-clicks#} ==> pstEnrSeven202108STEP_P_04MESSAGING';
+    local.setItem('logString', local.getItem('logString') + ',' + DOX);
     salsDoMessagingReponsesApply(responseObject, paramObject);
+    DOX = 'pstEnrSeven202108STEP_P_04MESSAGING_RETURN ==> Return from Messaging';
+    local.setItem('logString', local.getItem('logString') + ',' + DOX);
     // Array.prototype.push.apply(responseObject.logArrayDeveloper,paramObject.logArrayDeveloper);
 
     // ø <APPEND paramObject.logArrayDeveloper ONTO responseObject.logArrayDeveloper>
@@ -4457,6 +4481,7 @@ export async function msboxPostEnrollmentSevenPerformStepDO(responseObject = {})
     // pstZEnrSeven202108STEP_P_04RETURN #return from esl
     // pstZEnrSeven202108STEP_P_04RETURN ==> Return-To: PERFORM-UI ==> pstZEnrSeven202108STEP_P_05
     DOX = 'pstEnrSeven202108STEP_P_04RETURN ==> Return-To: PERFORM-UI ==> pstEnrSeven202108STEP_P_05';
+    DOX = 'pstEnrSeven202108STEP_P_04MESSAGING_RETURN ==> Return-To: PERFORM-UI ==> pstEnrSeven202108STEP_P_05';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
 }
 // ø <---------- </msboxPostEnrollmentSevenPerformStepDO> ---------->
@@ -4482,7 +4507,8 @@ export async function msboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# n
     let stepList = stepArrayOrig.toString();
     local.setItem('enrollmentStepListAll', stepList);
     let doReset = (local.getItem('enrollmentStepCompletedListAll')).length === 0 ? true : false;
-    doReset = (local.getItem('enrollmentStepCompletedListAll')).indexOf('ResolveAndDestroy') >= 0 ? true : false;
+    doReset = (local.getItem('enrollmentStepCompletedListAll')).lastIndexOf('ResolveAndDestroy') > 0 ? true : false;
+    //lastIndexOf(searchValue)
     doReset = $w('#radioOnReadyFullReset').value === 'FULL_RESET' ? true : doReset;
     if(doReset){
         // $w('#stContactResponseJSON').value = '\nOnReadyBefore|' + local.getItem('enrollmentStepCompletedListAll') + ',';
@@ -4743,7 +4769,32 @@ export function doBootstrapMessage(key, messageThis = 'DEFAULT', responsiveByLen
 
 // ø <---------- <salsDoMessagingReponsesApply UI>  ---------->
 export function salsDoMessagingReponsesApply(responseObject = {}, paramObject = {}) {
-    let DOX = 'JUST FOR VISIBLE DOX IN WIX'
+    let DOX = 'JUST FOR VISIBLE DOX IN WIX';
+    DOX = 'pstEnrSeven202108STEP_P_04MESSAGING ==> Begin Messaging';
+    local.setItem('logString', local.getItem('logString') + ',' + DOX);
+
+    /**
+     * A FEW PARADIGMS AT WORK:
+     * • faux{BOOTSTRAP_WORD}
+     * • 'DEFAULT' Alias
+     * ø ¿ Other Aliases ?
+     * ø  ¡stepLogSting Paradigm !
+     * ø ¡¿ logSting Paradigm ?! - so early, could be obviated
+     * ø ¡¿ responseObject/paramObject.logArrayDeveloper Paradigm ?! - so early, could be obviated
+     * ø ¡¿ responseObject/paramObject.paramObject.logArrayUserInterface Paradigm ?! - so early, could be obviated
+     */
+    if(DOX === `Source Object for memory.get('stepLogString') Paradigm`){
+        let sourceObjectThis = {};
+        sourceObjectThis.site = 'Brad Lowry Mac';
+        sourceObjectThis.title = 'stepLogSting_paradigm.yml';
+        sourceObjectThis.subTitle = 'How to parse memory.getItem(stepLogString) for Messaging';
+        sourceObjectThis.author = 'Brad Lowry';
+        sourceObjectThis.authorContact = 'brad@steamda.com';
+        sourceObjectThis.url = '/Users/brad/Documents/bradRepositories/vsCode/steamdaWixLocal/steamdaWix/agile/sprint/coreLoopSwitchParadigm/stepLogString_paradigm/stepLogSting_paradigm.yml'
+        sourceObjectThis.notes = ['new 20210819 but pretty good, lots of history with zPIPEz zEQz strings as data in the past',
+                                'also works as blood-brain-barrier with other methods'];
+    }
+
     // pstEnrSeven202108UTILITY BEGIN
     // pstEnrSeven202108SALSDoMessaging BEGIN
     let holderKey = 'FAUX';
@@ -4814,6 +4865,8 @@ export function salsDoMessagingReponsesApply(responseObject = {}, paramObject = 
 
     // pstEnrSeven202108UTILITY END
     // pstEnrSeven202108SALSDoMessaging END
+    DOX = 'pstEnrSeven202108STEP_P_04MESSAGING ==> Return from Messaging ==> pstEnrSeven202108STEP_P_04MESSAGING_RETURN';
+    local.setItem('logString', local.getItem('logString') + ',' + DOX);
 }
 // ø <---------- </salsDoMessagingReponsesApply UI> ---------->
 
@@ -4993,11 +5046,16 @@ export function btnStepsObject_click(event) {
     $w('#ppDatabaseResponseJSON').value = memory.getItem('stepObjects');
 }
 
+export function btnGetCompleteList_click(event) {
+	$w('#spContactResponseJSON').value = local.getItem('enrollmentStepCompletedListAll');
+    uiCopyTextElementThis('spContactResponseJSON');
+}
+
 /**
  *	Adds an event handler that runs when the element is clicked.
  *	 @param {$w.MouseEvent} event
  */
-export function btnGetCompleteList_click(event) {
-	$w('#spContactResponseJSON').value = local.getItem('enrollmentStepCompletedListAll');
+export function btnGetStepLogString_click(event) {
+	$w('#spContactResponseJSON').value = memory.getItem('stepLogString');
     uiCopyTextElementThis('spContactResponseJSON');
 }

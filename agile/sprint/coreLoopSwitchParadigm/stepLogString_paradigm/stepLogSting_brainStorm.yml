@@ -12,12 +12,14 @@ Notes:
   - (including here in this dox)
   - ANYWHERE that Code could confuse things it will go .toUpperCase()
 
+Element as Array Templay:
+  "{key}=message={lineNumber}={doPostWatchdogLogBooleanString}|"
 Element as Array Structure:
-- 1 first Element: is 'Sufficient' so far as Watchdog-Bootstrap:
+- 1 first Element: key: is 'Sufficient' so far as Watchdog-Bootstrap:
   - IF 'Sufficient' both Bootstrap and Watchdog Keys are determined
   - IF NOT 'Sufficient' then just 'SOMETHING' (maybe something more later)
     - you may start with a zEQz for zEEMPTYz as a NOT 'Sufficient' something
-- 2 second Element: is the Message String (long short just no zPIPEz or zEQz)
+- 2 second Element: message: is the Message String (long short just no zPIPEz or zEQz)
   - do replace() literal 'zPIPEz' and 'zEQz' string with the characters when its safe
   - supported, but BEWARE zCOMMAz's
   - Eventually, maybe, some ALIAS's mapped to a Library
@@ -27,7 +29,7 @@ Element as Array Structure:
 - 3 lineNumber: 
   - if use BTL-String-Booleans ['TTRUE','FFALSE'] then Assume #4
   - do attempt to use zEQzzEQz for No LineNumber though
-- 4 boolean: doPostWatchdogLog
+- 4 boolean: doPostWatchdogLog (doPostWatchdogLogBooleanString)
   - use BTL-String-Booleans ['TTRUE','FFALSE']
     - since it's all String Based, keep it explicitly String 
   - default as 'FFALSE', since mostly unused

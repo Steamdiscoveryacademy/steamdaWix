@@ -30,3 +30,9 @@ pstErnSevenStepsArraySwitchLoop
 
 pstEnrSeven202108STEP_SALS_LOOP
 
+// NOTE: using responseObject 'paradigm' but paramObject as 'Blood-Brain-Barrier'
+
+pstEnrSeven202108STEP_SALS_LOOP
+
+DOX = `pstEnrSeven202108STEP_SALS_SWITCH ==> Actual Orig SWITCH ==> pstEnrSeven202108STEP_SALS_EXE_SWITCH`;
+local.setItem('logString', local.getItem('logString') + ',' + DOX);

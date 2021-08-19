@@ -1,0 +1,144 @@
+    let DOX = `≈438≈ pstEnrSeven202108STEP_SALS_EXE_SWITCH BEGIN`;
+    local.setItem('logString', local.getItem('logString') + ',' + DOX);
+    memory.setItem('stepLogString','');// MAYBE TOO CLOSE, but can back-up later
+
+
+Notes:
+- user zPIPEz & zEQz (zEQUALSIGNz) String Data s Blood-Brain-Barrier to local.sgetItem('logString')
+- start zEEMPTYz, 
+- each Element will end with a zPIPEz: don't worry about trailing zPIPEz
+  - ¿¡ perhaps split('|') will not render trailing empty element!?
+- UPPERCASE vs lowercase is only for my feeble human self:
+  - (including here in this dox)
+  - ANYWHERE that Code could confuse things it will go .toUpperCase()
+
+Element as Array Structure:
+- 1 first Element: is 'Sufficient' so far as Watchdog-Bootstrap:
+  - IF 'Sufficient' both Bootstrap and Watchdog Keys are determined
+  - IF NOT 'Sufficient' then just 'SOMETHING' (maybe something more later)
+    - you may start with a zEQz for zEEMPTYz as a NOT 'Sufficient' something
+- 2 second Element: is the Message String (long short just no zPIPEz or zEQz)
+  - do replace() literal 'zPIPEz' and 'zEQz' string with the characters when its safe
+  - supported, but BEWARE zCOMMAz's
+  - Eventually, maybe, some ALIAS's mapped to a Library
+    - BECAUSE we don't want these to get too verbose at the source
+    - YET we do want to support fully cogent messages upon renderign
+    - indeed 'DEFAULT' is already supported
+- 3 lineNumber: 
+  - if use BTL-String-Booleans ['TTRUE','FFALSE'] then Assume #4
+  - do attempt to use zEQzzEQz for No LineNumber though
+- 4 boolean: doPostWatchdogLog
+  - use BTL-String-Booleans ['TTRUE','FFALSE']
+    - since it's all String Based, keep it explicitly String 
+  - default as 'FFALSE', since mostly unused
+
+Examples: 
+- EMERGENCY=The deDupe routine FAILED=1223=TTRUE|
+  elementObject: {
+    "message": "The deDupe routine FAILED",
+    "line": "1223",
+    "bootstrap": "danger",
+    "watchdog": "EMERGENCY",
+    "postLogString": "TTRUE",
+    "postLog": true,
+  }
+  notes:[
+    "line as string because more flexible",
+    "both postLogString and postLog because, well, it's an object so you can",
+    " ↪ string because it's the SOURCE and boolean because it works in code",
+    "attempted meaningful order, but..."
+    ]
+- warning=There were more than 2 Contacts by stEmail|
+  elementObject: {
+    "message": "There were more than 2 Contacts by stEmail",
+    "line": "",
+    "bootstrap": "warning",
+    "watchdog": "WARNING",
+    "postLogString": "",
+    "postLog": false,
+  }
+  notes:[
+    "postLogString is empty-string because it is the SOURCE, but postLog is (default) false"
+  ]
+- success=DEFAULT|
+  elementObject: {
+    "message": "DEFAULT",
+    "line": "",
+    "bootstrap": "success",
+    "watchdog": "INFO",
+    "postLogString": "",
+    "postLog": false,
+  }
+  notes:[
+    "Example of ALIAS use, the already supported 'DEFAULT'"
+  ]
+- primary=A rare instance where primary is overridden=2457|
+  elementObject: {
+    "message": "A rare instance where primary is overridden",
+    "line": "2457",
+    "bootstrap": "primary",
+    "watchdog": "INFO",
+    "postLogString": "",
+    "postLog": false,
+  }
+- devel=This is not a show-stopper but we need to support unfound Staff-Eye-Ds=TTRUE|
+  elementObject: {
+    "message": "A rare instance where primary is overridden",
+    "line": "2457",
+    "bootstrap": "devel",
+    "watchdog": "DEBUG",
+    "postLogString": "TTRUE",
+    "postLog": true,
+  }
+
+
+
+
+
+let uniqueWatchdogBootstrapKeyArray =
+["EMERGENCY",
+"CRITICAL",
+"ERROR",
+"ALERT",
+"WARNING",
+"NOTICE",
+"success",
+"primary",
+"info",
+"secondary",
+"devel"];
+
+let SUFFIENT_WatchdogBootstrapKeyArray =
+["EMERGENCY",
+"CRITICAL",
+"ERROR",
+"danger",
+"ALERT",
+"WARNING",
+"NOTICE",
+"success",
+"primary",
+"info",
+"secondary",
+"devel",
+"DEBUG"];
+
+let SUFFIENT_2D_WatchdogBootstrapKeyArray =
+[["EMERGENCY","danger"],
+["CRITICAL","danger"],
+["ERROR","danger"],
+["danger","ERROR"],
+["ALERT","warning"],
+["WARNING","warning"],
+["NOTICE","warning"],
+["success","INFO"],
+["primary","INFO"],
+["info","INFO"],
+["secondary","INFO"],
+["devel","DEBUG"],
+["DEBUG","devel"]]
+
+
+
+logElement
+

@@ -9,14 +9,6 @@ https://webhook.site/191e8210-1ce6-4d05-8d72-e3a3a10cf0e4
 
 
 ===================================
-
-// pstEnrSeven202108STEP_ESLS_01 ==> Return to pstEnrSeven ==> pstEnrSeven202108STEP_P_04RETURN
-
-let html = doBootstrapMessage('devel',develString,[[-1,18]]); 
-let html = doBootstrapMessage('devel',develString,[[-1,36],[50,28]]); 
-
-eslsDoMessagingReponsesApply(responseObject = {}, paramObject = {})
----
-    $w('#ppDatabaseResponseJSON').value = 'PerformStepDO:\n==============\n';
-    // $w('#ppDatabaseResponseJSON').value += JSON.parse(responseObject);
-    $w('#ppDatabaseResponseJSON').value += JSON.stringify(paramObject.currentStepObject);
+===== Friday August 20, 2021 ======
+===================================
+===================================

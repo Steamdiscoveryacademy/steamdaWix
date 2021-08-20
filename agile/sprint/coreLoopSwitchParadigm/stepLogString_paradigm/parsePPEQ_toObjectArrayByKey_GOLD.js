@@ -41,15 +41,3 @@ export function parsePPEQ_toObjectArrayByKey(ppeqString = 'STRING'){
     });  
     return responseObjectArraysByKey;
 }
-
-
-let ppeqStringThis = "devel=The first Number=1|devel=The second Number=2|EMERGENCY=The third Number=3";
-
-// parsePPEQ(ppeqStringThis);
-let responseObjectArraysByKeyThis = parsePPEQ(ppeqStringThis);
-
-console.warn('ppeqStringThis: ');
-console.warn(ppeqStringThis);
-console.warn('responseObjectArraysByKeyThis: ');
-console.warn(responseObjectArraysByKeyThis);
-// // console.warn(JSON.stringify(responseObjectArraysByKeyThis,undefined,4));

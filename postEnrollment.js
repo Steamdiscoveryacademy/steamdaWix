@@ -310,8 +310,8 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
         $w('#stContactResponseJSON').value += '\nSwitchB4ZZZ|' + local.getItem('enrollmentStepCompletedListAll') + ';';
 
         previouslyCompleted = Math.sign((local.getItem('enrollmentStepCompletedListAll')).indexOf(stepThis) + 1);
-        console.log(`≈NNN≈ (${local.getItem('enrollmentStepCompletedListAll')}).indexOf(${stepThis}): ` + (local.getItem('enrollmentStepCompletedListAll')).indexOf(stepThis));
-        console.log(`≈NNN≈ previouslyCompleted: ${previouslyCompleted}`);
+        console.log(`≈313≈ (${local.getItem('enrollmentStepCompletedListAll')}).indexOf(${stepThis}): ` + (local.getItem('enrollmentStepCompletedListAll')).indexOf(stepThis));
+        console.log(`≈314≈ previouslyCompleted: ${previouslyCompleted}`);
         // pstZEnrSeven202108STEP_SALS_SWITCH ==> Begin SWITCH
         // pstZEnrSeven202108STEP_SALS_1BY1 SWITCH BEGIN
         DOX = `pstEnrSeven202108STEP_SALS_SWITCH ==> Begin SWITCH`;
@@ -328,7 +328,12 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
                 DOX = previouslyCompleted ? `≈NNN≈ previouslyCompleted: ${stepThis}` : `≈NNN≈ ≈i${testIndex}≈ case '${stepThis}': RAW: case-handled thisStep ResolveAndDestroy as CleanUp`;
                 paramObject.messaging.info = DOX;
                 local.setItem('logString', local.getItem('logString') + ',' + DOX);
-                local.setItem('enrollmentStepCompletedListAll','ResolveAndDestroy');
+                break;
+        
+            case 'OffRamp':
+                DOX = previouslyCompleted ? `≈NNN≈ previouslyCompleted: ${stepThis}` : `≈NNN≈ ≈i${testIndex}≈ case '${stepThis}': RAW: case-handled thisStep OffRamp as Special [link to 'Process Web Hooks' will make 'Go To Next Step' Moot]`;
+                paramObject.messaging.info = DOX;
+                local.setItem('logString', local.getItem('logString') + ',' + DOX);
                 break;
         
             default:
@@ -369,13 +374,6 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
 
 
         // let stepKey = 'DEVEL';
-        // <PRE_TRASH>
-        DOX = 'pstEnrSeven202108STEP_SALS_1BY1 DO';
-        local.setItem('logString', local.getItem('logString') + ',' + DOX);
-        DOX = `≈ZZZ≈ doStepSwitch(${stepThis}): DO => PRE_TRASH NO! WITHIN THE SWITCH DEFAULT ABOVE`;
-        local.setItem('logString', local.getItem('logString') + ',' + DOX);
-        // MOVED AVOVE: doStepSwitch(stepThis);
-        // </PRE_TRASH>
 
 
 
@@ -3462,8 +3460,6 @@ export function btnGetSpDbase_click(event) {
 
 export function btnClearSpMember_click(event) {
     doClear('spMemberResponseJSON')
-    // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-    // Add your code for this event here: 
 }
 
 export function btnClearSpContact_click(event) {
@@ -4277,7 +4273,7 @@ export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}) {
     let responseArray = responseString.split(',');
     let comma = ($w('#spDatabaseResponseJSON').value).length === 0 ? '' : ',';
     $w('#spDatabaseResponseJSON').value += ',' + JSON.stringify(responseArray);
-    $w('#anchorPrimaryMessage').scrollTo();
+    // $w('#anchorPrimaryMessage').scrollTo();
     // pstEnrSeven202108ANY END
 
 }
@@ -4314,6 +4310,8 @@ export async function msboxPostEnrollmentSevenNextStateUI(responseObject = {}) {
     displaySteps();
     $w('#btnPeSevenCurrent').show();
     $w('#btnPeSevenNext').hide();
+    DOX = '≈4307≈ Show-Current & Hide-Next';
+    local.setItem('logString', local.getItem('logString') + ',' + DOX);
     // ø </After DO-Script Called>
     // pstZEnrSeven202108STEP_N_05 ==> ReturnTo: ANY-AFTER ==> pstZEnrSeven202108STEP_N_06
     DOX = 'pstEnrSeven202108STEP_N_05 ==> ReturnTo: ANY-AFTER ==> pstEnrSeven202108STEP_N_06';
@@ -4507,13 +4505,14 @@ export async function msboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# n
     let stepList = stepArrayOrig.toString();
     local.setItem('enrollmentStepListAll', stepList);
     let doReset = (local.getItem('enrollmentStepCompletedListAll')).length === 0 ? true : false;
-    doReset = (local.getItem('enrollmentStepCompletedListAll')).lastIndexOf('ResolveAndDestroy') > 0 ? true : false;
+    // doReset = (local.getItem('enrollmentStepCompletedListAll')).lastIndexOf('ResolveAndDestroy') > 0 ? true : false;
     //lastIndexOf(searchValue)
     doReset = $w('#radioOnReadyFullReset').value === 'FULL_RESET' ? true : doReset;
     if(doReset){
         // $w('#stContactResponseJSON').value = '\nOnReadyBefore|' + local.getItem('enrollmentStepCompletedListAll') + ',';
         local.setItem('enrollmentStepCompletedListAll','OnReadyReset')
         $w('#stContactResponseJSON').value += '\n,OnReadyZZZZ|' + local.getItem('enrollmentStepCompletedListAll') + ';';
+        $w('#radioOnReadyFullReset').value = '';
     }else{
         local.setItem('enrollmentStepCompletedListAll', local.getItem('enrollmentStepCompletedListAll') + ',' + 'OnReadyResetContinue')
         $w('#stContactResponseJSON').value += '\n,OnReadyZZZZ|' + local.getItem('enrollmentStepCompletedListAll') + ';';
@@ -5058,4 +5057,12 @@ export function btnGetCompleteList_click(event) {
 export function btnGetStepLogString_click(event) {
 	$w('#spContactResponseJSON').value = memory.getItem('stepLogString');
     uiCopyTextElementThis('spContactResponseJSON');
+}
+
+/**
+ *	Adds an event handler that runs when the element is clicked.
+ *	 @param {$w.MouseEvent} event
+ */
+export function btnClearSpContactResponseJSON_click(event) {
+	doClear('spContactResponseJSON');
 }

@@ -44,4 +44,25 @@ local.setItem('logString', local.getItem('logString') + ',' + DOX);
 DOX = 'pstEnrSeven202108STEP_P_04MESSAGING_RETURN ==> Return from Messaging';
 local.setItem('logString', local.getItem('logString') + ',' + DOX);
 
+    doClear('spContactResponseJSON')
+
+spContactResponseJSON
+
+
+
+
+btnPeSevenCurrent
+
+$w('#btnPeSevenNext').hide()
+
+
+
+
+
+
+
+
+
+
+
 

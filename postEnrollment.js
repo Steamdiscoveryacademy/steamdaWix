@@ -4801,11 +4801,83 @@ export function salsDoMessagingReponsesApply(responseObject = {}, paramObject = 
     $w('#stMemberResponseJSON').value = JSON.stringify(messageObjectArraysByKey,undefined,4);
     // pstEnrSeven202108UTILITY BEGIN
     // pstEnrSeven202108SALSDoMessaging BEGIN
-    let holderKey = 'FAUX';
-    let response = 'EEMPTY';
 
-    let DOXkey = 'success'
-    let DOXkeyDo = DOXkey + 'Do'
+
+    let primaryMessageObjectArray = [];
+    let secondaryMessageObjectArray = [];
+    let responseMessageObjectArray = [];
+    let infoMessageObjectArray = [];
+
+    let messageObjectArrayKeys = Object.keys(messageObjectArraysByKey);
+    let objectArray = [];
+    messageObjectArrayKeys.forEach(objectKey => {
+       objectArray = messageObjectArraysByKey[objectKey];
+            objectArray.forEach(messageObject => {
+                if(messageObject.uiPlacement === 'PRIMARY'){primaryMessageObjectArray.push(messageObject);}
+                if(messageObject.uiPlacement === 'SECONDARY'){secondaryMessageObjectArray.push(messageObject);}
+                if(messageObject.uiPlacement === 'RESPONSE'){responseMessageObjectArray.push(messageObject);}
+                if(messageObject.uiPlacement === 'INFO'){infoMessageObjectArray.push(messageObject);}
+            });
+       });         
+    // });
+
+let countPrimaryMessage = primaryMessageObjectArray.length;
+let countSecondaryMessage = secondaryMessageObjectArray.length;
+let countResponseMessage = responseMessageObjectArray.length;
+let countInfoMessage = infoMessageObjectArray.length;
+
+let zeroPrimaryMessage = `There were No Primary Overload Messages for this State-Step`;
+let onePrimaryMessage = `There was One Primary Overload Messages for this State-Step`;
+let manyPrimaryMessage = `There were Many (${countPrimaryMessage})  Primary Overload Messages for this State-Step`;
+ 
+let zeroSecondaryMessage = `There were No Secondary Overload Messages for this State-Step`;
+let oneSecondaryMessage = `There was One Secondary Overload Messages for this State-Step`;
+let manySecondaryMessage = `There were Many (${countSecondaryMessage})  Secondary Overload Messages for this State-Step`;
+ 
+let zeroResponseMessage = `There were No Response Overload Messages for this State-Step`;
+let oneResponseMessage = `There was One Response Overload Messages for this State-Step`;
+let manyResponseMessage = `There were Many (${countResponseMessage})  Response Overload Messages for this State-Step`;
+ 
+let zeroInfoMessage = `There were No Info Overload Messages for this State-Step`;
+let oneInfoMessage = `There was One Info Overload Messages for this State-Step`;
+let manyInfoMessage = `There were Many (${countInfoMessage})  Info Overload Messages for this State-Step`;
+ 
+let messagePrimary = countPrimaryMessage === 0 ? zeroPrimaryMessage : manyPrimaryMessage;
+messagePrimary = countPrimaryMessage === 1 ? onePrimaryMessage : messagePrimary;
+ 
+let messageSecondary = countSecondaryMessage === 0 ? zeroSecondaryMessage : manySecondaryMessage;
+messageSecondary = countSecondaryMessage === 1 ? oneSecondaryMessage : messageSecondary;
+ 
+let responseBootstrap = countResponseMessage === 1 ? 'danger' /*BOOTSTRAP FROM SINGLE OBJECT*/: 'success';
+let messageResponse = countResponseMessage === 0 ? zeroResponseMessage : manyResponseMessage;
+messageResponse = countResponseMessage === 1 ? oneResponseMessage : messageResponse;
+ 
+let messageInfo = countInfoMessage === 0 ? zeroInfoMessage : manyInfoMessage;
+messageInfo = countInfoMessage === 1 ? oneInfoMessage : messageInfo;
+
+if(countPrimaryMessage > 0){$w('#txtBootstrapPrimary').html = doBootstrapMessage('primary', messagePrimary, [[-1, 36], [50, 28]]);}
+if(countInfoMessage > -1){$w('#txtBootstrapInfo').html = doBootstrapMessage('info', messageInfo, [[-1, 36], [50, 28]]); $w('#txtBootstrapInfo').expand();}
+if(countResponseMessage > -1){$w('#txtBootstrapResponse').html = doBootstrapMessage(responseBootstrap, messageResponse, [[-1, 36], [50, 28]]);$w('#txtBootstrapResponse').expand();}
+
+
+
+
+
+    DOX = 'pstEnrSeven202108STEP_P_04MESSAGING ==> DISABLED_nonPPEQ_20210821 ≈4808≈ thru ≈4895≈';
+    local.setItem('logString', local.getItem('logString') + ',' + DOX);
+    // ø ==================================================================================================================================
+    // ø ====================  \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/  ====================
+    // ø ==================== <DISABLE ALL: Logic for Messaging other than PPEQ from memory.getItem('stepLogString')>  ====================
+    // ø ====================               DISABLED on August 21, 2021 marked DISABLED_nonPPEQ_20210821               ====================
+    // ø ====================  /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\  ====================
+    // ø ==================================================================================================================================
+    // ø ==================== <DISABLED_nonPPEQ_20210821>  ====================
+    // let holderKey = 'FAUX';
+    // let response = 'EEMPTY';
+
+    // let DOXkey = 'success'
+    // let DOXkeyDo = DOXkey + 'Do'
+    // ø ==================== </DISABLED_nonPPEQ_20210821> ====================
     // DOX = `${DOXkey.toUpperCase()} VALUES:\n============`;
     // DOX += '\n\n ORIGINAL:';
     // DOX += '\n' + `paramObject.messaging.${DOXkey}: ${paramObject.messaging[DOXkey]}`;
@@ -4813,39 +4885,43 @@ export function salsDoMessagingReponsesApply(responseObject = {}, paramObject = 
     // DOX += '\n' + `responseObject.currentMessagingObject.${DOXkey}: ${responseObject.currentMessagingObject[DOXkey]}`;
     // in decreasing eggregiousness so most eggregious is 'TAKEN'
 
+    // ø ==================== <DISABLED_nonPPEQ_20210821>  ====================
     // <APPLY DEFAULTS>
     //POdanger = POdanger === "DEFAULT" ? ROdanger : POdanger
-    paramObject.messaging.primary = paramObject.messaging.primary === "DEFAULT" ? responseObject.currentMessagingObject.primary : paramObject.messaging.primary;
-    paramObject.messaging.info = paramObject.messaging.info === "DEFAULT" ? responseObject.currentMessagingObject.info : paramObject.messaging.info;
-    paramObject.messaging.devel = paramObject.messaging.devel === "DEFAULT" ? responseObject.currentMessagingObject.devel : paramObject.messaging.devel;
-    paramObject.messaging.success = paramObject.messaging.success === "DEFAULT" ? responseObject.currentMessagingObject.success : paramObject.messaging.success;
-    paramObject.messaging.warning = paramObject.messaging.warning === "DEFAULT" ? responseObject.currentMessagingObject.warning : paramObject.messaging.warning;
-    paramObject.messaging.danger = paramObject.messaging.danger === "DEFAULT" ? responseObject.currentMessagingObject.danger : paramObject.messaging.danger;
+    // paramObject.messaging.primary = paramObject.messaging.primary === "DEFAULT" ? responseObject.currentMessagingObject.primary : paramObject.messaging.primary;
+    // paramObject.messaging.info = paramObject.messaging.info === "DEFAULT" ? responseObject.currentMessagingObject.info : paramObject.messaging.info;
+    // paramObject.messaging.devel = paramObject.messaging.devel === "DEFAULT" ? responseObject.currentMessagingObject.devel : paramObject.messaging.devel;
+    // paramObject.messaging.success = paramObject.messaging.success === "DEFAULT" ? responseObject.currentMessagingObject.success : paramObject.messaging.success;
+    // paramObject.messaging.warning = paramObject.messaging.warning === "DEFAULT" ? responseObject.currentMessagingObject.warning : paramObject.messaging.warning;
+    // paramObject.messaging.danger = paramObject.messaging.danger === "DEFAULT" ? responseObject.currentMessagingObject.danger : paramObject.messaging.danger;
     // DOX += '\n\n AFTER DEFAULT CHECK:';
     // DOX += '\n' + `paramObject.messaging.${DOXkey}: ${paramObject.messaging[DOXkey]}`;
     // DOX += '\n' + `paramObject.messaging.${DOXkeyDo}: ${paramObject.messaging[DOXkeyDo]}`;
     // DOX += '\n' + `responseObject.currentMessagingObject.${DOXkey}: ${responseObject.currentMessagingObject[DOXkey]}`;
     // </APPLY DEFAULTS>
+    // ø ==================== </DISABLED_nonPPEQ_20210821> ====================
 
-    holderKey = paramObject.messaging.danger !== 'dangerFAUX' ? 'danger' : holderKey;
-    holderKey = paramObject.messaging.warning !== 'warningFAUX' && holderKey === 'FAUX' ? 'warning' : holderKey;
-    holderKey = paramObject.messaging.success !== 'successFAUX' && holderKey === 'FAUX' ? 'success' : holderKey;
-    response = paramObject.messaging.success === 'successFAUX' ? paramObject.messaging.responseDo : 'success';
-    response = holderKey === 'FAUX' ? 'EEMPTY' : paramObject.messaging[holderKey];
-    responseObject.currentMessagingObject.responseKey = holderKey;
-    responseObject.currentMessagingObject.response = response;
-    // ø <APPLY paramObject IFF>
-    holderKey = 'FAUX';
-    holderKey = paramObject.messaging.primary === 'primaryFAUX' ? holderKey : 'primaryFAUX';
-    paramObject.messaging.primaryDo = paramObject.messaging.primary === 'primaryFAUX' ? false : true;
-    responseObject.currentMessagingObject.primary = holderKey === 'FAUX' ? responseObject.currentMessagingObject.primary : paramObject.messaging.primary;
-    holderKey = 'FAUX';
-    holderKey = paramObject.messaging.info === 'infoFAUX' ? holderKey : 'infoFAUX';
-    paramObject.messaging.infoDo = paramObject.messaging.info === 'infoFAUX' ? false : true;
-    responseObject.currentMessagingObject.info = holderKey === 'FAUX' ? responseObject.currentMessagingObject.info : paramObject.messaging.info;
-    holderKey = 'FAUX';
-    holderKey = paramObject.messaging.devel === 'develFAUX' ? holderKey : 'develFAUX';
-    responseObject.currentMessagingObject.devel = holderKey === 'FAUX' ? responseObject.currentMessagingObject.devel : paramObject.messaging.devel;
+    // ø ==================== <DISABLED_nonPPEQ_20210821>  ====================
+    // holderKey = paramObject.messaging.danger !== 'dangerFAUX' ? 'danger' : holderKey;
+    // holderKey = paramObject.messaging.warning !== 'warningFAUX' && holderKey === 'FAUX' ? 'warning' : holderKey;
+    // holderKey = paramObject.messaging.success !== 'successFAUX' && holderKey === 'FAUX' ? 'success' : holderKey;
+    // response = paramObject.messaging.success === 'successFAUX' ? paramObject.messaging.responseDo : 'success';
+    // response = holderKey === 'FAUX' ? 'EEMPTY' : paramObject.messaging[holderKey];
+    // responseObject.currentMessagingObject.responseKey = holderKey;
+    // responseObject.currentMessagingObject.response = response;
+    // // ø <APPLY paramObject IFF>
+    // holderKey = 'FAUX';
+    // holderKey = paramObject.messaging.primary === 'primaryFAUX' ? holderKey : 'primaryFAUX';
+    // paramObject.messaging.primaryDo = paramObject.messaging.primary === 'primaryFAUX' ? false : true;
+    // responseObject.currentMessagingObject.primary = holderKey === 'FAUX' ? responseObject.currentMessagingObject.primary : paramObject.messaging.primary;
+    // holderKey = 'FAUX';
+    // holderKey = paramObject.messaging.info === 'infoFAUX' ? holderKey : 'infoFAUX';
+    // paramObject.messaging.infoDo = paramObject.messaging.info === 'infoFAUX' ? false : true;
+    // responseObject.currentMessagingObject.info = holderKey === 'FAUX' ? responseObject.currentMessagingObject.info : paramObject.messaging.info;
+    // holderKey = 'FAUX';
+    // holderKey = paramObject.messaging.devel === 'develFAUX' ? holderKey : 'develFAUX';
+    // responseObject.currentMessagingObject.devel = holderKey === 'FAUX' ? responseObject.currentMessagingObject.devel : paramObject.messaging.devel;
+    // ø ==================== </DISABLED_nonPPEQ_20210821> ====================
     // DOX += '\n\n APPLY PARAM_OBJECT:';
     // DOX += '\n' + `paramObject.messaging.${DOXkey}: ${paramObject.messaging[DOXkey]}`;
     // DOX += '\n' + `paramObject.messaging.${DOXkeyDo}: ${paramObject.messaging[DOXkeyDo]}`;
@@ -4854,9 +4930,11 @@ export function salsDoMessagingReponsesApply(responseObject = {}, paramObject = 
 
 
     // ø <FINAL VALUES>
-    if (paramObject.messaging.primaryDo) { $w('#txtBootstrapPrimary').html = doBootstrapMessage('primary', paramObject.messaging.primary, [[-1, 36], [50, 28]]) }
-    if (paramObject.messaging.infoDo) { $w('#txtBootstrapInfo').html = doBootstrapMessage('info', paramObject.messaging.info, [[-1, 36], [50, 28]]); $w('#txtBootstrapInfo').expand(); }
-    if (responseObject.currentMessagingObject.response !== 'EEMPTY') { $w('#txtBootstrapResponse').html = doBootstrapMessage(responseObject.currentMessagingObject.responseKey, responseObject.currentMessagingObject.response, [[-1, 36], [50, 28]]); $w('#txtBootstrapResponse').expand(); }
+    // ø ==================== <DISABLED_nonPPEQ_20210821>  ====================
+    // if (paramObject.messaging.primaryDo) { $w('#txtBootstrapPrimary').html = doBootstrapMessage('primary', paramObject.messaging.primary, [[-1, 36], [50, 28]]) }
+    // if (paramObject.messaging.infoDo) { $w('#txtBootstrapInfo').html = doBootstrapMessage('info', paramObject.messaging.info, [[-1, 36], [50, 28]]); $w('#txtBootstrapInfo').expand(); }
+    // if (responseObject.currentMessagingObject.response !== 'EEMPTY') { $w('#txtBootstrapResponse').html = doBootstrapMessage(responseObject.currentMessagingObject.responseKey, responseObject.currentMessagingObject.response, [[-1, 36], [50, 28]]); $w('#txtBootstrapResponse').expand(); }
+    // ø ==================== </DISABLED_nonPPEQ_20210821> ====================
     // DOX += '\n\n FINAL VALUES:';
     // DOX += '\n' + `paramObject.messaging.${DOXkey}: ${paramObject.messaging[DOXkey]}`;
     // DOX += '\n' + `paramObject.messaging.${DOXkeyDo}: ${paramObject.messaging[DOXkeyDo]}`;
@@ -4866,6 +4944,11 @@ export function salsDoMessagingReponsesApply(responseObject = {}, paramObject = 
     // $w('#ppDatabaseResponseJSON').value = DOX;
     // ø </FINAL VALUES>
 
+    // ø ==================================================================================================================================
+    // ø ====================  \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/  ====================
+    // ø ==================== </DISABLE ALL: Logic for Messaging other than PPEQ from memory.getItem('stepLogString')> ====================
+    // ø ====================  /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\  ====================
+    // ø ==================================================================================================================================
 
     // pstEnrSeven202108UTILITY END
     // pstEnrSeven202108SALSDoMessaging END
@@ -4890,10 +4973,12 @@ export async function getSourcedJSON_byKey(key) {
 // ø <---------- </getSourcedJSON_byKey UTILITY> ---------->
 
 // ø <---------- <parsePPEQ_toObjectArraysByKey UTILITY>  ---------->
+// ø <---------- <parsePPEQ_toObjectArraysByKey UTILITY>  ---------->
 export function parsePPEQ_toObjectArraysByKey(ppeqString = 'STRING'){
     // pstEnrSeven202108UTILITY SHORT
     let accordingToSufficientBootstrapWatchdog = "not Necessary, parses to ObjectArrayByKey (objects), with bootstrap-watchdog of 'NA' if no match";
-    let sufficientObjectLookup = { EMERGENCY: { bootstrap: 'DANGER', watchdog: 'EMERGENCY' },CRITICAL: { bootstrap: 'DANGER', watchdog: 'CRITICAL' },ERROR: { bootstrap: 'DANGER', watchdog: 'ERROR' },DANGER: { bootstrap: 'DANGER', watchdog: 'ERROR' },ALERT: { bootstrap: 'WARNING', watchdog: 'ALERT' },WARNING: { bootstrap: 'WARNING', watchdog: 'WARNING' },NOTICE: { bootstrap: 'WARNING', watchdog: 'NOTICE' },SUCCESS: { bootstrap: 'SUCCESS', watchdog: 'INFO' },PRIMARY: { bootstrap: 'PRIMARY', watchdog: 'INFO' },INFO: { bootstrap: 'INFO', watchdog: 'INFO' },SECONDARY: { bootstrap: 'SECONDARY', watchdog: 'INFO' },DEVEL: { bootstrap: 'DEVEL', watchdog: 'DEBUG' },DEBUG: { bootstrap: 'DEVEL', watchdog: 'DEBUG' } };
+    // let sufficientObjectLookup = { EMERGENCY: { bootstrap: 'DANGER', watchdog: 'EMERGENCY' },CRITICAL: { bootstrap: 'DANGER', watchdog: 'CRITICAL' },ERROR: { bootstrap: 'DANGER', watchdog: 'ERROR' },DANGER: { bootstrap: 'DANGER', watchdog: 'ERROR' },ALERT: { bootstrap: 'WARNING', watchdog: 'ALERT' },WARNING: { bootstrap: 'WARNING', watchdog: 'WARNING' },NOTICE: { bootstrap: 'WARNING', watchdog: 'NOTICE' },SUCCESS: { bootstrap: 'SUCCESS', watchdog: 'INFO' },PRIMARY: { bootstrap: 'PRIMARY', watchdog: 'INFO' },INFO: { bootstrap: 'INFO', watchdog: 'INFO' },SECONDARY: { bootstrap: 'SECONDARY', watchdog: 'INFO' },DEVEL: { bootstrap: 'DEVEL', watchdog: 'DEBUG' },DEBUG: { bootstrap: 'DEVEL', watchdog: 'DEBUG' } };
+    let sufficientObjectLookup = { EMERGENCY: { bootstrap: 'DANGER', watchdog: 'EMERGENCY', uiPlacement: 'RESPONSE' }, CRITICAL: { bootstrap: 'DANGER', watchdog: 'CRITICAL', uiPlacement: 'RESPONSE' }, ERROR: { bootstrap: 'DANGER', watchdog: 'ERROR', uiPlacement: 'RESPONSE' }, DANGER: { bootstrap: 'DANGER', watchdog: 'ERROR', uiPlacement: 'RESPONSE' }, ALERT: { bootstrap: 'WARNING', watchdog: 'ALERT', uiPlacement: 'RESPONSE' }, WARNING: { bootstrap: 'WARNING', watchdog: 'WARNING', uiPlacement: 'RESPONSE' }, NOTICE: { bootstrap: 'WARNING', watchdog: 'NOTICE', uiPlacement: 'RESPONSE' }, SUCCESS: { bootstrap: 'SUCCESS', watchdog: 'INFO', uiPlacement: 'INFO' }, PRIMARY: { bootstrap: 'PRIMARY', watchdog: 'INFO', uiPlacement: 'PRIMARY' }, INFO: { bootstrap: 'INFO', watchdog: 'INFO', uiPlacement: 'INFO' }, SECONDARY: { bootstrap: 'SECONDARY', watchdog: 'INFO', uiPlacement: 'SECONDARY' }, DEVEL: { bootstrap: 'DEVEL', watchdog: 'DEBUG', uiPlacement: 'DEVEL' }, DEBUG: { bootstrap: 'DEVEL', watchdog: 'DEBUG', uiPlacement: 'DEVEL' } };
     let sufficientKeyArray = Object.keys(sufficientObjectLookup);
     let responseObjectArraysByKey = {};
     let elementArray = {};
@@ -4925,11 +5010,10 @@ export function parsePPEQ_toObjectArraysByKey(ppeqString = 'STRING'){
         elementObject.line = elementArray[2];
         elementObject.bootstrap = lookupObject.bootstrap;
         elementObject.watchdog = lookupObject.watchdog;
-        holder = typeof elementArray[3] === 'string' ? elementArray[3] : '';
+        elementObject.uiPlacement = lookupObject.uiPlacement;
+        holder = typeof elementArray[4] === 'string' ? elementArray[4] : '';
         elementObject.postLogString = holder;
         elementObject.postLog = elementObject.postLogString === 'TTRUE' ? true : false;
-        elementObject.state = elementArray[4];
-        elementObject.step = elementArray[5];
         elementObject.index = index;
         elementObject._id = index.toString();
         responseObjectArraysByKey[key].push(elementObject);
@@ -4937,6 +5021,7 @@ export function parsePPEQ_toObjectArraysByKey(ppeqString = 'STRING'){
     });  
     return responseObjectArraysByKey;
 }
+// ø <---------- </parsePPEQ_toObjectArraysByKey UTILITY> ---------->
 // ø <---------- </parsePPEQ_toObjectArraysByKey UTILITY> ---------->
 
 // ø <---------- <appendStepLogPPEQ UTILITY>  ---------->

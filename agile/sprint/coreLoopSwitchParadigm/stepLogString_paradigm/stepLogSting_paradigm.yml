@@ -126,21 +126,65 @@ let SUFFIENT_WatchdogBootstrapKeyArray =
 "DEBUG"];
 
 let SUFFIENT_2D_WatchdogBootstrapKeyArray =
-[["EMERGENCY","danger"],
-["CRITICAL","danger"],
-["ERROR","danger"],
-["danger","ERROR"],
-["ALERT","warning"],
-["WARNING","warning"],
-["NOTICE","warning"],
-["success","INFO"],
-["primary","INFO"],
-["info","INFO"],
-["secondary","INFO"],
-["devel","DEBUG"],
-["DEBUG","devel"]]
+[
+["EMERGENCY","danger","response"],
+["CRITICAL","danger","response"],
+["ERROR","danger","response"],
+["danger","ERROR","response"],
+["ALERT","warning","response"],
+["WARNING","warning","response"],
+["NOTICE","warning","response"],
+["success","INFO","info"],
+["primary","INFO","primary"],
+["info","INFO","info"],
+["secondary","INFO","secondary"],
+["devel","DEBUG","devel"],
+["DEBUG","devel","devel"]
+];
+// ø <---------- <NOTE: SUFFIENT_2D_WatchdogBootstrapUserInterfaceKeyArray must be included in Quokka Code>  ---------->
+// ø <---------- <use this code to build sufficientObjectLookup in Quokka>  ---------->
+console.warn('SUFFIENT_2D_WatchdogBootstrapUserInterfaceKeyArray: ');
+console.warn('Is Array: ' + Array.isArray(SUFFIENT_2D_WatchdogBootstrapUserInterfaceKeyArray));
+console.warn('Has Length: ' + SUFFIENT_2D_WatchdogBootstrapUserInterfaceKeyArray.length);
+console.warn('Example Object:');
+console.warn(`EMERGENCY: { bootstrap: 'DANGER', watchdog: 'EMERGENCY' , uiPlacement: 'RESPONSE'}`);
+let sufficientObjectLookup = {};
+let elementObject = {};
+let key = 'STRING';
+let bootstrap = 'STRING';
+let watchdog = 'STRING';
+let uiPlacement = 'STRING';
+let index = 0;
+SUFFIENT_2D_WatchdogBootstrapUserInterfaceKeyArray.forEach(elementArray => {
+    // console.log(elementArray);
+    /**
+     * can use various values for KEY
+     * using uiPlacement since this is the task
+     * of course, I want to get away from Case, but Upper vs Lower _matters_ in source Array
+     */
+    let key = elementArray[0].toUpperCase();
+    bootstrap = elementArray[0] === elementArray[0].toUpperCase() ? elementArray[1] : elementArray[0];
+    watchdog = elementArray[0] === elementArray[0].toUpperCase() ? elementArray[0] : elementArray[1];
+    bootstrap = bootstrap.toUpperCase();
+    watchdog = watchdog.toUpperCase();//OOAAOC
+    uiPlacement = elementArray[2].toUpperCase();
 
+    if(!Object.keys(sufficientObjectLookup).includes(key)){
+        sufficientObjectLookup[key] = {};
+    }
 
-
-logElement
+    elementObject = {}
+    elementObject.bootstrap = bootstrap;
+    elementObject.watchdog = watchdog;
+    elementObject.uiPlacement = uiPlacement;
+    // ø <Use this code if you ever need to place these into a Repeater>
+    // elementObject.index = index;
+    // elementObject._id = index.toString();
+    // ø </Use this code if you ever need to place these into a Repeater>
+    index++;
+    sufficientObjectLookup[key] = elementObject;
+});
+console.warn('sufficientObjectLookup: ');
+console.warn(sufficientObjectLookup);
+// ø <---------- </use this code to build sufficientObjectLookup in Quokka> ---------->
 

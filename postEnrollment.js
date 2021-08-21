@@ -31,6 +31,7 @@ import wixWindow from 'wix-window';
  // ø pstEnrSeven202108STEP_SALS_ZLOOP || // pstEnrSeven202108STEP_SALS_ZSWITCH
  // ø ≈NNN≈ UnResolve Line Numbers - an indication that that area is fast-moving
  // ø QUICK-FIND Step-Thru ==> Starts with OnReadyAction ==> pstEnrSeven202108STEP_R_01
+ // ø pstEnrSeven202108STEP_P_04MESSAGING  TODAY
  */
 
 
@@ -300,6 +301,7 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
         local.setItem('logString', local.getItem('logString') + ',' + DOX);
         DOX = 'pstEnrSeven202108STEP_SALS_1BY1 LOOP BEGIN';
         stepThis = stepsArray.shift();
+        memory.setItem('stepThis',stepThis);
 
         DOX = `≈262≈ `;// + `stepsArray.toString(): ${stepsArray.toString()}`;
         local.setItem('logString', local.getItem('logString') + ',' + DOX);
@@ -322,6 +324,8 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
                 DOX = previouslyCompleted ? `≈NNN≈ previouslyCompleted: ${stepThis}` : `≈NNN≈ ≈i${testIndex}≈ case '${stepThis}': RAW: case-handled thisStep ZERO as Null`;
                 paramObject.messaging.info = DOX;
                 local.setItem('logString', local.getItem('logString') + ',' + DOX);
+                // memory.setItem('stepLogString',memory.getItem('stepLogString') + `primary=Override Primary Mssg for ZZZ State|`);
+                appendStepLogPPEQ('primary', 'Override Primary Mssg for ZZZ State');
                 break;
         
             case 'ResolveAndDestroy':
@@ -448,7 +452,7 @@ export async function doStepSwitch(stepKey = 'PPENDING') {
     let DOX = `≈450≈ pstEnrSeven202108STEP_SALS_EXE_SWITCH BEGIN`;
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
     
-    memory.setItem('stepLogString',memory.getItem('stepLogString') + `info=doStepSwitch(${stepKey})=454|`);
+    // memory.setItem('stepLogString',memory.getItem('stepLogString') + `info=doStepSwitch(${stepKey})=454|`);
 
     DOX = ` ==> pstEnrSeven202108STEP_SALS_EXE_SWITCH ==> Return to pstEnrSeven SWITCH ==> pstEnrSeven202108STEP_SALS_SWITCH`;
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
@@ -4793,7 +4797,8 @@ export function salsDoMessagingReponsesApply(responseObject = {}, paramObject = 
         sourceObjectThis.notes = ['new 20210819 but pretty good, lots of history with zPIPEz zEQz strings as data in the past',
                                 'also works as blood-brain-barrier with other methods'];
     }
-
+    let messageObjectArraysByKey = parsePPEQ_toObjectArraysByKey(memory.getItem('stepLogString'));
+    $w('#stMemberResponseJSON').value = JSON.stringify(messageObjectArraysByKey,undefined,4);
     // pstEnrSeven202108UTILITY BEGIN
     // pstEnrSeven202108SALSDoMessaging BEGIN
     let holderKey = 'FAUX';
@@ -4883,6 +4888,85 @@ export async function getSourcedJSON_byKey(key) {
     return JSON.stringify(recordSourcedJSON.items[0].jsonData);
 }
 // ø <---------- </getSourcedJSON_byKey UTILITY> ---------->
+
+// ø <---------- <parsePPEQ_toObjectArraysByKey UTILITY>  ---------->
+export function parsePPEQ_toObjectArraysByKey(ppeqString = 'STRING'){
+    // pstEnrSeven202108UTILITY SHORT
+    let accordingToSufficientBootstrapWatchdog = "not Necessary, parses to ObjectArrayByKey (objects), with bootstrap-watchdog of 'NA' if no match";
+    let sufficientObjectLookup = { EMERGENCY: { bootstrap: 'DANGER', watchdog: 'EMERGENCY' },CRITICAL: { bootstrap: 'DANGER', watchdog: 'CRITICAL' },ERROR: { bootstrap: 'DANGER', watchdog: 'ERROR' },DANGER: { bootstrap: 'DANGER', watchdog: 'ERROR' },ALERT: { bootstrap: 'WARNING', watchdog: 'ALERT' },WARNING: { bootstrap: 'WARNING', watchdog: 'WARNING' },NOTICE: { bootstrap: 'WARNING', watchdog: 'NOTICE' },SUCCESS: { bootstrap: 'SUCCESS', watchdog: 'INFO' },PRIMARY: { bootstrap: 'PRIMARY', watchdog: 'INFO' },INFO: { bootstrap: 'INFO', watchdog: 'INFO' },SECONDARY: { bootstrap: 'SECONDARY', watchdog: 'INFO' },DEVEL: { bootstrap: 'DEVEL', watchdog: 'DEBUG' },DEBUG: { bootstrap: 'DEVEL', watchdog: 'DEBUG' } };
+    let sufficientKeyArray = Object.keys(sufficientObjectLookup);
+    let responseObjectArraysByKey = {};
+    let elementArray = {};
+    let elementObject = {};
+    let lookupObject = {};
+    let key = 'STRING';
+    let holder = 'STRING';
+    let index = 0;
+    
+    ppeqString = ppeqString.substr(0, ppeqString.length - 1);
+    
+    let ppeqElementArray = ppeqString.split('|');
+    ppeqElementArray.forEach(elementString => {
+        elementArray = elementString.split('=');
+        key = elementArray[0];
+        key = key.toUpperCase();
+        if(!Object.keys(responseObjectArraysByKey).includes(key)){
+            responseObjectArraysByKey[key] = [];
+        }
+        if(sufficientKeyArray.includes(key)){
+            lookupObject = sufficientObjectLookup[key];
+        }else{
+            lookupObject = { bootstrap: 'NA', watchdog: 'NA' }
+        }
+        elementObject = {};
+        elementObject.message = elementArray[1];
+        elementObject.key = key;
+        holder = typeof elementArray[2] === 'string' ? elementArray[2] : '';
+        elementObject.line = elementArray[2];
+        elementObject.bootstrap = lookupObject.bootstrap;
+        elementObject.watchdog = lookupObject.watchdog;
+        holder = typeof elementArray[4] === 'string' ? elementArray[4] : '';
+        elementObject.postLogString = holder;
+        elementObject.postLog = elementObject.postLogString === 'TTRUE' ? true : false;
+        elementObject.index = index;
+        elementObject._id = index.toString();
+        responseObjectArraysByKey[key].push(elementObject);
+        index++;
+    });  
+    return responseObjectArraysByKey;
+}
+// ø <---------- <appendStepLogPPEQ UTILITY>  ---------->
+export function appendStepLogPPEQ(key = 'STRING', message = 'STRING', lineNumber = 'STRING', postLog){
+    // pstEnrSeven202108UTILITY SHORT
+    lineNumber = lineNumber === 'STRING' ? '' : lineNumber.toString();
+    
+    // console.warn('orig: postLog: ' + postLog);
+    postLog = typeof postLog === 'boolean' && postLog === true ? 'TTRUE' : postLog;
+    // console.warn('boolean true: postLog: ' + postLog);
+    postLog = typeof postLog === 'string' && postLog.toLowerCase() === 'true' ? 'TTRUE' : postLog;
+    // console.warn('string true: postLog: ' + postLog);
+    postLog = postLog === 'TTRUE' ? 'TTRUE' : 'FFALSE';
+    // console.warn('final: postLog: ' + postLog);
+    
+    // postLog = typeof postLog === 'boolean' && postLog === true ? 'TTRUE' : postLog;
+    // postLog = typeof postLog === 'string' && postLog === true ? 'TTRUE' : 'FFALSE';
+
+    let msboxLastState= memory.getItem('msboxLastState');
+    let stepThis = memory.getItem('stepThis');
+
+    let stepStringLog = key + '=';
+    stepStringLog += message + '=';
+    stepStringLog += lineNumber + '=';
+    stepStringLog += postLog + '=';
+    stepStringLog += msboxLastState + '=';
+    stepStringLog += stepThis + '|';
+    memory.setItem('stepLogString', memory.getItem('stepLogString') + stepStringLog )
+    return stepStringLog    
+}
+// ø <---------- </appendStepLogPPEQ UTILITY> ---------->
+
+// ø <---------- </parsePPEQ_toObjectArraysByKey UTILITY> ---------->
+
 
 
 // ! =========================================================================================================================
@@ -5065,4 +5149,106 @@ export function btnGetStepLogString_click(event) {
  */
 export function btnClearSpContactResponseJSON_click(event) {
 	doClear('spContactResponseJSON');
+}
+
+/**
+ *	Adds an event handler that runs when the element is clicked.
+ *	 @param {$w.MouseEvent} event
+ */
+export function btnMessageObjectArrays_click(event) {
+	$w('#spContactResponseJSON').value = $w('#stMemberResponseJSON').value;
+    uiCopyTextElementThis('spContactResponseJSON');
+
+}
+
+/**
+ *	Adds an event handler that runs when the element is clicked.
+ *	 @param {$w.MouseEvent} event
+ */
+export function btnGetStates_click(event) {
+	$w('#spContactResponseJSON').value = `memory.getItem('msboxLastState'): ${memory.getItem('msboxLastState')};\nmemory.getItem('msboxNextStateId'): ${memory.getItem('msboxNextStateId')}` 
+    uiCopyTextElementThis('spContactResponseJSON');
+    
+}
+
+/**
+ *	Adds an event handler that runs when the element is clicked.
+ *	 @param {$w.MouseEvent} event
+ */
+export function btnApplendStepLog_click(event) {
+	// let doTheFunction = 'DO THE FUNCTION';
+    // let stepArray = (memory.getItem('stepLogString')).split('|');
+    // let stepArray = ('ONE|TWO|THREE').split('|');
+    // let stepLogThis = stepArray.pop();
+    // let stepLogThis = ;
+	// memory.setItem('stepLogString', memory.getItem('stepLogString') + )
+    let stepLogThis = demoAppendStepLog()
+    $w('#ppMemberResponseJSON').value = demoAppendStepLog();
+    $w('#ppContactResponseJSON').value = memory.getItem('stepLogString');
+}
+
+export function demoAppendStepLog(){
+    // let lineNumberNumber = Math.ceil(Math.random() * 999);
+    // let lineNumberString = lineNumberNumber.toString();
+    // let postLogBoolean = false;
+    // let postLogString = 'false';
+    // let postLogNumber = Math.ceil(Math.random() * 98);
+    // let keyThis = $w('#demoKey').value; 
+    // let messageThis = $w('#demoMessage').value; 
+    // // let lineNumberKindThis = $w('#ddLineNumber'); 
+    // let lineNumberThis = lineNumberString; 
+    // let postLogThis = $w('#ddPostLog').value; 
+    // // let compositionKey =  
+    // return appendStepLogPPEQ(keyThis, messageThis, lineNumberThis, postLogThis);
+    let key = $w('#demoKey').value; 
+    let message = $w('#demoMessage').value; 
+    let line = $w('#ddLineNumber').value; 
+    let doPost = $w('#ddPostLog').value; 
+    let lineNumberKind = 'PENDING'
+    lineNumberKind = Number(line) < 3 ? 'STRING' : lineNumberKind;
+    lineNumberKind = Number(line) === 0 ? 'NUMBER' : lineNumberKind;
+    
+    let doPostKind = doPost === 'NUMBER' ? 'NUMBER' : 'VALUE';
+    doPostKind = doPost.indexOf('BOOLEAN') >= 0 ? 'BOOLEAN' : doPostKind;
+    
+    let lineNumberNumber = Math.ceil(Math.random() * 998);
+    let lineNumberString = lineNumberNumber.toString();
+    lineNumberString = Number(line) === 2 ? '' : lineNumberString;
+    
+    let doPostValue = doPost;
+    let doPostBoolean = doPost.toLowerCase().indexOf('true') >= 0 ? true : false;
+    let doPostNumber = Math.ceil(Math.random() * 98);
+    
+    
+    
+    let returnString = '';
+    if(Number(line) === 3){
+        returnString = `call('${key}','${message}')`;
+    }else if(doPost === "NONE" && lineNumberKind === 'NUMBER'){
+        returnString = `call('${key}','${message}',${lineNumberNumber})`;
+    }else if(doPost === "NONE" && lineNumberKind === 'STRING'){
+        returnString = `call('${key}','${message}','${lineNumberString}')`;
+        
+        
+    }else if(lineNumberKind === 'NUMBER' && doPostKind === 'BOOLEAN'){
+        returnString = `call('${key}','${message}',${lineNumberNumber},${doPostBoolean})`;
+    }else if(lineNumberKind === 'NUMBER' && doPostKind === 'VALUE'){
+        returnString = `call('${key}','${message}',${lineNumberNumber},'${doPostValue}')`;
+    }else if(lineNumberKind === 'NUMBER' && doPostKind === 'NUMBER'){
+        returnString = `call('${key}','${message}',${lineNumberNumber},${doPostNumber})`;
+
+
+    }else if(lineNumberKind === 'STRING' && doPostKind === 'BOOLEAN'){
+        returnString = `call('${key}','${message}','${lineNumberString}',${doPostBoolean})`;
+    }else if(lineNumberKind === 'STRING' && doPostKind === 'VALUE'){
+        returnString = `call('${key}','${message}','${lineNumberString}','${doPostValue}')`;
+    }else if(lineNumberKind === 'STRING' && doPostKind === 'NUMBER'){
+        returnString = `call('${key}','${message}','${lineNumberString}',${doPostNumber})`;
+    }
+    returnString = returnString.replace('call','appendStepLogPPEQ');
+    let returnValue = eval(returnString);
+    returnString += '\n==========\n';
+    returnString += returnValue;
+    return returnString;
+
 }

@@ -1,4 +1,5 @@
-export function parsePPEQ_toObjectArrayByKey(ppeqString = 'STRING'){
+// ø <---------- <parsePPEQ_toObjectArraysByKey UTILITY>  ---------->
+export function parsePPEQ_toObjectArraysByKey(ppeqString = 'STRING'){
     let accordingToSufficientBootstrapWatchdog = "not Necessary, parses to ObjectArrayByKey (objects), with bootstrap-watchdog of 'NA' if no match";
     let sufficientObjectLookup = { EMERGENCY: { bootstrap: 'DANGER', watchdog: 'EMERGENCY' },CRITICAL: { bootstrap: 'DANGER', watchdog: 'CRITICAL' },ERROR: { bootstrap: 'DANGER', watchdog: 'ERROR' },DANGER: { bootstrap: 'DANGER', watchdog: 'ERROR' },ALERT: { bootstrap: 'WARNING', watchdog: 'ALERT' },WARNING: { bootstrap: 'WARNING', watchdog: 'WARNING' },NOTICE: { bootstrap: 'WARNING', watchdog: 'NOTICE' },SUCCESS: { bootstrap: 'SUCCESS', watchdog: 'INFO' },PRIMARY: { bootstrap: 'PRIMARY', watchdog: 'INFO' },INFO: { bootstrap: 'INFO', watchdog: 'INFO' },SECONDARY: { bootstrap: 'SECONDARY', watchdog: 'INFO' },DEVEL: { bootstrap: 'DEVEL', watchdog: 'DEBUG' },DEBUG: { bootstrap: 'DEVEL', watchdog: 'DEBUG' } };
     let sufficientKeyArray = Object.keys(sufficientObjectLookup);
@@ -8,6 +9,7 @@ export function parsePPEQ_toObjectArrayByKey(ppeqString = 'STRING'){
     let lookupObject = {};
     let key = 'STRING';
     let holder = 'STRING';
+    let index = 0;
     
     ppeqString = ppeqString.substr(0, ppeqString.length - 1);
     
@@ -29,24 +31,26 @@ export function parsePPEQ_toObjectArrayByKey(ppeqString = 'STRING'){
         elementObject.key = key;
         holder = typeof elementArray[2] === 'string' ? elementArray[2] : '';
         elementObject.line = elementArray[2];
-        // elementObject.bootstrap = elementArray[0];
         elementObject.bootstrap = lookupObject.bootstrap;
-        // elementObject.watchdog = elementArray[0];
         elementObject.watchdog = lookupObject.watchdog;
         holder = typeof elementArray[4] === 'string' ? elementArray[4] : '';
         elementObject.postLogString = holder;
         elementObject.postLog = elementObject.postLogString === 'TTRUE' ? true : false;
-        // responseObjectArraysByKey.objectArray.push(elementObject);
+        elementObject.index = index;
+        elementObject._id = index.toString();
         responseObjectArraysByKey[key].push(elementObject);
+        index++;
     });  
     return responseObjectArraysByKey;
 }
+// ø <---------- </parsePPEQ_toObjectArraysByKey UTILITY> ---------->
+
 
 
 let ppeqStringThis = "devel=The first Number=1|devel=The second Number=2|EMERGENCY=The third Number=3";
 
 // parsePPEQ(ppeqStringThis);
-let responseObjectArraysByKeyThis = parsePPEQ(ppeqStringThis);
+let responseObjectArraysByKeyThis = parsePPEQ_toObjectArraysByKey(ppeqStringThis);
 
 console.warn('ppeqStringThis: ');
 console.warn(ppeqStringThis);

@@ -1,0 +1,52 @@
+Boolean true,0
+Boolean false,1
+String True,2
+String False,3
+String TTRUE,4
+String FFALSE,5
+String Chester,6
+Random Number,7
+None,8
+
+
+
+Number,0
+STRING,1
+Empty,2
+None,3
+
+evaluatedLineNumber = lineNumberNumber
+evaluatedLineNumber =  lineNumberString
+
+evaluatedDoPost = doPostBoolean
+evaluateDoPost = doPostValue 
+evaluteDoPost = doPostNumber
+
+
+if(line === 3)
+    call(key,message)
+else if(doPost === 'NONE' && LineNumberkind === 'NUMBER')
+    call(key,message,lineNumberNumber_0)
+else if(doPost === 'NONE' && LineNumberkind === 'STRING')
+    call(key,message,lineNumberString_1+2)
+else
+    call(key,message,Number-1+2,doPost_0+1-2+3+4+5+6-7)
+
+
+else if(LineNumberkind === 'NUMBER' && doPostkind === 'BOOLEAN')
+    call(key,message,lineNumberNumber_0,doPostBoolean_0+1)
+else if(LineNumberkind === 'NUMBER' && doPostkind === 'VALUE')
+    call(key,message,lineNumberNumber_0,doPostValue_2+3+4+5+6)
+else if(LineNumberkind === 'NUMBER' && doPostkind === 'NUMBER')
+    call(key,message,lineNumberNumber_0,doPostNumber_7)
+
+else if(LineNumberkind === 'STRING' && doPostkind === 'BOOLEAN')
+    call(key,message,lineNumberString_1+2,doPostBoolean_0+1)
+else if(LineNumberkind === 'STRING' && doPostkind === 'VALUE')
+    call(key,message,lineNumberString_1+2,doPostValue_2+3+4+5+6)
+else if(LineNumberkind === 'STRING' && doPostkind === 'NUMBER')
+    call(key,message,lineNumberString_1+2,doPostNumber_7)
+
+
+
+

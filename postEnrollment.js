@@ -4925,9 +4925,11 @@ export function parsePPEQ_toObjectArraysByKey(ppeqString = 'STRING'){
         elementObject.line = elementArray[2];
         elementObject.bootstrap = lookupObject.bootstrap;
         elementObject.watchdog = lookupObject.watchdog;
-        holder = typeof elementArray[4] === 'string' ? elementArray[4] : '';
+        holder = typeof elementArray[3] === 'string' ? elementArray[3] : '';
         elementObject.postLogString = holder;
         elementObject.postLog = elementObject.postLogString === 'TTRUE' ? true : false;
+        elementObject.state = elementArray[4];
+        elementObject.step = elementArray[5];
         elementObject.index = index;
         elementObject._id = index.toString();
         responseObjectArraysByKey[key].push(elementObject);
@@ -4935,6 +4937,8 @@ export function parsePPEQ_toObjectArraysByKey(ppeqString = 'STRING'){
     });  
     return responseObjectArraysByKey;
 }
+// ø <---------- </parsePPEQ_toObjectArraysByKey UTILITY> ---------->
+
 // ø <---------- <appendStepLogPPEQ UTILITY>  ---------->
 export function appendStepLogPPEQ(key = 'STRING', message = 'STRING', lineNumber = 'STRING', postLog){
     // pstEnrSeven202108UTILITY SHORT
@@ -4964,8 +4968,6 @@ export function appendStepLogPPEQ(key = 'STRING', message = 'STRING', lineNumber
     return stepStringLog    
 }
 // ø <---------- </appendStepLogPPEQ UTILITY> ---------->
-
-// ø <---------- </parsePPEQ_toObjectArraysByKey UTILITY> ---------->
 
 
 

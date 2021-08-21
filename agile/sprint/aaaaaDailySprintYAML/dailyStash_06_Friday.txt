@@ -12,3 +12,8 @@ https://webhook.site/191e8210-1ce6-4d05-8d72-e3a3a10cf0e4
 ===== Friday August 20, 2021 ======
 ===================================
 ===================================
+
+memory.getItem('msboxLastState')
+memory.getItem('stepThis')
+
+`memory.getItem('msboxLastState'): ${memory.getItem('msboxLastState')};\nmemory.getItem('msboxNextStateId'): ${memory.getItem('msboxNextStateId')}`

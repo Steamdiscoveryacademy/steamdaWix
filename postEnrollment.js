@@ -325,18 +325,21 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
                 paramObject.messaging.info = DOX;
                 local.setItem('logString', local.getItem('logString') + ',' + DOX);
                 // memory.setItem('stepLogString',memory.getItem('stepLogString') + `primary=Override Primary Mssg for ZZZ State|`);
-                appendStepLogPPEQ('primary', 'Override Primary Mssg for ZZZ State');
+                DOX = 'This primary message for {%key%} is always present, unless overridden during step execution';
+                appendStepLogPPEQ('primary', DOX);
+                appendStepLogPPEQ('info', 'Override Base Info with Different Info');
                 break;
         
             case 'ResolveAndDestroy':
                 DOX = previouslyCompleted ? `≈NNN≈ previouslyCompleted: ${stepThis}` : `≈NNN≈ ≈i${testIndex}≈ case '${stepThis}': RAW: case-handled thisStep ResolveAndDestroy as CleanUp`;
-                paramObject.messaging.info = DOX;
+                // paramObject.messaging.info = DOX;
                 local.setItem('logString', local.getItem('logString') + ',' + DOX);
+                appendStepLogPPEQ('info', 'After Perfom Info where None Before');
                 break;
         
             case 'OffRamp':
                 DOX = previouslyCompleted ? `≈NNN≈ previouslyCompleted: ${stepThis}` : `≈NNN≈ ≈i${testIndex}≈ case '${stepThis}': RAW: case-handled thisStep OffRamp as Special [link to 'Process Web Hooks' will make 'Go To Next Step' Moot]`;
-                paramObject.messaging.info = DOX;
+                // paramObject.messaging.info = DOX;
                 local.setItem('logString', local.getItem('logString') + ',' + DOX);
                 break;
         
@@ -4309,6 +4312,7 @@ export async function msboxPostEnrollmentSevenNextStateUI(responseObject = {}) {
     $w('#txtPeSevenTitle').text = responseObject.currentStepObject.title;
     responseObject.logArrayDeveloper.push(`≈3835≈ {% POC stepObject: responseObject.currentStepObject.title: ${responseObject.currentStepObject.title} %}`);
     $w('#txtBootstrapPrimary').html = doBootstrapMessage('primary', responseObject.currentMessagingObject.primary, [[-1, 36], [50, 28]]);
+    if(responseObject.currentMessagingObject.info !== 'EEMPTY'){$w('#txtBootstrapInfo').html = doBootstrapMessage('info', responseObject.currentMessagingObject.info, [[-1, 36], [50, 28]]); $w('#txtBootstrapInfo').expand();}
     responseObject.logArrayDeveloper.push(`≈3837≈ {% POC messageObject: responseObject.currentMessagingObject.primary: ${responseObject.currentMessagingObject.primary} %}`);
     instantiateLoopSwitchEnrollmentSteps(responseObject.currentStepObject.origSteps.allStepArray);
     displaySteps();
@@ -4834,11 +4838,12 @@ let zeroSecondaryMessage = `There were No Secondary Overload Messages for this S
 let oneSecondaryMessage = `There was One Secondary Overload Messages for this State-Step`;
 let manySecondaryMessage = `There were Many (${countSecondaryMessage})  Secondary Overload Messages for this State-Step`;
  
-let zeroResponseMessage = `There were No Response Overload Messages for this State-Step`;
+let zeroResponseMessage = responseObject.currentMessagingObject.success;
 let oneResponseMessage = `There was One Response Overload Messages for this State-Step`;
 let manyResponseMessage = `There were Many (${countResponseMessage})  Response Overload Messages for this State-Step`;
  
-let zeroInfoMessage = `There were No Info Overload Messages for this State-Step`;
+let zeroInfoMessage = responseObject.currentMessagingObject.info;
+// let oneInfoMessage = infoMessageObjectArray[0].message;
 let oneInfoMessage = `There was One Info Overload Messages for this State-Step`;
 let manyInfoMessage = `There were Many (${countInfoMessage})  Info Overload Messages for this State-Step`;
  
@@ -4848,7 +4853,7 @@ messagePrimary = countPrimaryMessage === 1 ? onePrimaryMessage : messagePrimary;
 let messageSecondary = countSecondaryMessage === 0 ? zeroSecondaryMessage : manySecondaryMessage;
 messageSecondary = countSecondaryMessage === 1 ? oneSecondaryMessage : messageSecondary;
  
-let responseBootstrap = countResponseMessage === 1 ? 'danger' /*BOOTSTRAP FROM SINGLE OBJECT*/: 'success';
+let responseBootstrap = 'success';
 let messageResponse = countResponseMessage === 0 ? zeroResponseMessage : manyResponseMessage;
 messageResponse = countResponseMessage === 1 ? oneResponseMessage : messageResponse;
  
@@ -4856,7 +4861,7 @@ let messageInfo = countInfoMessage === 0 ? zeroInfoMessage : manyInfoMessage;
 messageInfo = countInfoMessage === 1 ? oneInfoMessage : messageInfo;
 
 if(countPrimaryMessage > 0){$w('#txtBootstrapPrimary').html = doBootstrapMessage('primary', messagePrimary, [[-1, 36], [50, 28]]);}
-if(countInfoMessage > -1){$w('#txtBootstrapInfo').html = doBootstrapMessage('info', messageInfo, [[-1, 36], [50, 28]]); $w('#txtBootstrapInfo').expand();}
+if(countInfoMessage > -1 && messageInfo !== 'EEMPTY'){$w('#txtBootstrapInfo').html = doBootstrapMessage('info', messageInfo, [[-1, 36], [50, 28]]); $w('#txtBootstrapInfo').expand();}
 if(countResponseMessage > -1){$w('#txtBootstrapResponse').html = doBootstrapMessage(responseBootstrap, messageResponse, [[-1, 36], [50, 28]]);$w('#txtBootstrapResponse').expand();}
 
 
@@ -4973,7 +4978,6 @@ export async function getSourcedJSON_byKey(key) {
 // ø <---------- </getSourcedJSON_byKey UTILITY> ---------->
 
 // ø <---------- <parsePPEQ_toObjectArraysByKey UTILITY>  ---------->
-// ø <---------- <parsePPEQ_toObjectArraysByKey UTILITY>  ---------->
 export function parsePPEQ_toObjectArraysByKey(ppeqString = 'STRING'){
     // pstEnrSeven202108UTILITY SHORT
     let accordingToSufficientBootstrapWatchdog = "not Necessary, parses to ObjectArrayByKey (objects), with bootstrap-watchdog of 'NA' if no match";
@@ -5004,7 +5008,7 @@ export function parsePPEQ_toObjectArraysByKey(ppeqString = 'STRING'){
             lookupObject = { bootstrap: 'NA', watchdog: 'NA' }
         }
         elementObject = {};
-        elementObject.message = elementArray[1];
+        elementObject.message = typeof elementArray[1] === 'undefined' ? '' : elementArray[1];
         elementObject.key = key;
         holder = typeof elementArray[2] === 'string' ? elementArray[2] : '';
         elementObject.line = elementArray[2];
@@ -5021,7 +5025,6 @@ export function parsePPEQ_toObjectArraysByKey(ppeqString = 'STRING'){
     });  
     return responseObjectArraysByKey;
 }
-// ø <---------- </parsePPEQ_toObjectArraysByKey UTILITY> ---------->
 // ø <---------- </parsePPEQ_toObjectArraysByKey UTILITY> ---------->
 
 // ø <---------- <appendStepLogPPEQ UTILITY>  ---------->

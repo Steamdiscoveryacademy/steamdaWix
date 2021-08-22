@@ -19,7 +19,7 @@ import wixWindow from 'wix-window';
  * ! QUICK-FIND UniqueID's for Blocks
  * ! ===============================
  // ø YIKES = something that needs attention do keep here even if none (well one, this) at atthis time
- // ø PRE_TRASH: pstEnrSeven202108SALSDoMessaging = maybe short-lived, just for Messaging Function
+ // ø PRE_TRASH OR PRETRASH_tobeDISABLEDandEventuallyREMOVED: pstEnrSeven202108SALSDoMessaging = maybe short-lived, just for Messaging Function
  // ø pstEnrSeven202108 =  for ALL (prefix of all below)
  // ø pstEnrSeven202108UTILITY = Utilities for work surrounding pstEnrSeven
  // ø pstEnrSeven202108ACTION = Actions OnReady | Next | Perform 
@@ -322,25 +322,36 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
         switch (stepThis) {
             case 'ZERO':
                 DOX = previouslyCompleted ? `≈NNN≈ previouslyCompleted: ${stepThis}` : `≈NNN≈ ≈i${testIndex}≈ case '${stepThis}': RAW: case-handled thisStep ZERO as Null`;
-                paramObject.messaging.info = DOX;
                 local.setItem('logString', local.getItem('logString') + ',' + DOX);
+                // ø <Messaging Testing> 
+                //PRETRASH_tobeDISABLEDandEventuallyREMOVED
+                // ø <OBVIATED> Only PPEQ
+                // paramObject.messaging.info = DOX; //was immediately below: DOX = previouslyCompleted ?
+                // ø </OBVIATED> Only PPEQ
                 // memory.setItem('stepLogString',memory.getItem('stepLogString') + `primary=Override Primary Mssg for ZZZ State|`);
                 DOX = 'This primary message for {%key%} is always present, unless overridden during step execution';
                 appendStepLogPPEQ('primary', DOX);
                 appendStepLogPPEQ('info', 'Override Base Info with Different Info');
+                // ø </Messaging Testing> 
                 break;
         
             case 'ResolveAndDestroy':
                 DOX = previouslyCompleted ? `≈NNN≈ previouslyCompleted: ${stepThis}` : `≈NNN≈ ≈i${testIndex}≈ case '${stepThis}': RAW: case-handled thisStep ResolveAndDestroy as CleanUp`;
-                // paramObject.messaging.info = DOX;
                 local.setItem('logString', local.getItem('logString') + ',' + DOX);
+                // paramObject.messaging.info = DOX;
+                // ø <Messaging Testing> 
+                //PRETRASH_tobeDISABLEDandEventuallyREMOVED
                 appendStepLogPPEQ('info', 'After Perfom Info where None Before');
+                // ø </Messaging Testing> 
                 break;
         
             case 'OffRamp':
                 DOX = previouslyCompleted ? `≈NNN≈ previouslyCompleted: ${stepThis}` : `≈NNN≈ ≈i${testIndex}≈ case '${stepThis}': RAW: case-handled thisStep OffRamp as Special [link to 'Process Web Hooks' will make 'Go To Next Step' Moot]`;
                 // paramObject.messaging.info = DOX;
                 local.setItem('logString', local.getItem('logString') + ',' + DOX);
+                // ø <Messaging Testing> 
+                //PRETRASH_tobeDISABLEDandEventuallyREMOVED
+                // ø </Messaging Testing> 
                 break;
         
             default:
@@ -4833,19 +4844,24 @@ let countInfoMessage = infoMessageObjectArray.length;
 let zeroPrimaryMessage = `There were No Primary Overload Messages for this State-Step`;
 let onePrimaryMessage = `There was One Primary Overload Messages for this State-Step`;
 let manyPrimaryMessage = `There were Many (${countPrimaryMessage})  Primary Overload Messages for this State-Step`;
+if(countPrimaryMessage > 1){manyPrimaryMessage = ppeqOneMessageFromMany(primaryMessageObjectArray);}
+
  
 let zeroSecondaryMessage = `There were No Secondary Overload Messages for this State-Step`;
 let oneSecondaryMessage = `There was One Secondary Overload Messages for this State-Step`;
 let manySecondaryMessage = `There were Many (${countSecondaryMessage})  Secondary Overload Messages for this State-Step`;
+if(countSecondaryMessage > 1){manySecondaryMessage = ppeqOneMessageFromMany(secondaryMessageObjectArray);}
  
 let zeroResponseMessage = responseObject.currentMessagingObject.success;
 let oneResponseMessage = `There was One Response Overload Messages for this State-Step`;
 let manyResponseMessage = `There were Many (${countResponseMessage})  Response Overload Messages for this State-Step`;
+if(countResponseMessage > 1){manyResponseMessage = ppeqOneMessageFromMany(responseMessageObjectArray);}
  
 let zeroInfoMessage = responseObject.currentMessagingObject.info;
 // let oneInfoMessage = infoMessageObjectArray[0].message;
 let oneInfoMessage = `There was One Info Overload Messages for this State-Step`;
 let manyInfoMessage = `There were Many (${countInfoMessage})  Info Overload Messages for this State-Step`;
+if(countInfoMessage > 1){manyInfoMessage = ppeqOneMessageFromMany(infoMessageObjectArray);}
  
 let messagePrimary = countPrimaryMessage === 0 ? zeroPrimaryMessage : manyPrimaryMessage;
 messagePrimary = countPrimaryMessage === 1 ? onePrimaryMessage : messagePrimary;
@@ -4982,7 +4998,9 @@ export function parsePPEQ_toObjectArraysByKey(ppeqString = 'STRING'){
     // pstEnrSeven202108UTILITY SHORT
     let accordingToSufficientBootstrapWatchdog = "not Necessary, parses to ObjectArrayByKey (objects), with bootstrap-watchdog of 'NA' if no match";
     // let sufficientObjectLookup = { EMERGENCY: { bootstrap: 'DANGER', watchdog: 'EMERGENCY' },CRITICAL: { bootstrap: 'DANGER', watchdog: 'CRITICAL' },ERROR: { bootstrap: 'DANGER', watchdog: 'ERROR' },DANGER: { bootstrap: 'DANGER', watchdog: 'ERROR' },ALERT: { bootstrap: 'WARNING', watchdog: 'ALERT' },WARNING: { bootstrap: 'WARNING', watchdog: 'WARNING' },NOTICE: { bootstrap: 'WARNING', watchdog: 'NOTICE' },SUCCESS: { bootstrap: 'SUCCESS', watchdog: 'INFO' },PRIMARY: { bootstrap: 'PRIMARY', watchdog: 'INFO' },INFO: { bootstrap: 'INFO', watchdog: 'INFO' },SECONDARY: { bootstrap: 'SECONDARY', watchdog: 'INFO' },DEVEL: { bootstrap: 'DEVEL', watchdog: 'DEBUG' },DEBUG: { bootstrap: 'DEVEL', watchdog: 'DEBUG' } };
-    let sufficientObjectLookup = { EMERGENCY: { bootstrap: 'DANGER', watchdog: 'EMERGENCY', uiPlacement: 'RESPONSE' }, CRITICAL: { bootstrap: 'DANGER', watchdog: 'CRITICAL', uiPlacement: 'RESPONSE' }, ERROR: { bootstrap: 'DANGER', watchdog: 'ERROR', uiPlacement: 'RESPONSE' }, DANGER: { bootstrap: 'DANGER', watchdog: 'ERROR', uiPlacement: 'RESPONSE' }, ALERT: { bootstrap: 'WARNING', watchdog: 'ALERT', uiPlacement: 'RESPONSE' }, WARNING: { bootstrap: 'WARNING', watchdog: 'WARNING', uiPlacement: 'RESPONSE' }, NOTICE: { bootstrap: 'WARNING', watchdog: 'NOTICE', uiPlacement: 'RESPONSE' }, SUCCESS: { bootstrap: 'SUCCESS', watchdog: 'INFO', uiPlacement: 'INFO' }, PRIMARY: { bootstrap: 'PRIMARY', watchdog: 'INFO', uiPlacement: 'PRIMARY' }, INFO: { bootstrap: 'INFO', watchdog: 'INFO', uiPlacement: 'INFO' }, SECONDARY: { bootstrap: 'SECONDARY', watchdog: 'INFO', uiPlacement: 'SECONDARY' }, DEVEL: { bootstrap: 'DEVEL', watchdog: 'DEBUG', uiPlacement: 'DEVEL' }, DEBUG: { bootstrap: 'DEVEL', watchdog: 'DEBUG', uiPlacement: 'DEVEL' } };
+    // let sufficientObjectLookup = { EMERGENCY: { bootstrap: 'DANGER', watchdog: 'EMERGENCY', uiPlacement: 'RESPONSE' }, CRITICAL: { bootstrap: 'DANGER', watchdog: 'CRITICAL', uiPlacement: 'RESPONSE' }, ERROR: { bootstrap: 'DANGER', watchdog: 'ERROR', uiPlacement: 'RESPONSE' }, DANGER: { bootstrap: 'DANGER', watchdog: 'ERROR', uiPlacement: 'RESPONSE' }, ALERT: { bootstrap: 'WARNING', watchdog: 'ALERT', uiPlacement: 'RESPONSE' }, WARNING: { bootstrap: 'WARNING', watchdog: 'WARNING', uiPlacement: 'RESPONSE' }, NOTICE: { bootstrap: 'WARNING', watchdog: 'NOTICE', uiPlacement: 'RESPONSE' }, SUCCESS: { bootstrap: 'SUCCESS', watchdog: 'INFO', uiPlacement: 'INFO' }, PRIMARY: { bootstrap: 'PRIMARY', watchdog: 'INFO', uiPlacement: 'PRIMARY' }, INFO: { bootstrap: 'INFO', watchdog: 'INFO', uiPlacement: 'INFO' }, SECONDARY: { bootstrap: 'SECONDARY', watchdog: 'INFO', uiPlacement: 'SECONDARY' }, DEVEL: { bootstrap: 'DEVEL', watchdog: 'DEBUG', uiPlacement: 'DEVEL' }, DEBUG: { bootstrap: 'DEVEL', watchdog: 'DEBUG', uiPlacement: 'DEVEL' } };
+    // let sufficientObjectLookup /*MANUAL UPDATE succes-placement 20210822091400*/= { EMERGENCY: { bootstrap: 'DANGER', watchdog: 'EMERGENCY', uiPlacement: 'RESPONSE' }, CRITICAL: { bootstrap: 'DANGER', watchdog: 'CRITICAL', uiPlacement: 'RESPONSE' }, ERROR: { bootstrap: 'DANGER', watchdog: 'ERROR', uiPlacement: 'RESPONSE' }, DANGER: { bootstrap: 'DANGER', watchdog: 'ERROR', uiPlacement: 'RESPONSE' }, ALERT: { bootstrap: 'WARNING', watchdog: 'ALERT', uiPlacement: 'RESPONSE' }, WARNING: { bootstrap: 'WARNING', watchdog: 'WARNING', uiPlacement: 'RESPONSE' }, NOTICE: { bootstrap: 'WARNING', watchdog: 'NOTICE', uiPlacement: 'RESPONSE' }, SUCCESS: { bootstrap: 'SUCCESS', watchdog: 'INFO', uiPlacement: 'RESPONSE' }, PRIMARY: { bootstrap: 'PRIMARY', watchdog: 'INFO', uiPlacement: 'PRIMARY' }, INFO: { bootstrap: 'INFO', watchdog: 'INFO', uiPlacement: 'INFO' }, SECONDARY: { bootstrap: 'SECONDARY', watchdog: 'INFO', uiPlacement: 'SECONDARY' }, DEVEL: { bootstrap: 'DEVEL', watchdog: 'DEBUG', uiPlacement: 'DEVEL' }, DEBUG: { bootstrap: 'DEVEL', watchdog: 'DEBUG', uiPlacement: 'DEVEL' } };
+    let sufficientObjectLookup /*GOLD .js Update 20210822091500*/ = { EMERGENCY: { bootstrap: 'DANGER', watchdog: 'EMERGENCY', uiPlacement: 'RESPONSE' }, CRITICAL: { bootstrap: 'DANGER', watchdog: 'CRITICAL', uiPlacement: 'RESPONSE' }, ERROR: { bootstrap: 'DANGER', watchdog: 'ERROR', uiPlacement: 'RESPONSE' }, DANGER: { bootstrap: 'DANGER', watchdog: 'ERROR', uiPlacement: 'RESPONSE' }, ALERT: { bootstrap: 'WARNING', watchdog: 'ALERT', uiPlacement: 'RESPONSE' }, WARNING: { bootstrap: 'WARNING', watchdog: 'WARNING', uiPlacement: 'RESPONSE' }, NOTICE: { bootstrap: 'WARNING', watchdog: 'NOTICE', uiPlacement: 'RESPONSE' }, SUCCESS: { bootstrap: 'SUCCESS', watchdog: 'INFO', uiPlacement: 'RESPONSE' }, PRIMARY: { bootstrap: 'PRIMARY', watchdog: 'INFO', uiPlacement: 'PRIMARY' }, INFO: { bootstrap: 'INFO', watchdog: 'INFO', uiPlacement: 'INFO' }, SECONDARY: { bootstrap: 'SECONDARY', watchdog: 'INFO', uiPlacement: 'SECONDARY' }, DEVEL: { bootstrap: 'DEVEL', watchdog: 'DEBUG', uiPlacement: 'DEVEL' }, DEBUG: { bootstrap: 'DEVEL', watchdog: 'DEBUG', uiPlacement: 'DEVEL' } };
     let sufficientKeyArray = Object.keys(sufficientObjectLookup);
     let responseObjectArraysByKey = {};
     let elementArray = {};
@@ -5026,6 +5044,24 @@ export function parsePPEQ_toObjectArraysByKey(ppeqString = 'STRING'){
     return responseObjectArraysByKey;
 }
 // ø <---------- </parsePPEQ_toObjectArraysByKey UTILITY> ---------->
+
+// ø <---------- <ppeqPostToWatchdogLog UTILITY>  ---------->
+export function ppeqPostToWatchdogLog(doPostLogObject = {}){
+    let response = `Holder for Eventual Watchdog-Log Logging Response`;
+    return response;
+}
+// ø <---------- </ppeqPostToWatchdogLog UTILITY> ---------->
+
+// ø <---------- <ppeqOneMessageFromMany UTILITY>  ---------->
+export function ppeqOneMessageFromMany(uiPlacementObjectArray = []){
+    // pstEnrSeven202108UTILITY SHORT
+    let finalObject = {};
+    // let uiPlacement = 'PENDING';// gather from param ¿or add param?
+    let uiPlacement = uiPlacementObjectArray[0].message;// should be the same for all objects in the array, by design
+    finalObject.message = `One [Holder] Message from Many for ${uiPlacement}`;
+    return finalObject.message;	
+}
+// ø <---------- </ppeqOneMessageFromMany UTILITY> ---------->
 
 // ø <---------- <appendStepLogPPEQ UTILITY>  ---------->
 export function appendStepLogPPEQ(key = 'STRING', message = 'STRING', lineNumber = 'STRING', postLog){

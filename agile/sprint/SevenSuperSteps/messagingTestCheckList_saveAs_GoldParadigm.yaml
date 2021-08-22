@@ -1,0 +1,34 @@
+---
+Messaging Tests Check-List:
+  - Primary Messaging Tests:
+    - Primary from Core on Next: no
+    - Primary from Core Persists on Perform: no
+    - Prmary from Core Overridden on Perform: no 
+  - Response Messaging:
+    - Success Messaging:
+      - Success Not Rendered on Next: no
+      - Success from Core on Perform: no
+      - Success from Core Overridden on Perform: no
+    - Warning Messaging:
+      - Warning Not Rendered on Next: no
+      - Core Overridden on Perform: no
+      - Multiple by Eggregiousness then Last:
+        # Alert-Warning-Notice
+        - Overridden on Perform: no
+    - Danger Messaging:
+      - Danger Not Rendered on Next: no
+      - Multiple by Eggregiousness then Last:
+        # Emergency-Critical-Error
+        - Overridden on Perform: no
+    - Cascading Messaging:
+      - Permutations:
+        - Response Not Rendered on Next: no
+  - Info Messaging Tests:
+    - Info from Core on Next: no
+    - Info from Core Persists on Perform: no
+    - Info from Core Overridden on Perform: no
+  - Secondary Messaging: TBD
+  ...
+  ---
+  PPEQ Execute Watchdog Log POST: no
+  ...

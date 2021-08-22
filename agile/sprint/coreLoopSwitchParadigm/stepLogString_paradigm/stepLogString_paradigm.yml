@@ -125,7 +125,7 @@ let SUFFIENT_WatchdogBootstrapKeyArray =
 "devel",
 "DEBUG"];
 
-let SUFFIENT_2D_WatchdogBootstrapKeyArray =
+let SUFFICIENT_2D_WatchdogBootstrapUserInterfaceKeyArray =
 [
 ["EMERGENCY","danger","response"],
 ["CRITICAL","danger","response"],
@@ -134,18 +134,18 @@ let SUFFIENT_2D_WatchdogBootstrapKeyArray =
 ["ALERT","warning","response"],
 ["WARNING","warning","response"],
 ["NOTICE","warning","response"],
-["success","INFO","info"],
+["success","INFO","response"],
 ["primary","INFO","primary"],
 ["info","INFO","info"],
 ["secondary","INFO","secondary"],
 ["devel","DEBUG","devel"],
 ["DEBUG","devel","devel"]
 ];
-// ø <---------- <NOTE: SUFFIENT_2D_WatchdogBootstrapUserInterfaceKeyArray must be included in Quokka Code>  ---------->
+// ø <---------- <NOTE: SUFFICIENT_2D_WatchdogBootstrapUserInterfaceKeyArray must be included in Quokka Code>  ---------->
 // ø <---------- <use this code to build sufficientObjectLookup in Quokka>  ---------->
-console.warn('SUFFIENT_2D_WatchdogBootstrapUserInterfaceKeyArray: ');
-console.warn('Is Array: ' + Array.isArray(SUFFIENT_2D_WatchdogBootstrapUserInterfaceKeyArray));
-console.warn('Has Length: ' + SUFFIENT_2D_WatchdogBootstrapUserInterfaceKeyArray.length);
+console.warn('SUFFICIENT_2D_WatchdogBootstrapUserInterfaceKeyArray: ');
+console.warn('Is Array: ' + Array.isArray(SUFFICIENT_2D_WatchdogBootstrapUserInterfaceKeyArray));
+console.warn('Has Length: ' + SUFFICIENT_2D_WatchdogBootstrapUserInterfaceKeyArray.length);
 console.warn('Example Object:');
 console.warn(`EMERGENCY: { bootstrap: 'DANGER', watchdog: 'EMERGENCY' , uiPlacement: 'RESPONSE'}`);
 let sufficientObjectLookup = {};
@@ -155,7 +155,7 @@ let bootstrap = 'STRING';
 let watchdog = 'STRING';
 let uiPlacement = 'STRING';
 let index = 0;
-SUFFIENT_2D_WatchdogBootstrapUserInterfaceKeyArray.forEach(elementArray => {
+SUFFICIENT_2D_WatchdogBootstrapUserInterfaceKeyArray.forEach(elementArray => {
     // console.log(elementArray);
     /**
      * can use various values for KEY
@@ -184,7 +184,6 @@ SUFFIENT_2D_WatchdogBootstrapUserInterfaceKeyArray.forEach(elementArray => {
     index++;
     sufficientObjectLookup[key] = elementObject;
 });
-console.warn('sufficientObjectLookup: ');
+console.warn('let sufficientObjectLookup = ');
 console.warn(sufficientObjectLookup);
 // ø <---------- </use this code to build sufficientObjectLookup in Quokka> ---------->
-

@@ -28,9 +28,9 @@ Messaging Tests Check-List:
         - for pstEnrSeven-SWITCH: no 
         - for Core-SWITCH: no 
     - Warning Messaging:
-      - Warning Not Rendered on Next: no
+      - Warning Not Rendered on Next: yes
       - Core Overridden on Perform: 
-        - for pstEnrSeven-SWITCH: no 
+        - for pstEnrSeven-SWITCH: yes 
         - for Core-SWITCH: no 
       - Multiple by Eggregiousness then Last:
         # Alert-Warning-Notice
@@ -38,9 +38,9 @@ Messaging Tests Check-List:
           - for pstEnrSeven-SWITCH: no 
           - for Core-SWITCH: no 
     - Danger Messaging:
-      - Danger Not Rendered on Next: no
+      - Danger Not Rendered on Next: yes
       - Core Overridden on Perform: 
-        - for pstEnrSeven-SWITCH: no 
+        - for pstEnrSeven-SWITCH: yes
         - for Core-SWITCH: no 
       - Multiple by Eggregiousness then Last:
         # Alert-Warning-Notice

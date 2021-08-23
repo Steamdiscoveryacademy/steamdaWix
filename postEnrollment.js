@@ -28,10 +28,11 @@ import wixWindow from 'wix-window';
  // ø pstEnrSeven202108DO = DO Code  for  Next && Perform
  // ø pstEnrSeven202108SALS = Do subset of Enrollment Step Loop-Switch (SALS)
  // ø pstEnrSeven202108STEPS_ARRAY_LOOP_SWITCH = Step through ORIG and RETOOL TO individual pstEnrSeven
- // ø pstEnrSeven202108STEP_SALS_ZLOOP || // pstEnrSeven202108STEP_SALS_ZSWITCH
+ // ø pstEnrSeven202108STEP_SALS_ZLOOP || // pstEnrSeven202108STEP_SALS_SWITCH
  // ø ≈NNN≈ UnResolve Line Numbers - an indication that that area is fast-moving
  // ø QUICK-FIND Step-Thru ==> Starts with OnReadyAction ==> pstEnrSeven202108STEP_R_01
  // ø pstEnrSeven202108STEP_P_04MESSAGING  TODAY
+ // ø pstEnrSeven20210822_MESSAGING  TODAY
  */
 
 
@@ -324,6 +325,7 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
                 DOX = previouslyCompleted ? `≈NNN≈ previouslyCompleted: ${stepThis}` : `≈NNN≈ ≈i${testIndex}≈ case '${stepThis}': RAW: case-handled thisStep ZERO as Null`;
                 local.setItem('logString', local.getItem('logString') + ',' + DOX);
                 // ø <Messaging Testing> 
+                // pstEnrSeven20210822_MESSAGING
                 //PRETRASH_tobeDISABLEDandEventuallyREMOVED
                 // ø <OBVIATED> Only PPEQ
                 // paramObject.messaging.info = DOX; //was immediately below: DOX = previouslyCompleted ?
@@ -332,6 +334,8 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
                 DOX = 'This primary message for {%key%} is always present, unless overridden during step execution';
                 appendStepLogPPEQ('primary', DOX);
                 appendStepLogPPEQ('info', 'Override Base Info with Different Info');
+                // appendStepLogPPEQ('success', 'Override Base Success with Different Success');
+                appendStepLogPPEQ('warning', 'Override Base Success with Different Warning');
                 // ø </Messaging Testing> 
                 break;
         
@@ -342,6 +346,7 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
                 // ø <Messaging Testing> 
                 //PRETRASH_tobeDISABLEDandEventuallyREMOVED
                 appendStepLogPPEQ('info', 'After Perfom Info where None Before');
+                appendStepLogPPEQ('danger', 'Override Base Success with Different Danger');
                 // ø </Messaging Testing> 
                 break;
         
@@ -465,6 +470,26 @@ export async function doPeformNextStep() {
 export async function doStepSwitch(stepKey = 'PPENDING') {
     let DOX = `≈450≈ pstEnrSeven202108STEP_SALS_EXE_SWITCH BEGIN`;
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
+    // ø <Messaging Testing> 
+    // pstEnrSeven20210822_MESSAGING
+    //PRETRASH_tobeDISABLEDandEventuallyREMOVED
+    let infoStepArray = ['HOLDER'];
+    let successStepArray = ['HOLDER'];
+    let warningStepArray = ['HOLDER'];
+    let dangerStepArray = ['HOLDER'];
+    if(infoStepArray.includes(stepKey)){
+        appendStepLogPPEQ('info', `Override Base Info with Different Info for ${stepKey}`);
+    }
+    if(successStepArray.includes(stepKey)){
+        appendStepLogPPEQ('success', `Override Base Success with Different Success for ${stepKey}`);
+    }
+    if(warningStepArray.includes(stepKey)){
+        appendStepLogPPEQ('warning', `Override Base Success with Different Warning for ${stepKey}`);
+    }
+    if(dangerStepArray.includes(stepKey)){
+        appendStepLogPPEQ('danger', `Override Base Success with Different Danger for ${stepKey}`);
+    }
+    // ø </Messaging Testing> 
     
     // memory.setItem('stepLogString',memory.getItem('stepLogString') + `info=doStepSwitch(${stepKey})=454|`);
 
@@ -4706,6 +4731,7 @@ export async function goToState(responseObject, direction = 'NEXT') {
 export function doBootstrapMessage(key, messageThis = 'DEFAULT', responsiveByLengthToFontSize2dArray = [], txtColor = '#007bff', bgColor = '#FFFFFF') {
     // pstEnrSeven202108UTILITY BEGIN
     // console.log("[fnc]key: " + key)
+    key = key.toLowerCase();
     let messages = [];
     let messageMatchKey = {};
     messageMatchKey.primary = "0";
@@ -4790,6 +4816,7 @@ export function salsDoMessagingReponsesApply(responseObject = {}, paramObject = 
     let DOX = 'JUST FOR VISIBLE DOX IN WIX';
     DOX = 'pstEnrSeven202108STEP_P_04MESSAGING ==> Begin Messaging';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
+    //pstEnrSeven20210822_MESSAGING
 
     /**
      * A FEW PARADIGMS AT WORK:
@@ -4818,50 +4845,70 @@ export function salsDoMessagingReponsesApply(responseObject = {}, paramObject = 
     // pstEnrSeven202108SALSDoMessaging BEGIN
 
 
-    let primaryMessageObjectArray = [];
-    let secondaryMessageObjectArray = [];
-    let responseMessageObjectArray = [];
-    let infoMessageObjectArray = [];
+    // let primaryMessageObjectArray = [];
+    // let secondaryMessageObjectArray = [];
+    // let responseMessageObjectArray = [];
+    // let infoMessageObjectArray = [];
+     
+    let primaryMessageObjectArray = [ { message: 'HOLDER message to make object valid', bootstrap: 'HOLDER' } ];
+    let secondaryMessageObjectArray = [ { message: 'HOLDER message to make object valid', bootstrap: 'HOLDER' } ];
+    let responseMessageObjectArray = [ { message: 'HOLDER message to make object valid', bootstrap: 'HOLDER' } ];
+    let infoMessageObjectArray = [ { message: 'HOLDER message to make object valid', bootstrap: 'HOLDER' } ];
+     
 
     let messageObjectArrayKeys = Object.keys(messageObjectArraysByKey);
     let objectArray = [];
     messageObjectArrayKeys.forEach(objectKey => {
        objectArray = messageObjectArraysByKey[objectKey];
             objectArray.forEach(messageObject => {
-                if(messageObject.uiPlacement === 'PRIMARY'){primaryMessageObjectArray.push(messageObject);}
-                if(messageObject.uiPlacement === 'SECONDARY'){secondaryMessageObjectArray.push(messageObject);}
-                if(messageObject.uiPlacement === 'RESPONSE'){responseMessageObjectArray.push(messageObject);}
-                if(messageObject.uiPlacement === 'INFO'){infoMessageObjectArray.push(messageObject);}
+                if(messageObject.uiPlacement === 'PRIMARY'){primaryMessageObjectArray.unshift(messageObject);}
+                if(messageObject.uiPlacement === 'SECONDARY'){secondaryMessageObjectArray.unshift(messageObject);}
+                if(messageObject.uiPlacement === 'RESPONSE'){responseMessageObjectArray.unshift(messageObject);}
+                if(messageObject.uiPlacement === 'INFO'){infoMessageObjectArray.unshift(messageObject);}
             });
        });         
     // });
+// ø <Just for DOX>
+let doxObject = {};
+doxObject.primary = primaryMessageObjectArray;
+doxObject.secondary = secondaryMessageObjectArray;
+doxObject.response = responseMessageObjectArray;
+doxObject.info = infoMessageObjectArray;
+$w('#sessionEnrollmentJSON').value = JSON.stringify(doxObject,undefined,4);
+// ø </Just for DOX>
 
-let countPrimaryMessage = primaryMessageObjectArray.length;
-let countSecondaryMessage = secondaryMessageObjectArray.length;
-let countResponseMessage = responseMessageObjectArray.length;
-let countInfoMessage = infoMessageObjectArray.length;
+let countPrimaryMessage = primaryMessageObjectArray.length - 1;
+let countSecondaryMessage = secondaryMessageObjectArray.length - 1;
+let countResponseMessage = responseMessageObjectArray.length - 1;
+let countInfoMessage = infoMessageObjectArray.length - 1;
+
+let responseOneFromMany = [];
+// let thisMessagingObjectReturnArray = [];
+// let thisMessagingMessage = 'HOLDER';
+// let thisMessagingKey = 'HOLDER';
 
 let zeroPrimaryMessage = `There were No Primary Overload Messages for this State-Step`;
-let onePrimaryMessage = `There was One Primary Overload Messages for this State-Step`;
+let onePrimaryMessage = primaryMessageObjectArray[0].message;
 let manyPrimaryMessage = `There were Many (${countPrimaryMessage})  Primary Overload Messages for this State-Step`;
-if(countPrimaryMessage > 1){manyPrimaryMessage = ppeqOneMessageFromMany(primaryMessageObjectArray);}
+// if(countPrimaryMessage > 1){manyPrimaryMessage = ppeqOneMessageFromMany(primaryMessageObjectArray);}
 
  
 let zeroSecondaryMessage = `There were No Secondary Overload Messages for this State-Step`;
 let oneSecondaryMessage = `There was One Secondary Overload Messages for this State-Step`;
 let manySecondaryMessage = `There were Many (${countSecondaryMessage})  Secondary Overload Messages for this State-Step`;
-if(countSecondaryMessage > 1){manySecondaryMessage = ppeqOneMessageFromMany(secondaryMessageObjectArray);}
+// if(countSecondaryMessage > 1){manySecondaryMessage = ppeqOneMessageFromMany(secondaryMessageObjectArray);}
  
+let responseBootstrap = countResponseMessage === 0 ? 'success' : responseMessageObjectArray[0].bootstrap;
 let zeroResponseMessage = responseObject.currentMessagingObject.success;
-let oneResponseMessage = `There was One Response Overload Messages for this State-Step`;
+// let oneResponseMessage = `There was One Response Overload Messages for this State-Step`;
+let oneResponseMessage = responseMessageObjectArray[0].message;
 let manyResponseMessage = `There were Many (${countResponseMessage})  Response Overload Messages for this State-Step`;
-if(countResponseMessage > 1){manyResponseMessage = ppeqOneMessageFromMany(responseMessageObjectArray);}
+if(countResponseMessage > 1){responseOneFromMany = ppeqOneMessageFromMany(responseMessageObjectArray); responseBootstrap = responseOneFromMany[0]; manyResponseMessage = responseOneFromMany[1];}
  
 let zeroInfoMessage = responseObject.currentMessagingObject.info;
-// let oneInfoMessage = infoMessageObjectArray[0].message;
-let oneInfoMessage = `There was One Info Overload Messages for this State-Step`;
+let oneInfoMessage = infoMessageObjectArray[0].message;
 let manyInfoMessage = `There were Many (${countInfoMessage})  Info Overload Messages for this State-Step`;
-if(countInfoMessage > 1){manyInfoMessage = ppeqOneMessageFromMany(infoMessageObjectArray);}
+// if(countInfoMessage > 1){manyInfoMessage = ppeqOneMessageFromMany(infoMessageObjectArray);}
  
 let messagePrimary = countPrimaryMessage === 0 ? zeroPrimaryMessage : manyPrimaryMessage;
 messagePrimary = countPrimaryMessage === 1 ? onePrimaryMessage : messagePrimary;
@@ -4869,7 +4916,7 @@ messagePrimary = countPrimaryMessage === 1 ? onePrimaryMessage : messagePrimary;
 let messageSecondary = countSecondaryMessage === 0 ? zeroSecondaryMessage : manySecondaryMessage;
 messageSecondary = countSecondaryMessage === 1 ? oneSecondaryMessage : messageSecondary;
  
-let responseBootstrap = 'success';
+// let responseBootstrap = 'success';
 let messageResponse = countResponseMessage === 0 ? zeroResponseMessage : manyResponseMessage;
 messageResponse = countResponseMessage === 1 ? oneResponseMessage : messageResponse;
  
@@ -4971,6 +5018,7 @@ if(countResponseMessage > -1){$w('#txtBootstrapResponse').html = doBootstrapMess
     // ø ====================  /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\  ====================
     // ø ==================================================================================================================================
 
+    // pstEnrSeven20210822_MESSAGING END
     // pstEnrSeven202108UTILITY END
     // pstEnrSeven202108SALSDoMessaging END
     DOX = 'pstEnrSeven202108STEP_P_04MESSAGING ==> Return from Messaging ==> pstEnrSeven202108STEP_P_04MESSAGING_RETURN';
@@ -4996,6 +5044,7 @@ export async function getSourcedJSON_byKey(key) {
 // ø <---------- <parsePPEQ_toObjectArraysByKey UTILITY>  ---------->
 export function parsePPEQ_toObjectArraysByKey(ppeqString = 'STRING'){
     // pstEnrSeven202108UTILITY SHORT
+    // pstEnrSeven20210822_MESSAGING
     let accordingToSufficientBootstrapWatchdog = "not Necessary, parses to ObjectArrayByKey (objects), with bootstrap-watchdog of 'NA' if no match";
     // let sufficientObjectLookup = { EMERGENCY: { bootstrap: 'DANGER', watchdog: 'EMERGENCY' },CRITICAL: { bootstrap: 'DANGER', watchdog: 'CRITICAL' },ERROR: { bootstrap: 'DANGER', watchdog: 'ERROR' },DANGER: { bootstrap: 'DANGER', watchdog: 'ERROR' },ALERT: { bootstrap: 'WARNING', watchdog: 'ALERT' },WARNING: { bootstrap: 'WARNING', watchdog: 'WARNING' },NOTICE: { bootstrap: 'WARNING', watchdog: 'NOTICE' },SUCCESS: { bootstrap: 'SUCCESS', watchdog: 'INFO' },PRIMARY: { bootstrap: 'PRIMARY', watchdog: 'INFO' },INFO: { bootstrap: 'INFO', watchdog: 'INFO' },SECONDARY: { bootstrap: 'SECONDARY', watchdog: 'INFO' },DEVEL: { bootstrap: 'DEVEL', watchdog: 'DEBUG' },DEBUG: { bootstrap: 'DEVEL', watchdog: 'DEBUG' } };
     // let sufficientObjectLookup = { EMERGENCY: { bootstrap: 'DANGER', watchdog: 'EMERGENCY', uiPlacement: 'RESPONSE' }, CRITICAL: { bootstrap: 'DANGER', watchdog: 'CRITICAL', uiPlacement: 'RESPONSE' }, ERROR: { bootstrap: 'DANGER', watchdog: 'ERROR', uiPlacement: 'RESPONSE' }, DANGER: { bootstrap: 'DANGER', watchdog: 'ERROR', uiPlacement: 'RESPONSE' }, ALERT: { bootstrap: 'WARNING', watchdog: 'ALERT', uiPlacement: 'RESPONSE' }, WARNING: { bootstrap: 'WARNING', watchdog: 'WARNING', uiPlacement: 'RESPONSE' }, NOTICE: { bootstrap: 'WARNING', watchdog: 'NOTICE', uiPlacement: 'RESPONSE' }, SUCCESS: { bootstrap: 'SUCCESS', watchdog: 'INFO', uiPlacement: 'INFO' }, PRIMARY: { bootstrap: 'PRIMARY', watchdog: 'INFO', uiPlacement: 'PRIMARY' }, INFO: { bootstrap: 'INFO', watchdog: 'INFO', uiPlacement: 'INFO' }, SECONDARY: { bootstrap: 'SECONDARY', watchdog: 'INFO', uiPlacement: 'SECONDARY' }, DEVEL: { bootstrap: 'DEVEL', watchdog: 'DEBUG', uiPlacement: 'DEVEL' }, DEBUG: { bootstrap: 'DEVEL', watchdog: 'DEBUG', uiPlacement: 'DEVEL' } };
@@ -5055,17 +5104,23 @@ export function ppeqPostToWatchdogLog(doPostLogObject = {}){
 // ø <---------- <ppeqOneMessageFromMany UTILITY>  ---------->
 export function ppeqOneMessageFromMany(uiPlacementObjectArray = []){
     // pstEnrSeven202108UTILITY SHORT
+    // pstEnrSeven20210822_MESSAGING
     let finalObject = {};
     // let uiPlacement = 'PENDING';// gather from param ¿or add param?
     let uiPlacement = uiPlacementObjectArray[0].message;// should be the same for all objects in the array, by design
+    finalObject.bootstrap = `danger`;
     finalObject.message = `One [Holder] Message from Many for ${uiPlacement}`;
-    return finalObject.message;	
+    let arrayBootstrapMessage = [];
+    arrayBootstrapMessage.push(finalObject.bootstrap);
+    arrayBootstrapMessage.push(finalObject.message);
+    return arrayBootstrapMessage;	
 }
 // ø <---------- </ppeqOneMessageFromMany UTILITY> ---------->
 
 // ø <---------- <appendStepLogPPEQ UTILITY>  ---------->
 export function appendStepLogPPEQ(key = 'STRING', message = 'STRING', lineNumber = 'STRING', postLog){
     // pstEnrSeven202108UTILITY SHORT
+    // pstEnrSeven20210822_MESSAGING
     lineNumber = lineNumber === 'STRING' ? '' : lineNumber.toString();
     
     // console.warn('orig: postLog: ' + postLog);

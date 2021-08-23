@@ -336,6 +336,7 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
                 appendStepLogPPEQ('info', 'Override Base Info with Different Info');
                 // appendStepLogPPEQ('success', 'Override Base Success with Different Success');
                 appendStepLogPPEQ('warning', 'Override Base Success with Different Warning');
+                appendStepLogPPEQ('danger', 'Override Base Success with Different Danger');
                 // ø </Messaging Testing> 
                 break;
         
@@ -473,21 +474,34 @@ export async function doStepSwitch(stepKey = 'PPENDING') {
     // ø <Messaging Testing> 
     // pstEnrSeven20210822_MESSAGING
     //PRETRASH_tobeDISABLEDandEventuallyREMOVED
-    let infoStepArray = ['HOLDER'];
-    let successStepArray = ['HOLDER'];
-    let warningStepArray = ['HOLDER'];
-    let dangerStepArray = ['HOLDER'];
+    let primaryStepArray = ['IINSTANTIATE'];
+    let infoStepArray = ['IINSTANTIATE'];
+    let successStepArray = ['IINSTANTIATE'];
+    let warningStepArray = ['IINSTANTIATE'];
+    let dangerStepArray = ['IINSTANTIATE'];
+    let bootstrapKeyArray = ['HOLDER'];
+    let bootstrapKey = 'HOLDER';
+    if(primaryStepArray.includes(stepKey)){
+        bootstrapKey = 'PrImArY';
+        appendStepLogPPEQ(bootstrapKey, `Override Base Primary with Different ${bootstrapKey} for ${stepKey}`);
+    }
     if(infoStepArray.includes(stepKey)){
-        appendStepLogPPEQ('info', `Override Base Info with Different Info for ${stepKey}`);
+        bootstrapKey = 'iNfO';
+        appendStepLogPPEQ(bootstrapKey, `Override Base Info with Different ${bootstrapKey} for ${stepKey}`);
     }
     if(successStepArray.includes(stepKey)){
-        appendStepLogPPEQ('success', `Override Base Success with Different Success for ${stepKey}`);
+        bootstrapKey = 'SuCcEsS';
+        appendStepLogPPEQ(bootstrapKey, `Override Base Success with Different ${bootstrapKey} for ${stepKey}`);
     }
     if(warningStepArray.includes(stepKey)){
-        appendStepLogPPEQ('warning', `Override Base Success with Different Warning for ${stepKey}`);
+        bootstrapKeyArray = ['aLeRt','notice','WARNING'];
+        bootstrapKey = bootstrapKeyArray[Math.floor(Math.random() * bootstrapKeyArray.length)];
+        appendStepLogPPEQ(bootstrapKey, `Override Base Success with Different ${bootstrapKey} for ${stepKey}`);
     }
     if(dangerStepArray.includes(stepKey)){
-        appendStepLogPPEQ('danger', `Override Base Success with Different Danger for ${stepKey}`);
+        bootstrapKeyArray = ['EmErGeNcY','cRiTiCaL','error','DANGER'];
+        bootstrapKey = bootstrapKeyArray[Math.floor(Math.random() * bootstrapKeyArray.length)];
+        appendStepLogPPEQ(bootstrapKey, `Override Base Success with Different ${bootstrapKey} for ${stepKey}`);
     }
     // ø </Messaging Testing> 
     
@@ -5105,11 +5119,12 @@ export function ppeqPostToWatchdogLog(doPostLogObject = {}){
 export function ppeqOneMessageFromMany(uiPlacementObjectArray = []){
     // pstEnrSeven202108UTILITY SHORT
     // pstEnrSeven20210822_MESSAGING
+    let count = uiPlacementObjectArray.length -1;
     let finalObject = {};
     // let uiPlacement = 'PENDING';// gather from param ¿or add param?
     let uiPlacement = uiPlacementObjectArray[0].message;// should be the same for all objects in the array, by design
     finalObject.bootstrap = `danger`;
-    finalObject.message = `One [Holder] Message from Many for ${uiPlacement}`;
+    finalObject.message = `One [Holder] Message from Many [${count}] for ${uiPlacement}`;
     let arrayBootstrapMessage = [];
     arrayBootstrapMessage.push(finalObject.bootstrap);
     arrayBootstrapMessage.push(finalObject.message);

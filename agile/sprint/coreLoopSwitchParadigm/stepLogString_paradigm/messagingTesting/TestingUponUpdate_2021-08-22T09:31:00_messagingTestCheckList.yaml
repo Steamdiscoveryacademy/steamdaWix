@@ -19,7 +19,7 @@ Messaging Tests Check-List:
     - Primary from Core Persists on Perform: yes
     - Prmary from Core Overridden on Perform: 
       - for pstEnrSeven-SWITCH: yes 
-      - for Core-SWITCH: no 
+      - for Core-SWITCH: yes 
   - Response Messaging:
     - Success Messaging:
       - Success Not Rendered on Next: yes
@@ -55,7 +55,7 @@ Messaging Tests Check-List:
     - Info from Core Persists on Perform: yes
     - Info from Core Overridden on Perform:
       - for pstEnrSeven-SWITCH: yes 
-      - for Core-SWITCH: no 
+      - for Core-SWITCH: yes 
     - Info Only on Perform: no
       - for pstEnrSeven-SWITCH: yes 
       - for Core-SWITCH: no 

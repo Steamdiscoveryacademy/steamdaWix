@@ -8,7 +8,18 @@ $w('#HOLDER')
 https://webhook.site/191e8210-1ce6-4d05-8d72-e3a3a10cf0e4
 
 
-===================================
-==== Saturday August 14, 2021 =====
-===================================
-===================================
+===========================================
+====== Stash Saturday August 21, 2021 =====
+===========================================
+===========================================
+
+memory.getItem('msboxLastState')
+memory.getItem('stepThis')
+
+`memory.getItem('msboxLastState'): ${memory.getItem('msboxLastState')};\nmemory.getItem('msboxNextStateId'):
+${memory.getItem('msboxNextStateId')}`
+
+let nullThesaurusArray = ["NA","NNA","EMPTY","EEMPTY","NULL","NNULL","NONE","NNONE","FAUX","FFAUX","FALSE","FFALSE"]
+
+
+

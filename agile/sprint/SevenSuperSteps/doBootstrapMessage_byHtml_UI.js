@@ -6,6 +6,7 @@
 // ! I WILL TRY TO KEEP UP, BUT CHECK THE FILE ITSELF, and/or git to be certain
 export function doBootstrapMessage(key,messageThis = 'DEFAULT', responsiveByLengthToFontSize2dArray = [],txtColor = '#007bff',bgColor = '#FFFFFF'){
 	// console.log("[fnc]key: " + key)
+	    key = key.toLowerCase();
 		let messages = [];
 		let messageMatchKey = {};
 		messageMatchKey.primary = "0";

@@ -18,8 +18,7 @@ Messaging Tests Check-List:
     - Primary from Core on Next: yes
     - Primary from Core Persists on Perform: yes
     - Prmary from Core Overridden on Perform: 
-      - for pstEnrSeven-SWITCH: no 
-      # holder message: yes, custom override message: no,
+      - for pstEnrSeven-SWITCH: yes 
       - for Core-SWITCH: no 
   - Response Messaging:
     - Success Messaging:
@@ -54,13 +53,11 @@ Messaging Tests Check-List:
   - Info Messaging Tests:
     - Info from Core on Next: yes
     - Info from Core Persists on Perform: yes
-    - Info from Core Overridden on Perform: no
-      - for pstEnrSeven-SWITCH: no 
-      # holder message: yes, custom override message: no,
+    - Info from Core Overridden on Perform:
+      - for pstEnrSeven-SWITCH: yes 
       - for Core-SWITCH: no 
     - Info Only on Perform: no
-      - for pstEnrSeven-SWITCH: no 
-      # holder message: yes, custom override message: no,
+      - for pstEnrSeven-SWITCH: yes 
       - for Core-SWITCH: no 
   - Secondary Messaging: TBD
   ...

@@ -478,7 +478,7 @@ export async function doStepSwitch(stepKey = 'PPENDING') {
     let infoStepArray = ['IINSTANTIATE'];
     let successStepArray = ['IINSTANTIATE'];
     let warningStepArray = ['HOLDER'];
-    let dangerStepArray = ['HOLDER'];
+    let dangerStepArray = ['dedupePpStContact'];
     let bootstrapKeyArray = ['HOLDER'];
     let bootstrapKey = 'HOLDER';
     if(primaryStepArray.includes(stepKey)){
@@ -507,87 +507,86 @@ export async function doStepSwitch(stepKey = 'PPENDING') {
     
     // memory.setItem('stepLogString',memory.getItem('stepLogString') + `info=doStepSwitch(${stepKey})=454|`);
 
-    DOX = ` ==> pstEnrSeven202108STEP_SALS_EXE_SWITCH ==> Return to pstEnrSeven SWITCH ==> pstEnrSeven202108STEP_SALS_SWITCH`;
-    local.setItem('logString', local.getItem('logString') + ',' + DOX);
-    return;
+    // return;
     let errorString = '';
     switch (stepKey) {
         case 'IINSTANTIATE':
-            await doInstantiateLoopSwitchStep();
+            // await doInstantiateLoopSwitchStep();
             console.log('Step: ' + stepKey)
             break;
         case 'PREP_ppMember':
-            await ppMemberPrepJSON()
+            // await ppMemberPrepJSON()
             console.log('Step: ' + stepKey)
             break;
         case 'EXECUTE_ppMember':
-            await ppMemberExecuteUpsert()
+            // await ppMemberExecuteUpsert()
             console.log('Step: ' + stepKey)
             break;
         case 'PREP_stMember':
-            await stMemberPrepJSON()
+            // await stMemberPrepJSON()
             console.log('Step: ' + stepKey)
             break;
         case 'EXECUTE_stMember':
-            await stMemberExecuteUpsert()
+            // await stMemberExecuteUpsert()
             console.log('Step: ' + stepKey)
             break;
 
+
         case 'dedupePpStContact':
-            await ppStContactDedupe()
+            // await ppStContactDedupe()
             console.log('Step: ' + stepKey)
             break;
 
 
 
         case 'PREP_ppContact':
-            await ppContactPrepJSON()
+            // await ppContactPrepJSON()
             console.log('Step: ' + stepKey)
             break;
         case 'PREP_ppDatabase':
-            await ppDatabasePrepJSON()
+            // await ppDatabasePrepJSON()
             console.log('Step: ' + stepKey)
             break;
         case 'PREP_stContact':
-            await stContactPrepJSON()
+            // await stContactPrepJSON()
             console.log('Step: ' + stepKey)
             break;
         case 'PREP_stDatabase':
-            await stDatabasePrepJSON()
+            // await stDatabasePrepJSON()
             console.log('Step: ' + stepKey)
             break;
         case 'PREP_spContact':
-            await spContactPrepJSON()
+            // await spContactPrepJSON()
             console.log('Step: ' + stepKey)
             break;
         case 'PREP_spDatabase':
             // await spDatabasePrepJSON()
-            await spDatabaseExecuteUpsert()
+            // await spDatabaseExecuteUpsert()
             console.log('Step: ' + stepKey)
             local.setItem('logString', local.getItem('logString') + '\n' + 'Step: ' + stepKey + '; [~116]Function-Swapped to ppDatabaseExecuteUpsert()')
             break;
         case 'EXECUTE_ppContact':
-            await ppContactExecuteUpsert()
+            // await ppContactExecuteUpsert()
             console.log('Step: ' + stepKey)
             break;
         case 'EXECUTE_ppDatabase':
-            await ppDatabaseExecuteUpsert()
+            // await ppDatabaseExecuteUpsert()
             console.log('Step: ' + stepKey)
             break;
         case 'EXECUTE_stContact':
-            await stContactExecuteUpsert()
+            // await stContactExecuteUpsert()
             console.log('Step: ' + stepKey)
             break;
         case 'EXECUTE_stDatabase':
-            await stDatabaseExecuteUpsert()
+            // await stDatabaseExecuteUpsert()
             console.log('Step: ' + stepKey)
             break;
         case 'EXECUTE_spContact':
-            await spContactExecuteUpsert()
+            // await spContactExecuteUpsert()
             console.log('Step: ' + stepKey)
             break;
         case 'EXECUTE_spDatabase':
-            await spDatabasePrepJSON()
+            // await spDatabasePrepJSON()
             local.setItem('logString', local.getItem('logString') + '\n' + 'Step: ' + stepKey + '; [~133]Function-Swapped to await spDatabasePrepJSON()')
             // spDatabaseExecuteUpsert()
             console.log('Step: ' + stepKey)
@@ -600,6 +599,8 @@ export async function doStepSwitch(stepKey = 'PPENDING') {
             errorString = 'stepKey (' + stepKey + ') is Not Supported within this Switch Structure';
             break;
     }
+    DOX = `≈602≈ ==> pstEnrSeven202108STEP_SALS_EXE_SWITCH ==> Return to pstEnrSeven SWITCH ==> pstEnrSeven202108STEP_SALS_SWITCH`;
+    local.setItem('logString', local.getItem('logString') + ',' + DOX);
 }
 // pstEnrSeven202108STEPS_ARRAY_LOOP_SWITCH
 // ø <---------- </doStepSwitch> ---------->

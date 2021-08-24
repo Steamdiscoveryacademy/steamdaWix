@@ -324,20 +324,21 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
             case 'ZERO':
                 DOX = previouslyCompleted ? `≈NNN≈ previouslyCompleted: ${stepThis}` : `≈NNN≈ ≈i${testIndex}≈ case '${stepThis}': RAW: case-handled thisStep ZERO as Null`;
                 local.setItem('logString', local.getItem('logString') + ',' + DOX);
-                // ø <Messaging Testing> 
-                // pstEnrSeven20210822_MESSAGING
-                //PRETRASH_tobeDISABLEDandEventuallyREMOVED
-                // ø <OBVIATED> Only PPEQ
-                // paramObject.messaging.info = DOX; //was immediately below: DOX = previouslyCompleted ?
-                // ø </OBVIATED> Only PPEQ
-                // memory.setItem('stepLogString',memory.getItem('stepLogString') + `primary=Override Primary Mssg for ZZZ State|`);
-                DOX = 'This primary message for {%key%} is always present, unless overridden during step execution';
-                appendStepLogPPEQ('primary', DOX);
-                appendStepLogPPEQ('info', 'Override Base Info with Different Info');
-                // appendStepLogPPEQ('success', 'Override Base Success with Different Success');
-                appendStepLogPPEQ('warning', 'Override Base Success with Different Warning');
-                appendStepLogPPEQ('danger', 'Override Base Success with Different Danger');
-                // ø </Messaging Testing> 
+                // // ø <Messaging Testing> 
+                // // pstEnrSeven20210822_MESSAGING
+                // //PRETRASH_tobeDISABLEDandEventuallyREMOVED
+                // // ø <OBVIATED> Only PPEQ
+                // // paramObject.messaging.info = DOX; //was immediately below: DOX = previouslyCompleted ?
+                // // ø </OBVIATED> Only PPEQ
+                // // memory.setItem('stepLogString',memory.getItem('stepLogString') + `primary=Override Primary Mssg for ZZZ State|`);
+                // DOX = 'This primary message for {%key%} is always present, unless overridden during step execution';
+                // appendStepLogPPEQ('primary', DOX);
+                // appendStepLogPPEQ('info', 'Override Base Info with Different Info');
+                // // appendStepLogPPEQ('success', 'Override Base Success with Different Success');
+                // appendStepLogPPEQ('warning', 'Override Base Success with Different Warning');
+                // appendStepLogPPEQ('danger', 'Override Base Success with Different Danger');
+                // // ø </Messaging Testing> 
+                onRampZERO(paramObject);
                 break;
         
             case 'ResolveAndDestroy':
@@ -447,6 +448,39 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
     DOX = 'pstEnrSeven202108STEP_SALS_LOOP ==> FUNCTION END ==> Return to pstEnrSeven ==> pstEnrSeven202108STEP_P_04RETURN';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
 }
+    // ø <onRamp-ZERO-ResolveAndDestroy-offRamp>
+    /**
+     *  and any other Miscellaneous Code NOT part of the Code
+     */
+    // ø </onRamp-ZERO-ResolveAndDestroy-offRamp>
+    export function onReadyToOnRamp(responseObject = {}){
+        $w('#spMemberResponseJSON').value = 'onReadyToOnRamp()';
+        let DOX = `≈NNN≈ onReadyToOnRamp: RAW: script for thisStep onReady as Null`;
+        local.setItem('logString', local.getItem('logString') + ',' + DOX);
+        DOX = 'Primary Override within onReadyToOnRamp()';
+        appendStepLogPPEQ('primary', DOX);
+        salsDoMessagingReponsesApply();
+    }
+    export function onRampZERO(paramObject = {}){
+        let DOX = `≈NNN≈ onRampZERO: RAW: script for thisStep ZERO as Null`;
+        local.setItem('logString', local.getItem('logString') + ',' + DOX);
+        // ø <Messaging Testing> 
+        // pstEnrSeven20210822_MESSAGING
+        //PRETRASH_tobeDISABLEDandEventuallyREMOVED
+        // ø <OBVIATED> Only PPEQ
+        // paramObject.messaging.info = DOX; //was immediately below: DOX = previouslyCompleted ?
+        // ø </OBVIATED> Only PPEQ
+        // memory.setItem('stepLogString',memory.getItem('stepLogString') + `primary=Override Primary Mssg for ZZZ State|`);
+        DOX = 'Primary Override within onRampZERO()';
+        appendStepLogPPEQ('primary', DOX);
+        appendStepLogPPEQ('info', 'Override Base Info with Different Info within onRampZERO()');
+        // appendStepLogPPEQ('success', 'Override Base Success with Different Success');
+        appendStepLogPPEQ('warning', 'Override Base Success with Different Warning within onRampZERO()');
+        appendStepLogPPEQ('danger', 'Override Base Success with Different Danger within onRampZERO()');
+        // ø </Messaging Testing> 
+    }
+
+
 // ! ====================================================================================================
 // ! ====================                </pstEnrSeven doLoop && switchOnly>               ==============
 // ! ====================                                ...20210816                       ==============
@@ -478,9 +512,11 @@ export async function doStepSwitch(stepKey = 'PPENDING') {
     let infoStepArray = ['IINSTANTIATE'];
     let successStepArray = ['IINSTANTIATE'];
     let warningStepArray = ['HOLDER'];
-    let dangerStepArray = ['dedupePpStContact'];
+    let dangerStepArray = ['HOLDER'];
     let bootstrapKeyArray = ['HOLDER'];
     let bootstrapKey = 'HOLDER';
+    let bootstrapMessage = 'HOLDER';
+    let responseNumber = 777;
     if(primaryStepArray.includes(stepKey)){
         bootstrapKey = 'PrImArY';
         appendStepLogPPEQ(bootstrapKey, `Override Base Primary with Different ${bootstrapKey} for ${stepKey}`);
@@ -534,6 +570,14 @@ export async function doStepSwitch(stepKey = 'PPENDING') {
 
         case 'dedupePpStContact':
             // await ppStContactDedupe()
+
+            // responseNumber = Math.ceil(Math.random() * 100);
+            // if(responseNumber > 0 && responseNumber < 50){bootstrapMessage = `The Duplicate Contact Anomaly was not present No Action Required [${responseNumber}]`; bootstrapKey = 'success';}
+            // if(responseNumber > 49 && responseNumber < 64){bootstrapMessage = `The Duplicate Contact Anomaly was present for the Primary Parent and Handled Successfully [${responseNumber}]`; bootstrapKey = 'warning';}
+            // if(responseNumber > 63 && responseNumber < 78){bootstrapMessage = `The Duplicate Contact Anomaly was present for the Student and Handled Successfully [${responseNumber}]`; bootstrapKey = 'warning';}
+            // if(responseNumber > 77 && responseNumber < 92){bootstrapMessage = `The Duplicate Contact Anomaly was present for both Primary Parent & Student and Handled Successfully [${responseNumber}]`; bootstrapKey = 'warning';}
+            // if(responseNumber > 91 && responseNumber < 101){bootstrapMessage = `The Duplicate Contact Anomaly was present the Logic Failed to Handle it [${responseNumber}]`; bootstrapKey = 'danger';}
+            // appendStepLogPPEQ(bootstrapKey, bootstrapMessage);
             console.log('Step: ' + stepKey)
             break;
 
@@ -4608,6 +4652,7 @@ export async function msboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# n
     DOX = 'pstEnrSeven202108STEP_R_01 ==> GoTo: AnyAction ==> pstEnrSeven202108STEP_RN_02';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
     msboxPostEnrollmentSevenAnyAction(responseObject);
+    onReadyToOnRamp(responseObject);
     // </202108100800> 
 }
 // ø <---------- </msboxPostEnrollmentSevenActionOnReady - [within $w.onReady(function ())]> ---------->

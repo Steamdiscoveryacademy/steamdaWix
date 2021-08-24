@@ -6,13 +6,21 @@ console.warn(JSON.stringify(peSevenObject, undefined, 4));
 // ø </ACTUAL CODE>
 
 // ø <----------- <peSevenObjectBuilderOverall() for Encapsulation> ----------->
+// ø <QUICK-FIND>
+// ø ManualEntryUpdate_MESSAGING
+// ø ManualEntryUpdate_STEPS
+// ø ManualEntryUpdate_TITLES
+// ø </QUICK-FIND>
 export function peSevenObjectBuilderOverall(peSevenObject) {
     // peSevenObject.test = 'Marais';
+    // peSevenObject.panelNotes = 'Whiskey-Tango-Foxtrot!';
+    peSevenObject.salt = ' [AUG24]';
     buildStepObjectArrayBase(peSevenObject);
     psSevenIntegrateSteps(peSevenObject)
     stepMessagingLogicColors(peSevenObject);
     stepMessagingBuildFromManual(peSevenObject);
-    wixStorageByStep(peSevenObject);
+    // wixStorageByStep(peSevenObject);
+    delete peSevenObject.salt;
 }
 // ø <----------- </peSevenObjectBuilderOverall() for Encapsulation> ----------->
 
@@ -28,13 +36,18 @@ export function peSevenObjectBuilderOverall(peSevenObject) {
 
 // ø <---------- <buildStepObjectArrayBase(peSevenObject)>  ----------->
 export function buildStepObjectArrayBase(peSevenObject) {
-    peSevenObject.errorStringArray = [];
+    // peSevenObject.errorStringArray = [];
     peSevenObject.stepObjects = {};
     // ø <step titles manual>
+    // ManualEntryUpdate_TITLES BEGIN
     let titleArray = [];
     let longTitleArray = [];
 
     let titleThis = 'On-Ramp';
+    // let titleThis = 'Marais And Chester';
+    // titleThis = peSevenObject.salt;
+    // titleThis = '[AUG24]';
+    // titleThis = 'Marais And Chester';
     titleArray.push(titleThis);
     titleThis = 'Long Title for On-Ramp';
     longTitleArray.push('Long Title for On-Ramp');
@@ -80,6 +93,7 @@ export function buildStepObjectArrayBase(peSevenObject) {
     titleThis = "Off-Ramp to Display Completion Data before taking Next Application";
     //XXXXXXXXXXX123456789012345678901234567890123456789012345678901234567890123456
     longTitleArray.push(titleThis);
+    // ManualEntryUpdate_TITLES END
     // ø </step titles manual>
 
     let chopTitle = '';//titleThis.split(' ');
@@ -120,7 +134,7 @@ export function buildStepObjectArrayBase(peSevenObject) {
         peSevenObject.stateIdArray = stateIdArray;
         let stepObject = {};
         stepObject.titleKey = titleKeyThis;
-        stepObject.title = titleThis;
+        stepObject.title = titleThis + peSevenObject.salt;
         stepObject.longTitle = longTitleThis;
         stepObject.stateIdThis = stateIdThis;
         peSevenObject.stepObjects[stateIdThis] = stepObject;
@@ -163,10 +177,11 @@ export function psSevenIntegrateSteps(peSevenObject) {
 
 
     // ø <Zeroth Step Manual>
+    //ManualEntryUpdate_STEPS BEGIN
     // ø <wixStorage for stateOnramp>
     confirmState = 'stateOnramp';
     allConfirmStateStepArray.push(confirmState);
-    allStepThis = ['VALIDATE_staffEyeD'];
+    allStepThis = ['ZERO'];
     allStepThisForShift = [...allStepThis];
     allStepThisForPop = [...allStepThis];
     allStepArray = allStepArray.concat([allStepThis]);
@@ -176,9 +191,9 @@ export function psSevenIntegrateSteps(peSevenObject) {
     lastStepArray.push(lastStepThis);
     notesStepArrayThis = ['otherise taken care of by onReady()'];
     allNotesStepArray.push(notesStepArrayThis);
-    panelNotesBeforeStepArrayThis = ['Tell them what you are going to do','including about Staff-Eye-D'];
+    panelNotesBeforeStepArrayThis = ['Tell them what you are going to do', 'including about Staff-Eye-D'];
     allPanelNotesBeforeStepArray.push(panelNotesBeforeStepArrayThis);
-    panelNotesAfterStepArrayThis = ['Tell them you did it','messaging about Staff-Eye-D results'];
+    panelNotesAfterStepArrayThis = ['Tell them you did it', 'messaging about Staff-Eye-D results'];
     allPanelNotesAfterStepArray.push(panelNotesAfterStepArrayThis);
     // ø </Zeroth Step Manual>
     // ø <First Step Manual>
@@ -195,9 +210,9 @@ export function psSevenIntegrateSteps(peSevenObject) {
     lastStepArray.push(lastStepThis);
     notesStepArrayThis = ['may need to manually confirm Staff-Eye-D Member if automatic is not conclusive'];
     allNotesStepArray.push(notesStepArrayThis);
-    panelNotesBeforeStepArrayThis = ['Tell them what you are going to do','IFF Staff-Eye-D Confirmation Input'];
+    panelNotesBeforeStepArrayThis = ['Tell them what you are going to do', 'IFF Staff-Eye-D Confirmation Input'];
     allPanelNotesBeforeStepArray.push(panelNotesBeforeStepArrayThis);
-    panelNotesAfterStepArrayThis = ['Tell them you did it','superEnrollmentStatus','ppAction','stAction','spAction'];
+    panelNotesAfterStepArrayThis = ['Tell them you did it', 'superEnrollmentStatus', 'ppAction', 'stAction', 'spAction'];
     allPanelNotesAfterStepArray.push(panelNotesAfterStepArrayThis);
     // ø </First Step Manual>
     // ø <Second Step Manual>
@@ -299,7 +314,7 @@ export function psSevenIntegrateSteps(peSevenObject) {
     // ø <wixStorage for stateResolveAndDestroy>
     confirmState = 'stateResolveAndDestroy';
     allConfirmStateStepArray.push(confirmState);
-    allStepThis = ['EEMPTY'];
+    allStepThis = ['ResolveAndDestroy'];
     allStepThisForShift = [...allStepThis];
     allStepThisForPop = [...allStepThis];
     allStepArray = allStepArray.concat([allStepThis]);
@@ -318,7 +333,7 @@ export function psSevenIntegrateSteps(peSevenObject) {
     // ø <wixStorage for stateOfframp>
     confirmState = 'stateOfframp';
     allConfirmStateStepArray.push(confirmState);
-    allStepThis = ['EEMPTY'];
+    allStepThis = ['offramp'];
     allStepThisForShift = [...allStepThis];
     allStepThisForPop = [...allStepThis];
     allStepArray = allStepArray.concat([allStepThis]);
@@ -332,6 +347,7 @@ export function psSevenIntegrateSteps(peSevenObject) {
     allPanelNotesBeforeStepArray.push(panelNotesBeforeStepArrayThis);
     panelNotesAfterStepArrayThis = ['Tell them you did it'];
     allPanelNotesAfterStepArray.push(panelNotesAfterStepArrayThis);
+    //ManualEntryUpdate_STEPS END
     // ø </Eighth Step Manual>
 
     let arrayCountManualValidation = 9;
@@ -350,18 +366,31 @@ export function psSevenIntegrateSteps(peSevenObject) {
         peSevenObject.errorStringArray.push('[psSevenIntegrateSteps] one or more invalid array counts to steps');
     }
     if (isValid) {
+        let develConfirmAllSetpsOriginalArray = [];
         for (let index = 0; index < firstStepArray.length; index++) {
             let objectKey = peSevenObject.stateIdArray[index];
             peSevenObject.stepObjects[objectKey]['origSteps'] = {};
             peSevenObject.stepObjects[objectKey]['origSteps']['confirmState'] = allConfirmStateStepArray[index];
-            peSevenObject.stepObjects[objectKey]['origSteps']['allStepArray'] = allStepArray[index];
-            peSevenObject.stepObjects[objectKey]['origSteps']['notes'] = allNotesStepArray[index];
-            peSevenObject.stepObjects[objectKey]['origSteps']['panelBeforeStepNotes'] = allPanelNotesBeforeStepArray[index];
-            peSevenObject.stepObjects[objectKey]['origSteps']['panelAfterStepNotes'] = allPanelNotesAfterStepArray[index];
             peSevenObject.stepObjects[objectKey]['origSteps']['firstStep'] = firstStepArray[index];
             peSevenObject.stepObjects[objectKey]['origSteps']['lastStep'] = lastStepArray[index];
+            // peSevenObject.stepObjects[objectKey]['origSteps']['allStepArray'] = allStepArray[index];
+            let allStepsArrayThis = allStepArray[index];
+            // ø <YIKES! Array Merge/Concat/Apply WTF> WORKING
+            // develConfirmAllSetpsOriginalArray = [];
+            // develConfirmAllSetpsOriginalArray = develConfirmAllSetpsOriginalArray.concat(allStepsArrayThis);
+            //array1 = array1.concat(array2);//MDN with tweak
+            develConfirmAllSetpsOriginalArray.push.apply(develConfirmAllSetpsOriginalArray,allStepsArrayThis);
+            //scriptUrls.push.apply(scriptUrls, urls);//https://stackoverflow.com/questions/12810366/concat-does-not-join-javascript-arrays-together
+            // ø </YIKES! Array Merge/Concat/Apply WTF> WORKING
+            allStepsArrayThis.push('CCOMPLETE');
+            peSevenObject.stepObjects[objectKey]['origSteps']['allStepArray'] = allStepsArrayThis;
+            peSevenObject.stepObjects[objectKey]['origSteps']['notes'] = allNotesStepArray[index];
+            // peSevenObject.stepObjects[objectKey]['origSteps']['panelBeforeStepNotes'] = allPanelNotesBeforeStepArray[index];
+            // peSevenObject.stepObjects[objectKey]['origSteps']['panelAfterStepNotes'] = allPanelNotesAfterStepArray[index];
 
         }
+        // console.warn('develConfirmAllSetpsOriginalArray: ');
+        // console.warn(develConfirmAllSetpsOriginalArray);
     }
 
 }
@@ -380,27 +409,10 @@ export function stepMessagingLogicColors(peSevenObject) {
             "rgbColor": "RGB( 0, 123, 255 )",
             "notes": []
         },
-        "devel": {
-            "logicColor": "devel",
-            "namedColor": "indigo",
-            "hexColor": "#6610f2",
-            "rgbColor": "RGB( 102, 16, 242 )",
-            "notes": [
-                "btl custom logicName"
-            ]
-        },
-        "danger": {
-            "logicColor": "danger",
-            "namedColor": "red",
-            "hexColor": "#dc3545",
-            "rgbColor": "RGB( 220, 53, 69 )",
-            "notes": []
-        },
-        "warning": {
-            "logicColor": "warning",
-            "namedColor": "yellow",
-            "hexColor": "#ffc107",
-            "rgbColor": "RGB( 255, 193, 7 )",
+        "secondary": {
+            "namedColor": "blue",
+            "hexColor": "#007bff",
+            "rgbColor": "RGB( 0, 123, 255 )",
             "notes": []
         },
         "success": {
@@ -410,13 +422,37 @@ export function stepMessagingLogicColors(peSevenObject) {
             "rgbColor": "RGB( 40, 167, 69 )",
             "notes": []
         },
+        "warning": {
+            "logicColor": "warning",
+            "namedColor": "yellow",
+            "hexColor": "#ffc107",
+            "rgbColor": "RGB( 255, 193, 7 )",
+            "notes": []
+        },
+        "danger": {
+            "logicColor": "danger",
+            "namedColor": "red",
+            "hexColor": "#dc3545",
+            "rgbColor": "RGB( 220, 53, 69 )",
+            "notes": []
+        },
         "info": {
             "logicColor": "info",
             "namedColor": "cyan",
             "hexColor": "#17a2b8",
             "rgbColor": "RGB( 23, 162, 184 )",
             "notes": []
-        }}`;
+        },
+        "devel": {
+            "logicColor": "devel",
+            "namedColor": "indigo",
+            "hexColor": "#6610f2",
+            "rgbColor": "RGB( 102, 16, 242 )",
+            "notes": [
+                "btl custom logicName"
+            ]
+        }
+    }`;
     let bootstrapObject = JSON.parse(bootstrapJSON);
     let messagingKeys = Object.keys(bootstrapObject);
     // console.warn('messagingKeys: ');
@@ -424,11 +460,12 @@ export function stepMessagingLogicColors(peSevenObject) {
     let messaging = {};
     messaging.hex = {};
     messaging.hex.primary = bootstrapObject.primary.hexColor;
-    messaging.hex.devel = bootstrapObject.devel.hexColor;
-    messaging.hex.danger = bootstrapObject.danger.hexColor;
-    messaging.hex.warning = bootstrapObject.warning.hexColor;
+    messaging.hex.secondary = bootstrapObject.secondary.hexColor;
     messaging.hex.success = bootstrapObject.success.hexColor;
+    messaging.hex.warning = bootstrapObject.warning.hexColor;
+    messaging.hex.danger = bootstrapObject.danger.hexColor;
     messaging.hex.info = bootstrapObject.info.hexColor;
+    messaging.hex.devel = bootstrapObject.devel.hexColor;
     // console.warn('messaging: ');
     // console.warn(messaging);
     // return messaging;
@@ -438,73 +475,84 @@ export function stepMessagingLogicColors(peSevenObject) {
 // ø <----------- </stepMessagingLogicColors for Encapsulation> ----------->
 
 // ø <----------- <stepMessagingBuildFromManual() for Encapsulation>  ----------->
+//ManualEntryUpdate_MESSAGING BEGIN
 export function stepMessagingBuildFromManual(peSevenObject) {
     let stepMessaging = {};
     stepMessaging.stateOnramp = {};
-    stepMessaging.stateOnramp.primary = 'The primary message for stateOnramp';
+    stepMessaging.stateOnramp.primary = 'Constant primary message unless override for stateOnramp';
+    stepMessaging.stateOnramp.secondary = 'EEMPTY';
+    stepMessaging.stateOnramp.success = 'This success response unless danger, warning or override for stateOnramp';
+    stepMessaging.stateOnramp.warning = 'EEMPTY';
+    stepMessaging.stateOnramp.danger = 'EEMPTY';
+    stepMessaging.stateOnramp.info = 'Additional Info for stateOnramp';
     stepMessaging.stateOnramp.devel = 'The devel message for stateOnramp';
-    stepMessaging.stateOnramp.danger = 'The danger message for stateOnramp';
-    stepMessaging.stateOnramp.warning = 'The warning message for stateOnramp';
-    stepMessaging.stateOnramp.success = 'The success message for stateOnramp';
-    stepMessaging.stateOnramp.info = 'The info message for stateOnramp';
     stepMessaging.stateInstantiate = {};
-    stepMessaging.stateInstantiate.primary = 'The primary message for stateInstantiate';
+    stepMessaging.stateInstantiate.primary = 'Constant primary message unless override for stateInstantiate';
+    stepMessaging.stateInstantiate.secondary = 'EEMPTY';
+    stepMessaging.stateInstantiate.success = 'This success response unless danger, warning or override for stateInstantiate';
+    stepMessaging.stateInstantiate.warning = 'EEMPTY';
+    stepMessaging.stateInstantiate.danger = 'EEMPTY';
+    stepMessaging.stateInstantiate.info = 'Additional Info for stateInstantiate';
     stepMessaging.stateInstantiate.devel = 'The devel message for stateInstantiate';
-    stepMessaging.stateInstantiate.danger = 'The danger message for stateInstantiate';
-    stepMessaging.stateInstantiate.warning = 'The warning message for stateInstantiate';
-    stepMessaging.stateInstantiate.success = 'The success message for stateInstantiate';
-    stepMessaging.stateInstantiate.info = 'The info message for stateInstantiate';
     stepMessaging.stateMemberConfirm = {};
-    stepMessaging.stateMemberConfirm.primary = 'The primary message for stateMemberConfirm';
+    stepMessaging.stateMemberConfirm.primary = 'Constant primary message unless override for stateMemberConfirm';
+    stepMessaging.stateMemberConfirm.secondary = 'EEMPTY';
+    stepMessaging.stateMemberConfirm.success = 'This success response unless danger, warning or override for stateMemberConfirm';
+    stepMessaging.stateMemberConfirm.warning = 'EEMPTY';
+    stepMessaging.stateMemberConfirm.danger = 'EEMPTY';
+    stepMessaging.stateMemberConfirm.info = 'Additional Info for stateMemberConfirm';
     stepMessaging.stateMemberConfirm.devel = 'The devel message for stateMemberConfirm';
-    stepMessaging.stateMemberConfirm.danger = 'The danger message for stateMemberConfirm';
-    stepMessaging.stateMemberConfirm.warning = 'The warning message for stateMemberConfirm';
-    stepMessaging.stateMemberConfirm.success = 'The success message for stateMemberConfirm';
-    stepMessaging.stateMemberConfirm.info = 'The info message for stateMemberConfirm';
     stepMessaging.stateDupeDelete = {};
-    stepMessaging.stateDupeDelete.primary = 'The primary message for stateDupeDelete';
+    stepMessaging.stateDupeDelete.primary = 'Constant primary message unless override for stateDupeDelete';
+    stepMessaging.stateDupeDelete.secondary = 'EEMPTY';
+    stepMessaging.stateDupeDelete.success = 'The Duplicate Contact Anomaly was not present No Action Required';
+    stepMessaging.stateDupeDelete.warning = 'EEMPTY';
+    stepMessaging.stateDupeDelete.danger = 'EEMPTY';
+    stepMessaging.stateDupeDelete.info = 'There is a Known Anomaly where Duplicate Contacts for Primary Parent and/or Student are created that need o be dealt with';
     stepMessaging.stateDupeDelete.devel = 'The devel message for stateDupeDelete';
-    stepMessaging.stateDupeDelete.danger = 'The danger message for stateDupeDelete';
-    stepMessaging.stateDupeDelete.warning = 'The warning message for stateDupeDelete';
-    stepMessaging.stateDupeDelete.success = 'The success message for stateDupeDelete';
-    stepMessaging.stateDupeDelete.info = 'The info message for stateDupeDelete';
     stepMessaging.stateDatabaseForPrimaryAndStudent = {};
-    stepMessaging.stateDatabaseForPrimaryAndStudent.primary = 'The primary message for stateDatabaseForPrimaryAndStudent';
+    stepMessaging.stateDatabaseForPrimaryAndStudent.primary = 'Constant primary message unless override for stateDatabaseForPrimaryAndStudent';
+    stepMessaging.stateDatabaseForPrimaryAndStudent.secondary = 'EEMPTY';
+    stepMessaging.stateDatabaseForPrimaryAndStudent.success = 'This success response unless danger, warning or override for stateDatabaseForPrimaryAndStudent';
+    stepMessaging.stateDatabaseForPrimaryAndStudent.warning = 'EEMPTY';
+    stepMessaging.stateDatabaseForPrimaryAndStudent.danger = 'EEMPTY';
+    stepMessaging.stateDatabaseForPrimaryAndStudent.info = 'Additional Info for stateDatabaseForPrimaryAndStudent';
     stepMessaging.stateDatabaseForPrimaryAndStudent.devel = 'The devel message for stateDatabaseForPrimaryAndStudent';
-    stepMessaging.stateDatabaseForPrimaryAndStudent.danger = 'The danger message for stateDatabaseForPrimaryAndStudent';
-    stepMessaging.stateDatabaseForPrimaryAndStudent.warning = 'The warning message for stateDatabaseForPrimaryAndStudent';
-    stepMessaging.stateDatabaseForPrimaryAndStudent.success = 'The success message for stateDatabaseForPrimaryAndStudent';
-    stepMessaging.stateDatabaseForPrimaryAndStudent.info = 'The info message for stateDatabaseForPrimaryAndStudent';
     stepMessaging.stateContactForPrimaryAndStudent = {};
-    stepMessaging.stateContactForPrimaryAndStudent.primary = 'The primary message for stateContactForPrimaryAndStudent';
+    stepMessaging.stateContactForPrimaryAndStudent.primary = 'Constant primary message unless override for stateContactForPrimaryAndStudent';
+    stepMessaging.stateContactForPrimaryAndStudent.secondary = 'EEMPTY';
+    stepMessaging.stateContactForPrimaryAndStudent.success = 'This success response unless danger, warning or override for stateContactForPrimaryAndStudent';
+    stepMessaging.stateContactForPrimaryAndStudent.warning = 'EEMPTY';
+    stepMessaging.stateContactForPrimaryAndStudent.danger = 'EEMPTY';
+    stepMessaging.stateContactForPrimaryAndStudent.info = 'Additional Info for stateContactForPrimaryAndStudent';
     stepMessaging.stateContactForPrimaryAndStudent.devel = 'The devel message for stateContactForPrimaryAndStudent';
-    stepMessaging.stateContactForPrimaryAndStudent.danger = 'The danger message for stateContactForPrimaryAndStudent';
-    stepMessaging.stateContactForPrimaryAndStudent.warning = 'The warning message for stateContactForPrimaryAndStudent';
-    stepMessaging.stateContactForPrimaryAndStudent.success = 'The success message for stateContactForPrimaryAndStudent';
-    stepMessaging.stateContactForPrimaryAndStudent.info = 'The info message for stateContactForPrimaryAndStudent';
     stepMessaging.stateContactAndDatabaseForSecondary = {};
-    stepMessaging.stateContactAndDatabaseForSecondary.primary = 'The primary message for stateContactAndDatabaseForSecondary';
+    stepMessaging.stateContactAndDatabaseForSecondary.primary = 'Constant primary message unless override for stateContactAndDatabaseForSecondary';
+    stepMessaging.stateContactAndDatabaseForSecondary.secondary = 'EEMPTY';
+    stepMessaging.stateContactAndDatabaseForSecondary.success = 'This success response unless danger, warning or override for stateContactAndDatabaseForSecondary';
+    stepMessaging.stateContactAndDatabaseForSecondary.warning = 'EEMPTY';
+    stepMessaging.stateContactAndDatabaseForSecondary.danger = 'EEMPTY';
+    stepMessaging.stateContactAndDatabaseForSecondary.info = 'Additional Info for stateContactAndDatabaseForSecondary';
     stepMessaging.stateContactAndDatabaseForSecondary.devel = 'The devel message for stateContactAndDatabaseForSecondary';
-    stepMessaging.stateContactAndDatabaseForSecondary.danger = 'The danger message for stateContactAndDatabaseForSecondary';
-    stepMessaging.stateContactAndDatabaseForSecondary.warning = 'The warning message for stateContactAndDatabaseForSecondary';
-    stepMessaging.stateContactAndDatabaseForSecondary.success = 'The success message for stateContactAndDatabaseForSecondary';
-    stepMessaging.stateContactAndDatabaseForSecondary.info = 'The info message for stateContactAndDatabaseForSecondary';
     stepMessaging.stateResolveAndDestroy = {};
-    stepMessaging.stateResolveAndDestroy.primary = 'The primary message for stateResolveAndDestroy';
+    stepMessaging.stateResolveAndDestroy.primary = 'Constant primary message unless override for stateResolveAndDestroy';
+    stepMessaging.stateResolveAndDestroy.secondary = 'EEMPTY';
+    stepMessaging.stateResolveAndDestroy.success = 'This success response unless danger, warning or override for stateResolveAndDestroy';
+    stepMessaging.stateResolveAndDestroy.warning = 'EEMPTY';
+    stepMessaging.stateResolveAndDestroy.danger = 'EEMPTY';
+    stepMessaging.stateResolveAndDestroy.info = 'Additional Info for stateResolveAndDestroy';
     stepMessaging.stateResolveAndDestroy.devel = 'The devel message for stateResolveAndDestroy';
-    stepMessaging.stateResolveAndDestroy.danger = 'The danger message for stateResolveAndDestroy';
-    stepMessaging.stateResolveAndDestroy.warning = 'The warning message for stateResolveAndDestroy';
-    stepMessaging.stateResolveAndDestroy.success = 'The success message for stateResolveAndDestroy';
-    stepMessaging.stateResolveAndDestroy.info = 'The info message for stateResolveAndDestroy';
     stepMessaging.stateOfframp = {};
-    stepMessaging.stateOfframp.primary = 'The primary message for stateOfframp';
+    stepMessaging.stateOfframp.primary = 'Constant primary message unless override for stateOfframp';
+    stepMessaging.stateOfframp.secondary = 'EEMPTY';
+    stepMessaging.stateOfframp.success = 'This success response unless danger, warning or override for stateOfframp';
+    stepMessaging.stateOfframp.warning = 'EEMPTY';
+    stepMessaging.stateOfframp.danger = 'EEMPTY';
+    stepMessaging.stateOfframp.info = 'Additional Info for stateOfframp';
     stepMessaging.stateOfframp.devel = 'The devel message for stateOfframp';
-    stepMessaging.stateOfframp.danger = 'The danger message for stateOfframp';
-    stepMessaging.stateOfframp.warning = 'The warning message for stateOfframp';
-    stepMessaging.stateOfframp.success = 'The success message for stateOfframp';
-    stepMessaging.stateOfframp.info = 'The info message for stateOfframp';
     peSevenObject.stepMessaging = stepMessaging;
 }
+//ManualEntryUpdate_MESSAGING END
 // ø <----------- </stepMessagingBuildFromManual() for Encapsulation> ----------->
 
 // ø <----------- <wixStorageByStep() for Encapsulation>  ----------->
@@ -570,16 +618,16 @@ export function wixStorageByStep(peSevenObject) {
         let confirmStateThis = peSevenObject.stepObjects[stateKeyThis].origSteps.confirmState;
         let origStepArrayThis = peSevenObject.stepObjects[stateKeyThis].origSteps.allStepArray;
         let origStepNotesThese = peSevenObject.stepObjects[stateKeyThis].origSteps.notes;
-        
+
         // let ZconfirmStateThis = peSevenObject.stepObjects[stateKeyThis];//.origSteps;//.confirmState;
         // console.log(ZconfirmStateThis);
         // let ZZconfirmStateThis = peSevenObject.stepObjects[stateKeyThis].origSteps;//.confirmState;
         // console.log(ZZconfirmStateThis);
         // let ZZZconfirmStateThis = peSevenObject.stepObjects[stateKeyThis].origSteps.confirmState;
         // console.log(ZZZconfirmStateThis);
-        
+
         console.log('[wixStorageByStep]INTERNAL DOX: ')
-        console.warn('[wixStorageByStep] => Confirm: \n'+ `${stateKeyThis} === ${confirmStateThis}`)
+        console.warn('[wixStorageByStep] => Confirm: \n' + `${stateKeyThis} === ${confirmStateThis}`)
         // console.warn(`${stateKeyThis} === ${confirmStateThis}`)
         console.warn('[wixStorageByStep]origStepArrayThis: ')
         console.warn(origStepArrayThis)

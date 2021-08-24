@@ -1,78 +1,71 @@
-===================================
-===== Tuesday August 17, 2021 =====
-===================================
 ---
-• <----- <daily Commits>  ----->
-ø Soup-To-Nuts
-ø postEnrollment (2021-08-17)
-• <----- </daily Commits> ----->
-
-• <----- <sourcedJSON Table and Queries>  ----->
-• move bootstrapMessaging to OnReadyAction()
-• confirm the extent of WiX-Storage
-      ↪ approx 50,000 Lines-of-Code for local. && session. (50 klocs)
-      ↪ approx 1,000,000 Lines-of-Code for memory. && session. (1,000 klocs)
-• <----- </sourcedJSON Table and Queries> ----->
-
-• <----- <use Messaging as Pseudo Coding Response>  ----->
-• Get Steps-List side-bar working
-ø      ↪ Test Devel
-•      ↪ added Responsive Array: [[-1,36],[50,28]]
-• <----- </use Messaging as Pseudo Coding Response> ----->
-
-• <----- <pstEnrSeven202108RETOOL_TO_ORIG_ESLS>  ----->
-ø Test return of Messaging in Object
-ø      ↪ should be trivial extension of above but, OOAAOC
-ø      ↪ make Success the stepArray.toString()
-ø      ↪ extend _new_ Loop-Switch to accomodate, ¿what, three enrPostSeven Steps?
-ø Add RETOOL TO Block
-ø Add RETOOL TO Quick-Find
-ø Retool Steps
-ø      ↪ ≈ 121 ≈ Equivalent of 'Reset Steps' button
-ø      ↪ ≈ 121 ≈ instantiateLoopSwitchEnrollmentSteps(paramObject.currentStepObject.origSteps.allStepArray)
-• NOT  ↪ ≈ 2099 ≈ DEP-recate doInstantiateExitAfter() with 'return;'
-•      ↪ ≈ 212 ≈ DEP-recate local.setItem('loopExitAfterStep', $w('#ddExitAfterStep').value) with form value within 'doPeformNextStep()'
-•      ↪ ≈ 116 ≈ replecate doInstantiateExitAfter() with literal 'memory.setItem()'' calls
-•      ↪ ≈ 116 ≈ exitAfter ==> paramObject.currentStepObject.origSteps.lastStep
-ø      ↪ ≈ ??? ≈ manual check for ExitAfter
-ø      ↪ ≈ ??? ≈ manual check for Current = 'CCOMPLETE' [as Cow-Catcher]
-ø      ↪ ≈ ??? ≈ manual check for Current = 'ZERO' [as Cow-Catcher]
-ø Step-Thru ==> Starts with OnReadyAction ==> pstEnrSeven202108STEP_R_01
-•      ↪ add all Steps to DOX = '' String
-•      ↪ Z-remove all Steps original Comment Steps
-ø      ↪ fully-remove all Steps original Comment Steps
-•      ↪ Append DOX via local.setItem('logString', ',' + local.getItem('logString') + DOX)
-ø      ↪ STUCK - pstEnrSeven202108STEP_SALS_01 while (<TESTING ONE-BY-ONE>)
-ø DOX - words = words.replace(/\n/g, " ");
-• <----- </pstEnrSeven202108RETOOL_TO_ORIG_ESLS> ----->
-
-
-• <----- <Code Clean-Up>  ----->
-• Update the QUICK-FIND tags and 
-• Add a STEPS System 
-•      ↪ a sequential CMD-F Tags mechanism to Step-Thru the Code-Flow
-•      ↪ improve on STEPS System with DOX of where you are just prior to CMD-F
-• REMOVE all 202107 QUICK-FIND tags after confirming that they are not only Deprecated but Redundant
-• <----- </Code Clean-Up> ----->
-
-• <----- <Drupal RestExport Views to sourcedJSON>  ----->
-• gather wix-week-fields data into sourcedJSON
-•      ↪ requires that Array be made into Object with Array
-•      ↪ arrayName = weeksArray
-•      ↪ needs sourcedJSON.jsonDox
-•      ↪ use Content Manager to Unpublish Old prior to gathering
-• gather wix-location-fields data into sourcedJSON
-•      ↪ requires that Array be made into Object with Array
-•      ↪ arrayName = locationsArray
-•      ↪ needs sourcedJSON.jsonDox
-•      ↪ use Content Manager to Publish only Active prior to gathering
-• Drupal View wix-course-fields data into sourcedJSON - LOTS of Twig Tweaking
-• <----- </Drupal RestExport Views to sourcedJSON> ----->
-
-
-
-
+#===========================================
+#===== Sprint Tuesday August 24, 2021 ======
+#===========================================
+daily Commits:
+      - postEnrollment: yes
+...
 ---
-ø refactor find responseObject.button to responseObject.actionKey
-ø ¿ refactor 'PostEnrollmentSeven' to 'PstEnrSeven' ? 
-ø use Drupal Logging ¿ OR ? create custom Dupal Log DB and use the API
+# <----- <sourcedJSON Table and Queries>  ----->
+move bootstrapMessaging to OnReadyAction(): no
+confirm the extent of WiX-Storage:
+      - approx 50,000 Lines-of-Code for local. && session. (50 klocs): no
+      - approx 1,000,000 Lines-of-Code for memory. && session. (1,000 klocs): no
+# <----- </sourcedJSON Table and Queries> ----->
+
+# <----- <use Messaging as Pseudo Coding Response>  ----->
+Get Steps-List side-bar working:
+      - as String to Primary within NEXT-UI && After-DO: yes
+      - as String to Response within PERFORM-UI && After-DO: yes
+      - as necessary change Response Break-Points for String Length: yes
+place currentStepObject into responseObject AnyAction:
+      - Test/POC assign Title NEXT-UI AFTER: yes
+place currentMessagingObject into responseObject AnyAction:
+      - Test/POC assign PrimaryHTML NEXT-UI AFTER: yes
+TEST/POC messaging upon eslsDO return (FAUX): no
+ADD 'DEFUALT' for using JSON Object Messages (library):
+      - Test Response ==> Success: yes
+      - Test Response ==> Warning (override Success T/F): yes
+      - Test Response ==> Danger  (override Success-Warning T/F-T/F): yes
+      - Test create/overload Info: yes
+      - Test overload Primary: yes
+      - Test Devel: no
+      - Turn Off TEST paramObject, but left in place: yes
+      - Turn Off DOX of values at steps: yes
+      - added Responsive Array: [[-1,36],[50,28]]: yes
+# <----- </use Messaging as Pseudo Coding Response> ----->
+
+# <----- <test of eslsDO>  ----->
+Test return of Messaging in Object:
+      - should be trivial extension of above but, OOAAOC: no
+      - make Success the stepArray.toString(): no
+      - extend _new_ Loop-Switch to accomodate, ¿what, three enrPostSeven Steps?: no
+# <----- </test of eslsDO> ----->
+
+
+# <----- <Code Clean-Up>  ----->
+Update the QUICK-FIND tags and Add a STEPS System:
+      - a sequential CMD-F Tags mechanism to Step-Thru the Code-Flow: yes
+      - improve on STEPS System with DOX of where you are just prior to CMD-F: yes
+REMOVE all 202107 QUICK-FIND tags after confirming that they are not only Deprecated but Redundant: no
+# <----- </Code Clean-Up> ----->
+
+# <----- <Drupal RestExport Views to sourcedJSON>  ----->
+gather wix-week-fields data into sourcedJSON:
+      - requires that Array be made into Object with Array: yes
+      - arrayName = weeksArray: yes
+      - needs sourcedJSON.jsonDox: yes
+      - use Content Manager to Unpublish Old prior to gathering: yes
+gather wix-location-fields data into sourcedJSON:
+      - requires that Array be made into Object with Array: yes
+      - arrayName = locationsArray: yes
+      - needs sourcedJSON.jsonDox: yes
+      - use Content Manager to Publish only Active prior to gathering: yes
+Drupal View wix-course-fields data into sourcedJSON - LOTS of Twig Tweaking: no
+# <----- </Drupal RestExport Views to sourcedJSON> ----->
+...
+---
+refactor find responseObject.button to responseObject.actionKey: no
+¿ refactor 'PostEnrollmentSeven' to 'PstEnrSeven' ? : no
+use Drupal Logging ¿ OR ? create custom Dupal Log DB and use the API: no
+...

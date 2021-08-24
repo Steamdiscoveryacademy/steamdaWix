@@ -1,0 +1,274 @@
+{
+    "stepObjects": {
+        "stateOnramp": {
+            "titleKey": "onramp",
+            "title": "On-Ramp [AUG24]",
+            "longTitle": "Long Title for On-Ramp",
+            "stateIdThis": "stateOnramp",
+            "origSteps": {
+                "confirmState": "stateOnramp",
+                "firstStep": "ZERO",
+                "lastStep": "ZERO",
+                "allStepArray": [
+                    "ZERO",
+                    "CCOMPLETE"
+                ],
+                "notes": [
+                    "otherise taken care of by onReady()"
+                ]
+            }
+        },
+        "stateInstantiate": {
+            "titleKey": "instantiate",
+            "title": "Instantiate [AUG24]",
+            "longTitle": "Instantiate Enrollment",
+            "stateIdThis": "stateInstantiate",
+            "origSteps": {
+                "confirmState": "stateInstantiate",
+                "firstStep": "IINSTANTIATE",
+                "lastStep": "IINSTANTIATE",
+                "allStepArray": [
+                    "IINSTANTIATE",
+                    "CCOMPLETE"
+                ],
+                "notes": [
+                    "may need to manually confirm Staff-Eye-D Member if automatic is not conclusive"
+                ]
+            }
+        },
+        "stateMemberConfirm": {
+            "titleKey": "memberConfirm",
+            "title": "Member Confirm [AUG24]",
+            "longTitle": "Confirm Members for Primary and Student",
+            "stateIdThis": "stateMemberConfirm",
+            "origSteps": {
+                "confirmState": "stateMemberConfirm",
+                "firstStep": "PREP_ppMember",
+                "lastStep": "EXECUTE_stMember",
+                "allStepArray": [
+                    "PREP_ppMember",
+                    "EXECUTE_ppMember",
+                    "PREP_stMember",
+                    "EXECUTE_stMember",
+                    "CCOMPLETE"
+                ],
+                "notes": []
+            }
+        },
+        "stateDupeDelete": {
+            "titleKey": "dupeDelete",
+            "title": "Dupe Delete [AUG24]",
+            "longTitle": "Delete any Duplicate Contacts (known bug)",
+            "stateIdThis": "stateDupeDelete",
+            "origSteps": {
+                "confirmState": "stateDupeDelete",
+                "firstStep": "dedupePpStContact",
+                "lastStep": "dedupePpStContact",
+                "allStepArray": [
+                    "dedupePpStContact",
+                    "CCOMPLETE"
+                ],
+                "notes": []
+            }
+        },
+        "stateDatabaseForPrimaryAndStudent": {
+            "titleKey": "databaseForPrimaryAndStudent",
+            "title": "Database for Primary and Student [AUG24]",
+            "longTitle": "Insert Records into the Person Database for Primary and Student",
+            "stateIdThis": "stateDatabaseForPrimaryAndStudent",
+            "origSteps": {
+                "confirmState": "stateDatabaseForPrimaryAndStudent",
+                "firstStep": "PREP_ppContact",
+                "lastStep": "PREP_stDatabase",
+                "allStepArray": [
+                    "PREP_ppContact",
+                    "PREP_ppDatabase",
+                    "PREP_stContact",
+                    "PREP_stDatabase",
+                    "CCOMPLETE"
+                ],
+                "notes": []
+            }
+        },
+        "stateContactForPrimaryAndStudent": {
+            "titleKey": "contactForPrimaryAndStudent",
+            "title": "Contact for Primary and Student [AUG24]",
+            "longTitle": "Update Contacts for Primary & Student with Complex Enrollment Data",
+            "stateIdThis": "stateContactForPrimaryAndStudent",
+            "origSteps": {
+                "confirmState": "stateContactForPrimaryAndStudent",
+                "firstStep": "PREP_spContact",
+                "lastStep": "EXECUTE_stDatabase",
+                "allStepArray": [
+                    "PREP_spContact",
+                    "PREP_spDatabase",
+                    "EXECUTE_ppContact",
+                    "EXECUTE_ppDatabase",
+                    "EXECUTE_stContact",
+                    "EXECUTE_stDatabase",
+                    "CCOMPLETE"
+                ],
+                "notes": []
+            }
+        },
+        "stateContactAndDatabaseForSecondary": {
+            "titleKey": "contactAndDatabaseForSecondary",
+            "title": "Contact and Database for Secondary [AUG24]",
+            "longTitle": "Upsert Contact and Insert Person database Record for Secondary",
+            "stateIdThis": "stateContactAndDatabaseForSecondary",
+            "origSteps": {
+                "confirmState": "stateContactAndDatabaseForSecondary",
+                "firstStep": "EXECUTE_spContact",
+                "lastStep": "EXECUTE_spDatabase",
+                "allStepArray": [
+                    "EXECUTE_spContact",
+                    "EXECUTE_spDatabase",
+                    "CCOMPLETE"
+                ],
+                "notes": []
+            }
+        },
+        "stateResolveAndDestroy": {
+            "titleKey": "resolveAndDestroy",
+            "title": "Resolve and Destroy [AUG24]",
+            "longTitle": "Resolve Webhook Payload and Off-Ramp the Post Enrollment Process",
+            "stateIdThis": "stateResolveAndDestroy",
+            "origSteps": {
+                "confirmState": "stateResolveAndDestroy",
+                "firstStep": "ResolveAndDestroy",
+                "lastStep": "ResolveAndDestroy",
+                "allStepArray": [
+                    "ResolveAndDestroy",
+                    "CCOMPLETE"
+                ],
+                "notes": [
+                    "ouside of Loop-Switch execute ¿Resolve WebHook?",
+                    "ouside of Loop-Switch execute ¿Destroy? wixStorage"
+                ]
+            }
+        },
+        "stateOfframp": {
+            "titleKey": "offramp",
+            "title": "Off-Ramp [AUG24]",
+            "longTitle": "Off-Ramp to Display Completion Data before taking Next Application",
+            "stateIdThis": "stateOfframp",
+            "origSteps": {
+                "confirmState": "stateOfframp",
+                "firstStep": "offramp",
+                "lastStep": "offramp",
+                "allStepArray": [
+                    "offramp",
+                    "CCOMPLETE"
+                ],
+                "notes": [
+                    "return to ¿Process Web Hooks?"
+                ]
+            }
+        }
+    },
+    "stateIdArray": [
+        "stateOnramp",
+        "stateInstantiate",
+        "stateMemberConfirm",
+        "stateDupeDelete",
+        "stateDatabaseForPrimaryAndStudent",
+        "stateContactForPrimaryAndStudent",
+        "stateContactAndDatabaseForSecondary",
+        "stateResolveAndDestroy",
+        "stateOfframp"
+    ],
+    "messaging": {
+        "hex": {
+            "primary": "#007bff",
+            "secondary": "#007bff",
+            "success": "#28a745",
+            "warning": "#ffc107",
+            "danger": "#dc3545",
+            "info": "#17a2b8",
+            "devel": "#6610f2"
+        }
+    },
+    "stepMessaging": {
+        "stateOnramp": {
+            "primary": "Constant primary message unless override for stateOnramp",
+            "secondary": "EEMPTY",
+            "success": "This success response unless danger, warning or override for stateOnramp",
+            "warning": "EEMPTY",
+            "danger": "EEMPTY",
+            "info": "Additional Info for stateOnramp",
+            "devel": "The devel message for stateOnramp"
+        },
+        "stateInstantiate": {
+            "primary": "Constant primary message unless override for stateInstantiate",
+            "secondary": "EEMPTY",
+            "success": "This success response unless danger, warning or override for stateInstantiate",
+            "warning": "EEMPTY",
+            "danger": "EEMPTY",
+            "info": "Additional Info for stateInstantiate",
+            "devel": "The devel message for stateInstantiate"
+        },
+        "stateMemberConfirm": {
+            "primary": "Constant primary message unless override for stateMemberConfirm",
+            "secondary": "EEMPTY",
+            "success": "This success response unless danger, warning or override for stateMemberConfirm",
+            "warning": "EEMPTY",
+            "danger": "EEMPTY",
+            "info": "Additional Info for stateMemberConfirm",
+            "devel": "The devel message for stateMemberConfirm"
+        },
+        "stateDupeDelete": {
+            "primary": "Constant primary message unless override for stateDupeDelete",
+            "secondary": "EEMPTY",
+            "success": "The Duplicate Contact Anomaly was not present No Action Required",
+            "warning": "EEMPTY",
+            "danger": "EEMPTY",
+            "info": "There is a Known Anomaly where Duplicate Contacts for Primary Parent and/or Student are created that need o be dealt with",
+            "devel": "The devel message for stateDupeDelete"
+        },
+        "stateDatabaseForPrimaryAndStudent": {
+            "primary": "Constant primary message unless override for stateDatabaseForPrimaryAndStudent",
+            "secondary": "EEMPTY",
+            "success": "This success response unless danger, warning or override for stateDatabaseForPrimaryAndStudent",
+            "warning": "EEMPTY",
+            "danger": "EEMPTY",
+            "info": "Additional Info for stateDatabaseForPrimaryAndStudent",
+            "devel": "The devel message for stateDatabaseForPrimaryAndStudent"
+        },
+        "stateContactForPrimaryAndStudent": {
+            "primary": "Constant primary message unless override for stateContactForPrimaryAndStudent",
+            "secondary": "EEMPTY",
+            "success": "This success response unless danger, warning or override for stateContactForPrimaryAndStudent",
+            "warning": "EEMPTY",
+            "danger": "EEMPTY",
+            "info": "Additional Info for stateContactForPrimaryAndStudent",
+            "devel": "The devel message for stateContactForPrimaryAndStudent"
+        },
+        "stateContactAndDatabaseForSecondary": {
+            "primary": "Constant primary message unless override for stateContactAndDatabaseForSecondary",
+            "secondary": "EEMPTY",
+            "success": "This success response unless danger, warning or override for stateContactAndDatabaseForSecondary",
+            "warning": "EEMPTY",
+            "danger": "EEMPTY",
+            "info": "Additional Info for stateContactAndDatabaseForSecondary",
+            "devel": "The devel message for stateContactAndDatabaseForSecondary"
+        },
+        "stateResolveAndDestroy": {
+            "primary": "Constant primary message unless override for stateResolveAndDestroy",
+            "secondary": "EEMPTY",
+            "success": "This success response unless danger, warning or override for stateResolveAndDestroy",
+            "warning": "EEMPTY",
+            "danger": "EEMPTY",
+            "info": "Additional Info for stateResolveAndDestroy",
+            "devel": "The devel message for stateResolveAndDestroy"
+        },
+        "stateOfframp": {
+            "primary": "Constant primary message unless override for stateOfframp",
+            "secondary": "EEMPTY",
+            "success": "This success response unless danger, warning or override for stateOfframp",
+            "warning": "EEMPTY",
+            "danger": "EEMPTY",
+            "info": "Additional Info for stateOfframp",
+            "devel": "The devel message for stateOfframp"
+        }
+    }
+}

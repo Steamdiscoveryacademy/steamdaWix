@@ -1,0 +1,5 @@
+---
+confirm the extent of WiX-Storage:
+      - approx 50,000 Lines-of-Code for local. && session. (50 klocs)
+      - approx 1,000,000 Lines-of-Code for memory. && session. (1,000 klocs)
+...

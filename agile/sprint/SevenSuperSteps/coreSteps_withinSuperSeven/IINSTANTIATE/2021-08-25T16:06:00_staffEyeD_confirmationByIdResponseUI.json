@@ -1,0 +1,70 @@
+{
+    "_createdDate": "2021-03-31T22:26:17.846Z",
+    "_id": "e80f0cef-2951-43bf-9fa0-e03eff03fb68",
+    "info": {
+        "addresses": [
+            {
+                "address": {
+                    "formatted": "1170 Grove Park Lane\nEarlysville, Virginia 22936\nUnited States",
+                    "city": "Earlysville",
+                    "subdivision": "US-VA",
+                    "country": "US",
+                    "postalCode": "22936",
+                    "addressLine1": "1170 Grove Park Lane"
+                },
+                "tag": "UNTAGGED"
+            },
+            {
+                "address": {
+                    "formatted": "United States",
+                    "country": "US"
+                },
+                "tag": "UNTAGGED"
+            }
+        ],
+        "emails": [
+            {
+                "tag": "UNTAGGED",
+                "email": "michelleturner.rn@gmail.com",
+                "primary": true
+            }
+        ],
+        "extendedFields": {
+            "contacts.displayByLastName": "Kaufman Michelle",
+            "emailSubscriptions.deliverabilityStatus": "VALID",
+            "members.membershipStatus": "APPROVED",
+            "emailSubscriptions.subscriptionStatus": "SUBSCRIBED",
+            "members.mobile": false,
+            "emailSubscriptions.effectiveEmail": "michelleturner.rn@gmail.com",
+            "contacts.displayByFirstName": "Michelle Kaufman"
+        },
+        "name": {
+            "first": "Michelle",
+            "last": "Kaufman"
+        },
+        "phones": [
+            {
+                "tag": "UNTAGGED",
+                "phone": "804-683-2796",
+                "primary": true
+            }
+        ],
+        "picture": {
+            "image": "https://lh3.googleusercontent.com/a-/AOh14GgpFlAK_NPrMPyAu5Ljlawf8tYQk3rS4t2MnRehDg=s96-c"
+        },
+        "profilePicture": "https://lh3.googleusercontent.com/a-/AOh14GgpFlAK_NPrMPyAu5Ljlawf8tYQk3rS4t2MnRehDg=s96-c"
+    },
+    "lastActivity": {
+        "activityDate": "2021-05-27T14:57:38.051Z",
+        "activityType": "MEMBER_LOGIN"
+    },
+    "primaryInfo": {
+        "email": "michelleturner.rn@gmail.com",
+        "phone": "804-683-2796"
+    },
+    "revision": 32,
+    "source": {
+        "sourceType": "ADMIN"
+    },
+    "_updatedDate": "2021-07-17T00:59:30.819Z"
+}

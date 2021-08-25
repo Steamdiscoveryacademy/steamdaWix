@@ -1,0 +1,12 @@
+PRETTY STRING about to execute:
+Including: memory.getItem('activeModifierKeys'): null
+For: 'EMAIL'
+steamdaGetContactFunction('michelleturner.rn@gmail.com')
+RESOLVED AS steamdaGetContactFunction('michelleturner.rn@gmail.com')
+
+<---------- <queryResponse> ---------->
+
+the Query of Contacts for 
+Primary Email: 'michelleturner.rn@gmail.com' 
+Returned:
+BEGIN queryResults:

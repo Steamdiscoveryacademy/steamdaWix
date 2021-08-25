@@ -459,6 +459,31 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
         local.setItem('logString', local.getItem('logString') + ',' + DOX);
         DOX = 'Primary Override within onReadyToOnRamp()';
         appendStepLogPPEQ('primary', DOX);
+        // ø <OnReady UI for Secondary and Staff-Eye-D>
+        let applicationObject = JSON.parse(local.getItem('ondeckEnrollmentJSON'));
+        let staffEyeD = applicationObject.family.parent.primary.memberId;
+        let secondaryExists = typeof applicationObject.family.parent.secondary === 'object' && typeof applicationObject.family.parent.secondary.first === 'string' && (applicationObject.family.parent.secondary.first).length > 0 ? true : false;
+        responseObject.logArrayDeveloper.push(`secondaryExists: ${secondaryExists}`);
+        let theseObjectKeys = Object.keys(applicationObject.family.parent);
+        if (!secondaryExists) {
+            responseObject.logArrayDeveloper.push('!secondaryExists : disable buttons');
+            responseObject.logArrayDeveloper.push('{¿ ONCE for `stateZero` yes?: ' + memory.getItem('msboxLastState') + ' ?}');
+            $w('#btnSecondaryIdLabel').disable();
+        }
+        if (staffEyeD === 'INSTANTIATE' || staffEyeD === 'IINSTANTIATE') {
+            responseObject.logArrayDeveloper.push('staffEyeD is IINSTANTIATE: hide-buttons');
+            responseObject.logArrayDeveloper.push('{¿ ONCE for `stateZero` yes?: ' + memory.getItem('msboxLastState') + ' ?}');
+            $w('#btnStaffEyeD').hide();
+            $w('#btnStaffEyeDLabel').hide();
+        } else {
+            responseObject.logArrayDeveloper.push('staffEyeD is not IINSTANTIATE: enable-buttons');
+            responseObject.logArrayDeveloper.push('{¿ ONCE for `stateZero` yes?: ' + memory.getItem('msboxLastState') + ' ?}');
+            local.setItem('staffIdentifiedFamilyId', staffEyeD);
+            $w("#btnStaffEyeD").label = local.getItem('staffIdentifiedFamilyId');
+            $w('#btnStaffEyeD').enable();
+            $w('#btnStaffEyeDLabel').enable();
+        }
+        // ø <OnReady UI for Secondary and Staff-Eye-D>
         salsDoMessagingReponsesApply();
     }
     export function onRampZERO(paramObject = {}){
@@ -2748,6 +2773,7 @@ export function displaySteps() {
     result = status === 'string' ? resultString : result;
     $w('#txtStepsList').text = result;
     $w('#txtStepsListSeven').text = result;
+    $w('#spContactResponseJSON').value = result;
     doUserInterfaceCleanupCurrent();
 }
 //ø <---------- </displaySteps> ---------->

@@ -9,63 +9,9 @@ https://webhook.site/191e8210-1ce6-4d05-8d72-e3a3a10cf0e4
 
 
 ===================================
-==== Wednesday August 18, 2021 ====
+==== Wednesday August 25, 2021 ====
 ===================================
 ===================================
-
-memory.getItem('stepObjects')
-memory.getItem('stepMessaging')
-memory.getItem('msboxLastState')
-
-10 Academic
-11 Athletic
-260 Enrichment
-
-|date("Y-m-d\\TH:i:s", "America/New_York")
-
-
-FAIL: {{ field_crs_span__value|date("Y-m-d\\TH:i:s", "America/New_York") }} {{ field_crs_span_1__end_value|date("\\ZP",
-"America/New_York") }}
-
-paramObject.messaging.info
-
-pstErnSevenStepsArraySwitchLoop
-
-pstEnrSeven202108STEP_SALS_LOOP
-
-// NOTE: using responseObject 'paradigm' but paramObject as 'Blood-Brain-Barrier'
-
-pstEnrSeven202108STEP_SALS_LOOP
-
-DOX = `pstEnrSeven202108STEP_SALS_SWITCH ==> Actual Orig SWITCH ==> pstEnrSeven202108STEP_SALS_EXE_SWITCH`;
-local.setItem('logString', local.getItem('logString') + ',' + DOX);
-
-
-
-
-
-DOX = 'pstEnrSeven202108STEP_P_04MESSAGING_RETURN ==> Return from Messaging';
-local.setItem('logString', local.getItem('logString') + ',' + DOX);
-
-    doClear('spContactResponseJSON')
 
 spContactResponseJSON
-
-
-
-
-btnPeSevenCurrent
-
-$w('#btnPeSevenNext').hide()
-
-
-
-
-
-
-
-
-
-
-
 

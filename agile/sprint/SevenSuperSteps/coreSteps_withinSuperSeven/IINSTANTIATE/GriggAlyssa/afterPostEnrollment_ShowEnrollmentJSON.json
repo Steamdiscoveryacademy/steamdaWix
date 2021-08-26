@@ -1,0 +1,398 @@
+{
+    "courses_array": [
+        {
+            "index": 0,
+            "weekId": 5,
+            "dateString": "July 12-16, 2021",
+            "dateStart": 1626094800000,
+            "dateEnd": 1626472800000,
+            "value": "5UTS35",
+            "billing": {
+                "discount": [
+                    {
+                        "kind": "Early Bird",
+                        "amount": 50
+                    }
+                ],
+                "tuition": 345,
+                "runningTotal": 295
+            },
+            "message": {},
+            "day": "FULL",
+            "courseId": "5UTS35",
+            "gradeLevel": "4-7",
+            "location": "Charlottesville Catholic",
+            "courseName": "Ultimate Trick Shot",
+            "checked": true
+        }
+    ],
+    "dogs_array": [
+        "Marcy",
+        "Chester",
+        "Marais"
+    ],
+    "formStack": {
+        "uniqueId": "823306749",
+        "formId": "4223065",
+        "wixWebhookId": "85d555d0-594c-425c-995c-23d403665f1a"
+    },
+    "application": {
+        "studentStatement": null,
+        "photoRelease": "Approved"
+    },
+    "stamps": [
+        {
+            "kind": "creation",
+            "string": "Mon Jun 14 2021 10:48:03 GMT-0500 (Central Daylight Time)",
+            "iso": "20210614154803000",
+            "unix": 1623685683
+        },
+        {
+            "kind": "process",
+            "string": "Thu Aug 26 2021 08:04:56 GMT-0500 (Central Daylight Time)",
+            "iso": "20210826130456032",
+            "unix": 1629983096
+        }
+    ],
+    "family": {
+        "phones": [
+            {
+                "phone": "(434) 242-2246",
+                "role": "Primary Parent",
+                "who": "Andrea",
+                "kind": "cell",
+                "usage": "Personal"
+            }
+        ],
+        "emails": [
+            {
+                "email": "alynnm32@hotmail.com",
+                "role": "Primary Parent",
+                "who": "Andrea",
+                "kind": "home",
+                "usage": "Personal"
+            }
+        ],
+        "messages": {
+            "dox": [
+                "only messages you want the Whole Family to see"
+            ]
+        },
+        "student": {
+            "photoRelease": true,
+            "name": {
+                "first": "Alyssa",
+                "last": "Grigg",
+                "preferred": "Alyssa",
+                "studentParentCombo": "Alyssa Grigg (AndreaMassey)",
+                "lastFirst": "Grigg, Alyssa",
+                "fullName": "Alyssa Grigg"
+            },
+            "declaredGender": "Female",
+            "studentStatement": null,
+            "messages": {
+                "dox": [
+                    "messages you want the Student only to see"
+                ]
+            },
+            "dobString": "08/13/2010",
+            "currentSchool": "Clark",
+            "currentGrade": 4,
+            "currentGradeString": "Fourth Grade",
+            "currentGradeLevel": "3-5",
+            "dob": {
+                "date": "2010-08-13T05:00:00.000Z",
+                "month": 8,
+                "day": 13,
+                "year": 2010
+            }
+        },
+        "parent": {
+            "messages": {
+                "dox": [
+                    "messages you want Both Parents to see"
+                ]
+            },
+            "primary": {
+                "memberId": "INSTANTIATE",
+                "messages": {
+                    "dox": [
+                        "messages you want the Primary Parent/Web Account Holder only to see"
+                    ]
+                },
+                "last": "Massey",
+                "first": "Andrea",
+                "fullName": "Andrea Massey",
+                "lastFirst": "Massey, Andrea"
+            }
+        },
+        "addresses": [
+            {
+                "kind": "mailing",
+                "address": {
+                    "streetAddress": {
+                        "number": "133",
+                        "name": "Elliott Avenue"
+                    },
+                    "city": "Charlottesville",
+                    "state": "VA",
+                    "postalCode": "22902",
+                    "country": "US",
+                    "subdivision": "VA",
+                    "location": {
+                        "latitude": null,
+                        "longitue": null
+                    },
+                    "formatted": "133 Elliott Avenue, Charlottesville, VA 22902, USA"
+                }
+            }
+        ]
+    },
+    "countWeekArray": [
+        -999,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+    ],
+    "writeMapWeekArray": [
+        -999,
+        5,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+    ],
+    "mapWeekCountObject": [
+        [
+            -999,
+            -777
+        ],
+        [
+            5,
+            1
+        ],
+        [
+            0,
+            -999
+        ],
+        [
+            0,
+            -999
+        ],
+        [
+            0,
+            -999
+        ],
+        [
+            0,
+            -999
+        ],
+        [
+            0,
+            -999
+        ],
+        [
+            0,
+            -999
+        ],
+        [
+            0,
+            -999
+        ],
+        [
+            0,
+            -999
+        ]
+    ],
+    "blockMapArray": {
+        "blockMapErrors": {
+            "zeroCheckedCount": 0,
+            "multipleCheckedCount": 0,
+            "gradeLevelMismatchCount": 0
+        },
+        "blockMapArray": [
+            {
+                "blockMap": -999,
+                "week": -999,
+                "switchIdArray": [
+                    -999
+                ],
+                "selectedCount": -999,
+                "checkedCount": -999,
+                "zeroChecked": -999,
+                "multipleChecked": -999,
+                "gradeMismatchCount": -999
+            },
+            {
+                "blockMap": 1,
+                "week": 5,
+                "switchIdArray": [
+                    "#switch101",
+                    "#switch102",
+                    "#switch103"
+                ],
+                "selectedCount": 1,
+                "checkedCount": 1,
+                "zeroChecked": 0,
+                "multipleChecked": 0,
+                "gradeMismatchCount": 0
+            },
+            {
+                "blockMap": 2,
+                "week": 0,
+                "switchIdArray": [
+                    "#switch201",
+                    "#switch202",
+                    "#switch203"
+                ],
+                "selectedCount": 0,
+                "checkedCount": 0,
+                "zeroChecked": 0,
+                "multipleChecked": 0,
+                "gradeMismatchCount": 0
+            },
+            {
+                "blockMap": 3,
+                "week": 0,
+                "switchIdArray": [
+                    "#switch301",
+                    "#switch302",
+                    "#switch303"
+                ],
+                "selectedCount": 0,
+                "checkedCount": 0,
+                "zeroChecked": 0,
+                "multipleChecked": 0,
+                "gradeMismatchCount": 0
+            },
+            {
+                "blockMap": 4,
+                "week": 0,
+                "switchIdArray": [
+                    "#switch401",
+                    "#switch402",
+                    "#switch403"
+                ],
+                "selectedCount": 0,
+                "checkedCount": 0,
+                "zeroChecked": 0,
+                "multipleChecked": 0,
+                "gradeMismatchCount": 0
+            },
+            {
+                "blockMap": 5,
+                "week": 0,
+                "switchIdArray": [
+                    "#switch501",
+                    "#switch502",
+                    "#switch503"
+                ],
+                "selectedCount": 0,
+                "checkedCount": 0,
+                "zeroChecked": 0,
+                "multipleChecked": 0,
+                "gradeMismatchCount": 0
+            },
+            {
+                "blockMap": 6,
+                "week": 0,
+                "switchIdArray": [
+                    "#switch601",
+                    "#switch602",
+                    "#switch603"
+                ],
+                "selectedCount": 0,
+                "checkedCount": 0,
+                "zeroChecked": 0,
+                "multipleChecked": 0,
+                "gradeMismatchCount": 0
+            },
+            {
+                "blockMap": 7,
+                "week": 0,
+                "switchIdArray": [
+                    "#switch701",
+                    "#switch702",
+                    "#switch703"
+                ],
+                "selectedCount": 0,
+                "checkedCount": 0,
+                "zeroChecked": 0,
+                "multipleChecked": 0,
+                "gradeMismatchCount": 0
+            },
+            {
+                "blockMap": 8,
+                "week": 0,
+                "switchIdArray": [
+                    "#switch801",
+                    "#switch802",
+                    "#switch803"
+                ],
+                "selectedCount": 0,
+                "checkedCount": 0,
+                "zeroChecked": 0,
+                "multipleChecked": 0,
+                "gradeMismatchCount": 0
+            },
+            {
+                "blockMap": 9,
+                "week": 0,
+                "switchIdArray": [
+                    "#switch901",
+                    "#switch902",
+                    "#switch903"
+                ],
+                "selectedCount": 0,
+                "checkedCount": 0,
+                "zeroChecked": 0,
+                "multipleChecked": 0,
+                "gradeMismatchCount": 0
+            }
+        ]
+    },
+    "enrollment": {
+        "errorArray": [
+            false,
+            false,
+            false,
+            false
+        ],
+        "overloadedErrorArray": [
+            false,
+            false,
+            false,
+            false
+        ],
+        "messages": {
+            "dox": [
+                "Zero Checked",
+                "Multible Checked",
+                "Student-Course GradeLevel",
+                "Grade-DOB",
+                "messaging specifically for the Enrollment Event"
+            ],
+            "error": [],
+            "warn": [],
+            "fyi": [],
+            "btw": []
+        },
+        "errorNoOverloadArray": [
+            false,
+            false,
+            false,
+            false
+        ],
+        "anyErrorWhatsoever": false
+    }
+}

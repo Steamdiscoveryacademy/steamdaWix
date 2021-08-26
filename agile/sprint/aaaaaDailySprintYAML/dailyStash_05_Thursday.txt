@@ -9,13 +9,15 @@ https://webhook.site/191e8210-1ce6-4d05-8d72-e3a3a10cf0e4
 
 
 ===================================
-==== Thursday August 19, 2021 =====
+==== Thursday August 26, 2021 =====
 ===================================
 ===================================
 
-// pstEnrSeven202108STEP_ESLS_01 ==> Return to pstEnrSeven ==> pstEnrSeven202108STEP_P_04RETURN
+['DATA', 'CODE', 'STEPS', 'UI']
 
-let html = doBootstrapMessage('devel',develString,[[-1,18]]); 
-let html = doBootstrapMessage('devel',develString,[[-1,36],[50,28]]); 
+BACKDOORROODKCAB
 
-eslsDoMessagingReponsesApply(responseObject = {}, paramObject = {})
+IINSTANTIATE Scripts:
+doInstantiateLoopSwitchStep()
+actionValueEvaluation()
+wixData.get("webhookPayload", webhookId, options)

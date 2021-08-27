@@ -9,17 +9,15 @@ https://webhook.site/191e8210-1ce6-4d05-8d72-e3a3a10cf0e4
 
 
 ===================================
-===== Friday August 20, 2021 ======
+====  Friday August 26, 2021  =====
 ===================================
 ===================================
 
-memory.getItem('msboxLastState')
-memory.getItem('stepThis')
+['DATA', 'CODE', 'STEPS', 'UI']
 
-`memory.getItem('msboxLastState'): ${memory.getItem('msboxLastState')};\nmemory.getItem('msboxNextStateId'):
-${memory.getItem('msboxNextStateId')}`
+BACKDOORROODKCAB
 
-let nullThesaurusArray = ["NA","NNA","EMPTY","EEMPTY","NULL","NNULL","NONE","NNONE","FAUX","FFAUX","FALSE","FFALSE"]
-
-
-
+IINSTANTIATE Scripts:
+doInstantiateLoopSwitchStep()
+actionValueEvaluation()
+wixData.get("webhookPayload", webhookId, options)

@@ -96,7 +96,7 @@ $w.onReady(function () {
 export function onReadyPostEnrollment() {
     let now = new Date();
     let ISO = now.getFullYear() + ("00" + (now.getMonth() + 1)).substr(-2) + ("00" + now.getDate()).substr(-2) + ("00" + now.getHours()).substr(-2) + ("00" + now.getMinutes()).substr(-2) + ("00" + now.getSeconds()).substr(-2);
-    if (Number(ISO) < Number("20210814235959")) {
+    if (Number(ISO) < Number("20210930235959")) {
         local.setItem('timezoneOffset', -4);
         local.setItem('tzAbbrv', 'EDT');
         local.setItem('termId', '202106');
@@ -105,7 +105,8 @@ export function onReadyPostEnrollment() {
         let weekIdToLabelKeyJSON = JSON.stringify(weekIdToLabelKeyArray);
         local.setItem('weekIdToLabelKeyJSON', weekIdToLabelKeyJSON);
         local.setItem('termBeginMMDD', '0607');
-        local.setItem('termEndMMDD', '0813');
+        local.setItem('termEndMMDD', '0930');
+        local.setItem('termEndYYYYMMDD', '20210930');
         local.setItem('kAppendString', '\n\nNo Action taken.\nPlease try again, or ask for assistance.');
     }
 }
@@ -1258,7 +1259,7 @@ export async function actionValueEvaluation() {
     let yyyymmdd = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
     local.setItem('logString', local.getItem('logString') + '\n[~Z557]yyyymmdd: ' + yyyymmdd);
 
-    if (yyyymmdd > 20210815) {
+    if (yyyymmdd > Number(local.getItem('termEndYYYYMMDD'))) {
         ppAction = "ALERT|ALERT|ALERT";
         stAction = "ALERT|ALERT|ALERT";
         spAction = "ALERT|ALERT|ALERT";

@@ -31,9 +31,9 @@ import wixWindow from 'wix-window';
  // ø pstEnrSeven202108STEP_SALS_ZLOOP || // pstEnrSeven202108STEP_SALS_SWITCH || // pstEnrSeven202108STEP_CORE_SWITCH
  // ø ≈NNN≈ UnResolve Line Numbers - an indication that that area is fast-moving
  // ø QUICK-FIND Step-Thru ==> Starts with OnReadyAction ==> pstEnrSeven202108STEP_R_01
+ // ø pstEnrSeven20210825_ActionValueEvaluation  TODAY
  // ø pstEnrSeven20210822_MESSAGING  TODAY
  // ø pstEnrSeven202108STEP_CORE_SWITCH  TODAY
- // ø pstEnrSeven20210825_ActionValueEvaluation  TODAY
  */
 
 
@@ -575,8 +575,8 @@ export async function doStepSwitch(stepKey = 'PPENDING') {
     let errorString = '';
     switch (stepKey) {
         case 'IINSTANTIATE':
-            // await doInstantiateLoopSwitchStep();
-        // pstEnrSeven202108STEP_CORE_SWITCH
+            await doInstantiateLoopSwitchStep();
+            // pstEnrSeven202108STEP_CORE_SWITCH
             // YIKES boxConfirmStaffEyeD
             console.log('Step: ' + stepKey)
             break;
@@ -673,13 +673,86 @@ export async function doStepSwitch(stepKey = 'PPENDING') {
             errorString = 'stepKey (' + stepKey + ') is Not Supported within this Switch Structure';
             break;
     }
+    await doStepUserInterfaceSwitch(stepKey);
     DOX = `≈Z602≈ ==> pstEnrSeven202108STEP_SALS_EXE_SWITCH ==> Return to pstEnrSeven SWITCH ==> pstEnrSeven202108STEP_SALS_SWITCH`;
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
 }
 // pstEnrSeven202108STEPS_ARRAY_LOOP_SWITCH
 // ø <---------- </doStepSwitch> ---------->
 
+// ø <---------- <doStepUserInterfaceSwitch>  ---------->
+export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING') {
+    let DOX = `≈Z450≈ pstEnrSeven202108STEPUI BEGIN`;
+    local.setItem('logString', local.getItem('logString') + ',' + DOX);
 
+    let errorString = '';
+    switch (stepKey) {
+        case 'IINSTANTIATE':
+            $w('#txtComboName').text = local.getItem('comboName');
+            $w('#txtComboName').show();
+            console.log('Step: ' + stepKey)
+            break;
+        case 'PREP_ppMember':
+            console.log('Step: ' + stepKey)
+            break;
+        case 'EXECUTE_ppMember':
+            console.log('Step: ' + stepKey)
+            break;
+        case 'PREP_stMember':
+            console.log('Step: ' + stepKey)
+            break;
+        case 'EXECUTE_stMember':
+            console.log('Step: ' + stepKey)
+            break;
+        case 'dedupePpStContact':
+            console.log('Step: ' + stepKey)
+            break;
+        case 'PREP_ppContact':
+            console.log('Step: ' + stepKey)
+            break;
+        case 'PREP_ppDatabase':
+            console.log('Step: ' + stepKey)
+            break;
+        case 'PREP_stContact':
+            console.log('Step: ' + stepKey)
+            break;
+        case 'PREP_stDatabase':
+            console.log('Step: ' + stepKey)
+            break;
+        case 'PREP_spContact':
+            console.log('Step: ' + stepKey)
+            break;
+        case 'PREP_spDatabase':
+            console.log('Step: ' + stepKey)
+            break;
+        case 'EXECUTE_ppContact':
+            console.log('Step: ' + stepKey)
+            break;
+        case 'EXECUTE_ppDatabase':
+            console.log('Step: ' + stepKey)
+            break;
+        case 'EXECUTE_stContact':
+            console.log('Step: ' + stepKey)
+            break;
+        case 'EXECUTE_stDatabase':
+            console.log('Step: ' + stepKey)
+            break;
+        case 'EXECUTE_spContact':
+            console.log('Step: ' + stepKey)
+            break;
+        case 'EXECUTE_spDatabase':
+            console.log('Step: ' + stepKey)
+            break;
+        case 'CCOMPLETE':
+            console.log('Step: ' + stepKey)
+            break;
+
+        default:
+            errorString = 'stepKey (' + stepKey + ') is Not Supported within this Switch Structure';
+            break;
+    }
+}
+// ø <---------- </doStepUserInterfaceSwitch> ---------->
 
 // ø <---------- <doStepLoopSwitch>  ---------->
 export async function doStepLoopSwitch() {
@@ -2913,6 +2986,7 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
         logString += '\n' + "local.getItem('termId'): " + local.getItem('termId');
         logString += '\n' + "local.getItem('termBeginMMDD')" + local.getItem('termBeginMMDD');
         logString += '\n' + "local.getItem('termEndMMDD')" + local.getItem('termEndMMDD');
+        logString += '\n' + "local.getItem('termEndYYYYMMDD')" + local.getItem('termEndYYYYMMDD');
         logString += '\n' + "local.getItem('termLabelKey'): " + local.getItem('termLabelKey');
         logString += '\n' + "local.getItem('wixWebhookId'): " + local.getItem('wixWebhookId');
         logString += '\n' + "local.getItem('wixWebhookStatus'): " + local.getItem('wixWebhookStatus');

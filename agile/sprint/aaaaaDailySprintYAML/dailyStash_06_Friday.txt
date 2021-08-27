@@ -13,6 +13,13 @@ https://webhook.site/191e8210-1ce6-4d05-8d72-e3a3a10cf0e4
 ===================================
 ===================================
 
+termEndYYYYMMDD
+
+LINE1262: if (yyyymmdd > 20210815 && yyyymmdd > Number(local.getItem('termEndYYYYMMDD')))
+
+
+
+
 ['DATA', 'CODE', 'STEPS', 'UI']
 
 BACKDOORROODKCAB

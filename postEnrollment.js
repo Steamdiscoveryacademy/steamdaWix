@@ -305,6 +305,8 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
         DOX = 'pstEnrSeven202108STEP_SALS_1BY1 LOOP BEGIN';
         stepThis = stepsArray.shift();
         memory.setItem('stepThis',stepThis);
+        let paramObjectStep = {};
+        paramObjectStep.stepKey = stepThis;
 
         DOX = `≈Z262≈ `;// + `stepsArray.toString(): ${stepsArray.toString()}`;
         local.setItem('logString', local.getItem('logString') + ',' + DOX);
@@ -317,6 +319,7 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
         previouslyCompleted = Math.sign((local.getItem('enrollmentStepCompletedListAll')).indexOf(stepThis) + 1);
         console.log(`≈Z313≈ (${local.getItem('enrollmentStepCompletedListAll')}).indexOf(${stepThis}): ` + (local.getItem('enrollmentStepCompletedListAll')).indexOf(stepThis));
         console.log(`≈Z314≈ previouslyCompleted: ${previouslyCompleted}`);
+        paramObjectStep.previouslyCompleted = previouslyCompleted === 1 ? true : false;
         // pstZEnrSeven202108STEP_SALS_SWITCH ==> Begin SWITCH
         // pstZEnrSeven202108STEP_SALS_1BY1 SWITCH BEGIN
         DOX = `pstEnrSeven202108STEP_SALS_SWITCH ==> Begin SWITCH`;
@@ -341,6 +344,7 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
                 // appendStepLogPPEQ('danger', 'Override Base Success with Different Danger');
                 // // ø </Messaging Testing> 
                 onRampZERO(paramObject);
+                await doStepUserInterfaceSwitch(stepThis,paramObjectStep);
                 break;
         
             case 'ResolveAndDestroy':
@@ -365,6 +369,7 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
         
             default:
                 if (previouslyCompleted) {
+                    await doStepUserInterfaceSwitch(stepThis,paramObjectStep);
                     DOX = `≈NNN≈ previouslyCompleted: ${stepThis}`;
                     paramObject.messaging.info = DOX;
                     local.setItem('logString', local.getItem('logString') + ',' + DOX);
@@ -375,7 +380,8 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
                     // DOX = `pstEnrSeven202108STEP_SALS_SWITCH ==> Actual Orig SWITCH ==> pstEnrSeven202108STEPS_ARRAY_LOOP_SWITCH`;
                     DOX = `pstEnrSeven202108STEP_SALS_SWITCH ==> Actual Orig SWITCH ==> pstEnrSeven202108STEP_SALS_EXE_SWITCH`;
                     local.setItem('logString', local.getItem('logString') + ',' + DOX);
-                    doStepSwitch(stepThis);
+                    await doStepSwitch(stepThis);
+                    await doStepUserInterfaceSwitch(stepThis,paramObjectStep);
                     DOX = `pstEnrSeven202108STEP_SALS_SWITCH ==> Actual Orig SWITCH ==> pstEnrSeven202108STEPS_ARRAY_LOOP_SWITCH`;
                     local.setItem('logString', local.getItem('logString') + ',' + DOX);
                 }else{
@@ -500,7 +506,7 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
         // memory.setItem('stepLogString',memory.getItem('stepLogString') + `primary=Override Primary Mssg for ZZZ State|`);
         DOX = 'Primary Override within onRampZERO()';
         appendStepLogPPEQ('primary', DOX);
-        appendStepLogPPEQ('info', 'Override Base Info with Different Info within onRampZERO()');
+        // appendStepLogPPEQ('info', 'Override Base Info with Different Info within onRampZERO()');
         // appendStepLogPPEQ('success', 'Override Base Success with Different Success');
         appendStepLogPPEQ('warning', 'Override Base Success with Different Warning within onRampZERO()');
         appendStepLogPPEQ('danger', 'Override Base Success with Different Danger within onRampZERO()');
@@ -673,7 +679,6 @@ export async function doStepSwitch(stepKey = 'PPENDING') {
             errorString = 'stepKey (' + stepKey + ') is Not Supported within this Switch Structure';
             break;
     }
-    await doStepUserInterfaceSwitch(stepKey);
     DOX = `≈Z602≈ ==> pstEnrSeven202108STEP_SALS_EXE_SWITCH ==> Return to pstEnrSeven SWITCH ==> pstEnrSeven202108STEP_SALS_SWITCH`;
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
 }
@@ -681,12 +686,23 @@ export async function doStepSwitch(stepKey = 'PPENDING') {
 // ø <---------- </doStepSwitch> ---------->
 
 // ø <---------- <doStepUserInterfaceSwitch>  ---------->
-export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING') {
+export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObjectStep = {}) {
     let DOX = `≈Z450≈ pstEnrSeven202108STEPUI BEGIN`;
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
+    if(paramObjectStep.previouslyCompleted){
+        appendStepLogPPEQ('info', `The '${stepKey}' Step has already been completed, the UI indicates this`);
+    }
 
     let errorString = '';
     switch (stepKey) {
+        // ø <NON-CORE Steps for UserInterface Only>
+        case 'ZERO':
+            break;
+        case 'ResolveAndDestroy':
+            break;
+        case 'OffRamp':
+            break;
+        // ø </NON-CORE Steps for UserInterface Only>
         case 'IINSTANTIATE':
             $w('#txtComboName').text = local.getItem('comboName');
             $w('#txtComboName').show();

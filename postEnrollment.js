@@ -327,44 +327,25 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
         DOX = `pstEnrSeven202108STEP_SALS_1BY1 SWITCH BEGIN`;
         switch (stepThis) {
             case 'ZERO':
+                //NON_CORE_Step
                 DOX = previouslyCompleted ? `≈NNN≈ previouslyCompleted: ${stepThis}` : `≈NNN≈ ≈i${testIndex}≈ case '${stepThis}': RAW: case-handled thisStep ZERO as Null`;
                 local.setItem('logString', local.getItem('logString') + ',' + DOX);
-                // // ø <Messaging Testing> 
-                // // pstEnrSeven20210822_MESSAGING
-                // //PRETRASH_tobeDISABLEDandEventuallyREMOVED
-                // // ø <OBVIATED> Only PPEQ
-                // // paramObject.messaging.info = DOX; //was immediately below: DOX = previouslyCompleted ?
-                // // ø </OBVIATED> Only PPEQ
-                // // memory.setItem('stepLogString',memory.getItem('stepLogString') + `primary=Override Primary Mssg for ZZZ State|`);
-                // DOX = 'This primary message for {%key%} is always present, unless overridden during step execution';
-                // appendStepLogPPEQ('primary', DOX);
-                // appendStepLogPPEQ('info', 'Override Base Info with Different Info');
-                // // appendStepLogPPEQ('success', 'Override Base Success with Different Success');
-                // appendStepLogPPEQ('warning', 'Override Base Success with Different Warning');
-                // appendStepLogPPEQ('danger', 'Override Base Success with Different Danger');
-                // // ø </Messaging Testing> 
                 onRampZERO(paramObject);
                 await doStepUserInterfaceSwitch(stepThis,paramObjectStep);
                 break;
         
             case 'ResolveAndDestroy':
+                //NON_CORE_Step
                 DOX = previouslyCompleted ? `≈NNN≈ previouslyCompleted: ${stepThis}` : `≈NNN≈ ≈i${testIndex}≈ case '${stepThis}': RAW: case-handled thisStep ResolveAndDestroy as CleanUp`;
                 local.setItem('logString', local.getItem('logString') + ',' + DOX);
-                // paramObject.messaging.info = DOX;
-                // ø <Messaging Testing> 
-                //PRETRASH_tobeDISABLEDandEventuallyREMOVED
-                appendStepLogPPEQ('info', 'After Perfom Info where None Before');
-                appendStepLogPPEQ('danger', 'Override Base Success with Different Danger');
-                // ø </Messaging Testing> 
+                await doStepUserInterfaceSwitch(stepThis,paramObjectStep);
                 break;
         
             case 'OffRamp':
+                //NON_CORE_Step
                 DOX = previouslyCompleted ? `≈NNN≈ previouslyCompleted: ${stepThis}` : `≈NNN≈ ≈i${testIndex}≈ case '${stepThis}': RAW: case-handled thisStep OffRamp as Special [link to 'Process Web Hooks' will make 'Go To Next Step' Moot]`;
-                // paramObject.messaging.info = DOX;
                 local.setItem('logString', local.getItem('logString') + ',' + DOX);
-                // ø <Messaging Testing> 
-                //PRETRASH_tobeDISABLEDandEventuallyREMOVED
-                // ø </Messaging Testing> 
+                await doStepUserInterfaceSwitch(stepThis,paramObjectStep);
                 break;
         
             default:
@@ -459,8 +440,9 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
     // ø <onRamp-ZERO-ResolveAndDestroy-offRamp>
     /**
      *  and any other Miscellaneous Code NOT part of the Code
+     *  aka NON_CORE_Step
      */
-    // ø </onRamp-ZERO-ResolveAndDestroy-offRamp>
+    // ø <---------- <onReadyToOnRamp NON_CORE_Step> ---------->
     export function onReadyToOnRamp(responseObject = {}){
         $w('#spMemberResponseJSON').value = 'onReadyToOnRamp()';
         let DOX = `≈NNN≈ onReadyToOnRamp: RAW: script for thisStep onReady as Null`;
@@ -494,6 +476,8 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
         // ø <OnReady UI for Secondary and Staff-Eye-D>
         salsDoMessagingReponsesApply();
     }
+    // ø <---------- </onReadyToOnRamp NON_CORE_Step> ---------->
+    // ø <---------- <onRampZERO NON_CORE_Step> ---------->
     export function onRampZERO(paramObject = {}){
         let DOX = `≈NNN≈ onRampZERO: RAW: script for thisStep ZERO as Null`;
         local.setItem('logString', local.getItem('logString') + ',' + DOX);
@@ -512,6 +496,9 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
         appendStepLogPPEQ('danger', 'Override Base Success with Different Danger within onRampZERO()');
         // ø </Messaging Testing> 
     }
+    // ø <---------- </onRampZERO NON_CORE_Step> ---------->
+
+    // ø </onRamp-ZERO-ResolveAndDestroy-offRamp>
 
 
 // ! ====================================================================================================
@@ -538,46 +525,7 @@ export async function doPeformNextStep() {
 export async function doStepSwitch(stepKey = 'PPENDING') {
     let DOX = `≈Z450≈ pstEnrSeven202108STEP_SALS_EXE_SWITCH BEGIN`;
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
-    // ø <Messaging Testing> 
-    // pstEnrSeven20210822_MESSAGING
     // pstEnrSeven202108STEP_CORE_SWITCH
-    //PRETRASH_tobeDISABLEDandEventuallyREMOVED
-    let primaryStepArray = ['IINSTANTIATE'];
-    let infoStepArray = ['IINSTANTIATE'];
-    let successStepArray = ['IINSTANTIATE'];
-    let warningStepArray = ['HOLDER'];
-    let dangerStepArray = ['HOLDER'];
-    let bootstrapKeyArray = ['HOLDER'];
-    let bootstrapKey = 'HOLDER';
-    let bootstrapMessage = 'HOLDER';
-    let responseNumber = 777;
-    if(primaryStepArray.includes(stepKey)){
-        bootstrapKey = 'PrImArY';
-        appendStepLogPPEQ(bootstrapKey, `Override Base Primary with Different ${bootstrapKey} for ${stepKey}`);
-    }
-    if(infoStepArray.includes(stepKey)){
-        bootstrapKey = 'iNfO';
-        appendStepLogPPEQ(bootstrapKey, `Override Base Info with Different ${bootstrapKey} for ${stepKey}`);
-    }
-    if(successStepArray.includes(stepKey)){
-        bootstrapKey = 'SuCcEsS';
-        appendStepLogPPEQ(bootstrapKey, `Override Base Success with Different ${bootstrapKey} for ${stepKey}`);
-    }
-    if(warningStepArray.includes(stepKey)){
-        bootstrapKeyArray = ['aLeRt','notice','WARNING'];
-        bootstrapKey = bootstrapKeyArray[Math.floor(Math.random() * bootstrapKeyArray.length)];
-        appendStepLogPPEQ(bootstrapKey, `Override Base Success with Different ${bootstrapKey} for ${stepKey}`);
-    }
-    if(dangerStepArray.includes(stepKey)){
-        bootstrapKeyArray = ['EmErGeNcY','cRiTiCaL','error','DANGER'];
-        bootstrapKey = bootstrapKeyArray[Math.floor(Math.random() * bootstrapKeyArray.length)];
-        appendStepLogPPEQ(bootstrapKey, `Override Base Success with Different ${bootstrapKey} for ${stepKey}`);
-    }
-    // ø </Messaging Testing> 
-    
-    // memory.setItem('stepLogString',memory.getItem('stepLogString') + `info=doStepSwitch(${stepKey})=454|`);
-
-    // return;
     let errorString = '';
     switch (stepKey) {
         case 'IINSTANTIATE':
@@ -699,6 +647,8 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
         case 'ZERO':
             break;
         case 'ResolveAndDestroy':
+            appendStepLogPPEQ('info', 'After Perfom Info where None Before UI');
+            appendStepLogPPEQ('danger', 'Override Base Success with Different Danger UI');
             break;
         case 'OffRamp':
             break;

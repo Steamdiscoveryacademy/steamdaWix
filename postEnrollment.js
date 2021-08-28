@@ -490,10 +490,28 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
         // memory.setItem('stepLogString',memory.getItem('stepLogString') + `primary=Override Primary Mssg for ZZZ State|`);
         DOX = 'Primary Override within onRampZERO()';
         appendStepLogPPEQ('primary', DOX);
-        // appendStepLogPPEQ('info', 'Override Base Info with Different Info within onRampZERO()');
-        // appendStepLogPPEQ('success', 'Override Base Success with Different Success');
-        appendStepLogPPEQ('warning', 'Override Base Success with Different Warning within onRampZERO()');
-        appendStepLogPPEQ('danger', 'Override Base Success with Different Danger within onRampZERO()');
+        
+        let switchIndex = Math.floor(Math.random() * 4);
+        // switchIndex = 3;
+        switch (switchIndex) {
+            case 1:
+                appendStepLogPPEQ('warning', 'Override Base Success with Different Warning within onRampZERO(1)');
+                appendStepLogPPEQ('danger', 'Override Base Success with Different Danger within onRampZERO(1)');
+                break;
+            case 2:
+                appendStepLogPPEQ('warning', 'Override Base Success with Different Warning within onRampZERO(2)');
+                // appendStepLogPPEQ('danger', 'Override Base Success with Different Danger within onRampZERO(2)');
+                break;
+            case 3:
+                // appendStepLogPPEQ('warning', 'Override Base Success with Different Warning within onRampZERO(3)');
+                appendStepLogPPEQ('danger', 'Override Base Success with Different Danger within onRampZERO(3)');
+                break;
+        
+            default:
+                //NEITHER
+                break;
+        }
+        appendStepLogPPEQ('info', 'Override Base Info with Different Info within onRampZERO()');
         // ø </Messaging Testing> 
     }
     // ø <---------- </onRampZERO NON_CORE_Step> ---------->
@@ -637,14 +655,23 @@ export async function doStepSwitch(stepKey = 'PPENDING') {
 export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObjectStep = {}) {
     let DOX = `≈Z450≈ pstEnrSeven202108STEPUI BEGIN`;
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
-    if(paramObjectStep.previouslyCompleted){
-        appendStepLogPPEQ('info', `The '${stepKey}' Step has already been completed, the UI indicates this`);
-    }
+    // if(paramObjectStep.previouslyCompleted){
+    //     appendStepLogPPEQ('info', `The '${stepKey}' Step has already been completed, the UI indicates this`);
+    // }
 
     let errorString = '';
     switch (stepKey) {
         // ø <NON-CORE Steps for UserInterface Only>
         case 'ZERO':
+            if(Math.floor(Math.random() * 2) === 1){
+                appendStepLogPPEQ('primary', 'Override ZERO Script Primary with Different Primary UI');
+            }
+            if(Math.floor(Math.random() * 2) === 1){
+                appendStepLogPPEQ('info', 'Override ZERO Script Info with Different Info UI');
+            }
+            if(Math.floor(Math.random() * 2) === 1){
+                appendStepLogPPEQ('success', 'Override Base Success with Different Success UI');
+            }
             break;
         case 'ResolveAndDestroy':
             appendStepLogPPEQ('info', 'After Perfom Info where None Before UI');
@@ -656,6 +683,7 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
         case 'IINSTANTIATE':
             $w('#txtComboName').text = local.getItem('comboName');
             $w('#txtComboName').show();
+            appendStepLogPPEQ('info', `The '${stepKey}' Step has an Info Override UI`);
             console.log('Step: ' + stepKey)
             break;
         case 'PREP_ppMember':
@@ -717,6 +745,10 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
             errorString = 'stepKey (' + stepKey + ') is Not Supported within this Switch Structure';
             break;
     }
+    if(paramObjectStep.previouslyCompleted){
+        appendStepLogPPEQ('info', `The '${stepKey}' Step has already been completed, the UI indicates this`);
+    }
+
 }
 // ø <---------- </doStepUserInterfaceSwitch> ---------->
 
@@ -5023,7 +5055,8 @@ let responseOneFromMany = [];
 let zeroPrimaryMessage = `There were No Primary Overload Messages for this State-Step`;
 let onePrimaryMessage = primaryMessageObjectArray[0].message;
 let manyPrimaryMessage = `There were Many (${countPrimaryMessage})  Primary Overload Messages for this State-Step`;
-// if(countPrimaryMessage > 1){manyPrimaryMessage = ppeqOneMessageFromMany(primaryMessageObjectArray);}
+if(countPrimaryMessage > 1){manyPrimaryMessage = primaryMessageObjectArray[0].message;}
+/*As per 'Cascading' of CSS, the most recent takes prioruty*/
 
  
 let zeroSecondaryMessage = `There were No Secondary Overload Messages for this State-Step`;
@@ -5042,6 +5075,8 @@ let zeroInfoMessage = responseObject.currentMessagingObject.info;
 let oneInfoMessage = infoMessageObjectArray[0].message;
 let manyInfoMessage = `There were Many (${countInfoMessage})  Info Overload Messages for this State-Step`;
 // if(countInfoMessage > 1){manyInfoMessage = ppeqOneMessageFromMany(infoMessageObjectArray);}
+if(countInfoMessage > 1){manyInfoMessage = infoMessageObjectArray[0].message;}
+/*As per 'Cascading' of CSS, the most recent takes prioruty*/
  
 let messagePrimary = countPrimaryMessage === 0 ? zeroPrimaryMessage : manyPrimaryMessage;
 messagePrimary = countPrimaryMessage === 1 ? onePrimaryMessage : messagePrimary;

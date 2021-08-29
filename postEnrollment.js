@@ -34,6 +34,7 @@ import wixWindow from 'wix-window';
  // ø pstEnrSeven20210825_ActionValueEvaluation  TODAY
  // ø pstEnrSeven20210822_MESSAGING  TODAY
  // ø pstEnrSeven202108STEP_CORE_SWITCH  TODAY
+ // ø pstEnrSeven202108ppStContactDedupe(  TODAY
  */
 
 
@@ -549,23 +550,23 @@ export async function doStepSwitch(stepKey = 'PPENDING') {
         case 'IINSTANTIATE':
             await doInstantiateLoopSwitchStep();
             // pstEnrSeven202108STEP_CORE_SWITCH
-            // YIKES boxConfirmStaffEyeD
             console.log('Step: ' + stepKey)
             break;
         case 'PREP_ppMember':
-            // await ppMemberPrepJSON()
+            await ppMemberPrepJSON()
+            // pstEnrSeven202108STEP_CORE_SWITCH
             console.log('Step: ' + stepKey)
             break;
         case 'EXECUTE_ppMember':
-            // await ppMemberExecuteUpsert()
+            await ppMemberExecuteUpsert()
             console.log('Step: ' + stepKey)
             break;
         case 'PREP_stMember':
-            // await stMemberPrepJSON()
+            await stMemberPrepJSON()
             console.log('Step: ' + stepKey)
             break;
         case 'EXECUTE_stMember':
-            // await stMemberExecuteUpsert()
+            await stMemberExecuteUpsert()
             console.log('Step: ' + stepKey)
             break;
 
@@ -655,9 +656,6 @@ export async function doStepSwitch(stepKey = 'PPENDING') {
 export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObjectStep = {}) {
     let DOX = `≈Z450≈ pstEnrSeven202108STEPUI BEGIN`;
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
-    // if(paramObjectStep.previouslyCompleted){
-    //     appendStepLogPPEQ('info', `The '${stepKey}' Step has already been completed, the UI indicates this`);
-    // }
 
     let errorString = '';
     switch (stepKey) {
@@ -697,6 +695,12 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
             break;
         case 'EXECUTE_stMember':
             console.log('Step: ' + stepKey)
+            $w('#btnFamilyId').label = local.getItem('familyId');
+            $w('#btnFamilyId').enable();
+            $w('#btnStudentId').label = local.getItem('studentId');
+            $w('#btnStudentId').enable();
+            // † Names
+            // † Emails
             break;
         case 'dedupePpStContact':
             console.log('Step: ' + stepKey)
@@ -1554,7 +1558,58 @@ export async function stMemberExecuteUpsert() {
 }
 
 // ø <---------- <ppStContactDedupe>  ---------->
-export async function ppStContactDedupe() { }
+// ø <---------- <ppStContactDedupe>  ---------->
+export async function ppStContactDedupe(paramObject = {}) {
+    //pstEnrSeven202108ppStContactDedupe
+    let diagnosticOnly = typeof paramObject.diagnosticOnly === 'boolean' && paramObject.diagnosticOnly === true ? true : false;
+
+    // ø <ELSE>
+    // † validate: [DATA]local.getItem('familyId'): \b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b
+    // † validate: [DATA]local.getItem('studentId'): \b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b
+    // † validate: [DATA]local.getItem('familyEmail'): /^\S+@\S+\.\S+$/
+    // † validate: [DATA]local.getItem('studentEmail'): /^\S+@\S+\.\S+$/
+    let regexId = /\b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b/;
+    let regexEmail = /^\S+@\S+\.\S+$/;
+    let allParametersValid = true;
+    let expressionIsValid = regexId.test(local.getItem('familyId'));
+    let DOX = `Is '${local.getItem('familyId')} a Valid PP ID?: ${expressionIsValid}`;
+    local.setItem('logString', local.getItem('logString') + ',' + DOX);
+    allParametersValid = expressionIsValid ? allParametersValid : false;
+    expressionIsValid = regexEmail.test(local.getItem('familyEmail'));
+    DOX = `Is '${local.getItem('familyEmail')} a Valid PP Email?: ${expressionIsValid}`;
+    local.setItem('logString', local.getItem('logString') + ',' + DOX);
+    allParametersValid = expressionIsValid ? allParametersValid : false;
+    expressionIsValid = regexId.test(local.getItem('studentId'));
+    DOX = `Is '${local.getItem('studentId')} a Valid ST ID?: ${expressionIsValid}`;
+    local.setItem('logString', local.getItem('logString') + ',' + DOX);
+    allParametersValid = expressionIsValid ? allParametersValid : false;
+    expressionIsValid = regexEmail.test(local.getItem('studentEmail'));
+    DOX = `Is '${local.getItem('studentEmail')} a Valid ST Email?: ${expressionIsValid}`;
+    local.setItem('logString', local.getItem('logString') + ',' + DOX);
+    allParametersValid = expressionIsValid ? allParametersValid : false;
+    if(typeof allParametersValid !== 'boolean' || allParametersValid !== true){
+        DOX = `'danger': One or more Key Data Points for the Primary Parent and Student is Invalid.`;
+        local.setItem('logString', local.getItem('logString') + ',' + DOX);
+        appendStepLogPPEQ('danger', `One or more Key Data Points for the Primary Parent and Student is Invalid.`);
+        return;
+    }
+    DOX = `'success': All Key Data Points for the Primary Parent and Student are Valid.`;
+    local.setItem('logString', local.getItem('logString') + ',' + DOX);
+    // ø </ELSE>
+
+
+    // † confirm ppMemberById
+    // † confirm ppMemberByEmail
+    // † confirm stMemberById
+    // † confirm stMemberByEmail
+
+    // ø <pedantic at first>
+    // † getContactByEmailAndNotIdFunction(diagnosticOnly)
+    // † getContactByEmailAndNotIdFunction(diagnosticOnly)
+    // ø </pedantic at first>
+    //
+ }
+// ø <---------- </ppStContactDedupe> ---------->
 // ø <---------- </ppStContactDedupe> ---------->
 
 // ø <---------- <ppContactPrepJSON AS Step-Function>  ---------->
@@ -5639,4 +5694,22 @@ export function demoAppendStepLog(){
     returnString += returnValue;
     return returnString;
 
+}
+
+/**
+ *	Adds an event handler that runs when the element is clicked.
+ *	 @param {$w.MouseEvent} event
+ */
+export function btnPpStContactDedupeDiagnosis_click(event) {
+    local.setItem('logString','PP ST Contact De-Dupe DDiagnosis')
+	let paramObjectThis = {};
+	paramObjectThis.diagnosticOnly = true;
+    ppStContactDedupe(paramObjectThis);
+    let log = local.getItem('logString');
+    let cowCatcherIndex = 0;
+    while (log.indexOf(',') >= 0 && cowCatcherIndex < 1000) {
+        log = log.replace(',','|\n');
+        cowCatcherIndex++;
+    }
+    $w('#sessionEnrollmentJSON').value = log + '\n\n' + cowCatcherIndex.toString();
 }

@@ -1,5 +1,8 @@
 // ø <---------- <getContactByEmailAndNotIdFunction Front-End>  ---------->
-export async function getContactByEmailAndNotIdFunction(emailToFind = 'invalid Email', notIdToFind = 'invalid Id', diagnosticOnly = false) {
+export async function getContactByEmailAndNotIdFunction(paramObject = { diagnosticOnly: false }) {
+    let emailToFind = paramObject.emailToFind;
+    let notIdToFind = paramObject.notIdToFind;
+    let diagnosticOnly = typeof paramObject.diagnosticOnly === 'boolean' && paramObject.diagnosticOnly === true ? true : false;
     let isValid = emailToFind.indexOf('@') > 0 ? true : false;
     isValid = notIdToFind.length !== 36 ? false : isValid;
     let logString = '';
@@ -8,8 +11,9 @@ export async function getContactByEmailAndNotIdFunction(emailToFind = 'invalid E
     if (!isValid) {
         logString = 'One of the two following Parameter Values is InValid:' + logString;
 
-        local.setItem('logString', logString);
-        return;
+        // local.setItem('logString', logString);
+        paramObject.logString = logString;
+        return; // ¡ convey to paramobject
     }
     logString = 'For the following Parameters:' + logString;
 
@@ -24,24 +28,27 @@ export async function getContactByEmailAndNotIdFunction(emailToFind = 'invalid E
     if (count > 1) {
         local.setItem('superEnrollmentStatus', 'ALERT');
         logString += `\nThe Count is More Than One [${count}] this is a Serious Probelem, for this reason the 'superEnrollmentStatus' has been set to 'ALERT' and no further Action taken.`;
-        local.setItem('logString', logString);
-        return;
+        // local.setItem('logString', logString);
+        paramObject.logString = logString;
+        return; // ¡ convey to paramobject
     }
     if (count === 0) {
         logString += `\nThe Count is Zero, this is the No BUG (expected) result. No further Action taken.`;
-        local.setItem('logString', logString);
-        return;
+        // local.setItem('logString', logString);
+        paramObject.logString = logString;
+        return; // ¡ convey to paramobject
     }
     let idToDelete = queryRresults.results._items[0]._id
-    //verificatio:   queryRresults.results._items[0]._id
+
     if (count === 1) {
         logString += `\nThe Count is One, this is the BUG exist in the form of the Contact with ID: ${idToDelete}`;
         logString += `\ndiagnosticOnly: ${diagnosticOnly}: Meaning the found Contact will `;
         logString += diagnosticOnly ? 'NOT ' : '';
         logString += `be Deleted at this time`;
         if (diagnosticOnly) {
-            local.setItem('logString', logString);
-            return;
+            // local.setItem('logString', logString);
+            paramObject.logString = logString;
+            return; // ¡ convey to paramobject
         }
     }
 
@@ -52,8 +59,9 @@ export async function getContactByEmailAndNotIdFunction(emailToFind = 'invalid E
     logString += `\n\ndeleteResults:\n==============\n`;
     logString += deleteResults;
     // ø </Delete the BUG Contact>
-    local.setItem('logString', logString);
+    // local.setItem('logString', logString);
+    paramObject.logString = logString;
 
-    return;
+    return; // ¡ convey to paramobject
 }
 // ø <---------- </getContactByEmailAndNotIdFunction Front-End> ---------->

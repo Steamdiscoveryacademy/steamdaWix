@@ -3,10 +3,11 @@
 #¿=====  Sprint Saturday August 29, 2021 ======
 #?=============================================
 daily Commits:
-      - postEnrollment: no#†
+      - postEnrollment: yes
 ...
 ---
 ppStDedupe:
+      - validate PP & ST Ids and Emails: yes
 ...
 ---
 Test Students: 

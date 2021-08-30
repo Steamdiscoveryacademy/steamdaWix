@@ -13,6 +13,8 @@ https://webhook.site/191e8210-1ce6-4d05-8d72-e3a3a10cf0e4
 ===================================
 ===================================
 
+paramObject = { diagnosticOnly: false, collectHumanLog: false }
+
 await getContactByEmailAndNotIdFunction(local.getItem('familyEmail'), local.getItem('familyId'), diagnosticOnlyThis);
 
 await getContactByEmailAndNotIdFunction(local.getItem('studentEmail'), local.getItem('studentId'), diagnosticOnlyThis);

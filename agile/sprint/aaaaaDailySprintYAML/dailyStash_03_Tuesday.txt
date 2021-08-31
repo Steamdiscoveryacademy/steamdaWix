@@ -9,29 +9,19 @@ https://webhook.site/191e8210-1ce6-4d05-8d72-e3a3a10cf0e4
 
 
 ===================================
-===== Tuesday August 24, 2021 =====
+==== Tuesday August 31, 2021  =====
 ===================================
 ===================================
 
-spContactResponseJSON
+paramObject = { diagnosticOnly: false, collectHumanLog: false }
 
-steamdaWixLocal/steamdaWix/agile/sprint/SevenSuperSteps/sevenSuperSteps_overallObject.js
+await getContactByEmailAndNotIdFunction(local.getItem('familyEmail'), local.getItem('familyId'), diagnosticOnlyThis);
 
-paramObject.currentStepObject.origSteps.allStepArray
+await getContactByEmailAndNotIdFunction(local.getItem('studentEmail'), local.getItem('studentId'), diagnosticOnlyThis);
+    
+'lastParamObject',
+'lastResponseObject',
 
-paramObject.currentStepObject.origSteps.lastStep
+btnFamilyId
 
-
-responseObject.currentStepObject = tempObject[tempKey]
-
-//instantiateLoopSwitchEnrollmentSteps();
-    if (stepArrayParam.length === 1 && stepArrayParam[0] === 'ORIG') {
-        stepArrayOrig = ['IINSTANTIATE', 'PREP_ppMember', 'EXECUTE_ppMember', 'PREP_stMember', 'EXECUTE_stMember', 'dedupePpStContact', 'PREP_ppContact', 'PREP_ppDatabase', 'PREP_stContact', 'PREP_stDatabase', 'PREP_spContact', 'PREP_spDatabase', 'EXECUTE_ppContact', 'EXECUTE_ppDatabase', 'EXECUTE_stContact', 'EXECUTE_stDatabase', 'EXECUTE_spContact', 'EXECUTE_spDatabase', 'CCOMPLETE'];
-    }
-    if (stepArrayOrig.length === 1 || stepArrayOrig[stepArrayOrig.length - 1] !== 'CCOMPLETE') {
-        stepArrayOrig.push('CCOMPLETE');
-    }
-    console.log('[1904]stepArrayOrig: ');
-    console.log(stepArrayOrig);
-    let stepList = stepArrayOrig.toString();
-    memory.setItem('enrollmentStepList', stepList);
+btnStudentId

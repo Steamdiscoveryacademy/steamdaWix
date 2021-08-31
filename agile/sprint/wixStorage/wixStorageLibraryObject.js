@@ -72,7 +72,11 @@ let wixLocalStorageLibraryObject = {
     ]
 };
 
-DOX = '2021-08-30T07:49:01|stepMessagingJSON|the result of all the PPEQ Append Calls for a Step|maybe for bug, maybe long-term';
+DOX = '2021-08-30T23:59:59|stepResponseBootstrapKey|a way to pass the resulting messaging bootstrap key to the UI from the _actual_ code, engendered by ppStDedupeDelete';
+wixLocalStorageLibraryObject.admin.localAttributesDoxPPEQArray.push(DOX)
+wixLocalStorageLibraryObject.wixLocalStorageArray.push('stepResponseBootstrapKey')
+
+DOX = '2021-08-31T07:49:01|stepMessagingJSON|the result of all the PPEQ Append Calls for a Step|maybe for bug, maybe long-term';
 wixLocalStorageLibraryObject.admin.localAttributesDoxPPEQArray.push(DOX)
 wixLocalStorageLibraryObject.wixLocalStorageArray.push('stepMessagingJSON')
 

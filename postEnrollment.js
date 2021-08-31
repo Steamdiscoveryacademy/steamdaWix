@@ -28,13 +28,14 @@ import wixWindow from 'wix-window';
  // ø pstEnrSeven202108DO = DO Code  for  Next && Perform
  // ø pstEnrSeven202108SALS = Do subset of Enrollment Step Loop-Switch (SALS)
  // ø pstEnrSeven202108STEPS_ARRAY_LOOP_SWITCH = Step through ORIG and RETOOL TO individual pstEnrSeven
- // ø pstEnrSeven202108STEP_SALS_ZLOOP || // pstEnrSeven202108STEP_SALS_SWITCH || // pstEnrSeven202108STEP_CORE_SWITCH
+ // ø pstEnrSeven202108STEP_SALS_ZLOOP || // pstEnrSeven202108STEP_SALS_SWITCH || 
+ // ø pstEnrSeven202108STEP_CORE_SWITCH || // pstEnrSeven202108STEP_UI_SWITCH
  // ø ≈NNN≈ UnResolve Line Numbers - an indication that that area is fast-moving
  // ø QUICK-FIND Step-Thru ==> Starts with OnReadyAction ==> pstEnrSeven202108STEP_R_01
  // ø pstEnrSeven20210825_ActionValueEvaluation  TODAY
  // ø pstEnrSeven20210822_MESSAGING  TODAY
- // ø pstEnrSeven202108STEP_CORE_SWITCH  TODAY
- // ø pstEnrSeven202108ppStContactDedupe(  TODAY
+ // ø pstEnrSeven202108getContactByEmailAndNotIdFunction  TODAY
+ // ø pstEnrSeven202108ppStContactDedupe  TODAY
  */
 
 
@@ -298,6 +299,7 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
 
 
     memory.setItem('stepLogString','');// Will Catch All Messages in a pstEnrSeven Group, but can back-up later
+    memory.setItem('stepResponseBootstrapKey','');// Will Catch All Messages in a pstEnrSeven Group, but can back-up later
     while (stepsArray.length > 0 && testIndex < testBreakIndex) {
         // pstZEnrSeven202108STEP_SALS_LOOP BEGIN ==> pstZEnrSeven202108STEP_SALS_SWITCH
         // pstZEnrSeven202108STEP_SALS_1BY1 LOOP BEGIN
@@ -444,7 +446,7 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
      *  aka NON_CORE_Step
      */
     // ø <---------- <onReadyToOnRamp NON_CORE_Step> ---------->
-    export function onReadyToOnRamp(responseObject = {}){
+    export async function onReadyToOnRamp(responseObject = {}){
         $w('#spMemberResponseJSON').value = 'onReadyToOnRamp()';
         let DOX = `≈NNN≈ onReadyToOnRamp: RAW: script for thisStep onReady as Null`;
         local.setItem('logString', local.getItem('logString') + ',' + DOX);
@@ -475,7 +477,7 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
             $w('#btnStaffEyeDLabel').enable();
         }
         // ø <OnReady UI for Secondary and Staff-Eye-D>
-        salsDoMessagingReponsesApply();
+        await salsDoMessagingReponsesApply();
     }
     // ø <---------- </onReadyToOnRamp NON_CORE_Step> ---------->
     // ø <---------- <onRampZERO NON_CORE_Step> ---------->
@@ -572,7 +574,8 @@ export async function doStepSwitch(stepKey = 'PPENDING') {
 
 
         case 'dedupePpStContact':
-            // await ppStContactDedupe()
+            // memory.setItem('stepResponseBootstrapKey','Dedupe Core');
+            await ppStContactDedupe()
 
             // responseNumber = Math.ceil(Math.random() * 100);
             // if(responseNumber > 0 && responseNumber < 50){bootstrapMessage = `The Duplicate Contact Anomaly was not present No Action Required [${responseNumber}]`; bootstrapKey = 'success';}
@@ -581,6 +584,7 @@ export async function doStepSwitch(stepKey = 'PPENDING') {
             // if(responseNumber > 77 && responseNumber < 92){bootstrapMessage = `The Duplicate Contact Anomaly was present for both Primary Parent & Student and Handled Successfully [${responseNumber}]`; bootstrapKey = 'warning';}
             // if(responseNumber > 91 && responseNumber < 101){bootstrapMessage = `The Duplicate Contact Anomaly was present the Logic Failed to Handle it [${responseNumber}]`; bootstrapKey = 'danger';}
             // appendStepLogPPEQ(bootstrapKey, bootstrapMessage);
+            appendStepLogPPEQ('danger', 'danger in core force');
             console.log('Step: ' + stepKey)
             break;
 
@@ -601,10 +605,12 @@ export async function doStepSwitch(stepKey = 'PPENDING') {
         case 'PREP_stDatabase':
             // await stDatabasePrepJSON()
             console.log('Step: ' + stepKey)
+            memory.setItem('stepResponseBootstrapKey','Student Database Core');
             break;
         case 'PREP_spContact':
             // await spContactPrepJSON()
             console.log('Step: ' + stepKey)
+            memory.setItem('stepResponseBootstrapKey','Secondary Parent Core');
             break;
         case 'PREP_spDatabase':
             // await spDatabasePrepJSON()
@@ -654,10 +660,13 @@ export async function doStepSwitch(stepKey = 'PPENDING') {
 
 // ø <---------- <doStepUserInterfaceSwitch>  ---------->
 export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObjectStep = {}) {
+    // pstEnrSeven202108STEP_UI_SWITCH
     let DOX = `≈Z450≈ pstEnrSeven202108STEPUI BEGIN`;
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
 
     let errorString = '';
+    let responseKey = 'unknown';
+    let responseMessage = 'DEFAULT';
     switch (stepKey) {
         // ø <NON-CORE Steps for UserInterface Only>
         case 'ZERO':
@@ -670,6 +679,7 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
             if(Math.floor(Math.random() * 2) === 1){
                 appendStepLogPPEQ('success', 'Override Base Success with Different Success UI');
             }
+            appendStepLogPPEQ('danger', 'danger zero core force');
             break;
         case 'ResolveAndDestroy':
             appendStepLogPPEQ('info', 'After Perfom Info where None Before UI');
@@ -682,19 +692,19 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
             $w('#txtComboName').text = local.getItem('comboName');
             $w('#txtComboName').show();
             appendStepLogPPEQ('info', `The '${stepKey}' Step has an Info Override UI`);
-            console.log('Step: ' + stepKey)
+            console.log('UI Step: ' + stepKey)
             break;
         case 'PREP_ppMember':
-            console.log('Step: ' + stepKey)
+            console.log('UI Step: ' + stepKey)
             break;
         case 'EXECUTE_ppMember':
-            console.log('Step: ' + stepKey)
+            console.log('UI Step: ' + stepKey)
             break;
         case 'PREP_stMember':
-            console.log('Step: ' + stepKey)
+            console.log('UI Step: ' + stepKey)
             break;
         case 'EXECUTE_stMember':
-            console.log('Step: ' + stepKey)
+            console.log('UI Step: ' + stepKey)
             $w('#btnFamilyId').label = local.getItem('familyId');
             $w('#btnFamilyId').enable();
             $w('#btnStudentId').label = local.getItem('studentId');
@@ -703,51 +713,68 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
             // † Emails
             break;
         case 'dedupePpStContact':
-            console.log('Step: ' + stepKey)
+            console.log('UI Step: ' + stepKey);
+            responseKey =  memory.getItem('stepResponseBootstrapKey').toLowerCase();
+            console.log('UI responseKey: ' + responseKey);
+
+            // responseMessage = memory.getItem('stepResponseBootstrapKey').toLowerCase() === 'success' ? 'DEFAULT';
+            // responseMessage = memory.getItem('stepResponseBootstrapKey').toLowerCase() === 'success' ? 'The Anomaly was Not Present [ui]' : responseMessage;
+            // responseMessage = memory.getItem('stepResponseBootstrapKey').toLowerCase() === 'warning' ? 'The Anamaly was Present and Dealt With Successfully [ui]' : responseMessage;
+            // responseMessage = memory.getItem('stepResponseBootstrapKey').toLowerCase() === 'danger' ? 'The Anomaly was Present and the Developer Needs to be Consulted [ui]' : responseMessage;
+            // appendStepLogPPEQ(responseKey, 'responseMessage in UI');
+            appendStepLogPPEQ('danger', 'danger in ui force');
+            // appendStepLogPPEQ(bootstrapKey, bootstrapMessage);
+            // memory.setItem('stepResponseBootstrapKey','Dedupe UI');
             break;
         case 'PREP_ppContact':
-            console.log('Step: ' + stepKey)
+            console.log('UI Step: ' + stepKey)
             break;
         case 'PREP_ppDatabase':
-            console.log('Step: ' + stepKey)
+            console.log('UI Step: ' + stepKey)
             break;
         case 'PREP_stContact':
-            console.log('Step: ' + stepKey)
+            console.log('UI Step: ' + stepKey)
             break;
         case 'PREP_stDatabase':
-            console.log('Step: ' + stepKey)
+            console.log('UI Step: ' + stepKey)
+            memory.setItem('stepResponseBootstrapKey','ST Database UI');
             break;
         case 'PREP_spContact':
-            console.log('Step: ' + stepKey)
+            memory.setItem('stepResponseBootstrapKey','SP Contact Prep UI');
+            console.log('UI Step: ' + stepKey)
             break;
         case 'PREP_spDatabase':
-            console.log('Step: ' + stepKey)
+            console.log('UI Step: ' + stepKey)
             break;
         case 'EXECUTE_ppContact':
-            console.log('Step: ' + stepKey)
+            console.log('UI Step: ' + stepKey)
             break;
         case 'EXECUTE_ppDatabase':
-            console.log('Step: ' + stepKey)
+            console.log('UI Step: ' + stepKey)
             break;
         case 'EXECUTE_stContact':
-            console.log('Step: ' + stepKey)
+            console.log('UI Step: ' + stepKey)
             break;
         case 'EXECUTE_stDatabase':
-            console.log('Step: ' + stepKey)
+            console.log('UI Step: ' + stepKey)
             break;
         case 'EXECUTE_spContact':
-            console.log('Step: ' + stepKey)
+            console.log('UI Step: ' + stepKey)
             break;
         case 'EXECUTE_spDatabase':
-            console.log('Step: ' + stepKey)
+            console.log('UI Step: ' + stepKey)
             break;
         case 'CCOMPLETE':
-            console.log('Step: ' + stepKey)
+            console.log('UI Step: ' + stepKey)
             break;
 
         default:
             errorString = 'stepKey (' + stepKey + ') is Not Supported within this Switch Structure';
             break;
+    }
+    appendStepLogPPEQ('danger', 'danger in end of ui force');
+    if(memory.getItem('stepResponseBootstrapKey').toLowerCase() === 'danger'){
+        $w('#btnPeSevenNext').hide();
     }
     if(paramObjectStep.previouslyCompleted){
         appendStepLogPPEQ('info', `The '${stepKey}' Step has already been completed, the UI indicates this`);
@@ -768,86 +795,86 @@ export async function doStepLoopSwitch() {
         switch (stepKey) {
             case 'IINSTANTIATE':
                 await doInstantiateLoopSwitchStep();
-                console.log('Step: ' + stepKey)
+                console.log('Orig Step: ' + stepKey)
                 break;
             case 'PREP_ppMember':
                 await ppMemberPrepJSON()
-                console.log('Step: ' + stepKey)
+                console.log('Orig Step: ' + stepKey)
                 break;
             case 'EXECUTE_ppMember':
                 await ppMemberExecuteUpsert()
-                console.log('Step: ' + stepKey)
+                console.log('Orig Step: ' + stepKey)
                 break;
             case 'PREP_stMember':
                 await stMemberPrepJSON()
-                console.log('Step: ' + stepKey)
+                console.log('Orig Step: ' + stepKey)
                 break;
             case 'EXECUTE_stMember':
                 await stMemberExecuteUpsert()
-                console.log('Step: ' + stepKey)
+                console.log('Orig Step: ' + stepKey)
                 break;
 
             case 'dedupePpStContact':
                 await ppStContactDedupe()
-                console.log('Step: ' + stepKey)
+                console.log('Orig Step: ' + stepKey)
                 break;
 
 
 
             case 'PREP_ppContact':
                 await ppContactPrepJSON()
-                console.log('Step: ' + stepKey)
+                console.log('Orig Step: ' + stepKey)
                 break;
             case 'PREP_ppDatabase':
                 await ppDatabasePrepJSON()
-                console.log('Step: ' + stepKey)
+                console.log('Orig Step: ' + stepKey)
                 break;
             case 'PREP_stContact':
                 await stContactPrepJSON()
-                console.log('Step: ' + stepKey)
+                console.log('Orig Step: ' + stepKey)
                 break;
             case 'PREP_stDatabase':
                 await stDatabasePrepJSON()
-                console.log('Step: ' + stepKey)
+                console.log('Orig Step: ' + stepKey)
                 break;
             case 'PREP_spContact':
                 await spContactPrepJSON()
-                console.log('Step: ' + stepKey)
+                console.log('Orig Step: ' + stepKey)
                 break;
             case 'PREP_spDatabase':
                 // await spDatabasePrepJSON()
                 await spDatabaseExecuteUpsert()
-                console.log('Step: ' + stepKey)
+                console.log('Orig Step: ' + stepKey)
                 local.setItem('logString', local.getItem('logString') + '\n' + 'Step: ' + stepKey + '; [~Z116]Function-Swapped to ppDatabaseExecuteUpsert()')
                 break;
             case 'EXECUTE_ppContact':
                 await ppContactExecuteUpsert()
-                console.log('Step: ' + stepKey)
+                console.log('Orig Step: ' + stepKey)
                 break;
             case 'EXECUTE_ppDatabase':
                 await ppDatabaseExecuteUpsert()
-                console.log('Step: ' + stepKey)
+                console.log('Orig Step: ' + stepKey)
                 break;
             case 'EXECUTE_stContact':
                 await stContactExecuteUpsert()
-                console.log('Step: ' + stepKey)
+                console.log('Orig Step: ' + stepKey)
                 break;
             case 'EXECUTE_stDatabase':
                 await stDatabaseExecuteUpsert()
-                console.log('Step: ' + stepKey)
+                console.log('Orig Step: ' + stepKey)
                 break;
             case 'EXECUTE_spContact':
                 await spContactExecuteUpsert()
-                console.log('Step: ' + stepKey)
+                console.log('Orig Step: ' + stepKey)
                 break;
             case 'EXECUTE_spDatabase':
                 await spDatabasePrepJSON()
                 local.setItem('logString', local.getItem('logString') + '\n' + 'Step: ' + stepKey + '; [~Z133]Function-Swapped to await spDatabasePrepJSON()')
                 // spDatabaseExecuteUpsert()
-                console.log('Step: ' + stepKey)
+                console.log('Orig Step: ' + stepKey)
                 break;
             case 'CCOMPLETE':
-                console.log('Step: ' + stepKey)
+                console.log('Orig Step: ' + stepKey)
                 break;
 
             default:
@@ -1022,7 +1049,12 @@ export async function getContactByEmail(emailToFind) {
 // ø <---------- </getContactByEmail Front-End> ---------->
 
 // ø <---------- <getContactByEmailAndNotIdFunction Front-End>  ---------->
-export async function getContactByEmailAndNotIdFunction(emailToFind = 'invalid Email', notIdToFind = 'invalid Id', diagnosticOnly = false) {
+export async function getContactByEmailAndNotIdFunction(paramObject = { diagnosticOnly: false, collectHumanLog: false }) {
+    // pstEnrSeven202108getContactByEmailAndNotIdFunction
+    let emailToFind = paramObject.emailToFind;
+    let notIdToFind = paramObject.notIdToFind;
+    let diagnosticOnly = typeof paramObject.diagnosticOnly === 'boolean' && paramObject.diagnosticOnly === true ? true : false;
+    let collectHumanLog = typeof paramObject.collectHumanLog === 'boolean' && paramObject.collectHumanLog === true ? true : false;
     let isValid = emailToFind.indexOf('@') > 0 ? true : false;
     isValid = notIdToFind.length !== 36 ? false : isValid;
     let logString = '';
@@ -1031,53 +1063,69 @@ export async function getContactByEmailAndNotIdFunction(emailToFind = 'invalid E
     if (!isValid) {
         logString = 'One of the two following Parameter Values is InValid:' + logString;
 
-        local.setItem('logString', logString);
-        return;
+        paramObject.logString = collectHumanLog ? logString : 'Human Log Not Collected';
+        return; 
     }
     logString = 'For the following Parameters:' + logString;
 
-    let queryRresults = await steamdaGetContactByEmailAndNotIdFunction(emailToFind, notIdToFind);
-    let count = queryRresults.resultsCount;
-
+    let queryResults = await steamdaGetContactByEmailAndNotIdFunction(emailToFind, notIdToFind);
+    let count = queryResults.resultsCount;
+    paramObject.results = {};
+    paramObject.results.queryResults = queryResults;
+    paramObject.results.tobeDeletedCount = queryResults.resultsCount;
+    paramObject.results.actuallyDeletedCount = 0;
+    paramObject.results.descr = 'PENDING: just a holder';
+    
     logString += `\nthe Query of Contacts for \nPrimary Email Equal to: '${emailToFind}' \nAND Contact Primary Email Not-Equal to: ${notIdToFind}`;
     logString += `\nReturned:\n`;
-    logString += `BEGIN queryRresults:\n`;
-    logString += JSON.stringify(queryRresults, undefined, 4);
-    logString += `\nEND queryRresults\n`;
+    logString += `BEGIN queryResults:\n`;
+    // logString += JSON.stringify(queryResults, undefined, 4);
+    logString += `DEPRECATED: see local.getItem('lastResponseObject')`;
+    logString += `\nEND queryResults\n`;
     if (count > 1) {
-        local.setItem('superEnrollmentStatus', 'ALERT');
+        paramObject.results.descr = 'GREATER_THAN_ONE: Alert, No Action';
+        // local.setItem('superEnrollmentStatus', 'ALERT');
+        paramObject.results.superEnrollmentStatus = 'ALERT';
         logString += `\nThe Count is More Than One [${count}] this is a Serious Probelem, for this reason the 'superEnrollmentStatus' has been set to 'ALERT' and no further Action taken.`;
-        local.setItem('logString', logString);
-        return;
+        paramObject.logString = collectHumanLog ? logString : 'Human Log Not Collected';
+        return; 
     }
     if (count === 0) {
+        paramObject.results.descr = 'ZERO: Expected, No Action';
         logString += `\nThe Count is Zero, this is the No BUG (expected) result. No further Action taken.`;
-        local.setItem('logString', logString);
-        return;
+        paramObject.logString = collectHumanLog ? logString : 'Human Log Not Collected';
+        return; 
     }
-    let idToDelete = queryRresults.results._items[0]._id
-    //verificatio:   queryRresults.results._items[0]._id
+    let idToDelete = queryResults.results._items[0]._id;
+    paramObject.results.idToDelete = queryResults.results._items[0]._id;
+    
     if (count === 1) {
+        // ø 'if (count === 1)' ABOVE is Technically Redundant
         logString += `\nThe Count is One, this is the BUG exist in the form of the Contact with ID: ${idToDelete}`;
         logString += `\ndiagnosticOnly: ${diagnosticOnly}: Meaning the found Contact will `;
         logString += diagnosticOnly ? 'NOT ' : '';
         logString += `be Deleted at this time`;
         if (diagnosticOnly) {
-            local.setItem('logString', logString);
-            return;
+            paramObject.results.descr = 'ONE: Diagnostic Only, No Action';
+            paramObject.logString = collectHumanLog ? logString : 'Human Log Not Collected';
+            return; 
         }
     }
-
+    
     // ø <Delete the BUG Contact>
+    paramObject.results.descr = 'ONE: Delete the Bug (contact)';
     logString += `\n\nThe code to actually Delete Contact[${idToDelete}] would look like this:`;
     logString += `\nlet deleteResults = await steamdaDeleteContactById('${idToDelete}'')`;
-    let deleteResults = await steamdaDeleteContactById(idToDelete)
+    let deleteResults = await steamdaDeleteContactById(idToDelete);
+    paramObject.results.deleteResults = deleteResults;
+    paramObject.results.actuallyDeletedCount = 1;// † Validate deleteResuls
+
     logString += `\n\ndeleteResults:\n==============\n`;
     logString += deleteResults;
     // ø </Delete the BUG Contact>
-    local.setItem('logString', logString);
+    paramObject.logString = collectHumanLog ? logString : 'Human Log Not Collected';
 
-    return;
+    return; 
 }
 // ø <---------- </getContactByEmailAndNotIdFunction Front-End> ---------->
 
@@ -1564,10 +1612,6 @@ export async function ppStContactDedupe(paramObject = {}) {
     let diagnosticOnly = typeof paramObject.diagnosticOnly === 'boolean' && paramObject.diagnosticOnly === true ? true : false;
 
     // ø <ELSE>
-    // † validate: [DATA]local.getItem('familyId'): \b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b
-    // † validate: [DATA]local.getItem('studentId'): \b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b
-    // † validate: [DATA]local.getItem('familyEmail'): /^\S+@\S+\.\S+$/
-    // † validate: [DATA]local.getItem('studentEmail'): /^\S+@\S+\.\S+$/
     let regexId = /\b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b/;
     let regexEmail = /^\S+@\S+\.\S+$/;
     let allParametersValid = true;
@@ -1598,16 +1642,51 @@ export async function ppStContactDedupe(paramObject = {}) {
     // ø </ELSE>
 
 
-    // † confirm ppMemberById
-    // † confirm ppMemberByEmail
-    // † confirm stMemberById
-    // † confirm stMemberByEmail
 
     // ø <pedantic at first>
-    // † getContactByEmailAndNotIdFunction(diagnosticOnly)
-    // † getContactByEmailAndNotIdFunction(diagnosticOnly)
+    let responseObjectCombo = {};
+    let tobeDeletedTotal = 0;
+    let actuallyDeletedTotal = 0;
+    // ø <Primary Parent DeDupe>
+    let paramObjectPrimary = {};
+    paramObjectPrimary.emailToFind = local.getItem('familyEmail');
+    paramObjectPrimary.notIdToFind = local.getItem('familyId');
+    paramObjectPrimary.diagnosticOnly = true;
+    paramObjectPrimary.collectHumanLog = false;
+    await getContactByEmailAndNotIdFunction(paramObjectPrimary);
+    responseObjectCombo.paramObjectPrimary = paramObjectPrimary;
+    tobeDeletedTotal += paramObjectPrimary.results.tobeDeletedCount;
+    actuallyDeletedTotal += paramObjectPrimary.results.actuallyDeletedCount;
+    let isValidPrimary = true;
+    isValidPrimary = paramObjectPrimary.emailToFind === local.getItem('familyEmail') ? isValidPrimary : false;
+    isValidPrimary = paramObjectPrimary.notIdToFind === local.getItem('familyId') ? isValidPrimary : false;
+    paramObjectPrimary.isValidPrimary = isValidPrimary;
+    // ø </Primary Parent DeDupe>
+    // ø <Student DeDupe>
+    let paramObjectStudent = {};
+    paramObjectStudent.emailToFind = local.getItem('studentEmail');
+    paramObjectStudent.notIdToFind = local.getItem('studentId');
+    paramObjectStudent.diagnosticOnly = true;
+    paramObjectStudent.collectHumanLog = false;
+    await getContactByEmailAndNotIdFunction(paramObjectStudent);
+    responseObjectCombo.paramObjectStudent = paramObjectStudent;
+    tobeDeletedTotal += paramObjectStudent.results.tobeDeletedCount;
+    actuallyDeletedTotal += paramObjectStudent.results.actuallyDeletedCount;
+    let isValidStudent = true;
+    isValidStudent = paramObjectPrimary.emailToFind === local.getItem('familyEmail') ? isValidStudent : false;
+    isValidStudent = paramObjectPrimary.notIdToFind === local.getItem('familyId') ? isValidStudent : false;
+    paramObjectStudent.isValidStudent = isValidStudent;
+    // ø </Student DeDupe>
+    let stepResponseBootstrapKey = 'success';
+    stepResponseBootstrapKey = tobeDeletedTotal > 0 ? 'warning' : stepResponseBootstrapKey;
+    stepResponseBootstrapKey = tobeDeletedTotal - actuallyDeletedTotal !== 0 ? 'danger' : stepResponseBootstrapKey;
+    stepResponseBootstrapKey = isValidPrimary === false ? 'danger' : stepResponseBootstrapKey;
+    stepResponseBootstrapKey = isValidStudent === false ? 'danger' : stepResponseBootstrapKey;
+    memory.setItem('stepResponseBootstrapKey',stepResponseBootstrapKey);
+    // memory.setItem('stepResponseBootstrapKey','Algonquin');
+    responseObjectCombo.stepResponseBootstrapKey = memory.getItem('stepResponseBootstrapKey');
+    $w('#sessionEnrollmentJSON').value = JSON.stringify(responseObjectCombo,undefined,4)
     // ø </pedantic at first>
-    //
  }
 // ø <---------- </ppStContactDedupe> ---------->
 // ø <---------- </ppStContactDedupe> ---------->
@@ -4355,22 +4434,54 @@ export function btnStepCopy_click(event) {
 }
 
 export async function btnExtraContactPrimary_click(event) {
-    let diagnosticOnlyThis = true;
+    // let diagnosticOnlyThis = true;
+    // if ($w('#radioAreYouSure').value === 'YES') {
+    //     diagnosticOnlyThis = false;
+    // }
+    // await getContactByEmailAndNotIdFunction(local.getItem('familyEmail'), local.getItem('familyId'), diagnosticOnlyThis);
+    // $w('#sessionEnrollmentJSON').value = local.getItem('logString');
+    // $w('#radioAreYouSure').value = 'NO';
+
+    // pstEnrSeven202108getContactByEmailAndNotIdFunction
+    let paramObjectPrimary = {};
+    paramObjectPrimary.emailToFind = local.getItem('familyEmail');
+    paramObjectPrimary.notIdToFind = local.getItem('familyId');
+    paramObjectPrimary.diagnosticOnly = true;
+    paramObjectPrimary.collectHumanLog = true;
     if ($w('#radioAreYouSure').value === 'YES') {
-        diagnosticOnlyThis = false;
+        paramObjectPrimary.diagnosticOnly = false;
     }
-    await getContactByEmailAndNotIdFunction(local.getItem('familyEmail'), local.getItem('familyId'), diagnosticOnlyThis);
-    $w('#sessionEnrollmentJSON').value = local.getItem('logString');
+    await getContactByEmailAndNotIdFunction(paramObjectPrimary);
+    $w('#sessionEnrollmentJSON').value = paramObjectPrimary.logString;
+    uiCopyTextElementThis('sessionEnrollmentJSON');
+    delete paramObjectPrimary.logString;
+    local.setItem('lastResponseObject',JSON.stringify(paramObjectPrimary));
     $w('#radioAreYouSure').value = 'NO';
 }
 
 export async function btnExtraContactStudent_click(event) {
-    let diagnosticOnlyThis = true;
+    // let diagnosticOnlyThis = true;
+    // if ($w('#radioAreYouSure').value === 'YES') {
+    //     diagnosticOnlyThis = false;
+    // }
+    // await getContactByEmailAndNotIdFunction(local.getItem('studentEmail'), local.getItem('studentId'), diagnosticOnlyThis);
+    // $w('#sessionEnrollmentJSON').value = local.getItem('logString');
+    // $w('#radioAreYouSure').value = 'NO';
+
+    // pstEnrSeven202108getContactByEmailAndNotIdFunction
+    let paramObjectStudent = {};
+    paramObjectStudent.emailToFind = local.getItem('studentEmail');
+    paramObjectStudent.notIdToFind = local.getItem('studentId');
+    paramObjectStudent.diagnosticOnly = true;
+    paramObjectStudent.collectHumanLog = true;
     if ($w('#radioAreYouSure').value === 'YES') {
-        diagnosticOnlyThis = false;
+        paramObjectStudent.diagnosticOnly = false;
     }
-    await getContactByEmailAndNotIdFunction(local.getItem('studentEmail'), local.getItem('studentId'), diagnosticOnlyThis);
-    $w('#sessionEnrollmentJSON').value = local.getItem('logString');
+    await getContactByEmailAndNotIdFunction(paramObjectStudent);
+    $w('#sessionEnrollmentJSON').value = paramObjectStudent.logString;
+    uiCopyTextElementThis('sessionEnrollmentJSON');
+    delete paramObjectStudent.logString;
+    local.setItem('lastResponseObject',JSON.stringify(paramObjectStudent));
     $w('#radioAreYouSure').value = 'NO';
 }
 
@@ -4711,7 +4822,7 @@ export async function msboxPostEnrollmentSevenPerformStepDO(responseObject = {})
     // pstEnrSeven202108SALSDoMessaging CALL
     DOX = 'pstEnrSeven202108STEP_P_04RETURN ==> Do Messaging {#extra-clicks#} ==> pstEnrSeven202108STEP_P_04MESSAGING';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
-    salsDoMessagingReponsesApply(responseObject, paramObject);
+    await salsDoMessagingReponsesApply(responseObject, paramObject);
     DOX = 'pstEnrSeven202108STEP_P_04MESSAGING_RETURN ==> Return from Messaging';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
     // Array.prototype.push.apply(responseObject.logArrayDeveloper,paramObject.logArrayDeveloper);
@@ -5031,7 +5142,7 @@ export function doBootstrapMessage(key, messageThis = 'DEFAULT', responsiveByLen
 // ø <---------- </doBootstrapMessage UI> ---------->
 
 // ø <---------- <salsDoMessagingReponsesApply UI>  ---------->
-export function salsDoMessagingReponsesApply(responseObject = {}, paramObject = {}) {
+export async function salsDoMessagingReponsesApply(responseObject = {}, paramObject = {}) {
     let DOX = 'JUST FOR VISIBLE DOX IN WIX';
     DOX = 'pstEnrSeven202108STEP_P_04MESSAGING ==> Begin Messaging';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
@@ -5094,7 +5205,8 @@ doxObject.secondary = secondaryMessageObjectArray;
 doxObject.response = responseMessageObjectArray;
 doxObject.info = infoMessageObjectArray;
 // $w('#sessionEnrollmentJSON').value = JSON.stringify(doxObject,undefined,4);
-$w('#txtStateObjectCurrentSeven').value = JSON.stringify(doxObject,undefined,4);
+// $w('#txtStateObjectCurrentSeven').value = JSON.stringify(doxObject,undefined,4);
+local.setItem('stepMessagingJSON', JSON.stringify(doxObject));
 // ø </Just for DOX>
 
 let countPrimaryMessage = primaryMessageObjectArray.length - 1;
@@ -5599,7 +5711,9 @@ export function btnClearSpContactResponseJSON_click(event) {
  *	 @param {$w.MouseEvent} event
  */
 export function btnMessageObjectArrays_click(event) {
-	$w('#spContactResponseJSON').value = $w('#stMemberResponseJSON').value;
+    let messagingObject = JSON.parse(local.getItem('stepMessagingJSON'));
+	// $w('#spContactResponseJSON').value = $w('#stMemberResponseJSON').value;
+	$w('#spContactResponseJSON').value = JSON.stringify(messagingObject,undefined,4);
     uiCopyTextElementThis('spContactResponseJSON');
 
 }
@@ -5712,4 +5826,42 @@ export function btnPpStContactDedupeDiagnosis_click(event) {
         cowCatcherIndex++;
     }
     $w('#sessionEnrollmentJSON').value = log + '\n\n' + cowCatcherIndex.toString();
+}
+
+export function btnResetToLastCompletedTEMP_click(event) {
+    let tempLastCompleted = 'OnReadyReset,ZERO,IINSTANTIATE,PREP_ppMember,EXECUTE_ppMember,PREP_stMember,EXECUTE_stMember'; 
+    local.setItem('enrollmentStepCompletedListAll',tempLastCompleted);
+    $w('#spContactResponseJSON').value = local.getItem('enrollmentStepCompletedListAll');
+    uiCopyTextElementThis('spContactResponseJSON');
+
+}
+
+/**
+ *	Adds an event handler that runs when the element is clicked.
+ *	 @param {$w.MouseEvent} event
+ */
+export function btnGetLastParamObject_click(event) {
+    let paramObjectTemp = JSON.parse(local.getItem('lastParamObject'));
+    $w('#sessionEnrollmentJSON').value = JSON.stringify(paramObjectTemp,undefined,4);
+    uiCopyTextElementThis('sessionEnrollmentJSON');
+}
+
+/**
+ *	Adds an event handler that runs when the element is clicked.
+ *	 @param {$w.MouseEvent} event
+ */
+export function btnGetLastResponseObject_click(event) {
+    let responseObjectTemp = JSON.parse(local.getItem('lastResponseObject'));
+    $w('#sessionEnrollmentJSON').value = JSON.stringify(responseObjectTemp,undefined,4);
+    uiCopyTextElementThis('sessionEnrollmentJSON');
+}
+
+/**
+ *	Adds an event handler that runs when the element is clicked.
+ *	 @param {$w.MouseEvent} event
+ */
+export function btnGetStepResponseKey_click(event) {
+	// memory.setItem('stepResponseBootstrapKey','Algonquin');
+	$w('#spContactResponseJSON').value = memory.getItem('stepResponseBootstrapKey');
+    uiCopyTextElementThis('spContactResponseJSON');//spContactResponseJSON
 }

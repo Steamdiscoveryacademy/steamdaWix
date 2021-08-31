@@ -9,6 +9,7 @@ let wixLocalStorageLibraryObject = {
         "sessionAttributesNotes": [],
         "memoryAttributesDoxPPEQArray": ["2021-08-29T23:59:59|Baseline|not collected yet"],
         "memoryAttributesNotes": ["there are many to be collected for baseline, but postponed"],
+        "notesOverall":["double-quoted everything here is not necessary, ¿but not an error?"]
     },
     "wixLocalStorageArray": [
         "comboName",

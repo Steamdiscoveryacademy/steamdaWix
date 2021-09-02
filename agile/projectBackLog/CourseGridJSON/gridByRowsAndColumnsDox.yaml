@@ -1,0 +1,5 @@
+dox:
+  - title: 'gridByRowsAndColumns'
+  - descr: |by grid I mean Columns as Weeks and Rows just the courses for that week 
+            by (whatever default order), that is, the algorithm should be able recalibrate
+            on the fly to different filters and sorts, but maintain the weeks steadfastly

@@ -8,10 +8,22 @@ $w('#HOLDER')
 https://webhook.site/191e8210-1ce6-4d05-8d72-e3a3a10cf0e4
 
 
-===================================
-==== Wednesday August 25, 2021 ====
-===================================
+==========================================
+=====   Wednesday September 1, 2021  =====
+==========================================
 ===================================
 
-spContactResponseJSON
+d31f4ad6-a21c-4aee-b09e-7ade0c1b84c3
 
+paramObject = { diagnosticOnly: false, collectHumanLog: false }
+
+await getContactByEmailAndNotIdFunction(local.getItem('familyEmail'), local.getItem('familyId'), diagnosticOnlyThis);
+
+await getContactByEmailAndNotIdFunction(local.getItem('studentEmail'), local.getItem('studentId'), diagnosticOnlyThis);
+    
+'lastParamObject',
+'lastResponseObject',
+
+btnFamilyId
+
+btnStudentId

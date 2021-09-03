@@ -8,16 +8,38 @@ $w('#HOLDER')
 https://webhook.site/191e8210-1ce6-4d05-8d72-e3a3a10cf0e4
 
 
-===================================
-==== Thursday August 26, 2021 =====
-===================================
+==========================================
+=====   Thursday September 2, 2021   =====
+==========================================
 ===================================
 
-['DATA', 'CODE', 'STEPS', 'UI']
+RESOLVE:
+        let statusThis = 'RESOLVED';//$w('#ddCurrentStatusUpdate').value;
+        doUpdateThisWebhookPayload(statusThis);
+        updateStatusWebhookPayloadThis(true);
+        console.log('[`3215] RESOLVE: Yes')
 
-BACKDOORROODKCAB
+DESTROY:
+        memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'), local.getItem('tzAbbrv')));
+        local.setItem('logString', '[~Z2595]entering btCleanUpAllIncludingnrJSON_click:YES');
+        let responseCleanupCurrentState = doEnrollmentCleanupByKind('ALL_INCLUDING_ENROLLMENT');//HINT: backdoor: MURDERREDRUM
+        local.setItem('logString', local.getItem('logString') + '\n[~Z2621]exiting btCleanUpAllIncludingnrJSON_click:YES');
+        $w('#sessionEnrollmentJSON').value = local.getItem(('logString'));
 
-IINSTANTIATE Scripts:
-doInstantiateLoopSwitchStep()
-actionValueEvaluation()
-wixData.get("webhookPayload", webhookId, options)
+
+========
+
+d31f4ad6-a21c-4aee-b09e-7ade0c1b84c3
+
+paramObject = { diagnosticOnly: false, collectHumanLog: false }
+
+await getContactByEmailAndNotIdFunction(local.getItem('familyEmail'), local.getItem('familyId'), diagnosticOnlyThis);
+
+await getContactByEmailAndNotIdFunction(local.getItem('studentEmail'), local.getItem('studentId'), diagnosticOnlyThis);
+    
+'lastParamObject',
+'lastResponseObject',
+
+btnFamilyId
+
+btnStudentId

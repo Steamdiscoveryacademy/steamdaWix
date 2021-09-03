@@ -1,9 +1,13 @@
 ---
-#=============================================
-#=====  Sprint Thursday August 26, 2021 ======
-#=============================================
+#?===============================================
+#¿=====  Sprint Thursday September 2, 2021 ======
+#?===============================================
 daily Commits:
-      - postEnrollment: yes
+      - postEnrollment: no
+...
+---
+ppStDedupe:
+      - validate PP & ST Ids and Emails: yes
 ...
 ---
 Test Students: 
@@ -17,12 +21,6 @@ Test Students:
             - classes: one
             - status: unknown
             - action: next for test
-...
----
-THIS IS BIG: 
-      - REBUFF if:|'local.getItem('ondeckEnrollmentJSON')' seems not to be actively set to an Enrollment Application
-      to Post.
-      You may travel to 'Process Webhooks' to process any remaining Appliations.
 ...
 ---
 THE STEPS:

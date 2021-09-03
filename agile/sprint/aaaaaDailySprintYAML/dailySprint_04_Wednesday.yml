@@ -1,9 +1,26 @@
 ---
-#=============================================
-#===== Sprint Wednesday August 25, 2021 ======
-#=============================================
+#?===============================================
+#¿===== Sprint Wednesday September 1, 2021 ======
+#?===============================================
 daily Commits:
-      - postEnrollment: yes
+      - postEnrollment: no
+...
+---
+ppStDedupe:
+      - validate PP & ST Ids and Emails: yes
+...
+---
+Test Students: 
+      - Aislyn Fisher-Turner (Michelle Kaufman):
+            - histor: previous student
+            - classes: unknown
+            - status: ABORT/ALERT HELL
+            - action: save for great Exception Test
+      - Alyssa Grigg (Andrea Massey):
+            - history: new
+            - classes: one
+            - status: unknown
+            - action: next for test
 ...
 ---
 THE STEPS:
@@ -12,6 +29,8 @@ THE STEPS:
             - ABORT| StaffEyeD Contact does not contain 'MEMBER' in sourceType
             - 2021-08-25T16:06:00_actionValueEvaluation.js:
                   - maybe us local.setItem('StaffEyeDPendingHumanConfirmation')
+                  - pstEnrSeven version of 'doUserInterfaceCleanupCurrent()'
+                  - pstEnrSeven version of 'doEnrollmentCleanupByKind('CURRENT')'
       - BUGS:
 ...
 ---

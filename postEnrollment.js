@@ -44,7 +44,7 @@ $w.onReady(function () {
     // $w('#btnStaffEyeD').disable();
     // ø </UI Disable PP, ST & SP Buttons>
     onReadyPostEnrollment();
-    doUserInterfaceCleanupCurrent()
+    // doUserInterfaceCleanupCurrent();// DISABLED 20210906
     // $w('#anchorPreTrash').scrollTo();
     memory.setItem('msboxCurrentId', '#mxboxPostEnrollmentSeven');
     let uniqueWatchdogBootstrapKeyArray = ["EMERGENCY","CRITICAL","ERROR","ALERT","WARNING","NOTICE","success","primary","info","secondary","devel"];
@@ -447,11 +447,16 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
      */
     // ø <---------- <onReadyToOnRamp NON_CORE_Step> ---------->
     export async function onReadyToOnRamp(responseObject = {}){
+        if(typeof responseObject.logArrayDeveloper === 'undefined'){
+            let DOX = `≈451≈ onReadyToOnRamp: responseObject.logArrayDeveloper was undefined`;
+            local.setItem('logString', local.getItem('logString') + ',' + DOX);
+            responseObject.logArrayDeveloper = [];
+        }
         $w('#spMemberResponseJSON').value = 'onReadyToOnRamp()';
         let DOX = `≈NNN≈ onReadyToOnRamp: RAW: script for thisStep onReady as Null`;
         local.setItem('logString', local.getItem('logString') + ',' + DOX);
         DOX = 'Primary Override within onReadyToOnRamp()';
-        appendStepLogPPEQ('primary', DOX);
+        await appendStepLogPPEQ('primary', DOX);
         // ø <OnReady UI for Secondary and Staff-Eye-D>
         let applicationObject = JSON.parse(local.getItem('ondeckEnrollmentJSON'));
         let staffEyeD = applicationObject.family.parent.primary.memberId;
@@ -477,7 +482,8 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
             $w('#btnStaffEyeDLabel').enable();
         }
         // ø <OnReady UI for Secondary and Staff-Eye-D>
-        await salsDoMessagingReponsesApply();
+        // await salsDoMessagingReponsesApply();
+        await salsDoMessagingReponsesApply(responseObject);
     }
     // ø <---------- </onReadyToOnRamp NON_CORE_Step> ---------->
     // ø <---------- <onRampZERO NON_CORE_Step> ---------->
@@ -492,29 +498,29 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
         // ø </OBVIATED> Only PPEQ
         // memory.setItem('stepLogString',memory.getItem('stepLogString') + `primary=Override Primary Mssg for ZZZ State|`);
         // DOX = 'Primary Override within onRampZERO()';
-        // appendStepLogPPEQ('primary', DOX);
+        // await appendStepLogPPEQ('primary', DOX);
         
         // let switchIndex = Math.floor(Math.random() * 4);
         // // switchIndex = 3;
         // switch (switchIndex) {
         //     case 1:
-        //         appendStepLogPPEQ('warning', 'Override Base Success with Different Warning within onRampZERO(1)');
-        //         appendStepLogPPEQ('danger', 'Override Base Success with Different Danger within onRampZERO(1)');
+        //         await appendStepLogPPEQ('warning', 'Override Base Success with Different Warning within onRampZERO(1)');
+        //         await appendStepLogPPEQ('danger', 'Override Base Success with Different Danger within onRampZERO(1)');
         //         break;
         //     case 2:
-        //         appendStepLogPPEQ('warning', 'Override Base Success with Different Warning within onRampZERO(2)');
-        //         // appendStepLogPPEQ('danger', 'Override Base Success with Different Danger within onRampZERO(2)');
+        //         await appendStepLogPPEQ('warning', 'Override Base Success with Different Warning within onRampZERO(2)');
+        //         // await appendStepLogPPEQ('danger', 'Override Base Success with Different Danger within onRampZERO(2)');
         //         break;
         //     case 3:
-        //         // appendStepLogPPEQ('warning', 'Override Base Success with Different Warning within onRampZERO(3)');
-        //         appendStepLogPPEQ('danger', 'Override Base Success with Different Danger within onRampZERO(3)');
+        //         // await appendStepLogPPEQ('warning', 'Override Base Success with Different Warning within onRampZERO(3)');
+        //         await appendStepLogPPEQ('danger', 'Override Base Success with Different Danger within onRampZERO(3)');
         //         break;
         
         //     default:
         //         //NEITHER
         //         break;
         // }
-        // appendStepLogPPEQ('info', 'Override Base Info with Different Info within onRampZERO()');
+        // await appendStepLogPPEQ('info', 'Override Base Info with Different Info within onRampZERO()');
         // ø </Messaging Testing> 
     }
     // ø <---------- </onRampZERO NON_CORE_Step> ---------->
@@ -683,16 +689,16 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
             switchIndex = 4;
             switch (switchIndex) {
                 case 1:
-                    appendStepLogPPEQ('warning', 'Override Base Success with Different Warning within onRampZERO(1)');
-                    appendStepLogPPEQ('danger', 'Override Base Success with Different Danger within onRampZERO(1)');
+                    await appendStepLogPPEQ('warning', 'Override Base Success with Different Warning within onRampZERO(1)');
+                    await appendStepLogPPEQ('danger', 'Override Base Success with Different Danger within onRampZERO(1)');
                     break;
                 case 2:
-                    appendStepLogPPEQ('warning', 'Override Base Success with Different Warning within onRampZERO(2)');
-                    // appendStepLogPPEQ('danger', 'Override Base Success with Different Danger within onRampZERO(2)');
+                    await appendStepLogPPEQ('warning', 'Override Base Success with Different Warning within onRampZERO(2)');
+                    // await appendStepLogPPEQ('danger', 'Override Base Success with Different Danger within onRampZERO(2)');
                     break;
                 case 3:
-                    // appendStepLogPPEQ('warning', 'Override Base Success with Different Warning within onRampZERO(3)');
-                    appendStepLogPPEQ('danger', 'Override Base Success with Different Danger within onRampZERO(3)');
+                    // await appendStepLogPPEQ('warning', 'Override Base Success with Different Warning within onRampZERO(3)');
+                    await appendStepLogPPEQ('danger', 'Override Base Success with Different Danger within onRampZERO(3)');
                     break;
             
                 default:
@@ -710,10 +716,10 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
         // ø </NON-CORE Steps for UserInterface Only>
         case 'IINSTANTIATE':
             responseKey =  memory.getItem('stepResponseBootstrapKey').toLowerCase();
-            appendStepLogPPEQ(responseKey, `First Message`);
-            appendStepLogPPEQ(responseKey, `Second Message`);
-            appendStepLogPPEQ(responseKey, `Third Message (fourth should take`);
-            appendStepLogPPEQ(responseKey, `${stepKey} Response Message for Key ${responseKey.toUpperCase()} in UI`);
+            await appendStepLogPPEQ(responseKey, `First Message`);
+            await appendStepLogPPEQ(responseKey, `Second Message`);
+            await appendStepLogPPEQ(responseKey, `Third Message (fourth should take`);
+            await appendStepLogPPEQ(responseKey, `${stepKey} Response Message for Key ${responseKey.toUpperCase()} in UI`);
 
             $w('#txtComboName').text = local.getItem('comboName');
             $w('#txtComboName').show();
@@ -746,7 +752,7 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
             // responseMessage = memory.getItem('stepResponseBootstrapKey').toLowerCase() === 'success' ? 'The Anomaly was Not Present [ui]' : responseMessage;
             // responseMessage = memory.getItem('stepResponseBootstrapKey').toLowerCase() === 'warning' ? 'The Anamaly was Present and Dealt With Successfully [ui]' : responseMessage;
             // responseMessage = memory.getItem('stepResponseBootstrapKey').toLowerCase() === 'danger' ? 'The Anomaly was Present and the Developer Needs to be Consulted [ui]' : responseMessage;
-            appendStepLogPPEQ(responseKey, `Response Message for Key ${responseKey.toUpperCase()} in UI`);
+            await appendStepLogPPEQ(responseKey, `Response Message for Key ${responseKey.toUpperCase()} in UI`);
             break;
         case 'PREP_ppContact':
             console.log('UI Step: ' + stepKey)
@@ -792,12 +798,12 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
             errorString = 'stepKey (' + stepKey + ') is Not Supported within this Switch Structure';
             break;
     }
-    // appendStepLogPPEQ('danger', 'danger in end of ui force');
+    // await appendStepLogPPEQ('danger', 'danger in end of ui force');
     if(memory.getItem('stepResponseBootstrapKey').toLowerCase() === 'danger'){
         $w('#btnPeSevenNext').hide();
     }
     if(paramObjectStep.previouslyCompleted){
-        appendStepLogPPEQ('info', `The '${stepKey}' Step has already been completed, the UI indicates this`);
+        await appendStepLogPPEQ('info', `The '${stepKey}' Step has already been completed, the UI indicates this`);
     }
 
 }
@@ -1659,7 +1665,7 @@ export async function ppStContactDedupe(paramObject = {}) {
     if(typeof allParametersValid !== 'boolean' || allParametersValid !== true){
         DOX = `'danger': One or more Key Data Points for the Primary Parent and Student is Invalid.`;
         local.setItem('logString', local.getItem('logString') + ',' + DOX);
-        appendStepLogPPEQ('danger', `One or more Key Data Points for the Primary Parent and Student is Invalid.`);
+        await appendStepLogPPEQ('danger', `One or more Key Data Points for the Primary Parent and Student is Invalid.`);
         return;
     }
     DOX = `'success': All Key Data Points for the Primary Parent and Student are Valid.`;
@@ -3582,9 +3588,8 @@ export async function updateStatusWebhookPayloadThis(getOnly = false) {
         updateObject.resolvedStatus = $w('#ddCurrentStatusUpdate').value;
         updateObject.resolvedStatusStamp = now;
     }
-    local.setItem('lastParamObject', JSON.stringify(updateObject));
+    // local.setItem('lastParamObject', JSON.stringify(updateObject));
     let response = await wixData.update("webhookPayload", updateObject)
-    local.setItem('lastResponseObject', JSON.stringify(response));
     $w('#sessionEnrollmentJSON').value = JSON.stringify(response, undefined, 4);
 
 }
@@ -4752,7 +4757,7 @@ export async function msboxPostEnrollmentSevenPerformStepUI(responseObject = {})
     // pstZEnrSeven202108STEP_P_03 ==> Call: PERFORM-DO ==> pstZEnrSeven202108STEP_P_04
     DOX = 'pstEnrSeven202108STEP_P_03 ==> Call: PERFORM-DO ==> pstEnrSeven202108STEP_P_04';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
-    msboxPostEnrollmentSevenPerformStepDO(responseObject);
+    await msboxPostEnrollmentSevenPerformStepDO(responseObject);
     // pstZEnrSeven202108STEP_P_05 PERFORM-UI-AFTER BEGIN
     DOX = 'pstEnrSeven202108STEP_P_05 PERFORM-UI-AFTER BEGIN';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
@@ -4836,7 +4841,7 @@ export async function msboxPostEnrollmentSevenPerformStepDO(responseObject = {})
     DOX = 'pstEnrSeven202108STEP_P_04 ==> Pefrom Array Steps Loop-Switch ==> pstEnrSeven202108STEP_SALS_LOOP';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
 
-    pstErnSevenStepsArraySwitchLoop(paramObject);
+    await pstErnSevenStepsArraySwitchLoop(paramObject);
 
     DOX = 'pstEnrSeven202108STEP_P_04RETURN #return from SALS';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
@@ -4951,8 +4956,8 @@ export async function msboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# n
     memory.setItem('stepLogString','');
     local.setItem('stepMessagingJSON','');
     // ø </CleanUp B4 things Start>
-    msboxPostEnrollmentSevenAnyAction(responseObject);
-    onReadyToOnRamp(responseObject);
+    await msboxPostEnrollmentSevenAnyAction(responseObject);
+    await onReadyToOnRamp(responseObject);
     // </202108100800> 
 }
 // ø <---------- </msboxPostEnrollmentSevenActionOnReady - [within $w.onReady(function ())]> ---------->
@@ -5009,7 +5014,7 @@ export async function msboxPostEnrollmentSevenActionPerform(anyButtonLog = '{# n
     DOX = 'pstEnrSeven202108STEP_P_01 ==> Call: ANY-ACTION ==> pstEnrSeven202108STEP_P_02';
     local.setItem('logString', local.getItem('logString') + '\n ' + DOX)
     DOX = '</more rigorous and belongs where RESPONSE Happens>'
-    msboxPostEnrollmentSevenAnyAction(responseObject);
+    await msboxPostEnrollmentSevenAnyAction(responseObject);
 }
 // ø <---------- </msboxPostEnrollmentSevenActionPerform - PERFORM_STATE_SCRIPTS> ---------->
 
@@ -5199,8 +5204,13 @@ export async function salsDoMessagingReponsesApply(responseObject = {}, paramObj
         sourceObjectThis.notes = ['new 20210819 but pretty good, lots of history with zPIPEz zEQz strings as data in the past',
                                 'also works as blood-brain-barrier with other methods'];
     }
+    console.groupCollapsed('ppEQ_toMessageObject');
+    DOX = (memory.getItem('stepLogString')).length > 0 ? memory.getItem('stepLogString') : 'stepLogString is EMPTY'
+    console.log(DOX);
     let messageObjectArraysByKey = await parsePPEQ_toObjectArraysByKey(memory.getItem('stepLogString'));
-    local.setItem('lastResponseObject', JSON.stringify(messageObjectArraysByKey,undefined,4));
+    console.dir(JSON.stringify(messageObjectArraysByKey));
+    console.groupEnd();
+    // local.setItem('lastResponseObject', JSON.stringify(messageObjectArraysByKey,undefined,4));
     $w('#stMemberResponseJSON').value = JSON.stringify(messageObjectArraysByKey,undefined,4);
     // pstEnrSeven202108UTILITY BEGIN
     // pstEnrSeven202108SALSDoMessaging BEGIN
@@ -5409,6 +5419,7 @@ export async function getSourcedJSON_byKey(key) {
 
 // ø <---------- <parsePPEQ_toObjectArraysByKey UTILITY>  ---------->
 export async function parsePPEQ_toObjectArraysByKey(ppeqString = 'STRING'){
+    local.setItem('lastParamObject', ppeqString);
     // pstEnrSeven202108UTILITY SHORT
     // pstEnrSeven20210822_MESSAGING
     let accordingToSufficientBootstrapWatchdog = "not Necessary, parses to ObjectArrayByKey (objects), with bootstrap-watchdog of 'NA' if no match";
@@ -5456,6 +5467,7 @@ export async function parsePPEQ_toObjectArraysByKey(ppeqString = 'STRING'){
         responseObjectArraysByKey[key].push(elementObject);
         index++;
     });  
+    local.setItem('lastResponseObject', JSON.stringify(responseObjectArraysByKey));
     return responseObjectArraysByKey;
 }
 // ø <---------- </parsePPEQ_toObjectArraysByKey UTILITY> ---------->
@@ -5523,7 +5535,7 @@ export function ppeqOneMessageFromMany(uiPlacementObjectArray = []){
 // ø <---------- </ppeqOneMessageFromMany UTILITY> ---------->
 
 // ø <---------- <appendStepLogPPEQ UTILITY>  ---------->
-export function appendStepLogPPEQ(key = 'STRING', message = 'STRING', lineNumber = 'STRING', postLog){
+export async function appendStepLogPPEQ(key = 'STRING', message = 'STRING', lineNumber = 'STRING', postLog){
     // pstEnrSeven202108UTILITY SHORT
     // pstEnrSeven20210822_MESSAGING
     lineNumber = lineNumber === 'STRING' ? '' : lineNumber.toString();
@@ -5582,9 +5594,9 @@ export function btnPeSevenPrev_click(event) {
     goToState(responseObject, 'PREV');
 }
 
-export function btnPeSevenCurrent_click(event) {
+export async function btnPeSevenCurrent_click(event) {
     let initLog = 'btnPeSevenCurrent_click PERFORM';
-    msboxPostEnrollmentSevenActionPerform(initLog);
+    await msboxPostEnrollmentSevenActionPerform(initLog);
 }
 
 export function btnGetStatesArray_click(event) {
@@ -5751,7 +5763,7 @@ export function demoAppendStepLog(){
     // let lineNumberThis = lineNumberString; 
     // let postLogThis = $w('#ddPostLog').value; 
     // // let compositionKey =  
-    // return appendStepLogPPEQ(keyThis, messageThis, lineNumberThis, postLogThis);
+    // return await appendStepLogPPEQ(keyThis, messageThis, lineNumberThis, postLogThis);
     let key = $w('#demoKey').value; 
     let message = $w('#demoMessage').value; 
     let line = $w('#ddLineNumber').value; 

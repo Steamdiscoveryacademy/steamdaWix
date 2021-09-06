@@ -1,7 +1,7 @@
 let responseObjectDEVEL = {};
 let paramStepLogString = "PENDING";
 paramStepLogString /*onRamp*/ = "primary=Primary Override within onRampZERO()==FFALSE=stateOnramp=ZERO|warning=Override Base Success with Different Warning within onRampZERO(1)==FFALSE=stateOnramp=ZERO|danger=Override Base Success with Different Danger within onRampZERO(1)==FFALSE=stateOnramp=ZERO|info=Override Base Info with Different Info within onRampZERO()==FFALSE=stateOnramp=ZERO|primary=Override ZERO Script Primary with Different Primary UI==FFALSE=stateOnramp=ZERO|success=Override Base Success with Different Success UI==FFALSE=stateOnramp=ZERO|danger=danger zero core force==FFALSE=stateOnramp=ZERO|danger=danger in end of ui force==FFALSE=stateOnramp=ZERO|";
-// paramStepLogString /*instantiate*/ = "info=The 'IINSTANTIATE' Step has an Info Override UI==FFALSE=stateInstantiate=IINSTANTIATE|danger=danger in end of ui force==FFALSE=stateInstantiate=IINSTANTIATE|";
+paramStepLogString /*instantiate*/ = "info=The 'IINSTANTIATE' Step has an Info Override UI==FFALSE=stateInstantiate=IINSTANTIATE|danger=danger in end of ui force==FFALSE=stateInstantiate=IINSTANTIATE|";
 responseObjectDEVEL.ppEQ = paramStepLogString;
 
 
@@ -45,6 +45,7 @@ function parsePPEQ_toObjectArraysByKey(ppeqString = 'STRING'){
     let holder = 'STRING';
     let index = 0;
     
+    // if(ppeqString.substr(-1) === '|'){}
     ppeqString = ppeqString.substr(0, ppeqString.length - 1);
     
     let ppeqElementArray = ppeqString.split('|');

@@ -28,7 +28,7 @@ import wixWindow from 'wix-window';
  // ø pstEnrSeven202108DO = DO Code  for  Next && Perform
  // ø pstEnrSeven202108SALS = Do subset of Enrollment Step Loop-Switch (SALS)
  // ø pstEnrSeven202108STEPS_ARRAY_LOOP_SWITCH = Step through ORIG and RETOOL TO individual pstEnrSeven
- // ø pstEnrSeven202108STEP_SALS_ZLOOP || // pstEnrSeven202108STEP_SALS_SWITCH || 
+ // ø pstEnrSeven202108STEP_SALS_LOOP || // pstEnrSeven202108STEP_SALS_SWITCH || 
  // ø pstEnrSeven202108STEP_CORE_SWITCH || // pstEnrSeven202108STEP_UI_SWITCH
  // ø ≈NNN≈ UnResolve Line Numbers - an indication that that area is fast-moving
  // ø QUICK-FIND Step-Thru ==> Starts with OnReadyAction ==> pstEnrSeven202108STEP_R_01
@@ -491,30 +491,30 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
         // paramObject.messaging.info = DOX; //was immediately below: DOX = previouslyCompleted ?
         // ø </OBVIATED> Only PPEQ
         // memory.setItem('stepLogString',memory.getItem('stepLogString') + `primary=Override Primary Mssg for ZZZ State|`);
-        DOX = 'Primary Override within onRampZERO()';
-        appendStepLogPPEQ('primary', DOX);
+        // DOX = 'Primary Override within onRampZERO()';
+        // appendStepLogPPEQ('primary', DOX);
         
-        let switchIndex = Math.floor(Math.random() * 4);
-        // switchIndex = 3;
-        switch (switchIndex) {
-            case 1:
-                appendStepLogPPEQ('warning', 'Override Base Success with Different Warning within onRampZERO(1)');
-                appendStepLogPPEQ('danger', 'Override Base Success with Different Danger within onRampZERO(1)');
-                break;
-            case 2:
-                appendStepLogPPEQ('warning', 'Override Base Success with Different Warning within onRampZERO(2)');
-                // appendStepLogPPEQ('danger', 'Override Base Success with Different Danger within onRampZERO(2)');
-                break;
-            case 3:
-                // appendStepLogPPEQ('warning', 'Override Base Success with Different Warning within onRampZERO(3)');
-                appendStepLogPPEQ('danger', 'Override Base Success with Different Danger within onRampZERO(3)');
-                break;
+        // let switchIndex = Math.floor(Math.random() * 4);
+        // // switchIndex = 3;
+        // switch (switchIndex) {
+        //     case 1:
+        //         appendStepLogPPEQ('warning', 'Override Base Success with Different Warning within onRampZERO(1)');
+        //         appendStepLogPPEQ('danger', 'Override Base Success with Different Danger within onRampZERO(1)');
+        //         break;
+        //     case 2:
+        //         appendStepLogPPEQ('warning', 'Override Base Success with Different Warning within onRampZERO(2)');
+        //         // appendStepLogPPEQ('danger', 'Override Base Success with Different Danger within onRampZERO(2)');
+        //         break;
+        //     case 3:
+        //         // appendStepLogPPEQ('warning', 'Override Base Success with Different Warning within onRampZERO(3)');
+        //         appendStepLogPPEQ('danger', 'Override Base Success with Different Danger within onRampZERO(3)');
+        //         break;
         
-            default:
-                //NEITHER
-                break;
-        }
-        appendStepLogPPEQ('info', 'Override Base Info with Different Info within onRampZERO()');
+        //     default:
+        //         //NEITHER
+        //         break;
+        // }
+        // appendStepLogPPEQ('info', 'Override Base Info with Different Info within onRampZERO()');
         // ø </Messaging Testing> 
     }
     // ø <---------- </onRampZERO NON_CORE_Step> ---------->
@@ -595,17 +595,7 @@ export async function doStepSwitch(stepKey = 'PPENDING') {
 
 
         case 'dedupePpStContact':
-            // memory.setItem('stepResponseBootstrapKey','Dedupe Core');
             // await ppStContactDedupe()
-
-            // responseNumber = Math.ceil(Math.random() * 100);
-            // if(responseNumber > 0 && responseNumber < 50){bootstrapMessage = `The Duplicate Contact Anomaly was not present No Action Required [${responseNumber}]`; bootstrapKey = 'success';}
-            // if(responseNumber > 49 && responseNumber < 64){bootstrapMessage = `The Duplicate Contact Anomaly was present for the Primary Parent and Handled Successfully [${responseNumber}]`; bootstrapKey = 'warning';}
-            // if(responseNumber > 63 && responseNumber < 78){bootstrapMessage = `The Duplicate Contact Anomaly was present for the Student and Handled Successfully [${responseNumber}]`; bootstrapKey = 'warning';}
-            // if(responseNumber > 77 && responseNumber < 92){bootstrapMessage = `The Duplicate Contact Anomaly was present for both Primary Parent & Student and Handled Successfully [${responseNumber}]`; bootstrapKey = 'warning';}
-            // if(responseNumber > 91 && responseNumber < 101){bootstrapMessage = `The Duplicate Contact Anomaly was present the Logic Failed to Handle it [${responseNumber}]`; bootstrapKey = 'danger';}
-            // appendStepLogPPEQ(bootstrapKey, bootstrapMessage);
-            appendStepLogPPEQ('danger', 'danger in core force');
             console.log('Step: ' + stepKey)
             break;
 
@@ -626,12 +616,10 @@ export async function doStepSwitch(stepKey = 'PPENDING') {
         case 'PREP_stDatabase':
             await stDatabasePrepJSON()
             console.log('Step: ' + stepKey)
-            memory.setItem('stepResponseBootstrapKey','Student Database Core');
             break;
         case 'PREP_spContact':
             await spContactPrepJSON()
             console.log('Step: ' + stepKey)
-            memory.setItem('stepResponseBootstrapKey','Secondary Parent Core');
             break;
         case 'PREP_spDatabase':
             // /*await spDatabasePrepJSON()*/
@@ -691,28 +679,44 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
     switch (stepKey) {
         // ø <NON-CORE Steps for UserInterface Only>
         case 'ZERO':
-            if(Math.floor(Math.random() * 2) === 1){
-                appendStepLogPPEQ('primary', 'Override ZERO Script Primary with Different Primary UI');
+            let switchIndex = Math.floor(Math.random() * 4);
+            switchIndex = 4;
+            switch (switchIndex) {
+                case 1:
+                    appendStepLogPPEQ('warning', 'Override Base Success with Different Warning within onRampZERO(1)');
+                    appendStepLogPPEQ('danger', 'Override Base Success with Different Danger within onRampZERO(1)');
+                    break;
+                case 2:
+                    appendStepLogPPEQ('warning', 'Override Base Success with Different Warning within onRampZERO(2)');
+                    // appendStepLogPPEQ('danger', 'Override Base Success with Different Danger within onRampZERO(2)');
+                    break;
+                case 3:
+                    // appendStepLogPPEQ('warning', 'Override Base Success with Different Warning within onRampZERO(3)');
+                    appendStepLogPPEQ('danger', 'Override Base Success with Different Danger within onRampZERO(3)');
+                    break;
+            
+                default:
+                    //NEITHER
+                    break;
             }
-            if(Math.floor(Math.random() * 2) === 1){
-                appendStepLogPPEQ('info', 'Override ZERO Script Info with Different Info UI');
-            }
-            if(Math.floor(Math.random() * 2) === 1){
-                appendStepLogPPEQ('success', 'Override Base Success with Different Success UI');
-            }
-            appendStepLogPPEQ('danger', 'danger zero core force');
+            console.log('UI Non-Core-Step: ' + stepKey)
             break;
         case 'ResolveAndDestroy':
-            appendStepLogPPEQ('info', 'After Perfom Info where None Before UI');
-            appendStepLogPPEQ('danger', 'Override Base Success with Different Danger UI');
+            console.log('UI Non-Core-Step: ' + stepKey)
             break;
         case 'OffRamp':
+            console.log('UI Non-Core-Step: ' + stepKey)
             break;
         // ø </NON-CORE Steps for UserInterface Only>
         case 'IINSTANTIATE':
+            responseKey =  memory.getItem('stepResponseBootstrapKey').toLowerCase();
+            appendStepLogPPEQ(responseKey, `First Message`);
+            appendStepLogPPEQ(responseKey, `Second Message`);
+            appendStepLogPPEQ(responseKey, `Third Message (fourth should take`);
+            appendStepLogPPEQ(responseKey, `${stepKey} Response Message for Key ${responseKey.toUpperCase()} in UI`);
+
             $w('#txtComboName').text = local.getItem('comboName');
             $w('#txtComboName').show();
-            appendStepLogPPEQ('info', `The '${stepKey}' Step has an Info Override UI`);
             console.log('UI Step: ' + stepKey)
             break;
         case 'PREP_ppMember':
@@ -742,10 +746,7 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
             // responseMessage = memory.getItem('stepResponseBootstrapKey').toLowerCase() === 'success' ? 'The Anomaly was Not Present [ui]' : responseMessage;
             // responseMessage = memory.getItem('stepResponseBootstrapKey').toLowerCase() === 'warning' ? 'The Anamaly was Present and Dealt With Successfully [ui]' : responseMessage;
             // responseMessage = memory.getItem('stepResponseBootstrapKey').toLowerCase() === 'danger' ? 'The Anomaly was Present and the Developer Needs to be Consulted [ui]' : responseMessage;
-            // appendStepLogPPEQ(responseKey, 'responseMessage in UI');
-            appendStepLogPPEQ('danger', 'danger in ui force');
-            // appendStepLogPPEQ(bootstrapKey, bootstrapMessage);
-            // memory.setItem('stepResponseBootstrapKey','Dedupe UI');
+            appendStepLogPPEQ(responseKey, `Response Message for Key ${responseKey.toUpperCase()} in UI`);
             break;
         case 'PREP_ppContact':
             console.log('UI Step: ' + stepKey)
@@ -758,10 +759,8 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
             break;
         case 'PREP_stDatabase':
             console.log('UI Step: ' + stepKey)
-            memory.setItem('stepResponseBootstrapKey','ST Database UI');
             break;
         case 'PREP_spContact':
-            memory.setItem('stepResponseBootstrapKey','SP Contact Prep UI');
             console.log('UI Step: ' + stepKey)
             break;
         case 'PREP_spDatabase':
@@ -793,7 +792,7 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
             errorString = 'stepKey (' + stepKey + ') is Not Supported within this Switch Structure';
             break;
     }
-    appendStepLogPPEQ('danger', 'danger in end of ui force');
+    // appendStepLogPPEQ('danger', 'danger in end of ui force');
     if(memory.getItem('stepResponseBootstrapKey').toLowerCase() === 'danger'){
         $w('#btnPeSevenNext').hide();
     }
@@ -1312,7 +1311,12 @@ export async function doInstantiateLoopSwitchStep() {
     let result = await wixData.get("webhookPayload", webhookId, options);
     local.setItem('wixWebhookStatus', result.currentStatus);
     local.setItem('logString', local.getItem('logString') + '\nwixWebhookStatus: ' + local.getItem('wixWebhookStatus'))
-    local.setItem('logString', local.getItem('logString') + '\n[~Z334]exiting: ' + 'doInstantiateLoopSwitchStep()')
+    local.setItem('logString', local.getItem('logString') + '\n[~Z334]exiting: ' + 'doInstantiateLoopSwitchStep()');
+    let stepResponseBootstrapKey = local.getItem('superEnrollmentStatus') !== 'CONTINUE' ? 'warning' : 'success';
+    stepResponseBootstrapKey = local.getItem('superEnrollmentStatus') === 'ALERT' ? 'danger' : stepResponseBootstrapKey;
+    // stepResponseBootstrapKey = 'warning'
+    // stepResponseBootstrapKey = 'danger'
+    memory.setItem('stepResponseBootstrapKey',stepResponseBootstrapKey);
 }
 // ø <---------- </doInstantiateLoopSwitchStep> ---------->
 
@@ -5196,6 +5200,7 @@ export async function salsDoMessagingReponsesApply(responseObject = {}, paramObj
                                 'also works as blood-brain-barrier with other methods'];
     }
     let messageObjectArraysByKey = await parsePPEQ_toObjectArraysByKey(memory.getItem('stepLogString'));
+    local.setItem('lastResponseObject', JSON.stringify(messageObjectArraysByKey,undefined,4));
     $w('#stMemberResponseJSON').value = JSON.stringify(messageObjectArraysByKey,undefined,4);
     // pstEnrSeven202108UTILITY BEGIN
     // pstEnrSeven202108SALSDoMessaging BEGIN

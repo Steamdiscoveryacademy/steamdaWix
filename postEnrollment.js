@@ -518,7 +518,28 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
         // ø </Messaging Testing> 
     }
     // ø <---------- </onRampZERO NON_CORE_Step> ---------->
+ 
+    // ø <---------- <doResolveAndDestroy NON_CORE_Step>  ---------->
+    export async function doResolveAndDestroy(){
+        // RESOLVE:
+        // let statusThis = $w('#ddCurrentStatusUpdate').value;
+        let statusThis = 'RESOLVED';
+        doUpdateThisWebhookPayload(statusThis);
+        local.setItem('logString', local.getItem('logString') + '[~528]completed doUpdateThisWebhookPayload(RESOLVED)');
+        updateStatusWebhookPayloadThis(true);
+        local.setItem('logString', local.getItem('logString') + '[~530]completed updateStatusWebhookPayloadThis(true)');
+        // console.log('[`3215] RESOLVE: Yes')
 
+        // DESTROY:
+        // memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'), local.getItem('tzAbbrv')));
+        local.setItem('logString', local.getItem('logString') + '[~535]entering btCleanUpAllIncludingnrJSON_click:YES');
+        let responseCleanupCurrentState = doEnrollmentCleanupByKind('ALL_INCLUDING_ENROLLMENT');//HINT: backdoor: MURDERREDRUM
+        local.setItem('logString', local.getItem('logString') + '\n[~537]exiting btCleanUpAllIncludingnrJSON_click:YES');
+        $w('#sessionEnrollmentJSON').value = local.getItem(('logString'));//FOR NOW
+
+    }
+    // ø <---------- </doResolveAndDestroy NON_CORE_Step> ---------->
+ 
     // ø </onRamp-ZERO-ResolveAndDestroy-offRamp>
 
 
@@ -555,27 +576,27 @@ export async function doStepSwitch(stepKey = 'PPENDING') {
             console.log('Step: ' + stepKey)
             break;
         case 'PREP_ppMember':
-            await ppMemberPrepJSON()
+            // await ppMemberPrepJSON()
             // pstEnrSeven202108STEP_CORE_SWITCH
             console.log('Step: ' + stepKey)
             break;
         case 'EXECUTE_ppMember':
-            await ppMemberExecuteUpsert()
+            // await ppMemberExecuteUpsert()
             console.log('Step: ' + stepKey)
             break;
         case 'PREP_stMember':
-            await stMemberPrepJSON()
+            // await stMemberPrepJSON()
             console.log('Step: ' + stepKey)
             break;
         case 'EXECUTE_stMember':
-            await stMemberExecuteUpsert()
+            // await stMemberExecuteUpsert()
             console.log('Step: ' + stepKey)
             break;
 
 
         case 'dedupePpStContact':
             // memory.setItem('stepResponseBootstrapKey','Dedupe Core');
-            await ppStContactDedupe()
+            // await ppStContactDedupe()
 
             // responseNumber = Math.ceil(Math.random() * 100);
             // if(responseNumber > 0 && responseNumber < 50){bootstrapMessage = `The Duplicate Contact Anomaly was not present No Action Required [${responseNumber}]`; bootstrapKey = 'success';}
@@ -591,57 +612,57 @@ export async function doStepSwitch(stepKey = 'PPENDING') {
 
 
         case 'PREP_ppContact':
-            // await ppContactPrepJSON()
+            await ppContactPrepJSON()
             console.log('Step: ' + stepKey)
             break;
         case 'PREP_ppDatabase':
-            // await ppDatabasePrepJSON()
+            await ppDatabasePrepJSON()
             console.log('Step: ' + stepKey)
             break;
         case 'PREP_stContact':
-            // await stContactPrepJSON()
+            await stContactPrepJSON()
             console.log('Step: ' + stepKey)
             break;
         case 'PREP_stDatabase':
-            // await stDatabasePrepJSON()
+            await stDatabasePrepJSON()
             console.log('Step: ' + stepKey)
             memory.setItem('stepResponseBootstrapKey','Student Database Core');
             break;
         case 'PREP_spContact':
-            // await spContactPrepJSON()
+            await spContactPrepJSON()
             console.log('Step: ' + stepKey)
             memory.setItem('stepResponseBootstrapKey','Secondary Parent Core');
             break;
         case 'PREP_spDatabase':
-            // await spDatabasePrepJSON()
-            // await spDatabaseExecuteUpsert()
+            // /*await spDatabasePrepJSON()*/
+            await spDatabaseExecuteUpsert()
             console.log('Step: ' + stepKey)
             local.setItem('logString', local.getItem('logString') + '\n' + 'Step: ' + stepKey + '; [~Z116]Function-Swapped to ppDatabaseExecuteUpsert()')
             break;
         case 'EXECUTE_ppContact':
-            // await ppContactExecuteUpsert()
+            await ppContactExecuteUpsert()
             console.log('Step: ' + stepKey)
             break;
         case 'EXECUTE_ppDatabase':
-            // await ppDatabaseExecuteUpsert()
+            await ppDatabaseExecuteUpsert()
             console.log('Step: ' + stepKey)
             break;
         case 'EXECUTE_stContact':
-            // await stContactExecuteUpsert()
+            await stContactExecuteUpsert()
             console.log('Step: ' + stepKey)
             break;
         case 'EXECUTE_stDatabase':
-            // await stDatabaseExecuteUpsert()
+            await stDatabaseExecuteUpsert()
             console.log('Step: ' + stepKey)
             break;
         case 'EXECUTE_spContact':
-            // await spContactExecuteUpsert()
+            await spContactExecuteUpsert()
             console.log('Step: ' + stepKey)
             break;
         case 'EXECUTE_spDatabase':
-            // await spDatabasePrepJSON()
+            // /*spDatabaseExecuteUpsert()*/
+            await spDatabasePrepJSON()
             local.setItem('logString', local.getItem('logString') + '\n' + 'Step: ' + stepKey + '; [~Z133]Function-Swapped to await spDatabasePrepJSON()')
-            // spDatabaseExecuteUpsert()
             console.log('Step: ' + stepKey)
             break;
         case 'CCOMPLETE':
@@ -4921,6 +4942,11 @@ export async function msboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# n
     // pstZEnrSeven202108STEP_R_01 ==> GoTo: AnyAction ==> pstZEnrSeven202108STEP_RN_02
     DOX = 'pstEnrSeven202108STEP_R_01 ==> GoTo: AnyAction ==> pstEnrSeven202108STEP_RN_02';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
+    // ø <CleanUp B4 things Start>
+    // ? anything else
+    memory.setItem('stepLogString','');
+    local.setItem('stepMessagingJSON','');
+    // ø </CleanUp B4 things Start>
     msboxPostEnrollmentSevenAnyAction(responseObject);
     onReadyToOnRamp(responseObject);
     // </202108100800> 
@@ -5169,7 +5195,7 @@ export async function salsDoMessagingReponsesApply(responseObject = {}, paramObj
         sourceObjectThis.notes = ['new 20210819 but pretty good, lots of history with zPIPEz zEQz strings as data in the past',
                                 'also works as blood-brain-barrier with other methods'];
     }
-    let messageObjectArraysByKey = parsePPEQ_toObjectArraysByKey(memory.getItem('stepLogString'));
+    let messageObjectArraysByKey = await parsePPEQ_toObjectArraysByKey(memory.getItem('stepLogString'));
     $w('#stMemberResponseJSON').value = JSON.stringify(messageObjectArraysByKey,undefined,4);
     // pstEnrSeven202108UTILITY BEGIN
     // pstEnrSeven202108SALSDoMessaging BEGIN
@@ -5377,7 +5403,7 @@ export async function getSourcedJSON_byKey(key) {
 // ø <---------- </getSourcedJSON_byKey UTILITY> ---------->
 
 // ø <---------- <parsePPEQ_toObjectArraysByKey UTILITY>  ---------->
-export function parsePPEQ_toObjectArraysByKey(ppeqString = 'STRING'){
+export async function parsePPEQ_toObjectArraysByKey(ppeqString = 'STRING'){
     // pstEnrSeven202108UTILITY SHORT
     // pstEnrSeven20210822_MESSAGING
     let accordingToSufficientBootstrapWatchdog = "not Necessary, parses to ObjectArrayByKey (objects), with bootstrap-watchdog of 'NA' if no match";
@@ -5593,10 +5619,6 @@ export function btnClearSeven_click(event) {
     doClear('ppDatabaseResponseJSON')
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnCopySeven_click(event) {
     uiCopyTextElementThis('ppDatabaseResponseJSON');
 }
@@ -5644,10 +5666,6 @@ export async function btnKludgeISO_click(event) {
 
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnPeSevenFauxOnReady_click(event) {
     let initLog = 'FAUX $w.onReady() NEXT';
     msboxPostEnrollmentSevenActionOnReady(initLog);
@@ -5656,18 +5674,10 @@ export function btnPeSevenFauxOnReady_click(event) {
     $w('#anchorTestProcess').scrollTo();
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnPeSevenPrepJSON_click(event) {
     $w('#preTrashLog').value = '{\n"postEnrollmentSeven": \n[' + $w('#preTrashLog').value + '\n]\n}';
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnPeSevenNextMANUAL_click(event) {
     let responseObject = {};
     responseObject.logArrayDeveloper = [];
@@ -5689,27 +5699,15 @@ export function btnGetCompleteList_click(event) {
     uiCopyTextElementThis('spContactResponseJSON');
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnGetStepLogString_click(event) {
 	$w('#spContactResponseJSON').value = memory.getItem('stepLogString');
     uiCopyTextElementThis('spContactResponseJSON');
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnClearSpContactResponseJSON_click(event) {
 	doClear('spContactResponseJSON');
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnMessageObjectArrays_click(event) {
     let messagingObject = JSON.parse(local.getItem('stepMessagingJSON'));
 	// $w('#spContactResponseJSON').value = $w('#stMemberResponseJSON').value;
@@ -5718,20 +5716,12 @@ export function btnMessageObjectArrays_click(event) {
 
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnGetStates_click(event) {
 	$w('#spContactResponseJSON').value = `memory.getItem('msboxLastState'): ${memory.getItem('msboxLastState')};\nmemory.getItem('msboxNextStateId'): ${memory.getItem('msboxNextStateId')}` 
     uiCopyTextElementThis('spContactResponseJSON');
     
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnApplendStepLog_click(event) {
 	// let doTheFunction = 'DO THE FUNCTION';
     // let stepArray = (memory.getItem('stepLogString')).split('|');
@@ -5810,10 +5800,6 @@ export function demoAppendStepLog(){
 
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnPpStContactDedupeDiagnosis_click(event) {
     local.setItem('logString','PP ST Contact De-Dupe DDiagnosis')
 	let paramObjectThis = {};
@@ -5829,39 +5815,49 @@ export function btnPpStContactDedupeDiagnosis_click(event) {
 }
 
 export function btnResetToLastCompletedTEMP_click(event) {
-    let tempLastCompleted = 'OnReadyReset,ZERO,IINSTANTIATE,PREP_ppMember,EXECUTE_ppMember,PREP_stMember,EXECUTE_stMember'; 
+    let current = local.getItem('enrollmentStepCompletedListAll');
+    let tempLastCompleted_b4DeDupe = 'OnReadyReset,ZERO,IINSTANTIATE,PREP_ppMember,EXECUTE_ppMember,PREP_stMember,EXECUTE_stMember'; 
+    let tempLastCompleted_b4PpStContactsAndDatabase = 'OnReadyReset,ZERO,IINSTANTIATE,PREP_ppMember,EXECUTE_ppMember,PREP_stMember,EXECUTE_stMember,OnReadyResetContinue,dedupePpStContact'; 
+    let tempLastCompleted_b4DeDupe_ActiveOnly = 'PREP_ppMember,EXECUTE_ppMember,PREP_stMember,EXECUTE_stMember,OnReadyResetContinue,dedupePpStContact'; 
+    // ø <Logic for First and Continuing>
+    let next = 'tempLastCompleted_b4DeDupe';
+    next = current === tempLastCompleted_b4DeDupe ? 'tempLastCompleted_b4PpStContactsAndDatabase' : next;
+    next = current === tempLastCompleted_b4PpStContactsAndDatabase ? 'tempLastCompleted_b4DeDupe_ActiveOnly' : next;
+    // ø </Logic for First and Continuing>
+    let tempLastCompleted = eval(next);
     local.setItem('enrollmentStepCompletedListAll',tempLastCompleted);
     $w('#spContactResponseJSON').value = local.getItem('enrollmentStepCompletedListAll');
     uiCopyTextElementThis('spContactResponseJSON');
 
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnGetLastParamObject_click(event) {
     let paramObjectTemp = JSON.parse(local.getItem('lastParamObject'));
     $w('#sessionEnrollmentJSON').value = JSON.stringify(paramObjectTemp,undefined,4);
     uiCopyTextElementThis('sessionEnrollmentJSON');
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnGetLastResponseObject_click(event) {
     let responseObjectTemp = JSON.parse(local.getItem('lastResponseObject'));
     $w('#sessionEnrollmentJSON').value = JSON.stringify(responseObjectTemp,undefined,4);
     uiCopyTextElementThis('sessionEnrollmentJSON');
 }
 
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnGetStepResponseKey_click(event) {
 	// memory.setItem('stepResponseBootstrapKey','Algonquin');
 	$w('#spContactResponseJSON').value = memory.getItem('stepResponseBootstrapKey');
     uiCopyTextElementThis('spContactResponseJSON');//spContactResponseJSON
+}
+
+export function btnResolveAndDestroy_click(event) {
+	doResolveAndDestroy();
+}
+
+/**
+ *	Adds an event handler that runs when the element is clicked.
+ *	 @param {$w.MouseEvent} event
+ */
+export function btnStepLogString_click(event) {
+	$w('#spContactResponseJSON').value = memory.getItem('stepLogString');
+    uiCopyTextElementThis('spContactResponseJSON');
 }

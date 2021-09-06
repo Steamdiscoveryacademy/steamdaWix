@@ -8,10 +8,42 @@ $w('#HOLDER')
 https://webhook.site/191e8210-1ce6-4d05-8d72-e3a3a10cf0e4
 
 
-===================================
-====  Monday August 30, 2021  =====
-===================================
-===================================
+==========================================
+=====    Monday September 6, 2021    =====
+==========================================
+==========================================
+
+Messgng:
+local.getItem('stepMessagingJSON')
+local.setItem('stepMessagingJSON'
+
+stepLog:
+memory.getItem('stepLogString')
+memory.setItem('stepLogString'
+
+
+ppContactResponseJSON
+
+txtStateObjectCurrentSeven
+
+
+RESOLVE:
+        let statusThis = 'RESOLVED';//$w('#ddCurrentStatusUpdate').value;
+        doUpdateThisWebhookPayload(statusThis);
+        updateStatusWebhookPayloadThis(true);
+        console.log('[`3215] RESOLVE: Yes')
+
+DESTROY:
+        memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'), local.getItem('tzAbbrv')));
+        local.setItem('logString', '[~Z2595]entering btCleanUpAllIncludingnrJSON_click:YES');
+        let responseCleanupCurrentState = doEnrollmentCleanupByKind('ALL_INCLUDING_ENROLLMENT');//HINT: backdoor: MURDERREDRUM
+        local.setItem('logString', local.getItem('logString') + '\n[~Z2621]exiting btCleanUpAllIncludingnrJSON_click:YES');
+        $w('#sessionEnrollmentJSON').value = local.getItem(('logString'));
+
+
+========
+
+d31f4ad6-a21c-4aee-b09e-7ade0c1b84c3
 
 paramObject = { diagnosticOnly: false, collectHumanLog: false }
 

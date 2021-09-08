@@ -36,6 +36,7 @@ import wixWindow from 'wix-window';
  // ø pstEnrSeven20210822_MESSAGING  TODAY
  // ø pstEnrSeven202108getContactByEmailAndNotIdFunction  TODAY
  // ø pstEnrSeven202108ppStContactDedupe  TODAY
+ // ø 202109ResolveAndDestroy  TODAY
  */
 
 
@@ -299,6 +300,7 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
 
 
     memory.setItem('stepLogString','');// Will Catch All Messages in a pstEnrSeven Group, but can back-up later
+    memory.setItem('stepLogStringSecondary','');// Will Catch All Messages in a pstEnrSeven Group, but can back-up later
     memory.setItem('stepResponseBootstrapKey','');// Will Catch All Messages in a pstEnrSeven Group, but can back-up later
     while (stepsArray.length > 0 && testIndex < testBreakIndex) {
         // pstZEnrSeven202108STEP_SALS_LOOP BEGIN ==> pstZEnrSeven202108STEP_SALS_SWITCH
@@ -338,9 +340,11 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
                 break;
         
             case 'ResolveAndDestroy':
+                // 202109ResolveAndDestroy
                 //NON_CORE_Step
                 DOX = previouslyCompleted ? `≈NNN≈ previouslyCompleted: ${stepThis}` : `≈NNN≈ ≈i${testIndex}≈ case '${stepThis}': RAW: case-handled thisStep ResolveAndDestroy as CleanUp`;
                 local.setItem('logString', local.getItem('logString') + ',' + DOX);
+                await doResolveAndDestroy();
                 await doStepUserInterfaceSwitch(stepThis,paramObjectStep);
                 break;
         
@@ -409,33 +413,6 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
     // exitLoopHere = stepsArray[0] === 'CCOMPLETE' ? true : exitLoopHere;
     // exitLoopHere = stepsArray[0] === 'ZERO' ? true : exitLoopHere;
     let indexCowCatcher = 999;
-    // while (stepsArray[0] !== 'CCOMPLETE' && indexCowCatcher < 100) {
-    //     indexCowCatcher++;
-    //     key = stepsArray.shift()
-    //     stepsArray.push(key)
-    //     switch (key) {
-    //         case 'DELETEME_NOT_A_STEP':
-    //             key = 'COMPLETE';
-    //             break;
-                
-    //             default:
-                    
-    //                 paramObject.logArrayDeveloper.push(`{# default: ${key} not supported in SWITCH [¿expected for testing?] #}`);
-    //                 break;
-    //             }
-                // ! </MIGHT BE FINE -- rewrite above anyway>
-        // ! <USE_LOCAL_SKIP_FUNCTION>
-        // stepsCycleSteps();
-        // ø <ExitAfter Switch Check>
-        // doCheckExitAfter();
-        // if (memory.getItem('loopExitNow') !== 'FFALSE') {
-        //     local.setItem('logString', local.getItem('logString') + '\n[~Z150]exiting (Break Loop is Exit): ' + 'doStepLoopSwitch()')
-        //     break;//(Break Loop is Exit)
-        // }
-        // ! </USE_LOCAL_SKIP_FUNCTION>
-    // }
-    // pstZEnrSeven202108STEP_SALS_1BY1 ==> Return to pstEnrSeven ==> pstZEnrSeven202108STEP_P_04RETURN
-    // pstZEnrSeven202108STEP_SALS_LOOP FUNCTION END
     DOX = 'pstEnrSeven202108STEP_SALS_1BY1 ==> FUNCTION END ==> Return to pstEnrSeven ==> pstEnrSeven202108STEP_P_04RETURN';
     DOX = 'pstEnrSeven202108STEP_SALS_LOOP ==> FUNCTION END ==> Return to pstEnrSeven ==> pstEnrSeven202108STEP_P_04RETURN';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
@@ -482,7 +459,6 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
             $w('#btnStaffEyeDLabel').enable();
         }
         // ø <OnReady UI for Secondary and Staff-Eye-D>
-        // await salsDoMessagingReponsesApply();
         await salsDoMessagingReponsesApply(responseObject);
     }
     // ø <---------- </onReadyToOnRamp NON_CORE_Step> ---------->
@@ -490,57 +466,34 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
     export function onRampZERO(paramObject = {}){
         let DOX = `≈NNN≈ onRampZERO: RAW: script for thisStep ZERO as Null`;
         local.setItem('logString', local.getItem('logString') + ',' + DOX);
-        // ø <Messaging Testing> 
-        // pstEnrSeven20210822_MESSAGING
-        //PRETRASH_tobeDISABLEDandEventuallyREMOVED
-        // ø <OBVIATED> Only PPEQ
-        // paramObject.messaging.info = DOX; //was immediately below: DOX = previouslyCompleted ?
-        // ø </OBVIATED> Only PPEQ
-        // memory.setItem('stepLogString',memory.getItem('stepLogString') + `primary=Override Primary Mssg for ZZZ State|`);
-        // DOX = 'Primary Override within onRampZERO()';
-        // await appendStepLogPPEQ('primary', DOX);
-        
-        // let switchIndex = Math.floor(Math.random() * 4);
-        // // switchIndex = 3;
-        // switch (switchIndex) {
-        //     case 1:
-        //         await appendStepLogPPEQ('warning', 'Override Base Success with Different Warning within onRampZERO(1)');
-        //         await appendStepLogPPEQ('danger', 'Override Base Success with Different Danger within onRampZERO(1)');
-        //         break;
-        //     case 2:
-        //         await appendStepLogPPEQ('warning', 'Override Base Success with Different Warning within onRampZERO(2)');
-        //         // await appendStepLogPPEQ('danger', 'Override Base Success with Different Danger within onRampZERO(2)');
-        //         break;
-        //     case 3:
-        //         // await appendStepLogPPEQ('warning', 'Override Base Success with Different Warning within onRampZERO(3)');
-        //         await appendStepLogPPEQ('danger', 'Override Base Success with Different Danger within onRampZERO(3)');
-        //         break;
-        
-        //     default:
-        //         //NEITHER
-        //         break;
-        // }
-        // await appendStepLogPPEQ('info', 'Override Base Info with Different Info within onRampZERO()');
-        // ø </Messaging Testing> 
     }
     // ø <---------- </onRampZERO NON_CORE_Step> ---------->
  
     // ø <---------- <doResolveAndDestroy NON_CORE_Step>  ---------->
     export async function doResolveAndDestroy(){
-        // RESOLVE:
-        // let statusThis = $w('#ddCurrentStatusUpdate').value;
-        let statusThis = 'RESOLVED';
-        doUpdateThisWebhookPayload(statusThis);
-        local.setItem('logString', local.getItem('logString') + '[~528]completed doUpdateThisWebhookPayload(RESOLVED)');
-        updateStatusWebhookPayloadThis(true);
-        local.setItem('logString', local.getItem('logString') + '[~530]completed updateStatusWebhookPayloadThis(true)');
-        // console.log('[`3215] RESOLVE: Yes')
+        // 202109ResolveAndDestroy
+        // 202109ResolveAndDestroy_RESOLVE
+        let resolve = true;
+        let destroy = true;
+        if (resolve) {
+            // RESOLVE:
+            // let statusThis = $w('#ddCurrentStatusUpdate').value;
+            // let statusThis = $w('#ddCurrentStatusUpdate').value;
+            let statusThis = 'RESOLVED';
+            await doUpdateThisWebhookPayload(statusThis);
+            await updateStatusWebhookPayloadThis(true);
+            // local.setItem('logString', local.getItem('logString') + '[~528]completed doUpdateThisWebhookPayload(RESOLVED)');
+            // local.setItem('logString', local.getItem('logString') + '[~530]completed updateStatusWebhookPayloadThis(true)');
+            // console.log('[`3215] RESOLVE: Yes')
+        }
 
-        // DESTROY:
-        // memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'), local.getItem('tzAbbrv')));
-        local.setItem('logString', local.getItem('logString') + '[~535]entering btCleanUpAllIncludingnrJSON_click:YES');
-        let responseCleanupCurrentState = doEnrollmentCleanupByKind('ALL_INCLUDING_ENROLLMENT');//HINT: backdoor: MURDERREDRUM
-        local.setItem('logString', local.getItem('logString') + '\n[~537]exiting btCleanUpAllIncludingnrJSON_click:YES');
+        if (destroy) {
+            // DESTROY:
+            // memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'), local.getItem('tzAbbrv')));
+            local.setItem('logString', local.getItem('logString') + '[~535]entering btCleanUpAllIncludingnrJSON_click:YES');
+            let responseCleanupCurrentState = doEnrollmentCleanupByKind('ALL_INCLUDING_ENROLLMENT');//HINT: backdoor: MURDERREDRUM
+            local.setItem('logString', local.getItem('logString') + '\n[~537]exiting btCleanUpAllIncludingnrJSON_click:YES');
+        }
         $w('#sessionEnrollmentJSON').value = local.getItem(('logString'));//FOR NOW
 
     }
@@ -576,89 +529,144 @@ export async function doStepSwitch(stepKey = 'PPENDING') {
     // pstEnrSeven202108STEP_CORE_SWITCH
     let errorString = '';
     switch (stepKey) {
+        // ø <stateSteps> BEGIN
         case 'IINSTANTIATE':
-            await doInstantiateLoopSwitchStep();
+            // ø <stateInstantiate>
+            memory.setItem('stepResponseBootstrapKey','success');//assumption
+            if(memory.getItem('stepResponseBootstrapKey') === 'success'){
+                await doInstantiateLoopSwitchStep();
+            }
             // pstEnrSeven202108STEP_CORE_SWITCH
             console.log('Step: ' + stepKey)
             break;
+            // ø </stateInstantiate>
         case 'PREP_ppMember':
-            // await ppMemberPrepJSON()
+            // ø <stateMemberConfirm>
+            memory.setItem('stepResponseBootstrapKey','success');//assumption
+            if(memory.getItem('stepResponseBootstrapKey') === 'success'){
+                await ppMemberPrepJSON()
+            }
             // pstEnrSeven202108STEP_CORE_SWITCH
             console.log('Step: ' + stepKey)
             break;
         case 'EXECUTE_ppMember':
-            // await ppMemberExecuteUpsert()
+            if(memory.getItem('stepResponseBootstrapKey') === 'success'){
+                await ppMemberExecuteUpsert()
+            }
             console.log('Step: ' + stepKey)
             break;
         case 'PREP_stMember':
-            // await stMemberPrepJSON()
+            if(memory.getItem('stepResponseBootstrapKey') === 'success'){
+                await stMemberPrepJSON()
+            }
             console.log('Step: ' + stepKey)
             break;
         case 'EXECUTE_stMember':
-            // await stMemberExecuteUpsert()
+            if(memory.getItem('stepResponseBootstrapKey') === 'success'){
+                await stMemberExecuteUpsert()
+            }
             console.log('Step: ' + stepKey)
             break;
+            // ø </stateMemberConfirm>
 
 
         case 'dedupePpStContact':
-            // await ppStContactDedupe()
+            // ø <stateDupeDelete>
+            memory.setItem('stepResponseBootstrapKey','success');//assumption
+            if(memory.getItem('stepResponseBootstrapKey') === 'success'){
+                await ppStContactDedupe()
+            }
             console.log('Step: ' + stepKey)
             break;
+            // ø </stateDupeDelete>
 
 
 
         case 'PREP_ppContact':
-            await ppContactPrepJSON()
+            // ø <stateDatabaseForPrimaryAndStudent>
+            memory.setItem('stepResponseBootstrapKey','success');//assumption
+            if(memory.getItem('stepResponseBootstrapKey') === 'success'){
+                await ppContactPrepJSON()
+            }
             console.log('Step: ' + stepKey)
             break;
         case 'PREP_ppDatabase':
-            await ppDatabasePrepJSON()
+            if(memory.getItem('stepResponseBootstrapKey') === 'success'){
+                await ppDatabasePrepJSON()
+            }
             console.log('Step: ' + stepKey)
             break;
         case 'PREP_stContact':
-            await stContactPrepJSON()
+            if(memory.getItem('stepResponseBootstrapKey') === 'success'){
+                await stContactPrepJSON()
+            }
             console.log('Step: ' + stepKey)
             break;
         case 'PREP_stDatabase':
-            await stDatabasePrepJSON()
+            if(memory.getItem('stepResponseBootstrapKey') === 'success'){
+                await stDatabasePrepJSON()
+            }
             console.log('Step: ' + stepKey)
             break;
+            // ø </stateDatabaseForPrimaryAndStudent>
         case 'PREP_spContact':
-            await spContactPrepJSON()
+            // ø <stateDatabaseForPrimaryAndStudent>
+            memory.setItem('stepResponseBootstrapKey','success');//assumption
+            if(memory.getItem('stepResponseBootstrapKey') === 'success'){
+                await spContactPrepJSON()
+            }
             console.log('Step: ' + stepKey)
             break;
         case 'PREP_spDatabase':
-            // /*await spDatabasePrepJSON()*/
-            await spDatabaseExecuteUpsert()
+            if(memory.getItem('stepResponseBootstrapKey') === 'success'){
+                // /*await spDatabasePrepJSON()*/
+                await spDatabaseExecuteUpsert()
+            }
             console.log('Step: ' + stepKey)
             local.setItem('logString', local.getItem('logString') + '\n' + 'Step: ' + stepKey + '; [~Z116]Function-Swapped to ppDatabaseExecuteUpsert()')
             break;
         case 'EXECUTE_ppContact':
-            await ppContactExecuteUpsert()
+            if(memory.getItem('stepResponseBootstrapKey') === 'success'){
+                await ppContactExecuteUpsert()
+            }
             console.log('Step: ' + stepKey)
             break;
         case 'EXECUTE_ppDatabase':
-            await ppDatabaseExecuteUpsert()
+            if(memory.getItem('stepResponseBootstrapKey') === 'success'){
+                await ppDatabaseExecuteUpsert()
+            }
             console.log('Step: ' + stepKey)
             break;
         case 'EXECUTE_stContact':
-            await stContactExecuteUpsert()
+            if(memory.getItem('stepResponseBootstrapKey') === 'success'){
+                await stContactExecuteUpsert()
+            }
             console.log('Step: ' + stepKey)
             break;
         case 'EXECUTE_stDatabase':
-            await stDatabaseExecuteUpsert()
+            if(memory.getItem('stepResponseBootstrapKey') === 'success'){
+                await stDatabaseExecuteUpsert()
+            }
             console.log('Step: ' + stepKey)
             break;
+            // ø </stateDatabaseForPrimaryAndStudent>
         case 'EXECUTE_spContact':
-            await spContactExecuteUpsert()
+            // ø <stateContactAndDatabaseForSecondary>
+            memory.setItem('stepResponseBootstrapKey','success');//assumption
+            if(memory.getItem('stepResponseBootstrapKey') === 'success'){
+                await spContactExecuteUpsert()
+            }
             console.log('Step: ' + stepKey)
             break;
         case 'EXECUTE_spDatabase':
-            // /*spDatabaseExecuteUpsert()*/
-            await spDatabasePrepJSON()
+            if(memory.getItem('stepResponseBootstrapKey') === 'success'){
+                // /*spDatabaseExecuteUpsert()*/
+                await spDatabasePrepJSON()
+            }
             local.setItem('logString', local.getItem('logString') + '\n' + 'Step: ' + stepKey + '; [~Z133]Function-Swapped to await spDatabasePrepJSON()')
             console.log('Step: ' + stepKey)
             break;
+            // ø </stateContactAndDatabaseForSecondary>
         case 'CCOMPLETE':
             console.log('Step: ' + stepKey)
             break;
@@ -682,9 +690,19 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
     let errorString = '';
     let responseKey = 'unknown';
     let responseMessage = 'DEFAULT';
+    let anyDangerHide = false;
     switch (stepKey) {
         // ø <NON-CORE Steps for UserInterface Only>
+        // ø <stateSteps> BEGIN
         case 'ZERO':
+            // ø <stateOnramp>
+            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+            }
+            if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
+            }
+            // ø <Singleton - NO - Catch of >
             let switchIndex = Math.floor(Math.random() * 4);
             switchIndex = 4;
             switch (switchIndex) {
@@ -707,89 +725,242 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
             }
             console.log('UI Non-Core-Step: ' + stepKey)
             break;
+            // ø </stateOnramp>
         case 'ResolveAndDestroy':
+            // ø <stateResolveAndDestroy>
+            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+            }
+            if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
+            }
             console.log('UI Non-Core-Step: ' + stepKey)
             break;
+            // ø </stateResolveAndDestroy>
         case 'OffRamp':
+            // ø <stateOfframp>
+            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+            }
+            if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
+            }
             console.log('UI Non-Core-Step: ' + stepKey)
             break;
+            // ø </stateOfframp>
         // ø </NON-CORE Steps for UserInterface Only>
         case 'IINSTANTIATE':
-            responseKey =  memory.getItem('stepResponseBootstrapKey').toLowerCase();
-            await appendStepLogPPEQ(responseKey, `First Message`);
-            await appendStepLogPPEQ(responseKey, `Second Message`);
-            await appendStepLogPPEQ(responseKey, `Third Message (fourth should take`);
-            await appendStepLogPPEQ(responseKey, `${stepKey} Response Message for Key ${responseKey.toUpperCase()} in UI`);
+            // ø <stateInstantiate>
+            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+            }
+            if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
+            }
 
             $w('#txtComboName').text = local.getItem('comboName');
             $w('#txtComboName').show();
             console.log('UI Step: ' + stepKey)
             break;
+            // ø </stateInstantiate>
         case 'PREP_ppMember':
+            // ø <stateMemberConfirm>
+            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+                memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
+            }
+            if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
+            }
             console.log('UI Step: ' + stepKey)
             break;
         case 'EXECUTE_ppMember':
+            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+                memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
+            }
+            if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
+            }
             console.log('UI Step: ' + stepKey)
             break;
         case 'PREP_stMember':
+            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+                memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
+            }
+            if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
+            }
             console.log('UI Step: ' + stepKey)
             break;
         case 'EXECUTE_stMember':
+            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+                memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
+            }
+            if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
+            }
             console.log('UI Step: ' + stepKey)
             $w('#btnFamilyId').label = local.getItem('familyId');
             $w('#btnFamilyId').enable();
             $w('#btnStudentId').label = local.getItem('studentId');
-            $w('#btnStudentId').enable();
             // † Names
             // † Emails
-            break;
-        case 'dedupePpStContact':
-            console.log('UI Step: ' + stepKey);
             responseKey =  memory.getItem('stepResponseBootstrapKey').toLowerCase();
+            $w('#btnStudentId').enable();
+            // await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${responseKey.toUpperCase()} in UI`);
+            $w('#btnStudentId').enable();
+            break;
+            // ø </stateMemberConfirm>
+        case 'dedupePpStContact':
+            // ø <stateDupeDelete>
+            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+            }
+            if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
+            }
+            console.log('UI Step: ' + stepKey);
+            // responseKey =  memory.getItem('stepResponseBootstrapKey').toLowerCase();
             console.log('UI responseKey: ' + responseKey);
 
             // responseMessage = memory.getItem('stepResponseBootstrapKey').toLowerCase() === 'success' ? 'DEFAULT';
             // responseMessage = memory.getItem('stepResponseBootstrapKey').toLowerCase() === 'success' ? 'The Anomaly was Not Present [ui]' : responseMessage;
             // responseMessage = memory.getItem('stepResponseBootstrapKey').toLowerCase() === 'warning' ? 'The Anamaly was Present and Dealt With Successfully [ui]' : responseMessage;
             // responseMessage = memory.getItem('stepResponseBootstrapKey').toLowerCase() === 'danger' ? 'The Anomaly was Present and the Developer Needs to be Consulted [ui]' : responseMessage;
-            await appendStepLogPPEQ(responseKey, `Response Message for Key ${responseKey.toUpperCase()} in UI`);
+            // await appendStepLogPPEQ(responseKey, `Response Message for Key ${responseKey.toUpperCase()} in UI`);
             break;
+            // ø </stateDupeDelete>
         case 'PREP_ppContact':
+            // ø <stateDatabaseForPrimaryAndStudent>
+            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+                memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
+            }
+            if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
+            }
             console.log('UI Step: ' + stepKey)
             break;
         case 'PREP_ppDatabase':
+            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+                memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
+            }
+            if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
+            }
             console.log('UI Step: ' + stepKey)
             break;
         case 'PREP_stContact':
+            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+                memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
+            }
+            if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
+            }
             console.log('UI Step: ' + stepKey)
             break;
         case 'PREP_stDatabase':
+            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+                memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
+            }
+            if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
+            }
             console.log('UI Step: ' + stepKey)
             break;
+            // ø </stateDatabaseForPrimaryAndStudent>
         case 'PREP_spContact':
+            // ø <stateContactForPrimaryAndStudent>
+            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+                memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
+            }
+            if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
+            }
             console.log('UI Step: ' + stepKey)
             break;
         case 'PREP_spDatabase':
+            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+                memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
+            }
+            if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
+            }
             console.log('UI Step: ' + stepKey)
             break;
         case 'EXECUTE_ppContact':
+            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+                memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
+            }
+            if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
+            }
             console.log('UI Step: ' + stepKey)
             break;
         case 'EXECUTE_ppDatabase':
+            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+                memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
+            }
+            if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
+            }
             console.log('UI Step: ' + stepKey)
             break;
         case 'EXECUTE_stContact':
+            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+                memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
+            }
+            if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
+            }
             console.log('UI Step: ' + stepKey)
             break;
         case 'EXECUTE_stDatabase':
+            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+                memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
+            }
+            if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
+            }
             console.log('UI Step: ' + stepKey)
             break;
+            // ø </stateContactForPrimaryAndStudent>
         case 'EXECUTE_spContact':
+            // ø <stateContactAndDatabaseForSecondary>
+            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+                memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
+            }
+            if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
+            }
             console.log('UI Step: ' + stepKey)
             break;
         case 'EXECUTE_spDatabase':
+            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+                anyDangerHide = memory.getItem('stepResponseBootstrapKey') === 'danger' ? true : anyDangerHide;
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+                memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
+            }
+            if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
+                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
+            }
             console.log('UI Step: ' + stepKey)
             break;
+            // ø </stateContactAndDatabaseForSecondary>
+        // ø </stateSteps> END
         case 'CCOMPLETE':
             console.log('UI Step: ' + stepKey)
             break;
@@ -799,8 +970,11 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
             break;
     }
     // await appendStepLogPPEQ('danger', 'danger in end of ui force');
-    if(memory.getItem('stepResponseBootstrapKey').toLowerCase() === 'danger'){
+    console.log('anyDangerHide: ' + anyDangerHide);
+    if(anyDangerHide){
+        console.log('hide Perform & Next Buttons')
         $w('#btnPeSevenNext').hide();
+        $w('#btnPeSevenCurrent').hide();
     }
     if(paramObjectStep.previouslyCompleted){
         await appendStepLogPPEQ('info', `The '${stepKey}' Step has already been completed, the UI indicates this`);
@@ -3175,11 +3349,6 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
         logString += '\n' + "memory.getItem('msboxCurrentId'): " + memory.getItem('msboxCurrentId');
         logString += '\n' + "memory.getItem('msboxLastState'): " + memory.getItem('msboxLastState');
 
-        // cleanupString = develTest === true ? 'UNACCOUNTED_FOR' : cleanupString;
-        // memory.setItem('loopExitNow', cleanupString);
-        // memory.setItem('ppMemberOnDeckJSON', cleanupString);
-        // memory.setItem('HHOLDER', cleanupString);
-        // memory.setItem('loopExitAfterStep', cleanupString);
     }//END if(kind === 'UNACCOUNTED_FOR')
     // ø </STATE>
     // ø <---------- <Alias Options>  ---------->
@@ -3527,6 +3696,7 @@ export function doClear(clearIdArray) {
 
 // ø <------------ <doUpdateThisWebhookPayload(status)>  -------------->
 export async function doUpdateThisWebhookPayload(status) {
+    // 202109ResolveAndDestroy_RESOLVE
     let response = "";
     let kInvalidAppend = `\nNo action taken.\nPlease try again or ask for assistnace.`;
     if (typeof local.getItem('wixWebhookId') !== 'string' || local.getItem('wixWebhookId').length < 20) {
@@ -3534,11 +3704,12 @@ export async function doUpdateThisWebhookPayload(status) {
         $w('#sessionEnrollmentJSON').value = response;
         return;
     }
-    if ($w('#ddCurrentStatusUpdate').value === local.getItem('wixWebhookStatus')) {
+    if (status === local.getItem('wixWebhookStatus')) {
         response = "On-deck 'Webhook-Payload' Status is the same as the Drop-Down (update) Value. No Update Indicated" + kInvalidAppend;
         $w('#sessionEnrollmentJSON').value = response;
         return;
     }
+    local.setItem('wixWebhookStatus',status)
     await updateStatusWebhookPayloadThis();
     let lastResponse = JSON.parse(local.getItem('lastResponseObject'));
     if (lastResponse._id === local.getItem('webhookThisId')) {
@@ -3554,6 +3725,7 @@ export async function doUpdateThisWebhookPayload(status) {
 
 // ø <------------ <updateStatusWebhookPayloadThis()>  -------------->
 export async function updateStatusWebhookPayloadThis(getOnly = false) {
+    // 202109ResolveAndDestroy_RESOLVE
     const options = {
         "suppressAuth": true,
         "suppressHooks": true
@@ -3582,10 +3754,10 @@ export async function updateStatusWebhookPayloadThis(getOnly = false) {
 
     let now = new Date();
     let nowISO = now.toISOString();
-    updateObject.currentStatus = $w('#ddCurrentStatusUpdate').value;
+    updateObject.currentStatus = local.getItem('wixWebhookStatus');
     updateObject.currentStatusStamp = now;
-    if ($w('#ddCurrentStatusUpdate').value === 'RESOLVED') {
-        updateObject.resolvedStatus = $w('#ddCurrentStatusUpdate').value;
+    if (local.getItem('wixWebhookStatus') === 'RESOLVED') {
+        updateObject.resolvedStatus = local.getItem('wixWebhookStatus');
         updateObject.resolvedStatusStamp = now;
     }
     // local.setItem('lastParamObject', JSON.stringify(updateObject));
@@ -3746,6 +3918,8 @@ export async function btCleanUpAllExceptEnrJSON_click(event) {
 }
 
 export async function btCleanUpAllIncludingnrJSON_click(event) {
+    // 202109ResolveAndDestroy
+    // 202109ResolveAndDestroy_DESTROY
     if ($w('#radioAreYouSure').value === 'YES') {
         memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'), local.getItem('tzAbbrv')));
         local.setItem('logString', '[~Z2595]entering btCleanUpAllIncludingnrJSON_click:YES');
@@ -3845,6 +4019,8 @@ export function btnClearSpDbase_click(event) {
 }
 
 export function btnWebhookResolve_click(event) {
+    // 202109ResolveAndDestroy
+    // 202109ResolveAndDestroy_RESOLVE
     if ($w('#radioAreYouSure').value === 'YES') {
         let statusThis = $w('#ddCurrentStatusUpdate').value;
         doUpdateThisWebhookPayload(statusThis);
@@ -3898,6 +4074,10 @@ export async function btnCleanUpByKindTEST_click(event) {
 
 export function btnGetWebhookPayload_click(event) {
     updateStatusWebhookPayloadThis(true);
+    if(($w('#sessionEnrollmentJSON').value).length === 0){
+       $w('#sessionEnrollmentJSON').value = `wixWebhookStatus: ${local.getItem('wixWebhookStatus')}` 
+    }
+    
 }
 
 
@@ -4464,14 +4644,6 @@ export function btnStepCopy_click(event) {
 }
 
 export async function btnExtraContactPrimary_click(event) {
-    // let diagnosticOnlyThis = true;
-    // if ($w('#radioAreYouSure').value === 'YES') {
-    //     diagnosticOnlyThis = false;
-    // }
-    // await getContactByEmailAndNotIdFunction(local.getItem('familyEmail'), local.getItem('familyId'), diagnosticOnlyThis);
-    // $w('#sessionEnrollmentJSON').value = local.getItem('logString');
-    // $w('#radioAreYouSure').value = 'NO';
-
     // pstEnrSeven202108getContactByEmailAndNotIdFunction
     let paramObjectPrimary = {};
     paramObjectPrimary.emailToFind = local.getItem('familyEmail');
@@ -4490,14 +4662,6 @@ export async function btnExtraContactPrimary_click(event) {
 }
 
 export async function btnExtraContactStudent_click(event) {
-    // let diagnosticOnlyThis = true;
-    // if ($w('#radioAreYouSure').value === 'YES') {
-    //     diagnosticOnlyThis = false;
-    // }
-    // await getContactByEmailAndNotIdFunction(local.getItem('studentEmail'), local.getItem('studentId'), diagnosticOnlyThis);
-    // $w('#sessionEnrollmentJSON').value = local.getItem('logString');
-    // $w('#radioAreYouSure').value = 'NO';
-
     // pstEnrSeven202108getContactByEmailAndNotIdFunction
     let paramObjectStudent = {};
     paramObjectStudent.emailToFind = local.getItem('studentEmail');
@@ -4666,12 +4830,6 @@ export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}) {
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
     let responseString = local.getItem('logString');
     responseString = responseString.replace(/\n/g, ",");
-    // let cowCatcherIndex = 0;
-    // let lineFeed = '\\n';
-    // while(responseString.indexOf(lineFeed) >= 0 && cowCatcherIndex < 1000){
-    //     responseString.replace(lineFeed,',');
-    //     cowCatcherIndex++;
-    // }
     let responseArray = responseString.split(',');
     let comma = ($w('#spDatabaseResponseJSON').value).length === 0 ? '' : ',';
     $w('#spDatabaseResponseJSON').value += ',' + JSON.stringify(responseArray);
@@ -4781,15 +4939,6 @@ export async function msboxPostEnrollmentSevenPerformStepDO(responseObject = {})
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
     DOX = 'So I can read these comments in WiX-Editor';
     responseObject.logArrayDeveloper.push('{% msboxPostEnrollmentSevenPerformStepDO %}');
-    // responseObject.logArrayDeveloper.push('memory.getItem(msboxLastState) === ' + memory.getItem('msboxLastState'));
-    // responseObject.logArrayDeveloper.push('memory.getItem(msboxCurrentId) === ' + memory.getItem('msboxCurrentId'));
-
-    // responseObject.logArrayDeveloper.push('{# PERFORM_STEP_DO is, other than instantiateSteps and Display, is INERT #}');
-    // PERFORM
-
-
-    // instantiateLoopSwitchEnrollmentSteps(responseObject.currentStepOriginalStepsArray);
-    // displaySteps();
 
 
     let paramObject = {};
@@ -4819,22 +4968,6 @@ export async function msboxPostEnrollmentSevenPerformStepDO(responseObject = {})
     DOX = '≈Z4303≈ Is-Good: paramObject.currentStepObject.origSteps.allStepArray [confirm in Student-Member code-block]';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
 
-    DOX = '<TESTING> Messaging Only';
-    // pstEnrSeven202108SALSDoMessaging TESTING
-    // paramObject.messaging.primary = 'Primary After DO: Thu 8/12 2pm seconds: ' + paramObject.testNumber;
-    // paramObject.messaging.primary = 'DEFAULT';
-    // paramObject.messaging.info = 'Info After DO: Thu 8/12 2pm seconds: ' + paramObject.testNumber;
-    // paramObject.messaging.info = 'The infoo message for stateDatabaseForPrimaryAndStudent';
-    // paramObject.messaging.info = '123456789 123456789 123456789 123456789 123456789 1';//TWO Lines
-    // paramObject.messaging.info = '123456789 123456789 123456789 123456789 1234567_50';//ONE Line
-    // paramObject.messaging.info = 'DEFAULT';
-    // paramObject.messaging.success = 'Success After DO: Thu 8/12 2pm seconds: ' + paramObject.testNumber;
-    // paramObject.messaging.success = 'DEFAULT';
-    // paramObject.messaging.warning = 'Warning After DO: Thu 8/12 2pm seconds: ' + paramObject.testNumber;
-    // paramObject.messaging.warning = 'DEFAULT';
-    // paramObject.messaging.danger = 'Danger After DO: Thu 8/12 2pm seconds: ' + paramObject.testNumber;
-    // paramObject.messaging.danger = 'DEFAULT';
-    DOX = '</TESTING> Messaging Only';
 
 
     // pstEnrSeven202108SALS CALL
@@ -5560,7 +5693,11 @@ export async function appendStepLogPPEQ(key = 'STRING', message = 'STRING', line
     stepStringLog += postLog + '=';
     stepStringLog += msboxLastState + '=';
     stepStringLog += stepThis + '|';
-    memory.setItem('stepLogString', memory.getItem('stepLogString') + stepStringLog )
+    memory.setItem('stepLogStringSecondary', memory.getItem('stepLogStringSecondary') + stepStringLog )
+    if(key.toLocaleLowerCase() !== 'secondary'){
+        memory.setItem('stepLogString', memory.getItem('stepLogString') + stepStringLog )
+    }
+    
     return stepStringLog    
 }
 // ø <---------- </appendStepLogPPEQ UTILITY> ---------->
@@ -5595,6 +5732,7 @@ export function btnPeSevenPrev_click(event) {
 }
 
 export async function btnPeSevenCurrent_click(event) {
+    $w('#btnPeSevenCurrent').hide();
     let initLog = 'btnPeSevenCurrent_click PERFORM';
     await msboxPostEnrollmentSevenActionPerform(initLog);
 }
@@ -5752,18 +5890,6 @@ export function btnApplendStepLog_click(event) {
 }
 
 export function demoAppendStepLog(){
-    // let lineNumberNumber = Math.ceil(Math.random() * 999);
-    // let lineNumberString = lineNumberNumber.toString();
-    // let postLogBoolean = false;
-    // let postLogString = 'false';
-    // let postLogNumber = Math.ceil(Math.random() * 98);
-    // let keyThis = $w('#demoKey').value; 
-    // let messageThis = $w('#demoMessage').value; 
-    // // let lineNumberKindThis = $w('#ddLineNumber'); 
-    // let lineNumberThis = lineNumberString; 
-    // let postLogThis = $w('#ddPostLog').value; 
-    // // let compositionKey =  
-    // return await appendStepLogPPEQ(keyThis, messageThis, lineNumberThis, postLogThis);
     let key = $w('#demoKey').value; 
     let message = $w('#demoMessage').value; 
     let line = $w('#ddLineNumber').value; 
@@ -5867,14 +5993,37 @@ export function btnGetStepResponseKey_click(event) {
 }
 
 export function btnResolveAndDestroy_click(event) {
+    // 202109ResolveAndDestroy
+    // 202109ResolveAndDestroy_RESOLVE
+    // 202109ResolveAndDestroy_DESTROY
 	doResolveAndDestroy();
+}
+
+export function btnStepLogString_click(event) {
+    let current = ($w('#spContactResponseJSON').value).length === 0 ? 'stepLogStringSecondary is EMPTY' : $w('#spContactResponseJSON').value;
+    let stepLogString = memory.getItem('stepLogString') === null || (memory.getItem('stepLogString')).length === 0 ? 'stepLogString is EMPTY' : memory.getItem('stepLogString'); 
+    let stepLogStringSecondary = memory.getItem('stepLogStringSecondary') === null || (memory.getItem('stepLogStringSecondary')).length === 0 ? 'stepLogStringSecondary is EMPTY' : memory.getItem('stepLogStringSecondary');
+    // let next = current === stepLogStringSecondary ? 'stepLogString' : 'stepLogStringSecondary';
+    let next = current === stepLogStringSecondary ? 'A' : 'B';
+    // next = current === stepLogString ? 'stepLogStringSecondary' : next;
+    next = current === stepLogString ? 'B' : next;
+    next = next === 'A' ? stepLogString : stepLogStringSecondary;
+
+	$w('#spContactResponseJSON').value = next;
+    uiCopyTextElementThis('spContactResponseJSON');
 }
 
 /**
  *	Adds an event handler that runs when the element is clicked.
  *	 @param {$w.MouseEvent} event
  */
-export function btnStepLogString_click(event) {
-	$w('#spContactResponseJSON').value = memory.getItem('stepLogString');
-    uiCopyTextElementThis('spContactResponseJSON');
+export function btnGetWebhookStatuses_click(event) {
+	let responseObject = {};
+    let wixWebhookStatus = typeof local.getItem('wixWebhookStatus') === 'string' ? local.getItem('wixWebhookStatus') : 'NNULL';
+    let webhookThisStatus = typeof local.getItem('webhookThisStatus') === 'string' ? local.getItem('webhookThisStatus') : 'NNULL';;
+    let webhookThisResolved = typeof local.getItem('webhookThisResolved') === 'string' ? local.getItem('webhookThisResolved') : 'NNULL';;
+    responseObject.wixWebhookStatus = wixWebhookStatus;
+    responseObject.webhookThisStatus = webhookThisStatus;
+    responseObject.webhookThisResolved = webhookThisResolved;
+    $w('#sessionEnrollmentJSON').value = JSON.stringify(responseObject,undefined,4)
 }

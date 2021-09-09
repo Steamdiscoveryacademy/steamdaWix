@@ -696,6 +696,18 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
         // ø <stateSteps> BEGIN
         case 'ZERO':
             // ø <stateOnramp>
+            // ø <assign UI Demografx>
+            $w('#btnPrimaryName').label = local.getItem('ppFirst') + ' ' + local.getItem('ppLast');
+            $w('#btnPrimaryName').enable();
+            $w('#btnStudentName').label = local.getItem('stFirst') + ' ' + local.getItem('stLast');
+            $w('#btnStudentName').enable();
+            let spName = (local.getItem('spFirst') + ' ' + local.getItem('spLast')).trim();
+            if(spName.length > 0){
+                $w('#btnSecondaryName').label = spName;
+                $w('#btnSecondaryName').enable();
+                $w('#btnSecondaryIdLabel').enable();
+            }
+            // ø </assign UI Demografx>
             if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
                 await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
             }
@@ -3264,8 +3276,8 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
         logString += '\n' + "local.getItem('ppLast'): " + local.getItem('ppLast');
         logString += '\n' + "local.getItem('stFirst'): " + local.getItem('stFirst');
         logString += '\n' + "local.getItem('stPreferredFirst'): " + local.getItem('stPreferredFirst');
-        logString += '\n' + "local.getItem('stLast'): " + local.getItem('stLast');
-        logString += '\n' + "local.getItem('spFirst'): " + local.getItem('stFirst');
+        logString += '\n' + "local.getItem('stLast'): " + local.getItem('spLast');
+        logString += '\n' + "local.getItem('spFirst'): " + local.getItem('spFirst');
         logString += '\n' + "local.getItem('spLast'): " + local.getItem('stLast');
         logString += '\n' + "local.getItem('comboName'): " + local.getItem('comboName');
         logString += '\n' + "[CORE]local.getItem('termId'): " + local.getItem('termId');
@@ -5089,6 +5101,7 @@ export async function msboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# n
     memory.setItem('stepLogString','');
     local.setItem('stepMessagingJSON','');
     // ø </CleanUp B4 things Start>
+    await doSimpleDemogrfxAssignment()
     await msboxPostEnrollmentSevenAnyAction(responseObject);
     await onReadyToOnRamp(responseObject);
     // </202108100800> 
@@ -5150,6 +5163,46 @@ export async function msboxPostEnrollmentSevenActionPerform(anyButtonLog = '{# n
     await msboxPostEnrollmentSevenAnyAction(responseObject);
 }
 // ø <---------- </msboxPostEnrollmentSevenActionPerform - PERFORM_STATE_SCRIPTS> ---------->
+
+// ø <---------- <doSimpleDemogrfxAssignment - ON_READY> ---------->
+export async function doSimpleDemogrfxAssignment(){
+    // ø <--->
+    // ø <added 20210909>
+    // ø <Simple Demogrfx Assignment to local-Storage upon OnRamp>
+    let enrollmentObject = JSON.parse(local.getItem('ondeckEnrollmentJSON'));
+    // local.setItem('superEnrollmentStatus', enrollmentObject.descr);
+    local.setItem('staffIdentifiedFamilyId', enrollmentObject.family.parent.primary.memberId);
+    // local.setItem('familySeed', enrollmentObject.descr);
+    // local.setItem('familyId', enrollmentObject.descr);
+    // local.setItem('studentId', enrollmentObject.descr);
+    // local.setItem('secondaryId', enrollmentObject.descr);
+    local.setItem('familyEmail', enrollmentObject.family.emails[0].email);
+    // local.setItem('studentEmail', enrollmentObject.descr);
+    // local.setItem('secondaryEmail', enrollmentObject.descr);
+    local.setItem('ppFirst', enrollmentObject.family.parent.primary.first);
+    local.setItem('ppLast', enrollmentObject.family.parent.primary.last);
+    local.setItem('stFirst', enrollmentObject.family.student.name.first);
+    local.setItem('stPreferredFirst', enrollmentObject.family.student.name.preferred);
+    local.setItem('stLast', enrollmentObject.family.student.name.last);
+    let spFirst = "";
+    let spLast = "";
+    let spAny = typeof enrollmentObject.family.parent.secondary === 'undefined' ? false : true;
+    if (spAny) {
+        spFirst = typeof enrollmentObject.family.parent.secondary.first === 'string' ? enrollmentObject.family.parent.secondary.first : "";
+        spLast = typeof enrollmentObject.family.parent.secondary.last === 'string' ? enrollmentObject.family.parent.secondary.last : "";
+        if (spLast.length === 0 && spFirst.length > 0) {
+            spLast = local.getItem('ppLast');
+        }
+    }
+    local.setItem('spFirst', spFirst);
+    local.setItem('spLast', spLast);
+    local.setItem('comboName', enrollmentObject.family.student.name.studentParentCombo);
+    // ø </Simple Demogrfx Assignment to local-Storage upon OnRamp>
+    // ø </added 20210909>
+    // ø </...>
+}
+// ø <---------- </doSimpleDemogrfxAssignment - ON_READY> ---------->
+
 
 // pstEnrSeven202108ACTION ACTION_SCRIPT-ALL_END
 // ø <---------- </msboxPostEnrollmentSevenActionScripts> ---------->

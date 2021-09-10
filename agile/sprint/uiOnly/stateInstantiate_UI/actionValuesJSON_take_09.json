@@ -1,0 +1,130 @@
+{
+    "headerRepeater": {
+        "headerRepeaterArray": [
+            {
+                "title": "Who",
+                "titleSub": "",
+                "boxColor": "https://static.wixstatic.com/media/523205_5104d8acb3d2450c8b23ef9c4cb0d362~mv2.png",
+                "doxColumn": "header_who",
+                "_id": "1"
+            },
+            {
+                "title": "Member",
+                "titleSub": "",
+                "boxColor": "https://static.wixstatic.com/media/523205_760601a9aeca428aadcc29d99a6558ec~mv2.png",
+                "doxColumn": "header_member",
+                "_id": "2"
+            },
+            {
+                "title": "Contact",
+                "titleSub": "",
+                "boxColor": "https://static.wixstatic.com/media/523205_6755546f08b24ed9861b1f629e17cabb~mv2.png",
+                "doxColumn": "header_contact",
+                "_id": "3"
+            },
+            {
+                "title": "Data-Base",
+                "titleSub": "",
+                "boxColor": "https://static.wixstatic.com/media/523205_5274995693c04d1ab87b61ab8b23c94e~mv2.png",
+                "doxColumn": "header_database",
+                "_id": "4"
+            }
+        ]
+    },
+    "primaryRepeater": {
+        "primaryRepeaterArray": [
+            {
+                "title": "Primary",
+                "titleSub": "Amanda Ames",
+                "boxColor": "https://static.wixstatic.com/media/523205_5104d8acb3d2450c8b23ef9c4cb0d362~mv2.png",
+                "doxColumn": "who",
+                "_id": "1"
+            },
+            {
+                "title": "INSERT",
+                "titleSub": "",
+                "boxColor": "https://static.wixstatic.com/media/523205_760601a9aeca428aadcc29d99a6558ec~mv2.png",
+                "doxColumn": "member",
+                "_id": "2"
+            },
+            {
+                "title": "UPDATE",
+                "titleSub": "",
+                "boxColor": "https://static.wixstatic.com/media/523205_6755546f08b24ed9861b1f629e17cabb~mv2.png",
+                "doxColumn": "contact",
+                "_id": "3"
+            },
+            {
+                "title": "INSERT",
+                "titleSub": "",
+                "boxColor": "https://static.wixstatic.com/media/523205_5274995693c04d1ab87b61ab8b23c94e~mv2.png",
+                "doxColumn": "database",
+                "_id": "4"
+            }
+        ]
+    },
+    "studentRepeater": {
+        "studentRepeaterArray": [
+            {
+                "title": "Student",
+                "titleSub": "Isabel Ames",
+                "boxColor": "https://static.wixstatic.com/media/523205_5104d8acb3d2450c8b23ef9c4cb0d362~mv2.png",
+                "doxColumn": "Who",
+                "_id": "1"
+            },
+            {
+                "title": "INSERT",
+                "titleSub": "",
+                "boxColor": "https://static.wixstatic.com/media/523205_760601a9aeca428aadcc29d99a6558ec~mv2.png",
+                "doxColumn": "member",
+                "_id": "2"
+            },
+            {
+                "title": "UPDATE",
+                "titleSub": "",
+                "boxColor": "https://static.wixstatic.com/media/523205_6755546f08b24ed9861b1f629e17cabb~mv2.png",
+                "doxColumn": "contact",
+                "_id": "3"
+            },
+            {
+                "title": "INSERT",
+                "titleSub": "",
+                "boxColor": "https://static.wixstatic.com/media/523205_5274995693c04d1ab87b61ab8b23c94e~mv2.png",
+                "doxColumn": "database",
+                "_id": "4"
+            }
+        ]
+    },
+    "secondaryRepeater": {
+        "secondaryRepeaterArray": [
+            {
+                "title": "Secondary",
+                "titleSub": "Lucas Ames",
+                "boxColor": "https://static.wixstatic.com/media/523205_5104d8acb3d2450c8b23ef9c4cb0d362~mv2.png",
+                "doxColumn": "Who",
+                "_id": "1"
+            },
+            {
+                "title": "NA",
+                "titleSub": "",
+                "boxColor": "https://static.wixstatic.com/media/523205_760601a9aeca428aadcc29d99a6558ec~mv2.png",
+                "doxColumn": "member",
+                "_id": "2"
+            },
+            {
+                "title": "INSERT",
+                "titleSub": "",
+                "boxColor": "https://static.wixstatic.com/media/523205_6755546f08b24ed9861b1f629e17cabb~mv2.png",
+                "doxColumn": "contact",
+                "_id": "3"
+            },
+            {
+                "title": "INSERT",
+                "titleSub": "",
+                "boxColor": "https://static.wixstatic.com/media/523205_5274995693c04d1ab87b61ab8b23c94e~mv2.png",
+                "doxColumn": "database",
+                "_id": "4"
+            }
+        ]
+    }
+}

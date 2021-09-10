@@ -9,9 +9,57 @@ https://webhook.site/191e8210-1ce6-4d05-8d72-e3a3a10cf0e4
 
 
 ==========================================
-=====   Thursday September 2, 2021   =====
+=====   Thursday September 9, 2021   =====
 ==========================================
-===================================
+==========================================
+
+local.getItem('wixWebhookStatus')
+
+
+logArrayDeveloper
+
+local.setItem('superEnrollmentStatus'
+memory.setItem('stepResponseBootstrapKey',stepResponseBootstrapKey);
+
+            appendStepLogPPEQ('info', 'After Perfom Info where None Before UI');
+            appendStepLogPPEQ('danger', 'Override Base Success with Different Danger UI');
+
+
+if(Math.floor(Math.random() * 2) === 1){
+                appendStepLogPPEQ('primary', 'Override ZERO Script Primary with Different Primary UI');
+            }
+            if(Math.floor(Math.random() * 2) === 1){
+                appendStepLogPPEQ('info', 'Override ZERO Script Info with Different Info UI');
+            }
+            if(Math.floor(Math.random() * 2) === 1){
+                appendStepLogPPEQ('success', 'Override Base Success with Different Success UI');
+            }
+            appendStepLogPPEQ('danger', 'danger zero core force');
+            
+
+            // responseNumber = Math.ceil(Math.random() * 100);
+            // if(responseNumber > 0 && responseNumber < 50){bootstrapMessage = `The Duplicate Contact Anomaly was not present No Action Required [${responseNumber}]`; bootstrapKey = 'success';}
+            // if(responseNumber > 49 && responseNumber < 64){bootstrapMessage = `The Duplicate Contact Anomaly was present for the Primary Parent and Handled Successfully [${responseNumber}]`; bootstrapKey = 'warning';}
+            // if(responseNumber > 63 && responseNumber < 78){bootstrapMessage = `The Duplicate Contact Anomaly was present for the Student and Handled Successfully [${responseNumber}]`; bootstrapKey = 'warning';}
+            // if(responseNumber > 77 && responseNumber < 92){bootstrapMessage = `The Duplicate Contact Anomaly was present for both Primary Parent & Student and Handled Successfully [${responseNumber}]`; bootstrapKey = 'warning';}
+            // if(responseNumber > 91 && responseNumber < 101){bootstrapMessage = `The Duplicate Contact Anomaly was present the Logic Failed to Handle it [${responseNumber}]`; bootstrapKey = 'danger';}
+            // appendStepLogPPEQ(bootstrapKey, bootstrapMessage);
+            appendStepLogPPEQ('danger', 'danger in core force');
+
+
+Messgng:
+local.getItem('stepMessagingJSON')
+local.setItem('stepMessagingJSON'
+
+stepLog:
+memory.getItem('stepLogString')
+memory.setItem('stepLogString'
+
+
+ppContactResponseJSON
+
+txtStateObjectCurrentSeven
+
 
 RESOLVE:
         let statusThis = 'RESOLVED';//$w('#ddCurrentStatusUpdate').value;

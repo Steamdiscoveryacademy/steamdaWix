@@ -1,0 +1,12 @@
+{
+    "stash": [
+        "local.getItem('ppFirst'): Amanda",
+        "local.getItem('ppLast'): Ames",
+        "local.getItem('stFirst'): Isabel",
+        "local.getItem('stPreferredFirst'): Isabel",
+        "local.getItem('stLast'): Ames",
+        "local.getItem('spFirst'): Lucas",
+        "local.getItem('spLast'): Ames",
+        "local.getItem('comboName'): Isabel Ames (Amanda)"
+    ]
+}

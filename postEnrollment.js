@@ -681,6 +681,13 @@ export async function doStepSwitch(stepKey = 'PPENDING') {
 // pstEnrSeven202108STEPS_ARRAY_LOOP_SWITCH
 // ø <---------- </doStepSwitch> ---------->
 
+// ! ====================================================================================================
+// ! ====================                          <USER-INTERFACT>                        ==============
+// ! ====================================================================================================
+// ! ====================                    <doStepUserInterfaceSwitch>                   ==============
+// ! ====================              ...core to the 202109_UserInterface BEGIN           ==============
+// ! ====================================================================================================
+
 // ø <---------- <doStepUserInterfaceSwitch>  ---------->
 export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObjectStep = {}) {
     // pstEnrSeven202108STEP_UI_SWITCH
@@ -773,6 +780,8 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
             $w('#txtComboName').text = local.getItem('comboName');
             $w('#txtComboName').show();
             console.log('UI Step: ' + stepKey)
+            $w('#txtActionValueGridDescr').hide();
+            $w('#boxActionValueGrid').show();
             break;
             // ø </stateInstantiate>
         case 'PREP_ppMember':
@@ -815,15 +824,15 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
                 await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
             }
             console.log('UI Step: ' + stepKey)
-            $w('#btnFamilyId').label = local.getItem('familyId');
-            $w('#btnFamilyId').enable();
-            $w('#btnStudentId').label = local.getItem('studentId');
+            // $w('#btnFamilyId').label = local.getItem('familyId');
+            // $w('#btnFamilyId').enable();
+            // $w('#btnStudentId').label = local.getItem('studentId');
             // † Names
             // † Emails
             responseKey =  memory.getItem('stepResponseBootstrapKey').toLowerCase();
-            $w('#btnStudentId').enable();
+            // $w('#btnStudentId').enable();
             // await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${responseKey.toUpperCase()} in UI`);
-            $w('#btnStudentId').enable();
+            // $w('#btnStudentId').enable();
             break;
             // ø </stateMemberConfirm>
         case 'dedupePpStContact':
@@ -994,6 +1003,132 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
 
 }
 // ø <---------- </doStepUserInterfaceSwitch> ---------->
+// ! ====================================================================================================
+// ! ====================         </doStepUserInterfaceSwitch> 202109_UserInterface        ==============
+// ! ====================================================================================================
+
+
+// ! ====================================================================================================
+// ! ====================                 <loadActionValueRepeatersWithJSON>               ==============
+// ! ====================             ...core to the Enrollment Testing Process            ==============
+// ! ====================================================================================================
+// ø <---------- <loadActionValueRepeatersWithJSON>  ---------->
+ export async function loadActionValueRepeatersWithJSON() {
+		let actionValuesJSON/*take_20_FAUX*/ = `{"headerRepeater":{"headerRepeaterArray":[{"title":"Who","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_6755546f08b24ed9861b1f629e17cabb~mv2.png","doxColumn":"header_who","_id":"1"},{"title":"Member","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_760601a9aeca428aadcc29d99a6558ec~mv2.png","doxColumn":"header_member","_id":"2"},{"title":"Contact","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5274995693c04d1ab87b61ab8b23c94e~mv2.png","doxColumn":"header_contact","_id":"3"},{"title":"Data-Base","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5104d8acb3d2450c8b23ef9c4cb0d362~mv2.png","doxColumn":"header_database","_id":"4"}]},"primaryRepeater":{"primaryRepeaterArray":[{"title":"Primary","titleSub":"ppName","boxColor":"https://static.wixstatic.com/media/523205_6755546f08b24ed9861b1f629e17cabb~mv2.png","doxColumn":"who","_id":"1"},{"title":"ppMMBR","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_760601a9aeca428aadcc29d99a6558ec~mv2.png","doxColumn":"member","_id":"2"},{"title":"ppCTCT","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5274995693c04d1ab87b61ab8b23c94e~mv2.png","doxColumn":"contact","_id":"3"},{"title":"ppDB","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5104d8acb3d2450c8b23ef9c4cb0d362~mv2.png","doxColumn":"database","_id":"4"}]},"studentRepeater":{"studentRepeaterArray":[{"title":"Student","titleSub":"stName","boxColor":"https://static.wixstatic.com/media/523205_6755546f08b24ed9861b1f629e17cabb~mv2.png","doxColumn":"Who","_id":"1"},{"title":"stMMBR","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_760601a9aeca428aadcc29d99a6558ec~mv2.png","doxColumn":"member","_id":"2"},{"title":"stCTCT","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5274995693c04d1ab87b61ab8b23c94e~mv2.png","doxColumn":"contact","_id":"3"},{"title":"stDB","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5104d8acb3d2450c8b23ef9c4cb0d362~mv2.png","doxColumn":"database","_id":"4"}]},"secondaryRepeater":{"secondaryRepeaterArray":[{"title":"Secondary","titleSub":"spName","boxColor":"https://static.wixstatic.com/media/523205_6755546f08b24ed9861b1f629e17cabb~mv2.png","doxColumn":"Who","_id":"1"},{"title":"spMMBR","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_760601a9aeca428aadcc29d99a6558ec~mv2.png","doxColumn":"member","_id":"2"},{"title":"spCTCT","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5274995693c04d1ab87b61ab8b23c94e~mv2.png","doxColumn":"contact","_id":"3"},{"title":"spDB","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5104d8acb3d2450c8b23ef9c4cb0d362~mv2.png","doxColumn":"database","_id":"4"}]}}`;
+		// let actionValueRepeatersObject = JSON.parse($w('#txtbxActionValuesJSON').value)
+		let actionValueRepeatersObject = JSON.parse(actionValuesJSON)
+	// ø <Header>
+	let headerId = 'rptrHeader';
+	let headerRepeaterArray = actionValueRepeatersObject.headerRepeater.headerRepeaterArray;
+	headerRepeaterArray = await prepRepeaterArray(headerId,headerRepeaterArray);
+
+	await loadRepeaterWithArray(headerId,headerRepeaterArray);
+	// ø </Header>
+	
+	// // ø <Pimary>
+	let primaryId = 'rptrPrimary';
+	let primaryRepeaterArray = actionValueRepeatersObject.primaryRepeater.primaryRepeaterArray;
+	primaryRepeaterArray = await prepRepeaterArray(primaryId,primaryRepeaterArray);
+
+	await loadRepeaterWithArray(primaryId,primaryRepeaterArray);
+	// // ø </Primary>
+	
+	// // ø <Student>
+	let studentId = 'rptrStudent';
+	let studentRepeaterArray = actionValueRepeatersObject.studentRepeater.studentRepeaterArray;
+	studentRepeaterArray = await prepRepeaterArray(studentId,studentRepeaterArray);
+
+	await loadRepeaterWithArray(studentId,studentRepeaterArray);
+	// // ø </Student>
+	
+	// // ø <Secondary>
+	let secondaryId = 'rptrSecondary';
+	let secondaryRepeaterArray = actionValueRepeatersObject.secondaryRepeater.secondaryRepeaterArray;
+	secondaryRepeaterArray = await prepRepeaterArray(secondaryId,secondaryRepeaterArray);
+
+	await loadRepeaterWithArray(secondaryId,secondaryRepeaterArray);
+	// // ø </Secondary>
+
+}
+// ø <---------- </loadActionValueRepeatersWithJSON> ---------->
+
+// ø <---------- <prepRepeaterArray>   ---------->
+export async function prepRepeaterArray(repeaterId,repeaterArray = []){
+	let prepKind = 'PENDING';
+	prepKind = repeaterId.indexOf('Header') ? 'header' : prepKind;
+	prepKind = repeaterId.indexOf('Primary') ? 'primary' : prepKind;
+	let noPrepRequiredPrepKindArray = ['header'];
+	if(noPrepRequiredPrepKindArray.includes(prepKind)){
+		return repeaterArray;
+	}
+
+	return repeaterArray;
+}
+// ø <---------- </prepRepeaterArray>  ---------->
+
+// ø <---------- <loadRepeaterWithArray>  ---------->
+export async function loadRepeaterWithArray(repeaterId, preppedCourseRepeaterArray = []){
+	if(repeaterId.substr(0,1) !== '#'){
+		repeaterId = '#' + repeaterId;
+	}
+	// ø <ELSE>
+	if($w(repeaterId).rendered === false){
+		return;
+	}
+	// ø </ELSE>
+
+	let prepKind = 'PENDING';
+	prepKind = repeaterId.indexOf('Header') ? 'header' : prepKind;
+	prepKind = repeaterId.indexOf('Primary') ? 'primary' : prepKind;
+
+
+	$w(repeaterId).data = preppedCourseRepeaterArray;
+	let titleId = 'PENDING';
+	let titleSubId = 'PENDING';
+	let boxId = 'PENDING';
+	titleId = repeaterId === '#rptrHeader' ? '#txtHdrTitle' : titleId;
+	titleId = repeaterId === '#rptrPrimary' ? '#txtPrimaryTitle' : titleId;
+	titleId = repeaterId === '#rptrStudent' ? '#txtStudentTitle' : titleId;
+	titleId = repeaterId === '#rptrSecondary' ? '#txtSecondaryTitle' : titleId;
+
+	// titleSubId = repeaterId === '#rptrHeader' ? 'NA' : titleSubId;
+	titleSubId = repeaterId === '#rptrPrimary' ? '#txtPrimaryTitleSub' : titleSubId;
+	titleSubId = repeaterId === '#rptrStudent' ? '#txtStudentTitleSub' : titleSubId;
+	titleSubId = repeaterId === '#rptrSecondary' ? '#txtSecondaryTitleSub' : titleSubId;
+
+	boxId = repeaterId === '#rptrHeader' ? '#boxHdr' : boxId;
+	boxId = repeaterId === '#rptrPrimary' ? '#boxPrimary' : boxId;
+	boxId = repeaterId === '#rptrStudent' ? '#boxStudent' : boxId;
+	boxId = repeaterId === '#rptrSecondary' ? '#boxSecondary' : boxId;
+	
+	console.groupCollapsed('repeaterIds')
+	console.log(`titleId: ${titleId}`)
+	console.log(`titleSubId: ${titleSubId}`)
+	console.log(`boxId: ${boxId}`)
+	console.groupEnd();
+
+	$w(repeaterId).onItemReady( ($element, elementData,index) => {
+
+		$element(titleId).text = elementData.title;
+		if(prepKind !== 'header'){
+			$element(titleSubId).text = elementData.titleSub;
+		}
+
+		// $element(boxId).background.src = "https://static.wixstatic.com/media/523205_50b6cfa021dc4057a41b55112ff2db85~mv2.png";
+		$element(boxId).background.src = elementData.boxColor;
+
+	});
+}
+// ø <---------- </loadRepeaterWithArray> ---------->
+
+
+
+// ! ====================================================================================================
+// ! ====================                   </loadActionValueRepeatersWithJSON>            ==============
+// ! ====================================================================================================
+// ! ====================                          </USER-INTERFACT>                       ==============
+// ! ====================================================================================================
+
 
 // ø <---------- <doStepLoopSwitch>  ---------->
 export async function doStepLoopSwitch() {

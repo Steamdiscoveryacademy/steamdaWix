@@ -38,6 +38,7 @@ import wixWindow from 'wix-window';
  // ø pstEnrSeven202108ppStContactDedupe  TODAY
  // ø 202109ResolveAndDestroy  TODAY
  // ø 202109_UserInterface  TODAY
+ // ø 202109_ActionValueRepeaters  TODAY
  */
 
 
@@ -783,6 +784,7 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
             $w('#txtComboName').text = local.getItem('comboName');
             $w('#txtComboName').show();
 
+            // 202109_ActionValueRepeaters
             let actionValueRepeatersParamObject = {};
             actionValueRepeatersParamObject.prepKey = 'stateInstantiate';
             await loadActionValueRepeatersWithJSON(actionValueRepeatersParamObject);
@@ -1023,6 +1025,7 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
 // ø <---------- <loadActionValueRepeatersWithJSON>  ---------->
  export async function loadActionValueRepeatersWithJSON(paramObject = {}) {
      // 202109_UserInterface
+    //  202109_ActionValueRepeaters
     let prepKey = typeof paramObject.prepKey !== 'string' ? 'MISSING' : paramObject.prepKey;
     paramObject.prepKey = prepKey;
     let actionValuesJSON/*take_20_FAUX*/ = `{"headerRepeater":{"headerRepeaterArray":[{"title":"Who","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_6755546f08b24ed9861b1f629e17cabb~mv2.png","doxColumn":"header_who","_id":"1"},{"title":"Member","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_760601a9aeca428aadcc29d99a6558ec~mv2.png","doxColumn":"header_member","_id":"2"},{"title":"Contact","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5274995693c04d1ab87b61ab8b23c94e~mv2.png","doxColumn":"header_contact","_id":"3"},{"title":"Data-Base","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5104d8acb3d2450c8b23ef9c4cb0d362~mv2.png","doxColumn":"header_database","_id":"4"}]},"primaryRepeater":{"primaryRepeaterArray":[{"title":"Primary","titleSub":"ppName","boxColor":"https://static.wixstatic.com/media/523205_6755546f08b24ed9861b1f629e17cabb~mv2.png","doxColumn":"who","_id":"1"},{"title":"ppMMBR","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_760601a9aeca428aadcc29d99a6558ec~mv2.png","doxColumn":"member","_id":"2"},{"title":"ppCTCT","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5274995693c04d1ab87b61ab8b23c94e~mv2.png","doxColumn":"contact","_id":"3"},{"title":"ppDB","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5104d8acb3d2450c8b23ef9c4cb0d362~mv2.png","doxColumn":"database","_id":"4"}]},"studentRepeater":{"studentRepeaterArray":[{"title":"Student","titleSub":"stName","boxColor":"https://static.wixstatic.com/media/523205_6755546f08b24ed9861b1f629e17cabb~mv2.png","doxColumn":"Who","_id":"1"},{"title":"stMMBR","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_760601a9aeca428aadcc29d99a6558ec~mv2.png","doxColumn":"member","_id":"2"},{"title":"stCTCT","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5274995693c04d1ab87b61ab8b23c94e~mv2.png","doxColumn":"contact","_id":"3"},{"title":"stDB","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5104d8acb3d2450c8b23ef9c4cb0d362~mv2.png","doxColumn":"database","_id":"4"}]},"secondaryRepeater":{"secondaryRepeaterArray":[{"title":"Secondary","titleSub":"spName","boxColor":"https://static.wixstatic.com/media/523205_6755546f08b24ed9861b1f629e17cabb~mv2.png","doxColumn":"Who","_id":"1"},{"title":"spMMBR","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_760601a9aeca428aadcc29d99a6558ec~mv2.png","doxColumn":"member","_id":"2"},{"title":"spCTCT","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5274995693c04d1ab87b61ab8b23c94e~mv2.png","doxColumn":"contact","_id":"3"},{"title":"spDB","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5104d8acb3d2450c8b23ef9c4cb0d362~mv2.png","doxColumn":"database","_id":"4"}]}}`;
@@ -1032,7 +1035,10 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
 	// ø <Header>
 	let headerId = 'rptrHeader';
 	let headerRepeaterArray = actionValueRepeatersObject.headerRepeater.headerRepeaterArray;
-	headerRepeaterArray = await prepRepeaterArray(headerId,headerRepeaterArray);
+    paramObject.repeaterId = headerId;
+    paramObject.repeaterArray = headerRepeaterArray;
+	// headerRepeaterArray = await prepRepeaterArray(headerId,headerRepeaterArray);
+	headerRepeaterArray = await prepRepeaterArray(paramObject);
 
 	await loadRepeaterWithArray(headerId,headerRepeaterArray);
 	// ø </Header>
@@ -1040,15 +1046,23 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
 	// // ø <Pimary>
 	let primaryId = 'rptrPrimary';
 	let primaryRepeaterArray = actionValueRepeatersObject.primaryRepeater.primaryRepeaterArray;
-	primaryRepeaterArray = await prepRepeaterArray(primaryId,primaryRepeaterArray);
-
+    paramObject.repeaterId = primaryId;
+    paramObject.repeaterArray = primaryRepeaterArray;
+	// primaryRepeaterArray = await prepRepeaterArray(primaryId,primaryRepeaterArray);
+	primaryRepeaterArray = await prepRepeaterArray(paramObject);
+    
 	await loadRepeaterWithArray(primaryId,primaryRepeaterArray);
 	// // ø </Primary>
 	
 	// // ø <Student>
 	let studentId = 'rptrStudent';
 	let studentRepeaterArray = actionValueRepeatersObject.studentRepeater.studentRepeaterArray;
-	studentRepeaterArray = await prepRepeaterArray(studentId,studentRepeaterArray);
+     
+    paramObject.repeaterId = studentId;
+    paramObject.repeaterArray = studentRepeaterArray;
+	// studentRepeaterArray = await prepRepeaterArray(studentId,studentRepeaterArray);
+	headerRepeaterArray = await prepRepeaterArray(paramObject);
+ 
 
 	await loadRepeaterWithArray(studentId,studentRepeaterArray);
 	// // ø </Student>
@@ -1056,7 +1070,12 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
 	// // ø <Secondary>
 	let secondaryId = 'rptrSecondary';
 	let secondaryRepeaterArray = actionValueRepeatersObject.secondaryRepeater.secondaryRepeaterArray;
-	secondaryRepeaterArray = await prepRepeaterArray(secondaryId,secondaryRepeaterArray);
+     
+    paramObject.repeaterId = secondaryId;
+    paramObject.repeaterArray = secondaryRepeaterArray;
+	// secondaryRepeaterArray = await prepRepeaterArray(secondaryId,secondaryRepeaterArray);
+	headerRepeaterArray = await prepRepeaterArray(paramObject);
+ 
 
 	await loadRepeaterWithArray(secondaryId,secondaryRepeaterArray);
 	// // ø </Secondary>
@@ -1065,8 +1084,11 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
 // ø <---------- </loadActionValueRepeatersWithJSON> ---------->
 
 // ø <---------- <prepRepeaterArray>   ---------->
-export async function prepRepeaterArray(repeaterId,repeaterArray = []){
+export async function prepRepeaterArray(paramObject = {}){
     // 202109_UserInterface
+    // 202109_ActionValueRepeaters
+    let repeaterId = paramObject.repeaterId;
+    let repeaterArray = paramObject.repeaterArray;
 	let prepKind = 'PENDING';
 	prepKind = repeaterId.indexOf('Header') ? 'header' : prepKind;
 	prepKind = repeaterId.indexOf('Primary') ? 'primary' : prepKind;
@@ -1082,6 +1104,7 @@ export async function prepRepeaterArray(repeaterId,repeaterArray = []){
 // ø <---------- <loadRepeaterWithArray>  ---------->
 export async function loadRepeaterWithArray(repeaterId, preppedCourseRepeaterArray = []){
     // 202109_UserInterface
+    // 202109_ActionValueRepeaters
 	if(repeaterId.substr(0,1) !== '#'){
 		repeaterId = '#' + repeaterId;
 	}
@@ -1581,8 +1604,10 @@ export function ppMemberBuildOnDeckJSONZZZ() {
 // ø <---------- <manually added Step Functions>  ---------->
 // ø <---------- <doInstantiateLoopSwitchStep>  ---------->
 export async function doInstantiateLoopSwitchStep() {
+    console.groupCollapsed('≈1589≈ doInstantiateLoopSwitchStep')
     memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'), local.getItem('tzAbbrv')));
     local.setItem('logString', local.getItem('logString') + '\n[~Z319]entering: ' + 'doInstantiateLoopSwitchStep() at ' + memory.getItem('lastStamp'))
+    console.log(`memory.getItem('lastStamp'): ${memory.getItem('lastStamp')}`)
 
     local.setItem('superEnrollmentStatus', 'CONTINUE');
 
@@ -1607,7 +1632,7 @@ export async function doInstantiateLoopSwitchStep() {
     let memberId = enrollmentObject.family.parent.primary.memberId
     local.setItem('staffIdentifiedFamilyId', memberId);
 
-
+    // ø <20210911_nowRedundant>
     local.setItem('ppFirst', enrollmentObject.family.parent.primary.first);
     local.setItem('ppLast', enrollmentObject.family.parent.primary.last);
     local.setItem('stFirst', enrollmentObject.family.student.name.first);
@@ -1625,10 +1650,13 @@ export async function doInstantiateLoopSwitchStep() {
     }
     local.setItem('spFirst', spFirst);
     local.setItem('spLast', spLast);
+    // ø </20210911_nowRedundant>
 
     let tempStamp = await nowISO(local.getItem('timezoneOffset'), local.getItem('tzAbbrv'));
     local.setItem('logString', local.getItem('logString') + '\n[~Z322]about to call: ' + 'actionValueEvaluation() at ' + tempStamp);
     await actionValueEvaluation();
+    console.log('≈1640≈ await actionValueEvaluation(); RETURNED')
+    console.groupEnd()
     tempStamp = await nowISO(local.getItem('timezoneOffset'), local.getItem('tzAbbrv'));
     local.setItem('logString', local.getItem('logString') + '\n[~1148]just called: ' + 'actionValueEvaluation() at ' + tempStamp);
     local.setItem('logString', local.getItem('logString') + '\nppAction: ' + memory.getItem('ppAction'))
@@ -1663,6 +1691,9 @@ export async function doInstantiateLoopSwitchStep() {
 
 // ø <---------- <actionValueEvaluation of IINSTANTIATE>  ---------->
 export async function actionValueEvaluation() {
+    console.groupCollapsed('actionValueEvaluation');
+    console.log('≈1676≈ actionValueEvaluation(); ENTERED');
+
     // pstEnrSeven20210825_ActionValueEvaluation
     let tempStamp = await nowISO(local.getItem('timezoneOffset'), local.getItem('tzAbbrv'));
     local.setItem('logString', local.getItem('logString') + '\nLAUNCH\n[~Z484] Entering actionValueEvaluation() at ' + tempStamp);
@@ -1671,25 +1702,35 @@ export async function actionValueEvaluation() {
     let spAction = "NA|INSERT|INSERT";
 
     let staffMatch = local.getItem('staffIdentifiedFamilyId') === 'INSTANTIATE' ? false : true;
+    console.log(`≈1687≈ staffMatch; ${staffMatch}`);
     if (staffMatch) {
         let staffMatchId = local.getItem('staffIdentifiedFamilyId');
         let contact = await steamdaGetContactFunction(staffMatchId);
+        console.dir(contact);
         if (contact._id !== staffMatchId) {
             local.setItem('superEnrollmentStatus', 'ALERT');
             local.setItem('logString', local.getItem('logString') + '\n[~1189]Staff-Eye-D Does NOT Match Contact Found ID (probably none). AbortForNow');
+            console.log(`≈1694≈ staffMatch; local.getItem('superEnrollmentStatus'): ${local.getItem('superEnrollmentStatus')}`);
             return;
         }
+        console.log(`≈1697≈ staffMatch; local.getItem('superEnrollmentStatus'): ${local.getItem('superEnrollmentStatus')}`);
         if ($w('#radioConfirmStaffEyeD').value !== 'YES') {
-            if (contact.source.sourceType.toUpperCase().indexOf('MEMBER') < 0) {
+            console.log(`≈1700≈ contact.source.sourceType: could be MOOT but 'MEMBER' or 'IMPORT' supported now`);
+            if (contact.source.sourceType.toUpperCase().indexOf('MEMBER') < 0 && contact.source.sourceType.toUpperCase().indexOf('IMPORT') < 0) {
                 local.setItem('logString', `[~1194] ABORT: StaffEyeD Contact does not contain 'MEMBER' in sourceType`);
+                console.log(`≈1703≈ ABORT: StaffEyeD Contact does not contain 'MEMBER' in sourceType`);
                 return;
             }
+        console.log(`≈1706≈ contact.source.sourceType.toUpperCase().indexOf('MEMBER'): ${contact.source.sourceType.toUpperCase().indexOf('MEMBER')}`);
+        console.log(`≈1707≈ contact.source.sourceType.toUpperCase().indexOf('INDEX'): ${contact.source.sourceType.toUpperCase().indexOf('IMPORT')}`);
         }
         local.setItem('familyId', staffMatchId);
+        console.log(`≈1710≈ local.getItem('familyId'): ${local.getItem('familyId')}`);
         local.setItem('familyEmail', contact.primaryInfo.email);
         local.setItem('logString', local.getItem('logString') + '\n[~Z547]staffMatchFoundContact: ' + JSON.stringify(contact, undefined, 4));
         ppAction = "SKIP|UPDATE|INSERT";
     }
+    console.groupEnd();
     local.setItem('logString', local.getItem('logString') + '\n[~Z583]staffMatch: ' + staffMatch);
 
     let familyId = local.getItem('staffIdentifiedFamilyId');
@@ -5253,6 +5294,7 @@ export async function msboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# n
     // ø </CleanUp B4 things Start>
     await doSimpleDemogrfxAssignment()
 
+    // 202109_ActionValueRepeaters
     let actionValueRepeatersParamObject = {};
     actionValueRepeatersParamObject.prepKey = 'OnReady';
     await loadActionValueRepeatersWithJSON(actionValueRepeatersParamObject);

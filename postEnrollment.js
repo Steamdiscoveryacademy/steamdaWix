@@ -37,6 +37,7 @@ import wixWindow from 'wix-window';
  // ø pstEnrSeven202108getContactByEmailAndNotIdFunction  TODAY
  // ø pstEnrSeven202108ppStContactDedupe  TODAY
  // ø 202109ResolveAndDestroy  TODAY
+ // ø 202109_UserInterface  TODAY
  */
 
 
@@ -691,6 +692,7 @@ export async function doStepSwitch(stepKey = 'PPENDING') {
 // ø <---------- <doStepUserInterfaceSwitch>  ---------->
 export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObjectStep = {}) {
     // pstEnrSeven202108STEP_UI_SWITCH
+    // 202109_UserInterface
     let DOX = `≈Z450≈ pstEnrSeven202108STEPUI BEGIN`;
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
 
@@ -742,6 +744,7 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
                     //NEITHER
                     break;
             }
+        
             console.log('UI Non-Core-Step: ' + stepKey)
             break;
             // ø </stateOnramp>
@@ -779,9 +782,14 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
 
             $w('#txtComboName').text = local.getItem('comboName');
             $w('#txtComboName').show();
+
+            let actionValueRepeatersParamObject = {};
+            actionValueRepeatersParamObject.prepKey = 'stateInstantiate';
+            await loadActionValueRepeatersWithJSON(actionValueRepeatersParamObject);
+
             console.log('UI Step: ' + stepKey)
-            $w('#txtActionValueGridDescr').hide();
-            $w('#boxActionValueGrid').show();
+            // $w('#txtActionValueGridDescr').hide();
+            // $w('#boxActionValueGrid').show();
             break;
             // ø </stateInstantiate>
         case 'PREP_ppMember':
@@ -1013,10 +1021,14 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
 // ! ====================             ...core to the Enrollment Testing Process            ==============
 // ! ====================================================================================================
 // ø <---------- <loadActionValueRepeatersWithJSON>  ---------->
- export async function loadActionValueRepeatersWithJSON() {
-		let actionValuesJSON/*take_20_FAUX*/ = `{"headerRepeater":{"headerRepeaterArray":[{"title":"Who","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_6755546f08b24ed9861b1f629e17cabb~mv2.png","doxColumn":"header_who","_id":"1"},{"title":"Member","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_760601a9aeca428aadcc29d99a6558ec~mv2.png","doxColumn":"header_member","_id":"2"},{"title":"Contact","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5274995693c04d1ab87b61ab8b23c94e~mv2.png","doxColumn":"header_contact","_id":"3"},{"title":"Data-Base","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5104d8acb3d2450c8b23ef9c4cb0d362~mv2.png","doxColumn":"header_database","_id":"4"}]},"primaryRepeater":{"primaryRepeaterArray":[{"title":"Primary","titleSub":"ppName","boxColor":"https://static.wixstatic.com/media/523205_6755546f08b24ed9861b1f629e17cabb~mv2.png","doxColumn":"who","_id":"1"},{"title":"ppMMBR","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_760601a9aeca428aadcc29d99a6558ec~mv2.png","doxColumn":"member","_id":"2"},{"title":"ppCTCT","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5274995693c04d1ab87b61ab8b23c94e~mv2.png","doxColumn":"contact","_id":"3"},{"title":"ppDB","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5104d8acb3d2450c8b23ef9c4cb0d362~mv2.png","doxColumn":"database","_id":"4"}]},"studentRepeater":{"studentRepeaterArray":[{"title":"Student","titleSub":"stName","boxColor":"https://static.wixstatic.com/media/523205_6755546f08b24ed9861b1f629e17cabb~mv2.png","doxColumn":"Who","_id":"1"},{"title":"stMMBR","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_760601a9aeca428aadcc29d99a6558ec~mv2.png","doxColumn":"member","_id":"2"},{"title":"stCTCT","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5274995693c04d1ab87b61ab8b23c94e~mv2.png","doxColumn":"contact","_id":"3"},{"title":"stDB","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5104d8acb3d2450c8b23ef9c4cb0d362~mv2.png","doxColumn":"database","_id":"4"}]},"secondaryRepeater":{"secondaryRepeaterArray":[{"title":"Secondary","titleSub":"spName","boxColor":"https://static.wixstatic.com/media/523205_6755546f08b24ed9861b1f629e17cabb~mv2.png","doxColumn":"Who","_id":"1"},{"title":"spMMBR","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_760601a9aeca428aadcc29d99a6558ec~mv2.png","doxColumn":"member","_id":"2"},{"title":"spCTCT","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5274995693c04d1ab87b61ab8b23c94e~mv2.png","doxColumn":"contact","_id":"3"},{"title":"spDB","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5104d8acb3d2450c8b23ef9c4cb0d362~mv2.png","doxColumn":"database","_id":"4"}]}}`;
-		// let actionValueRepeatersObject = JSON.parse($w('#txtbxActionValuesJSON').value)
-		let actionValueRepeatersObject = JSON.parse(actionValuesJSON)
+ export async function loadActionValueRepeatersWithJSON(paramObject = {}) {
+     // 202109_UserInterface
+    let prepKey = typeof paramObject.prepKey !== 'string' ? 'MISSING' : paramObject.prepKey;
+    paramObject.prepKey = prepKey;
+    let actionValuesJSON/*take_20_FAUX*/ = `{"headerRepeater":{"headerRepeaterArray":[{"title":"Who","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_6755546f08b24ed9861b1f629e17cabb~mv2.png","doxColumn":"header_who","_id":"1"},{"title":"Member","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_760601a9aeca428aadcc29d99a6558ec~mv2.png","doxColumn":"header_member","_id":"2"},{"title":"Contact","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5274995693c04d1ab87b61ab8b23c94e~mv2.png","doxColumn":"header_contact","_id":"3"},{"title":"Data-Base","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5104d8acb3d2450c8b23ef9c4cb0d362~mv2.png","doxColumn":"header_database","_id":"4"}]},"primaryRepeater":{"primaryRepeaterArray":[{"title":"Primary","titleSub":"ppName","boxColor":"https://static.wixstatic.com/media/523205_6755546f08b24ed9861b1f629e17cabb~mv2.png","doxColumn":"who","_id":"1"},{"title":"ppMMBR","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_760601a9aeca428aadcc29d99a6558ec~mv2.png","doxColumn":"member","_id":"2"},{"title":"ppCTCT","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5274995693c04d1ab87b61ab8b23c94e~mv2.png","doxColumn":"contact","_id":"3"},{"title":"ppDB","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5104d8acb3d2450c8b23ef9c4cb0d362~mv2.png","doxColumn":"database","_id":"4"}]},"studentRepeater":{"studentRepeaterArray":[{"title":"Student","titleSub":"stName","boxColor":"https://static.wixstatic.com/media/523205_6755546f08b24ed9861b1f629e17cabb~mv2.png","doxColumn":"Who","_id":"1"},{"title":"stMMBR","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_760601a9aeca428aadcc29d99a6558ec~mv2.png","doxColumn":"member","_id":"2"},{"title":"stCTCT","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5274995693c04d1ab87b61ab8b23c94e~mv2.png","doxColumn":"contact","_id":"3"},{"title":"stDB","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5104d8acb3d2450c8b23ef9c4cb0d362~mv2.png","doxColumn":"database","_id":"4"}]},"secondaryRepeater":{"secondaryRepeaterArray":[{"title":"Secondary","titleSub":"spName","boxColor":"https://static.wixstatic.com/media/523205_6755546f08b24ed9861b1f629e17cabb~mv2.png","doxColumn":"Who","_id":"1"},{"title":"spMMBR","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_760601a9aeca428aadcc29d99a6558ec~mv2.png","doxColumn":"member","_id":"2"},{"title":"spCTCT","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5274995693c04d1ab87b61ab8b23c94e~mv2.png","doxColumn":"contact","_id":"3"},{"title":"spDB","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5104d8acb3d2450c8b23ef9c4cb0d362~mv2.png","doxColumn":"database","_id":"4"}]}}`;
+    // let actionValueRepeatersObject = JSON.parse($w('#txtbxActionValuesJSON').value)
+    let actionValueRepeatersObject = JSON.parse(actionValuesJSON)
+    console.dir(actionValueRepeatersObject);
 	// ø <Header>
 	let headerId = 'rptrHeader';
 	let headerRepeaterArray = actionValueRepeatersObject.headerRepeater.headerRepeaterArray;
@@ -1054,6 +1066,7 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
 
 // ø <---------- <prepRepeaterArray>   ---------->
 export async function prepRepeaterArray(repeaterId,repeaterArray = []){
+    // 202109_UserInterface
 	let prepKind = 'PENDING';
 	prepKind = repeaterId.indexOf('Header') ? 'header' : prepKind;
 	prepKind = repeaterId.indexOf('Primary') ? 'primary' : prepKind;
@@ -1068,6 +1081,7 @@ export async function prepRepeaterArray(repeaterId,repeaterArray = []){
 
 // ø <---------- <loadRepeaterWithArray>  ---------->
 export async function loadRepeaterWithArray(repeaterId, preppedCourseRepeaterArray = []){
+    // 202109_UserInterface
 	if(repeaterId.substr(0,1) !== '#'){
 		repeaterId = '#' + repeaterId;
 	}
@@ -5176,6 +5190,7 @@ export async function msboxPostEnrollmentSevenPerformStepDO(responseObject = {})
 export async function msboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# no button log #}') {
     // pstEnrSeven202108ACTION
     // pstZEnrSeven202108STEP_R_01 BEGIN (CLICK DURING DEV)
+    // 202109_UserInterface
     let DOX = (new Date).toISOString();
     local.setItem('logString',DOX);
     DOX = 'pstEnrSeven202108STEP_R_01 BEGIN (CLICK DURING DEV)';
@@ -5237,6 +5252,11 @@ export async function msboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# n
     local.setItem('stepMessagingJSON','');
     // ø </CleanUp B4 things Start>
     await doSimpleDemogrfxAssignment()
+
+    let actionValueRepeatersParamObject = {};
+    actionValueRepeatersParamObject.prepKey = 'OnReady';
+    await loadActionValueRepeatersWithJSON(actionValueRepeatersParamObject);
+
     await msboxPostEnrollmentSevenAnyAction(responseObject);
     await onReadyToOnRamp(responseObject);
     // </202108100800> 

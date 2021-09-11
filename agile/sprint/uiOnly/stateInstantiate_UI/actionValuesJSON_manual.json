@@ -6,6 +6,7 @@
                 "titleSub": "",
                 "boxColor": "https://static.wixstatic.com/media/523205_6755546f08b24ed9861b1f629e17cabb~mv2.png",
                 "doxColumn": "header_who",
+                "doxColor": "blue",
                 "_id": "1"
             },
             {
@@ -13,6 +14,7 @@
                 "titleSub": "",
                 "boxColor": "https://static.wixstatic.com/media/523205_760601a9aeca428aadcc29d99a6558ec~mv2.png",
                 "doxColumn": "header_member",
+                "doxColor": "red",
                 "_id": "2"
             },
             {
@@ -20,6 +22,7 @@
                 "titleSub": "",
                 "boxColor": "https://static.wixstatic.com/media/523205_5274995693c04d1ab87b61ab8b23c94e~mv2.png",
                 "doxColumn": "header_contact",
+                "doxColor": "green",
                 "_id": "3"
             },
             {
@@ -27,6 +30,7 @@
                 "titleSub": "",
                 "boxColor": "https://static.wixstatic.com/media/523205_5104d8acb3d2450c8b23ef9c4cb0d362~mv2.png",
                 "doxColumn": "header_database",
+                "doxColor": "mustard",
                 "_id": "4"
             }
         ]
@@ -38,6 +42,7 @@
                 "titleSub": "ppName",
                 "boxColor": "https://static.wixstatic.com/media/523205_6755546f08b24ed9861b1f629e17cabb~mv2.png",
                 "doxColumn": "who",
+                "doxColor": "blue",
                 "_id": "1"
             },
             {
@@ -45,6 +50,7 @@
                 "titleSub": "",
                 "boxColor": "https://static.wixstatic.com/media/523205_760601a9aeca428aadcc29d99a6558ec~mv2.png",
                 "doxColumn": "member",
+                "doxColor": "red",
                 "_id": "2"
             },
             {
@@ -52,6 +58,7 @@
                 "titleSub": "",
                 "boxColor": "https://static.wixstatic.com/media/523205_5274995693c04d1ab87b61ab8b23c94e~mv2.png",
                 "doxColumn": "contact",
+                "doxColor": "green",
                 "_id": "3"
             },
             {
@@ -59,6 +66,7 @@
                 "titleSub": "",
                 "boxColor": "https://static.wixstatic.com/media/523205_5104d8acb3d2450c8b23ef9c4cb0d362~mv2.png",
                 "doxColumn": "database",
+                "doxColor": "mustard",
                 "_id": "4"
             }
         ]
@@ -70,6 +78,7 @@
                 "titleSub": "stName",
                 "boxColor": "https://static.wixstatic.com/media/523205_6755546f08b24ed9861b1f629e17cabb~mv2.png",
                 "doxColumn": "Who",
+                "doxColor": "blue",
                 "_id": "1"
             },
             {
@@ -77,6 +86,7 @@
                 "titleSub": "",
                 "boxColor": "https://static.wixstatic.com/media/523205_760601a9aeca428aadcc29d99a6558ec~mv2.png",
                 "doxColumn": "member",
+                "doxColor": "red",
                 "_id": "2"
             },
             {
@@ -84,6 +94,7 @@
                 "titleSub": "",
                 "boxColor": "https://static.wixstatic.com/media/523205_5274995693c04d1ab87b61ab8b23c94e~mv2.png",
                 "doxColumn": "contact",
+                "doxColor": "green",
                 "_id": "3"
             },
             {
@@ -91,6 +102,7 @@
                 "titleSub": "",
                 "boxColor": "https://static.wixstatic.com/media/523205_5104d8acb3d2450c8b23ef9c4cb0d362~mv2.png",
                 "doxColumn": "database",
+                "doxColor": "mustard",
                 "_id": "4"
             }
         ]
@@ -102,6 +114,7 @@
                 "titleSub": "spName",
                 "boxColor": "https://static.wixstatic.com/media/523205_6755546f08b24ed9861b1f629e17cabb~mv2.png",
                 "doxColumn": "Who",
+                "doxColor": "blue",
                 "_id": "1"
             },
             {
@@ -109,6 +122,7 @@
                 "titleSub": "",
                 "boxColor": "https://static.wixstatic.com/media/523205_760601a9aeca428aadcc29d99a6558ec~mv2.png",
                 "doxColumn": "member",
+                "doxColor": "red",
                 "_id": "2"
             },
             {
@@ -116,6 +130,7 @@
                 "titleSub": "",
                 "boxColor": "https://static.wixstatic.com/media/523205_5274995693c04d1ab87b61ab8b23c94e~mv2.png",
                 "doxColumn": "contact",
+                "doxColor": "green",
                 "_id": "3"
             },
             {
@@ -123,6 +138,7 @@
                 "titleSub": "",
                 "boxColor": "https://static.wixstatic.com/media/523205_5104d8acb3d2450c8b23ef9c4cb0d362~mv2.png",
                 "doxColumn": "database",
+                "doxColor": "mustard",
                 "_id": "4"
             }
         ]

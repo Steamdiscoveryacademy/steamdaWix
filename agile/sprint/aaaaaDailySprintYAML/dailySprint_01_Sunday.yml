@@ -3,7 +3,7 @@
 #¿=====   Sprint  Sunday September 11, 2021   ======
 #?==================================================
 daily Commits:
-      - postEnrollment: no #†
+      - postEnrollment: yes
 ...
 ---
 ppStDedupe:
@@ -14,11 +14,15 @@ validation Triplet:
       - local.setItem('superEnrollmentStatus')
       - memory.setItem('stepResponseBootstrapKey')
       - appendStepLogPPEQ('sufficientBootstrap','Message')
+            - memory.getItem('stepLogString')
+            - memory.getItem('stepLogStringSecondary')
 actionValueRepeaters:
       - disableNames (above is sufficient, perhaps somethings else): yes
       - onRamp prep Array: yes
-      - success prep Array: no
-      - nonSuccess prep Array: no
+      - success prep Array: yes
+      - nonSuccess prep Array:
+            - general(as default of switch): yes
+            - more specific(whatever that means): no#†
       - messaging from within:
             - contact.source.sourceType: yes
 messaging:

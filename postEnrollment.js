@@ -304,6 +304,7 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
     memory.setItem('stepLogString','');// Will Catch All Messages in a pstEnrSeven Group, but can back-up later
     memory.setItem('stepLogStringSecondary','');// Will Catch All Messages in a pstEnrSeven Group, but can back-up later
     memory.setItem('stepResponseBootstrapKey','');// Will Catch All Messages in a pstEnrSeven Group, but can back-up later
+    local.setItem('superEnrollmentStatus','PENDING');// Will Catch All Messages in a pstEnrSeven Group, but can back-up later
     while (stepsArray.length > 0 && testIndex < testBreakIndex) {
         // pstZEnrSeven202108STEP_SALS_LOOP BEGIN ==> pstZEnrSeven202108STEP_SALS_SWITCH
         // pstZEnrSeven202108STEP_SALS_1BY1 LOOP BEGIN
@@ -1028,7 +1029,7 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
     //  202109_ActionValueRepeaters
     let prepKey = typeof paramObject.prepKey !== 'string' ? 'MISSING' : paramObject.prepKey;
     paramObject.prepKey = prepKey;
-    let actionValuesJSON/*take_20_FAUX*/ = `{"headerRepeater":{"headerRepeaterArray":[{"title":"Who","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_6755546f08b24ed9861b1f629e17cabb~mv2.png","doxColumn":"header_who","_id":"1"},{"title":"Member","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_760601a9aeca428aadcc29d99a6558ec~mv2.png","doxColumn":"header_member","_id":"2"},{"title":"Contact","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5274995693c04d1ab87b61ab8b23c94e~mv2.png","doxColumn":"header_contact","_id":"3"},{"title":"Data-Base","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5104d8acb3d2450c8b23ef9c4cb0d362~mv2.png","doxColumn":"header_database","_id":"4"}]},"primaryRepeater":{"primaryRepeaterArray":[{"title":"Primary","titleSub":"ppName","boxColor":"https://static.wixstatic.com/media/523205_6755546f08b24ed9861b1f629e17cabb~mv2.png","doxColumn":"who","_id":"1"},{"title":"ppMMBR","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_760601a9aeca428aadcc29d99a6558ec~mv2.png","doxColumn":"member","_id":"2"},{"title":"ppCTCT","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5274995693c04d1ab87b61ab8b23c94e~mv2.png","doxColumn":"contact","_id":"3"},{"title":"ppDB","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5104d8acb3d2450c8b23ef9c4cb0d362~mv2.png","doxColumn":"database","_id":"4"}]},"studentRepeater":{"studentRepeaterArray":[{"title":"Student","titleSub":"stName","boxColor":"https://static.wixstatic.com/media/523205_6755546f08b24ed9861b1f629e17cabb~mv2.png","doxColumn":"Who","_id":"1"},{"title":"stMMBR","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_760601a9aeca428aadcc29d99a6558ec~mv2.png","doxColumn":"member","_id":"2"},{"title":"stCTCT","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5274995693c04d1ab87b61ab8b23c94e~mv2.png","doxColumn":"contact","_id":"3"},{"title":"stDB","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5104d8acb3d2450c8b23ef9c4cb0d362~mv2.png","doxColumn":"database","_id":"4"}]},"secondaryRepeater":{"secondaryRepeaterArray":[{"title":"Secondary","titleSub":"spName","boxColor":"https://static.wixstatic.com/media/523205_6755546f08b24ed9861b1f629e17cabb~mv2.png","doxColumn":"Who","_id":"1"},{"title":"spMMBR","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_760601a9aeca428aadcc29d99a6558ec~mv2.png","doxColumn":"member","_id":"2"},{"title":"spCTCT","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5274995693c04d1ab87b61ab8b23c94e~mv2.png","doxColumn":"contact","_id":"3"},{"title":"spDB","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5104d8acb3d2450c8b23ef9c4cb0d362~mv2.png","doxColumn":"database","_id":"4"}]}}`;
+    let actionValuesJSON/*take_20_FAUX*/ = `{"headerRepeater":{"headerRepeaterArray":[{"title":"Who","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_6755546f08b24ed9861b1f629e17cabb~mv2.png","doxColumn":"header_who","_id":"1"},{"title":"Member","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_760601a9aeca428aadcc29d99a6558ec~mv2.png","doxColumn":"header_member","_id":"2"},{"title":"Contact","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5274995693c04d1ab87b61ab8b23c94e~mv2.png","doxColumn":"header_contact","_id":"3"},{"title":"Data-Base","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5104d8acb3d2450c8b23ef9c4cb0d362~mv2.png","doxColumn":"header_database","_id":"4"}]},"primaryRepeater":{"primaryRepeaterArray":[{"title":"Primary","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_6755546f08b24ed9861b1f629e17cabb~mv2.png","doxColumn":"who","_id":"1"},{"title":"ppMMBR","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_760601a9aeca428aadcc29d99a6558ec~mv2.png","doxColumn":"member","_id":"2"},{"title":"ppCTCT","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5274995693c04d1ab87b61ab8b23c94e~mv2.png","doxColumn":"contact","_id":"3"},{"title":"ppDB","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5104d8acb3d2450c8b23ef9c4cb0d362~mv2.png","doxColumn":"database","_id":"4"}]},"studentRepeater":{"studentRepeaterArray":[{"title":"Student","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_6755546f08b24ed9861b1f629e17cabb~mv2.png","doxColumn":"Who","_id":"1"},{"title":"stMMBR","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_760601a9aeca428aadcc29d99a6558ec~mv2.png","doxColumn":"member","_id":"2"},{"title":"stCTCT","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5274995693c04d1ab87b61ab8b23c94e~mv2.png","doxColumn":"contact","_id":"3"},{"title":"stDB","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5104d8acb3d2450c8b23ef9c4cb0d362~mv2.png","doxColumn":"database","_id":"4"}]},"secondaryRepeater":{"secondaryRepeaterArray":[{"title":"Secondary","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_6755546f08b24ed9861b1f629e17cabb~mv2.png","doxColumn":"Who","_id":"1"},{"title":"spMMBR","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_760601a9aeca428aadcc29d99a6558ec~mv2.png","doxColumn":"member","_id":"2"},{"title":"spCTCT","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5274995693c04d1ab87b61ab8b23c94e~mv2.png","doxColumn":"contact","_id":"3"},{"title":"spDB","titleSub":"","boxColor":"https://static.wixstatic.com/media/523205_5104d8acb3d2450c8b23ef9c4cb0d362~mv2.png","doxColumn":"database","_id":"4"}]}}`;
     // let actionValueRepeatersObject = JSON.parse($w('#txtbxActionValuesJSON').value)
     let actionValueRepeatersObject = JSON.parse(actionValuesJSON)
     console.dir(actionValueRepeatersObject);
@@ -1087,15 +1088,53 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
 export async function prepRepeaterArray(paramObject = {}){
     // 202109_UserInterface
     // 202109_ActionValueRepeaters
+    console.groupCollapsed('prepRepeaterArray()');
+    let nullActionString = '–';
     let repeaterId = paramObject.repeaterId;
     let repeaterArray = paramObject.repeaterArray;
+    console.log(`repeaterId: ${repeaterId}`);
 	let prepKind = 'PENDING';
-	prepKind = repeaterId.indexOf('Header') ? 'header' : prepKind;
-	prepKind = repeaterId.indexOf('Primary') ? 'primary' : prepKind;
+	prepKind = repeaterId.indexOf('Header') >= 0 ? 'header' : prepKind;
+	prepKind = repeaterId.indexOf('Primary') >= 0 ? 'primary' : prepKind;
+    console.log(`prepKind: ${prepKind}`);
 	let noPrepRequiredPrepKindArray = ['header'];
 	if(noPrepRequiredPrepKindArray.includes(prepKind)){
+        console.log('return: repeaterArray Unchanged');
 		return repeaterArray;
 	}
+    console.groupEnd();
+    // let prepKey = paramObject.prepKey; NO USE local-Storage
+    let prepKey = local.getItem('superEnrollmentStatus');
+    let index = 0;
+    switch (prepKey) {
+        case 'CONTINUE':
+            nullActionString = 'CONT'
+            repeaterArray.forEach(elementObject => {
+                if(index > 0){
+                    elementObject.title = nullActionString;
+                }
+                index++;
+            });
+            break;
+        case 'PENDING':
+            // nullActionString = 'PEND'
+            repeaterArray.forEach(elementObject => {
+                if(index > 0){
+                    elementObject.title = nullActionString;
+                }
+                index++;
+            });
+            break;
+    
+        default:
+            repeaterArray.forEach(elementObject => {
+                if(index > 0){
+                    elementObject.title = nullActionString;
+                }
+                index++;
+            });
+            break;
+    }
 
 	return repeaterArray;
 }
@@ -1691,15 +1730,18 @@ export async function doInstantiateLoopSwitchStep() {
 
 // ø <---------- <actionValueEvaluation of IINSTANTIATE>  ---------->
 export async function actionValueEvaluation() {
+    // local.setItem('superEnrollmentStatus', 'CONTINUE'); ALREADY SET
     console.groupCollapsed('actionValueEvaluation');
     console.log('≈1676≈ actionValueEvaluation(); ENTERED');
 
     // pstEnrSeven20210825_ActionValueEvaluation
     let tempStamp = await nowISO(local.getItem('timezoneOffset'), local.getItem('tzAbbrv'));
     local.setItem('logString', local.getItem('logString') + '\nLAUNCH\n[~Z484] Entering actionValueEvaluation() at ' + tempStamp);
+    // <defaults>
     let ppAction = "INSERT|UPDATE|INSERT";
     let stAction = "INSERT|UPDATE|INSERT";
     let spAction = "NA|INSERT|INSERT";
+    // </defaults>
 
     let staffMatch = local.getItem('staffIdentifiedFamilyId') === 'INSTANTIATE' ? false : true;
     console.log(`≈1687≈ staffMatch; ${staffMatch}`);
@@ -1716,10 +1758,15 @@ export async function actionValueEvaluation() {
         console.log(`≈1697≈ staffMatch; local.getItem('superEnrollmentStatus'): ${local.getItem('superEnrollmentStatus')}`);
         if ($w('#radioConfirmStaffEyeD').value !== 'YES') {
             console.log(`≈1700≈ contact.source.sourceType: could be MOOT but 'MEMBER' or 'IMPORT' supported now`);
-            if (contact.source.sourceType.toUpperCase().indexOf('MEMBER') < 0 && contact.source.sourceType.toUpperCase().indexOf('IMPORT') < 0) {
+            let sourceType = contact.source.sourceType.toUpperCase();
+            let supportedSourceTypeArray = ['MEMBER','IMPORT']
+            if (supportedSourceTypeArray.includes(sourceType) === false) {
+                local.setItem('superEnrollmentStatus', 'ALERT');
+                memory.setItem('stepResponseBootstrapKey','danger');
+                await appendStepLogPPEQ('danger', `'Staff Eye-D' Contact is of unsupported Source Type: '${sourceType}'`);
                 local.setItem('logString', `[~1194] ABORT: StaffEyeD Contact does not contain 'MEMBER' in sourceType`);
                 console.log(`≈1703≈ ABORT: StaffEyeD Contact does not contain 'MEMBER' in sourceType`);
-                return;
+                // return;
             }
         console.log(`≈1706≈ contact.source.sourceType.toUpperCase().indexOf('MEMBER'): ${contact.source.sourceType.toUpperCase().indexOf('MEMBER')}`);
         console.log(`≈1707≈ contact.source.sourceType.toUpperCase().indexOf('INDEX'): ${contact.source.sourceType.toUpperCase().indexOf('IMPORT')}`);

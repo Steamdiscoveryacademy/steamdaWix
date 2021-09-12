@@ -304,7 +304,6 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
     memory.setItem('stepLogString','');// Will Catch All Messages in a pstEnrSeven Group, but can back-up later
     memory.setItem('stepLogStringSecondary','');// Will Catch All Messages in a pstEnrSeven Group, but can back-up later
     memory.setItem('stepResponseBootstrapKey','');// Will Catch All Messages in a pstEnrSeven Group, but can back-up later
-    local.setItem('superEnrollmentStatus','PENDING');// Will Catch All Messages in a pstEnrSeven Group, but can back-up later
     while (stepsArray.length > 0 && testIndex < testBreakIndex) {
         // pstZEnrSeven202108STEP_SALS_LOOP BEGIN ==> pstZEnrSeven202108STEP_SALS_SWITCH
         // pstZEnrSeven202108STEP_SALS_1BY1 LOOP BEGIN
@@ -699,6 +698,15 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
 
     let errorString = '';
+    // ø <For All Steps>
+    let nonSuccessResponseKeyArray = ['warning','danger'];//just use TRUE Bootstrap lowercase keys, and catch in Secondary if every a problem
+    let ppeqDefaultIndicated = false
+    ppeqDefaultIndicated = nonSuccessResponseKeyArray.includes(memory.getItem('stepResponseBootstrapKey'));
+    ppeqDefaultIndicated = (memory.getItem('stepLogString')).indexOf(memory.getItem('stepResponseBootstrapKey')) >= 0 ? false : ppeqDefaultIndicated;
+    if(ppeqDefaultIndicated){
+        await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+    }
+    // ø </For All Steps>
     let responseKey = 'unknown';
     let responseMessage = 'DEFAULT';
     let anyDangerHide = false;
@@ -719,9 +727,9 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
                 $w('#btnSecondaryIdLabel').enable();
             }
             // ø </assign UI Demografx>
-            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
-                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
-            }
+            // if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+            //     await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+            // }
             if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
                 await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
             }
@@ -752,9 +760,9 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
             // ø </stateOnramp>
         case 'ResolveAndDestroy':
             // ø <stateResolveAndDestroy>
-            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
-                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
-            }
+            // if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+            //     await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+            // }
             if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
                 await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
             }
@@ -763,9 +771,9 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
             // ø </stateResolveAndDestroy>
         case 'OffRamp':
             // ø <stateOfframp>
-            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
-                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
-            }
+            // if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+            //     await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+            // }
             if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
                 await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
             }
@@ -775,9 +783,9 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
         // ø </NON-CORE Steps for UserInterface Only>
         case 'IINSTANTIATE':
             // ø <stateInstantiate>
-            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
-                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
-            }
+            // if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+            //     await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+            // }
             if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
                 await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
             }
@@ -797,40 +805,40 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
             // ø </stateInstantiate>
         case 'PREP_ppMember':
             // ø <stateMemberConfirm>
-            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
-                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
-                memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
-            }
-            if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
-                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
-            }
+            // if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+            //     await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+            //     memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
+            // }
+            // if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
+            //     await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
+            // }
             console.log('UI Step: ' + stepKey)
             break;
         case 'EXECUTE_ppMember':
-            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
-                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
-                memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
-            }
+            // if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+            //     await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+            //     memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
+            // }
             if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
                 await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
             }
             console.log('UI Step: ' + stepKey)
             break;
         case 'PREP_stMember':
-            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
-                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
-                memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
-            }
+            // if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+            //     await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+            //     memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
+            // }
             if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
                 await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
             }
             console.log('UI Step: ' + stepKey)
             break;
         case 'EXECUTE_stMember':
-            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
-                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
-                memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
-            }
+            // if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+            //     await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+            //     memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
+            // }
             if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
                 await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
             }
@@ -848,9 +856,9 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
             // ø </stateMemberConfirm>
         case 'dedupePpStContact':
             // ø <stateDupeDelete>
-            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
-                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
-            }
+            // if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+            //     await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+            // }
             if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
                 await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
             }
@@ -867,40 +875,40 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
             // ø </stateDupeDelete>
         case 'PREP_ppContact':
             // ø <stateDatabaseForPrimaryAndStudent>
-            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
-                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
-                memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
-            }
+            // if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+            //     await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+            //     memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
+            // }
             if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
                 await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
             }
             console.log('UI Step: ' + stepKey)
             break;
         case 'PREP_ppDatabase':
-            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
-                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
-                memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
-            }
+            // if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+            //     await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+            //     memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
+            // }
             if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
                 await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
             }
             console.log('UI Step: ' + stepKey)
             break;
         case 'PREP_stContact':
-            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
-                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
-                memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
-            }
+            // if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+            //     await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+            //     memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
+            // }
             if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
                 await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
             }
             console.log('UI Step: ' + stepKey)
             break;
         case 'PREP_stDatabase':
-            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
-                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
-                memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
-            }
+            // if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+            //     await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+            //     memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
+            // }
             if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
                 await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
             }
@@ -909,60 +917,60 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
             // ø </stateDatabaseForPrimaryAndStudent>
         case 'PREP_spContact':
             // ø <stateContactForPrimaryAndStudent>
-            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
-                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
-                memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
-            }
+            // if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+            //     await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+            //     memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
+            // }
             if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
                 await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
             }
             console.log('UI Step: ' + stepKey)
             break;
         case 'PREP_spDatabase':
-            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
-                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
-                memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
-            }
+            // if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+            //     await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+            //     memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
+            // }
             if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
                 await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
             }
             console.log('UI Step: ' + stepKey)
             break;
         case 'EXECUTE_ppContact':
-            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
-                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
-                memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
-            }
+            // if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+            //     await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+            //     memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
+            // }
             if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
                 await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
             }
             console.log('UI Step: ' + stepKey)
             break;
         case 'EXECUTE_ppDatabase':
-            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
-                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
-                memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
-            }
+            // if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+            //     await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+            //     memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
+            // }
             if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
                 await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
             }
             console.log('UI Step: ' + stepKey)
             break;
         case 'EXECUTE_stContact':
-            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
-                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
-                memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
-            }
+            // if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+            //     await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+            //     memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
+            // }
             if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
                 await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
             }
             console.log('UI Step: ' + stepKey)
             break;
         case 'EXECUTE_stDatabase':
-            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
-                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
-                memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
-            }
+            // if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+            //     await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+            //     memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
+            // }
             if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
                 await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
             }
@@ -971,21 +979,21 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
             // ø </stateContactForPrimaryAndStudent>
         case 'EXECUTE_spContact':
             // ø <stateContactAndDatabaseForSecondary>
-            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
-                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
-                memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
-            }
+            // if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+            //     await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+            //     memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
+            // }
             if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
                 await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
             }
             console.log('UI Step: ' + stepKey)
             break;
         case 'EXECUTE_spDatabase':
-            if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
-                anyDangerHide = memory.getItem('stepResponseBootstrapKey') === 'danger' ? true : anyDangerHide;
-                await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
-                memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
-            }
+            // if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
+            //     anyDangerHide = memory.getItem('stepResponseBootstrapKey') === 'danger' ? true : anyDangerHide;
+            //     await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
+            //     memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
+            // }
             if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
                 await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
             }
@@ -1096,22 +1104,32 @@ export async function prepRepeaterArray(paramObject = {}){
 	let prepKind = 'PENDING';
 	prepKind = repeaterId.indexOf('Header') >= 0 ? 'header' : prepKind;
 	prepKind = repeaterId.indexOf('Primary') >= 0 ? 'primary' : prepKind;
+	prepKind = repeaterId.indexOf('Student') >= 0 ? 'student' : prepKind;
+	prepKind = repeaterId.indexOf('Secondary') >= 0 ? 'secondary' : prepKind;
+
     console.log(`prepKind: ${prepKind}`);
 	let noPrepRequiredPrepKindArray = ['header'];
 	if(noPrepRequiredPrepKindArray.includes(prepKind)){
         console.log('return: repeaterArray Unchanged');
+        console.groupEnd();
 		return repeaterArray;
 	}
-    console.groupEnd();
+    let actionArrayString = 'error|error|error';
+    let actionArray = [];
     // let prepKey = paramObject.prepKey; NO USE local-Storage
     let prepKey = local.getItem('superEnrollmentStatus');
-    let index = 0;
+    let index = -1;
     switch (prepKey) {
         case 'CONTINUE':
+            actionArrayString = prepKind === 'primary' ? memory.getItem('ppAction') : actionArrayString;
+            actionArrayString = prepKind === 'student' ? memory.getItem('stAction') : actionArrayString;
+            actionArrayString = prepKind === 'secondary' ? memory.getItem('spAction') : actionArrayString;
+            actionArray = actionArrayString.split('|');
+            console.log(`actionArrayString: ${actionArrayString}`);
             nullActionString = 'CONT'
             repeaterArray.forEach(elementObject => {
-                if(index > 0){
-                    elementObject.title = nullActionString;
+                if(index >= 0){
+                    elementObject.title = actionArray[index];
                 }
                 index++;
             });
@@ -1119,7 +1137,7 @@ export async function prepRepeaterArray(paramObject = {}){
         case 'PENDING':
             // nullActionString = 'PEND'
             repeaterArray.forEach(elementObject => {
-                if(index > 0){
+                if(index >= 0){
                     elementObject.title = nullActionString;
                 }
                 index++;
@@ -1128,13 +1146,15 @@ export async function prepRepeaterArray(paramObject = {}){
     
         default:
             repeaterArray.forEach(elementObject => {
-                if(index > 0){
+                if(index >= 0){
+                    nullActionString = '{% alert %}';// OR WHATEVER
                     elementObject.title = nullActionString;
                 }
                 index++;
             });
             break;
     }
+    console.groupEnd();
 
 	return repeaterArray;
 }
@@ -1751,6 +1771,8 @@ export async function actionValueEvaluation() {
         console.dir(contact);
         if (contact._id !== staffMatchId) {
             local.setItem('superEnrollmentStatus', 'ALERT');
+            memory.setItem('stepResponseBootstrapKey','danger');
+            await appendStepLogPPEQ('danger', `'Staff Eye-D' does not match actual 'Contact ID': '${contact._id}'`);
             local.setItem('logString', local.getItem('logString') + '\n[~1189]Staff-Eye-D Does NOT Match Contact Found ID (probably none). AbortForNow');
             console.log(`≈1694≈ staffMatch; local.getItem('superEnrollmentStatus'): ${local.getItem('superEnrollmentStatus')}`);
             return;
@@ -1759,14 +1781,14 @@ export async function actionValueEvaluation() {
         if ($w('#radioConfirmStaffEyeD').value !== 'YES') {
             console.log(`≈1700≈ contact.source.sourceType: could be MOOT but 'MEMBER' or 'IMPORT' supported now`);
             let sourceType = contact.source.sourceType.toUpperCase();
-            let supportedSourceTypeArray = ['MEMBER','IMPORT']
+            let supportedSourceTypeArray = ['MEMBER','zIMPORT']
             if (supportedSourceTypeArray.includes(sourceType) === false) {
                 local.setItem('superEnrollmentStatus', 'ALERT');
                 memory.setItem('stepResponseBootstrapKey','danger');
                 await appendStepLogPPEQ('danger', `'Staff Eye-D' Contact is of unsupported Source Type: '${sourceType}'`);
                 local.setItem('logString', `[~1194] ABORT: StaffEyeD Contact does not contain 'MEMBER' in sourceType`);
                 console.log(`≈1703≈ ABORT: StaffEyeD Contact does not contain 'MEMBER' in sourceType`);
-                // return;
+                return;
             }
         console.log(`≈1706≈ contact.source.sourceType.toUpperCase().indexOf('MEMBER'): ${contact.source.sourceType.toUpperCase().indexOf('MEMBER')}`);
         console.log(`≈1707≈ contact.source.sourceType.toUpperCase().indexOf('INDEX'): ${contact.source.sourceType.toUpperCase().indexOf('IMPORT')}`);
@@ -5279,6 +5301,9 @@ export async function msboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# n
     // pstEnrSeven202108ACTION
     // pstZEnrSeven202108STEP_R_01 BEGIN (CLICK DURING DEV)
     // 202109_UserInterface
+    // <init>
+    local.setItem('superEnrollmentStatus','PENDING');
+    // </init>
     let DOX = (new Date).toISOString();
     local.setItem('logString',DOX);
     DOX = 'pstEnrSeven202108STEP_R_01 BEGIN (CLICK DURING DEV)';

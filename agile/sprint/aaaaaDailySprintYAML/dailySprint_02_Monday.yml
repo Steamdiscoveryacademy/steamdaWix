@@ -1,13 +1,46 @@
 ---
-#?===============================================
-#¿=====   Sprint Monday September 6, 2021  ======
-#?===============================================
+#?==================================================
+#¿=====   Sprint  Monday September 13, 2021   ======
+#?==================================================
 daily Commits:
-      - postEnrollment: no
+      - postEnrollment:  no #†
 ...
 ---
 ppStDedupe:
       - validate PP & ST Ids and Emails: yes
+...
+---
+validation Triplet:
+      - local.setItem('superEnrollmentStatus')
+      - memory.setItem('stepResponseBootstrapKey')
+      - appendStepLogPPEQ('sufficientBootstrap','Message')
+            - memory.getItem('stepLogString')
+            - memory.getItem('stepLogStringSecondary')
+actionValueRepeaters:
+      - disableNames (above is sufficient, perhaps somethings else): yes
+      - onRamp prep Array: yes
+      - success prep Array: yes
+      - nonSuccess prep Array:
+            - general(as default of switch): yes
+            - more specific(whatever that means): no#†
+      - messaging from within:
+            - contact.id mismatch Staff-Eye-D:
+                  - success: yes
+                  - danger (force): no
+                        - messsage: no
+                        - buttonsHide: no
+            - contact.source.sourceType:
+                  - success: yes
+                  - danger (force):
+                        - messsage: no
+                        - buttonsHide: no
+messaging:
+      - secondary as LightBox: no
+      - devel as SOMETHING: no 
+      - onRamp UI:
+            - onRamp all demographx: no
+            - OR
+            - onRamp 'Perform' blank to all demograhx: no
 ...
 ---
 Test Students: 

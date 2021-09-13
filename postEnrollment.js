@@ -38,7 +38,7 @@ import wixWindow from 'wix-window';
  // ø pstEnrSeven202108ppStContactDedupe  TODAY
  // ø 202109ResolveAndDestroy  TODAY
  // ø 202109_UserInterface  TODAY
- // ø 202109_ActionValueRepeaters  TODAY
+ // ø 202109_ActionValueRepeaters  || 202109_ActionValues TODAY
  */
 
 
@@ -709,7 +709,6 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
     // ø </For All Steps>
     let responseKey = 'unknown';
     let responseMessage = 'DEFAULT';
-    let anyDangerHide = false;
     switch (stepKey) {
         // ø <NON-CORE Steps for UserInterface Only>
         // ø <stateSteps> BEGIN
@@ -989,11 +988,6 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
             console.log('UI Step: ' + stepKey)
             break;
         case 'EXECUTE_spDatabase':
-            // if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
-            //     anyDangerHide = memory.getItem('stepResponseBootstrapKey') === 'danger' ? true : anyDangerHide;
-            //     await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
-            //     memory.setItem('stepResponseBootstrapKey','secondary');//for remainder of stateStep
-            // }
             if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
                 await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
             }
@@ -1008,13 +1002,6 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
         default:
             errorString = 'stepKey (' + stepKey + ') is Not Supported within this Switch Structure';
             break;
-    }
-    // await appendStepLogPPEQ('danger', 'danger in end of ui force');
-    console.log('anyDangerHide: ' + anyDangerHide);
-    if(anyDangerHide){
-        console.log('hide Perform & Next Buttons')
-        $w('#btnPeSevenNext').hide();
-        $w('#btnPeSevenCurrent').hide();
     }
     if(paramObjectStep.previouslyCompleted){
         await appendStepLogPPEQ('info', `The '${stepKey}' Step has already been completed, the UI indicates this`);
@@ -1751,6 +1738,7 @@ export async function doInstantiateLoopSwitchStep() {
 // ø <---------- <actionValueEvaluation of IINSTANTIATE>  ---------->
 export async function actionValueEvaluation() {
     // local.setItem('superEnrollmentStatus', 'CONTINUE'); ALREADY SET
+    // 202109_ActionValues
     console.groupCollapsed('actionValueEvaluation');
     console.log('≈1676≈ actionValueEvaluation(); ENTERED');
 
@@ -1769,7 +1757,7 @@ export async function actionValueEvaluation() {
         let staffMatchId = local.getItem('staffIdentifiedFamilyId');
         let contact = await steamdaGetContactFunction(staffMatchId);
         console.dir(contact);
-        if (contact._id !== staffMatchId) {
+        if (contact._id === staffMatchId) {
             local.setItem('superEnrollmentStatus', 'ALERT');
             memory.setItem('stepResponseBootstrapKey','danger');
             await appendStepLogPPEQ('danger', `'Staff Eye-D' does not match actual 'Contact ID': '${contact._id}'`);
@@ -1781,7 +1769,7 @@ export async function actionValueEvaluation() {
         if ($w('#radioConfirmStaffEyeD').value !== 'YES') {
             console.log(`≈1700≈ contact.source.sourceType: could be MOOT but 'MEMBER' or 'IMPORT' supported now`);
             let sourceType = contact.source.sourceType.toUpperCase();
-            let supportedSourceTypeArray = ['MEMBER','zIMPORT']
+            let supportedSourceTypeArray = ['MEMBER','IMPORT']
             if (supportedSourceTypeArray.includes(sourceType) === false) {
                 local.setItem('superEnrollmentStatus', 'ALERT');
                 memory.setItem('stepResponseBootstrapKey','danger');
@@ -5199,6 +5187,20 @@ export async function msboxPostEnrollmentSevenPerformStepUI(responseObject = {})
     // pstZEnrSeven202108STEP_P_05 ==> ReturnTo: ANY-AFTER ==> pstZEnrSeven202108STEP_P_06
     DOX = 'pstEnrSeven202108STEP_P_05 ==> ReturnTo: ANY-AFTER ==> pstEnrSeven202108STEP_P_06';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
+    
+    // ø <FINAL> Remove Buttons if anyDanger
+    let anyDangerHide = false;
+    anyDangerHide = memory.getItem('stepResponseBootstrapKey') === 'danger' ? true : anyDangerHide;
+    anyDangerHide = (memory.getItem('stepLogString')).indexOf('danger') >= 0 ? true : anyDangerHide;
+    console.log('anyDangerHide: ' + anyDangerHide);
+    if(anyDangerHide){
+        console.log('hide Perform & Next Buttons')
+        $w('#btnPeSevenNext').collapse();
+        $w('#btnPeSevenCurrent').collapse();
+        $w('#btnAnyDanger').expand();
+        
+    }
+    // ø </FINAL> Remove Buttons if anyDanger
 }
 // ø <---------- </msboxPostEnrollmentSevenPerformStepUI> ---------->
 

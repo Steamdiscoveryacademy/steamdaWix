@@ -39,6 +39,7 @@ import wixWindow from 'wix-window';
  // ø 202109ResolveAndDestroy  TODAY
  // ø 202109_UserInterface  TODAY
  // ø 202109_ActionValueRepeaters  || 202109_ActionValues TODAY
+ // ø 202109_DeDupeRepeaters  || 202109_DeDupeCode TODAY
  */
 
 
@@ -573,6 +574,7 @@ export async function doStepSwitch(stepKey = 'PPENDING') {
 
 
         case 'dedupePpStContact':
+            // 202109_DeDupeCode
             // ø <stateDupeDelete>
             memory.setItem('stepResponseBootstrapKey','success');//assumption
             if(memory.getItem('stepResponseBootstrapKey') === 'success'){
@@ -1757,7 +1759,7 @@ export async function actionValueEvaluation() {
         let staffMatchId = local.getItem('staffIdentifiedFamilyId');
         let contact = await steamdaGetContactFunction(staffMatchId);
         console.dir(contact);
-        if (contact._id === staffMatchId) {
+        if (contact._id !== staffMatchId) {
             local.setItem('superEnrollmentStatus', 'ALERT');
             memory.setItem('stepResponseBootstrapKey','danger');
             await appendStepLogPPEQ('danger', `'Staff Eye-D' does not match actual 'Contact ID': '${contact._id}'`);
@@ -1787,7 +1789,6 @@ export async function actionValueEvaluation() {
         local.setItem('logString', local.getItem('logString') + '\n[~Z547]staffMatchFoundContact: ' + JSON.stringify(contact, undefined, 4));
         ppAction = "SKIP|UPDATE|INSERT";
     }
-    console.groupEnd();
     local.setItem('logString', local.getItem('logString') + '\n[~Z583]staffMatch: ' + staffMatch);
 
     let familyId = local.getItem('staffIdentifiedFamilyId');
@@ -1802,6 +1803,7 @@ export async function actionValueEvaluation() {
             .eq("termId", termId)
             .count();
         ppAction = ppExistsCount > 0 ? "SKIP|SKIP|SKIP" : ppAction;
+        console.log(`existing PP for this Term: usually additional children|ppExistsCount > 0 ? "SKIP|SKIP|SKIP"`);
         local.setItem('logString', local.getItem('logString') + '\n[~Z508]ppExistsCount: ' + ppExistsCount);
     }
     // ø </ppAction>
@@ -1813,8 +1815,14 @@ export async function actionValueEvaluation() {
             .eq("firstLegal", studentLegalFirst)
             .eq("termId", termId)
             .count();
-        stAction = stExistsCount > 0 ? "ALERT|ALERT|ALERT" : stAction;
-        local.setItem('logString', local.getItem('logString') + '\n[~Z523]stExistsCount: ' + stExistsCount);
+        if(stExistsCount > 0){
+            stAction = "ALERT|ALERT|ALERT";
+            local.setItem('superEnrollmentStatus', 'ALERT');
+            memory.setItem('stepResponseBootstrapKey','danger');
+            await appendStepLogPPEQ('danger', `Unaccepatable Anomaly: Student Already Exist for the Current Term`);
+            local.setItem('logString', local.getItem('logString') + '\n[~Z523]stExistsCount: ' + stExistsCount);
+            console.log(`Unaccepatable Anomaly: Student Already Exist for the Current Term`);
+        }
     }
     // ø </stAction>
 
@@ -1829,6 +1837,7 @@ export async function actionValueEvaluation() {
     local.setItem('logString', local.getItem('logString') + '\n[~Z536]logSecondaryParentReason: ' + logSecondaryParentReason);
     local.setItem('logString', local.getItem('logString') + '\n[~Z537]checkSecondaryParent: ' + checkSecondaryParent);
     spAction = !checkSecondaryParent ? "NA|SKIP|SKIP" : spAction;
+    console.log(`spAction: by Secondary in Application: ${spAction}`);
     if (staffMatch) {
         if (checkSecondaryParent) {
             let spExistsCount = await wixData.query("person")
@@ -1837,6 +1846,7 @@ export async function actionValueEvaluation() {
                 .eq("termId", termId)
                 .count();
             spAction = spExistsCount > 0 ? "NA|SKIP|SKIP" : spAction;
+            console.log(`spAction: by Exist in Database: ${spAction}`);
             local.setItem('logString', local.getItem('logString') + '\n[~Z550]spExistsCount: ' + spExistsCount);
         }
     }
@@ -1850,6 +1860,10 @@ export async function actionValueEvaluation() {
         ppAction = "ALERT|ALERT|ALERT";
         stAction = "ALERT|ALERT|ALERT";
         spAction = "ALERT|ALERT|ALERT";
+        local.setItem('superEnrollmentStatus', 'ALERT');
+        memory.setItem('stepResponseBootstrapKey','danger');
+        await appendStepLogPPEQ('danger', `Today is Past the End of the Current Term`);
+        console.log(`Today is Past the End of the Current Term: ${memory.getItem('stepResponseBootstrapKey')}`);
     }
 
     memory.setItem('ppAction', ppAction);
@@ -1862,6 +1876,9 @@ export async function actionValueEvaluation() {
     local.setItem('logString', local.getItem('logString') + '\n[~Z576]superEnrollmentStatus: ' + superEnrollmentStatus);
     local.setItem('superEnrollmentStatus', superEnrollmentStatus);
     local.setItem('logString', local.getItem('logString') + '\n[~Z578]Exiting: ' + 'actionValueEvaluation()');
+    console.log(`superEnrollmentStatus: ${superEnrollmentStatus}')}`);
+    console.log(`local.getItem('superEnrollmentStatus'): ${local.getItem('superEnrollmentStatus')}')}`);
+    console.groupEnd();
 }
 // ø <---------- </actionValueEvaluation of IINSTANTIATE> ---------->
 
@@ -2073,6 +2090,7 @@ export async function stMemberExecuteUpsert() {
 // ø <---------- <ppStContactDedupe>  ---------->
 export async function ppStContactDedupe(paramObject = {}) {
     //pstEnrSeven202108ppStContactDedupe
+    // 202109_DeDupeCode
     let diagnosticOnly = typeof paramObject.diagnosticOnly === 'boolean' && paramObject.diagnosticOnly === true ? true : false;
 
     // ø <ELSE>

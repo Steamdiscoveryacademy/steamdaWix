@@ -16,20 +16,37 @@ validation Triplet:
       - appendStepLogPPEQ('sufficientBootstrap','Message')
             - memory.getItem('stepLogString')
             - memory.getItem('stepLogStringSecondary')
+actionValueRepeaters-UI brain-storm:
+      - make full screen
+      - not name, but IDs:
+            - Member ID: (when Created/Skipped)(remember SKIP indicates accuracy)
+            - ContactID: when Updated/Skipped
+            - DatabaseRecordID: when Inserted/Skipped
+      - grey-out secondary if Non-Existent (different than already in DB for Term)
 actionValueRepeaters:
       - disableNames (above is sufficient, perhaps somethings else): yes
       - onRamp prep Array: yes
       - success prep Array: yes
       - nonSuccess prep Array:
             - general(as default of switch): yes
-            - more specific(whatever that means): no#†
+            - more specific(whatever that means): yes
       - messaging from within:
             - contact.id mismatch Staff-Eye-D:
                   - success: yes
-                  - danger (force): no
-                        - messsage: no
-                        - buttonsHide: no
+                  - danger (force):
+                        - messsage: yes
+                        - buttonsHide: yes
             - contact.source.sourceType:
+                  - success: yes
+                  - danger (force):
+                        - messsage: yes
+                        - buttonsHide: yes
+            - Student Exists for Current Term:
+                  - success: yes
+                  - danger (force):
+                        - messsage: yes
+                        - buttonsHide: yes
+            - Today is Past the End of the Current Term:
                   - success: yes
                   - danger (force):
                         - messsage: no

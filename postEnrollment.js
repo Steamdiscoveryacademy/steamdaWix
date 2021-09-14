@@ -1810,6 +1810,14 @@ export async function actionValueEvaluation() {
 
     // ø <stAction>
     if (staffMatch) {
+        if(202106 < Number(local.getItem('termId'))){
+                stAction = "ALERT|ALERT|ALERT";
+                local.setItem('superEnrollmentStatus', 'ALERT');
+                memory.setItem('stepResponseBootstrapKey','danger');
+                await appendStepLogPPEQ('danger', `Logic Required: Check for Same Student Previous Term`);
+                local.setItem('logString', local.getItem('logString') + '\n[~1817] Logic Required: Check for Same Student Previous Term');
+                console.log(`Logic Required: Check for Same Student Previous Term`);
+        }
         let stExistsCount = await wixData.query("person")
             .eq("familyId", familyId)
             .eq("firstLegal", studentLegalFirst)
@@ -1839,6 +1847,14 @@ export async function actionValueEvaluation() {
     spAction = !checkSecondaryParent ? "NA|SKIP|SKIP" : spAction;
     console.log(`spAction: by Secondary in Application: ${spAction}`);
     if (staffMatch) {
+        if(202106 < Number(local.getItem('termId'))){
+                spAction = "ALERT|ALERT|ALERT";
+                local.setItem('superEnrollmentStatus', 'ALERT');
+                memory.setItem('stepResponseBootstrapKey','danger');
+                await appendStepLogPPEQ('danger', `Logic Required: Check for Same Secondary Parent Previous Term`);
+                local.setItem('logString', local.getItem('logString') + '\n[~1817] Logic Required: Check for Same Secondary Parent Previous Term');
+                console.log(`Logic Required: Check for Same Secondary Parent Previous Term`);
+        }
         if (checkSecondaryParent) {
             let spExistsCount = await wixData.query("person")
                 .eq("familyId", familyId)
@@ -2091,6 +2107,7 @@ export async function stMemberExecuteUpsert() {
 export async function ppStContactDedupe(paramObject = {}) {
     //pstEnrSeven202108ppStContactDedupe
     // 202109_DeDupeCode
+    console.groupCollapsed('ppStContactDedupe()');
     let diagnosticOnly = typeof paramObject.diagnosticOnly === 'boolean' && paramObject.diagnosticOnly === true ? true : false;
 
     // ø <ELSE>
@@ -2116,12 +2133,16 @@ export async function ppStContactDedupe(paramObject = {}) {
     if(typeof allParametersValid !== 'boolean' || allParametersValid !== true){
         DOX = `'danger': One or more Key Data Points for the Primary Parent and Student is Invalid.`;
         local.setItem('logString', local.getItem('logString') + ',' + DOX);
+        memory.setItem('stepResponseBootstrapKey','danger');
         await appendStepLogPPEQ('danger', `One or more Key Data Points for the Primary Parent and Student is Invalid.`);
+        console.log(`≈12123≈ One or more Key Data Points for the Primary Parent and Student is Invalid`);
+        console.groupEnd();
         return;
     }
     DOX = `'success': All Key Data Points for the Primary Parent and Student are Valid.`;
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
     // ø </ELSE>
+    console.groupEnd();
 
 
 
@@ -2140,8 +2161,11 @@ export async function ppStContactDedupe(paramObject = {}) {
     tobeDeletedTotal += paramObjectPrimary.results.tobeDeletedCount;
     actuallyDeletedTotal += paramObjectPrimary.results.actuallyDeletedCount;
     let isValidPrimary = true;
-    isValidPrimary = paramObjectPrimary.emailToFind === local.getItem('familyEmail') ? isValidPrimary : false;
-    isValidPrimary = paramObjectPrimary.notIdToFind === local.getItem('familyId') ? isValidPrimary : false;
+    let isValidPrimaryString = 'TTRUE';
+    isValidPrimary        = paramObjectPrimary.emailToFind === local.getItem('familyEmail') ? isValidPrimary : false;
+    isValidPrimaryString  = paramObjectPrimary.emailToFind === local.getItem('familyEmail') ? isValidPrimaryString : '_EMAIL';
+    isValidPrimary        = paramObjectPrimary.notIdToFind === local.getItem('familyId') ? isValidPrimary : false;
+    isValidPrimaryString += paramObjectPrimary.notIdToFind === local.getItem('familyId') ? '' : '_PPID';
     paramObjectPrimary.isValidPrimary = isValidPrimary;
     // ø </Primary Parent DeDupe>
     // ø <Student DeDupe>
@@ -2155,15 +2179,44 @@ export async function ppStContactDedupe(paramObject = {}) {
     tobeDeletedTotal += paramObjectStudent.results.tobeDeletedCount;
     actuallyDeletedTotal += paramObjectStudent.results.actuallyDeletedCount;
     let isValidStudent = true;
-    isValidStudent = paramObjectPrimary.emailToFind === local.getItem('familyEmail') ? isValidStudent : false;
-    isValidStudent = paramObjectPrimary.notIdToFind === local.getItem('familyId') ? isValidStudent : false;
+    let isValidStudentString = 'TTRUE';
+    isValidStudent        = paramObjectStudent.emailToFind === local.getItem('studentEmail') ? isValidStudent : false;
+    isValidStudentString  = paramObjectStudent.emailToFind === local.getItem('studentEmail') ? isValidStudentString : '_EMAIL';
+    isValidStudent        = paramObjectStudent.notIdToFind + 'Z' === local.getItem('studentId') ? isValidStudent : false;
+    isValidStudentString += paramObjectStudent.notIdToFind + 'Z' === local.getItem('studentId') ? '' : '_STID';
     paramObjectStudent.isValidStudent = isValidStudent;
     // ø </Student DeDupe>
     let stepResponseBootstrapKey = 'success';
-    stepResponseBootstrapKey = tobeDeletedTotal > 0 ? 'warning' : stepResponseBootstrapKey;
-    stepResponseBootstrapKey = tobeDeletedTotal - actuallyDeletedTotal !== 0 ? 'danger' : stepResponseBootstrapKey;
-    stepResponseBootstrapKey = isValidPrimary === false ? 'danger' : stepResponseBootstrapKey;
-    stepResponseBootstrapKey = isValidStudent === false ? 'danger' : stepResponseBootstrapKey;
+    if(tobeDeletedTotal > 0){
+        stepResponseBootstrapKey = 'warning';
+        DOX = 'DUPLICATE_EXISTS';
+        DOX += paramObjectPrimary.tobeDeletedCount > 0 ? '_PRIMARY' : '';
+        DOX += paramObjectStudent.results.tobeDeletedCount > 0 ? '_STUDENT' : '';
+
+    }
+    if(tobeDeletedTotal - actuallyDeletedTotal !== 0){
+        stepResponseBootstrapKey = 'danger';
+        DOX = 'DUPLICATE_UNDELETED';
+        DOX += paramObjectPrimary.tobeDeletedCount - paramObjectPrimary.actuallyDeletedCount !== 0 ? '_PRIMARY' : '';
+        DOX += paramObjectStudent.results.tobeDeletedCount - paramObjectStudent.actuallyDeletedCount !== 0 ? '_STUDENT' : '';
+
+    }
+    if(isValidPrimary === false){
+        stepResponseBootstrapKey = 'danger';
+        DOX = 'INVALID_PRIMARY' + isValidPrimaryString;
+
+    }
+    if(isValidStudent === false){
+        stepResponseBootstrapKey = 'danger';
+        DOX = 'INVALID_STUDENT' + isValidStudentString;
+
+    }
+    
+    if(stepResponseBootstrapKey !== 'success'){
+        memory.setItem('stepResponseBootstrapKey',stepResponseBootstrapKey);
+        await appendStepLogPPEQ(stepResponseBootstrapKey, DOX);
+        console.log(`≈2208≈ DeDupe: stepResponseBootstrapKey: ${DOX}`);
+    }
     memory.setItem('stepResponseBootstrapKey',stepResponseBootstrapKey);
     // memory.setItem('stepResponseBootstrapKey','Algonquin');
     responseObjectCombo.stepResponseBootstrapKey = memory.getItem('stepResponseBootstrapKey');
@@ -6303,7 +6356,7 @@ export function btnResetToLastCompletedTEMP_click(event) {
     let current = local.getItem('enrollmentStepCompletedListAll');
     let tempLastCompleted_b4DeDupe = 'OnReadyReset,ZERO,IINSTANTIATE,PREP_ppMember,EXECUTE_ppMember,PREP_stMember,EXECUTE_stMember'; 
     let tempLastCompleted_b4PpStContactsAndDatabase = 'OnReadyReset,ZERO,IINSTANTIATE,PREP_ppMember,EXECUTE_ppMember,PREP_stMember,EXECUTE_stMember,OnReadyResetContinue,dedupePpStContact'; 
-    let tempLastCompleted_b4DeDupe_ActiveOnly = 'PREP_ppMember,EXECUTE_ppMember,PREP_stMember,EXECUTE_stMember,OnReadyResetContinue,dedupePpStContact'; 
+    let tempLastCompleted_b4DeDupe_ActiveOnly = 'PREP_ppMember,EXECUTE_ppMember,PREP_stMember,EXECUTE_stMember,OnReadyResetContinue'; 
     // ø <Logic for First and Continuing>
     let next = 'tempLastCompleted_b4DeDupe';
     next = current === tempLastCompleted_b4DeDupe ? 'tempLastCompleted_b4PpStContactsAndDatabase' : next;

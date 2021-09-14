@@ -3,7 +3,26 @@
 #¿=====   Sprint  Monday September 13, 2021   ======
 #?==================================================
 daily Commits:
-      - postEnrollment:  no #†
+      - postEnrollment:  yes
+...
+---
+Brainstorm enrollmentstates UI:
+      - States:
+            - mimimize
+            - make Bootstrap-primary
+            - test that Primary can Expand the state(s)
+                  - thus anything like it can expand a State as needbe
+            
+      - Code:
+            - identify on UI and then Remove Code:
+                  - all JUST BUTTONs then CALL - removed FIRST
+                  - then and ONLY THEN remove from UI
+            - what code remains:
+                  - display
+            - what code is tossed:
+                  - Loop-Switch
+                        - as opposed to Loop that calls a Switch
+
 ...
 ---
 ppStDedupe:
@@ -46,11 +65,55 @@ actionValueRepeaters:
                   - danger (force):
                         - messsage: yes
                         - buttonsHide: yes
+            - Student Exists for Previous to 202106 Term:
+                  - success: yes
+                  - danger (force):
+                        - messsage: yes
+                        - buttonsHide: yes
+            - Secondary Parent Exists for Previous to 202106 Term:
+                  - success: yes
+                  - danger (force):
+                        - messsage: yes
+                        - buttonsHide: yes
             - Today is Past the End of the Current Term:
                   - success: yes
                   - danger (force):
                         - messsage: no
                         - buttonsHide: no
+202109_DeDupeCode:
+      - SKIP DeDupe if PP and ST are Member-SKIP: no
+      - Dedupe Primary Parent Contact:
+            - success: yes
+            - danger (force):
+                  - messsage: no
+                  - buttonsHide: no
+      - Dedupe Student Contact:
+            - success: yes
+            - danger (force):
+                  - messsage: no
+                  - buttonsHide: no
+      - Invalid Primary:
+            - success: yes
+            - danger email (force):
+                  - messsage: yes
+                  - buttonsHide: yes
+            - danger Id (force):
+                  - messsage: no
+                  - buttonsHide: no
+            - danger email && Id (force):
+                  - messsage: yes
+                  - buttonsHide: yes
+      - Invalid Student:
+            - success: yes
+            - danger email (force):
+                  - messsage: yes
+                  - buttonsHide: yes
+            - danger Id (force):
+                  - messsage: no
+                  - buttonsHide: no
+            - danger email && Id (force):
+                  - messsage: yes
+                  - buttonsHide: yes
 messaging:
       - secondary as LightBox: no
       - devel as SOMETHING: no 
@@ -58,6 +121,21 @@ messaging:
             - onRamp all demographx: no
             - OR
             - onRamp 'Perform' blank to all demograhx: no
+
+      - INVALID PRIMARY || INVALID STUDENT:
+            - alias to Clean Message PRIMARY EMAIL: no
+            - alias to Clean Message PRIMARY PPID: no
+            - alias to Clean Message PRIMARY EMAIL && PPID: no
+            - alias to Clean Message STUDENT EMAIL: no
+            - alias to Clean Message STUDENT STID: no
+            - alias to Clean Message STUDENT EMAIL && STID: no
+      - ANY_DUPLICATES || ANY_UNDELETED:
+            - ANY_DUPLICATES PRIMARY: no
+            - ANY_DUPLICATES STUDENT: no
+            - ANY_DUPLICATES PRIMARY && STUDENT: no
+            - ANY_UNDELETED PRIMARY: no
+            - ANY_UNDELETED STUDENT: no
+            - ANY_UNDELETED PRIMARY && STUDENT: no
 ...
 ---
 Test Students: 

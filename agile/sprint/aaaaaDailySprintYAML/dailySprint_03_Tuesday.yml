@@ -1,13 +1,142 @@
 ---
-#?===============================================
-#¿=====  Sprint Tuesday September 7, 2021  ======
-#?===============================================
+#?==================================================
+#¿=====   Sprint  Tuesday September 14, 2021  ======
+#?==================================================
 daily Commits:
-      - postEnrollment: yes
+      - postEnrollment:  yes #¡ Just Before Quitting 11:14PM
+...
+---
+Brainstorm enrollmentstates UI:
+      - States:
+            - mimimize
+            - make Bootstrap-primary
+            - test that Primary can Expand the state(s)
+                  - thus anything like it can expand a State as needbe
+            
+      - Code:
+            - identify on UI and then Remove Code:
+                  - all JUST BUTTONs then CALL - removed FIRST
+                  - then and ONLY THEN remove from UI
+            - what code remains:
+                  - display
+            - what code is tossed:
+                  - Loop-Switch
+                        - as opposed to Loop that calls a Switch
+
 ...
 ---
 ppStDedupe:
       - validate PP & ST Ids and Emails: yes
+...
+---
+validation Triplet:
+      - local.setItem('superEnrollmentStatus')
+      - memory.setItem('stepResponseBootstrapKey')
+      - appendStepLogPPEQ('sufficientBootstrap','Message')
+            - memory.getItem('stepLogString')
+            - memory.getItem('stepLogStringSecondary')
+actionValueRepeaters-UI brain-storm:
+      - make full screen
+      - not name, but IDs:
+            - Member ID: (when Created/Skipped)(remember SKIP indicates accuracy)
+            - ContactID: when Updated/Skipped
+            - DatabaseRecordID: when Inserted/Skipped
+      - grey-out secondary if Non-Existent (different than already in DB for Term)
+actionValueRepeaters:
+      - disableNames (above is sufficient, perhaps somethings else): yes
+      - onRamp prep Array: yes
+      - success prep Array: yes
+      - nonSuccess prep Array:
+            - general(as default of switch): yes
+            - more specific(whatever that means): yes
+      - messaging from within:
+            - contact.id mismatch Staff-Eye-D:
+                  - success: yes
+                  - danger (force):
+                        - messsage: yes
+                        - buttonsHide: yes
+            - contact.source.sourceType:
+                  - success: yes
+                  - danger (force):
+                        - messsage: yes
+                        - buttonsHide: yes
+            - Student Exists for Current Term:
+                  - success: yes
+                  - danger (force):
+                        - messsage: yes
+                        - buttonsHide: yes
+            - Student Exists for Previous to 202106 Term:
+                  - success: yes
+                  - danger (force):
+                        - messsage: yes
+                        - buttonsHide: yes
+            - Secondary Parent Exists for Previous to 202106 Term:
+                  - success: yes
+                  - danger (force):
+                        - messsage: yes
+                        - buttonsHide: yes
+            - Today is Past the End of the Current Term:
+                  - success: yes
+                  - danger (force):
+                        - messsage: no
+                        - buttonsHide: no
+202109_DeDupeCode:
+      - SKIP DeDupe if PP and ST are Member-SKIP: no
+      - Dedupe Primary Parent Contact:
+            - success: yes
+            - danger (force):
+                  - messsage: no
+                  - buttonsHide: no
+      - Dedupe Student Contact:
+            - success: yes
+            - danger (force):
+                  - messsage: no
+                  - buttonsHide: no
+      - Invalid Primary:
+            - success: yes
+            - danger email (force):
+                  - messsage: yes
+                  - buttonsHide: yes
+            - danger Id (force):
+                  - messsage: no
+                  - buttonsHide: no
+            - danger email && Id (force):
+                  - messsage: yes
+                  - buttonsHide: yes
+      - Invalid Student:
+            - success: yes
+            - danger email (force):
+                  - messsage: yes
+                  - buttonsHide: yes
+            - danger Id (force):
+                  - messsage: no
+                  - buttonsHide: no
+            - danger email && Id (force):
+                  - messsage: yes
+                  - buttonsHide: yes
+messaging:
+      - secondary as LightBox: no
+      - devel as SOMETHING: no 
+      - onRamp UI:
+            - onRamp all demographx: no
+            - OR
+            - onRamp 'Perform' blank to all demograhx: no
+
+      - INVALID PRIMARY || INVALID STUDENT:
+            - alias to Clean Message PRIMARY EMAIL: no
+            - alias to Clean Message PRIMARY PPID: no
+            - alias to Clean Message PRIMARY EMAIL && PPID: no
+            - alias to Clean Message STUDENT EMAIL: no
+            - alias to Clean Message STUDENT STID: no
+            - alias to Clean Message STUDENT EMAIL && STID: no
+            - This is so unlikely that the aliases will wait
+      - ANY_DUPLICATES || ANY_UNDELETED:
+            - ANY_DUPLICATES PRIMARY: yes
+            - ANY_DUPLICATES STUDENT: yes
+            - ANY_DUPLICATES PRIMARY && STUDENT: yes
+            - ANY_UNDELETED PRIMARY: yes
+            - ANY_UNDELETED STUDENT: yes
+            - ANY_UNDELETED PRIMARY && STUDENT: yes
 ...
 ---
 Test Students: 
@@ -64,4 +193,6 @@ EVERGREEN:
       - EVERGREEN Code Clean-Up:
             - REMOVE all 202107 QUICK-FIND tags after confirming that they are not only Deprecated but Redundant: no
             - renumber the ≈Z123≈ to correct number without 'Z': no
+            - local.wixWebhookStatus vs local.webhookThisStatus vs local.webhookThisResolved: no
+            
 ...

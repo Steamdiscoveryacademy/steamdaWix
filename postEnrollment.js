@@ -792,9 +792,6 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
                 await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
             }
 
-            $w('#txtComboName').text = local.getItem('comboName');
-            $w('#txtComboName').show();
-
             // 202109_ActionValueRepeaters
             let actionValueRepeatersParamObject = {};
             actionValueRepeatersParamObject.prepKey = 'stateInstantiate';
@@ -1772,7 +1769,7 @@ export async function actionValueEvaluation() {
         if ($w('#radioConfirmStaffEyeD').value !== 'YES') {
             console.log(`≈1700≈ contact.source.sourceType: could be MOOT but 'MEMBER' or 'IMPORT' supported now`);
             let sourceType = contact.source.sourceType.toUpperCase();
-            let supportedSourceTypeArray = ['MEMBER','IMPORT']
+            let supportedSourceTypeArray = ['MEMBER','IMPORT','ADMIN']
             if (supportedSourceTypeArray.includes(sourceType) === false) {
                 local.setItem('superEnrollmentStatus', 'ALERT');
                 memory.setItem('stepResponseBootstrapKey','danger');
@@ -5203,7 +5200,16 @@ export async function msboxPostEnrollmentSevenNextStateUI(responseObject = {}) {
     // ø <After DO-Script Called>
     DOX = `After DO-Next - Within UI-Next: show btnCurrent/hide btnNext`;
     responseObject.logArrayDeveloper.push(`{% ${DOX} %}`);
-    $w('#txtPeSevenTitle').text = responseObject.currentStepObject.title;
+    // $w('#txtPeSevenTitle').text = responseObject.currentStepObject.title;
+    let textId = '#' + memory.getItem('msboxNextStateId') + 'Title';
+    console.log(`textId: Title: ${textId}`)
+    $w(textId).text = responseObject.currentStepObject.title;
+    textId = '#' + memory.getItem('msboxNextStateId') + 'TitleSub';
+    console.log(`textId: TitleSub ${textId}`)
+    $w(textId).text = responseObject.currentStepObject.titleSub;
+    textId = '#' + memory.getItem('msboxNextStateId') + 'Descr';
+    console.log(`textId: Descr ${textId}`)
+    $w(textId).text = typeof responseObject.currentStepObject.descr === 'string' ? responseObject.currentStepObject.descr : '';
     responseObject.logArrayDeveloper.push(`≈Z3835≈ {% POC stepObject: responseObject.currentStepObject.title: ${responseObject.currentStepObject.title} %}`);
     $w('#txtBootstrapPrimary').html = doBootstrapMessage('primary', responseObject.currentMessagingObject.primary, [[-1, 36], [50, 28]]);
     if(responseObject.currentMessagingObject.info !== 'EEMPTY'){$w('#txtBootstrapInfo').html = doBootstrapMessage('info', responseObject.currentMessagingObject.info, [[-1, 36], [50, 28]]); $w('#txtBootstrapInfo').expand();}

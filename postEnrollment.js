@@ -40,6 +40,7 @@ import wixWindow from 'wix-window';
  // ø 202109_UserInterface  TODAY
  // ø 202109_ActionValueRepeaters  || 202109_ActionValues TODAY
  // ø 202109_DeDupeRepeaters  || 202109_DeDupeCode TODAY
+ // ø 202109_processALIASES TODAY
  */
 
 
@@ -2158,6 +2159,11 @@ export async function ppStContactDedupe(paramObject = {}) {
     paramObjectPrimary.collectHumanLog = false;
     await getContactByEmailAndNotIdFunction(paramObjectPrimary);
     responseObjectCombo.paramObjectPrimary = paramObjectPrimary;
+    DOX = 'vvvvvvvvvv ##### MANIPULATE VALUES FOR TESTING ##### vvvvvvvvvv';
+    // 202109_processALIASES
+    // paramObjectPrimary.results.tobeDeletedCount++;
+    // paramObjectPrimary.results.actuallyDeletedCount++;
+    DOX = '^^^^^^^^^^ ##### MANIPULATE VALUES FOR TESTING ##### ^^^^^^^^^^';
     tobeDeletedTotal += paramObjectPrimary.results.tobeDeletedCount;
     actuallyDeletedTotal += paramObjectPrimary.results.actuallyDeletedCount;
     let isValidPrimary = true;
@@ -2176,29 +2182,34 @@ export async function ppStContactDedupe(paramObject = {}) {
     paramObjectStudent.collectHumanLog = false;
     await getContactByEmailAndNotIdFunction(paramObjectStudent);
     responseObjectCombo.paramObjectStudent = paramObjectStudent;
+    DOX = 'vvvvvvvvvv ##### MANIPULATE VALUES FOR TESTING ##### vvvvvvvvvv';
+    // 202109_processALIASES
+    // paramObjectStudent.results.tobeDeletedCount++;
+    // paramObjectStudent.results.actuallyDeletedCount++;
+    DOX = '^^^^^^^^^^ ##### MANIPULATE VALUES FOR TESTING ##### ^^^^^^^^^^';
     tobeDeletedTotal += paramObjectStudent.results.tobeDeletedCount;
     actuallyDeletedTotal += paramObjectStudent.results.actuallyDeletedCount;
     let isValidStudent = true;
     let isValidStudentString = 'TTRUE';
     isValidStudent        = paramObjectStudent.emailToFind === local.getItem('studentEmail') ? isValidStudent : false;
     isValidStudentString  = paramObjectStudent.emailToFind === local.getItem('studentEmail') ? isValidStudentString : '_EMAIL';
-    isValidStudent        = paramObjectStudent.notIdToFind + 'Z' === local.getItem('studentId') ? isValidStudent : false;
-    isValidStudentString += paramObjectStudent.notIdToFind + 'Z' === local.getItem('studentId') ? '' : '_STID';
+    isValidStudent        = paramObjectStudent.notIdToFind === local.getItem('studentId') ? isValidStudent : false;
+    isValidStudentString += paramObjectStudent.notIdToFind === local.getItem('studentId') ? '' : '_STID';
     paramObjectStudent.isValidStudent = isValidStudent;
     // ø </Student DeDupe>
     let stepResponseBootstrapKey = 'success';
     if(tobeDeletedTotal > 0){
         stepResponseBootstrapKey = 'warning';
         DOX = 'DUPLICATE_EXISTS';
-        DOX += paramObjectPrimary.tobeDeletedCount > 0 ? '_PRIMARY' : '';
+        DOX += paramObjectPrimary.results.tobeDeletedCount > 0 ? '_PRIMARY' : '';
         DOX += paramObjectStudent.results.tobeDeletedCount > 0 ? '_STUDENT' : '';
 
     }
     if(tobeDeletedTotal - actuallyDeletedTotal !== 0){
         stepResponseBootstrapKey = 'danger';
         DOX = 'DUPLICATE_UNDELETED';
-        DOX += paramObjectPrimary.tobeDeletedCount - paramObjectPrimary.actuallyDeletedCount !== 0 ? '_PRIMARY' : '';
-        DOX += paramObjectStudent.results.tobeDeletedCount - paramObjectStudent.actuallyDeletedCount !== 0 ? '_STUDENT' : '';
+        DOX += paramObjectPrimary.results.tobeDeletedCount - paramObjectPrimary.results.actuallyDeletedCount !== 0 ? '_PRIMARY' : '';
+        DOX += paramObjectStudent.results.tobeDeletedCount - paramObjectStudent.results.actuallyDeletedCount !== 0 ? '_STUDENT' : '';
 
     }
     if(isValidPrimary === false){
@@ -5961,6 +5972,7 @@ export async function parsePPEQ_toObjectArraysByKey(ppeqString = 'STRING'){
     let elementObject = {};
     let lookupObject = {};
     let key = 'STRING';
+    let message = 'STRING';
     let holder = 'STRING';
     let index = 0;
     
@@ -5979,8 +5991,27 @@ export async function parsePPEQ_toObjectArraysByKey(ppeqString = 'STRING'){
         }else{
             lookupObject = { bootstrap: 'NA', watchdog: 'NA' }
         }
+        message = typeof elementArray[1] === 'undefined' ? '' : elementArray[1];
+        // ø
+        // ø <>//#endregion
+        // ø <Process Aliases>
+        // 202109_processALIASES
+        // ø <DeDupe Aliases>
+        message = message === 'DUPLICATE_EXISTS_PRIMARY' ? `The 'Duplicate Anomaly' exists for Primary Parent` : message;
+        message = message === 'DUPLICATE_EXISTS_STUDENT' ? `The 'Duplicate Anomaly' exists for Student` : message;
+        message = message === 'DUPLICATE_EXISTS_PRIMARY_STUDENT' ? `The 'Duplicate Anomaly' exists for both Primary Parent and Student` : message;
+        message = message === 'DUPLICATE_UNDELETED_PRIMARY' ? `An Undeleted 'Duplicate Anomaly' exists for Primary Parent` : message;
+        message = message === 'DUPLICATE_UNDELETED_STUDENT' ? `An Undeleted 'Duplicate Anomaly' exists for Student` : message;
+        message = message === 'DUPLICATE_UNDELETED_PRIMARY_STUDENT' ? `An Undeleted 'Duplicate Anomaly' exists for both Primary Parent and Student` : message;
+        // ø <INVALID PRIMARY || INVALID STUDENT>
+        // ø INVALID PRIMARY || INVALID STUDENT are unlikely that the aliases will wait
+        // ø </INVALID PRIMARY || INVALID STUDENT>
+        // ø </DeDupe Aliases>
+        // ø </Process Aliases>
+        // ø </>
+        // ø
         elementObject = {};
-        elementObject.message = typeof elementArray[1] === 'undefined' ? '' : elementArray[1];
+        elementObject.message = message;
         elementObject.key = key;
         holder = typeof elementArray[2] === 'string' ? elementArray[2] : '';
         elementObject.line = elementArray[2];

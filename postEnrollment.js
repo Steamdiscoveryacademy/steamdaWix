@@ -3518,7 +3518,6 @@ export function displaySteps() {
     })
     result = status === 'string' ? resultString : result;
     $w('#txtStepsList').text = result;
-    $w('#txtStepsListSeven').text = result;
     $w('#spContactResponseJSON').value = result;
     doUserInterfaceCleanupCurrent();
 }
@@ -6267,34 +6266,6 @@ export function btnStepsObject_click(event) {
     $w('#ppDatabaseResponseJSON').value = memory.getItem('stepObjects');
 }
 
-export function btnGetCompleteList_click(event) {
-	$w('#spContactResponseJSON').value = local.getItem('enrollmentStepCompletedListAll');
-    uiCopyTextElementThis('spContactResponseJSON');
-}
-
-export function btnGetStepLogString_click(event) {
-	$w('#spContactResponseJSON').value = memory.getItem('stepLogString');
-    uiCopyTextElementThis('spContactResponseJSON');
-}
-
-export function btnClearSpContactResponseJSON_click(event) {
-	doClear('spContactResponseJSON');
-}
-
-export function btnMessageObjectArrays_click(event) {
-    let messagingObject = JSON.parse(local.getItem('stepMessagingJSON'));
-	// $w('#spContactResponseJSON').value = $w('#stMemberResponseJSON').value;
-	$w('#spContactResponseJSON').value = JSON.stringify(messagingObject,undefined,4);
-    uiCopyTextElementThis('spContactResponseJSON');
-
-}
-
-export function btnGetStates_click(event) {
-	$w('#spContactResponseJSON').value = `memory.getItem('msboxLastState'): ${memory.getItem('msboxLastState')};\nmemory.getItem('msboxNextStateId'): ${memory.getItem('msboxNextStateId')}` 
-    uiCopyTextElementThis('spContactResponseJSON');
-    
-}
-
 export function btnApplendStepLog_click(event) {
 	// let doTheFunction = 'DO THE FUNCTION';
     // let stepArray = (memory.getItem('stepLogString')).split('|');
@@ -6375,23 +6346,6 @@ export function btnPpStContactDedupeDiagnosis_click(event) {
     $w('#sessionEnrollmentJSON').value = log + '\n\n' + cowCatcherIndex.toString();
 }
 
-export function btnResetToLastCompletedTEMP_click(event) {
-    let current = local.getItem('enrollmentStepCompletedListAll');
-    let tempLastCompleted_b4DeDupe = 'OnReadyReset,ZERO,IINSTANTIATE,PREP_ppMember,EXECUTE_ppMember,PREP_stMember,EXECUTE_stMember'; 
-    let tempLastCompleted_b4PpStContactsAndDatabase = 'OnReadyReset,ZERO,IINSTANTIATE,PREP_ppMember,EXECUTE_ppMember,PREP_stMember,EXECUTE_stMember,OnReadyResetContinue,dedupePpStContact'; 
-    let tempLastCompleted_b4DeDupe_ActiveOnly = 'PREP_ppMember,EXECUTE_ppMember,PREP_stMember,EXECUTE_stMember,OnReadyResetContinue'; 
-    // ø <Logic for First and Continuing>
-    let next = 'tempLastCompleted_b4DeDupe';
-    next = current === tempLastCompleted_b4DeDupe ? 'tempLastCompleted_b4PpStContactsAndDatabase' : next;
-    next = current === tempLastCompleted_b4PpStContactsAndDatabase ? 'tempLastCompleted_b4DeDupe_ActiveOnly' : next;
-    // ø </Logic for First and Continuing>
-    let tempLastCompleted = eval(next);
-    local.setItem('enrollmentStepCompletedListAll',tempLastCompleted);
-    $w('#spContactResponseJSON').value = local.getItem('enrollmentStepCompletedListAll');
-    uiCopyTextElementThis('spContactResponseJSON');
-
-}
-
 export function btnGetLastParamObject_click(event) {
     let paramObjectTemp = JSON.parse(local.getItem('lastParamObject'));
     $w('#sessionEnrollmentJSON').value = JSON.stringify(paramObjectTemp,undefined,4);
@@ -6404,12 +6358,6 @@ export function btnGetLastResponseObject_click(event) {
     uiCopyTextElementThis('sessionEnrollmentJSON');
 }
 
-export function btnGetStepResponseKey_click(event) {
-	// memory.setItem('stepResponseBootstrapKey','Algonquin');
-	$w('#spContactResponseJSON').value = memory.getItem('stepResponseBootstrapKey');
-    uiCopyTextElementThis('spContactResponseJSON');//spContactResponseJSON
-}
-
 export function btnResolveAndDestroy_click(event) {
     // 202109ResolveAndDestroy
     // 202109ResolveAndDestroy_RESOLVE
@@ -6417,24 +6365,6 @@ export function btnResolveAndDestroy_click(event) {
 	doResolveAndDestroy();
 }
 
-export function btnStepLogString_click(event) {
-    let current = ($w('#spContactResponseJSON').value).length === 0 ? 'stepLogStringSecondary is EMPTY' : $w('#spContactResponseJSON').value;
-    let stepLogString = memory.getItem('stepLogString') === null || (memory.getItem('stepLogString')).length === 0 ? 'stepLogString is EMPTY' : memory.getItem('stepLogString'); 
-    let stepLogStringSecondary = memory.getItem('stepLogStringSecondary') === null || (memory.getItem('stepLogStringSecondary')).length === 0 ? 'stepLogStringSecondary is EMPTY' : memory.getItem('stepLogStringSecondary');
-    // let next = current === stepLogStringSecondary ? 'stepLogString' : 'stepLogStringSecondary';
-    let next = current === stepLogStringSecondary ? 'A' : 'B';
-    // next = current === stepLogString ? 'stepLogStringSecondary' : next;
-    next = current === stepLogString ? 'B' : next;
-    next = next === 'A' ? stepLogString : stepLogStringSecondary;
-
-	$w('#spContactResponseJSON').value = next;
-    uiCopyTextElementThis('spContactResponseJSON');
-}
-
-/**
- *	Adds an event handler that runs when the element is clicked.
- *	 @param {$w.MouseEvent} event
- */
 export function btnGetWebhookStatuses_click(event) {
 	let responseObject = {};
     let wixWebhookStatus = typeof local.getItem('wixWebhookStatus') === 'string' ? local.getItem('wixWebhookStatus') : 'NNULL';
@@ -6455,6 +6385,14 @@ export function btnGetWebhookStatuses_click(event) {
  */
 // ! ========================================================================================================================
 
+// ! ========================================================================================================================
+// ! ===================================               <Button Clicks Only>               ===================================
+// ! ========================================================================================================================
+export function btnMultButtonDD01_click(event) {
+    // 202109_Developer
+    overallManyButtonsByManyDropDowns();
+}
+
 
 export function btnDeveloperOnly_click(event) {
     // 202109_Developer
@@ -6466,30 +6404,157 @@ export function btnDeveloperOnly_click(event) {
     let nextState = stateArray[nextIndex]
     $w(developerStateBoxID).changeState(nextState);
 }
-export function overallManyButtonsByManyDropDowns(paramObject = {ddValue: "NNULL",done: false, messaging: {}}){
+export function btnMultButtonClearDD01_click(event) {
+	let paramObject = {ddValue: "CLEAR",response: {string:'STRING'},done: false, messaging: {}}
+    overallManyButtonsByManyDropDowns(paramObject);
+}
+// ! ========================================================================================================================
+// ! ===================================               </Button Clicks Only>              ===================================
+// ! ========================================================================================================================
+
+export function overallManyButtonsByManyDropDowns(paramObject = {ddValue: "NNULL",response: {string:'STRING'},done: false, messaging: {}}){
      // 202109_Developer
-   manyButtonsDropDownO1(paramObject);
-    if (paramObject.done) {
-        return;        
+     let responseBlockId = '#txareaDevelResponseBlock';
+     paramObject.response.blockId = responseBlockId;
+    // ø <Overall On-Ramp>
+    if(paramObject.ddValue === 'CLEAR'){
+        doClear(responseBlockId);
+        paramObject.done = true;
+        paramObject.response.string = '';
     }
-    paramObject.messaging.danger = `Un-Caught Drop-Down Value: '${paramObject.ddValue}'`
+    // ø </Overall On-Ramp>
+    // ø <ManyButtonsByManyDropDowns>
+    if (!paramObject.done) {
+        manyButtonsDropDownO1(paramObject);
+    }
+    // ø </ManyButtonsByManyDropDowns>
+
+    // ø <Overall Off-Ramp>
+    if (!paramObject.done) {
+        paramObject.messaging.danger = `Un-Caught Drop-Down Value: '${paramObject.ddValue}'`
+        paramObject.response.string = `Un-Caught Drop-Down Value: '${paramObject.ddValue}'`
+    }
+    $w(responseBlockId).value = paramObject.response.string;
+    wixWindow.copyToClipboard(paramObject.response.string)
+        .then(() => {
+            // handle case where text was copied
+        })
+        .catch((err) => {
+            // handle case where an error occurred
+        });
+    // ø </Overall Off-Ramp>
     return;//MOOT, but for clarity
 }
-export function manyButtonsDropDownO1(paramObject = {ddValue: "NNULL",done: false}){
+export function manyButtonsDropDownO1(paramObject = {ddValue: "NNULL",response: {string:'STRING'},done: false, messaging: {}}){
     // 202109_Developer
+    console.groupCollapsed('manyButtonsDropDownO1')
     let DOX = 'engenderingProximateDevelButtons'
     let thisDropDownElementId = '#ddManyButtons01';
+    paramObject.ddValue = $w(thisDropDownElementId).value
+    console.log(`paramObject.ddValue: ${paramObject.ddValue}`)
     let thisDropDownOptionArray = $w(thisDropDownElementId).options;
     // $w("#myDropdown").options = [
     //     {"label": "Who's on first!", "value": "first"},
     //     {"label": "What's on second", "value": "second"},
     //     {"label": "I Don't Know is on third", "value": "third"}
     // ];
-    let thisDropDownValueArray = 'USE DECONSTRUCTION TECHNIQUE HERE';
+
+    let thisDropDownValueArray = ['USE DECONSTRUCTION TECHNIQUE HERE'];
+    thisDropDownValueArray = ['enrollmentStepCompletedListAll','TGGL_CMPLTD_STEPS','stepLogString','stepResponseBootstrapKey','stepMessagingJSON','LAST_NEXT_STATES','STEP_LOGS_TOGGLE'];
     if(thisDropDownValueArray.includes(paramObject.ddValue) === false){
+        console.groupEnd()
         return;
     }
+    // ø <ManyButtonDropDow-ProcessValue>
+    let value = paramObject.ddValue
+    console.log(`value: ${value}`)
+    let done = false;
+    let responseString = 'NNULL'
+    console.groupEnd()
+    let tempMatchArray = [];
+
+    if(!done){
+    // ø ø <localStorage SimpleAssignment>
+    tempMatchArray = ['enrollmentStepCompletedListAll','stepMessagingJSON']
+    if(tempMatchArray.includes(value)){
+
+        responseString = local.getItem(value);
+        done = true;
+        paramObject.done = done;
+        paramObject.response.string = responseString;
+    }
+    // ø ø </localStorage SimpleAssignment>
+    }
+        
+    if(!done){}
+    // ø ø <sessionStorage SimpleAssignment>
+    // ø ø </sessionStorage SimpleAssignment>
+    if(!done){
+        // ø ø <memoryStorage SimpleAssignment>
+        tempMatchArray = ['stepLogString','stepResponseBootstrapKey']
+        if(tempMatchArray.includes(value)){
+            responseString = memory.getItem(value);
+            done = true;
+            paramObject.done = done;
+            paramObject.response.string = responseString;
+        }
+        // ø ø </memoryStorage SimpleAssignment>
+    }
+    if(!done){
+        // ø ø <Ternary SimpleAssignment>
+        responseString = value === 'ZXZ' ? 'ZXZ' : responseString;
+        responseString = value === 'LAST_NEXT_STATES' ? `memory.getItem('msboxLastState'): ${memory.getItem('msboxLastState')};\nmemory.getItem('msboxNextStateId'): ${memory.getItem('msboxNextStateId')}` : responseString;
+        done = responseString === 'NNULL' ? done : true;
+        if(done){
+            paramObject.done = done;
+            paramObject.response.string = responseString;
+        }
+        // ø ø </Ternary SimpleAssignment>
+    }
+    if(!done){}
+    // ø ø <COMPLEX Logic Blocks>
+    if (value === 'ZXZ') {
+        done = true;
+        paramObject.done = done;
+        paramObject.response.string = responseString;
+    }
+    if (value === 'STEP_LOGS_TOGGLE') {
+        let current = ($w(paramObject.response.blockId).value).length === 0 ? 'stepLogStringToggle is EMPTY' : $w(paramObject.response.blockId).value;
+        let stepLogString = memory.getItem('stepLogString') === null || (memory.getItem('stepLogString')).length === 0 ? 'stepLogString is EMPTY' : memory.getItem('stepLogString'); 
+        let stepLogStringSecondary = memory.getItem('stepLogStringSecondary') === null || (memory.getItem('stepLogStringSecondary')).length === 0 ? 'stepLogStringSecondary is EMPTY' : memory.getItem('stepLogStringSecondary');
+        // let next = current === stepLogStringSecondary ? 'stepLogString' : 'stepLogStringSecondary';
+        let next = current === stepLogStringSecondary ? 'A' : 'B';
+        // next = current === stepLogString ? 'stepLogStringSecondary' : next;
+        next = current === stepLogString ? 'B' : next;
+        next = next === 'A' ? stepLogString : stepLogStringSecondary;
+
+        responseString = next;
+        done = true;
+        paramObject.done = done;
+        paramObject.response.string = responseString;
+    }
+    if (value === 'TGGL_CMPLTD_STEPS') {
+        let current = local.getItem('enrollmentStepCompletedListAll');
+        let tempLastCompleted_b4DeDupe = 'OnReadyReset,ZERO,IINSTANTIATE,PREP_ppMember,EXECUTE_ppMember,PREP_stMember,EXECUTE_stMember'; 
+        let tempLastCompleted_b4PpStContactsAndDatabase = 'OnReadyReset,ZERO,IINSTANTIATE,PREP_ppMember,EXECUTE_ppMember,PREP_stMember,EXECUTE_stMember,OnReadyResetContinue,dedupePpStContact'; 
+        let tempLastCompleted_b4DeDupe_ActiveOnly = 'PREP_ppMember,EXECUTE_ppMember,PREP_stMember,EXECUTE_stMember,OnReadyResetContinue'; 
+        // ø <Logic for First and Continuing>
+        let next = 'tempLastCompleted_b4DeDupe';
+        next = current === tempLastCompleted_b4DeDupe ? 'tempLastCompleted_b4PpStContactsAndDatabase' : next;
+        next = current === tempLastCompleted_b4PpStContactsAndDatabase ? 'tempLastCompleted_b4DeDupe_ActiveOnly' : next;
+        // ø </Logic for First and Continuing>
+        let tempLastCompleted = eval(next);
+        local.setItem('enrollmentStepCompletedListAll',tempLastCompleted);
+        responseString = local.getItem('enrollmentStepCompletedListAll');
+        done = true;
+        paramObject.done = done;
+        paramObject.response.string = responseString;
+    }
+    // ø ø </COMPLEX Logic Blocks>
+    // ø </ManyButtonDropDow-ProcessValue>
 }
 // ! ========================================================================================================================
 // ! ==============================               </DEVELOPER ONLY MultiStateBox>              ==============================
 // ! ========================================================================================================================
+
+

@@ -83,11 +83,12 @@ $w.onReady(function () {
     // console.log(`memory.getItem('msboxAllStatesList')`);
     // console.log(memory.getItem('msboxAllStatesList'));
     memory.setItem('DateDOTgetDate', '0');
-    // $w('#anchorTestProcess').scrollTo();
-    $w('#anchorDevOnReadtScroll').scrollTo();
+    $w('#anchorTestProcess').scrollTo();
+    // $w('#anchorDevOnReadtScroll').scrollTo();
     // goToState()
     // console.log('[ready]Next');
-
+    let initLog = 'TTRUE $w.onReady() NEXT';
+    msboxPostEnrollmentSevenActionOnReady(initLog)
 });
 
 
@@ -1701,7 +1702,6 @@ export async function doInstantiateLoopSwitchStep() {
     let comboName = local.getItem('stLast') === local.getItem('ppLast') ? '' : ' ' + local.getItem('ppLast');
     comboName = local.getItem('stPreferredFirst').trim() + ' ' + local.getItem('stLast').trim() + ' (' + local.getItem('ppFirst') + comboName + ')';
     local.setItem('comboName', comboName);
-    $w('#txtNamesList').text = '• ' + local.getItem('comboName') + '\n• ' + local.getItem('ppLast') + ', ' + local.getItem('ppFirst') + '\n• ' + local.getItem('stLast') + ', ' + local.getItem('stPreferredFirst') + '\n• ' + local.getItem('spLast') + ', ' + local.getItem('spFirst');
     local.setItem('uiStDobString', enrollmentObject.family.student.dobString);
     $w('#txtStudentDobString').value = local.getItem('uiStDobString');
     // let memberId = Math.random() > 0.1 ? 'INSTANTIATE' : '777888'
@@ -1728,6 +1728,7 @@ export async function doInstantiateLoopSwitchStep() {
 export async function actionValueEvaluation() {
     // local.setItem('superEnrollmentStatus', 'CONTINUE'); ALREADY SET
     // 202109_ActionValues
+    let DOX = 'To Make It Visible';
     console.groupCollapsed('actionValueEvaluation');
     console.log('≈1676≈ actionValueEvaluation(); ENTERED');
 
@@ -1755,7 +1756,7 @@ export async function actionValueEvaluation() {
             return;
         }
         console.log(`≈1697≈ staffMatch; local.getItem('superEnrollmentStatus'): ${local.getItem('superEnrollmentStatus')}`);
-        if ($w('#radioConfirmStaffEyeD').value !== 'YES') {
+        if (DOX !== 'YES -  But the whole If-Clause should always be run, the Manual Confirmation is a thing of the past') {
             console.log(`≈1700≈ contact.source.sourceType: could be MOOT but 'MEMBER' or 'IMPORT' supported now`);
             let sourceType = contact.source.sourceType.toUpperCase();
             let supportedSourceTypeArray = ['MEMBER','IMPORT','ADMIN']
@@ -3259,7 +3260,6 @@ export function instantiateLoopSwitchEnrollmentSteps(stepArrayParam = ['ORIG']) 
     let isArray = Array.isArray(stepArrayOrig);
     memory.setItem('enrollmentStepCurrent', stepArrayOrig[0]);
     memory.setItem('enrollmentStepNext', stepArrayOrig[1]);
-    $w('#boxConfirmStaffEyeD').show();
 }
 // ø <---------- </instantiateLoopSwitchEnrollmentSteps> ---------->
 
@@ -3340,127 +3340,7 @@ export function doCheckExitAfter() {
 // ! ====================             ...nothing core to the Enrollment Process            ==============
 // ! ====================================================================================================
 
-export function switchGetMemoryKey(action) {
-    let who = $w('#radioWho').value;
-    let code = $w('#radioCode').value;
-    let now = new Date();
-    let timeDateString = ' [ on ' + now.toLocaleDateString() + ']';
-    timeDateString = now.toLocaleTimeString('en-US') + timeDateString;
-    let codeLabel = 'CODE LABLE DEFAULT' + timeDateString;
-    let memoryKey = who.toLowerCase() + code + 'OnDeckJSON';
-    let buildObject = {};
-    buildObject.memoryKey = memoryKey;
 
-    switch (action) {
-        case 'BUILD':
-            if ($w('#radioAreYouSure').value !== 'YES') {
-                $w('#sessionEnrollmentJSON').value = "'BUILD'  is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.";
-                action = 'GET';
-                break;
-            }
-            console.log('memoryKey: ' + memoryKey);
-            codeLabel = "BUILT: memory.setItem(" + memoryKey + ", {codeString})";
-            code = 'PPENDING';
-            code = memoryKey.substr(0, 2) === 'sp' ? 'DDYNAMIC_NNOT_AAPPLICABLE' : code;
-            code = memoryKey === 'spMemberOnDeckJSON' ? 'NNEVER_AAPPLICABLE' : code;
-            if (memoryKey === 'ppMemberOnDeckJSON') {
-                ppMemberBuildOnDeckJSONZZZ();
-            } else {
-                buildObject.status = code;
-                code = JSON.stringify(buildObject);
-                memory.setItem(memoryKey, code);
-            }
-            $w("#radioAreYouSure").value = 'NO';
-            break;
-        case 'CLEAR':
-            if ($w('#radioAreYouSure').value !== 'YES') {
-                $w('#sessionEnrollmentJSON').value = `'` + action + `'  is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.`;
-                action = 'GET';
-                break;
-            }
-            codeLabel = "CLEARED: memory.setItem(" + memoryKey + ", {clearString})";
-            code = 'EEMPTY';
-            code = memoryKey === 'spMemberOnDeckJSON' ? 'NNOT_AAPPLICABLE' : code;
-            memory.setItem(memoryKey, code);
-            $w("#radioAreYouSure").value = 'NO';
-            break;
-
-        case 'GET':
-            if (action === 'GET') {
-                let logString = '';
-                if (who === 'PP' && code === 'Member') {
-                    logString += '' + "Prep:";
-                    logString += '\n' + "memory.getItem('ppMemberPrepJSON'): \n" + memory.getItem('ppMemberPrepJSON');
-                    logString += '\n\n' + "Execute:";
-                    logString += '\n' + "memory.getItem('ppMemberExecuteUpsert'): \n" + memory.getItem('ppMemberExecuteUpsert');
-                } else if (who === 'PP' && code === 'Contact') {
-                    logString += '' + "Prep:";
-                    logString += '\n' + "memory.getItem('ppContactPrepJSON'): \n" + memory.getItem('ppContactPrepJSON');
-                    logString += '\n\n' + "Execute:";
-                    logString += '\n' + "memory.getItem('ppContactExecuteUpsert'): \n" + memory.getItem('ppContactExecuteUpsert');
-                } else if (who === 'PP' && code === 'Database') {
-                    logString += '' + "Prep:";
-                    logString += '\n' + "memory.getItem('ppDatabasePrepJSON'): \n" + memory.getItem('ppDatabasePrepJSON');
-                    logString += '\n\n' + "Execute:";
-                    logString += '\n' + "memory.getItem('ppDatabaseExecuteUpsert'): \n" + memory.getItem('ppDatabaseExecuteUpsert');
-                } else if (who === 'ST' && code === 'Member') {
-                    logString += '' + "Prep:";
-                    logString += '\n' + "memory.getItem('stMemberPrepJSON'): \n" + memory.getItem('stMemberPrepJSON');
-                    logString += '\n\n' + "Execute:";
-                    logString += '\n' + "memory.getItem('stMemberExecuteUpsert'): \n" + memory.getItem('stMemberExecuteUpsert');
-                } else if (who === 'ST' && code === 'Contact') {
-                    logString += '' + "Prep:";
-                    logString += '\n' + "memory.getItem('stContactPrepJSON'): \n" + memory.getItem('stContactPrepJSON');
-                    logString += '\n\n' + "Execute:";
-                    logString += '\n' + "memory.getItem('stContactExecuteUpsert'): \n" + memory.getItem('stContactExecuteUpsert');
-                } else if (who === 'ST' && code === 'Database') {
-                    logString += '' + "Prep:";
-                    logString += '\n' + "memory.getItem('stDatabasePrepJSON'): \n" + memory.getItem('stDatabasePrepJSON');
-                    logString += '\n\n' + "Execute:";
-                    logString += '\n' + "memory.getItem('stDatabaseExecuteUpsert'): \n" + memory.getItem('stDatabaseExecuteUpsert');
-                } else if (who === 'SP' && code === 'Member') {
-                    logString += '' + "'Secordary Parent Member' is Not Applicable to the SteamDA Workflow";
-                } else if (who === 'SP' && code === 'Contact') {
-                    logString += '' + "Prep:";
-                    logString += '\n' + "memory.getItem('spContactPrepJSON'): \n" + memory.getItem('spContactPrepJSON');
-                    logString += '\n\n' + "Execute:";
-                    logString += '\n' + "memory.getItem('spContactExecuteUpsert'): \n" + memory.getItem('spContactExecuteUpsert');
-                } else if (who === 'SP' && code === 'Database') {
-                    logString += '' + "Prep:";
-                    logString += '\n' + "memory.getItem('stDatabasePrepJSON'): \n" + memory.getItem('stDatabasePrepJSON');
-                    logString += '\n\n' + "Execute:";
-                    logString += '\n' + "memory.getItem('stDatabaseExecuteUpsert'): \n" + memory.getItem('stDatabaseExecuteUpsert');
-                } else {
-                    logString += '' + "DEFAULT_Prep:";
-                    logString += '\n' + "memory.getItem('ppMemberPrepJSON'): \n" + memory.getItem('ppMemberPrepJSON');
-                    logString += '\n\n' + "DEFAULT_Execute:";
-                    logString += '\n' + "memory.getItem('ppMemberExecuteUpsert'): \n" + memory.getItem('ppMemberExecuteUpsert');
-                }
-                action.toUpperCase();
-                $w('#sessionEnrollmentJSON').value = logString;
-            } else {
-                codeLabel = "GOTTEN: memory.getItem(" + memoryKey + ")";
-                action = typeof memory.getItem(memoryKey) === 'string' ? 'MAYBE' : action;
-                action = action === 'MAYBE' && (memory.getItem(memoryKey)).length > 0 ? 'GETTABLE' : action;
-                action = action === 'MAYBE' ? "The value of memory.getItem('" + memoryKey + "') exists and is an Empty String" : action;
-                action = action === 'GET' ? "The value of memory.getItem('" + memoryKey + "') is not a string (almost certainly 'undefined')" : action;
-                if (action !== 'GETTABLE') {
-                    codeLabel = "MISBEGOTTEN: memory.getItem(" + memoryKey + ")";
-                    $w('#sessionEnrollmentJSON').value = action;
-                    action = 'GET';
-                }
-            }
-            break;
-
-        default:
-            console.log("DO NOTHING - all action end with GET")
-            break;
-    }
-    $w('#txtCodeLabel').text = codeLabel;
-    if (action !== 'GET') {
-        $w('#sessionEnrollmentJSON').value = memory.getItem(memoryKey);
-    }
-}
 
 export function clearByElementIdArray(elementIdArray) {
     if (!Array.isArray(elementIdArray)) {
@@ -3514,7 +3394,6 @@ export function displaySteps() {
         newLine = "\n • ";
     })
     result = status === 'string' ? resultString : result;
-    $w('#txtStepsList').text = result;
     $w('#spContactResponseJSON').value = result;
     doUserInterfaceCleanupCurrent();
 }
@@ -3896,18 +3775,14 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
 // ø <---------- </doEnrollmentCleanupByKind> ---------->
 
 export function doUserInterfaceCleanupCurrent() {
-    $w("#btnUiPpId").label = "Staff ID PP: " + local.getItem('staffIdentifiedFamilyId');
     let label = "Family ID: ";
     label += local.getItem('familyId') !== "EEMPTY" ? local.getItem('familyId') : '';
     label += Number(memory.getItem('ppRevision')) > 0 ? ' [' + memory.getItem('ppRevision') + ']' : '';
-    $w("#btnUiFamilyID").label = label;
     label = "Student ID: ";
     label += local.getItem('studentId') !== "EEMPTY" ? local.getItem('studentId') : '';
     label += Number(memory.getItem('stRevision')) > 0 ? ' [' + memory.getItem('stRevision') + ']' : '';
-    $w("#btnUiStudentID").label = label;
     label = "Secondary ID: ";
     label += local.getItem('secondaryId') !== "EEMPTY" ? local.getItem('secondaryId') : '';
-    $w("#btnUiSecondaryID").label = label;
     let step = memory.getItem('enrollmentStepCompleted') === null ? false : true;
     step = memory.getItem('enrollmentStepCompleted') === "EEMPTY" ? false : step;
     step = memory.getItem('enrollmentStepCompleted') === "NNOT_AAPPLICABLE" ? false : step;
@@ -3916,8 +3791,6 @@ export function doUserInterfaceCleanupCurrent() {
     step = memory.getItem('enrollmentStepCurrent') === null ? false : true;
     step = memory.getItem('enrollmentStepCurrent') === "EEMPTY" ? false : step;
     step = memory.getItem('enrollmentStepCurrent') === "NNOT_AAPPLICABLE" ? false : step;
-    $w("#btStepCurrent").label = step ? memory.getItem('enrollmentStepCurrent') : '';
-    $w("#btStepCurrentSeven").label = step ? memory.getItem('enrollmentStepCurrent') : '';
     $w("#txtStudentDobString").value = local.getItem('uiStDobString');
     let webhookId = local.getItem('wixWebhookId')
     if (typeof webhookId === 'string' && webhookId.length > 20) {
@@ -4110,76 +3983,35 @@ export function btnGetEnrollmentJSON_click(event) {
     }
 }
 
-export function btnGetCode_click(event) {
-    switchGetMemoryKey('GET');
-}
-
-export function btnClearCode_click(event) {
-    switchGetMemoryKey('CLEAR');
-}
-
-export function btnBuildCode_click(event) {
-    switchGetMemoryKey('BUILD');
-}
-
 export function btnClearPreviewCode_click(event) {
     let elementIdArray = [];
     elementIdArray.push("sessionEnrollmentJSON")
     clearByElementIdArray(elementIdArray);
 }
 
-export function btnGetFamilyID_click(event) {
-    let status = typeof local.getItem('familyId') === 'string' ? 'string' : 'undefined';
-    status = status === 'string' && local.getItem('familyId').length < 1 ? 'empty' : status;
-    let result = 'GET';
-    result = status === 'undefined' ? "local.getItem('familyId') is undefined at this time" : result;
-    result = status === 'empty' ? "local.getItem('familyId') is an empty string at this time" : result;
-    result = status === 'string' ? "the current value of local.getItem('familyId') is: " + local.getItem('familyId') : result;
-    console.log('local.getItem("ondeckEnrollmentJSON"): ');
-    console.log(result);
-    $w('#sessionEnrollmentJSON').value = result;
-}
-
-export function btnGetStudentID_click(event) {
-    let status = typeof local.getItem('studentId') === 'string' ? 'string' : 'undefined';
-    status = status === 'string' && local.getItem('studentId').length < 1 ? 'empty' : status;
-    let result = 'GET';
-    result = status === 'undefined' ? "local.getItem('studentId') is undefined at this time" : result;
-    result = status === 'empty' ? "local.getItem('studentId') is an empty string at this time" : result;
-    result = status === 'string' ? "the current value of local.getItem('studentId') is: " + local.getItem('studentId') : result;
-    $w('#sessionEnrollmentJSON').value = result;
-}
-
 export function btnResetSteps_click(event) {
-    if ($w('#radioAreYouSure').value === 'YES') {
         instantiateLoopSwitchEnrollmentSteps();
         $w('#sessionEnrollmentJSON').value = stepsDisplayStatusAsReturnString('init');
         displaySteps();
-    } else {
-        $w('#sessionEnrollmentJSON').value = "'Reset Steps' is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.";
-    }
-    $w("#radioAreYouSure").value = 'NO';
 }
 
 export function btnDisplayCurrentState_click(event) {
     let kind = $w('#ddDisplayKind').value;
-    $w('#sessionEnrollmentJSON').value = doEnrollmentLogCurrent(kind);
+    let responseString = doEnrollmentLogCurrent(kind);
+    $w('#sessionEnrollmentJSON').value = responseString;
+    // ø <IIABDFI>
+    let responseBlockId = '#txareaDevelResponseBlock';
+    $w(responseBlockId).value = responseString;
+    wixWindow.copyToClipboard(responseString)
+    // ø </IIABDFI>
 }
 
 export async function btnCleanupCurrentState_click(event) {
-    if ($w('#radioAreYouSure').value === 'YES') {
         memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'), local.getItem('tzAbbrv')));
         local.setItem('logString', 'enter btnCleanupCurrentState_click(event): YES');
         local.setItem('logString', local.getItem('logString') + '\nTest of Clean Tags BEGIN Man in the High Castle<clean>');
         doEnrollmentCleanupByKind('CURRENT')
         doUserInterfaceCleanupCurrent();
-    } else {
-        local.setItem('logString', 'enter btnCleanupCurrentState_click(event): NO');
-        local.setItem('logString', local.getItem('logString') + '\nTest of Clean Tags BEGIN The Plot Against America<clean>');
-        memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'), local.getItem('tzAbbrv')));
-        local.setItem('logString', local.getItem('logString') + '\n' + "'Clean Up' is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.");
-    }
-    $w("#radioAreYouSure").value = 'NO';
     local.setItem('logString', local.getItem('logString') + '\n</clean>Marvelous Mrs. Maisel END Test of Clean Tags');
     local.setItem('logString', local.getItem('logString') + '\n[~Z2534]exit btnCleanupCurrentState_click(event) nowISO: ' + memory.getItem('lastStamp'));
     $w('#sessionEnrollmentJSON').value = local.getItem('logString');
@@ -4194,22 +4026,22 @@ export async function btnPeformNextStep_click(event) {
     doUserInterfaceCleanupCurrent()
     local.setItem('logString', local.getItem('logString') + '\n[~Z2450]exit btnPeformNextStep_click(event) nowISO: ' + memory.getItem('lastStamp'));
     $w('#sessionEnrollmentJSON').value = local.getItem('logString');
-    $w('#boxConfirmStaffEyeD').hide();
 }
 
 export async function btnSkipNextStep_click(event) {
     local.setItem('logString', 'enter btnSkipNextStep_click(event)');
     memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'), local.getItem('tzAbbrv')));
-    if ($w('#radioAreYouSure').value !== 'YES') {
-        local.setItem('logString', local.getItem('logString') + '\n[~Z2293]: ' + "'Skip Next Step' is so critical that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.");
-    } else if (memory.getItem('enrollmentStepCurrent') === 'IINSTANTIATE') {
+    
+    
+
+
+    if (memory.getItem('enrollmentStepCurrent') === 'IINSTANTIATE') {
         local.setItem('logString', local.getItem('logString') + '\n[~Z2296]: ' + "You cannot use 'Skip Next Step' to skip the 'IINSTANTIATE' step. Please proceed normally to execute the 'IINSTANTIATE' step.\n\nNo action taken. \nPlease try again or ask for assistance.");
     } else {
         stepsCycleSteps();
         displaySteps();
         local.setItem('logString', local.getItem('logString') + '\n[~Z2301]stepSkipped: ' + memory.getItem('enrollmentStepCompleted'));
     }
-    $w("#radioAreYouSure").value = 'NO';
     local.setItem('logString', local.getItem('logString') + '\n[~Z2304]exit btnSkipNextStep_click(event) nowISO: ' + memory.getItem('lastStamp'));
     $w('#sessionEnrollmentJSON').value = local.getItem('logString');
 }
@@ -4231,31 +4063,21 @@ export function btnToggleBoxStateToo_click(event) {
 }
 
 export async function btCleanUpAllExceptEnrJSON_click(event) {
-    if ($w('#radioAreYouSure').value === 'YES') {
         memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'), local.getItem('tzAbbrv')));
         local.setItem('logString', '[~Z2595]entering btCleanUpAllExceptEnrJSON_click:YES');
         let responseCleanupCurrentState = doEnrollmentCleanupByKind('ALL_EXCEPT_ENROLLMENT');
         local.setItem('logString', local.getItem('logString') + '\n[~Z2601]exiting btCleanUpAllExceptEnrJSON_click:YES');
         $w('#sessionEnrollmentJSON').value = local.getItem(('logString'));
-    } else {
-        $w('#sessionEnrollmentJSON').value = "'Clean Up All - Except Enrollment JSON' is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.";
-    }
-    $w("#radioAreYouSure").value = 'NO';
 }
 
 export async function btCleanUpAllIncludingnrJSON_click(event) {
     // 202109ResolveAndDestroy
     // 202109ResolveAndDestroy_DESTROY
-    if ($w('#radioAreYouSure').value === 'YES') {
         memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'), local.getItem('tzAbbrv')));
         local.setItem('logString', '[~Z2595]entering btCleanUpAllIncludingnrJSON_click:YES');
         let responseCleanupCurrentState = doEnrollmentCleanupByKind('ALL_INCLUDING_ENROLLMENT');//HINT: backdoor: MURDERREDRUM
         local.setItem('logString', local.getItem('logString') + '\n[~Z2621]exiting btCleanUpAllIncludingnrJSON_click:YES');
         $w('#sessionEnrollmentJSON').value = local.getItem(('logString'));
-    } else {
-        $w('#sessionEnrollmentJSON').value = "'Clean Up All - Including Enrollment JSON' is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.";
-    }
-    $w("#radioAreYouSure").value = 'NO';
 }
 
 export function btnUpdateStudentDOB_click(event) {
@@ -4285,11 +4107,6 @@ export function btnClearPpContact_click(event) {
 export function btnClearPpDbase_click(event) {
     let clearArray = ['#ppDatabaseResponseJSON'];
     doClear(clearArray);
-}
-
-export function btnKludgeClearPpStSpIDs_click(event) {
-    doUserInterfaceCleanupCurrent();
-    $w('#sessionEnrollmentJSON').value = 'DEPRECATED: Kludge-Clear has removed all Primary-Parent, Student, and Secondary-Parent ID Values from Storage.'
 }
 
 export function btnGetStMember_click(event) {
@@ -4347,30 +4164,19 @@ export function btnClearSpDbase_click(event) {
 export function btnWebhookResolve_click(event) {
     // 202109ResolveAndDestroy
     // 202109ResolveAndDestroy_RESOLVE
-    if ($w('#radioAreYouSure').value === 'YES') {
         let statusThis = $w('#ddCurrentStatusUpdate').value;
         doUpdateThisWebhookPayload(statusThis);
         updateStatusWebhookPayloadThis(true);
         console.log('[`3215] RESOLVE: Yes')
-    } else {
-        $w('#sessionEnrollmentJSON').value = "'Resolve Webhook' is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.";
-    }
-    $w("#radioAreYouSure").value = 'NO';
     console.log('[`3221] EXIT: btnWebhookResolve_click(event)')
 }
 
 export function btnCleanUpDEP_click(event) {
-    if ($w('#radioAreYouSure').value === 'YES') {
         $w('#sessionEnrollmentJSON').value = doEnrollmentCleanupCurrent();
         doUserInterfaceCleanupCurrent();
-    } else {
-        $w('#sessionEnrollmentJSON').value = "'Clean Up' is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.";
-    }
-    $w("#radioAreYouSure").value = 'NO';
 }
 
 export async function btnCleanUpByKindTEST_click(event) {
-    if ($w('#radioAreYouSure').value === 'YES') {
         memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'), local.getItem('tzAbbrv')));
         local.setItem('logString', '[~Z2817]entering btnCleanUpByKindTEST_click:YES');
         local.setItem('logString', local.getItem('logString') + '\nddCleanupByKind: ' + $w('#ddCleanupByKind').value);
@@ -4380,10 +4186,6 @@ export async function btnCleanUpByKindTEST_click(event) {
         local.setItem('logString', local.getItem('logString') + '\n</clean>Marvelous Mrs. Maisel END Test of Clean Tags');
         local.setItem('logString', local.getItem('logString') + '\nexiting btnCleanUpByKindTEST_click');
         $w('#sessionEnrollmentJSON').value = local.getItem('logString');
-    } else {
-        local.setItem('logString', "'Clean Up by zKind' is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.");
-    }
-    $w("#radioAreYouSure").value = 'NO';
     let logStringClean = local.getItem('logString');
     if (logStringClean.indexOf('</clean>') >= 0) {
         logStringClean = logStringClean.substr(0, logStringClean.indexOf('</clean>'));
@@ -4828,9 +4630,6 @@ export function btnAppendToPreTrashLog_click(event) {
     $w('#preTrashLog').value += $w('#sessionEnrollmentJSON').value;
 }
 
-export function btnKludgeClearPpStSpIDs_click_1(event) {
-    $w('#sessionEnrollmentJSON').value = 'DISABLED: Kludge-Clear has disabled.\n\nNo actiontake.\nPlease try again or ask for assistance.'
-}
 
 export function btnUIrefresh_click(event) {
     doUserInterfaceCleanupCurrent();
@@ -4951,10 +4750,6 @@ export function btnLITGetContact_click(event) {
     $w('#txtGetContactLiteral').value = '';
 }
 
-export function btnGetContactByParam_click(event) {
-    // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-    // Add your code for this event here: 
-}
 export function btnStepAppend_click(event) {
     $w('#preTrashLog').value += '\n\n---\n\n';
     $w('#preTrashLog').value += $w('#sessionEnrollmentJSON').value;
@@ -4976,15 +4771,12 @@ export async function btnExtraContactPrimary_click(event) {
     paramObjectPrimary.notIdToFind = local.getItem('familyId');
     paramObjectPrimary.diagnosticOnly = true;
     paramObjectPrimary.collectHumanLog = true;
-    if ($w('#radioAreYouSure').value === 'YES') {
-        paramObjectPrimary.diagnosticOnly = false;
-    }
+        // paramObjectPrimary.diagnosticOnly = false;
     await getContactByEmailAndNotIdFunction(paramObjectPrimary);
     $w('#sessionEnrollmentJSON').value = paramObjectPrimary.logString;
     uiCopyTextElementThis('sessionEnrollmentJSON');
     delete paramObjectPrimary.logString;
     local.setItem('lastResponseObject',JSON.stringify(paramObjectPrimary));
-    $w('#radioAreYouSure').value = 'NO';
 }
 
 export async function btnExtraContactStudent_click(event) {
@@ -4994,15 +4786,12 @@ export async function btnExtraContactStudent_click(event) {
     paramObjectStudent.notIdToFind = local.getItem('studentId');
     paramObjectStudent.diagnosticOnly = true;
     paramObjectStudent.collectHumanLog = true;
-    if ($w('#radioAreYouSure').value === 'YES') {
-        paramObjectStudent.diagnosticOnly = false;
-    }
+    // paramObjectStudent.diagnosticOnly = false;
     await getContactByEmailAndNotIdFunction(paramObjectStudent);
     $w('#sessionEnrollmentJSON').value = paramObjectStudent.logString;
     uiCopyTextElementThis('sessionEnrollmentJSON');
     delete paramObjectStudent.logString;
     local.setItem('lastResponseObject',JSON.stringify(paramObjectStudent));
-    $w('#radioAreYouSure').value = 'NO';
 }
 
 export function btnDemoIfElseThen_click(event) {
@@ -6363,13 +6152,6 @@ export function btnGetLastResponseObject_click(event) {
     let responseObjectTemp = JSON.parse(local.getItem('lastResponseObject'));
     $w('#sessionEnrollmentJSON').value = JSON.stringify(responseObjectTemp,undefined,4);
     uiCopyTextElementThis('sessionEnrollmentJSON');
-}
-
-export function btnResolveAndDestroy_click(event) {
-    // 202109ResolveAndDestroy
-    // 202109ResolveAndDestroy_RESOLVE
-    // 202109ResolveAndDestroy_DESTROY
-	doResolveAndDestroy();
 }
 
 export function btnGetWebhookStatuses_click(event) {

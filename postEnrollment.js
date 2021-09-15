@@ -41,6 +41,7 @@ import wixWindow from 'wix-window';
  // ø 202109_ActionValueRepeaters  || 202109_ActionValues TODAY
  // ø 202109_DeDupeRepeaters  || 202109_DeDupeCode TODAY
  // ø 202109_processALIASES TODAY
+ // ø 202109_Developer TODAY
  */
 
 
@@ -88,15 +89,6 @@ $w.onReady(function () {
     // goToState()
     // console.log('[ready]Next');
 
-    // ø <UNIVERSAL - Devel Notes>
-    let develString = `msboxPostEnrollmentSeven 'Next-Kludge' working`;
-    if (typeof develString === 'string' && develString.length > 0) {
-        develString = 'develNotes:\n===========\n' + develString;
-        let html = doBootstrapMessage('devel', develString, [[-1, 18]]);
-        $w('#txtOnReadyDevelHMTL').html = html;
-        $w('#txtOnReadyDevelHMTL').expand();
-    }
-    // ø </UNIVERSAL - Devel Notes>
 });
 
 
@@ -6157,12 +6149,6 @@ export function btnPeSevenNext_click(event) {
     msboxPostEnrollmentSevenActionNext(initLog);
 }
 
-export function btnPeSevenPrev_click(event) {
-    let responseObject = {};
-    responseObject.logArrayDeveloper = [];
-    goToState(responseObject, 'PREV');
-}
-
 export async function btnPeSevenCurrent_click(event) {
     $w('#btnPeSevenCurrent').hide();
     let initLog = 'btnPeSevenCurrent_click PERFORM';
@@ -6459,3 +6445,51 @@ export function btnGetWebhookStatuses_click(event) {
     responseObject.webhookThisResolved = webhookThisResolved;
     $w('#sessionEnrollmentJSON').value = JSON.stringify(responseObject,undefined,4)
 }
+// ! ========================================================================================================================
+// ! ==============================               <DEVELOPER ONLY MultiStateBox>               ==============================
+// ! ==============================                    FIND 202109_Developer                   ==============================
+// ! ========================================================================================================================
+// ! =========================================================== DOX ========================================================
+/**
+ * 
+ */
+// ! ========================================================================================================================
+
+
+export function btnDeveloperOnly_click(event) {
+    // 202109_Developer
+    let developerStateBoxID = '#DeveloperStateBox'
+    let currentState = $w(developerStateBoxID).currentState;//"GET IT"
+    let stateArray = $w(developerStateBoxID).states;;//['GET THEM']
+	let currentIndex = stateArray.indexOf(currentState)
+    let nextIndex = currentIndex + 1 >= stateArray.length ? 0 : currentIndex + 1;
+    let nextState = stateArray[nextIndex]
+    $w(developerStateBoxID).changeState(nextState);
+}
+export function overallManyButtonsByManyDropDowns(paramObject = {ddValue: "NNULL",done: false, messaging: {}}){
+     // 202109_Developer
+   manyButtonsDropDownO1(paramObject);
+    if (paramObject.done) {
+        return;        
+    }
+    paramObject.messaging.danger = `Un-Caught Drop-Down Value: '${paramObject.ddValue}'`
+    return;//MOOT, but for clarity
+}
+export function manyButtonsDropDownO1(paramObject = {ddValue: "NNULL",done: false}){
+    // 202109_Developer
+    let DOX = 'engenderingProximateDevelButtons'
+    let thisDropDownElementId = '#ddManyButtons01';
+    let thisDropDownOptionArray = $w(thisDropDownElementId).options;
+    // $w("#myDropdown").options = [
+    //     {"label": "Who's on first!", "value": "first"},
+    //     {"label": "What's on second", "value": "second"},
+    //     {"label": "I Don't Know is on third", "value": "third"}
+    // ];
+    let thisDropDownValueArray = 'USE DECONSTRUCTION TECHNIQUE HERE';
+    if(thisDropDownValueArray.includes(paramObject.ddValue) === false){
+        return;
+    }
+}
+// ! ========================================================================================================================
+// ! ==============================               </DEVELOPER ONLY MultiStateBox>              ==============================
+// ! ========================================================================================================================

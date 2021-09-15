@@ -8,22 +8,38 @@ $w('#HOLDER')
 https://webhook.site/191e8210-1ce6-4d05-8d72-e3a3a10cf0e4
 
 
-==========================================
-=====   Wednesday September 1, 2021  =====
-==========================================
-===================================
+=============================================
+=====    Wednesday September 14, 2021   =====
+=============================================
+=============================================
 
-d31f4ad6-a21c-4aee-b09e-7ade0c1b84c3
+memory.getItem('msboxCurrentId')
+memory.getItem('msboxCurrentStateId')
 
-paramObject = { diagnosticOnly: false, collectHumanLog: false }
+DUPLICATE_EXISTS_PRIMARY
 
-await getContactByEmailAndNotIdFunction(local.getItem('familyEmail'), local.getItem('familyId'), diagnosticOnlyThis);
+            local.setItem('superEnrollmentStatus', 'ALERT');
+            memory.setItem('stepResponseBootstrapKey','danger');
+            await appendStepLogPPEQ('danger', `'Staff Eye-D' does not match actual 'Contact ID': '${contact._id}'`);
+            console.log(`≈1694≈ staffMatch; local.getItem('superEnrollmentStatus'): ${local.getItem('superEnrollmentStatus')}`);
 
-await getContactByEmailAndNotIdFunction(local.getItem('studentEmail'), local.getItem('studentId'), diagnosticOnlyThis);
-    
-'lastParamObject',
-'lastResponseObject',
 
-btnFamilyId
+pstEnrSeven202108STEP_P_05
 
-btnStudentId
+
+    let anyDangerHide = false;
+    anyDangerHide = memory.getItem('stepResponseBootstrapKey') === 'danger' ? true : anyDangerHide;
+    anyDangerHide = (memory.getItem('stepLogString')).indexOf('danger') >= 0 ? true : anyDangerHide;
+    console.log('anyDangerHide: ' + anyDangerHide);
+    if(anyDangerHide){
+        console.log('hide Perform & Next Buttons')
+        $w('#btnPeSevenNext').hide();
+        $w('#btnPeSevenCurrent').hide();
+    }
+
+
+await appendStepLogPPEQ('sufficientBootstrap', `Message`);
+
+memory.setItem('stepResponseBootstrapKey',stepResponseBootstrapKey);
+
+local.setItem('superEnrollmentStatus')

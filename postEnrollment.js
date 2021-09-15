@@ -47,7 +47,6 @@ import wixWindow from 'wix-window';
 
 $w.onReady(function () {
     // ø <UI Disable PP, ST & SP Buttons>
-    // $w('#btnStaffEyeD').disable();
     // ø </UI Disable PP, ST & SP Buttons>
     onReadyPostEnrollment();
     // doUserInterfaceCleanupCurrent();// DISABLED 20210906
@@ -444,15 +443,11 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
         if (staffEyeD === 'INSTANTIATE' || staffEyeD === 'IINSTANTIATE') {
             responseObject.logArrayDeveloper.push('staffEyeD is IINSTANTIATE: hide-buttons');
             responseObject.logArrayDeveloper.push('{¿ ONCE for `stateZero` yes?: ' + memory.getItem('msboxLastState') + ' ?}');
-            $w('#btnStaffEyeD').hide();
-            $w('#btnStaffEyeDLabel').hide();
         } else {
             responseObject.logArrayDeveloper.push('staffEyeD is not IINSTANTIATE: enable-buttons');
             responseObject.logArrayDeveloper.push('{¿ ONCE for `stateZero` yes?: ' + memory.getItem('msboxLastState') + ' ?}');
             local.setItem('staffIdentifiedFamilyId', staffEyeD);
             $w("#btnStaffEyeD").label = local.getItem('staffIdentifiedFamilyId');
-            $w('#btnStaffEyeD').enable();
-            $w('#btnStaffEyeDLabel').enable();
         }
         // ø <OnReady UI for Secondary and Staff-Eye-D>
         await salsDoMessagingReponsesApply(responseObject);
@@ -710,16 +705,16 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
         case 'ZERO':
             // ø <stateOnramp>
             // ø <assign UI Demografx>
-            $w('#btnPrimaryName').label = local.getItem('ppFirst') + ' ' + local.getItem('ppLast');
-            $w('#btnPrimaryName').enable();
-            $w('#btnStudentName').label = local.getItem('stFirst') + ' ' + local.getItem('stLast');
-            $w('#btnStudentName').enable();
-            let spName = (local.getItem('spFirst') + ' ' + local.getItem('spLast')).trim();
-            if(spName.length > 0){
-                $w('#btnSecondaryName').label = spName;
-                $w('#btnSecondaryName').enable();
-                $w('#btnSecondaryIdLabel').enable();
-            }
+            // $w('#btnPrimaryName').label = local.getItem('ppFirst') + ' ' + local.getItem('ppLast');
+            // $w('#btnPrimaryName').enable();
+            // $w('#btnStudentName').label = local.getItem('stFirst') + ' ' + local.getItem('stLast');
+            // $w('#btnStudentName').enable();
+            // let spName = (local.getItem('spFirst') + ' ' + local.getItem('spLast')).trim();
+            // if(spName.length > 0){
+            //     $w('#btnSecondaryName').label = spName;
+            //     $w('#btnSecondaryName').enable();
+            //     $w('#btnSecondaryIdLabel').enable();
+            // }
             // ø </assign UI Demografx>
             // if(memory.getItem('stepResponseBootstrapKey') !== 'success' && memory.getItem('stepResponseBootstrapKey') !== 'secondary'){
             //     await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Response Message for Key ${(memory.getItem('stepResponseBootstrapKey')).toUpperCase()} in UI`);
@@ -760,6 +755,8 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
             if(memory.getItem('stepResponseBootstrapKey') === 'secondary'){
                 await appendStepLogPPEQ(memory.getItem('stepResponseBootstrapKey'), `${stepKey} Secondary Message in UI`);
             }
+            $w('#btnEnrollmentLandngPage').expand();
+            $w('#btnPeSevenNext').collapse();
             console.log('UI Non-Core-Step: ' + stepKey)
             break;
             // ø </stateResolveAndDestroy>
@@ -5207,8 +5204,8 @@ export async function msboxPostEnrollmentSevenNextStateUI(responseObject = {}) {
     responseObject.logArrayDeveloper.push(`≈Z3837≈ {% POC messageObject: responseObject.currentMessagingObject.primary: ${responseObject.currentMessagingObject.primary} %}`);
     instantiateLoopSwitchEnrollmentSteps(responseObject.currentStepObject.origSteps.allStepArray);
     displaySteps();
-    $w('#btnPeSevenCurrent').show();
-    $w('#btnPeSevenNext').hide();
+    $w('#btnPeSevenCurrent').expand();
+    $w('#btnPeSevenNext').collapse();
     DOX = '≈Z4307≈ Show-Current & Hide-Next';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
     // ø </After DO-Script Called>
@@ -5260,8 +5257,13 @@ export async function msboxPostEnrollmentSevenPerformStepUI(responseObject = {})
     // ø <After DO-Script Called>
     DOX = `After DO-Perform - Within UI-Perform: hide btnCurrent/show btnNext`;
     responseObject.logArrayDeveloper.push(`{% ${DOX} %}`);
-    $w('#btnPeSevenCurrent').hide();
-    $w('#btnPeSevenNext').show();
+    $w('#btnPeSevenCurrent').collapse();
+    $w('#btnPeSevenNext').expand();
+    if(memory.getItem('msboxLastState') === 'stateResolveAndDestroy'){
+        $w('#btnPeSevenNext').collapse();
+        // memory.getItem('msboxLastState'): null;
+        // memory.getItem('msboxNextStateId'): null
+    }
     // ø </After DO-Script Called>
     // pstZEnrSeven202108STEP_P_05 ==> ReturnTo: ANY-AFTER ==> pstZEnrSeven202108STEP_P_06
     DOX = 'pstEnrSeven202108STEP_P_05 ==> ReturnTo: ANY-AFTER ==> pstEnrSeven202108STEP_P_06';
@@ -5446,6 +5448,19 @@ export async function msboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# n
     local.setItem('stepMessagingJSON','');
     // ø </CleanUp B4 things Start>
     await doSimpleDemogrfxAssignment()
+
+    // ø <assign UI Demografx>
+    $w('#btnPrimaryName').label = local.getItem('ppFirst') + ' ' + local.getItem('ppLast');
+    $w('#btnPrimaryName').enable();
+    $w('#btnStudentName').label = local.getItem('stFirst') + ' ' + local.getItem('stLast');
+    $w('#btnStudentName').enable();
+    let spName = (local.getItem('spFirst') + ' ' + local.getItem('spLast')).trim();
+    if(spName.length > 0){
+        $w('#btnSecondaryName').label = spName;
+        $w('#btnSecondaryName').enable();
+        $w('#btnSecondaryIdLabel').enable();
+    }
+    // ø </assign UI Demografx>
 
     // 202109_ActionValueRepeaters
     let actionValueRepeatersParamObject = {};
@@ -6149,7 +6164,7 @@ export function btnPeSevenNext_click(event) {
 }
 
 export async function btnPeSevenCurrent_click(event) {
-    $w('#btnPeSevenCurrent').hide();
+    $w('#btnPeSevenCurrent').collapse();
     let initLog = 'btnPeSevenCurrent_click PERFORM';
     await msboxPostEnrollmentSevenActionPerform(initLog);
 }
@@ -6242,19 +6257,11 @@ export function btnPeSevenFauxOnReady_click(event) {
     let initLog = 'FAUX $w.onReady() NEXT';
     msboxPostEnrollmentSevenActionOnReady(initLog);
     $w('#btnPeSevenFauxOnReady').hide();
-    $w('#btnPeSevenNextMANUAL').show();
     $w('#anchorTestProcess').scrollTo();
 }
 
 export function btnPeSevenPrepJSON_click(event) {
     $w('#preTrashLog').value = '{\n"postEnrollmentSeven": \n[' + $w('#preTrashLog').value + '\n]\n}';
-}
-
-export function btnPeSevenNextMANUAL_click(event) {
-    let responseObject = {};
-    responseObject.logArrayDeveloper = [];
-    goToState(responseObject, 'NEXT');
-
 }
 
 

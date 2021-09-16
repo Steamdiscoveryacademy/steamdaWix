@@ -4484,18 +4484,6 @@ export function btnCopyPreTrashLog_click(event) {
     uiCopyTextElementThis('preTrashLog');
 }
 
-export function btnLocalLastError_click(event) {
-    $w('#sessionEnrollmentJSON').value = doEnrollmentLogCurrent('ERROR');
-}
-
-export function btnLocalLogString_click(event) {
-    $w('#sessionEnrollmentJSON').value = doEnrollmentLogCurrent('LOG');
-}
-
-export function btnUIrefresh_click(event) {
-    doUserInterfaceCleanupCurrent();
-}
-
 export async function doQueryContactById(idValueOrKey = 'NONE') {
     let altKeyString = $w('#radioContactFindBy').value;
     let kind = idValueOrKey.length < 30 ? 'KEY' : 'LITERAL';
@@ -4613,6 +4601,7 @@ export function btnLITGetContact_click(event) {
 
 export async function btnExtraContactPrimary_click(event) {
     // pstEnrSeven202108getContactByEmailAndNotIdFunction
+    // 202109_dd02_COMPLEX
     let paramObjectPrimary = {};
     paramObjectPrimary.emailToFind = local.getItem('familyEmail');
     paramObjectPrimary.notIdToFind = local.getItem('familyId');
@@ -4628,6 +4617,7 @@ export async function btnExtraContactPrimary_click(event) {
 
 export async function btnExtraContactStudent_click(event) {
     // pstEnrSeven202108getContactByEmailAndNotIdFunction
+    // 202109_dd02_COMPLEX
     let paramObjectStudent = {};
     paramObjectStudent.emailToFind = local.getItem('studentEmail');
     paramObjectStudent.notIdToFind = local.getItem('studentId');
@@ -5926,18 +5916,6 @@ export function btnPpStContactDedupeDiagnosis_click(event) {
     $w('#sessionEnrollmentJSON').value = log + '\n\n' + cowCatcherIndex.toString();
 }
 
-export function btnGetLastParamObject_click(event) {
-    let paramObjectTemp = JSON.parse(local.getItem('lastParamObject'));
-    $w('#sessionEnrollmentJSON').value = JSON.stringify(paramObjectTemp,undefined,4);
-    uiCopyTextElementThis('sessionEnrollmentJSON');
-}
-
-export function btnGetLastResponseObject_click(event) {
-    let responseObjectTemp = JSON.parse(local.getItem('lastResponseObject'));
-    $w('#sessionEnrollmentJSON').value = JSON.stringify(responseObjectTemp,undefined,4);
-    uiCopyTextElementThis('sessionEnrollmentJSON');
-}
-
 export function btnGetWebhookStatuses_click(event) {
 	let responseObject = {};
     let wixWebhookStatus = typeof local.getItem('wixWebhookStatus') === 'string' ? local.getItem('wixWebhookStatus') : 'NNULL';
@@ -5977,15 +5955,15 @@ export function btnDeveloperOnly_click(event) {
     let nextState = stateArray[nextIndex]
     $w(developerStateBoxID).changeState(nextState);
 }
-export function btnMultButtonClearDD01_click(event) {
+export async function btnMultButtonClearDD01_click(event) {
 	let paramObject = {ddValue: "CLEAR",response: {string:'STRING'},done: false, messaging: {}}
-    overallManyButtonsByManyDropDowns(paramObject);
+    await overallManyButtonsByManyDropDowns(paramObject);
 }
 // ! ========================================================================================================================
 // ! ===================================               </Button Clicks Only>              ===================================
 // ! ========================================================================================================================
 
-export function overallManyButtonsByManyDropDowns(paramObject = {ddValue: "NNULL",response: {string:'STRING'},done: false, messaging: {}}){
+export async function overallManyButtonsByManyDropDowns(paramObject = {ddValue: "NNULL",response: {string:'STRING'},done: false, messaging: {}}){
      // 202109_Developer
      let responseBlockId = '#txareaDevelResponseBlock';
      paramObject.response.blockId = responseBlockId;
@@ -5998,7 +5976,10 @@ export function overallManyButtonsByManyDropDowns(paramObject = {ddValue: "NNULL
     // ø </Overall On-Ramp>
     // ø <ManyButtonsByManyDropDowns>
     if (!paramObject.done) {
-        manyButtonsDropDownO1(paramObject);
+        await manyButtonsDropDownO1(paramObject);
+    }
+    if (!paramObject.done) {
+        await manyButtonsDropDownO2(paramObject);
     }
     // ø </ManyButtonsByManyDropDowns>
 
@@ -6018,7 +5999,7 @@ export function overallManyButtonsByManyDropDowns(paramObject = {ddValue: "NNULL
     // ø </Overall Off-Ramp>
     return;//MOOT, but for clarity
 }
-export function manyButtonsDropDownO1(paramObject = {ddValue: "NNULL",response: {string:'STRING'},done: false, messaging: {}}){
+export async function manyButtonsDropDownO1(paramObject = {ddValue: "NNULL",response: {string:'STRING'},done: false, messaging: {}}){
     // 202109_Developer
     console.groupCollapsed('manyButtonsDropDownO1')
     let DOX = 'engenderingProximateDevelButtons'
@@ -6127,7 +6108,7 @@ export function manyButtonsDropDownO1(paramObject = {ddValue: "NNULL",response: 
     // ø </ManyButtonDropDow-ProcessValue>
     console.groupEnd()
 }
-export function manyButtonsDropDownO2(paramObject = {ddValue: "NNULL",response: {string:'STRING'},done: false, messaging: {}}){
+export async function manyButtonsDropDownO2(paramObject = {ddValue: "NNULL",response: {string:'STRING'},done: false, messaging: {}}){
     // 202109_Developer
     console.groupCollapsed('manyButtonsDropDownO2')
     let DOX = 'engenderingProximateDevelButtons'
@@ -6157,9 +6138,15 @@ export function manyButtonsDropDownO2(paramObject = {ddValue: "NNULL",response: 
 
     if(!done){
     // ø ø <localStorage SimpleAssignment>
-    tempMatchArray = ['ZZZenrollmentStepCompletedListAll','ZZZstepMessagingJSON']
+    tempMatchArray = ['local.lastParamObject','local.lastResponseObject']
     if(tempMatchArray.includes(value)){
-
+        let DOX = '<TESTING>'; 
+        DOX = 'lastParamObject_20210916';
+        local.setItem('lastParamObject', DOX) 
+        DOX = 'lastResponseObject_20210916';
+        local.setItem('lastResponseObject', DOX) 
+        DOX = '</TESTING>'; 
+        value = value.substr(0,6) === 'local.' ? value.substr(6) : value;
         responseString = local.getItem(value);
         done = true;
         paramObject.done = done;
@@ -6195,8 +6182,51 @@ export function manyButtonsDropDownO2(paramObject = {ddValue: "NNULL",response: 
     }
     if(!done){}
     // ø ø <COMPLEX Logic Blocks>
+    // 202109_dd02_COMPLEX
     if (value === 'ZXZ') {
         done = true;
+        paramObject.done = done;
+        paramObject.response.string = responseString;
+    }
+    if (value === 'doUserInterfaceCleanupCurrent') {
+        doUserInterfaceCleanupCurrent()
+        done = true;
+        paramObject.done = done;
+        paramObject.response.string = responseString;
+    }
+    if (value === 'ExtraContactPrimary') {
+        let paramObjectPrimary = {};
+        paramObjectPrimary.emailToFind = local.getItem('familyEmail');
+        paramObjectPrimary.notIdToFind = local.getItem('familyId');
+        paramObjectPrimary.diagnosticOnly = true;
+        paramObjectPrimary.collectHumanLog = true;
+        await getContactByEmailAndNotIdFunction(paramObjectPrimary);
+        // ø <Maybe Later> but... too-clever-by-half
+        // $w('#sessionEnrollmentJSON').value = paramObjectPrimary.logString;
+        // uiCopyTextElementThis('sessionEnrollmentJSON');
+        // delete paramObjectPrimary.logString;
+        // local.setItem('lastResponseObject',JSON.stringify(paramObjectPrimary));
+        // ø </Maybe Later>
+        responseString = JSON.stringify(paramObjectPrimary);
+        done = true;
+        paramObject.done = done;
+        paramObject.response.string = responseString;
+    }
+    if (value === 'ExtraContactStudent') {
+        let paramObjectStudent = {};
+        paramObjectStudent.emailToFind = local.getItem('studentEmail');
+        paramObjectStudent.notIdToFind = local.getItem('studentId');
+        paramObjectStudent.diagnosticOnly = true;
+        paramObjectStudent.collectHumanLog = true;
+        await getContactByEmailAndNotIdFunction(paramObjectStudent);
+        // ø <Maybe Later> but... too-clever-by-half
+        // $w('#sessionEnrollmentJSON').value = paramObjectStudent.logString;
+        // uiCopyTextElementThis('sessionEnrollmentJSON');
+        // delete paramObjectStudent.logString;
+        // local.setItem('lastResponseObject',JSON.stringify(paramObjectStudent));
+        // ø </Maybe Later>
+        done = true;
+        responseString = JSON.stringify(paramObjectStudent);
         paramObject.done = done;
         paramObject.response.string = responseString;
     }
@@ -6204,7 +6234,7 @@ export function manyButtonsDropDownO2(paramObject = {ddValue: "NNULL",response: 
     // ø </ManyButtonDropDow-ProcessValue>
     console.groupEnd()
 }
-export function manyButtonsDropDownO3(paramObject = {ddValue: "NNULL",response: {string:'STRING'},done: false, messaging: {}}){
+export async function manyButtonsDropDownO3(paramObject = {ddValue: "NNULL",response: {string:'STRING'},done: false, messaging: {}}){
     // 202109_Developer
     console.groupCollapsed('manyButtonsDropDownO3')
     let DOX = 'engenderingProximateDevelButtons'

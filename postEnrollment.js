@@ -1759,7 +1759,7 @@ export async function actionValueEvaluation() {
         if (DOX !== 'YES -  But the whole If-Clause should always be run, the Manual Confirmation is a thing of the past') {
             console.log(`≈1700≈ contact.source.sourceType: could be MOOT but 'MEMBER' or 'IMPORT' supported now`);
             let sourceType = contact.source.sourceType.toUpperCase();
-            let supportedSourceTypeArray = ['MEMBER','IMPORT','ADMIN']
+            let supportedSourceTypeArray = ['MEMBER','IMPORT','ADMIN','WIX_STORES']
             if (supportedSourceTypeArray.includes(sourceType) === false) {
                 local.setItem('superEnrollmentStatus', 'ALERT');
                 memory.setItem('stepResponseBootstrapKey','danger');
@@ -3343,6 +3343,7 @@ export function doCheckExitAfter() {
 
 
 export function clearByElementIdArray(elementIdArray) {
+    // BACKED_UP
     if (!Array.isArray(elementIdArray)) {
         return;
     }
@@ -3398,47 +3399,6 @@ export function displaySteps() {
     doUserInterfaceCleanupCurrent();
 }
 //ø <---------- </displaySteps> ---------->
-
-
-// ø <---------- <doEnrollmentCleanupCurrent>  ---------->
-// ø <DEPRECATED for 'doEnrollmentCleanupByKind' two below>
-export function doEnrollmentCleanupCurrent() {
-    local.setItem('logString', '[~Z1859]entering: ' + 'doEnrollmentCleanupCurrent()')
-    local.setItem('logString', local.getItem('logString') + '\n' + "DEPRECATED for 'doEnrollmentCleanupByKind'")
-    // ø <code Cleanup for Current Enrollment> mostly for testing
-    memory.setItem('ppRevision', "EEMPTY")
-    memory.setItem('stRevision', "EEMPTY")
-    memory.setItem('ppMemberPrepJSON', 'EEMPTY');
-    memory.setItem('ppMemberExecuteUpsert', 'EEMPTY');
-    memory.setItem('stMemberPrepJSON', 'EEMPTY');
-    memory.setItem('stMemberExecuteUpsert', 'EEMPTY');
-    memory.setItem('ppContactPrepJSON', 'EEMPTY');
-    memory.setItem('ppDatabasePrepJSON', 'EEMPTY');
-    memory.setItem('stContactPrepJSON', 'EEMPTY');
-    memory.setItem('stDatabasePrepJSON', 'EEMPTY');
-    memory.setItem('spContactPrepJSON', 'EEMPTY');
-    memory.setItem('spDatabasePrepJSON', 'EEMPTY');
-    memory.setItem('ppContactExecuteUpsert', 'EEMPTY');
-    memory.setItem('ppDatabaseExecuteUpsert', 'EEMPTY');
-    memory.setItem('stContactExecuteUpsert', 'EEMPTY');
-    memory.setItem('stDatabaseExecuteUpsert', 'EEMPTY');
-    memory.setItem('spContactExecuteUpsert', 'EEMPTY');
-    memory.setItem('spDatabaseExecuteUpsert', 'EEMPTY');
-    memory.setItem('enrollmentStepList', 'EEMPTY');
-    memory.setItem('enrollmentStepCompleted', 'EEMPTY');
-    memory.setItem('enrollmentStepCurrent', 'EEMPTY');
-    memory.setItem('enrollmentStepNext', 'EEMPTY');
-    local.setItem('loopExitAfterStep', 'EEMPTY');
-    local.setItem('loopExitNow', 'TTRUE_DEFUALT');
-    memory.setItem('stepStampArray', 'EEMPTY_AARRAY');
-    memory.setItem('yyyymm', 'EEMPTY');
-
-    // ø </code Cleanup for Current Enrollment>
-    return "The Current Enrollment Data has been Reset to 'EEMPTY', Clean-Up Successful.";
-}
-// ø </DEPRECATED for 'doEnrollmentCleanupByKind' two below>
-// ø <---------- </doEnrollmentCleanupCurrent> ---------->
-
 
 // ø <---------- <doEnrollmentLogCurrent>  ---------->
 // ø <---------- <doEnrollmentLogCurrent_byKind.js filename>  ---------->
@@ -3786,8 +3746,6 @@ export function doUserInterfaceCleanupCurrent() {
     let step = memory.getItem('enrollmentStepCompleted') === null ? false : true;
     step = memory.getItem('enrollmentStepCompleted') === "EEMPTY" ? false : step;
     step = memory.getItem('enrollmentStepCompleted') === "NNOT_AAPPLICABLE" ? false : step;
-    $w("#btStepCompleted").label = step ? memory.getItem('enrollmentStepCompleted') : '';
-    $w("#btStepCompletedSeven").label = step ? memory.getItem('enrollmentStepCompleted') : '';
     step = memory.getItem('enrollmentStepCurrent') === null ? false : true;
     step = memory.getItem('enrollmentStepCurrent') === "EEMPTY" ? false : step;
     step = memory.getItem('enrollmentStepCurrent') === "NNOT_AAPPLICABLE" ? false : step;
@@ -3983,18 +3941,6 @@ export function btnGetEnrollmentJSON_click(event) {
     }
 }
 
-export function btnClearPreviewCode_click(event) {
-    let elementIdArray = [];
-    elementIdArray.push("sessionEnrollmentJSON")
-    clearByElementIdArray(elementIdArray);
-}
-
-export function btnResetSteps_click(event) {
-        instantiateLoopSwitchEnrollmentSteps();
-        $w('#sessionEnrollmentJSON').value = stepsDisplayStatusAsReturnString('init');
-        displaySteps();
-}
-
 export function btnDisplayCurrentState_click(event) {
     let kind = $w('#ddDisplayKind').value;
     let responseString = doEnrollmentLogCurrent(kind);
@@ -4006,45 +3952,6 @@ export function btnDisplayCurrentState_click(event) {
     // ø </IIABDFI>
 }
 
-export async function btnCleanupCurrentState_click(event) {
-        memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'), local.getItem('tzAbbrv')));
-        local.setItem('logString', 'enter btnCleanupCurrentState_click(event): YES');
-        local.setItem('logString', local.getItem('logString') + '\nTest of Clean Tags BEGIN Man in the High Castle<clean>');
-        doEnrollmentCleanupByKind('CURRENT')
-        doUserInterfaceCleanupCurrent();
-    local.setItem('logString', local.getItem('logString') + '\n</clean>Marvelous Mrs. Maisel END Test of Clean Tags');
-    local.setItem('logString', local.getItem('logString') + '\n[~Z2534]exit btnCleanupCurrentState_click(event) nowISO: ' + memory.getItem('lastStamp'));
-    $w('#sessionEnrollmentJSON').value = local.getItem('logString');
-}
-
-export async function btnPeformNextStep_click(event) {
-    local.setItem('logString', 'enter btnPeformNextStep_click(event)');
-    local.setItem('logString', local.getItem('logString') + '\n[~Z2444]Next (current) Step: ' + memory.getItem('enrollmentStepCurrent'))
-    await doPeformNextStep();
-    $w('#ddDisplayKind').value = 'ALL';
-    displaySteps();
-    doUserInterfaceCleanupCurrent()
-    local.setItem('logString', local.getItem('logString') + '\n[~Z2450]exit btnPeformNextStep_click(event) nowISO: ' + memory.getItem('lastStamp'));
-    $w('#sessionEnrollmentJSON').value = local.getItem('logString');
-}
-
-export async function btnSkipNextStep_click(event) {
-    local.setItem('logString', 'enter btnSkipNextStep_click(event)');
-    memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'), local.getItem('tzAbbrv')));
-    
-    
-
-
-    if (memory.getItem('enrollmentStepCurrent') === 'IINSTANTIATE') {
-        local.setItem('logString', local.getItem('logString') + '\n[~Z2296]: ' + "You cannot use 'Skip Next Step' to skip the 'IINSTANTIATE' step. Please proceed normally to execute the 'IINSTANTIATE' step.\n\nNo action taken. \nPlease try again or ask for assistance.");
-    } else {
-        stepsCycleSteps();
-        displaySteps();
-        local.setItem('logString', local.getItem('logString') + '\n[~Z2301]stepSkipped: ' + memory.getItem('enrollmentStepCompleted'));
-    }
-    local.setItem('logString', local.getItem('logString') + '\n[~Z2304]exit btnSkipNextStep_click(event) nowISO: ' + memory.getItem('lastStamp'));
-    $w('#sessionEnrollmentJSON').value = local.getItem('logString');
-}
 
 export function toggleBoxState() {
     if ($w("#boxUImultiState").currentState.id === "Main") {
@@ -4169,11 +4076,6 @@ export function btnWebhookResolve_click(event) {
         updateStatusWebhookPayloadThis(true);
         console.log('[`3215] RESOLVE: Yes')
     console.log('[`3221] EXIT: btnWebhookResolve_click(event)')
-}
-
-export function btnCleanUpDEP_click(event) {
-        $w('#sessionEnrollmentJSON').value = doEnrollmentCleanupCurrent();
-        doUserInterfaceCleanupCurrent();
 }
 
 export async function btnCleanUpByKindTEST_click(event) {
@@ -4613,10 +4515,6 @@ export function btnCopyPreTrashLog_click(event) {
     uiCopyTextElementThis('preTrashLog');
 }
 
-export function btnCopySessionEnrollmentJSON_click(event) {
-    uiCopyTextElementThis('sessionEnrollmentJSON');
-}
-
 export function btnLocalLastError_click(event) {
     $w('#sessionEnrollmentJSON').value = doEnrollmentLogCurrent('ERROR');
 }
@@ -4624,12 +4522,6 @@ export function btnLocalLastError_click(event) {
 export function btnLocalLogString_click(event) {
     $w('#sessionEnrollmentJSON').value = doEnrollmentLogCurrent('LOG');
 }
-
-export function btnAppendToPreTrashLog_click(event) {
-    $w('#preTrashLog').value += '\n\n---\n\n';
-    $w('#preTrashLog').value += $w('#sessionEnrollmentJSON').value;
-}
-
 
 export function btnUIrefresh_click(event) {
     doUserInterfaceCleanupCurrent();
@@ -4748,20 +4640,6 @@ export function btnLITGetContact_click(event) {
     paramIdOrKey = paramIdOrKey.trim();
     doQueryContactById(paramIdOrKey);
     $w('#txtGetContactLiteral').value = '';
-}
-
-export function btnStepAppend_click(event) {
-    $w('#preTrashLog').value += '\n\n---\n\n';
-    $w('#preTrashLog').value += $w('#sessionEnrollmentJSON').value;
-}
-
-export function btnStepLogAll_click(event) {
-    // $w('#sessionEnrollmentJSON').value = doEnrollmentLogCurrent('ALL');
-    $w('#sessionEnrollmentJSON').value = doEnrollmentLogCurrent('CODE');
-}
-
-export function btnStepCopy_click(event) {
-    uiCopyTextElementThis('sessionEnrollmentJSON');
 }
 
 export async function btnExtraContactPrimary_click(event) {
@@ -6060,72 +5938,6 @@ export function btnMessagingbject_click(event) {
 
 export function btnStepsObject_click(event) {
     $w('#ppDatabaseResponseJSON').value = memory.getItem('stepObjects');
-}
-
-export function btnApplendStepLog_click(event) {
-	// let doTheFunction = 'DO THE FUNCTION';
-    // let stepArray = (memory.getItem('stepLogString')).split('|');
-    // let stepArray = ('ONE|TWO|THREE').split('|');
-    // let stepLogThis = stepArray.pop();
-    // let stepLogThis = ;
-	// memory.setItem('stepLogString', memory.getItem('stepLogString') + )
-    let stepLogThis = demoAppendStepLog()
-    $w('#ppMemberResponseJSON').value = demoAppendStepLog();
-    $w('#ppContactResponseJSON').value = memory.getItem('stepLogString');
-}
-
-export function demoAppendStepLog(){
-    let key = $w('#demoKey').value; 
-    let message = $w('#demoMessage').value; 
-    let line = $w('#ddLineNumber').value; 
-    let doPost = $w('#ddPostLog').value; 
-    let lineNumberKind = 'PENDING'
-    lineNumberKind = Number(line) < 3 ? 'STRING' : lineNumberKind;
-    lineNumberKind = Number(line) === 0 ? 'NUMBER' : lineNumberKind;
-    
-    let doPostKind = doPost === 'NUMBER' ? 'NUMBER' : 'VALUE';
-    doPostKind = doPost.indexOf('BOOLEAN') >= 0 ? 'BOOLEAN' : doPostKind;
-    
-    let lineNumberNumber = Math.ceil(Math.random() * 998);
-    let lineNumberString = lineNumberNumber.toString();
-    lineNumberString = Number(line) === 2 ? '' : lineNumberString;
-    
-    let doPostValue = doPost;
-    let doPostBoolean = doPost.toLowerCase().indexOf('true') >= 0 ? true : false;
-    let doPostNumber = Math.ceil(Math.random() * 98);
-    
-    
-    
-    let returnString = '';
-    if(Number(line) === 3){
-        returnString = `call('${key}','${message}')`;
-    }else if(doPost === "NONE" && lineNumberKind === 'NUMBER'){
-        returnString = `call('${key}','${message}',${lineNumberNumber})`;
-    }else if(doPost === "NONE" && lineNumberKind === 'STRING'){
-        returnString = `call('${key}','${message}','${lineNumberString}')`;
-        
-        
-    }else if(lineNumberKind === 'NUMBER' && doPostKind === 'BOOLEAN'){
-        returnString = `call('${key}','${message}',${lineNumberNumber},${doPostBoolean})`;
-    }else if(lineNumberKind === 'NUMBER' && doPostKind === 'VALUE'){
-        returnString = `call('${key}','${message}',${lineNumberNumber},'${doPostValue}')`;
-    }else if(lineNumberKind === 'NUMBER' && doPostKind === 'NUMBER'){
-        returnString = `call('${key}','${message}',${lineNumberNumber},${doPostNumber})`;
-
-
-    }else if(lineNumberKind === 'STRING' && doPostKind === 'BOOLEAN'){
-        returnString = `call('${key}','${message}','${lineNumberString}',${doPostBoolean})`;
-    }else if(lineNumberKind === 'STRING' && doPostKind === 'VALUE'){
-        returnString = `call('${key}','${message}','${lineNumberString}','${doPostValue}')`;
-    }else if(lineNumberKind === 'STRING' && doPostKind === 'NUMBER'){
-        returnString = `call('${key}','${message}','${lineNumberString}',${doPostNumber})`;
-    }
-    returnString = returnString.replace('call','appendStepLogPPEQ');
-    let returnValue = eval(returnString);
-    returnString += '\n==========\n';
-    returnString += returnValue;
-    return returnString;
-
 }
 
 export function btnPpStContactDedupeDiagnosis_click(event) {

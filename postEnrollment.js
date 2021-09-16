@@ -1703,7 +1703,6 @@ export async function doInstantiateLoopSwitchStep() {
     comboName = local.getItem('stPreferredFirst').trim() + ' ' + local.getItem('stLast').trim() + ' (' + local.getItem('ppFirst') + comboName + ')';
     local.setItem('comboName', comboName);
     local.setItem('uiStDobString', enrollmentObject.family.student.dobString);
-    $w('#txtStudentDobString').value = local.getItem('uiStDobString');
     // let memberId = Math.random() > 0.1 ? 'INSTANTIATE' : '777888'
     local.setItem('wixWebhookId', enrollmentObject.formStack.wixWebhookId);
     const options = {
@@ -3749,7 +3748,6 @@ export function doUserInterfaceCleanupCurrent() {
     step = memory.getItem('enrollmentStepCurrent') === null ? false : true;
     step = memory.getItem('enrollmentStepCurrent') === "EEMPTY" ? false : step;
     step = memory.getItem('enrollmentStepCurrent') === "NNOT_AAPPLICABLE" ? false : step;
-    $w("#txtStudentDobString").value = local.getItem('uiStDobString');
     let webhookId = local.getItem('wixWebhookId')
     if (typeof webhookId === 'string' && webhookId.length > 20) {
         label = 'Webhook ID: ';
@@ -3760,39 +3758,14 @@ export function doUserInterfaceCleanupCurrent() {
     } else {
         label = 'Webhook ID: [invalid]';
     }
-    $w('#btnWebhookData').label = label;
+    
     if (local.getItem('wixWebhookStatus') === 'RESOLVED') {
         // $w('#grpCleanUpAllIncludingEnrJSON').show();
         // $w('#grpWebhookResolve').hide();
     } else {
         // $w('#grpCleanUpAllIncludingEnrJSON').hide();
-        $w('#grpWebhookResolve').show();
+        // $w('#grpWebhookResolve').show();
     }
-}
-export function doUpdateStudentDOB() {
-    let resultString = '';
-    if ($w("#txtStudentDobString").value === local.getItem('uiStDobString')) {
-        resultString = 'There is No Change in the Student Date-of-Birth to Update.'
-        resultString += "\n\nNo action taken. \nPlease try again or ask for assistance.";
-        $w("#sessionEnrollmentJSON").value = resultString;
-        return;
-    }
-    let enrollmentObject = JSON.parse(local.getItem('ondeckEnrollmentJSON'));
-
-    let dob = new Date($w("#txtStudentDobString").value);
-    let dobString = ('00' + (dob.getMonth() + 1).toString()).substr(-2) + '/' + ('00' + dob.getDate().toString()).substr(-2) + '/' + dob.getFullYear().toString();
-    local.setItem('uiStDobString', dobString);
-    enrollmentObject.family.student.dobString = dobString;
-    enrollmentObject.family.student.dob.date = dob.toISOString();
-    enrollmentObject.family.student.dob.month = dob.getMonth() + 1;
-    enrollmentObject.family.student.dob.day = dob.getDate();
-    enrollmentObject.family.student.dob.year = dob.getFullYear();
-    local.setItem('ondeckEnrollmentJSON', JSON.stringify(enrollmentObject));
-    local.setItem('ondeckEnrollmentJSON', JSON.stringify(enrollmentObject));
-    $w("#txtStudentDobString").value = dobString;
-    resultString = "The logic to allow 'Student Date-of-Birth to Update' was successfully executed."
-    resultString += "\n\nNo further action taken. \nPlease click 'Show Enrollment JSON' to check the result.";
-    $w("#sessionEnrollmentJSON").value = resultString;
 }
 
 export async function doGetRecord(what, where) {
@@ -3985,10 +3958,6 @@ export async function btCleanUpAllIncludingnrJSON_click(event) {
         let responseCleanupCurrentState = doEnrollmentCleanupByKind('ALL_INCLUDING_ENROLLMENT');//HINT: backdoor: MURDERREDRUM
         local.setItem('logString', local.getItem('logString') + '\n[~Z2621]exiting btCleanUpAllIncludingnrJSON_click:YES');
         $w('#sessionEnrollmentJSON').value = local.getItem(('logString'));
-}
-
-export function btnUpdateStudentDOB_click(event) {
-    doUpdateStudentDOB()
 }
 
 export function btnGetPpMember_click(event) {
@@ -4871,6 +4840,7 @@ export async function msboxPostEnrollmentSevenNextStateUI(responseObject = {}) {
     responseObject.logArrayDeveloper.push(`≈Z3837≈ {% POC messageObject: responseObject.currentMessagingObject.primary: ${responseObject.currentMessagingObject.primary} %}`);
     instantiateLoopSwitchEnrollmentSteps(responseObject.currentStepObject.origSteps.allStepArray);
     displaySteps();
+    console.log('Next UI: After DO:  Perform.expand(),  Next.collapse()')
     $w('#btnPeSevenCurrent').expand();
     $w('#btnPeSevenNext').collapse();
     DOX = '≈Z4307≈ Show-Current & Hide-Next';
@@ -4924,6 +4894,7 @@ export async function msboxPostEnrollmentSevenPerformStepUI(responseObject = {})
     // ø <After DO-Script Called>
     DOX = `After DO-Perform - Within UI-Perform: hide btnCurrent/show btnNext`;
     responseObject.logArrayDeveloper.push(`{% ${DOX} %}`);
+    console.log('Perform UI: After DO:  Perform.collapse(),  Next.expand()')
     $w('#btnPeSevenCurrent').collapse();
     $w('#btnPeSevenNext').expand();
     if(memory.getItem('msboxLastState') === 'stateResolveAndDestroy'){
@@ -4940,9 +4911,9 @@ export async function msboxPostEnrollmentSevenPerformStepUI(responseObject = {})
     let anyDangerHide = false;
     anyDangerHide = memory.getItem('stepResponseBootstrapKey') === 'danger' ? true : anyDangerHide;
     anyDangerHide = (memory.getItem('stepLogString')).indexOf('danger') >= 0 ? true : anyDangerHide;
-    console.log('anyDangerHide: ' + anyDangerHide);
+    console.log('≈4912≈ anyDangerHide: ' + anyDangerHide);
     if(anyDangerHide){
-        console.log('hide Perform & Next Buttons')
+        console.log('Any Danger:  Perform.collapse(),  Next.collapse()')
         $w('#btnPeSevenNext').collapse();
         $w('#btnPeSevenCurrent').collapse();
         $w('#btnAnyDanger').expand();
@@ -5831,6 +5802,7 @@ export function btnPeSevenNext_click(event) {
 }
 
 export async function btnPeSevenCurrent_click(event) {
+    console.log('Perform-Click:  Perform.collapse(),  (Next.collapse() already): no buttons until complete')
     $w('#btnPeSevenCurrent').collapse();
     let initLog = 'btnPeSevenCurrent_click PERFORM';
     await msboxPostEnrollmentSevenActionPerform(initLog);
@@ -6060,8 +6032,9 @@ export function manyButtonsDropDownO1(paramObject = {ddValue: "NNULL",response: 
     //     {"label": "I Don't Know is on third", "value": "third"}
     // ];
 
-    let thisDropDownValueArray = ['USE DECONSTRUCTION TECHNIQUE HERE'];
-    thisDropDownValueArray = ['enrollmentStepCompletedListAll','TGGL_CMPLTD_STEPS','stepLogString','stepResponseBootstrapKey','stepMessagingJSON','LAST_NEXT_STATES','STEP_LOGS_TOGGLE'];
+    let thisDropDownValueArray = thisDropDownOptionArray.map(element => element.value);;
+    console.dir(thisDropDownValueArray)
+    // thisDropDownValueArray = ['enrollmentStepCompletedListAll','TGGL_CMPLTD_STEPS','stepLogString','stepResponseBootstrapKey','stepMessagingJSON','LAST_NEXT_STATES','STEP_LOGS_TOGGLE'];
     if(thisDropDownValueArray.includes(paramObject.ddValue) === false){
         console.groupEnd()
         return;
@@ -6071,7 +6044,6 @@ export function manyButtonsDropDownO1(paramObject = {ddValue: "NNULL",response: 
     console.log(`value: ${value}`)
     let done = false;
     let responseString = 'NNULL'
-    console.groupEnd()
     let tempMatchArray = [];
 
     if(!done){
@@ -6153,6 +6125,161 @@ export function manyButtonsDropDownO1(paramObject = {ddValue: "NNULL",response: 
     }
     // ø ø </COMPLEX Logic Blocks>
     // ø </ManyButtonDropDow-ProcessValue>
+    console.groupEnd()
+}
+export function manyButtonsDropDownO2(paramObject = {ddValue: "NNULL",response: {string:'STRING'},done: false, messaging: {}}){
+    // 202109_Developer
+    console.groupCollapsed('manyButtonsDropDownO2')
+    let DOX = 'engenderingProximateDevelButtons'
+    let thisDropDownElementId = '#ddManyButtons02';
+    paramObject.ddValue = $w(thisDropDownElementId).value
+    console.log(`paramObject.ddValue: ${paramObject.ddValue}`)
+    let thisDropDownOptionArray = $w(thisDropDownElementId).options;
+    // $w("#myDropdown").options = [
+    //     {"label": "Who's on first!", "value": "first"},
+    //     {"label": "What's on second", "value": "second"},
+    //     {"label": "I Don't Know is on third", "value": "third"}
+    // ];
+
+    let thisDropDownValueArray = thisDropDownOptionArray.map(element => element.value);;
+    console.dir(thisDropDownValueArray)
+    // thisDropDownValueArray = ['enrollmentStepCompletedListAll','TGGL_CMPLTD_STEPS','stepLogString','stepResponseBootstrapKey','stepMessagingJSON','LAST_NEXT_STATES','STEP_LOGS_TOGGLE'];
+    if(thisDropDownValueArray.includes(paramObject.ddValue) === false){
+        console.groupEnd()
+        return;
+    }
+    // ø <ManyButtonDropDow-ProcessValue>
+    let value = paramObject.ddValue
+    console.log(`value: ${value}`)
+    let done = false;
+    let responseString = 'NNULL'
+    let tempMatchArray = [];
+
+    if(!done){
+    // ø ø <localStorage SimpleAssignment>
+    tempMatchArray = ['ZZZenrollmentStepCompletedListAll','ZZZstepMessagingJSON']
+    if(tempMatchArray.includes(value)){
+
+        responseString = local.getItem(value);
+        done = true;
+        paramObject.done = done;
+        paramObject.response.string = responseString;
+    }
+    // ø ø </localStorage SimpleAssignment>
+    }
+        
+    if(!done){}
+    // ø ø <sessionStorage SimpleAssignment>
+    // ø ø </sessionStorage SimpleAssignment>
+    if(!done){
+        // ø ø <memoryStorage SimpleAssignment>
+        tempMatchArray = ['ZZZstepLogString','ZZZstepResponseBootstrapKey']
+        if(tempMatchArray.includes(value)){
+            responseString = memory.getItem(value);
+            done = true;
+            paramObject.done = done;
+            paramObject.response.string = responseString;
+        }
+        // ø ø </memoryStorage SimpleAssignment>
+    }
+    if(!done){
+        // ø ø <Ternary SimpleAssignment>
+        responseString = value === 'ZXZ' ? 'ZXZ' : responseString;
+        responseString = value === 'ZZZLAST_NEXT_STATES' ? `memory.getItem('msboxLastState'): ${memory.getItem('msboxLastState')};\nmemory.getItem('msboxNextStateId'): ${memory.getItem('msboxNextStateId')}` : responseString;
+        done = responseString === 'NNULL' ? done : true;
+        if(done){
+            paramObject.done = done;
+            paramObject.response.string = responseString;
+        }
+        // ø ø </Ternary SimpleAssignment>
+    }
+    if(!done){}
+    // ø ø <COMPLEX Logic Blocks>
+    if (value === 'ZXZ') {
+        done = true;
+        paramObject.done = done;
+        paramObject.response.string = responseString;
+    }
+    // ø ø </COMPLEX Logic Blocks>
+    // ø </ManyButtonDropDow-ProcessValue>
+    console.groupEnd()
+}
+export function manyButtonsDropDownO3(paramObject = {ddValue: "NNULL",response: {string:'STRING'},done: false, messaging: {}}){
+    // 202109_Developer
+    console.groupCollapsed('manyButtonsDropDownO3')
+    let DOX = 'engenderingProximateDevelButtons'
+    let thisDropDownElementId = '#ddManyButtons03';
+    paramObject.ddValue = $w(thisDropDownElementId).value
+    console.log(`paramObject.ddValue: ${paramObject.ddValue}`)
+    let thisDropDownOptionArray = $w(thisDropDownElementId).options;
+    // $w("#myDropdown").options = [
+    //     {"label": "Who's on first!", "value": "first"},
+    //     {"label": "What's on second", "value": "second"},
+    //     {"label": "I Don't Know is on third", "value": "third"}
+    // ];
+
+    let thisDropDownValueArray = thisDropDownOptionArray.map(element => element.value);;
+    console.dir(thisDropDownValueArray)
+    // thisDropDownValueArray = ['enrollmentStepCompletedListAll','TGGL_CMPLTD_STEPS','stepLogString','stepResponseBootstrapKey','stepMessagingJSON','LAST_NEXT_STATES','STEP_LOGS_TOGGLE'];
+    if(thisDropDownValueArray.includes(paramObject.ddValue) === false){
+        console.groupEnd()
+        return;
+    }
+    // ø <ManyButtonDropDow-ProcessValue>
+    let value = paramObject.ddValue
+    console.log(`value: ${value}`)
+    let done = false;
+    let responseString = 'NNULL'
+    let tempMatchArray = [];
+
+    if(!done){
+    // ø ø <localStorage SimpleAssignment>
+    tempMatchArray = ['ZZZenrollmentStepCompletedListAll','ZZZstepMessagingJSON']
+    if(tempMatchArray.includes(value)){
+
+        responseString = local.getItem(value);
+        done = true;
+        paramObject.done = done;
+        paramObject.response.string = responseString;
+    }
+    // ø ø </localStorage SimpleAssignment>
+    }
+        
+    if(!done){}
+    // ø ø <sessionStorage SimpleAssignment>
+    // ø ø </sessionStorage SimpleAssignment>
+    if(!done){
+        // ø ø <memoryStorage SimpleAssignment>
+        tempMatchArray = ['ZZZstepLogString','ZZZstepResponseBootstrapKey']
+        if(tempMatchArray.includes(value)){
+            responseString = memory.getItem(value);
+            done = true;
+            paramObject.done = done;
+            paramObject.response.string = responseString;
+        }
+        // ø ø </memoryStorage SimpleAssignment>
+    }
+    if(!done){
+        // ø ø <Ternary SimpleAssignment>
+        responseString = value === 'ZXZ' ? 'ZXZ' : responseString;
+        responseString = value === 'ZZZLAST_NEXT_STATES' ? `memory.getItem('msboxLastState'): ${memory.getItem('msboxLastState')};\nmemory.getItem('msboxNextStateId'): ${memory.getItem('msboxNextStateId')}` : responseString;
+        done = responseString === 'NNULL' ? done : true;
+        if(done){
+            paramObject.done = done;
+            paramObject.response.string = responseString;
+        }
+        // ø ø </Ternary SimpleAssignment>
+    }
+    if(!done){}
+    // ø ø <COMPLEX Logic Blocks>
+    if (value === 'ZXZ') {
+        done = true;
+        paramObject.done = done;
+        paramObject.response.string = responseString;
+    }
+    // ø ø </COMPLEX Logic Blocks>
+    // ø </ManyButtonDropDow-ProcessValue>
+    console.groupEnd()
 }
 // ! ========================================================================================================================
 // ! ==============================               </DEVELOPER ONLY MultiStateBox>              ==============================

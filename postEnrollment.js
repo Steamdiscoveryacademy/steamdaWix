@@ -3967,8 +3967,7 @@ export async function pretrashFindFamilyIdTermId() {
     let logString = '';
     let exceptionLogArray = [];
 
-    let familyId = $w('#txtFamilyId').value;
-    let termId = Number($w('#txtTermId').value);
+    let termId = Number(999);
 
     logString += '\n' + "local.getItem('familyId'): " + familyId;
     logString += '\n' + "local.getItem('termId'): " + termId;
@@ -3999,10 +3998,6 @@ EXCEPTION LOG BLOCK:
 
 
 
-    if (exceptionLogBlock.length > 0) {
-        $w('#preTrashLog').value = logString;
-        return;
-    }
     // ø </CHECK FOR EXISTING>
 
     // ø <---------- <direct (or nearly)>  ---------->
@@ -4044,7 +4039,6 @@ EXCEPTION LOG BLOCK:
     // ø <---------- </INSERT> ---------->
     logString += JSON.stringify(toInsert, undefined, 4);;
 
-    $w('#preTrashLog').value = JSON.stringify(ppInsertResult, undefined, 4);
     return;
 
 }// END function pretrashFindFamilyIdTermId()
@@ -4053,12 +4047,9 @@ export async function pretrashFindStByFamilyIdLegalFirst() {
     let logString = '';
     let exceptionLogArray = [];
 
-    let familyId = $w('#txtFamilyId').value;
-    let termId = Number($w('#txtTermId').value);
+    let termId = Number(999);
 
-    let studentId = $w('#txStudentId').value;
 
-    let studentLegalFirst = $w('#txStudentLegalFirst').value;
 
     logString += '\n' + "local.getItem('familyId'): " + familyId;
     logString += '\n' + "local.getItem('termId'): " + termId;
@@ -4092,7 +4083,6 @@ EXCEPTION LOG BLOCK:
 
     if (exceptionLogBlock.length > 0) {
         logString += '\n' + 'RETURN NO INSERT';
-        $w('#preTrashLog').value = logString;
         return;
     }
     // ø </CHECK FOR EXISTING>
@@ -4102,8 +4092,6 @@ EXCEPTION LOG BLOCK:
     let lastFirst = local.getItem('stLast') + ', ' + local.getItem('stPreferredFirst');
     let toInsert = {};
     toInsert.title = lastFirst;
-    toInsert.personId = studentId;
-    toInsert.familyId = familyId;
     toInsert.role = 'Student';
     toInsert.first = local.getItem('stPreferredFirst');
     toInsert.last = local.getItem('stLast');
@@ -4112,9 +4100,6 @@ EXCEPTION LOG BLOCK:
     toInsert.lastFirst = lastFirst;
     toInsert.comboName = local.getItem('comboName');
     toInsert.webhookId = local.getItem('wixWebhookId');
-    toInsert.idHH = familyId;
-    toInsert.idBL = familyId;
-    toInsert.altPersonId = studentId;
     toInsert.termId = termId;
     // ø <---------- </direct (or nearly)> ---------->
     // ø <---------- <complex>  ---------->
@@ -4138,35 +4123,21 @@ EXCEPTION LOG BLOCK:
     // ø <---------- </INSERT> ---------->
     logString += JSON.stringify(toInsert, undefined, 4);;
 
-    $w('#preTrashLog').value = JSON.stringify(stInsertResult, undefined, 4);
     return;
 
 }// END function pretrashFindStByFamilyIdLegalFirst()
 
 export async function pretrashActionEvaluationTest() {
-    local.setItem('staffIdentifiedFamilyId', $w('#txtStaffEyeD').value);
+    local.setItem('staffIdentifiedFamilyId', 'ZXZ');
     memory.setItem('familyId_HOLDER', local.getItem('familyId'));
-    local.setItem('familyId', $w('#txtFamilyId').value);
-    local.setItem('termId', Number($w('#txtTermId').value));
-    local.setItem('stFirst', $w('#txStudentLegalFirst').value);
-    local.setItem('spFirst', $w('#txtSecondaryFirst').value);
-    local.setItem('spLast', $w('#txtSecondaryLast').value);
+    local.setItem('termId', Number(999));
+    local.setItem('spFirst', 'ZXZ');
+    local.setItem('spLast', 'ZXZ');
     let now = new Date();
     let yyyymmddhhiiss = now.getFullYear() * 10000000000 + (now.getMonth() + 1) * 100000000 + now.getDate() * 1000000 + now.getHours() * 10000 + now.getMinutes() * 100 + now.getSeconds() * 1;
 
 
     await actionValueEvaluation();
-    $w('#preTrashLog').value = '============================================';
-    $w('#preTrashLog').value += '\n========== <TESTING ACTION EVAL> ===========';
-    $w('#preTrashLog').value += '\n======= actual data could be altered =======';
-    $w('#preTrashLog').value += '\n============================================\n';
-    $w('#preTrashLog').value += doEnrollmentLogCurrent('DATA');
-    $w('#preTrashLog').value += '\nlocal.getItem(termId): ' + local.getItem('termId');
-    $w('#preTrashLog').value += '\n\n==========\n' + local.getItem('logString') + '\n==========\n';
-    $w('#preTrashLog').value += '\n============================================';
-    $w('#preTrashLog').value += '\n==========     ' + yyyymmddhhiiss + '      =========';
-    $w('#preTrashLog').value += '\n========== </TESTING ACTION EVAL> ==========';
-    $w('#preTrashLog').value += '\n============================================';
 
     local.setItem('familyId', memory.getItem('familyId_HOLDER'));
 
@@ -4182,29 +4153,21 @@ export function doPreTrashLogUI() {
     logString += '\n================================================================\n';
 
 
-    logString += '\n' + "$w('#txtFamilyId').value: " + $w('#txtFamilyId').value;
-    logString += '\n' + "$w('#txStudentId').value: " + $w('#txStudentId').value;
-    logString += '\n' + "$w('#txStudentLegalFirst').value: " + $w('#txStudentLegalFirst').value;
-    logString += '\n' + "$w('#txtTermId').value: " + $w('#txtTermId').value;
-    logString += '\n' + "$w('#txtStaffEyeD').value: " + $w('#txtStaffEyeD').value;
-    logString += '\n' + "$w('#txtSecondaryFirst').value: " + $w('#txtSecondaryFirst').value;
-    logString += '\n' + "$w('#txtSecondaryLast').value: " + $w('#txtSecondaryLast').value;
 
     logString += '\n\n================================================================';
     logString += '\n===========              ' + yyyymmddhhiiss + '               ==========';
     logString += '\n===========    </LOG of PRE_TRASH User Interface>    ===========';
     logString += '\n================================================================';
 
-    $w('#preTrashLog').value = logString;
 }//END function doPreTrashLogUI()
 
 export async function doPreTrashThreeQueries() {
     let now = new Date();
     let yyyymmddhhiiss = now.getFullYear() * 10000000000 + (now.getMonth() + 1) * 100000000 + now.getDate() * 1000000 + now.getHours() * 10000 + now.getMinutes() * 100 + now.getSeconds() * 1;
 
-    let staffIdentifiedFamilyId = $w('#txtStaffEyeD').value;
-    let termId = Number($w('#txtTermId').value);
-    let studentLegalFirst = $w('#txStudentLegalFirst').value;
+    let staffIdentifiedFamilyId = 'ZXZ';
+    let termId = Number(999);
+    let studentLegalFirst = '';
 
     let logBeginString = '';
     let logString = '';
@@ -4296,70 +4259,6 @@ export function uiCopyTextElementThis(elementId = '') {
 // ! ====================================================================================================
 // ! ====================                      </PRETRASH DB TESTING>                      ==============
 // ! ====================================================================================================
-
-
-export async function btnPreTrashDo_click(event) {
-    // pretrashFindFamilyIdTermId();
-    await ppDatabasePrepJSON();
-    $w('#preTrashLog').value = memory.getItem('ppDatabasePrepJSON');
-}
-
-export function btnPreTrashClear_click(event) {
-    T
-    doClear('preTrashLog')
-}
-
-export function btnGetFamilyId_click(event) {
-    $w('#txtFamilyId').value = local.getItem('familyId');
-}
-
-
-export async function btnPreTrashDoST_click(event) {
-    // pretrashFindStByFamilyIdLegalFirst();
-    await stDatabasePrepJSON();
-    $w('#preTrashLog').value = memory.getItem('stDatabasePrepJSON');
-}
-
-export function btnGetTermID_click(event) {
-    $w('#txtTermId').value = local.getItem('termId');
-}
-
-export function btnGetStudentId_click(event) {
-    $w('#txStudentId').value = local.getItem('studentId');
-}
-
-export function btnGetStudentLegalFirst_click(event) {
-    $w('#txStudentLegalFirst').value = local.getItem('stFirst');
-}
-
-export function btnPretrashGetStaffEyeD_click(event) {
-    if ($w('#txtStaffEyeD').value === $w('#txtFamilyId').value) {
-        $w('#txtStaffEyeD').value = 'INSTANTIATE';
-    } else {
-        $w('#txtStaffEyeD').value = $w('#txtFamilyId').value;
-    }
-}
-
-export async function btnPreTrashActEval_click(event) {
-    await pretrashActionEvaluationTest();
-}
-
-export function btnGetSecondaryFirstLast_click(event) {
-    $w('#txtSecondaryFirst').value = local.getItem('spFirst');
-    $w('#txtSecondaryLast').value = local.getItem('spLast');
-}
-
-export function btnPreTrashLogUI_click(event) {
-    doPreTrashLogUI();
-}
-
-export async function btnPreTrashThreeQueries_click(event) {
-    $w('#preTrashLog').value = await doPreTrashThreeQueries();
-}
-
-export function btnCopyPreTrashLog_click(event) {
-    uiCopyTextElementThis('preTrashLog');
-}
 
 export async function doQueryContactById(idValueOrKey = 'NONE') {
     let altKeyString = $w('#radioContactFindBy').value;
@@ -4508,29 +4407,6 @@ export async function btnExtraContactStudent_click(event) {
     local.setItem('lastResponseObject',JSON.stringify(paramObjectStudent));
 }
 
-export function btnDemoIfElseThen_click(event) {
-    let beforeString = `entering 'btnDemoIfElseThen_click'\n`;
-    beforeString += '\n' + "local.getItem('superEnrollmentStatus'): " + local.getItem('superEnrollmentStatus');
-    beforeString += '\n' + "[At Line: ~670]: WAS superEnrollmentStatus to SKIP if Any, that was removed 7/15/2021";
-    beforeString += '\n' + "memory.getItem('ppAction'): " + memory.getItem('ppAction');
-    beforeString += '\n' + "memory.getItem('stAction'): " + memory.getItem('stAction');
-    beforeString += '\n' + "memory.getItem('spAction'): " + memory.getItem('spAction');
-    beforeString += '\n\n==========\n';
-
-    $w('#preTrashLog').value = beforeString;
-    let demoResponse = demoLoop_doIfElseThen();
-    let demoResponseToString = '[';
-    demoResponse.forEach(responseRow => {
-        demoResponseToString += '\n[' + responseRow.toString() + ']';
-    })
-    demoResponseToString += '\n]\n==========\n';
-    let afterString = `\nexiting 'btnDemoIfElseThen_click'`;
-    demoResponseToString = beforeString + demoResponseToString + afterString;
-    demoResponseToString += doEnrollmentLogCurrent('CODE');
-    demoResponseToString += afterString;
-
-    $w('#preTrashLog').value = demoResponseToString;
-}
 
 // ! =========================================================================================================================
 // ! ==================================          <SEVENT-SUPER-STEPS with MultiStateBox>          ============================
@@ -4638,9 +4514,7 @@ export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}) {
     DOXobject[DOXobjectKey]['logArrayDeveloper'] = responseObject.logArrayDeveloper;
     delete responseObject.logArrayDeveloper;
     DOXobject[DOXobjectKey]['responseObject'] = responseObject;
-    DOX = ($w('#preTrashLog').value).length > 0 ? ',\n' : '';
     DOX += JSON.stringify(DOXobject, undefined, 4);
-    $w('#preTrashLog').value += DOX;
 
 
 
@@ -5684,11 +5558,6 @@ export function btnPeSevenFauxOnReady_click(event) {
     $w('#btnPeSevenFauxOnReady').hide();
     $w('#anchorTestProcess').scrollTo();
 }
-
-export function btnPeSevenPrepJSON_click(event) {
-    $w('#preTrashLog').value = '{\n"postEnrollmentSeven": \n[' + $w('#preTrashLog').value + '\n]\n}';
-}
-
 
 // ! ========================================================================================================================
 // ! ==============================               <DEVELOPER ONLY MultiStateBox>               ==============================

@@ -50,7 +50,6 @@ $w.onReady(function () {
     // ø </UI Disable PP, ST & SP Buttons>
     onReadyPostEnrollment();
     // doUserInterfaceCleanupCurrent();// DISABLED 20210906
-    // $w('#anchorPreTrash').scrollTo();
     memory.setItem('msboxCurrentId', '#mxboxPostEnrollmentSeven');
     let uniqueWatchdogBootstrapKeyArray = ["EMERGENCY","CRITICAL","ERROR","ALERT","WARNING","NOTICE","success","primary","info","secondary","devel"];
     let uniqueWatchdogBootstrapKeyArrayString = '';
@@ -81,8 +80,6 @@ $w.onReady(function () {
     // console.log(`memory.getItem('msboxAllStatesList')`);
     // console.log(memory.getItem('msboxAllStatesList'));
     memory.setItem('DateDOTgetDate', '0');
-    $w('#anchorTestProcess').scrollTo();
-    // $w('#anchorDevOnReadtScroll').scrollTo();
     // goToState()
     // console.log('[ready]Next');
     let initLog = 'TTRUE $w.onReady() NEXT';
@@ -4532,7 +4529,6 @@ export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}) {
     responseString = responseString.replace(/\n/g, ",");
     let responseArray = responseString.split(',');
     let comma = ',';
-    // $w('#anchorPrimaryMessage').scrollTo();
     // pstEnrSeven202108ANY END
 
 }
@@ -5556,7 +5552,6 @@ export function btnPeSevenFauxOnReady_click(event) {
     let initLog = 'FAUX $w.onReady() NEXT';
     msboxPostEnrollmentSevenActionOnReady(initLog);
     $w('#btnPeSevenFauxOnReady').hide();
-    $w('#anchorTestProcess').scrollTo();
 }
 
 // ! ========================================================================================================================

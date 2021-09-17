@@ -70,8 +70,6 @@ $w.onReady(function () {
     local.setItem('uniqueWatchdogBootstrapKeyArray',uniqueWatchdogBootstrapKeyArrayString);
     local.setItem('sufficientWatchdogBootstrapKeyArray',sufficientWatchdogBootstrapKeyArrayString);
     // </EVENTUALLY: local.removeItem() one of them>
-    // $w('#spDatabaseResponseJSON').value = 'ONLY OnReady:\n=============\n';
-    // $w('#spDatabaseResponseJSON').value += local.getItem('uniqueWatchdogBootstrapKeyArray');
 
     // console.log('All States Array: ')
     let allStates = $w(memory.getItem('msboxCurrentId')).states;
@@ -185,11 +183,6 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
 
     // ø </ELSE>
-    // $w('#ppDatabaseResponseJSON').value = JSON.parse(paramObject.currentStepObject.origSteps.allStepArray);
-    // $w('#ppDatabaseResponseJSON').value = (paramObject.currentStepObject.origSteps.allStepArray).toString();
-    $w('#ppDatabaseResponseJSON').value = 'PerformSALS:\n==============\n';
-    // $w('#ppDatabaseResponseJSON').value += JSON.stringify(paramObject.currentStepObject.origSteps.allStepArray);
-    $w('#ppDatabaseResponseJSON').value += $w('#txtPeSevenTitle').text + ` ==> validateCCOMPLETE: ${validateCCOMPLETE}`;
     // paramObject.messaging.success = 'Success SALS: Thu 8/13 Afternoon seconds: ' + paramObject.testNumber;
     paramObject.messaging.success = (paramObject.currentStepObject.origSteps.allStepArray).toString() + ': Thu 8/13 Afternoon seconds: ' + paramObject.testNumber;
     
@@ -208,7 +201,6 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
 
     if(DOX === 'CHECK FOR WatchdogBootstrap in logString'){
         // let responseString = local.getItem('logString');
-        // $w('#spDatabaseResponseJSON').value = responseArray;
         let responseString = local.getItem('logString');
         responseString = responseString.replace(/\n/g, ",");
         // let cowCatcherIndex = 0;
@@ -218,7 +210,6 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
         //     cowCatcherIndex++;
         // }
         let responseArray = responseString.split(',');
-        // $w('#spDatabaseResponseJSON').value = JSON.stringify(responseArray);
 
         let bootstrap2dArray = [];
         let bootstrapList = local.getItem('uniqueWatchdogBootstrapKeyArray');
@@ -430,7 +421,6 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
             local.setItem('logString', local.getItem('logString') + ',' + DOX);
             responseObject.logArrayDeveloper = [];
         }
-        $w('#spMemberResponseJSON').value = 'onReadyToOnRamp()';
         let DOX = `≈NNN≈ onReadyToOnRamp: RAW: script for thisStep onReady as Null`;
         local.setItem('logString', local.getItem('logString') + ',' + DOX);
         DOX = 'Primary Override within onReadyToOnRamp()';
@@ -1761,7 +1751,7 @@ export async function actionValueEvaluation() {
         if (DOX !== 'YES -  But the whole If-Clause should always be run, the Manual Confirmation is a thing of the past') {
             console.log(`≈1700≈ contact.source.sourceType: could be MOOT but 'MEMBER' or 'IMPORT' supported now`);
             let sourceType = contact.source.sourceType.toUpperCase();
-            let supportedSourceTypeArray = ['MEMBER','IMPORT','ADMIN','WIX_STORES']
+            let supportedSourceTypeArray = ['MEMBER','IMPORT','ADMIN','WIX_STORES','WIX_SITE_MEMBERS']
             if (supportedSourceTypeArray.includes(sourceType) === false) {
                 local.setItem('superEnrollmentStatus', 'ALERT');
                 memory.setItem('stepResponseBootstrapKey','danger');
@@ -3395,7 +3385,6 @@ export function displaySteps() {
         newLine = "\n • ";
     })
     result = status === 'string' ? resultString : result;
-    $w('#spContactResponseJSON').value = result;
     doUserInterfaceCleanupCurrent();
 }
 //ø <---------- </displaySteps> ---------->
@@ -3934,34 +3923,6 @@ export function btnToggleBoxState_click(event) {
 
 export function btnToggleBoxStateToo_click(event) {
     toggleBoxState();
-}
-
-export function btnGetSpMember_click(event) {
-    doGetRecord('spMember', 'spMemberResponseJSON');
-}
-
-export function btnGetSpCpntact_click(event) {
-    doGetRecord('spContact', 'spContactResponseJSON');
-}
-
-export function btnGetSpDbase_click(event) {
-    doGetRecord('spDbase', 'spDatabaseResponseJSON');
-}
-
-export function btnClearSpMember_click(event) {
-    doClear('spMemberResponseJSON')
-}
-
-export function btnClearSpContact_click(event) {
-    doClear('spContactResponseJSON')
-    // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-    // Add your code for this event here: 
-}
-
-export function btnClearSpDbase_click(event) {
-    doClear('spDatabaseResponseJSON')
-    // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-    // Add your code for this event here: 
 }
 
 export function btnWebhookResolve_click(event) {
@@ -4642,7 +4603,6 @@ export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}) {
 
     // ! <Call 'PERFORM' Sequence>
     responseObject.logArrayDeveloper.push(`≈Z3953≈ ◊ responseObject.button === ${responseObject.button} ◊`);
-    // $w('#spDatabaseResponseJSON').value = JSON.stringify(responseObject,undefined,4);
     if (responseObject.button === 'CURRENT') {
         responseObject.logArrayDeveloper.push('≈Z3955≈ ◊ responseObject.button === CURRENT ◊');
         responseObject.logArrayDeveloper.push('≈Z3955≈ ◊ PREV: lastClicked === PERFORM_STEP ◊');
@@ -4697,8 +4657,7 @@ export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}) {
     let responseString = local.getItem('logString');
     responseString = responseString.replace(/\n/g, ",");
     let responseArray = responseString.split(',');
-    let comma = ($w('#spDatabaseResponseJSON').value).length === 0 ? '' : ',';
-    $w('#spDatabaseResponseJSON').value += ',' + JSON.stringify(responseArray);
+    let comma = ',';
     // $w('#anchorPrimaryMessage').scrollTo();
     // pstEnrSeven202108ANY END
 
@@ -4839,7 +4798,6 @@ export async function msboxPostEnrollmentSevenPerformStepDO(responseObject = {})
 
     let paramObject = {};
     paramObject.currentStepObject = responseObject.currentStepObject;
-    // $w('#ppDatabaseResponseJSON').value = JSON.parse(paramObject.currentStepObject.origSteps.allStepArray);
     // paramObject.logArray = [];
     paramObject.logArrayUserInterface = [];
 
@@ -4873,7 +4831,6 @@ export async function msboxPostEnrollmentSevenPerformStepDO(responseObject = {})
     DOX = 'pstEnrSeven202108STEP_P_04RETURN #return from SALS';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
 
-    $w('#ppDatabaseResponseJSON').value = JSON.stringify(paramObject, undefined, 4);
     responseObject.logArrayDeveloper.push('{# PERFORM_STEP_DO just performed instantiateSteps and Display #}');
 
     // pstEnrSeven202108SALSDoMessaging CALL
@@ -4903,8 +4860,6 @@ export async function msboxPostEnrollmentSevenPerformStepDO(responseObject = {})
     // ø </APPEND paramObject.logArrayUserInterface ONTO responseObject.logArrayUserInterface>
 
     // console.log(`≈≈Z4040≈ {% logArrayDeveloper ==> index: ${index} %}`)
-    $w('#spMemberResponseJSON').value = 'paramObject.logArrayUserInterface;\n==================================';
-    $w('#spMemberResponseJSON').value += '\n' + JSON.stringify(paramObject.logArrayUserInterface);
     // console.log(`≈≈Z4047≈ {% logArrayUserInterface ==> index: ${index} %}`)
     // pstZEnrSeven202108STEP_P_04RETURN #return from esl
     // pstZEnrSeven202108STEP_P_04RETURN ==> Return-To: PERFORM-UI ==> pstZEnrSeven202108STEP_P_05
@@ -4931,7 +4886,6 @@ export async function msboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# n
     local.setItem('logString',DOX);
     DOX = 'pstEnrSeven202108STEP_R_01 BEGIN (CLICK DURING DEV)';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
-    // $w('#spDatabaseResponseJSON').value = 'msboxPostEnrollmentSevenActionOnReady(CLICK)';
 
     // <OBVIATE: instantiateLoopSwitchEnrollmentSteps()>
     // VIA: 'Really Do It' ==> Reset Steps [button]
@@ -4948,7 +4902,6 @@ export async function msboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# n
     }else{
         local.setItem('enrollmentStepCompletedListAll', local.getItem('enrollmentStepCompletedListAll') + ',' + 'OnReadyResetContinue')
     }
-    $w('#spDatabaseResponseJSON').value = JSON.stringify(stepArrayOrig);
     // </OBVIATE: instantiateLoopSwitchEnrollmentSteps()>
 
 
@@ -4970,8 +4923,6 @@ export async function msboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# n
     let jsonDataJSON = await getSourcedJSON_byKey(key);
     let jsonDataObject = JSON.parse(jsonDataJSON);
 
-    $w('#ppDatabaseResponseJSON').value = 'OnReady ONLY\nstepObjects:\n============\n';
-    $w('#ppDatabaseResponseJSON').value += JSON.stringify(jsonDataObject.stepObjects,undefined,4);
 
     memory.setItem('stepObjects', JSON.stringify(jsonDataObject.stepObjects));
     memory.setItem('stepMessaging', JSON.stringify(jsonDataObject.stepMessaging));
@@ -5017,7 +4968,6 @@ export async function msboxPostEnrollmentSevenActionNext(anyButtonLog = '{# no b
     local.setItem('logString',DOX);
     DOX = 'pstEnrSeven202108STEP_N_01 ACTION-NEXT BEGIN-CLICK';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
-    // $w('#spDatabaseResponseJSON').value = 'msboxPostEnrollmentSevenActionNext(CLICK)';
     let responseObject = {};
     responseObject.action = 'NEXT';
     responseObject.logArrayUserInterface = [];
@@ -5045,7 +4995,6 @@ export async function msboxPostEnrollmentSevenActionPerform(anyButtonLog = '{# n
     local.setItem('logString',DOX);
     DOX = 'pstEnrSeven202108STEP_P_01 ACTION-PERFORM BEGIN-CLICK';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
-    // $w('#spDatabaseResponseJSON').value = 'msboxPostEnrollmentSevenActionPerform(CLICK)';
     let responseObject = {};
     responseObject.action = 'PERFROM';
     responseObject.logArrayUserInterface = [];
@@ -5470,7 +5419,6 @@ if(countResponseMessage > -1){$w('#txtBootstrapResponse').html = doBootstrapMess
     // DOX += '\n' + `responseObject.currentMessagingObject.${DOXkey}: ${responseObject.currentMessagingObject[DOXkey]}`;
     // DOX += '\n' + `rresponseObject.currentMessagingObject.responseKey: ${responseObject.currentMessagingObject.responseKey}`;
     // DOX += '\n' + `rresponseObject.currentMessagingObject.response: ${responseObject.currentMessagingObject.response}`;
-    // $w('#ppDatabaseResponseJSON').value = DOX;
     // ø </FINAL VALUES>
 
     // ø ==================================================================================================================================
@@ -5710,43 +5658,8 @@ export function btnGetStatesArray_click(event) {
     let statesArray = $w("#mxboxPostEnrollmentSeven").states.map(state => state.id);
 }
 
-export function btnLogStringSeven_click(event) {
-    $w('#ppDatabaseResponseJSON').value = doEnrollmentLogCurrent('LOG');
-}
-
-export function btnErrorStringSeven_click(event) {
-    $w('#ppDatabaseResponseJSON').value = doEnrollmentLogCurrent('ERROR');
-}
-
-export function btnThisStateSeven_click(event) {
-    $w('#ppDatabaseResponseJSON').value = doEnrollmentLogCurrent('STATE');
-}
-
-export function btnAllStatesSeven_click(event) {
-    let stateCurrent = $w(memory.getItem('msboxCurrentId')).currentState;
-    let stateCurrentObject = {};
-    stateCurrentObject.id = stateCurrent.id;
-    stateCurrentObject.rendered = stateCurrent.rendered;
-    stateCurrentObject.global = stateCurrent.global;
-    stateCurrentObject.parent = stateCurrent.parent;
-    let arrayStateIdAll = $w(memory.getItem('msboxCurrentId')).states.map(a => a.id);
-    stateCurrentObject.parentAllStatesIdArray = arrayStateIdAll;
-    stateCurrentObject.type = stateCurrent.type;
-    stateCurrentObject.background = stateCurrent.background;
-    stateCurrentObject.children = stateCurrent.children;
-    $w('#ppDatabaseResponseJSON').value = JSON.stringify(stateCurrentObject, undefined, 4);
-}
-
-export function btnClearSeven_click(event) {
-    doClear('ppDatabaseResponseJSON')
-}
-
-export function btnCopySeven_click(event) {
-    uiCopyTextElementThis('ppDatabaseResponseJSON');
-}
-
 export function btnCopySevenBelow_click(event) {
-    uiCopyTextElementThis('ppDatabaseResponseJSON');
+    uiCopyTextElementThis('WHERE IS THIS BUTTON ZXZ');
 }
 
 export async function isoKLUDGE() {
@@ -5765,29 +5678,6 @@ export async function isoKLUDGE() {
     return isoStampStringNEW;
 }
 
-export async function btnISOtestSeven_click(event) {
-    let isoStampStringRaw = await nowISO(local.getItem('timezoneOffset'), local.getItem('tzAbbrv'));
-    let isoStampStringCHOP = isoStampStringRaw;
-    isoStampStringCHOP = isoStampStringRaw.indexOf('-') < 0 ? isoStampStringCHOP : '20201231235959.599 [EDT]';
-    isoStampStringCHOP = isoStampStringCHOP.substr(0, 14);
-    let isoStampStringNEW = isoStampStringCHOP.substr(0, 4) + '-';
-    isoStampStringNEW += isoStampStringCHOP.substr(4, 2) + '-';
-    isoStampStringNEW += isoStampStringCHOP.substr(6, 2) + 'T';
-    isoStampStringNEW += ('00' + (Number(isoStampStringCHOP.substr(8, 2)) - 1)).substr(-2); //Central
-    isoStampStringNEW += ':';
-    isoStampStringNEW += isoStampStringCHOP.substr(10, 2) + ':';
-    isoStampStringNEW += isoStampStringCHOP.substr(12, 2);
-    let isoStampStringKludge = await isoKLUDGE();
-    isoStampStringCHOP = `ISO Testing:\n============\nisoStampStringRaw : ${isoStampStringRaw}\nisoStampStringCHOP: ${isoStampStringCHOP}\nisoStampStringNEW : ${isoStampStringNEW}\nisoKludge()       : ${isoStampStringKludge}`;
-    $w('#ppDatabaseResponseJSON').value = isoStampStringCHOP;
-}
-
-export async function btnKludgeISO_click(event) {
-    let isoCurrentCentralTime = await isoKLUDGE();
-    $w('#ppDatabaseResponseJSON').value = `isoCurrentCentralTime:\n${isoCurrentCentralTime}`;
-
-}
-
 export function btnPeSevenFauxOnReady_click(event) {
     let initLog = 'FAUX $w.onReady() NEXT';
     msboxPostEnrollmentSevenActionOnReady(initLog);
@@ -5797,15 +5687,6 @@ export function btnPeSevenFauxOnReady_click(event) {
 
 export function btnPeSevenPrepJSON_click(event) {
     $w('#preTrashLog').value = '{\n"postEnrollmentSeven": \n[' + $w('#preTrashLog').value + '\n]\n}';
-}
-
-
-export function btnMessagingbject_click(event) {
-    $w('#ppDatabaseResponseJSON').value = memory.getItem('stepMessaging');
-}
-
-export function btnStepsObject_click(event) {
-    $w('#ppDatabaseResponseJSON').value = memory.getItem('stepObjects');
 }
 
 

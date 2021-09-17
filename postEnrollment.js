@@ -143,8 +143,6 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
     
     DOX = '≈Z110≈ aramObject.currentStepObject AT pstEnrSeven202108STEP_SALS_1BY1 BEGIN';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
-    $w('#ppMemberResponseJSON').value += '\n\n' + `paramObject.currentStepObject\npstEnrSeven202108STEP_SALS_1BY1 BEGIN\n=====================\n`;
-    $w('#ppMemberResponseJSON').value += JSON.stringify(paramObject.currentStepObject,undefined,4);
 
 
 
@@ -185,8 +183,6 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
     }
     DOX = '≈Z152≈ paramObject.currentStepObject JUST AFTER validateCCOMPLETE pop()-ed off the final step';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
-    $w('#ppMemberResponseJSON').value += '\n\n' + `paramObject.currentStepObject\nJUST AFTER validateCCOMPLETE pop()-ed off the final step\n=====================\n`;
-    $w('#ppMemberResponseJSON').value += JSON.stringify(paramObject.currentStepObject,undefined,4);
 
     // ø </ELSE>
     // $w('#ppDatabaseResponseJSON').value = JSON.parse(paramObject.currentStepObject.origSteps.allStepArray);
@@ -255,9 +251,6 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
     
     let stepsArray = paramObject.currentStepObject.origSteps.allStepArray;
     // DOX = `≈≈Z211≈ stepsArray.toString(): ${stepsArray.toString()}`;
-    $w('#ppMemberResponseJSON').value += '\n\n' + `paramObject...allSteArraystepsArray ==> stepsArray\npstEnrSeven202108STEP_SALS_1BY1\n=====================\n`;
-    // $w('#ppMemberResponseJSON').value += JSON.stringify(paramObject.currentStepObject,undefined,4);
-    $w('#ppMemberResponseJSON').value += JSON.stringify(stepsArray,undefined,4);
     DOX = '≈Z214≈ ';// + 'Is-Good: stepsArray within pstEnrSeven202108STEP_SALS_1BY1 [confirm in Student-Member code-block]';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
@@ -307,7 +300,6 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
     testIndex = 0;
     testBreakIndex = 777;//leave this here at 777 in order to Backward-DeBug
     let doStepSwitchSupportedStepArray = local.getItem('enrollmentStepListAll').split(',');
-    $w('#ppContactResponseJSON').value = JSON.stringify(doStepSwitchSupportedStepArray,undefined,4)
     let previouslyCompleted = 0;
 
 
@@ -1449,7 +1441,6 @@ export async function doUpdateContact(paramObjectThis) {
     let wixContact = await streamdaUpdateContactFunction(paramObjectThis);
     console.log('[~Z174]wixContact: ');
     console.log(wixContact);
-    $w('#ppContactResponseJSON').value = JSON.stringify(wixContact, undefined, 4);
 }
 // ø <----------- </doUpdateContact() Front-End> ----------->
 
@@ -2265,7 +2256,6 @@ export async function ppContactPrepJSON() {
     }
 
     let contact = await steamdaGetContactFunction(local.getItem('familyId'));
-    $w('#ppContactResponseJSON').value = JSON.stringify(contact, undefined, 4);
     if (typeof contact.revision === 'number' && contact.revision > 0) {
         memory.setItem('ppRevision', (contact.revision).toString());
     } else {
@@ -3950,31 +3940,6 @@ export function btnToggleBoxStateToo_click(event) {
     toggleBoxState();
 }
 
-export function btnGetPpMember_click(event) {
-    doGetRecord('ppMember', 'ppMemberResponseJSON');
-}
-
-export function btnGetPpCpntact_click(event) {
-    doGetRecord('ppContact', 'ppContactResponseJSON');
-}
-
-export function btnGetPpDbase_click(event) {
-    doGetRecord('ppDbase', 'ppDatabaseResponseJSON');
-}
-
-export function btnClearPpMember_click(event) {
-    doClear('ppMemberResponseJSON')
-}
-
-export function btnClearPpContact_click(event) {
-    doClear('#ppContactResponseJSON')
-}
-
-export function btnClearPpDbase_click(event) {
-    let clearArray = ['#ppDatabaseResponseJSON'];
-    doClear(clearArray);
-}
-
 export function btnGetStMember_click(event) {
     doGetRecord('stMember', 'stMemberResponseJSON');
 }
@@ -4684,8 +4649,6 @@ export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}) {
     // tempObjectJSON = memory.getItem('stepObjects');
     tempKey = responseObject.button === 'NEXT' ? memory.getItem('msboxNextStateId') : memory.getItem('msboxCurrentStateId');
     tempObject = JSON.parse(memory.getItem('stepObjects'));
-    $w('#ppMemberResponseJSON').value = `memory.getItem('stepObjects')[${tempKey}]\n${responseObject.button}\n=====================\n`;
-    $w('#ppMemberResponseJSON').value += JSON.stringify(tempObject[tempKey],undefined,4);
     responseObject.currentStepObject = tempObject[tempKey];
     tempObject = JSON.parse(memory.getItem('stepMessaging'));
     responseObject.currentMessagingObject = tempObject[tempKey];
@@ -4926,8 +4889,6 @@ export async function msboxPostEnrollmentSevenPerformStepDO(responseObject = {})
     paramObject.messaging.infoDo = false;
     paramObject.messaging.develDo = false;
 
-    $w('#ppMemberResponseJSON').value += '\n\n' + `paramObject.currentStepObject\n${responseObject.button}\n=====================\n`;
-    $w('#ppMemberResponseJSON').value += JSON.stringify(paramObject.currentStepObject,undefined,4);
     DOX = '≈Z4303≈ Is-Good: paramObject.currentStepObject.origSteps.allStepArray [confirm in Student-Member code-block]';
     local.setItem('logString', local.getItem('logString') + ',' + DOX);
 
@@ -5406,7 +5367,6 @@ doxObject.secondary = secondaryMessageObjectArray;
 doxObject.response = responseMessageObjectArray;
 doxObject.info = infoMessageObjectArray;
 // $w('#sessionEnrollmentJSON').value = JSON.stringify(doxObject,undefined,4);
-// $w('#txtStateObjectCurrentSeven').value = JSON.stringify(doxObject,undefined,4);
 local.setItem('stepMessagingJSON', JSON.stringify(doxObject));
 // ø </Just for DOX>
 
@@ -5915,11 +5875,13 @@ export function btnDeveloperOnly_click(event) {
 }
 
 export async function btnMultButtonClearDD01_click(event) {
+    // 202109_Developer
 	let paramObject = {ddValue: "CLEAR",response: {string:'STRING'},done: false, messaging: {}}
     await overallManyButtonsByManyDropDowns(paramObject);
 }
 
 export async function btnMultButtonParseJSON_click(event) {
+    // 202109_Developer
 	let paramObject = {ddValue: "PARSE_JSON",response: {string:'STRING'},done: false, messaging: {}}
     await overallManyButtonsByManyDropDowns(paramObject);
 }

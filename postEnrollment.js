@@ -89,6 +89,7 @@ $w.onReady(function () {
     // console.log('[ready]Next');
     let initLog = 'TTRUE $w.onReady() NEXT';
     msboxPostEnrollmentSevenActionOnReady(initLog)
+    wixUsersOnReady()
 });
 
 
@@ -110,6 +111,21 @@ export function onReadyPostEnrollment() {
     }
 }
 
+export function wixUsersOnReady(){
+	const user = wixUsers.currentUser;
+	const adminShowArray = ['#btnDeveloperOnly'];
+	if(user.loggedIn){
+		user.getRoles()
+		.then( (roles) => {
+			console.log(roles);
+			if (roles.some(r => r.name === "Admin")){
+				for (var i = 0; i < adminShowArray.length; i++) {
+					$w(adminShowArray[i]).show();
+				}
+			}
+		});
+	}
+}
 
 // ! ====================================================================================================
 // ! ====================                <pstEnrSeven doLoop && switchOnly>                ==============
@@ -505,7 +521,6 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
 
 export async function doPeformNextStep() {
     local.setItem('logString', local.getItem('logString') + '\n[~Z50]entering: ' + 'doPeformNextStep()')
-    $w('#txtCodeLabel').text = 'doPerformNextStep';
     local.setItem('loopExitAfterStep', $w('#ddExitAfterStep').value);
     await doStepLoopSwitch();
     local.setItem('logString', local.getItem('logString') + '\n[~Z58]After Completed: ' + memory.getItem('enrollmentStepCompleted'))
@@ -3570,6 +3585,8 @@ export function doEnrollmentLogCurrent(kind = 'DDEFAULT') {
 // ø <---------- <doEnrollmentCleanupByKind>  ---------->
 export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     // ø <DO NOT REMOVE>
+    let dogBiscuit = 'WOOF';
+    dogBiscuit = local.getItem('logString');
     // ! well, unless really final
     // ! do assign either true or false
     local.setItem('logString', local.getItem('logString') + '\n[~Z2019]entering: ' + 'doEnrollmentCleanupByKind() at ' + memory.getItem('lastStamp'))
@@ -3609,11 +3626,10 @@ export function doEnrollmentCleanupByKind(kindKey = 'DDEFAULT') {
     }
     if (kindArray.includes('NEXT_ENROLLMENT')) {
         if (typeof develTest !== 'boolean' || develTest !== true) {
-            if ($w('#sessionEnrollmentJSON').value !== 'BACKDOORROODKCAB') {
+            if(dogBiscuit === 'BACKDOORROODKCAB'){
                 if (typeof local.getItem('wixWebhookStatus') !== 'string' || local.getItem('wixWebhookStatus') !== 'RESOLVED') {
                     local.setItem('logString', local.getItem('logString') + '\n[~Z2057]: ' + "'Next Enrollment' rquires that the current Webhook Payload have a status of 'Resolved'")
                     abort = true;
-
                 }
             }
         }
@@ -3878,7 +3894,8 @@ export async function updateStatusWebhookPayloadThis(getOnly = false) {
             local.setItem('wixWebhookStatus', updateObject.currentStatus)
             doUserInterfaceUpdate = true;
         }
-        $w('#sessionEnrollmentJSON').value = JSON.stringify(updateObject, undefined, 4);
+        // $w('#sessionEnrollmentJSON').value = JSON.stringify(updateObject, undefined, 4);
+        // $w('#txareaDevelResponseBlock').value = JSON.stringify(updateObject, undefined, 4);
         return;
     }
 
@@ -3904,15 +3921,6 @@ export async function updateStatusWebhookPayloadThis(getOnly = false) {
 // ! ====================================================================================================
 // ! ====================.        <Only BUTTON_click Functiions Below Here>          ====================
 // ! ====================================================================================================
-export function btnGetEnrollmentJSON_click(event) {
-    if (local.getItem('ondeckEnrollmentJSON').length < 20) {
-        $w('#sessionEnrollmentJSON').value = "'local.getItem('ondeckEnrollmentJSON')' seems not to be actively set to an Enrollment Application to Post.\n\nYou may travel to 'Process Webhooks' to process any remaining Appliations.";
-
-    } else {
-        let enrollmentObject = JSON.parse(local.getItem('ondeckEnrollmentJSON'))
-        $w('#sessionEnrollmentJSON').value = JSON.stringify(enrollmentObject, undefined, 4);
-    }
-}
 
 export function btnDisplayCurrentState_click(event) {
     let kind = $w('#ddDisplayKind').value;
@@ -3940,24 +3948,6 @@ export function btnToggleBoxState_click(event) {
 
 export function btnToggleBoxStateToo_click(event) {
     toggleBoxState();
-}
-
-export async function btCleanUpAllExceptEnrJSON_click(event) {
-        memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'), local.getItem('tzAbbrv')));
-        local.setItem('logString', '[~Z2595]entering btCleanUpAllExceptEnrJSON_click:YES');
-        let responseCleanupCurrentState = doEnrollmentCleanupByKind('ALL_EXCEPT_ENROLLMENT');
-        local.setItem('logString', local.getItem('logString') + '\n[~Z2601]exiting btCleanUpAllExceptEnrJSON_click:YES');
-        $w('#sessionEnrollmentJSON').value = local.getItem(('logString'));
-}
-
-export async function btCleanUpAllIncludingnrJSON_click(event) {
-    // 202109ResolveAndDestroy
-    // 202109ResolveAndDestroy_DESTROY
-        memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'), local.getItem('tzAbbrv')));
-        local.setItem('logString', '[~Z2595]entering btCleanUpAllIncludingnrJSON_click:YES');
-        let responseCleanupCurrentState = doEnrollmentCleanupByKind('ALL_INCLUDING_ENROLLMENT');//HINT: backdoor: MURDERREDRUM
-        local.setItem('logString', local.getItem('logString') + '\n[~Z2621]exiting btCleanUpAllIncludingnrJSON_click:YES');
-        $w('#sessionEnrollmentJSON').value = local.getItem(('logString'));
 }
 
 export function btnGetPpMember_click(event) {
@@ -4070,15 +4060,6 @@ export async function btnCleanUpByKindTEST_click(event) {
     $w('#sessionEnrollmentJSON').value += '\n\n---\n\n[Proof of Concept]\n(line-feeds are tricky)\nCLEAN VERSION OF ABOVE\n======================\n';
     $w('#sessionEnrollmentJSON').value += memory.getItem('logStringClean');
 }
-
-export function btnGetWebhookPayload_click(event) {
-    updateStatusWebhookPayloadThis(true);
-    if(($w('#sessionEnrollmentJSON').value).length === 0){
-       $w('#sessionEnrollmentJSON').value = `wixWebhookStatus: ${local.getItem('wixWebhookStatus')}` 
-    }
-    
-}
-
 
 // ! ====================================================================================================
 // ! ====================                       <PRETRASH DB TESTING>                      ==============
@@ -4530,7 +4511,7 @@ export async function doQueryContactById(idValueOrKey = 'NONE') {
         logString += 'Query Aborted';
         logString += local.getItem('kAppendString');
         local.setItem('logString', logString);
-        $w('#sessionEnrollmentJSON').value = logString;
+        $w('#txareaDevelResponseBlock').value = logString;
         return;
     }
 
@@ -4539,7 +4520,7 @@ export async function doQueryContactById(idValueOrKey = 'NONE') {
         logString += 'Query Aborted';
         logString += local.getItem('kAppendString');
         local.setItem('logString', logString);
-        $w('#sessionEnrollmentJSON').value = logString;
+        $w('#txareaDevelResponseBlock').value = logString;
         return;
     }
 
@@ -4550,7 +4531,7 @@ export async function doQueryContactById(idValueOrKey = 'NONE') {
         logString += '\n\n<---------- <queryResponse> ---------->\n\n';
         logString += JSON.stringify(contact, undefined, 4);
         local.setItem('logString', logString);
-        $w('#sessionEnrollmentJSON').value = logString;
+        $w('#txareaDevelResponseBlock').value = logString;
         return;
     }
 
@@ -4563,13 +4544,13 @@ export async function doQueryContactById(idValueOrKey = 'NONE') {
         logString += JSON.stringify(contact, undefined, 4);
         logString += `\nEND queryResults`;
         local.setItem('logString', logString);
-        $w('#sessionEnrollmentJSON').value = logString;
+        $w('#txareaDevelResponseBlock').value = logString;
 
         return;
     }
 
     logString += '\n\n<---------- <Force Abort for Testing> ---------->\n\n';
-    $w('#sessionEnrollmentJSON').value = logString;
+    $w('#txareaDevelResponseBlock').value = logString;
     return;
 }
 
@@ -5800,7 +5781,7 @@ export async function btnPeSevenCurrent_click(event) {
 
 export function btnGetStatesArray_click(event) {
     let superSevenStates = $w("#mxboxPostEnrollmentSeven").states;
-    $w('#spMemberResponseJSON').value = JSON.stringify(superSevenStates, undefined, 4)
+    $w('#txareaDevelResponseBlock').value = JSON.stringify(superSevenStates, undefined, 4)
     let statesArray = $w("#mxboxPostEnrollmentSeven").states.map(state => state.id);
 }
 
@@ -5902,30 +5883,7 @@ export function btnStepsObject_click(event) {
     $w('#ppDatabaseResponseJSON').value = memory.getItem('stepObjects');
 }
 
-export function btnPpStContactDedupeDiagnosis_click(event) {
-    local.setItem('logString','PP ST Contact De-Dupe DDiagnosis')
-	let paramObjectThis = {};
-	paramObjectThis.diagnosticOnly = true;
-    ppStContactDedupe(paramObjectThis);
-    let log = local.getItem('logString');
-    let cowCatcherIndex = 0;
-    while (log.indexOf(',') >= 0 && cowCatcherIndex < 1000) {
-        log = log.replace(',','|\n');
-        cowCatcherIndex++;
-    }
-    $w('#sessionEnrollmentJSON').value = log + '\n\n' + cowCatcherIndex.toString();
-}
 
-export function btnGetWebhookStatuses_click(event) {
-	let responseObject = {};
-    let wixWebhookStatus = typeof local.getItem('wixWebhookStatus') === 'string' ? local.getItem('wixWebhookStatus') : 'NNULL';
-    let webhookThisStatus = typeof local.getItem('webhookThisStatus') === 'string' ? local.getItem('webhookThisStatus') : 'NNULL';;
-    let webhookThisResolved = typeof local.getItem('webhookThisResolved') === 'string' ? local.getItem('webhookThisResolved') : 'NNULL';;
-    responseObject.wixWebhookStatus = wixWebhookStatus;
-    responseObject.webhookThisStatus = webhookThisStatus;
-    responseObject.webhookThisResolved = webhookThisResolved;
-    $w('#sessionEnrollmentJSON').value = JSON.stringify(responseObject,undefined,4)
-}
 // ! ========================================================================================================================
 // ! ==============================               <DEVELOPER ONLY MultiStateBox>               ==============================
 // ! ==============================                    FIND 202109_Developer                   ==============================
@@ -5939,11 +5897,11 @@ export function btnGetWebhookStatuses_click(event) {
 // ! ========================================================================================================================
 // ! ===================================               <Button Clicks Only>               ===================================
 // ! ========================================================================================================================
-export function btnMultButtonDD01_click(event) {
+
+export async function btnMultButtonDD01_click(event) {
     // 202109_Developer
     overallManyButtonsByManyDropDowns();
 }
-
 
 export function btnDeveloperOnly_click(event) {
     // 202109_Developer
@@ -5955,8 +5913,14 @@ export function btnDeveloperOnly_click(event) {
     let nextState = stateArray[nextIndex]
     $w(developerStateBoxID).changeState(nextState);
 }
+
 export async function btnMultButtonClearDD01_click(event) {
 	let paramObject = {ddValue: "CLEAR",response: {string:'STRING'},done: false, messaging: {}}
+    await overallManyButtonsByManyDropDowns(paramObject);
+}
+
+export async function btnMultButtonParseJSON_click(event) {
+	let paramObject = {ddValue: "PARSE_JSON",response: {string:'STRING'},done: false, messaging: {}}
     await overallManyButtonsByManyDropDowns(paramObject);
 }
 // ! ========================================================================================================================
@@ -5965,13 +5929,24 @@ export async function btnMultButtonClearDD01_click(event) {
 
 export async function overallManyButtonsByManyDropDowns(paramObject = {ddValue: "NNULL",response: {string:'STRING'},done: false, messaging: {}}){
      // 202109_Developer
+     console.groupCollapsed('overallManyButtonsByManyDropDowns')
      let responseBlockId = '#txareaDevelResponseBlock';
      paramObject.response.blockId = responseBlockId;
     // ø <Overall On-Ramp>
     if(paramObject.ddValue === 'CLEAR'){
+        console.dir(paramObject);
         doClear(responseBlockId);
         paramObject.done = true;
         paramObject.response.string = '';
+    }
+    if(paramObject.ddValue === 'PARSE_JSON'){
+        console.dir(paramObject);
+        let responseObject = JSON.parse($w(responseBlockId).value);
+        let responseJSON = JSON.stringify(responseObject,undefined,4);
+        // $w(responseBlockId).value = responseJSON;
+        // wixWindow.copyToClipboard(responseJSON)
+        paramObject.done = true;
+        paramObject.response.string = responseJSON;
     }
     // ø </Overall On-Ramp>
     // ø <ManyButtonsByManyDropDowns>
@@ -5980,6 +5955,9 @@ export async function overallManyButtonsByManyDropDowns(paramObject = {ddValue: 
     }
     if (!paramObject.done) {
         await manyButtonsDropDownO2(paramObject);
+    }
+    if (!paramObject.done) {
+        await manyButtonsDropDownO3(paramObject);
     }
     // ø </ManyButtonsByManyDropDowns>
 
@@ -5997,10 +5975,12 @@ export async function overallManyButtonsByManyDropDowns(paramObject = {ddValue: 
             // handle case where an error occurred
         });
     // ø </Overall Off-Ramp>
+    console.groupEnd();
     return;//MOOT, but for clarity
 }
 export async function manyButtonsDropDownO1(paramObject = {ddValue: "NNULL",response: {string:'STRING'},done: false, messaging: {}}){
     // 202109_Developer
+    console.dir(paramObject);
     console.groupCollapsed('manyButtonsDropDownO1')
     let DOX = 'engenderingProximateDevelButtons'
     let thisDropDownElementId = '#ddManyButtons01';
@@ -6031,7 +6011,7 @@ export async function manyButtonsDropDownO1(paramObject = {ddValue: "NNULL",resp
     // ø ø <localStorage SimpleAssignment>
     tempMatchArray = ['enrollmentStepCompletedListAll','stepMessagingJSON']
     if(tempMatchArray.includes(value)){
-
+        value = value.substr(0,6) === 'local.' ? value.substr(6) : value;
         responseString = local.getItem(value);
         done = true;
         paramObject.done = done;
@@ -6047,6 +6027,7 @@ export async function manyButtonsDropDownO1(paramObject = {ddValue: "NNULL",resp
         // ø ø <memoryStorage SimpleAssignment>
         tempMatchArray = ['stepLogString','stepResponseBootstrapKey']
         if(tempMatchArray.includes(value)){
+            value = value.substr(0,7) === 'memory.' ? value.substr(7) : value;
             responseString = memory.getItem(value);
             done = true;
             paramObject.done = done;
@@ -6110,17 +6091,13 @@ export async function manyButtonsDropDownO1(paramObject = {ddValue: "NNULL",resp
 }
 export async function manyButtonsDropDownO2(paramObject = {ddValue: "NNULL",response: {string:'STRING'},done: false, messaging: {}}){
     // 202109_Developer
+    console.dir(paramObject);
     console.groupCollapsed('manyButtonsDropDownO2')
     let DOX = 'engenderingProximateDevelButtons'
     let thisDropDownElementId = '#ddManyButtons02';
     paramObject.ddValue = $w(thisDropDownElementId).value
     console.log(`paramObject.ddValue: ${paramObject.ddValue}`)
     let thisDropDownOptionArray = $w(thisDropDownElementId).options;
-    // $w("#myDropdown").options = [
-    //     {"label": "Who's on first!", "value": "first"},
-    //     {"label": "What's on second", "value": "second"},
-    //     {"label": "I Don't Know is on third", "value": "third"}
-    // ];
 
     let thisDropDownValueArray = thisDropDownOptionArray.map(element => element.value);;
     console.dir(thisDropDownValueArray)
@@ -6162,6 +6139,7 @@ export async function manyButtonsDropDownO2(paramObject = {ddValue: "NNULL",resp
         // ø ø <memoryStorage SimpleAssignment>
         tempMatchArray = ['ZZZstepLogString','ZZZstepResponseBootstrapKey']
         if(tempMatchArray.includes(value)){
+            value = value.substr(0,7) === 'memory.' ? value.substr(7) : value;
             responseString = memory.getItem(value);
             done = true;
             paramObject.done = done;
@@ -6236,17 +6214,13 @@ export async function manyButtonsDropDownO2(paramObject = {ddValue: "NNULL",resp
 }
 export async function manyButtonsDropDownO3(paramObject = {ddValue: "NNULL",response: {string:'STRING'},done: false, messaging: {}}){
     // 202109_Developer
+    console.dir(paramObject);
     console.groupCollapsed('manyButtonsDropDownO3')
     let DOX = 'engenderingProximateDevelButtons'
     let thisDropDownElementId = '#ddManyButtons03';
     paramObject.ddValue = $w(thisDropDownElementId).value
     console.log(`paramObject.ddValue: ${paramObject.ddValue}`)
     let thisDropDownOptionArray = $w(thisDropDownElementId).options;
-    // $w("#myDropdown").options = [
-    //     {"label": "Who's on first!", "value": "first"},
-    //     {"label": "What's on second", "value": "second"},
-    //     {"label": "I Don't Know is on third", "value": "third"}
-    // ];
 
     let thisDropDownValueArray = thisDropDownOptionArray.map(element => element.value);;
     console.dir(thisDropDownValueArray)
@@ -6264,9 +6238,9 @@ export async function manyButtonsDropDownO3(paramObject = {ddValue: "NNULL",resp
 
     if(!done){
     // ø ø <localStorage SimpleAssignment>
-    tempMatchArray = ['ZZZenrollmentStepCompletedListAll','ZZZstepMessagingJSON']
+    tempMatchArray = ['local.ondeckEnrollmentJSON']
     if(tempMatchArray.includes(value)){
-
+        value = value.substr(0,6) === 'local.' ? value.substr(6) : value;
         responseString = local.getItem(value);
         done = true;
         paramObject.done = done;
@@ -6282,6 +6256,7 @@ export async function manyButtonsDropDownO3(paramObject = {ddValue: "NNULL",resp
         // ø ø <memoryStorage SimpleAssignment>
         tempMatchArray = ['ZZZstepLogString','ZZZstepResponseBootstrapKey']
         if(tempMatchArray.includes(value)){
+            value = value.substr(0,7) === 'memory.' ? value.substr(7) : value;
             responseString = memory.getItem(value);
             done = true;
             paramObject.done = done;
@@ -6303,6 +6278,75 @@ export async function manyButtonsDropDownO3(paramObject = {ddValue: "NNULL",resp
     if(!done){}
     // ø ø <COMPLEX Logic Blocks>
     if (value === 'ZXZ') {
+        responseString = 'HOLDER FOR: ZXZ';
+        done = true;
+        paramObject.done = done;
+        paramObject.response.string = responseString;
+    }    
+    if (value === 'doCleanUpAllExceptEnrJSON') {
+        responseString = 'HOLDER FOR: doCleanUpAllExceptEnrJSON';
+        local.setItem('logString','')
+        let responseCleanupCurrentState = doEnrollmentCleanupByKind('ALL_EXCEPT_ENROLLMENT');
+        responseString = local.getItem(('logString'));
+
+        done = true;
+        paramObject.done = done;
+        paramObject.response.string = responseString;
+    }    
+    if (value === 'doCleanUpAllIncludingnrJSON') {
+        responseString = 'HOLDER FOR: doCleanUpAllIncludingnrJSON';
+        responseString = "'Next Enrollment' rquires that the current Webhook Payload have a status of 'Resolved'";
+        local.setItem('logString','')
+        if($w(paramObject.response.blockId).value === 'BACKDOORROODKCAB'){
+            local.setItem('logString','BACKDOORROODKCAB')
+            let responseCleanupCurrentState = doEnrollmentCleanupByKind('ALL_INCLUDING_ENROLLMENT');//HINT: backdoor: MURDERREDRUM
+            responseString = local.getItem(('logString'));;
+        }
+
+        done = true;
+        paramObject.done = done;
+        paramObject.response.string = responseString;
+    }    
+    if (value === 'doPpStContactDedupeDiagnosis') {
+        responseString = 'HOLDER FOR: doPpStContactDedupeDiagnosis';
+        local.setItem('logString','PP ST Contact De-Dupe DDiagnosis')
+        let paramObjectThis = {};
+        paramObjectThis.diagnosticOnly = true;
+        ppStContactDedupe(paramObjectThis);
+        let log = local.getItem('logString');
+        let cowCatcherIndex = 0;
+        while (log.indexOf(',') >= 0 && cowCatcherIndex < 1000) {
+            log = log.replace(',','|\n');
+            cowCatcherIndex++;
+        }
+        // $w('#sessionEnrollmentJSON').value = log + '\n\n' + cowCatcherIndex.toString();
+        responseString = log + '\n\n' + cowCatcherIndex.toString();
+
+        done = true;
+        paramObject.done = done;
+        paramObject.response.string = responseString;
+    }    
+    if (value === 'doGetWebhookPayload') {
+        updateStatusWebhookPayloadThis(true);
+        if((local.getItem('lastResponseObject')).length === 0){
+            local.setItem('lastResponseObject',`wixWebhookStatus: ${local.getItem('wixWebhookStatus')}`); 
+        }
+        // $w('#txareaDevelResponseBlock').value = local.getItem('lastResponseObject'); 
+        responseString = local.getItem('lastResponseObject');
+        done = true;
+        paramObject.done = done;
+        paramObject.response.string = responseString;
+    }
+    if (value === 'doGetWebhookStatuses') {
+        let responseObject = {};
+        let wixWebhookStatus = typeof local.getItem('wixWebhookStatus') === 'string' ? local.getItem('wixWebhookStatus') : 'NNULL';
+        let webhookThisStatus = typeof local.getItem('webhookThisStatus') === 'string' ? local.getItem('webhookThisStatus') : 'NNULL';;
+        let webhookThisResolved = typeof local.getItem('webhookThisResolved') === 'string' ? local.getItem('webhookThisResolved') : 'NNULL';;
+        responseObject.wixWebhookStatus = wixWebhookStatus;
+        responseObject.webhookThisStatus = webhookThisStatus;
+        responseObject.webhookThisResolved = webhookThisResolved;
+        // $w('#sessionEnrollmentJSON').value = JSON.stringify(responseObject,undefined,4)
+        responseString = JSON.stringify(responseObject);
         done = true;
         paramObject.done = done;
         paramObject.response.string = responseString;
@@ -6314,5 +6358,6 @@ export async function manyButtonsDropDownO3(paramObject = {ddValue: "NNULL",resp
 // ! ========================================================================================================================
 // ! ==============================               </DEVELOPER ONLY MultiStateBox>              ==============================
 // ! ========================================================================================================================
+
 
 

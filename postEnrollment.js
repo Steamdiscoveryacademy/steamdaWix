@@ -237,7 +237,6 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
             }
         });
         // bootstrap2dArray.push(cowCatcherIndex);
-        $w('#stDatabaseResponseJSON').value = JSON.stringify(bootstrap2dArray,undefined,4);
     } //END if(DOX === 'CHECK FOR WatchdogBootstrap in logString')
     
     // return;
@@ -323,7 +322,6 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
         DOX = `≈Z265≈ `;// + `stepsArrayCompleted.toString(): ${stepsArrayCompleted.toString()}`;
         local.setItem('logString', local.getItem('logString') + ',' + DOX);
 
-        $w('#stContactResponseJSON').value += '\nSwitchB4ZZZ|' + local.getItem('enrollmentStepCompletedListAll') + ';';
 
         previouslyCompleted = Math.sign((local.getItem('enrollmentStepCompletedListAll')).indexOf(stepThis) + 1);
         console.log(`≈Z313≈ (${local.getItem('enrollmentStepCompletedListAll')}).indexOf(${stepThis}): ` + (local.getItem('enrollmentStepCompletedListAll')).indexOf(stepThis));
@@ -393,7 +391,6 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
             stepsArrayCompleted.push(stepThis);
             local.setItem('enrollmentStepCompletedListAll', local.getItem('enrollmentStepCompletedListAll') + ',' + stepThis );
         }
-        $w('#stContactResponseJSON').value += '\nSwitchAfter|' + local.getItem('enrollmentStepCompletedListAll') + ';';
 
 
 
@@ -2529,7 +2526,6 @@ export async function stContactPrepJSON() {
     // ø <---------- stepStampArray ---------->
 
     let contact = await steamdaGetContactFunction(local.getItem('studentId'));
-    $w('#stContactResponseJSON').value = JSON.stringify(contact, undefined, 4);
     memory.setItem('stRevision', (contact.revision).toString());
     let stEmail = contact.info.emails[0].email;
     let stPhone = contact.info.phones[0].phone;
@@ -3940,30 +3936,6 @@ export function btnToggleBoxStateToo_click(event) {
     toggleBoxState();
 }
 
-export function btnGetStMember_click(event) {
-    doGetRecord('stMember', 'stMemberResponseJSON');
-}
-
-export function btnGetStCpntact_click(event) {
-    doGetRecord('stContact', 'stContactResponseJSON');
-}
-
-export function btnGetStDbase_click(event) {
-    doGetRecord('stDbase', 'stDatabaseResponseJSON');
-}
-
-export function btnClearStMember_click(event) {
-    doClear('stMemberResponseJSON')
-}
-
-export function btnClearStContact_click(event) {
-    doClear('stContactResponseJSON')
-}
-
-export function btnClearStDbase_click(event) {
-    doClear('stDatabaseResponseJSON')
-}
-
 export function btnGetSpMember_click(event) {
     doGetRecord('spMember', 'spMemberResponseJSON');
 }
@@ -4104,7 +4076,6 @@ EXCEPTION LOG BLOCK:
     // ø <---------- </complex> ---------->
     logString = JSON.stringify(toInsert, undefined, 4);
     logString += "==========";
-    $w('#stDatabaseResponseJSON').value = logString;
 
 
     // ø <---------- <INSERT>  ---------->
@@ -4198,7 +4169,6 @@ EXCEPTION LOG BLOCK:
     logString = JSON.stringify(toInsert, undefined, 4);
     logString += "==========";
     logString += '\n' + 'INSERT INDICATED (SKIPPED)';
-    $w('#stDatabaseResponseJSON').value = logString;
     // return;
 
 
@@ -4973,15 +4943,11 @@ export async function msboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# n
     //lastIndexOf(searchValue)
     doReset = $w('#radioOnReadyFullReset').value === 'FULL_RESET' ? true : doReset;
     if(doReset){
-        // $w('#stContactResponseJSON').value = '\nOnReadyBefore|' + local.getItem('enrollmentStepCompletedListAll') + ',';
         local.setItem('enrollmentStepCompletedListAll','OnReadyReset')
-        $w('#stContactResponseJSON').value += '\n,OnReadyZZZZ|' + local.getItem('enrollmentStepCompletedListAll') + ';';
         $w('#radioOnReadyFullReset').value = '';
     }else{
         local.setItem('enrollmentStepCompletedListAll', local.getItem('enrollmentStepCompletedListAll') + ',' + 'OnReadyResetContinue')
-        $w('#stContactResponseJSON').value += '\n,OnReadyZZZZ|' + local.getItem('enrollmentStepCompletedListAll') + ';';
     }
-    // $w('#stDatabaseResponseJSON').value = JSON.stringify(stepArrayOrig);
     $w('#spDatabaseResponseJSON').value = JSON.stringify(stepArrayOrig);
     // </OBVIATE: instantiateLoopSwitchEnrollmentSteps()>
 
@@ -5332,7 +5298,6 @@ export async function salsDoMessagingReponsesApply(responseObject = {}, paramObj
     console.dir(JSON.stringify(messageObjectArraysByKey));
     console.groupEnd();
     // local.setItem('lastResponseObject', JSON.stringify(messageObjectArraysByKey,undefined,4));
-    $w('#stMemberResponseJSON').value = JSON.stringify(messageObjectArraysByKey,undefined,4);
     // pstEnrSeven202108UTILITY BEGIN
     // pstEnrSeven202108SALSDoMessaging BEGIN
 

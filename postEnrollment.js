@@ -42,6 +42,7 @@ import wixWindow from 'wix-window';
  // ø 202109_DeDupeRepeaters  || 202109_DeDupeCode TODAY
  // ø 202109_processALIASES TODAY
  // ø 202109_Developer TODAY
+ // ø 202109_alphaTimeKey
  */
 
 
@@ -457,6 +458,7 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
     export async function doResolveAndDestroy(){
         // 202109ResolveAndDestroy
         // 202109ResolveAndDestroy_RESOLVE
+        await appendSessionEnrollmentLogs()
         let resolve = true;
         let destroy = true;
         if (resolve) {
@@ -484,7 +486,19 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
     // ø <---------- </doResolveAndDestroy NON_CORE_Step> ---------->
     // ø <---------- <appendSessionEnrollmentIdsBeforeResolveAndDestroy NON_CORE_NonStep> ---------->
     export async function appendSessionEnrollmentLogs(){
-        session
+        // 202109_alphaTimeKey
+        let logElement = {}
+        logElement._id = alphaTimeKey()
+        // logElement._id = 'ZXZ'
+        logElement.familyId = local.getItem('familyId')
+        logElement.studentId = local.getItem('studentId')
+        logElement.secondaryId = typeof local.getItem('secondaryId') !== 'string' || local.getItem('secondaryId').length < 20 ? 'NA' : local.getItem('secondaryId')
+        session.setItem('postedEnrollmentLastKey',logElement._id)
+        session.setItem('postedEnrollmentLastElement', JSON.stringify(logElement))
+        let isValid = typeof session.getItem('postedEnrollmentElementArray') !== 'string' || session.getItem('postedEnrollmentElementArray').length < 2 ? false : true;
+        let postedEnrollmentElementArrayObject = isValid ? JSON.parse(session.getItem('postedEnrollmentElementArray')) : [];
+        postedEnrollmentElementArrayObject.push(logElement);
+        session.setItem('postedEnrollmentElementArray',JSON.stringify(postedEnrollmentElementArrayObject))
     }
     // ø <---------- </appendSessionEnrollmentIdsBeforeResolveAndDestroy NON_CORE_NonStep> ---------->
  
@@ -1753,7 +1767,7 @@ export async function actionValueEvaluation() {
         if (DOX !== 'YES -  But the whole If-Clause should always be run, the Manual Confirmation is a thing of the past') {
             console.log(`≈1700≈ contact.source.sourceType: could be MOOT but 'MEMBER' or 'IMPORT' supported now`);
             let sourceType = contact.source.sourceType.toUpperCase();
-            let supportedSourceTypeArray = ['MEMBER','IMPORT','ADMIN','WIX_STORES','WIX_SITE_MEMBERS']
+            let supportedSourceTypeArray = ['zMEMBER','zIMPORT','zADMIN','zWIX_STORES','zWIX_SITE_MEMBERS','zOTHER']
             if (supportedSourceTypeArray.includes(sourceType) === false) {
                 local.setItem('superEnrollmentStatus', 'ALERT');
                 memory.setItem('stepResponseBootstrapKey','danger');
@@ -5496,6 +5510,7 @@ export async function appendStepLogPPEQ(key = 'STRING', message = 'STRING', line
 // ø <---------- </appendStepLogPPEQ UTILITY> ---------->
 
 // ø <---------- <alphaTimeKey GROUP>  ---------->
+// 202109_alphaTimeKey
 // pstEnrSeven202108UTILITY SHORT
 
 // ø <---------- <alphaTimeKey>  ---------->

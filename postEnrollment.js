@@ -482,6 +482,11 @@ export async function pstErnSevenStepsArraySwitchLoop(paramObject = { logArrayDe
 
     }
     // ø <---------- </doResolveAndDestroy NON_CORE_Step> ---------->
+    // ø <---------- <appendSessionEnrollmentIdsBeforeResolveAndDestroy NON_CORE_NonStep> ---------->
+    export async function appendSessionEnrollmentLogs(){
+        session
+    }
+    // ø <---------- </appendSessionEnrollmentIdsBeforeResolveAndDestroy NON_CORE_NonStep> ---------->
  
     // ø </onRamp-ZERO-ResolveAndDestroy-offRamp>
 
@@ -5403,7 +5408,6 @@ export function ppeqPostToWatchdogLog(doPostLogObject = {}){
 // ø <---------- </ppeqPostToWatchdogLog UTILITY> ---------->
 
 // ø <---------- <ppeqOneMessageFromMany UTILITY>  ---------->
-// ø <---------- <ppeqOneMessageFromMany UTILITY>  ---------->
 export function ppeqOneMessageFromMany(uiPlacementObjectArray = []){
     // pstEnrSeven202108UTILITY SHORT
     // pstEnrSeven20210822_MESSAGING
@@ -5455,7 +5459,6 @@ export function ppeqOneMessageFromMany(uiPlacementObjectArray = []){
     return arrayBootstrapMessage;	
 }
 // ø <---------- </ppeqOneMessageFromMany UTILITY> ---------->
-// ø <---------- </ppeqOneMessageFromMany UTILITY> ---------->
 
 // ø <---------- <appendStepLogPPEQ UTILITY>  ---------->
 export async function appendStepLogPPEQ(key = 'STRING', message = 'STRING', lineNumber = 'STRING', postLog){
@@ -5492,7 +5495,46 @@ export async function appendStepLogPPEQ(key = 'STRING', message = 'STRING', line
 }
 // ø <---------- </appendStepLogPPEQ UTILITY> ---------->
 
+// ø <---------- <alphaTimeKey GROUP>  ---------->
+// pstEnrSeven202108UTILITY SHORT
 
+// ø <---------- <alphaTimeKey>  ---------->
+export function alphaTimeKey(jsDate = new Date()){
+    // pstEnrSeven202108UTILITY SHORT
+    let yyyyChunkParam = jsDate.getFullYear() % 100
+    let mmChunkParam = jsDate.getMonth() + 1
+    let ddChunkParam = jsDate.getDate()
+    var d = new Date(jsDate);
+    var timeChunkParam = Math.floor(Number(jsDate - d.setHours(0,0,0,0))/1000);
+    let msChunkParam = jsDate.getMilliseconds();
+    let yyyyChunk = alphaChunk(yyyyChunkParam)
+    let mmChunk = alphaChunk(mmChunkParam)
+    let timeChunk = alphaChunk(timeChunkParam)
+    let alphaTimeKeyFinal = yyyyChunk + mmChunk + ('00' + ddChunkParam.toString()).substr(-2) + timeChunk + ('000' + msChunkParam.toString()).substr(-3);
+    return alphaTimeKeyFinal;
+}
+// ø <---------- </alphaTimeKey> ---------->
+
+// ø <---------- <alphaChunk>  ---------->
+export function alphaChunk(chunk = 777){
+    // pstEnrSeven202108UTILITY SHORT
+    let alphabetTransposer /*base 26*/ = { a1: 'A', a2: 'B', a3: 'C', a4: 'D', a5: 'E', a6: 'F', a7: 'G', a8: 'H', a9: 'I', a0: 'J', a: 'K', b: 'L', c: 'M', d: 'N', e: 'O', f: 'P', g: 'Q', h: 'R', i: 'S', j: 'T', k: 'U', l: 'V', m: 'W', n: 'X', o: 'Y', p: 'Z' };
+    let chunkArray = (chunk.toString(26)).split("");
+    let alphaChunkString = '';
+    let transChar = '';
+    let alphaChar = '';
+    let alphaCharArray = [];
+    chunkArray.forEach(char => {
+        transChar = Number(char) > 0 ? 'a' + char : char;
+        transChar = transChar === '0' ? 'a0' : transChar;
+        alphaChar = alphabetTransposer[transChar];
+        alphaCharArray.push(alphaChar);
+        alphaChunkString += alphaChar;
+    });
+    return alphaChunkString
+}
+// ø <---------- </alphaChunk> ---------->
+// ø <---------- </alphaTimeKey GROUP> ---------->
 
 // ! =========================================================================================================================
 // ! ==================================          </SEVENT-SUPER-STEPS with MultiStateBox>         ============================

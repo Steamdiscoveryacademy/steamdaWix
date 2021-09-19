@@ -8,19 +8,10 @@ var textHOLDER = '';
 var objectHOLDER = {};
 
 $w.onReady(function () {
-    // $w('#dropdownFilter').value = 'UNRESOLVED';
-    // memory.setItem('noFilterTotalCount',$w("#dsWebhookPayload").getTotalCount().toString())
-    // dropdownFilter_change();
-
-    // $w('#filterDescr').text = "Descriptison for All Un-Resolved Webhook's Received";
-    // $w('#dsWebhookPayload')
-
-    // $w("#dsWebhookPayload").setFilter(wixData.filter()
-    //     .isEmpty("resolvedStatus"));
-    // let totalCount = $w("#dsWebhookPayload").getTotalCount();
-    // console.log('totalCount: ' + totalCount);
-
-    $w('#txtPayloadTitleAlert').text = local.getItem("ondeckEnrollmentJSON").length > 20 ? 'ALERT: There is an On-Deck Enrollment to Post' : '';//45characters
+    if(local.getItem("ondeckEnrollmentJSON").length > 20){
+        $w('#txtPayloadTitleAlert').expand()
+        $w('#txtPayloadTitleAlert').text = 'ALERT: There is an On-Deck Enrollment to Post';//45characters
+    }
     // console.log(local.getItem("ondeckEnrollmentJSON"));
 
     console.log(
@@ -82,9 +73,10 @@ export function rptrTitle_click(event, $w) {
     $w('#thisKey').value = wixId;
     let title = targetItem['title'];
     let payload = JSON.parse(targetItem['payload']);
-    $w('#responseHolderFieldZZZ').value = typeof payload.second_parentguardian_phone.first !== 'string' ? '' : payload.second_parentguardian_phone.first;
-    $w('#responseHolderFieldZZZ').value += typeof payload.second_parentguardian_phone.last !== 'string' ? '' : ' ' + payload.second_parentguardian_phone.last;
-    $w('#responseHolderFieldZZZ').value = $w('#responseHolderFieldZZZ').value.trim().length === 0 ? 'No Secondary Parent' : $w('#responseHolderFieldZZZ').value.trim()
+    $w('#theseParents').value = typeof payload.second_parentguardian_phone.first !== 'string' ? '' : payload.second_parentguardian_phone.first;
+    $w('#theseParents').value += typeof payload.second_parentguardian_phone.last !== 'string' ? '' : ' ' + payload.second_parentguardian_phone.last;
+    $w('#theseParents').value = $w('#theseParents').value.trim().length === 0 ? 'No Secondary Parent' : $w('#theseParents').value.trim()
+    $w('#theseParents').value = payload.primary_parentguardian_name.first + ' ' + payload.primary_parentguardian_name.last + ' (' + $w('#theseParents').value + ')';
     console.groupCollapsed('[~Z95]payload: ');
     console.dir(payload);
     // console.log(payload.student_name);
@@ -191,15 +183,33 @@ export function txtStartsWith_change(event) {
         dropdownFilter_change(event);  
     }
 }
+
+// ø <---------- <dropdownFilter_change>  ---------->
+// ø <---------- <dropdownFilter_change>  ---------->
+// ‡ Is-Default: All Pending,PENDING
+// ‡ All Resolved,RESOLVED
+// ‡ Application Summer,APPLICATIONSUMMER
+// ‡ Starts with...,STARTSWITH
+// ‡ All Test,TEST
+// ‡ All Test-Resolved,TESTRESOLVED
+// ‡ Problem,PROBLEM
+// ‡ All Pre-Trash,PRETRASH
+// ‡ Contact Us,CONTACTUS
+// ‡ Free Lesson Request,FREELESSONREQUEST
+// ‡ All (no filter),ALL
+
 export async function dropdownFilter_change(event) {
     var totalCount = 0;
-    if(typeof memory.getItem('noFilterTotalCount') !== 'string' || memory.getItem('noFilterTotalCount') === '0'){
-        memory.setItem('noFilterTotalCount',$w("#dsWebhookPayload").getTotalCount().toString());
+    if (typeof memory.getItem('noFilterTotalCount') !== 'string' || memory.getItem('noFilterTotalCount') === '0') {
+        memory.setItem('noFilterTotalCount', $w("#dsWebhookPayload").getTotalCount().toString());
     }
     // var noFilterTotalCount = $w("#dsWebhookPayload").getTotalCount();
     var filterValue = $w('#dropdownFilter').value;
     switch (filterValue) {
+        // † Is-Default: All Pending,PENDING
+
         case 'RESOLVED':
+            // † All Resolved,RESOLVED
             $w('#filterDescr').text = "Resolved Webhooks";
             await $w("#dsWebhookPayload").setFilter(wixData.filter()
                 // .isNotEmpty("wixData.filter()")
@@ -208,19 +218,8 @@ export async function dropdownFilter_change(event) {
             totalCount = $w("#dsWebhookPayload").getTotalCount();
             console.log(filterValue + ': ' + totalCount);
             break;
-
-        case 'CONTACTUS':
-            $w('#filterDescr').text = "'Contact Us' Webhooks";
-            await $w("#dsWebhookPayload").setFilter(wixData.filter()
-                .isEmpty("resolvedStatus")
-                .eq("source", 'FormStack')
-                .eq("webhookId", '4273251')
-            );
-            totalCount = $w("#dsWebhookPayload").getTotalCount();
-            console.log(filterValue + ': ' + totalCount);
-            break;
-
         case 'APPLICATIONSUMMER':
+            // † Application Summer,APPLICATIONSUMMER
             $w('#filterDescr').text = "'Application Summer' Webhooks";
             await $w("#dsWebhookPayload").setFilter(wixData.filter()
                 .isEmpty("resolvedStatus")
@@ -230,19 +229,8 @@ export async function dropdownFilter_change(event) {
             totalCount = $w("#dsWebhookPayload").getTotalCount();
             console.log(filterValue + ': ' + totalCount);
             break;
-
-        case 'FREELESSONREQUEST':
-            $w('#filterDescr').text = "'Free Lesson Request' Webhooks";
-            await $w("#dsWebhookPayload").setFilter(wixData.filter()
-                .isEmpty("resolvedStatus")
-                .eq("source", 'FormStack')
-                .eq("webhookId", '4262311')
-            );
-            totalCount = $w("#dsWebhookPayload").getTotalCount();
-            console.log(filterValue + ': ' + totalCount);
-            break;
-
         case 'STARTSWITH':
+            // † Starts with...,STARTSWITH
             $w('#filterDescr').text = "'Free Lesson Request' Webhooks";
             let startsWith = $w('#txtStartsWith').value;
             startsWith = startsWith.length === 0 ? 'a' : startsWith;
@@ -257,6 +245,7 @@ export async function dropdownFilter_change(event) {
             console.log(filterValue + ': ' + totalCount);
             break;
         case 'TEST':
+            // † All Test,TEST
             $w('#filterDescr').text = "Webhooks with Status 'Test'";
             await $w("#dsWebhookPayload").setFilter(wixData.filter()
                 // .isEmpty("resolvedStatus"));
@@ -266,6 +255,7 @@ export async function dropdownFilter_change(event) {
             console.log(filterValue + ': ' + totalCount);
             break;
         case 'TESTRESOLVED':
+            // † All Test-Resolved,TESTRESOLVED
             $w('#filterDescr').text = "Webhooks with Status 'Test-Resolved'";
             await $w("#dsWebhookPayload").setFilter(wixData.filter()
                 // .isEmpty("resolvedStatus"));
@@ -275,6 +265,7 @@ export async function dropdownFilter_change(event) {
             console.log(filterValue + ': ' + totalCount);
             break;
         case 'PROBLEM':
+            // † Problem,PROBLEM
             $w('#filterDescr').text = "Webhooks with Status 'Problem'";
             await $w("#dsWebhookPayload").setFilter(wixData.filter()
                 // .isEmpty("resolvedStatus"));
@@ -284,11 +275,44 @@ export async function dropdownFilter_change(event) {
             console.log(filterValue + ': ' + totalCount);
             break;
         case 'PRETRASH':
+            // † All Pre-Trash,PRETRASH
             $w('#filterDescr').text = "Webhooks with Status 'Pre-Trash'";
             await $w("#dsWebhookPayload").setFilter(wixData.filter()
                 // .isEmpty("resolvedStatus"));
                 .eq("currentStatus", 'PRETRASH'));
 
+            totalCount = $w("#dsWebhookPayload").getTotalCount();
+            console.log(filterValue + ': ' + totalCount);
+            break;
+        case 'CONTACTUS':
+            // † Contact Us,CONTACTUS
+            $w('#filterDescr').text = "'Contact Us' Webhooks";
+            await $w("#dsWebhookPayload").setFilter(wixData.filter()
+                .isEmpty("resolvedStatus")
+                .eq("source", 'FormStack')
+                .eq("webhookId", '4273251')
+            );
+            totalCount = $w("#dsWebhookPayload").getTotalCount();
+            console.log(filterValue + ': ' + totalCount);
+            break;
+        case 'FREELESSONREQUEST':
+            // † Free Lesson Request,FREELESSONREQUEST
+            $w('#filterDescr').text = "'Free Lesson Request' Webhooks";
+            await $w("#dsWebhookPayload").setFilter(wixData.filter()
+                .isEmpty("resolvedStatus")
+                .eq("source", 'FormStack')
+                .eq("webhookId", '4262311')
+            );
+            totalCount = $w("#dsWebhookPayload").getTotalCount();
+            console.log(filterValue + ': ' + totalCount);
+            break;
+        case 'ALL':
+            // † All (no filter),ALLexport async function dropdownFilter_change(event) {
+            $w('#filterDescr').text = "All with No Filter";
+            await $w("#dsWebhookPayload").setFilter(wixData.filter()
+                // .isNotEmpty("wixData.filter()")
+                .ne("resolvedStatus", 'DELETED')
+            );
             totalCount = $w("#dsWebhookPayload").getTotalCount();
             console.log(filterValue + ': ' + totalCount);
             break;
@@ -303,10 +327,12 @@ export async function dropdownFilter_change(event) {
             console.log(filterValue + ': ' + totalCount);
             break;
     }
-    $w('#filterDescr').text += '\n ['+totalCount.toString()+' of '+memory.getItem('noFilterTotalCount')+']';
+    $w('#filterDescr').text += '\n [' + totalCount.toString() + ' of ' + memory.getItem('noFilterTotalCount') + ']';
     // $w('#txtFilterCount').value = totalCount.toString();
 
 }
+// ø <---------- </dropdownFilter_change> ---------->
+// ø <---------- </dropdownFilter_change> ---------->
 
 export function FormStack4223065_click(event, $w) {
     // This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
@@ -422,15 +448,20 @@ export function instantiateEnrollment (returnObjectArrayObject) {
 
     let parentFirst = objApplicationSummer.primary_parentguardian_name.first;
     parentFirst = parentFirst.trim();
+    parentFirst = parentFirst === parentFirst.toLowerCase() ? parentFirst.substr(0,1).toUpperCase() + parentFirst.substr(1): parentFirst;
     let parentLast = objApplicationSummer.primary_parentguardian_name.last;
     parentLast = parentLast.trim();
+    parentLast = parentLast === parentLast.toLowerCase() ? parentLast.substr(0,1).toUpperCase() + parentLast.substr(1): parentLast;
     let studentFirst = objApplicationSummer.student_name.first;
     studentFirst = studentFirst.trim();
+    studentFirst = studentFirst === studentFirst.toLowerCase() ? studentFirst.substr(0,1).toUpperCase() + studentFirst.substr(1): studentFirst;
     let studentLast = objApplicationSummer.student_name.last;
     studentLast = studentLast.trim();
+    studentLast = studentLast === studentLast.toLowerCase() ? studentLast.substr(0,1).toUpperCase() + studentLast.substr(1): studentFirst;
     let preferredName = objApplicationSummer.preferred_name;
     if(renderableString(preferredName) > 0){
         preferredName = preferredName.trim();
+        preferredName = preferredName === preferredName.toLowerCase() ? preferredName.substr(0,1).toUpperCase() + preferredName.substr(1): preferredName;
     } else {
         preferredName = studentFirst;
     }
@@ -443,12 +474,14 @@ export function instantiateEnrollment (returnObjectArrayObject) {
     if(renderableString(parentFirstSecondary) > 0) {
         parentSecondaryRenderable = true;
         parentFirstSecondary = parentFirstSecondary.trim();
+        parentFirstSecondary = parentFirstSecondary === parentFirstSecondary.toLowerCase() ? parentFirstSecondary.substr(0,1).toUpperCase() + parentFirstSecondary.substr(1): parentFirstSecondary;
         // parentLastSecondary = parentLastSecondary.trim();
     }
     if(renderableString(parentLastSecondary) > 0) {
         parentSecondaryRenderable = parentSecondaryRenderable ? true : false;
         // parentFirstSecondary = parentFirstSecondary.trim();
         parentLastSecondary = parentLastSecondary.trim();
+        parentLastSecondary = parentLastSecondary === parentLastSecondary.toLowerCase() ? parentLastSecondary.substr(0,1).toUpperCase() + studentFirst.substr(1): studentFirst;
     }
 
     returnObjectArrayObject.family = {};

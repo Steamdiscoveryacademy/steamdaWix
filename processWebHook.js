@@ -185,18 +185,18 @@ export function txtStartsWith_change(event) {
 }
 
 // ø <---------- <dropdownFilter_change>  ---------->
-// ø <---------- <dropdownFilter_change>  ---------->
-// ‡ Is-Default: All Pending,PENDING
-// ‡ All Resolved,RESOLVED
+// ‡ All (no filter),ALL
+// ‡ All Pending,PENDING
+// ‡ Contact Us,CONTACTUS
 // ‡ Application Summer,APPLICATIONSUMMER
+// ‡ Free Lesson Request,FREELESSONREQUEST
+// ‡ All Resolved,RESOLVED
 // ‡ Starts with...,STARTSWITH
 // ‡ All Test,TEST
 // ‡ All Test-Resolved,TESTRESOLVED
+// † Unsupported Forms,UNSUPPORTED
 // ‡ Problem,PROBLEM
 // ‡ All Pre-Trash,PRETRASH
-// ‡ Contact Us,CONTACTUS
-// ‡ Free Lesson Request,FREELESSONREQUEST
-// ‡ All (no filter),ALL
 
 export async function dropdownFilter_change(event) {
     var totalCount = 0;
@@ -274,6 +274,20 @@ export async function dropdownFilter_change(event) {
             totalCount = $w("#dsWebhookPayload").getTotalCount();
             console.log(filterValue + ': ' + totalCount);
             break;
+        case 'UNSUPPORTED':
+            // † Unsupported Forms,UNSUPPORTED
+            $w('#filterDescr').text = "Webhooks with Source and ID that are Unsupported";
+            await $w("#dsWebhookPayload").setFilter(wixData.filter()
+                // .isEmpty("resolvedStatus"));
+                .eq("source", 'FormStack')
+                .ne("webhookId", '4223065')
+                .ne("webhookId", '4262311')
+                .ne("webhookId", '4273251')
+                );
+
+            totalCount = $w("#dsWebhookPayload").getTotalCount();
+            console.log(filterValue + ': ' + totalCount);
+            break;
         case 'PRETRASH':
             // † All Pre-Trash,PRETRASH
             $w('#filterDescr').text = "Webhooks with Status 'Pre-Trash'";
@@ -331,7 +345,6 @@ export async function dropdownFilter_change(event) {
     // $w('#txtFilterCount').value = totalCount.toString();
 
 }
-// ø <---------- </dropdownFilter_change> ---------->
 // ø <---------- </dropdownFilter_change> ---------->
 
 export function FormStack4223065_click(event, $w) {
@@ -1670,6 +1683,7 @@ export function btnLogEnrollmentJSON_click(event) {
     console.log(local.getItem("ondeckEnrollmentJSON"));
 }
 
+// ø <------------ <Update WebhookPayload WebhookStatus GROUP>  -------------->
 // ø <------------ <doUpdateThisWebhookPayload(status)>  -------------->
 export async function doUpdateThisWebhookPayload(status) {
 	let response = "";
@@ -1794,3 +1808,4 @@ export function btnWebhookResolve_click(event) {
 	$w("#ddCurrentStatusUpdate").resetValidityIndication();
 
 }
+// ø <------------ </Update WebhookPayload WebhookStatus GROUP> -------------->

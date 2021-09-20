@@ -1,6 +1,7 @@
 import wixData from 'wix-data';
 import wixLocation from 'wix-location';
 import {local, session, memory} from 'wix-storage';
+import wixWindow from 'wix-window';
 
 const dashboardBaseUrl = 'https://manage.wix.com/dashboard/a8472b36-bc63-4063-bd42-95519419cb8a/admin-pages/';
 const repeaterLimit = 10;
@@ -53,6 +54,7 @@ $w.onReady(function () {
 //0402errorMAYBE: 
 export function rptrTitle_click(event, $w) {
     //responseHolderFieldZZZ
+    $w('#btnUnloadTop').show()
     let status = local.getItem("ondeckEnrollmentJSON").length > 20 ? 'ALERT' : 'CONTINUE';
     $w('#txtPayloadTitleAlert').text = status === 'ALERT' ? 'ALERT: There is an On-Deck Enrollment to Post' : '';
     if(status === 'ALERT'){
@@ -334,8 +336,10 @@ export async function dropdownFilter_change(event) {
         default:
             $w('#filterDescr').text = "Pending Webhooks";
             await $w("#dsWebhookPayload").setFilter(wixData.filter()
-                // .isEmpty("resolvedStatus"));
-                .eq("currentStatus", 'PENDING'));
+                .eq("source", 'FormStack')
+                .eq("currentStatus", 'PENDING')
+                .hasSome("webhookId", ['4223065','9994262311','9994273251'])
+                );
 
             totalCount = $w("#dsWebhookPayload").getTotalCount();
             console.log(filterValue + ': ' + totalCount);
@@ -360,9 +364,9 @@ export function FormStack4223065_click(event, $w) {
     let phoneRaw = phone.replace(pattern, '');
     $w('#phoneParent').value = phoneRaw;
 
-    let filter1 = wixData.filter().eq("mainPhone", phoneRaw);
+    // let filter1 = wixData.filter().eq("mainPhone", phoneRaw);
     let filter2 = wixData.filter().startsWith("loginEmail", emailParent);
-    // let finalFilter = filter1.or(filter2);
+    // // let finalFilter = filter1.or(filter2);
     let finalFilter = filter2;
     $w("#dsMembers").setFilter(finalFilter);
     $w("#btnAssignNewMember").show();
@@ -461,20 +465,20 @@ export function instantiateEnrollment (returnObjectArrayObject) {
 
     let parentFirst = objApplicationSummer.primary_parentguardian_name.first;
     parentFirst = parentFirst.trim();
-    parentFirst = parentFirst === parentFirst.toLowerCase() ? parentFirst.substr(0,1).toUpperCase() + parentFirst.substr(1): parentFirst;
+    parentFirst = parentFirst === parentFirst.toLowerCase() || parentFirst === parentFirst.toUpperCase() ? parentFirst.substr(0,1).toUpperCase() + parentFirst.substr(1).toLowerCase(): parentFirst;
     let parentLast = objApplicationSummer.primary_parentguardian_name.last;
     parentLast = parentLast.trim();
-    parentLast = parentLast === parentLast.toLowerCase() ? parentLast.substr(0,1).toUpperCase() + parentLast.substr(1): parentLast;
+    parentLast = parentLast === parentLast.toLowerCase() || parentLast === parentLast.toUpperCase() ? parentLast.substr(0,1).toUpperCase() + parentLast.substr(1).toLowerCase(): parentLast;
     let studentFirst = objApplicationSummer.student_name.first;
     studentFirst = studentFirst.trim();
-    studentFirst = studentFirst === studentFirst.toLowerCase() ? studentFirst.substr(0,1).toUpperCase() + studentFirst.substr(1): studentFirst;
+    studentFirst = studentFirst === studentFirst.toLowerCase() || studentFirst === studentFirst.toUpperCase() ? studentFirst.substr(0,1).toUpperCase() + studentFirst.substr(1).toLowerCase(): studentFirst;
     let studentLast = objApplicationSummer.student_name.last;
     studentLast = studentLast.trim();
-    studentLast = studentLast === studentLast.toLowerCase() ? studentLast.substr(0,1).toUpperCase() + studentLast.substr(1): studentFirst;
+    studentLast = studentLast === studentLast.toLowerCase() || studentLast === studentLast.toUpperCase() ? studentLast.substr(0,1).toUpperCase() + studentLast.substr(1).toLowerCase(): studentLast;
     let preferredName = objApplicationSummer.preferred_name;
     if(renderableString(preferredName) > 0){
         preferredName = preferredName.trim();
-        preferredName = preferredName === preferredName.toLowerCase() ? preferredName.substr(0,1).toUpperCase() + preferredName.substr(1): preferredName;
+        preferredName = preferredName === preferredName.toLowerCase() || preferredName === preferredName.toUpperCase() ? preferredName.substr(0,1).toUpperCase() + preferredName.substr(1).toLowerCase(): preferredName;
     } else {
         preferredName = studentFirst;
     }
@@ -487,14 +491,14 @@ export function instantiateEnrollment (returnObjectArrayObject) {
     if(renderableString(parentFirstSecondary) > 0) {
         parentSecondaryRenderable = true;
         parentFirstSecondary = parentFirstSecondary.trim();
-        parentFirstSecondary = parentFirstSecondary === parentFirstSecondary.toLowerCase() ? parentFirstSecondary.substr(0,1).toUpperCase() + parentFirstSecondary.substr(1): parentFirstSecondary;
+        parentFirstSecondary = parentFirstSecondary === parentFirstSecondary.toLowerCase() || parentFirstSecondary === parentFirstSecondary.toUpperCase() ? parentFirstSecondary.substr(0,1).toUpperCase() + parentFirstSecondary.substr(1).toLowerCase(): parentFirstSecondary;
         // parentLastSecondary = parentLastSecondary.trim();
     }
     if(renderableString(parentLastSecondary) > 0) {
         parentSecondaryRenderable = parentSecondaryRenderable ? true : false;
         // parentFirstSecondary = parentFirstSecondary.trim();
         parentLastSecondary = parentLastSecondary.trim();
-        parentLastSecondary = parentLastSecondary === parentLastSecondary.toLowerCase() ? parentLastSecondary.substr(0,1).toUpperCase() + studentFirst.substr(1): studentFirst;
+        parentLastSecondary = parentLastSecondary === parentLastSecondary.toLowerCase() || parentLastSecondary === parentLastSecondary.toUpperCase() ? parentLastSecondary.substr(0,1).toUpperCase() + studentFirst.substr(1).toLowerCase(): studentFirst;
     }
 
     returnObjectArrayObject.family = {};
@@ -816,13 +820,17 @@ export function gradeLeveFromGrade(currentGrade) {
 }
 
 export function btnMemberMatch_click(event, $w) {
+    console.groupCollapsed('btnMemberMatch_click')
 	// export function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
 	// Add your code for this event here: 
     let $item = $w.at(event.context);
+    console.dir($item)
     let targetItem = $w("#dsMembers").getCurrentItem();
     console.log(targetItem);
     $w("#thisMemberId").value = targetItem._id;
+    $w("#emailParent").value = targetItem.loginEmail;
     $w("#btnConfirmClasses").show();
+    console.groupEnd()
 
 }
 
@@ -901,10 +909,22 @@ export function cleanUp(returnObjectArrayObject, runningTotalObject, objApplicat
         ,"#dobGradeLevelErrorText"
         ,"#warnTextBox"
         ,"#develTemp"
-]
+    ]
+    unsetElementsArray.push('#theseParents')//202109 - unLoad()
+    unsetElementsArray.push('#responseHolderFieldZZZ')//202109 - Change-Sttus
+    unsetElementsArray.push('#studentStatement')//20210920 - double-check
+    unsetElementsArray.push('#memberIdStudent')//20210920 - double-check
+    unsetElementsArray.push('#displayDevelJSON')//20210920 - double-check
+    $w('#btnUnloadTop').hide()//20210920 = new button that calls at top
+    let unsetTextElementsArray = ['#dobGradeLevelErrorText']
 
     for ( let element of unsetElementsArray) {
-        $w(element).value = null;
+        if(unsetTextElementsArray.includes(element)){
+            $w(element).text = '';
+        }
+        if(!unsetTextElementsArray.includes(element)){
+            $w(element).value = null;
+        }
     }
     let switchErrorIdArray = ["#swtchOverloadZeroCourses", "#swtchOverloadTwoCourses", "#swtchOverloadGradeCourse", "#swtchOverloaGradeDob"];
     for (let index = 0; index < switchErrorIdArray.length; index++) {
@@ -941,6 +961,8 @@ export function cleanUp(returnObjectArrayObject, runningTotalObject, objApplicat
     // ø \_ that is, eventually, it will disappear for having been resolved
     // ø empty Object(s)
     // ø write out age on September 30, YYYY below gradeLevel and DOB
+    // dropdownFilter_change();
+    sessionInstantiateDevelJSON();
     return true;
 }
 
@@ -1680,45 +1702,51 @@ export function sessionInstantiateDevelJSON(){
  */
 export function btnLogEnrollmentJSON_click(event) {
 	console.log('local.getItem("ondeckEnrollmentJSON"): ');
-    console.log(local.getItem("ondeckEnrollmentJSON"));
+    console.dir(local.getItem("ondeckEnrollmentJSON"));
 }
 
 // ø <------------ <Update WebhookPayload WebhookStatus GROUP>  -------------->
 // ø <------------ <doUpdateThisWebhookPayload(status)>  -------------->
+// ¡ <I THINK THIS IS DUPLICATION OF BUTTON: btnWebhookResolve_click>
+// ¡   - notwithstanding the unfortunate Id (update, one option being resolve)
+// ¡   - notwithstanding the understandable instinct to separate btn__click from actual do() function
 export async function doUpdateThisWebhookPayload(status) {
-	let response = "";
-	let kInvalidAppend = `\nNo action taken.\nPlease try again or ask for assistnace.`;
-	if($w('#thisKey').value.length < 30){
-		response = "Invalid 'WiX-Webhook-ID'" + kInvalidAppend;
-		// $w('#responseHolderFieldZZZ').value = response;
-		// onReadyUserInterface();
-		return;
-	}
-	if($w('#ddCurrentStatusUpdate').value === $w('#thisCurrentStatus').value){
-		response = "On-deck 'Webhook-Payload' Status is the same as the Drop-Down (update) Value. No Update Indicated" + kInvalidAppend;
-		// $w('#responseHolderFieldZZZ').value = response;
-		// onReadyUserInterface();
-		return;
-	}
-	await updateStatuWebhookPayloadThis();
-	let lastResponse = JSON.parse(local.getItem('lastResponseObject'));
-	if(lastResponse._id === $w('#thisKey').value){
-		$w('#thisCurrentStatus').value = lastResponse.currentStatus;
-		// if(typeof lastResponse.resolvedStatus !== 'undefined'){
-		// 	local.setItem('webhookThisResolved',lastResponse.resolvedStatus);
-		// }
-	}
-	response = "UPDATE: String Pending" + kInvalidAppend;
-	// $w('#responseHolderFieldZZZ').value = response;
-	// refreshWebhookPayloadDataSet()
-	// onReadyUserInterface();
+    let response = "";
+    let kInvalidAppend = `\nNo action taken.\nPlease try again or ask for assistnace.`;
+    if ($w('#thisKey').value.length < 30) {
+        response = "Invalid 'WiX-Webhook-ID'" + kInvalidAppend;
+        // $w('#responseHolderFieldZZZ').value = response;
+        // onReadyUserInterface();
+        return;
+    }
+    if ($w('#ddCurrentStatusUpdate').value === $w('#thisCurrentStatus').value) {
+        response = "On-deck 'Webhook-Payload' Status is the same as the Drop-Down (update) Value. No Update Indicated" + kInvalidAppend;
+        // $w('#responseHolderFieldZZZ').value = response;
+        // onReadyUserInterface();
+        return;
+    }
+    await updateStatuWebhookPayloadThis();
+    let lastResponse = JSON.parse(local.getItem('lastResponseObject'));
+    if (lastResponse._id === $w('#thisKey').value) {
+        $w('#thisCurrentStatus').value = lastResponse.currentStatus;
+        // if(typeof lastResponse.resolvedStatus !== 'undefined'){
+        // 	local.setItem('webhookThisResolved',lastResponse.resolvedStatus);
+        // }
+    }
+    response = "UPDATE: String Pending" + kInvalidAppend;
+    // $w('#responseHolderFieldZZZ').value = response;
+    // refreshWebhookPayloadDataSet()
+    // onReadyUserInterface();
 
 }
+// ¡ </I THINK THIS IS DUPLICATION OF BUTTON: btnWebhookResolve_click>
 // ø <------------ </doUpdateThisWebhookPayload(status)> -------------->
 
 // ø <------------ <updateStatuWebhookPayloadThis()>  -------------->
-export async function updateStatuWebhookPayloadThis(getOnly = false){
-	   const options = {
+export async function updateStatuWebhookPayloadThis(getOnly = false) {
+    console.groupCollapsed('updateStatuWebhookPayloadThis')
+    console.log(`getOnly: ${getOnly}`)
+    const options = {
         "suppressAuth": true,
         "suppressHooks": true
     };
@@ -1726,86 +1754,153 @@ export async function updateStatuWebhookPayloadThis(getOnly = false){
 
     let updateObject = await wixData.get("webhookPayload", webhookId, options);
     let doUserInterfaceUpdate = false;
-    if(getOnly){
-      	local.setItem('lastResponseObject', JSON.stringify(updateObject));
-        if(updateObject.currentStatus === "RESOLVED"){
-            if(updateObject.resolvedStatus === "RESOLVED"){
-                local.setItem('wixWebhookStatus',"RESOLVED");
+    if (getOnly) {
+        // local.setItem('lastResponseObject', JSON.stringify(updateObject));
+        if (updateObject.currentStatus === "RESOLVED") {
+            if (updateObject.resolvedStatus === "RESOLVED") {
+                // local.setItem('wixWebhookStatus',"RESOLVED");// ø postEnrollmentOnly
                 doUserInterfaceUpdate = true;
-            }else{
-                local.setItem('lastErrorString',"current WebhookPayload 'currentStatus' and 'resolvedStatus' are Out-Of-Sync");
+            } else {
+                local.setItem('lastErrorString', `current WebhookPayload currentStatus['${updateObject.currentStatus}'] and resolvedStatus['${updateObject.resolvedStatus}''] are Out-Of-Sync`);
             }
         }
-        if(updateObject.currentStatus !== local.getItem('wixWebhookStatus')){
-            local.setItem('wixWebhookStatus',updateObject.currentStatus)
-            doUserInterfaceUpdate = true;
-        }
+        // ø <postEnrollmentOnly>
+        // if(updateObject.currentStatus !== local.getItem('wixWebhookStatus')){
+        //     local.setItem('wixWebhookStatus',updateObject.currentStatus)
+        //     doUserInterfaceUpdate = true;
+        // }
+        // ø </postEnrollmentOnly>
         // $w('#responseHolderFieldZZZ').value = JSON.stringify(updateObject,undefined,4);
-        if(doUserInterfaceUpdate){
-            // doUserInterfaceCleanupCurrent();
-            console.log("[~1665]'doUserInterfaceUpdate [boolean] doEquivalent for 'Process Web Hooks'?");
-            console.log("[~1666]'getOnly' Webhook Payload && doUserInterfaceCleanupCurrent()");
-        }
-        console.log("[~2278]About to Return with 'getOnly' Webhook Payload");
+        // if (doUserInterfaceUpdate) {
+        //     // doUserInterfaceCleanupCurrent();
+        //     console.log("[~Z1665]'doUserInterfaceUpdate [boolean] doEquivalent for 'Process Web Hooks'?");
+        //     console.log("[~Z1666]'getOnly' Webhook Payload && doUserInterfaceCleanupCurrent()");
+        //     console.log("[~Z1667] Whiskey-Tango-Foxtrot!");
+        // }
+        console.log("[~Z2278]About to Return with 'getOnly' Webhook Payload");
+        local.setItem('lastParamObject', JSON.stringify(updateObject));
+        local.setItem('lastResponseObject', '');
+        console.groupEnd()
         return;
     }
     // doUserInterfaceUpdate = true;
 
-	let now = new Date();
-	let nowISO = now.toISOString();
-	// let updateObject = {};
-	// updateObject._id = local.getItem('webhookThisId');
-	updateObject.currentStatus = $w('#ddCurrentStatusUpdate').value;
-	updateObject.currentStatusStamp = now;
-	if($w('#ddCurrentStatusUpdate').value === 'RESOLVED'){
-		updateObject.resolvedStatus = $w('#ddCurrentStatusUpdate').value;
-		updateObject.resolvedStatusStamp = now;
-	}
-	local.setItem('lastParamObject', JSON.stringify(updateObject));
-	// $w('#txareaCodeBlock').value = JSON.stringify(updateObject,undefined,4);
-	let response = await wixData.update("webhookPayload", updateObject)
-	local.setItem('lastResponseObject', JSON.stringify(response));
-	// $w('#responseHolderFieldZZZ').value = JSON.stringify(response,undefined,4);
+    let now = new Date();
+    let nowISO = now.toISOString();
+    // let updateObject = {};
+    local.setItem('lastParamObject', JSON.stringify(updateObject));
+    // updateObject._id = local.getItem('webhookThisId');
+    updateObject.currentStatus = $w('#ddCurrentStatusUpdate').value;
+    updateObject.currentStatusStamp = now;
+    console.log(`updateObject.currentStatus: ${updateObject.currentStatus}`)
+    console.groupEnd()
+    if ($w('#ddCurrentStatusUpdate').value === 'RESOLVED') {
+        updateObject.resolvedStatus = $w('#ddCurrentStatusUpdate').value;
+        updateObject.resolvedStatusStamp = now;
+    }
+    // $w('#txareaCodeBlock').value = JSON.stringify(updateObject,undefined,4);
+    // let paramObject = {};
+    // paramObject.holder = 'The Quick Brown Fox Jumps Over the Lazy Dog';
+    // local.setItem('lastResponseObject', JSON.stringify(paramObject));
+    // return;
+    let response = await wixData.update("webhookPayload", updateObject)
+    local.setItem('lastResponseObject', JSON.stringify(response));
+    // local.setItem('lastResponseObject', JSON.stringify(updateObject));
+    // $w('#responseHolderFieldZZZ').value = JSON.stringify(response,undefined,4);
 }
 // ø <------------ </updateStatuWebhookPayloadThis()> -------------->
 
-export function btnWebhookResolve_click(event) {
+// ø <------------ <btnWebhookResolve_click>  -------------->
+export async function btnWebhookResolve_click(event) {
     let isValid = true;
     let invalidString = '';
     let selected = $w('#ddCurrentStatusUpdate').value;
-    selected = selected.length === 0 ? 'NONE_SELECTED': selected;
-    if(isValid){
+    selected = selected.length === 0 ? 'NONE_SELECTED' : selected;
+    if (isValid) {
         isValid = $w('#radioAreYouSure').value === 'YES' ? isValid : false;
         invalidString = "'Update Status' is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.";
     }
-    if(isValid){
+    if (isValid) {
         isValid = $w('#thisKey').value.length > 30 ? isValid : false;
         invalidString = "'Update Status' cannot proceed. No valid Webhook Payload record selected. Select the Webhook Payload from the list at left for which you wish to change the Status.\n\nNo action taken. \nPlease try again or ask for assistance.";
     }
-    if(isValid){
-        let validStatusOptionArray = ['PENDING','TEST','PROBLEM','PRETRASH','TESTRESOLVED','RESOLVED'];
-        isValid = validStatusOptionArray.includes(selected) ? isValid : false;
-        invalidString = "'Update Status' cannot proceed. "+selected+" is NOT a valid Status.";
+    if (isValid) {
+        let validStatusOptionArray = ['CURRENT','PENDING', 'TEST', 'PROBLEM', 'PRETRASH', 'TESTRESOLVED', 'RESOLVED'];
+        isValid = validStatusOptionArray.includes($w('#thisCurrentStatus').value) ? isValid : false;
+        invalidString = `'Update Status' cannot proceed. Current (displayed) Status ['${$w('#thisCurrentStatus').value}'] is NOT a valid Status.`;
     }
-    if(isValid){
+    if (isValid) {
+        let validStatusOptionArray = ['CURRENT','PENDING', 'TEST', 'PROBLEM', 'PRETRASH', 'TESTRESOLVED', 'RESOLVED'];
+        isValid = validStatusOptionArray.includes(selected) ? isValid : false;
+        invalidString = `'Update Status' cannot proceed. ${selected} is NOT a valid Status.`;
+    }
+    if (isValid) {
         // let validStatusOptionArray = ['PENDING','TEST','PRETRASH','TESTRESOLVED','RESOLVED'];
         isValid = $w('#thisCurrentStatus').value !== selected ? isValid : false;
-        invalidString = "'Update Status' cannot proceed. "+selected+" would mean No Change as it is the Current Status.";
+        invalidString = `'Update Status' cannot proceed. ${selected} would mean No Change as it is the Current Status.`;
     }
 
-    if(isValid){
-		// $w('#responseHolderFieldZZZ').value = "'Update Status' is NOT Enabled at this time.\n\nNo action taken. \nPlease try again or ask for assistance.";
+    if (isValid) {
+        // ø <DO IT>
+        let responseObject = {}
+        // $w('#responseHolderFieldZZZ').value = "'Update Status' is NOT Enabled at this time.\n\nNo action taken. \nPlease try again or ask for assistance.";
         let statusThis = $w('#ddCurrentStatusUpdate').value;
-        doUpdateThisWebhookPayload(statusThis);
-    	// updateStatuWebhookPayloadThis(true); 
+        // doUpdateThisWebhookPayload(statusThis);
+        // doUpdateThisWebhookPayload(statusThis);
+        let getOnly = statusThis === 'CURRENT' ? true : false;
+        await updateStatuWebhookPayloadThis(getOnly);
         // doUserInterfaceCleanupCurrent();
-	}else{
-		// $w('#responseHolderFieldZZZ').value = "'Resolve Webhook' is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.";
-		$w('#responseHolderFieldZZZ').value = invalidString;
-	}
-	$w("#radioAreYouSure").value = 'NO';
-    $w('#ddCurrentStatusUpdate').value = '';
-	$w("#ddCurrentStatusUpdate").resetValidityIndication();
+        if (local.getItem('lastResponseObject').length < 20) {
+            responseObject.webhookCurrent = JSON.parse(local.getItem('lastParamObject'))
+            invalidString = 'CURRENT STATUS:\n'
+            invalidString += local.getItem('lastParamObject')
+        } else {
+            responseObject.webhookBefore = JSON.parse(local.getItem('lastParamObject'))
+            invalidString = 'BEFORE UPDATE:\n'
+            invalidString += local.getItem('lastParamObject')
+            responseObject.webhookAfter = JSON.parse(local.getItem('lastResponseObject'))
+            invalidString += '\nAFTER UPDATE:\n'
+            invalidString += local.getItem('lastResponseObject')
+        }
+        // $w('#responseHolderFieldZZZ').value = invalidString;
+        $w('#responseHolderFieldZZZ').value = JSON.stringify(responseObject,undefined,4);
+        wixWindow.copyToClipboard($w('#responseHolderFieldZZZ').value)
+        // ø </DO IT>
+    } else {
+        // ø <ELSE Show Message>
+        // $w('#responseHolderFieldZZZ').value = "'Resolve Webhook' is so critical, and destructive, that it will only be executed if you indicate that you really want to do it.\n\nNo action taken. \nPlease try again or ask for assistance.";
+        $w('#responseHolderFieldZZZ').value = invalidString;
+        // ø <ELSE Show Message>
+    }
+    $w("#radioAreYouSure").value = 'NO';
+    $w('#ddCurrentStatusUpdate').value = 'CURRENT';
+    $w("#ddCurrentStatusUpdate").resetValidityIndication();
+}
+// ø <------------ </btnWebhookResolve_click> -------------->
+// ø <------------ </Update WebhookPayload WebhookStatus GROUP> -------------->
+
+/**
+ *	Adds an event handler that runs when the element is clicked.
+ *	 @param {$w.MouseEvent} event
+ */
+export function btnUnloadTop_click(event) {
+	// doUnload(); 
+    cleanUp();
+
+    // $w('#btnUnloadTop').hide()
+}
+
+/**
+*	Adds an event handler that runs when an input element's value
+ is changed.
+*	 @param {$w.Event} event
+*/
+export function emailParent_change(event) {
+    // let filter1 = wixData.filter().eq("mainPhone", phoneRaw);
+    let filter2 = wixData.filter().startsWith("loginEmail", $w('#emailParent').value);
+    // let finalFilter = filter1.or(filter2);
+    let finalFilter = filter2;
+    $w("#dsMembers").setFilter(finalFilter);
+    $w("#btnAssignNewMember").show();
 
 }
-// ø <------------ </Update WebhookPayload WebhookStatus GROUP> -------------->

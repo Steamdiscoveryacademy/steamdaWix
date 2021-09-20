@@ -1706,42 +1706,6 @@ export function btnLogEnrollmentJSON_click(event) {
 }
 
 // ø <------------ <Update WebhookPayload WebhookStatus GROUP>  -------------->
-// ø <------------ <doUpdateThisWebhookPayload(status)>  -------------->
-// ¡ <I THINK THIS IS DUPLICATION OF BUTTON: btnWebhookResolve_click>
-// ¡   - notwithstanding the unfortunate Id (update, one option being resolve)
-// ¡   - notwithstanding the understandable instinct to separate btn__click from actual do() function
-export async function doUpdateThisWebhookPayload(status) {
-    let response = "";
-    let kInvalidAppend = `\nNo action taken.\nPlease try again or ask for assistnace.`;
-    if ($w('#thisKey').value.length < 30) {
-        response = "Invalid 'WiX-Webhook-ID'" + kInvalidAppend;
-        // $w('#responseHolderFieldZZZ').value = response;
-        // onReadyUserInterface();
-        return;
-    }
-    if ($w('#ddCurrentStatusUpdate').value === $w('#thisCurrentStatus').value) {
-        response = "On-deck 'Webhook-Payload' Status is the same as the Drop-Down (update) Value. No Update Indicated" + kInvalidAppend;
-        // $w('#responseHolderFieldZZZ').value = response;
-        // onReadyUserInterface();
-        return;
-    }
-    await updateStatuWebhookPayloadThis();
-    let lastResponse = JSON.parse(local.getItem('lastResponseObject'));
-    if (lastResponse._id === $w('#thisKey').value) {
-        $w('#thisCurrentStatus').value = lastResponse.currentStatus;
-        // if(typeof lastResponse.resolvedStatus !== 'undefined'){
-        // 	local.setItem('webhookThisResolved',lastResponse.resolvedStatus);
-        // }
-    }
-    response = "UPDATE: String Pending" + kInvalidAppend;
-    // $w('#responseHolderFieldZZZ').value = response;
-    // refreshWebhookPayloadDataSet()
-    // onReadyUserInterface();
-
-}
-// ¡ </I THINK THIS IS DUPLICATION OF BUTTON: btnWebhookResolve_click>
-// ø <------------ </doUpdateThisWebhookPayload(status)> -------------->
-
 // ø <------------ <updateStatuWebhookPayloadThis()>  -------------->
 export async function updateStatuWebhookPayloadThis(getOnly = false) {
     console.groupCollapsed('updateStatuWebhookPayloadThis')

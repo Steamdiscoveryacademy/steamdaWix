@@ -1767,7 +1767,7 @@ export async function actionValueEvaluation() {
         if (DOX !== 'YES -  But the whole If-Clause should always be run, the Manual Confirmation is a thing of the past') {
             console.log(`≈1700≈ contact.source.sourceType: could be MOOT but 'MEMBER' or 'IMPORT' supported now`);
             let sourceType = contact.source.sourceType.toUpperCase();
-            let supportedSourceTypeArray = ['zMEMBER','zIMPORT','zADMIN','zWIX_STORES','zWIX_SITE_MEMBERS','zOTHER']
+            let supportedSourceTypeArray = ['zMEMBER','zIMPORT','ADMIN','WIX_STORES','zWIX_SITE_MEMBERS','zOTHER']
             if (supportedSourceTypeArray.includes(sourceType) === false) {
                 local.setItem('superEnrollmentStatus', 'ALERT');
                 memory.setItem('stepResponseBootstrapKey','danger');
@@ -1831,6 +1831,8 @@ export async function actionValueEvaluation() {
     // ø </stAction>
 
     // ø <spAction>
+    console.groupCollapsed('<spAction>')
+    console.log(`init: spAction: ${spAction}`)
     let checkSecondaryParent = (local.getItem('spFirst')).length === 0 && (local.getItem('spLast')).length === 0 ? false : true;
     let logSecondaryParentReason = '';
     logSecondaryParentReason = checkSecondaryParent === false ? 'Secondary Parent was not filled in in the form' : logSecondaryParentReason;
@@ -1841,6 +1843,7 @@ export async function actionValueEvaluation() {
     local.setItem('logString', local.getItem('logString') + '\n[~Z536]logSecondaryParentReason: ' + logSecondaryParentReason);
     local.setItem('logString', local.getItem('logString') + '\n[~Z537]checkSecondaryParent: ' + checkSecondaryParent);
     spAction = !checkSecondaryParent ? "NA|SKIP|SKIP" : spAction;
+    console.log(`!checkSecondaryParent[!${checkSecondaryParent}]: spAction: ${spAction}`)
     console.log(`spAction: by Secondary in Application: ${spAction}`);
     if (staffMatch) {
         if(202106 < Number(local.getItem('termId'))){
@@ -1858,10 +1861,24 @@ export async function actionValueEvaluation() {
                 .eq("termId", termId)
                 .count();
             spAction = spExistsCount > 0 ? "NA|SKIP|SKIP" : spAction;
+            if (spExistsCount > 0) {
+                let spPerson = await wixData.query("person")
+                    .eq("familyId", familyId)
+                    .eq("role", 'Secondary')
+                    .eq("termId", termId)
+                    .find();
+                // console.log('spPerson')                
+                // console.dir(spPerson) 
+                let secondaryId = spPerson.items[0].personId    
+                // console.log(`secondaryId: ${secondaryId}`)
+                local.setItem('secondaryId',secondaryId)           
+                console.log(`local.getItem('secondaryId'): ${local.getItem('secondaryId')}`)
+            }
             console.log(`spAction: by Exist in Database: ${spAction}`);
             local.setItem('logString', local.getItem('logString') + '\n[~Z550]spExistsCount: ' + spExistsCount);
         }
     }
+    console.groupEnd()
     // ø </spAction>
 
     let now = new Date();
@@ -6076,6 +6093,17 @@ export async function manyButtonsDropDownO3(paramObject = {ddValue: "NNULL",resp
         responseObject.webhookThisResolved = webhookThisResolved;
         // $w('#sessionEnrollmentJSON').value = JSON.stringify(responseObject,undefined,4)
         responseString = JSON.stringify(responseObject);
+        done = true;
+        paramObject.done = done;
+        paramObject.response.string = responseString;
+    }
+    if (value === 'doUnloadSafelyDD03') {
+        let DOX = ''
+        local.setItem("ondeckEnrollmentJSON",DOX);
+        local.setItem('wixWebhookId',DOX);
+        local.setItem('wixWebhookStatus',DOX);
+        responseString = `Enrollment has been Unloaded Safely, with no change to the Application Webbook
+        ...you may return to Process this Application again (or any other)`;
         done = true;
         paramObject.done = done;
         paramObject.response.string = responseString;

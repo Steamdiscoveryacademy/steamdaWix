@@ -501,7 +501,7 @@ export function instantiateEnrollment (returnObjectArrayObject) {
         parentSecondaryRenderable = parentSecondaryRenderable ? true : false;
         // parentFirstSecondary = parentFirstSecondary.trim();
         parentLastSecondary = parentLastSecondary.trim();
-        parentLastSecondary = parentLastSecondary === parentLastSecondary.toLowerCase() || parentLastSecondary === parentLastSecondary.toUpperCase() ? parentLastSecondary.substr(0,1).toUpperCase() + studentFirst.substr(1).toLowerCase(): studentFirst;
+        parentLastSecondary = parentLastSecondary === parentLastSecondary.toLowerCase() || parentLastSecondary === parentLastSecondary.toUpperCase() ? parentLastSecondary.substr(0,1).toUpperCase() + studentFirst.substr(1).toLowerCase(): parentLastSecondary;
     }
 
     returnObjectArrayObject.family = {};

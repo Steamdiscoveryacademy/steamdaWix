@@ -54,6 +54,7 @@ $w.onReady(function () {
 //0402errorMAYBE: 
 export function rptrTitle_click(event, $w) {
     //responseHolderFieldZZZ
+    console.groupCollapsed('rptrTitle_click')
     $w('#btnUnloadTop').show()
     let status = local.getItem("ondeckEnrollmentJSON").length > 20 ? 'ALERT' : 'CONTINUE';
     $w('#txtPayloadTitleAlert').text = status === 'ALERT' ? 'ALERT: There is an On-Deck Enrollment to Post' : '';
@@ -81,13 +82,13 @@ export function rptrTitle_click(event, $w) {
     $w('#theseParents').value = payload.primary_parentguardian_name.first + ' ' + payload.primary_parentguardian_name.last + ' (' + $w('#theseParents').value + ')';
     console.groupCollapsed('[~Z95]payload: ');
     console.dir(payload);
+    console.groupEnd()
     // console.log(payload.student_name);
     let name = 'Davis, Chester';
     let applicationSummerIndex = -777;
     if(webhookId === '4223065'){
         name = payload.student_name.last + ', ' + payload.student_name.first;
-        applicationSummerIndex = title.indexOf('Application Summer');
-        
+        applicationSummerIndex = title.indexOf('Application Summer');    
     }
     title = title.replace('Application Summer', name);
     title = title.replace('freeLessonRequest', 'FREE! Lesson Requet ');
@@ -121,7 +122,7 @@ export function rptrTitle_click(event, $w) {
     currentStatusStamp = currentStatusStamp.substr(0, currentStatusStamp.search(" GMT"))
     $w('#thisCurrentStatusStamp').value = currentStatusStamp;
     $w('#thisResolvedStatus').value = targetItem['resolvedStatus'];
-    if (targetItem['resolvedStatusStamp'] === null) {
+    if (targetItem['resolvedStatusStamp'] == null) {
         $w('#thisResolvedStatusStamp').value = targetItem['resolvedStatusStamp'];
     } else {
         let resolvedStatusStamp = targetItem['resolvedStatusStamp'].toString();
@@ -134,6 +135,7 @@ export function rptrTitle_click(event, $w) {
 
         let webhookIdArray = ['4223065']
         for (let webhookIdThis of webhookIdArray) {
+            console.log(`EnableButtons iteration: sourceThis['${sourceThis}''] – webhookIdThis['${webhookIdThis}'] `)
             let buttonIdConcat = '#' + sourceThis + webhookIdThis;
             if (webhookId === webhookIdThis && source === sourceThis) {
                 $w(buttonIdConcat).show();
@@ -142,6 +144,7 @@ export function rptrTitle_click(event, $w) {
             }
         }
     }
+    console.groupEnd()
 }
 
 export function resolveSelectedWebHook() {
@@ -916,6 +919,7 @@ export function cleanUp(returnObjectArrayObject, runningTotalObject, objApplicat
     unsetElementsArray.push('#memberIdStudent')//20210920 - double-check
     unsetElementsArray.push('#displayDevelJSON')//20210920 - double-check
     $w('#btnUnloadTop').hide()//20210920 = new button that calls at top
+    $w('#FormStack4223065').hide()//20210920 = as with Re-Loading Page: (see Loop for rptrTitle_click when more forms)
     let unsetTextElementsArray = ['#dobGradeLevelErrorText']
 
     for ( let element of unsetElementsArray) {
@@ -934,9 +938,13 @@ export function cleanUp(returnObjectArrayObject, runningTotalObject, objApplicat
         $w(switchErrorIdArray[index]).checked = false;   
         $w(switchErrorIdArray[index]).hide();   
     }
-    let hideArray = ["#boxReadyToEnroll"];
-    for ( let element of hideArray) {
-        $w(element).hide();
+    let collapsseArray = ["#boxReadyToEnroll"];
+    for ( let element of collapsseArray) {
+        $w(element).collapse();
+    }
+    let expandArray = ["#btnValidateEnrollment"];
+    for ( let element of expandArray) {
+        $w(element).expand();
     }
     let disableArray = ["#warnTextBox"];
     for ( let element of disableArray) {
@@ -973,7 +981,7 @@ export function btnProcessEnrollment_click(event) {
 }
 
 export function btnValidateEnrollment_click(event, returnObjectArrayObject) {
-    $w("#boxReadyToEnroll").hide();
+    $w("#boxReadyToEnroll").collapse();
     let dog = "Chester";
     console.log(dog);
     console.log(
@@ -1008,7 +1016,8 @@ export function btnValidateEnrollment_click(event, returnObjectArrayObject) {
     returnObjectArrayObject.enrollment.errorNoOverloadArray = errorNoOverloadArray;
     returnObjectArrayObject.enrollment.anyErrorWhatsoever = anyErrorWhatsoever;
     if (!anyErrorWhatsoever){
-        $w("#boxReadyToEnroll").show();
+        $w("#btnValidateEnrollment").collapse()
+        $w("#boxReadyToEnroll").expand();
     }
 
     displayErrors(enrollmentErrorArray);
@@ -1649,8 +1658,11 @@ export function doPostEnrollemnt(){
     local.setItem('wixWebhookStatus',webhookStatus);
     console.log('local.getItem("ondeckEnrollmentJSON"): ');
     console.log(local.getItem("ondeckEnrollmentJSON"));
-    $w('#btnGoToPostEnrollment').show();
-    $w('#postEnrollment').hide();
+    // $w('#btnGoToPostEnrollment').show();
+    // $w('#txtEnrConfirmedAbove').show();
+    // $w('#txtEnrConfirmedBelow').show();
+    $w('#groupEnrollmentConfirmed').expand();
+    $w('#postEnrollment').collapse();
     // wixLocation.to("/post-enrollment");
 }
 
@@ -1848,17 +1860,9 @@ export async function btnWebhookResolve_click(event) {
  *	 @param {$w.MouseEvent} event
  */
 export function btnUnloadTop_click(event) {
-	// doUnload(); 
     cleanUp();
-
-    // $w('#btnUnloadTop').hide()
 }
 
-/**
-*	Adds an event handler that runs when an input element's value
- is changed.
-*	 @param {$w.Event} event
-*/
 export function emailParent_change(event) {
     // let filter1 = wixData.filter().eq("mainPhone", phoneRaw);
     let filter2 = wixData.filter().startsWith("loginEmail", $w('#emailParent').value);
@@ -1867,4 +1871,8 @@ export function emailParent_change(event) {
     $w("#dsMembers").setFilter(finalFilter);
     $w("#btnAssignNewMember").show();
 
+}
+
+export function btnGoToTopAndCleanup_click(event) {
+	cleanUp();
 }

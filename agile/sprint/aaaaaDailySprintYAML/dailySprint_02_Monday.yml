@@ -1,9 +1,11 @@
 ---
-#?==================================================
-#¿=====   Sprint  Monday September 13, 2021   ======
-#?==================================================
+#?========================================================
+#¿=====       Sprint  Monday September 20, 2021      =====
+#?========================================================
 daily Commits:
-      - postEnrollment:  yes
+      - postEnrollment: yes
+      - processWebhooks: yes
+      - enrollmentLandingPage: yes
 ...
 ---
 Brainstorm enrollmentstates UI:
@@ -129,13 +131,14 @@ messaging:
             - alias to Clean Message STUDENT EMAIL: no
             - alias to Clean Message STUDENT STID: no
             - alias to Clean Message STUDENT EMAIL && STID: no
+            - This is so unlikely that the aliases will wait
       - ANY_DUPLICATES || ANY_UNDELETED:
-            - ANY_DUPLICATES PRIMARY: no
-            - ANY_DUPLICATES STUDENT: no
-            - ANY_DUPLICATES PRIMARY && STUDENT: no
-            - ANY_UNDELETED PRIMARY: no
-            - ANY_UNDELETED STUDENT: no
-            - ANY_UNDELETED PRIMARY && STUDENT: no
+            - ANY_DUPLICATES PRIMARY: yes
+            - ANY_DUPLICATES STUDENT: yes
+            - ANY_DUPLICATES PRIMARY && STUDENT: yes
+            - ANY_UNDELETED PRIMARY: yes
+            - ANY_UNDELETED STUDENT: yes
+            - ANY_UNDELETED PRIMARY && STUDENT: yes
 ...
 ---
 Test Students: 

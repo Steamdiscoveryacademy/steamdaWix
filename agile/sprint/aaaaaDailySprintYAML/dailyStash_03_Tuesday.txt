@@ -8,38 +8,7 @@ $w('#HOLDER')
 https://webhook.site/191e8210-1ce6-4d05-8d72-e3a3a10cf0e4
 
 
-===========================================
-=====    Tuesday September 14, 2021   =====
-===========================================
-===========================================
-
-memory.getItem('msboxCurrentId')
-memory.getItem('msboxCurrentStateId')
-
-DUPLICATE_EXISTS_PRIMARY
-
-            local.setItem('superEnrollmentStatus', 'ALERT');
-            memory.setItem('stepResponseBootstrapKey','danger');
-            await appendStepLogPPEQ('danger', `'Staff Eye-D' does not match actual 'Contact ID': '${contact._id}'`);
-            console.log(`≈1694≈ staffMatch; local.getItem('superEnrollmentStatus'): ${local.getItem('superEnrollmentStatus')}`);
-
-
-pstEnrSeven202108STEP_P_05
-
-
-    let anyDangerHide = false;
-    anyDangerHide = memory.getItem('stepResponseBootstrapKey') === 'danger' ? true : anyDangerHide;
-    anyDangerHide = (memory.getItem('stepLogString')).indexOf('danger') >= 0 ? true : anyDangerHide;
-    console.log('anyDangerHide: ' + anyDangerHide);
-    if(anyDangerHide){
-        console.log('hide Perform & Next Buttons')
-        $w('#btnPeSevenNext').hide();
-        $w('#btnPeSevenCurrent').hide();
-    }
-
-
-await appendStepLogPPEQ('sufficientBootstrap', `Message`);
-
-memory.setItem('stepResponseBootstrapKey',stepResponseBootstrapKey);
-
-local.setItem('superEnrollmentStatus')
+===============================================
+=====      Tuesday September 16, 2021     =====
+===============================================
+===============================================

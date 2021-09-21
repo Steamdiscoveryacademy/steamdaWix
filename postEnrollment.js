@@ -15,6 +15,7 @@ import wixData from 'wix-data';
 import wixWindow from 'wix-window';
 
 
+
 /**
  * ! QUICK-FIND UniqueID's for Blocks
  * ! ===============================
@@ -110,6 +111,7 @@ export function onReadyPostEnrollment() {
 export function wixUsersOnReady(){
 	const user = wixUsers.currentUser;
 	const adminShowArray = ['#btnDeveloperOnly'];
+	const mgrShowArray = ['#btnSafeUnloadRoles'];
 	if(user.loggedIn){
 		user.getRoles()
 		.then( (roles) => {
@@ -117,6 +119,11 @@ export function wixUsersOnReady(){
 			if (roles.some(r => r.name === "Admin")){
 				for (var i = 0; i < adminShowArray.length; i++) {
 					$w(adminShowArray[i]).show();
+				}
+			}
+			if (roles.some(r => r.name === "Manager" || r.name === "Admin")){
+				for (var i = 0; i < mgrShowArray.length; i++) {
+					$w(mgrShowArray[i]).show();
 				}
 			}
 		});
@@ -1767,7 +1774,7 @@ export async function actionValueEvaluation() {
         if (DOX !== 'YES -  But the whole If-Clause should always be run, the Manual Confirmation is a thing of the past') {
             console.log(`≈1700≈ contact.source.sourceType: could be MOOT but 'MEMBER' or 'IMPORT' supported now`);
             let sourceType = contact.source.sourceType.toUpperCase();
-            let supportedSourceTypeArray = ['zMEMBER','zIMPORT','ADMIN','WIX_STORES','zWIX_SITE_MEMBERS','zOTHER']
+            let supportedSourceTypeArray = ['MEMBER','IMPORT','ADMIN','WIX_STORES','WIX_SITE_MEMBERS','zOTHER']
             if (supportedSourceTypeArray.includes(sourceType) === false) {
                 local.setItem('superEnrollmentStatus', 'ALERT');
                 memory.setItem('stepResponseBootstrapKey','danger');
@@ -5658,6 +5665,70 @@ export function btnDeveloperOnly_click(event) {
     $w(developerStateBoxID).changeState(nextState);
 }
 
+export function btnSafeUnloadRoles_click(event) {
+	console.groupCollapsed('btnSafeUnloadRoles_click')
+    let developerStateBoxID = '#DeveloperStateBox'
+    let supportedStateArray = ['stateInvisible','safeUnload'];
+    console.log(`supportedStateArray`)
+    console.dir(supportedStateArray)
+    
+    // ø <ELSE>
+    let currentState = $w(developerStateBoxID).currentState;//"GET IT"
+    // console.log(`currentState`)
+    // console.dir(currentState)
+    if(!supportedStateArray.includes(currentState.id)){
+        console.log(`!supportedStateArray.includes(currentState)`)
+        console.groupEnd()
+        return;
+    }
+    let stateArray = $w(developerStateBoxID).states;//['GET THEM']
+    // console.log(`stateArray`)
+    // console.dir(stateArray)
+    if(supportedStateArray[0] !== stateArray[0].id){
+        console.log(`supportedStateArray[0] !== stateArray[0]`)
+        console.groupEnd()
+        return;
+    }
+    if(supportedStateArray[1] !== stateArray[stateArray.length - 1].id){
+        console.log(`supportedStateArray[1] !== stateArray[stateArray.length - 1]`)
+        console.groupEnd()
+        return;
+    }
+    // ø </ELSE>
+
+    // ø <THEN>
+    console.log(`Successful Arrivale, ready to travel`)
+    let targetIndex = supportedStateArray[0] === currentState.id ? 1 : 0;
+    console.log(`supportedStateArray[${targetIndex}]: ${supportedStateArray[targetIndex]}`)
+
+    // $w(developerStateBoxID).changeState(supportedStateArray[1]);
+    $w(developerStateBoxID).changeState(supportedStateArray[targetIndex]);
+    // ø </THEN>
+
+    // let currentIndex = stateArray.indexOf(currentState)
+    // let nextIndex = currentIndex + 1 >= stateArray.length ? 0 : currentIndex + 1;
+    // let nextState = stateArray[nextIndex]
+    // $w(developerStateBoxID).changeState(nextState);
+    console.groupEnd()
+}
+export function btnDoSafeUnload_click(event) {
+	// ø <UNLOAD>
+    let DOX = ''
+    local.setItem("ondeckEnrollmentJSON",DOX);
+    local.setItem('wixWebhookId',DOX);
+    local.setItem('wixWebhookStatus',DOX);
+    // responseString = `Enrollment has been Unloaded Safely, with no change to the Application Webbook
+    // ...you may return to Process this Application again (or any other)`;
+    // done = true;
+    // paramObject.done = done;
+    // paramObject.response.string = responseString;
+	// ø </UNLOAD>
+
+	// ø <GoTo LANDING PAGE>
+    wixLocation.to("/blank-4");
+	// ø </GoTo LANDING PAGE>
+}
+
 export async function btnMultButtonClearDD01_click(event) {
     // 202109_Developer
 	let paramObject = {ddValue: "CLEAR",response: {string:'STRING'},done: false, messaging: {}}
@@ -6115,6 +6186,3 @@ export async function manyButtonsDropDownO3(paramObject = {ddValue: "NNULL",resp
 // ! ========================================================================================================================
 // ! ==============================               </DEVELOPER ONLY MultiStateBox>              ==============================
 // ! ========================================================================================================================
-
-
-

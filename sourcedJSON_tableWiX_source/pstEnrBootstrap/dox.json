@@ -14,5 +14,38 @@
             "will always just be a shell",
             " ↪ ¿¡ UNLESS read-file !?"
         ]
+    },
+    "manualEntry": {
+        "salt": {
+            "function": "peSevenObjectBuilderOverall(peSevenObject) {}",
+            "path": "",
+            "seachFor": [
+                ""
+            ],
+            "notes": [
+                "ability to Apply and Not"
+            ]
+        },
+        "titleValues": {
+            "function": "buildStepObjectArrayBase(peSevenObject){}",
+            "path": "/vsCode/steamdaWixLocal/steamdaWix/agile/sprint/SevenSuperSteps/SevenSuperSteps_JSON_Builder/manualEntryTitles_versioning/",
+            "seachFor": [
+                "<step titles manual>",
+                "Customize zxzHEREzxz"
+            ],
+            "notes": [
+                "now uses Full 'manualEntryTitles() Versioned Function"
+            ]
+        },
+        "bootstrapMessageValues": {
+            "function": "stepMessagingBuildFromManual(peSevenObject) {}",
+            "path": "",
+            "seachFor": [
+                "Customize zxzHEREzxz"
+            ],
+            "notes": [
+                "needs better Entry Mechanism"
+            ]
+        }
     }
 }

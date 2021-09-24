@@ -1,0 +1,9 @@
+export async function btnGetContactById_click(event) {
+	console.groupCollapsed('btnGetContactById_click()')
+	let currMemberId = 'fbf3a29c-3d4c-4687-bff9-5216165ca47b';
+	console.log(`currMemberId: ${currMemberId}`)
+	let contactReturned = await steamdaGetContactFunction(currMemberId);
+	console.log(`let contactReturned = await steamdaGetContactFunction(currMemberId);`)
+	console.dir(contactReturned)
+	console.groupEnd()
+}

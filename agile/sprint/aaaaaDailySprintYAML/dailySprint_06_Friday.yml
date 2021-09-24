@@ -1,9 +1,11 @@
 ---
 #?========================================================
-#¿=====       Sprint  Friday September 17, 2021      =====
+#¿=====       Sprint  Friday September 22, 2021      =====
 #?========================================================
 daily Commits:
-      - postEnrollment: yes
+      - postEnrollment: no
+      - processWebhooks: no
+      - enrollmentLandingPage: no
 ...
 ---
 Brainstorm enrollmentstates UI:

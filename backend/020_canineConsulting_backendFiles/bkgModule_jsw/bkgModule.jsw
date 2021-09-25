@@ -1,0 +1,59 @@
+
+// import wixBookingsBackend from 'wix-bookings-backend';
+
+// export function sdaAllBookings (date) {
+// wixBookingsBackend.queryBookings
+//   .ge("endTime", date)
+//   // .ascending("startTime")
+//   // .limit(5)
+//   .find()
+//   .then( (results) => {
+//     console.log(results.items);
+//   } );
+// }
+
+import { bookings } from "wix-bookings-backend";
+
+export function queryBookings() {
+  return bookings
+    .queryBookings()
+    // .gt("endTime", "2021-01-01T01:00:00.000Z")
+    // .hasSome("status", ["PENDING_CHECKOUT", "CONFIRMED", "CANCELED", "PENDING", "PENDING_APPROVAL", "DECLINED"])
+    .find()
+    .then((queryResult) => {
+      return queryResult;
+    })
+    .catch((error) => {
+      return error;
+    });
+}
+
+
+// .jsw files enable you to write functions that run on the server side
+
+// Test any backend function by clicking the "Play" button on the left side of the code panel
+
+// About testing backend functions: https://support.wix.com/en/article/velo-testing-your-backend-functions
+
+// Sample function
+
+export function multiply(factor1, factor2) {
+    return factor1 * factor2;
+}
+
+// Execute the sample function above by copying the following into your page code
+
+/* 
+import {multiply} from 'backend/bModule';
+
+$w.onReady(function () {
+	
+	multiply(4,5).then(product => {
+	    console.log(product);
+	      // Logs: 20
+	})
+	.catch(error => {
+		console.log(error);
+	});
+});
+*/

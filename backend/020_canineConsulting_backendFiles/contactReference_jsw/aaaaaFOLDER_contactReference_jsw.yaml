@@ -1,0 +1,26 @@
+aModule_jsw:
+  - filename: contactReference.jsw
+  - descr: TEMPLATE FOR ALL OTHER BACKEND FILE-FOLDER YAML FILES
+  - notes:
+      - seems like a good strong TEST
+      - MAYBE deployed
+  - import declarations:
+    - import wixCrmBackend from 'wix-crm-backend';
+    - import { contacts } from 'wix-crm-backend';
+    - notes: 
+      - ¿Are BOTH required together?
+      - ¿Is the first the GENERAL and the second SPECIFIC?
+  - functions:
+    - multiply(factor1, factor2) {:
+      - descr: default still active
+    - ZZZmultiply(factor1, factor2) {:
+      - descr: simple call to getContactById()
+      - issues: tbd
+      - todo:
+        - replace multiply() with CustomRewrite
+      - files where local code needs to be deprecated in favor of this:
+        - tbd
+      - files where successfully used:
+        - tbd
+
+      

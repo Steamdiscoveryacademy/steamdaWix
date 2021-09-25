@@ -1,0 +1,18 @@
+aModule_jsw:
+  - filename: bkgModule.jsw
+  - descr: seems just the Import of Booking Module Backend
+  - notes:
+    - seems very cursory, not to be trusted
+  - import declarations:
+    - mport { bookings } from "wix-bookings-backend";
+  - functions:
+    - queryBookings():
+      - descr: nothing
+      - issues: tbd
+      - todo: tbd
+      - files where local code needs to be deprecated in favor of this:
+        - tbd
+      - files where successfully used:
+        - tbd
+
+      

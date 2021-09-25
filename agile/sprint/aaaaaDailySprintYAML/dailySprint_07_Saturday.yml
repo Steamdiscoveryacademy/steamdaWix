@@ -1,9 +1,18 @@
 ---
 #?========================================================
-#¿=====      Sprint  Saturday September 18, 2021     =====
+#¿=====      Sprint  Friurday September 25, 2021     =====
 #?========================================================
 daily Commits:
-      - postEnrollment: yes
+      - postEnrollment: no
+      - processWebhooks: no
+      - enrollmentLandingPage: no
+...
+---
+Saturday September 25:
+      - sortable alphaTimeKey: no
+      - backend alphaTimeKey: no
+      - backend diverseAvatar: no
+      - backend alphabetAvatar: no
 ...
 ---
 Brainstorm enrollmentstates UI:

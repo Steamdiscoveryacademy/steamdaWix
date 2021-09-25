@@ -13,6 +13,9 @@ Saturday September 25:
       - backend alphaTimeKey: no
       - backend diverseAvatar: no
       - backend alphabetAvatar: no
+      - Creation Date and AlphaKey INSTED for Student: no
+      - "_createdDate": "2021-03-16T18:10:57.830Z",
+      - integrate Sprint => backEnd_20210715_lotsToOrganize: no
 ...
 ---
 Brainstorm enrollmentstates UI:

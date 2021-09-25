@@ -1,0 +1,14 @@
+Existing Code that may be a Good Candidates for Backend Functions:
+  - getImagePath_ofAlphabetAvatar_NOTbackend:
+    - approx 2021-09-15
+  - getImagePath_ofRandomDiverseFace_NOTbackend:
+    - approx 2021-09-20
+
+
+
+
+
+Notes:
+  - |a file where '_NOTbackend' is appended indicates that it was deployed locally
+  where it is known that it is a good candidate for backend, but didn't want to go
+  through the the additional time/bother (and to get it right before backend)

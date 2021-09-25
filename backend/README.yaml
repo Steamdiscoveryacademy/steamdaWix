@@ -1,0 +1,20 @@
+Declarations:
+  -  This file is ignorant of any previous attempt to organize Backend Files
+
+This will attempt organize in three folders:
+  - functionsCode: 
+    -where to create/move code that is identified for the backed
+  - canineConsulting_backendFiles:
+    - for BackEnd Testing
+    - a foler for each actual backend FILE:
+      -  (named identically)
+      - the GOLD actaul FILE itself
+      - the 'functionsCode' files moved/aliased here upon testing
+      - (changed to an alias upon moving to steamda below)
+  - steamDA_backendFiles:
+    - for BackEnd Deployment
+    - a foler for each actual backend FILE:
+      -  (named identically)
+      - the GOLD actaul FILE itself (may or not be identifal to CC, if so change to alias)
+      - the 'functionsCode' files moved here upon deployment
+      - (do replace moved from CC with aliases)

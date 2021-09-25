@@ -1,0 +1,6 @@
+import wixCrmBackend from 'wix-crm-backend';
+// import wixCrm from 'wix-crm-backend';
+
+export function myBackendFunction(contactId) {
+  return wixCrmBackend.getContactById(contactId);
+}

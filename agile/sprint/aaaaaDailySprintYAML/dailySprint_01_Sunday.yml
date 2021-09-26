@@ -8,20 +8,31 @@ daily Commits:
       - enrollmentLandingPage: no
 ...
 ---
-Saturday Sunday 26:
-      - sortable alphaTimeKey(): yes
+Sunday Septermber 26:
       - backend alphaTimeKey(): no
       - backend getImagePath_ofRandomDiverseFace():
             - migrate to OnDeck: yes
-            - YAML: no
+            - YAML: yes
             - Test in Canine-Consulting: no
-      - backend getImagePath_ofAlphabetAvatar(): no
-      - backend intlDateTimeFormatByDateAliasFormatAlias(): no
-      - Creation Date and AlphaKey INSTAED for Student: no
+      - backend getImagePath_ofAlphabetAvatar(): 
+            - migrate to OnDeck: yes
+            - YAML: yes
+            - Test in Canine-Consulting: no
+      - backend intlDateTimeFormatByDateAliasFormatAlias(): 
+            - migrate to OnDeck: yes
+            - YAML: yes
+            - Test in Canine-Consulting: no
+      - Creation Date and AlphaKey INSTEAD for Student: no
       - "_createdDate": "2021-03-16T18:10:57.830Z",
-      - work on and enhance intlDateTimeFormatByDateAliasFormatAlias() for above: yes
+      - work on and enhance intlDateTimeFormatByDateAliasFormatAlias() for above:
+            - cleanup, bug-killed, better devel-output: yes
+            - more data-aliases: no
       - integrate Sprint => backEnd_20210715_lotsToOrganize: no
-      - recreate 'multiply' function for-each Backend File TEMPLATE: yes
+      - recreate 'multiply' function Backend File TEMPLATE: yes
+      - recreate 'multiply' function for-each Backend File TEMPLATE:
+            - FILENAME:
+                  - Update Multiply Function
+                  - convert YAML to JSON manually (until API is found)
 ...
 ---
 Brainstorm enrollmentstates UI:

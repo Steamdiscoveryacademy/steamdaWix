@@ -1,0 +1,25 @@
+aModule_jsw:
+  - filename: radomDiversityAvatarCollection.js
+  - descr: returns a simple random Diverse Avatar
+  - notes:
+      - sourced (but may be infringement of yada,yada)
+      - random by gender, race
+      - NOT random by sexual-identity, age
+      - works with a literal array of site paths, can be swapped (even paramaterized) to different array
+  - import declarations:
+    - none
+  - functions:
+    - getImagePath_ofRandomDiverseFace():
+      - descr: above
+      - issues: tbd
+      - todo: 
+        - (above) check licensing
+        - (above) parameterized groups (¿too clever by half?)
+        - extend (just initial 9 by source) for more diversity
+      - files where local code needs to be deprecated in favor of this:
+        - https://brad7390.wixsite.com/canine-consulting/team-json?display=postedEnrollmentLastElement:
+          - as '_NOTbackend', so ready for backend
+      - files where successfully used:
+        - tbd
+
+      

@@ -1,0 +1,26 @@
+aModule_jsw:
+  - filename: alphabetAvatarCollection.js
+  - descr: returns a simple Letter Avatar by way of a Parameter
+  - notes:
+      - no gender, no age, no race Just Letters
+      - works with a literal array of site paths, can be swapped (even paramaterized) to different array
+      - accepts any String as Parameter (name.first, for example)
+      - but only acts on the first Alphabetic character
+      - if No Alphabetic character exists in the parameter, it defaults to '@' avatar-path
+      - this defualt could be changed or extended to a random element of an array
+  - import declarations:
+    - none
+  - functions:
+    - getImagePath_ofAlphabetAvatar(letter = 'STRING'):
+      - descr: above
+      - issues: tbd
+      - todo: 
+        - (above) alternate/random of array for default
+        - (above) parameterized groups (¿too clever by half? just client by client/use-case by use-case)
+      - files where local code needs to be deprecated in favor of this:
+        - https://brad7390.wixsite.com/canine-consulting/team-json?display=postedEnrollmentLastElement:
+          - as '_NOTbackend', so ready for backend
+      - files where successfully used:
+        - tbd
+
+      

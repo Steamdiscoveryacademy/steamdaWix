@@ -1,0 +1,40 @@
+aModule_jsw:
+  - filename: intlDateTimeFormatByDateAliasFormatAlias_GROUP.js
+  - descr: designed for Backend use using Intl.DateTimeFormat to replace phpDate
+  - notes:
+      - supports extensible ability to alias Date Object:
+        - now: yes
+        - todayBegin: no
+        - tomorrowBegin [todayEnd (¿how does Oracle do it?)]: no
+        - thisWeek, thisMonth, this Quarter, thisYear Begin
+        - nextWeek, nextMonth, next Quarter, nextYear Begin [see above]
+      - supports extensible ability to alias Format Object:
+        - local ISO: yes
+        - formal Date: no
+        - formal Date-Time: no
+        - formal Time: no
+        - short, long, isoNumber [no limit]
+      - supportes Non-Alias ('na') Date Object being set in responseObject.dateObject: yes
+      - supportes Non-Alias ('na') Format Object being set in responseObject.formatObject:
+        - but as this is so involved, why would you do this _without_ building a corollary ALIAS
+  - import declarations:
+    - none
+  - functions of Group:
+    - intlDateTimeFormatByDateAliasFormatAlias (dateAlias = 'na', formatAlias = 'na', responseObject = {}):
+      - descr: calls the others
+      - issues: tbd
+      - todo: tbd
+    - buildDateObjectByAlias(dateAlias, responseObject):
+      - descr: instantiates the responseObject.dateObject by ALIAS
+      - issues: tbd
+      - todo: investigate Oracle begin/end, add some aliases
+    - buildFormatObjectByAlias(formatAlias, responseObject):
+      - descr: instantiates the responseObject.formatObject by ALIAS
+      - issues: tbd
+      - todo: build some good aliases (EVER-GREEN)
+    - files where local code needs to be deprecated in favor of this GROUP:
+      - tbd
+    - files where this GROUP is successfully used:
+      - tbd
+
+      

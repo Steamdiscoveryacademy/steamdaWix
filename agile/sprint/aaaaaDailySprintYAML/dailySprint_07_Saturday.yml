@@ -1,6 +1,6 @@
 ---
 #?========================================================
-#¿=====      Sprint  Friurday September 25, 2021     =====
+#¿=====      Sprint  Saturday September 25, 2021     =====
 #?========================================================
 daily Commits:
       - postEnrollment: no
@@ -9,13 +9,19 @@ daily Commits:
 ...
 ---
 Saturday September 25:
-      - sortable alphaTimeKey: no
-      - backend alphaTimeKey: no
-      - backend diverseAvatar: no
-      - backend alphabetAvatar: no
-      - Creation Date and AlphaKey INSTED for Student: no
+      - sortable alphaTimeKey(): yes
+      - backend alphaTimeKey(): no
+      - backend getImagePath_ofRandomDiverseFace():
+            - migrate to OnDeck: yes
+            - YAML: no
+            - Test in Canine-Consulting: no
+      - backend getImagePath_ofAlphabetAvatar(): no
+      - backend intlDateTimeFormatByDateAliasFormatAlias(): no
+      - Creation Date and AlphaKey INSTAED for Student: no
       - "_createdDate": "2021-03-16T18:10:57.830Z",
+      - work on and enhance intlDateTimeFormatByDateAliasFormatAlias() for above: yes
       - integrate Sprint => backEnd_20210715_lotsToOrganize: no
+      - recreate 'multiply' function for-each Backend File TEMPLATE: yes
 ...
 ---
 Brainstorm enrollmentstates UI:

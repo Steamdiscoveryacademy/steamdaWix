@@ -1,0 +1,442 @@
+import wixCrmBackend from 'wix-crm-backend';
+import { contacts } from 'wix-crm-backend';
+
+export function multiply(factor1, factor2) {
+    // return factor1 * factor2;
+    // Now Return: Piped-Array `Unique Message|product|reminder of session.getItem()`
+    let thisMultiplyJSON = 'the JSON from the BACKEND FILE FOLDER YAML'
+    // session.setItem('lastMultiplyJSON',thisMultiplyJSON)
+    let product =  factor1 * factor2;
+    return `In SteamDA site's Backend, in the file 'contactReference.jsw', the multiply() function return a product of ${product} |${product}| [see session.getItem('lastMultiplyJSON') for YAML to JSON for this backend file]`
+}
+
+// ø <======================================================================>
+// ø <=================<         Contact Labels           >=================>
+// ø <======================================================================>
+// ø <----------- <getCurrentContactLables Front-End>  ----------->
+
+// ø <------------ <steamdaQueryLabelsFunction>  ------------>
+export function steamdaQueryLabelsFunction() {
+  return contacts.queryLabels()
+    .limit(1000)
+    .find()
+    .then((queryResults) => {
+      const items = queryResults.items;
+      const firstItem = items[0];
+      const pageSize = queryResults.pageSize;
+      const hasNext = queryResults.hasNext();
+      const hasPrev = queryResults.hasPrev();
+      const length = queryResults.length;
+      const query = queryResults.query;
+
+      return items;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+// ø <------------ </steamdaQueryLabelsFunction> ------------>
+
+// ø <------------ <steamdaFindOrCreateLabelFunction>  ------------>
+export function steamdaFindOrCreateLabelFunction(paramObject = {}) {
+    const displayName = paramObject.displayName;
+	// if(displayName.length > 0){
+	// 	return 'Invalid displayName parameter [better Error handling needed]';
+	// }
+
+    const options = {
+        suppressAuth: false
+    };
+
+    return contacts.findOrCreateLabel(displayName, options)
+        .then((label) => {
+            return label;
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+}
+// ø <------------ </steamdaFindOrCreateLabelFunction> ------------>
+
+// ø <---------- <steamdaDeleteLabelFunction>  ---------->
+export function steamdaDeleteLabelFunction(paramObject) {
+  const labelKey = paramObject.labelKey;
+  const options = {
+    suppressAuth: false
+  };
+
+  return contacts.deleteLabel(labelKey, options)
+    .then(() => {
+      console.log("Label deleted");
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+// ø <---------- </steamdaDeleteLabelFunction> ---------->
+
+// ø <---------- <steamdaRenameLabelFunction>  ---------->
+export function steamdaRenameLabelFunction(paramObject) {
+  const labelKey = paramObject.labelKey;
+  const displayName = paramObject.displayName;
+  const options = {
+    suppressAuth: false
+  };
+
+  return contacts.renameLabel(labelKey, displayName, options)
+    .then((renamedLabel) => {
+      return renamedLabel;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+// ø <---------- </steamdaRenameLabelFunction> ---------->
+// ø <======================================================================>
+// ø <=================</         Contact Labels          >=================>
+// ø <======================================================================>
+
+
+// ø <======================================================================>
+// ø <=================<            Contact               >=================>
+// ø <======================================================================>
+// ø <----------- <getCurrentContactLables Front-End>  ----------->
+
+// ø <----------- <steamdaCreateContactFunction()>  ----------->
+export function steamdaCreateContactFunction(paramObject) {
+  const contactInfo = paramObject.contactInfo;
+  // const contactInfo = {
+  //   name: {
+  //     first: "Ari",
+  //     last: "Thereyet"
+  //   }
+  // };
+
+  let options = {
+    allowDuplicates: false,
+    suppressAuth: false
+  };
+
+  // const options = {}
+  // if(typeof paramObject.options === 'object'){
+  //   options = paramObject.options;
+  // }else{
+  //   options = {
+  //     allowDuplicates: false,
+  //     suppressAuth: false
+  //   };
+  // }
+
+  return contacts.createContact(contactInfo, options)
+    .then((contact) => {
+      return contact;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+// ø <----------- </steamdaCreateContactFunction()> ----------->
+
+// ø <----------- <streamdaUpdateContactFunction>  ----------->
+export function streamdaUpdateContactFunction(paramObject) {
+  const contactIdentifiers = paramObject.contactIdentifiers;
+//   const contactIdentifiers = {
+//     contactId: "0677ef55-cf20-4f68-989a-f31d3649eb72",
+//     revision: 6
+//   };
+  const contactInfo = paramObject.contactInfo;
+//   const contactInfo = {
+//     name: {
+//       first: "Annie",
+//       last: "New Name"
+//     },
+//     extendedFields: {
+//       "custom.event-we-met-at": "Cloud Computing MegaCon"
+//     }
+//   };
+  const options = {
+    allowDuplicates: false,
+    suppressAuth: false
+  };
+
+  return contacts.updateContact(contactIdentifiers, contactInfo, options)
+    .then((updatedContact) => {
+      return updatedContact;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+// ø <----------- </streamdaUpdateContactFunction> ----------->
+
+// ø <---------- <steamdaQueryContactsFunction>  ---------->
+export function steamdaQueryContactsFunction() {
+  return contacts.queryContacts()
+    .find()
+    .then((queryResults) => {
+      const items = queryResults.items;
+      const firstItem = items[0];
+      const pageSize = queryResults.pageSize;
+      const hasNext = queryResults.hasNext();
+      const hasPrev = queryResults.hasPrev();
+      const length = queryResults.length;
+      const query = queryResults.query;
+
+      return queryResults;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+// ø <---------- </steamdaQueryContactsFunction> ---------->
+
+// ø <---------- <steamdaTestQueryByParamObject>  ---------->
+export function steamdaTestQueryByParamObject(paramObject = {}) {
+
+
+let usQuery = contacts.queryContacts()
+.eq("info.addresses.country", "US");
+
+let maleQuery = contacts.queryContacts()
+.hasSome("info.labelKeys", ["custom.gender-male"]);
+//  .startsWith("info.jobTitle", "A")
+//  .ascending("info.name.lastName")
+//  .limit(5)
+
+let usANDmaleQuery = usQuery.or(maleQuery)
+  .ascending("info.name.lastName")
+  .limit(15);
+
+return usANDmaleQuery
+  .find()
+ .then( (results) => {
+   return results;
+  //  return results.items;
+ });
+
+}
+// ø <---------- </steamdaTestQueryByParamObject> ---------->
+
+// ø <---------- <contactsQueryWorksButIsInadequate>  ---------->
+export function contactsQueryWorksButIsInadequate(paramOject = {}) {
+ // return paramOject;
+  let testDevOrWorking = "WORKING";
+
+
+
+if (testDevOrWorking === "WORKING"){
+
+
+
+
+
+//   const queryThis = contacts.queryContacts()
+//   .hasSome("info.labelKeys", ["custom.t202106"])
+let labelKeysHasAll = Array.isArray(paramOject.labelKeys.hasAll) && (paramOject.labelKeys.hasAll).length > 0;
+let labelKeysHasSome = Array.isArray(paramOject.labelKeys.hasSome) && (paramOject.labelKeys.hasSome).length > 0;
+if(labelKeysHasSome){
+  return contacts.queryContacts()
+    .hasSome("info.labelKeys", paramOject.labelKeys.hasSome)
+    .find()
+    .then((queryResults) => {
+      return queryResults;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+if(labelKeysHasAll){
+  return contacts.queryContacts()
+  .hasAll("info.labelKeys", paramOject.labelKeys.hasAll)
+    .find()
+    .then((queryResults) => {
+      return queryResults;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+
+
+
+}
+}
+// ø <---------- </contactsQueryWorksButIsInadequate> ---------->
+
+// ø <---------- <steamdaGetContactByEmailFunction>  ---------->
+export async function steamdaGetContactByEmailFunction(emailToFind) {
+    // export async function steamdaGetContactByEmailFunction(emailToFind) {//ORIG CopyCode
+    
+        let results = await contacts.queryContacts()
+        // let results = await contacts.queryContacts()//ORIG CopyCode
+            // .eq("info.emails.email", emailToFind)//ORIG CopyCode
+            .eq("primaryInfo.email", emailToFind)
+            .find();
+    
+        let count = (results.items).length;
+        let returnObject = {};
+        returnObject.emailToFind = emailToFind;
+        returnObject.resultsCount = count;
+        if (count === 1) {
+            returnObject.resultsString = 'Found 1 contact';
+            returnObject.resultCountValid = true;
+            returnObject.resultContactAction = 'UPDATE';
+        } else if (count > 1) {
+            returnObject.resultsString = 'Found more than 1 contact by Primary Email. This is an Error.';
+            returnObject.resultCountValid = false;
+            returnObject.resultContactAction = 'ABORT';
+        } else {
+            returnObject.resultsString = 'No contacts found';
+            returnObject.resultContactAction = 'INSERT';
+            returnObject.resultCountValid = true;
+        }
+        returnObject.results = results;
+        return returnObject;
+    }
+    // ø <---------- </steamdaGetContactByEmailFunction> ---------->
+
+// ø <---------- <steamdaGetContactByEmailAndNotIdFunction Back-End>  ---------->
+export async function steamdaGetContactByEmailAndNotIdFunction(emailToFind,notIdToFind) {
+    // validation should have been done in the Front-End
+    
+    let results = await contacts.queryContacts()
+    // let results = await contacts.queryContacts()//ORIG CopyCode
+        // .eq("info.emails.email", emailToFind)//ORIG CopyCode
+        .ne("_id", notIdToFind)
+        .eq("primaryInfo.email", emailToFind)
+        .find();
+
+    let count = (results.items).length;
+    let returnObject = {};
+    returnObject.emailToFind = emailToFind;
+    returnObject.notIdToFind = notIdToFind;
+    returnObject.resultsCount = count;
+    if (count === 1) {
+        returnObject.resultsString = 'Found 1 contact';
+        returnObject.resultContactId = results._items[0]._id;
+        //                            results._items[0]._id
+        // \_ above was from results without above _/                        results._items[0]._id
+        returnObject.resultScriptAction = 'DELETE';
+    } else if (count > 1) {
+        returnObject.resultsString = 'Found more than 1 contact by Primary Email. This is an Error.';
+        returnObject.resultContactId = 999;
+        returnObject.resultScriptAction = 'ABORT';
+    } else {
+        returnObject.resultsString = 'No contacts found';
+        returnObject.resultContactId = 777;
+        returnObject.resultScriptAction = 'CONTINUE';
+    }
+    returnObject.results = results;
+    return returnObject;
+}
+// ø <---------- </steamdaGetContactByEmailAndNotIdFunction Back-End> ---------->
+
+// ø <---------- <steamdaDeleteContactById BackEnd>  ---------->
+export function steamdaDeleteContactById(contactIdToDelete = 'ZXZ') {
+  const contactId = contactIdToDelete;
+  const options = {
+    suppressAuth: false
+  };
+
+  return contacts.deleteContact(contactId, options)
+    .then(() => {
+      console.log("Contact deleted");
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+// ø <---------- </steamdaDeleteContactById BackEnd> ---------->
+
+// ø <======================================================================>
+// ø <=================</            Contact              >=================>
+// ø <======================================================================>
+
+
+// ø <======================================================================>
+// ø <=================<          Extended Fields         >=================>
+// ø <======================================================================>
+// ø <------------ <steamdaQueryExtendedFieldsFunction>  ------------>
+export function steamdaQueryExtendedFieldsFunction() {
+    return contacts.queryExtendedFields()
+        .find()
+        .then((queryResults) => {
+            const items = queryResults.items;
+            const firstItem = items[0];
+            const pageSize = queryResults.pageSize;
+            const hasNext = queryResults.hasNext();
+            const hasPrev = queryResults.hasPrev();
+            const length = queryResults.length;
+            const query = queryResults.query;
+
+            return items;
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+}
+// ø <------------ </steamdaQueryExtendedFieldsFunction> ------------>
+
+// ø <------------ <steamdaFindOrCreateExtendedFieldFunction>  ------------>
+export function steamdaFindOrCreateExtendedFieldFunction(paramObject) {
+  const extendedFieldInfo = {}
+  extendedFieldInfo.displayName = paramObject.displayName;
+  extendedFieldInfo.dataType = paramObject.dataType;
+//   const extendedFieldInfo = {
+//     displayName: "Last Contacted",
+//     dataType: "DATE"
+//   };
+  const options = {
+    suppressAuth: false
+  };
+
+  return contacts.findOrCreateExtendedField(extendedFieldInfo, options)
+    .then((extendedField) => {
+      return extendedField;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+//ø <------------ </steamdaFindOrCreateExtendedFieldFunction> ------------>
+
+//ø <----------- <steamdaRenameExtendedFieldFunction>  ----------->
+export function steamdaRenameExtendedFieldFunction(paramObject) {
+  const fieldKey = paramObject.fieldKey;
+  const displayName = paramObject.displayName;
+  const options = {
+    suppressAuth: false
+  };
+
+  return contacts.renameExtendedField(fieldKey, displayName, options)
+    .then((renamedExtendedField) => {
+      return renamedExtendedField;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+//ø <----------- </steamdaRenameExtendedFieldFunction> ----------->
+
+// ø <---------- <steamdaDeleteExtendedFieldFunction>  ---------->
+export function steamdaDeleteExtendedFieldFunction(paramObject) {
+  const fieldKey = paramObject.fieldKey;
+  const options = {
+    suppressAuth: false
+  };
+
+  return contacts.deleteExtendedField(fieldKey, options)
+    .then(() => {
+      console.log("Extended field deleted");
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+// ø <---------- </steamdaDeleteExtendedFieldFunction> ---------->
+
+// ø <======================================================================>
+// ø <=================</         Extended Fields         >=================>
+// ø <======================================================================>
+

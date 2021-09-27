@@ -1,0 +1,33 @@
+import wixUsersBackend from 'wix-users-backend';
+
+export function multiply(factor1, factor2) {
+    // return factor1 * factor2;
+    // Now Return: Piped-Array `Unique Message|product|reminder of session.getItem()`
+    let thisMultiplyJSON = 'the JSON from the BACKEND FILE FOLDER YAML'
+    // session.setItem('lastMultiplyJSON',thisMultiplyJSON)
+    let product =  factor1 * factor2;
+    return `In SteamDa Backend, in the file 'userReference.jsw', the multiply() function return a product of ${product} |${product}| [see session.getItem('lastMultiplyJSON') for YAML to JSON for this backend file]`
+}
+
+
+export function getUser(id) {
+  return wixUsersBackend.getUser(id)
+    .then((user) => {
+      return user;
+    });
+}
+
+export function updateUserFields(userId, firstName, lastName, email, phone) {
+  wixUsersBackend.updateUserFields(userId, {
+      "firstName": firstName,
+      "lastName": lastName,
+      "emails": [email],
+      "phones": [phone]
+  } )
+    .then( () => {
+      // contact has been updated
+    } )
+    .catch( (err) => {
+      // there was an error updating the contact
+    } );
+}

@@ -1,0 +1,171 @@
+aModule_jsw:
+  - filename: contactReference.jsw
+  - descr: TEMPLATE FOR ALL OTHER BACKEND FILE-FOLDER YAML FILES
+  - notes:
+      - seems like a good strong TEST
+      - MAYBE deployed
+  - import declarations:
+    - import wixCrmBackend from 'wix-crm-backend';
+    - import { contacts } from 'wix-crm-backend';
+    - notes: 
+      - ¿Are BOTH required together?
+      - ¿Is the first the GENERAL and the second SPECIFIC?
+  - functions:
+    - multiply(factor1, factor2) {:
+      - descr: Updated as Unique-Custom
+    - ConctactLabel functions:
+      - steamdaQueryLabelsFunction():
+        - descr: tbd
+        - issues: tbd
+        - todo:
+          - tbd
+        - files where local code needs to be deprecated in favor of this:
+          - tbd
+        - files where successfully used:
+          - tbd
+      - steamdaFindOrCreateLabelFunction(paramObject = {}):
+        - descr: tbd
+        - issues: tbd
+        - todo:
+          - tbd
+        - files where local code needs to be deprecated in favor of this:
+          - tbd
+        - files where successfully used:
+          - tbd
+      - steamdaDeleteLabelFunction(paramObject):
+        - descr: tbd
+        - issues: tbd
+        - todo:
+          - tbd
+        - files where local code needs to be deprecated in favor of this:
+          - tbd
+        - files where successfully used:
+          - tbd
+      - steamdaRenameLabelFunction(paramObject):
+        - descr: tbd
+        - issues: tbd
+        - todo:
+          - tbd
+        - files where local code needs to be deprecated in favor of this:
+          - tbd
+        - files where successfully used:
+          - tbd
+    - Contact functions:
+      - steamdaCreateContactFunction(paramObject):
+        - descr: tbd
+        - issues: tbd
+        - todo:
+          - tbd
+        - files where local code needs to be deprecated in favor of this:
+          - tbd
+        - files where successfully used:
+          - tbd
+      - streamdaUpdateContactFunction(paramObject):
+        - descr: tbd
+        - issues: tbd
+        - todo:
+          - tbd
+        - files where local code needs to be deprecated in favor of this:
+          - tbd
+        - files where successfully used:
+          - tbd
+      - steamdaQueryContactsFunction():
+        - descr: tbd
+        - issues: tbd
+        - todo:
+          - tbd
+        - files where local code needs to be deprecated in favor of this:
+          - tbd
+        - files where successfully used:
+          - tbd
+      - steamdaTestQueryByParamObject(paramObject = {}):
+        - descr: tbd
+        - issues: tbd
+        - todo:
+          - tbd
+        - files where local code needs to be deprecated in favor of this:
+          - tbd
+        - files where successfully used:
+          - tbd
+      - contactsQueryWorksButIsInadequate(paramOject = {}):
+        - descr: tbd
+        - issues: tbd
+        - todo:
+          - tbd
+        - files where local code needs to be deprecated in favor of this:
+          - tbd
+        - files where successfully used:
+          - tbd
+      - steamdaGetContactByEmailFunction(emailToFind):
+        - descr: tbd
+        - issues: tbd
+        - todo:
+          - tbd
+        - files where local code needs to be deprecated in favor of this:
+          - tbd
+        - files where successfully used:
+          - tbd
+      - steamdaGetContactByEmailAndNotIdFunction(emailToFind,notIdToFind):
+        - descr: tbd
+        - issues: tbd
+        - todo:
+          - tbd
+        - files where local code needs to be deprecated in favor of this:
+          - tbd
+        - files where successfully used:
+          - tbd
+      - steamdaDeleteContactById(contactIdToDelete = 'ZXZ'):
+        - descr: tbd
+        - issues: tbd
+        - todo:
+          - tbd
+        - files where local code needs to be deprecated in favor of this:
+          - tbd
+        - files where successfully used:
+          - tbd
+      - steamdaDeleteContactById(contactIdToDelete = 'ZXZ'):
+        - descr: tbd
+        - issues: tbd
+        - todo:
+          - tbd
+        - files where local code needs to be deprecated in favor of this:
+          - tbd
+        - files where successfully used:
+          - tbd
+    - Extended Fields functions:
+      - steamdaQueryExtendedFieldsFunction():
+        - descr: tbd
+        - issues: tbd
+        - todo:
+          - tbd
+        - files where local code needs to be deprecated in favor of this:
+          - tbd
+        - files where successfully used:
+          - tbd
+      - steamdaFindOrCreateExtendedFieldFunction(paramObject):
+        - descr: tbd
+        - issues: tbd
+        - todo:
+          - tbd
+        - files where local code needs to be deprecated in favor of this:
+          - tbd
+        - files where successfully used:
+          - tbd
+      - steamdaRenameExtendedFieldFunction(paramObject):
+        - descr: tbd
+        - issues: tbd
+        - todo:
+          - tbd
+        - files where local code needs to be deprecated in favor of this:
+          - tbd
+        - files where successfully used:
+          - tbd
+      - steamdaDeleteExtendedFieldFunction(paramObject):
+        - descr: tbd
+        - issues: tbd
+        - todo:
+          - tbd
+        - files where local code needs to be deprecated in favor of this:
+          - tbd
+        - files where successfully used:
+          - tbd

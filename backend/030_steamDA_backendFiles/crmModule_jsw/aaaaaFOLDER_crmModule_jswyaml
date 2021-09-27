@@ -1,14 +1,14 @@
 aModule_jsw:
-  - filename: aModule.jsw
+  - filename: crmModule.jsw
   - descr: TEMPLATE FOR ALL OTHER BACKEND FILE-FOLDER YAML FILES
   - notes:
       - when descr does not suffice
   - import declarations:
-    - import wixCrmBackend from 'wix-crm-backend';
+    - iimport { contacts } from 'wix-crm-backend';
   - functions:
-    - myBackendFunction(contactId):
+    - steamdaGetContactFunction(contactId):
       - descr: simple call to getContactById()
-      - issues: tbd
+      - issues: ¿IS THIS ALREADY IN contactReference.jsw?
       - todo: tbd
       - files where local code needs to be deprecated in favor of this:
         - tbd

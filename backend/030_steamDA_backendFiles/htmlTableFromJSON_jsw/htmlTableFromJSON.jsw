@@ -1,0 +1,301 @@
+//imports
+
+export function multiply(factor1, factor2) {
+    // return factor1 * factor2;
+    // Now Return: Piped-Array `Unique Message|product|reminder of session.getItem()`
+    let thisMultiplyJSON = 'the JSON from the BACKEND FILE FOLDER YAML'
+    // session.setItem('lastMultiplyJSON',thisMultiplyJSON)
+    let product =  factor1 * factor2;
+    return `In SteamDA Backend, in the file 'htmlTableFromJSON.jsw', the multiply() function return a product of ${product} |${product}| [see session.getItem('lastMultiplyJSON') for YAML to JSON for this backend file]`
+}
+
+// ø <---------- <jsonToTable>  ---------->
+export function jsonToTable(jsonData, paramJSON, styleObjectJSON = `{}`) {
+
+    let testReturnObject = {};
+    let testReturnString = "[test return value]";
+    testReturnString = "[test return value]";
+    let testTypeOf = 'I think it returns a string';
+    let testReturnLog = '<h1>Hi Brad</h1><p>Log Sucessful Steps Here.</p>';
+    testReturnLog = '<h1>Hi Brad</h1><p>Cut to the chase, the Monster has been Tamed! Now just dealing with snazzy tFoot</p>';
+    let tbodyElementArray = JSON.parse(jsonData); // MOOT but not rewriting code below until certain
+    let messages = [];
+    // ø <Keep>
+    // testReturnString = "[jsonData]";
+    // testReturnString += jsonData;
+    // return testReturnString;
+    // ø </Keep>
+
+    //<tHead could become a function>
+    let paramObject = JSON.parse(paramJSON);
+    let numberingBoolean = typeof paramObject.numbering === 'object' ? true : false;
+    numberingBoolean = typeof paramObject.numbering === 'boolean' ? paramObject.numbering : numberingBoolean;
+    //ø \_ empty object okay for 'true', non-existent okay for 'false'
+
+    // ø <Keep>
+    // testReturnString = "[numberingBoolean]" + numberingBoolean.toString();
+    // return testReturnString;
+    // ø </Keep>
+
+    let tHeadElement = {};
+    let tFootElement = {};
+    let tHeadValues = [];
+    let tableKeys = [];
+
+    if (Object.keys(paramObject.tHeadElement).length > 0) {
+        tHeadElement = paramObject.tHeadElement;
+        tableKeys = Object.keys(paramObject.tHeadElement);
+        tHeadValues = Object.values(tHeadElement);
+    } else {
+        tHeadElement = tbodyElementArray[0];
+        tableKeys = Object.keys(tHeadElement);
+        tHeadValues = Object.keys(tHeadElement);
+
+    }
+    let tHead = '<thead><tr>';
+    if(numberingBoolean){
+        let numberingHeader = typeof paramObject.numbering.header === 'string' ? paramObject.numbering.header : "#";
+        tHead += '<th>' + numberingHeader + '</th>';
+    }
+    tHeadValues.forEach(element => {
+        tHead += '<th>' + element + '</th>';
+    })
+    tHead += '</tr></thead>';
+    //</tHead could become a function>
+    // testReturnString = "[tHead]" + tHead;
+    // return testReturnString;
+
+
+    // <tBody could become a function>
+    // ø <numberingObject>
+    // ø numberingObject: NOT even close to fully tested, just here for extensibility and that it doesn't BREAK what is working
+    let numberingObject = {};//numberingBoolean is independent of this,just so that nothing else breaks
+    let numberingOffest = 0;
+    let numberingLimit = 0;//as 'false', meaning 'no limit'
+    let justCounter = 0;//indicated with limit etc, but NOT necessarily part of numbering
+    if(numberingBoolean){
+        numberingObject = paramObject.numbering;
+        numberingOffest = typeof numberingObject.offset === 'number' ? numberingObject.offset : 0;
+        numberingLimit = typeof numberingObject.limit === 'number' ? numberingObject.limit : 0;
+    }
+    // ø </numberingObject>
+    let undefinedString = "&bull;"
+    let tRowCode = '';
+    let tBody = '<tbody>';
+    for (let index = 0; index < tbodyElementArray.length; index++) {
+        if(numberingLimit > 0 && index >= numberingLimit){
+            break;
+        }
+        const tRowObect = tbodyElementArray[index];
+        tRowCode = '<tr>';
+        if(numberingBoolean){
+            tRowCode += '<td>';
+            tRowCode += (index + 1 + numberingOffest).toString();
+            tRowCode += '</td>';
+        }
+        tableKeys.forEach(key => {
+            let tdValue = typeof tRowObect[key] === 'undefined' ? undefinedString : tRowObect[key];
+            tRowCode += '<td>';
+            tRowCode += tdValue;
+            tRowCode += '</td>';
+        })
+        tRowCode += '</tr>';
+        tBody += tRowCode;
+        
+    }    
+    // tbodyElementArray.forEach(tRowObect => {
+    //     justCounter++;
+    //     tRowCode = '<tr>';
+    //     if(numberingBoolean){
+    //         tRowCode += '<td>';
+    //         tRowCode += (index + 1 + numberingOffest).toString();
+    //         tRowCode += '</td>';
+    //     }
+    //     tableKeys.forEach(key => {
+    //         tRowCode += '<td>';
+    //         tRowCode += tRowObect[key];
+    //         tRowCode += '</td>';
+    //     })
+    //     tRowCode += '</tr>';
+    //     tBody += tRowCode;
+        
+    // });
+    tBody += '</tbody>';
+    // </tBody could become a function>
+
+    let tFootObjectParam = paramObject["tFootObject"];
+    tFootObjectParam.tableKeys = tableKeys;
+    let tFoot = tableTfoot(tFootObjectParam);
+    // testReturnString = tFoot;
+    // return testReturnString;
+
+
+
+    //<tFoot could become a function>
+
+    // //<mainBoolean and Construct>
+    // //</mainBoolean and Construct>
+
+    // //</tFoot could become a function>
+
+
+    let returnedTable = '<table>';
+    returnedTable += tHead;
+    returnedTable += tBody;
+    returnedTable += tFoot;
+    returnedTable += '</table>';
+    returnedTable += '</table>';
+
+    // return returnedTable;
+
+
+    // ø <Keep>
+    // testReturnString = "[styleObjectJSON]";
+    // testReturnString += styleObjectJSON;
+    // return testReturnString;
+    // ø </Keep>
+
+    let theHTML = returnedTable;
+
+    let styleObject = JSON.parse(styleObjectJSON);
+	let tableTagReplacement = typeof styleObject.table === 'string' ? '<table style="' + styleObject.table + '">' : '<table>';
+	let theadTagReplacement = typeof styleObject.thead === 'string' ? '<thead style="' + styleObject.thead + '">' : '<thead>';
+	let tbodyTagReplacement = typeof styleObject.tbody === 'string' ? '<tbody style="' + styleObject.tbody + '">' : '<tbody>';
+	let tdataTagReplacement = typeof styleObject.tdata === 'string' ? '<td style="' + styleObject.tdata + '">' : '<td>';
+	let tfootTagReplacement = typeof styleObject.tfoot === 'string' ? '<tfoot style="' + styleObject.tfoot + '">' : '<tfoot>';
+	theHTML = theHTML.replace('<table>', tableTagReplacement);
+	theHTML = theHTML.replace('<thead>', theadTagReplacement);
+	theHTML = theHTML.replace('<tbody>', tbodyTagReplacement);
+
+
+	// let trowTagReplacement = typeof styleObject.trow === 'string' ? '<tr style="' + styleObject.trow + '">' : '<tr>';
+	// theHTML = theHTML.replace('<tr>', trowTagReplacement);
+
+
+    //=========================================================================
+    //=========================================================================
+	// theHTML = theHTML.replaceAll('<td>', tdataTagReplacement);
+    //=========================================================================
+    //=========================================================================
+    //========== Property 'replaceAll' does not exist on type        ==========
+    //========== 'string'. Do you need to change your target library?==========
+    //========== Try changing the 'lib' compiler options to 'esnext' ==========
+    //========== or later.                                           ==========
+    //=========================================================================
+    //=========================================================================
+    //=======================   Whiskey-Tango-Foxtrot!  =======================
+    //=========================================================================
+    //=========================================================================
+
+
+    //=========================================================================
+    //=======================   <replaceAll() KLUDGE>   =======================
+    //=========================================================================
+    let safetyValveMax = 10000;
+    let safetyValveCount = 0;
+    safetyValveCount = 0;
+    if(tdataTagReplacement !== '<td>'){
+        while (theHTML.includes('<td>')) {
+            safetyValveCount++;
+            if(safetyValveCount >=safetyValveMax){
+                theHTML += '<p>[safety valve invoked: ' + safetyValveCount + ']</p>'
+                break;
+            }
+            theHTML = theHTML.replace('<td>', tdataTagReplacement);
+        }
+    }
+    // theHTML += '<p>[safety valve check: ' + safetyValveCount + ']</p>'
+
+    //=========================================================================
+    //=======================   </replaceAll() KLUDGE>  =======================
+    //=========================================================================
+
+
+
+	theHTML = theHTML.replace('<tfoot>', tfootTagReplacement);
+
+    return theHTML;
+}
+// ø <---------- </jsonToTable> ---------->
+
+// ø <---------- <tableTfoot>  ---------->
+export function tableTfoot(tFootObject){
+    return '';
+    // return 'RETURN tFoot value';
+    let tableKeys = tFootObject.tableKeys;
+
+
+
+
+
+    //<tFoot could become a function>
+    let evalObject = {};
+    let tFootBoolean = true;// ! will be caught to abort
+    let tFootElement = {};
+    if (typeof tFootObject === 'object') {
+        //<evalKVP Loop>
+        tFootElement = tFootObject.tFootElement;
+        if (Array.isArray(tFootObject.evalKVParray)) {
+            let evalKVParray = tFootObject.evalKVParray;
+
+            let evalKey = '';
+            let evalValueCode = '';
+            evalKVParray.forEach(evalKVPelement => {
+                evalKey = evalKVPelement[0]
+                evalValueCode = evalKVPelement[1]
+                evalObject[evalKey] = eval(evalValueCode);
+            });
+            // testReturnString = "[evalObject] ";
+            // testReturnString = JSON.stringify(evalObject);
+            // return testReturnString;
+        } else {
+            tFootBoolean = false;
+            // messages = ["tFoot is so complex that it cannot be accomplished via appending a last row to he core JSON"
+                // , "moreover, the paradigm is most powerful when you just _have_ JSON and apply this to get a table"];
+        }
+        //</evalKVP Loop>
+    } else {
+        tFootBoolean = false;
+        // messages = ["tFoot is so complex that it cannot be accomplished via appending a last row to he core JSON"
+            // , "moreover, the paradigm is most powerful when you just _have_ JSON and apply this to get a table"];
+        // console.log(messages);
+    }
+
+    //<mainBoolean and Construct>
+    let tFoot = '<tfoot><tr>';
+    if (tFootBoolean) {
+        let tRow = ''
+        let valueCode = ''
+        let value = ''
+        let colspanIndex = 0;
+        let colspanArray = tFootElement.colspan;
+        let tFootRows = '';
+        tableKeys.forEach(element => {
+            valueCode = tFootElement[element];
+            if (valueCode.length > 0) {
+                value = eval(valueCode)
+                tFootRows += '<td';
+                tFootRows += colspanArray[colspanIndex] > 0 ? ' colspan="' + colspanArray[colspanIndex] + '">' : '>';
+                tFootRows += value + '</td>'
+            } else {
+                // messages = ['unused']
+            }
+            colspanIndex++;
+        });
+
+
+        tFoot += tFootRows;
+    } else {
+        tFoot += '';
+    }
+    tFoot += '</tr></tfoot>';
+    //</mainBoolean and Construct>
+
+    //</tFoot could become a function>
+
+
+
+    return tFoot;
+}
+// ø <---------- </tableTfoot> ---------->
+

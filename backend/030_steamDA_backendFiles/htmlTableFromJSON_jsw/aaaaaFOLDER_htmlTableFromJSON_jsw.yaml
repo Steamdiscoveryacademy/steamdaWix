@@ -1,0 +1,28 @@
+aModule_jsw:
+  - filename: htmlTableFromJSON.jsw
+  - descr: TEMPLATE FOR ALL OTHER BACKEND FILE-FOLDER YAML FILES
+  - notes:
+      - when descr does not suffice
+  - import declarations:
+    - import wixCrmBackend from 'wix-crm-backend';
+  - functions:
+    - multiply(factor1, factor2):
+      - descr: rewrite to return Unique Result
+    - jsonToTable(jsonData, paramJSON, styleObjectJSON = `{}`):
+      - descr: tbd
+      - issues: tbd
+      - todo: tbd
+      - files where local code needs to be deprecated in favor of this:
+        - tbd
+      - files where successfully used:
+        - tbd
+    - tableTfoot(tFootObject):
+      - descr: tbd
+      - issues: tbd
+      - todo: tbd
+      - files where local code needs to be deprecated in favor of this:
+        - tbd
+      - files where successfully used:
+        - tbd
+
+      

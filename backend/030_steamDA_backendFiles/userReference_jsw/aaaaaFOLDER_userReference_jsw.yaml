@@ -1,0 +1,32 @@
+aModule_jsw:
+  - filename: userReference.jsw
+  - descr: TEMPLATE FOR ALL OTHER BACKEND FILE-FOLDER YAML FILES
+  - notes:
+      - when descr does not suffice
+  - import declarations:
+    - import someThing from 'wix-some-thing';
+  - functions:
+    - multiply(factor1, factor2):
+      - descr: rewrite to return Unique Result
+    - getUser(id):
+      - descr: tbd
+      - issues: 
+        - tbd
+      - todo: 
+        - tbd
+      - files where local code needs to be deprecated in favor of this:
+        - tbd
+      - files where successfully used:
+        - tbd
+    - updateUserFields(userId, firstName, lastName, email, phone):
+      - descr: tbd
+      - issues: 
+        - tbd
+      - todo: 
+        - tbd
+      - files where local code needs to be deprecated in favor of this:
+        - tbd
+      - files where successfully used:
+        - tbd
+
+      

@@ -1,0 +1,20 @@
+aModule_jsw:
+  - filename: aModule.jsw
+  - descr: TEMPLATE FOR ALL OTHER BACKEND FILE-FOLDER YAML FILES
+  - notes:
+      - when descr does not suffice
+  - import declarations:
+    - import someThing from 'wix-some-thing';
+  - functions:
+    - myBackendFunction(contactId):
+      - descr: tbd
+      - issues: 
+        - tbd
+      - todo: 
+        - tbd
+      - files where local code needs to be deprecated in favor of this:
+        - tbd
+      - files where successfully used:
+        - tbd
+
+      

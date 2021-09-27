@@ -1,0 +1,90 @@
+actionValueEvaluation_js:
+  - filename: postEnrollment.js
+  - descr: the Core Logic of the IINSTANTIATE Step
+  - notes:
+      - Core-Paradigm=> if Staff-Eye-D exists TRUST IT
+  - import declarations:
+    - import someThing from 'wix-some-thing';
+  - versions:
+    - v0.0.1:
+      - descr: almost psuedoCode, just bare bones
+      - notes:
+          - almost psuedoCode
+          - just bare bones
+          - only kept OOAAOC
+      - build-issues: 
+        - tbd
+      - build-todo: 
+        - tbd
+      - patch-issues: 
+        - tbd
+      - patch-todo: 
+        - tbd
+      - files where local code needs to be deprecated in favor of this:
+        - tbd
+      - files where successfully used:
+        - tbd
+    - v1.0.0:
+      - descr: deployed Summer 2021, dependable
+      - notes:
+          - remember=> if not found, then moot
+      - build-issues: 
+        - find Student Member/Contact by Database
+        - find Student Member/Contact by Seeded-Email for KLUDGE
+          - notes:
+            - Kludge means anomaly where an error occurs with wixUser.register()
+            - since it is an error-nonError [knownBug] it is going to be worked around
+            - Instatiate=>Member=>¡BREAK!=>Restart=>Instantiate=>SKIP
+            - should also work if knownBug occurs for Primary
+      - build-todo: 
+        - tbd
+      - patch-issues: 
+        - tbd
+      - patch-todo: 
+        - tbd
+      - files where local code needs to be deprecated in favor of this:
+        - tbd
+      - files where successfully used:
+        - tbd
+    - v1.1.0:
+      - descr: tbd
+      - notes:
+          - when descr does not suffice
+      - build-issues: 
+        - tbd
+      - build-todo: 
+        - overall actionValueObject:
+          - actionValueObject.primary/student/secondary
+          - actionValueObject.primary.final(boolean)
+          - actionValueObject.primary.primaryId (what it's called in wix-storage)
+          - actionValueObject.primary.primaryEmail (what it's called in wix-storage)
+          - actionValueObject.primary.action [INSERT||UPDATE||SKIP||ALERT]
+        - ppContactFindByEmail:
+          - criteria:
+            - familySeeded Email
+            - KLUDGE-familySeeded Email `+{legalFirst}eemp@` (first four of EEMPTY)
+          - IFF: 
+            - gather primaryId
+            - [0]SKIP
+        - stContactFindByDatabase:
+          - criteria:
+            - familyId
+            - role=> Student
+            - first (legal first)
+          - IFF: 
+            - gather studentId
+            - [0]SKIP
+        - stContactFindByEmail:
+          - IFF: 
+            - gather studentId
+            - [0]SKIP
+      - patch-issues: 
+        - tbd
+      - patch-todo: 
+        - tbd
+      - files where local code needs to be deprecated in favor of this:
+        - tbd
+      - files where successfully used:
+        - tbd
+
+      

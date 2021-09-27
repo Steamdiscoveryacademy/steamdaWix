@@ -1,11 +1,41 @@
 ---
-#?========================================================
-#¿=====       Sprint  Monday September 20, 2021      =====
-#?========================================================
+#?=====================================================
+#¿=====     Sprint  Monday September 27, 2021     =====
+#?=====================================================
 daily Commits:
-      - postEnrollment: yes
-      - processWebhooks: yes
-      - enrollmentLandingPage: yes
+      - postEnrollment: no
+      - processWebhooks: no
+      - enrollmentLandingPage: no
+...
+---
+Monday Septermber 27:
+      - backend alphaTimeKey(): no
+            - migrate to OnDeck
+            - YAML
+            - Test in Canine-Consulting
+      - backend getImagePath_ofRandomDiverseFace():
+            - migrate to OnDeck: yes
+            - YAML: yes
+            - Test in Canine-Consulting: no
+      - backend getImagePath_ofAlphabetAvatar(): 
+            - migrate to OnDeck: yes
+            - YAML: yes
+            - Test in Canine-Consulting: no
+      - backend intlDateTimeFormatByDateAliasFormatAlias(): 
+            - migrate to OnDeck: yes
+            - YAML: yes
+            - Test in Canine-Consulting: no
+      - Creation Date and AlphaKey INSTEAD for Student: no
+      - "_createdDate": "2021-03-16T18:10:57.830Z",
+      - work on and enhance intlDateTimeFormatByDateAliasFormatAlias() for above:
+            - cleanup, bug-killed, better devel-output: yes
+            - more data-aliases: no
+      - integrate Sprint => backEnd_20210715_lotsToOrganize: no
+      - recreate 'multiply' function Backend File TEMPLATE: yes
+      - recreate 'multiply' function for-each Backend File TEMPLATE:
+            - FILENAME:
+                  - Update Multiply Function
+                  - convert YAML to JSON manually (until API is found)
 ...
 ---
 Brainstorm enrollmentstates UI:

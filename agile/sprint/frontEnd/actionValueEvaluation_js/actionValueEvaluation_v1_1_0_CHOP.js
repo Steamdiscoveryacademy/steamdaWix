@@ -14,6 +14,7 @@ export async function actionValueEvaluation() {
      * ø   - action values by Defaults (below in orig)
      */
          let actionValueObject = {}
+         actionValueObject.termId = local.getItem('termId')
          actionValueObject.primary = {}
          actionValueObject.student = {}
          actionValueObject.secondary = {}
@@ -65,6 +66,7 @@ export async function actionValueEvaluation() {
          console.log(`actionValueObject:`)
          console.dir(actionValueObject)
      
+//export async function getFamilyPersonsArrayByFamilyId(familyId)
 
     // pstEnrSeven20210825_ActionValueEvaluation
     let tempStamp = await nowISO(local.getItem('timezoneOffset'), local.getItem('tzAbbrv'));
@@ -118,33 +120,60 @@ export async function actionValueEvaluation() {
     let studentLegalFirst = local.getItem('stFirst');
 
     // ø <ppAction>
+    /**
+     * ø ppAction
+     * ø   - currently
+     * ø     - if staffMatch check Database this TermID
+     * ø   - enhancements now
+     * ø     - search on Email provided
+     * ø       - notwithstanding staffMatch, pickup again if KnownGlitch
+     * ø     - Load all results into actionValueObject
+     * ø   - enhancements eventually
+     * ø     - if eMail changes from existing, append on UPDATE
+     * ø     - if phone changes from existing, append on UPDATE
+     */
     // ppAction = staffMatch ? "UPDATE|UPDATE|INSERT" : ppAction;
     if (staffMatch) {
         let ppExistsCount = await wixData.query("person")
-            .eq("personId", familyId)
-            .eq("termId", termId)
-            .count();
+        .eq("personId", familyId)
+        .eq("termId", termId)
+        .count();
         ppAction = ppExistsCount > 0 ? "SKIP|SKIP|SKIP" : ppAction;
         console.log(`existing PP for this Term: usually additional children|ppExistsCount > 0 ? "SKIP|SKIP|SKIP"`);
         local.setItem('logString', local.getItem('logString') + '\n[~Z508]ppExistsCount: ' + ppExistsCount);
     }
     // ø </ppAction>
-
+    
     // ø <stAction>
+    /**
+     * ø stAction
+     * ø   - currently
+     * ø     - termId KLUDGE
+     * ø     - if staffMatch check Database THIS TermID
+     * ø   - enhancements now
+     * ø     - termId KLUDGE=> ¡may be redundant and can be removed!
+     * ø     - if staffMatch check Database ANY TermID
+     * ø     - search on Email faux (and Kludge faux)
+     * ø       - notwithstanding staffMatch, pickup again if KnownGlitch
+     * ø     - Load all results into actionValueObject
+     * ø   - enhancements eventually
+     * ø     - if eMail changes from existing, append on UPDATE
+     * ø     - if phone changes from existing, append on UPDATE
+     */
     if (staffMatch) {
         if(202106 < Number(local.getItem('termId'))){
-                stAction = "ALERT|ALERT|ALERT";
-                local.setItem('superEnrollmentStatus', 'ALERT');
-                memory.setItem('stepResponseBootstrapKey','danger');
-                await appendStepLogPPEQ('danger', `Logic Required: Check for Same Student Previous Term`);
-                local.setItem('logString', local.getItem('logString') + '\n[~1817] Logic Required: Check for Same Student Previous Term');
-                console.log(`Logic Required: Check for Same Student Previous Term`);
+            stAction = "ALERT|ALERT|ALERT";
+            local.setItem('superEnrollmentStatus', 'ALERT');
+            memory.setItem('stepResponseBootstrapKey','danger');
+            await appendStepLogPPEQ('danger', `Logic Required: Check for Same Student Previous Term`);
+            local.setItem('logString', local.getItem('logString') + '\n[~1817] Logic Required: Check for Same Student Previous Term');
+            console.log(`Logic Required: Check for Same Student Previous Term`);
         }
         let stExistsCount = await wixData.query("person")
-            .eq("familyId", familyId)
-            .eq("firstLegal", studentLegalFirst)
-            .eq("termId", termId)
-            .count();
+        .eq("familyId", familyId)
+        .eq("firstLegal", studentLegalFirst)
+        .eq("termId", termId)
+        .count();
         if(stExistsCount > 0){
             stAction = "ALERT|ALERT|ALERT";
             local.setItem('superEnrollmentStatus', 'ALERT');
@@ -155,8 +184,23 @@ export async function actionValueEvaluation() {
         }
     }
     // ø </stAction>
-
+    
     // ø <spAction>
+    /**
+     * ø spAction
+     * ø   - currently
+     * ø     - ZtermId KLUDGE
+     * ø     - if staffMatch check Database role and THIS TermID
+     * ø   - enhancements now
+     * ø     - if staffMatch check Database ANY TermID
+     * ø     - search on Email faux (and Kludge faux)
+     * ø       - notwithstanding staffMatch, pickup again if KnownGlitch
+     * ø     - Load all results into actionValueObject
+     * ø   - enhancements eventually
+     * ø     - alert if Secondary changes from Previous Term
+     * ø     - if eMail changes from existing, append on UPDATE
+     * ø     - if phone changes from existing, append on UPDATE
+     */
     console.groupCollapsed('<spAction>')
     console.log(`init: spAction: ${spAction}`)
     let checkSecondaryParent = (local.getItem('spFirst')).length === 0 && (local.getItem('spLast')).length === 0 ? false : true;
@@ -206,11 +250,22 @@ export async function actionValueEvaluation() {
     }
     console.groupEnd()
     // ø </spAction>
-
+    
+    // ø <Load Results>
+    /**
+     * ø Load Results
+     * ø   - currently
+     * ø     - termId KLUDGE
+     * ø     - Load directly
+     * ø   - enhancements now
+     * ø     - Load from actionValueObject 
+     * ø   - enhancements eventually
+     * ø     - tbd
+     */
     let now = new Date();
     let yyyymmdd = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
     local.setItem('logString', local.getItem('logString') + '\n[~Z557]yyyymmdd: ' + yyyymmdd);
-
+    
     if (yyyymmdd > Number(local.getItem('termEndYYYYMMDD'))) {
         ppAction = "ALERT|ALERT|ALERT";
         stAction = "ALERT|ALERT|ALERT";
@@ -220,11 +275,11 @@ export async function actionValueEvaluation() {
         await appendStepLogPPEQ('danger', `Today is Past the End of the Current Term`);
         console.log(`Today is Past the End of the Current Term: ${memory.getItem('stepResponseBootstrapKey')}`);
     }
-
+    
     memory.setItem('ppAction', ppAction);
     memory.setItem('stAction', stAction);
     memory.setItem('spAction', spAction);
-
+    
     let allActionStrings = memory.getItem('ppAction') + memory.getItem('stAction') + memory.getItem('spAction');
     let superEnrollmentStatus = local.getItem('superEnrollmentStatus');
     superEnrollmentStatus = allActionStrings.indexOf('ALERT') >= 0 ? 'ALERT' : superEnrollmentStatus;
@@ -234,5 +289,6 @@ export async function actionValueEvaluation() {
     console.log(`superEnrollmentStatus: ${superEnrollmentStatus}')}`);
     console.log(`local.getItem('superEnrollmentStatus'): ${local.getItem('superEnrollmentStatus')}')}`);
     console.groupEnd();
+    // ø </Load Results>
 }
 // ø <---------- </actionValueEvaluation of IINSTANTIATE> ---------->

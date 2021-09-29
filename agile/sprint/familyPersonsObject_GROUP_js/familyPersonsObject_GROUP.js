@@ -13,17 +13,21 @@
 // Loop for SecondaryId_firstName2dArray
 
 export async function applyFamilyPersonsObject_to_actionValueObject(actionValueObject = {}) {
-    getFamilyPersonsObject(actionValueObject.primary.contactId)
+    let familyPersonsObject = getFamilyPersonsObject(actionValueObject.primary.contactId)
 }
 
-export async function getFamilyPersonsObject(familyId) {
+// ø <-------------------- <getFamilyPersonsObject>  -------------------->
+export async function getFamilyPersonsObject(familyId = 'STRING') {
 
-    let familyId = 'THE THING YOU QUERY'
+    let familyIdPersonQueryResponseObject = 'THE_THING_YOU_QUERY(familyId)'
+    // let arrayOfPersonRecords = familyIdPersonQueryResponseObject.items
     let arrayOfPersonRecords = []
+
+    // ø <familyDataObject INSTANTIATE>
     let familyDataObject = {}
-    // let familyPersionItemThis = {} 
     familyDataObject.familyId = familyId
     familyDataObject.familyAlphaKey_uniqueArray = []
+    // ø => Validation: Should have a Single Value
     familyDataObject.personIdCount = 0
     familyDataObject.personIdArray = [] // very unlikely event where on personId has more than one role (¿primary/secondary switch?)
     familyDataObject.primaryMemberObjectsById = {}
@@ -34,9 +38,11 @@ export async function getFamilyPersonsObject(familyId) {
     familyDataObject.secondaryMemberObjectsById = {}
     familyDataObject.secondaryPersonCount = 0
     familyDataObject.unsupportedRolePersonIdArray = []
-    let arrayAsElement = []
+    // ø => Validation: Should be empty
+    // ø </familyDataObject INSTANTIATE>
+    // let arrayAsElement = []
 
-    let personIdObject = {}
+    // let personIdObject = {}
     arrayOfPersonRecords.forEach(person => {
         appendPerson_toPersonObjectById(person, familyDataObject)
 
@@ -63,8 +69,11 @@ export async function getFamilyPersonsObject(familyId) {
     // let secondaryPersonIdCount = secondaryPersonIdArray.length;
 
 }
+// ø <-------------------- </getFamilyPersonsObject> -------------------->
 
+// ø <-------------------- </appendPerson_toPersonObjectById> -------------------->
 export async function appendPerson_toPersonObjectById(person = {}, familyDataObject = {}) {
+    // ø <personObjectById_TEMPLATE INSTANTIATE>
     /**
      * ø person Database Attributes
      * ø  - first
@@ -76,10 +85,6 @@ export async function appendPerson_toPersonObjectById(person = {}, familyDataObj
      * ø  - termId
      * ø  - familyAlphaKey
      */
-    if (!familyDataObject.familyAlphaKey_uniqueArray.includes(person.familyAlphaKey)) {
-        familyDataObject.familyAlphaKey_uniqueArray.push(person.familyAlphaKey)
-    }
-
 
     let personObjectById_TEMPLATE = {}
     ObjectById_TEMPLATE.familyAlphaKey = 'STRING'//redundant, but
@@ -91,16 +96,27 @@ export async function appendPerson_toPersonObjectById(person = {}, familyDataObj
     ObjectById_TEMPLATE.termIdArray = []
     ObjectById_TEMPLATE.firstArray = []
     ObjectById_TEMPLATE.termIdFirst2dArray = []
+    // ø </personObjectById_TEMPLATE INSTANTIATE>
+
     let personObjectById = {}
     personObjectById.redundantId = person.personId
     familyDataObject.personIdCount++
     familyDataObject.personIdArray.push()
-    let kindIdArray = []
+    let holderString = 'STRING'
+    let holderArray = []
 
+
+    // ø <pre-SWITCH Code>
+    if (!familyDataObject.familyAlphaKey_uniqueArray.includes(person.familyAlphaKey)) {
+        // ø => Validation: Should have a Single Value
+        familyDataObject.familyAlphaKey_uniqueArray.push(person.familyAlphaKey)
+    }
+    // ø </pre-SWITCH Code>
+    // ø <SWITCH to INSTANTIATE>
     switch (person.role) {
         case 'Primary':
-            kindIdArray = Object.keys(familyDataObject.primaryMemberObjectsById)
-            personObjectById = kindIdArray.includes(person.personId) ? DataObject.primaryMemberObjectsById[person.personId] : personObjectById_TEMPLATE
+            holderArray = Object.keys(familyDataObject.primaryMemberObjectsById)
+            personObjectById = holderArray.includes(person.personId) ? DataObject.primaryMemberObjectsById[person.personId] : personObjectById_TEMPLATE
             break;
         case 'Student':
             familyDataObject.studentFirstTermIdConcatArray.push(person.firstLegal + '_' + person.termId + '_' + person.personId)
@@ -108,8 +124,27 @@ export async function appendPerson_toPersonObjectById(person = {}, familyDataObj
         case 'Secondary':
             break;
         default:
+            holderArray = [person.role, person.personId]
+            familyDataObject.unsupportedRolePersonIdArray.push(holderArray)
             break;
     }
+    // ø </SWITCH to INSTANTIATE>
+
+    // ø <Populate personObjectById>
+    personObjectById.familyAlphaKey = person.familyAlphaKey//redundant, but
+    personObjectById.contactId = person.personId//redundant, but
+    personObjectById.role = person.role//redundant, but
+    personObjectById.termId = person.termId
+    holderString = person.role === 'Student' ? person.firstLegal : person.first//legal for student
+    personObjectById.first = holderString//legal for student
+    personObjectById.last = person.last
+    personObjectById.termIdArray.push(person.termId)
+    personObjectById.firstArray.push(holderString)//legal for student
+    holderArray = [termId, holderString]
+    personObjectById.termIdFirst2dArray.push(holderArray)
+    // ø </Populate personObjectById>
+
+    // ø <SWITCH to Assign>
     switch (person.role) {
         case 'Primary':
             DataObject.primaryMemberObjectsById[person.personId] = personObjectById
@@ -121,4 +156,6 @@ export async function appendPerson_toPersonObjectById(person = {}, familyDataObj
         default:
             break;
     }
+    // ø </SWITCH to Assign>
 }
+// ø <-------------------- </appendPerson_toPersonObjectById> -------------------->

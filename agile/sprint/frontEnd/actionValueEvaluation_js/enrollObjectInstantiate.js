@@ -1,5 +1,4 @@
 export async function instantiateSimpleDemogfxObject() {
-    // ø <final in Post-Enrollment>
     // let enroll = {}
     // enroll.familyId = PENDING
     // enroll.familyIdStatus = 'PENDING'//'Staff-Eye-D' inferred by Data, precision here not necessary
@@ -27,7 +26,7 @@ export async function instantiateSimpleDemogfxObject() {
     // enroll.application.secondary.secondaryEmail = local.getItem('secondaryEmail')
     // enroll.application.secondary.spFirst = local.getItem('spFirst')
     // enroll.application.secondary.spLast = local.getItem('spLast')
-    // ø </final in Post-Enrollment>
+    
     // ø </demogrfx-application-processed>
     
     
@@ -63,27 +62,73 @@ export async function instantiateSimpleDemogfxObject() {
     // ø </TESTING>
     // ø </demogrfx-application-processed>
     
+    
     // ø <current-evaluation-personDbase-personData-wixWebhookId>
+    // enroll.familyId = PENDING
+    // enroll.familyIdStatus = 'PENDING'//'Staff-Eye-D' inferred by Data, precision here not necessary
     enroll.personData = {}
+    enroll.personData.primary.familyId = 'FROM_familyDataObject'
+    enroll.personData.primary.maxTermId = 'FROM_familyDataObject'
+    enroll.personData.student.studentId = 'FROM_familyDataObject'
+    enroll.personData.student.maxTermId = 'FROM_familyDataObject'
+    enroll.personData.secondary.secondaryId = 'FROM_familyDataObject'
+    enroll.personData.secondary.maxTermId = 'FROM_familyDataObject'
     // ø </current-evaluation-personDbase-personData-wixWebhookId>
     
     // ø <contacts-directQuery-emailQuery-emailQueryWithKludge>
+    // enroll.familyId = PENDING
+    // enroll.familyIdStatus = 'PENDING'//'Staff-Eye-D' inferred by Data, precision here not necessary
     enroll.emailQuery = {}
+    enroll.emailQuery.primary.familyId = 'FROM_familyDataObject_OR_FROM_emailQuery'
+    enroll.emailQuery.student.studentId = 'FROM_familyDataObject_OR_FROM_emailQuery'
+    enroll.emailQuery.secondary.secondaryId = 'FROM_familyDataObject_OR_FROM_emailQuery'
+    // ø <DATA FOR THE QUERY(IES)>
+    enroll.emailQuery.primary.familyEmail = enroll.application.familyEmail
+    enroll.emailQuery.student.studentEmail = enroll.application.studentEmail
+    let replaceBlock = (enroll.application.studentEmail).substr((enroll.application.studentEmail).indexOf('@') - 4,5)
+    enroll.emailQuery.student.studentEmailKludge = (enroll.application.studentEmail).replace(replaceBlock, 'eemp@')
+    // ø </DATA FOR THE QUERY(IES)>
     // ø </contacts-directQuery-emailQuery-emailQueryWithKludge>
     
     // ø <action-actionEvaluation-final>
+    // enroll.familyId = PENDING
+    // enroll.familyIdStatus = 'PENDING'//'Staff-Eye-D' inferred by Data, precision here not necessary
     enroll.action = {}
     enroll.action.primary = {}
-    enroll.action.primary.member = PENDING
-    enroll.action.primary.contact = PENDING
-    enroll.action.primary.dataBase = PENDING
-    enroll.action.student.member = PENDING
-    enroll.action.student.contact = PENDING
-    enroll.action.student.dataBase = PENDING
-    enroll.action.secondary.member = NA
-    enroll.action.secondary.contact = PENDING
-    enroll.action.secondary.dataBase = PENDING
+    enroll.action.primary.member = 'PENDING_LOGIC'
+    enroll.action.primary.contact = 'PENDING_LOGIC'
+    enroll.action.primary.dataBase = 'PENDING_LOGIC'
+    // enroll.emailQuery.primary.familyId = 'DANGER'
+    // enroll.action.primary.familyId = enroll.application.familyId
+    enroll.action.student.member = 'PENDING_LOGIC'
+    enroll.action.student.contact = 'PENDING_LOGIC'
+    enroll.action.student.dataBase = 'PENDING_LOGIC'
+    // enroll.action.student.studentId = enroll.application.studentId
+    // enroll.emailQuery.student.studentId = 'DANGER'
+    enroll.action.secondary.member = 'PENDING_LOGIC_but_NA'
+    enroll.action.secondary.contact = 'PENDING_LOGIC'
+    enroll.action.secondary.dataBase = 'PENDING_LOGIC'
+    // enroll.emailQuery.secondary.secondaryId = 'DANGER'
+    // enroll.action.secondary.secondaryId = enroll.application.secondaryId
     // ø <SAME AS APPLICATION: update if different>
+    // ø <>
+    enroll.action.termId = enroll.application.termId
+    enroll.action.familySeed = enroll.application.familySeed
+    // enroll.action.familySeed = enroll.application.familySeed
+    enroll.action.primary = {}
+    enroll.action.primary.familyEmail = enroll.application.familyEmail
+    enroll.action.primary.ppFirst = enroll.application.ppFirst
+    enroll.action.primary.ppLast = enroll.application.ppLast
+    enroll.action.student = {}
+    enroll.action.student.studentEmail = enroll.application.studentEmail
+    enroll.action.student.stFirst = enroll.application.stFirst
+    enroll.action.student.stPreferredFirst = enroll.application.stPreferredFirst
+    enroll.action.student.stLast = enroll.application.stLast
+    enroll.action.secondary = {}
+    enroll.action.secondary.secondaryEmail = enroll.application.secondaryEmail
+    enroll.action.secondary.spFirst = enroll.application.spFirst
+    enroll.action.secondary.spLast = enroll.application.spLast
+    // ø </>
     // ø </SAME AS APPLICATION: update if different>
     // ø </action-actionEvaluation-final>
 }

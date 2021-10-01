@@ -1,15 +1,18 @@
 // ø <==========================================================================================>
 // ø <============================== <familyPersonsObject_GROUP>  ==============================>
 // ø <==========================================================================================>
-// ø <-------------------- <getFamilyPersonsObject>  -------------------->
-export async function getFamilyPersonsObject(familyId = 'STRING') {
-    console.groupCollapsed(`getFamilyPersonsObject(familyId)`)
-    console.log(`Full Declaration: export async function getFamilyPersonsObject(familyId = 'STRING')`)
+// ø <-------------------- <getFamilyPersonsObject_NotBackend>  -------------------->
+export async function getFamilyPersonsObject_NotBackend(familyId = 'STRING') {
+    console.groupCollapsed(`getFamilyPersonsObject_NotBackend(familyId)`)
+    console.log(`Full Declaration: export async function getFamilyPersonsObject_NotBackend(familyId = 'STRING')`)
     console.log(`familyId: ${familyId} [@todo: validate family id]`)
     let familyIdPersonQueryResponseObject = await dataQueryPerson_filterByFamilyId(familyId)
     console.log(`familyIdPersonQueryResponseObject:`)
     console.dir(familyIdPersonQueryResponseObject)
+    // let arrayOfPersonRecords = familyIdPersonQueryResponseObject.items
     let arrayOfPersonRecords =  familyIdPersonQueryResponseObject.items
+
+
 
 	arrayOfPersonRecords.forEach(item => {
 		item.familyAlphaKey = 'TBD'
@@ -26,6 +29,9 @@ export async function getFamilyPersonsObject(familyId = 'STRING') {
 		delete item._id
 	});
 
+
+
+
     console.log(`arrayOfPersonRecords:`)
     console.dir(arrayOfPersonRecords)
 
@@ -35,7 +41,7 @@ export async function getFamilyPersonsObject(familyId = 'STRING') {
     familyDataObject.familyAlphaKey_uniqueArray = []
     // ø => Validation: Should have a Single Value
     familyDataObject.personIdCount = 0
-    familyDataObject.personIdArray = [] // very unlikely event where one personId has more than one role (¿primary/secondary switch?)
+    familyDataObject.personIdArray = [] // very unlikely event where on personId has more than one role (¿primary/secondary switch?)
     familyDataObject.primaryMemberObjectsById = {}
     familyDataObject.primaryPersonCount = 0
     familyDataObject.studentMemberObjectsById = {}
@@ -49,26 +55,52 @@ export async function getFamilyPersonsObject(familyId = 'STRING') {
     // ø </familyDataObject INSTANTIATE>
     console.log(`familyDataObject: INSTANTIATE:`)
     console.dir(familyDataObject)
+    // console.log(`familyDataObject: INSTANTIATE:`)
+    // console.dir(familyDataObject)
+    // console.groupEnd()
+    // return
+    // let arrayAsElement = []
 
+    // let personIdObject = {}
     arrayOfPersonRecords.forEach(person => {
         appendPerson_toPersonObjectById(person, familyDataObject)
+
+
+
+        // familyDataObject.personIdCount++
+        // personIdObject = {}
+        // familyDataObject.primaryPersonCount++
+        // familyDataObject.studentPersonCount++
+
+        // familyDataObject.secondaryPersonCount++
+
+
+        // arrayAsElement = [person._id, person.role]
+        // familyDataObject.unsupportedRolePersonIdArray.push(arrayAsElement)
+
     });
 
+    // let primaryPersonIdArray = Object.keys(familyDataObject.primaryMemberObjectsById)
+    // let primaryPersonIdCount = primaryPersonIdArray.length;
+    // let studentPersonIdArray = Object.keys(familyDataObject.studentMemberObjectsById)
+    // let studentPersonIdCount = studentPersonIdArray.length;
+    // let secondaryPersonIdArray = Object.keys(familyDataObject.secondaryMemberObjectsById)
+    // let secondaryPersonIdCount = secondaryPersonIdArray.length;
+    
     console.log(`familyDataObject: Pre-Validation: `)
     console.dir(familyDataObject)
     
     validateFamilyPersonsObject(familyDataObject)
-
     console.log(`familyDataObject: FINAL: `)
     console.dir(familyDataObject)
-
+    local.setItem('familyPersonsObjectJSON', JSON.stringify(familyDataObject))
     console.groupEnd()
     return familyDataObject
 
 }
-// ø <-------------------- </getFamilyPersonsObject> -------------------->
+// ø <-------------------- </getFamilyPersonsObject_NotBackend> -------------------->
 
-// ø <-------------------- <appendPerson_toPersonObjectById>  -------------------->
+// ø <-------------------- </appendPerson_toPersonObjectById> -------------------->
 export async function appendPerson_toPersonObjectById(person = {}, familyDataObject = {}) {
     // ø <personObjectById_TEMPLATE INSTANTIATE>
     let DOX = 'entering'
@@ -78,7 +110,6 @@ export async function appendPerson_toPersonObjectById(person = {}, familyDataObj
     console.dir(person)
 
     // ø <familyAlphaKey CowCatcher>
-    // ø TBD above
     person.alphaKey = person.alphaKey == null ? 'alphaKeyPENDING' : person.alphaKey
     // ø </familyAlphaKey CowCatcher>
 
@@ -190,69 +221,81 @@ export async function appendPerson_toPersonObjectById(person = {}, familyDataObj
 export async function instantiateEnrollmentObject(familyId = 'STRING') {
     console.groupCollapsed(`instantiateSimpleDemogfxObject(familyId)`)
     console.log(`FULL DECLARATION: export async function instantiateSimpleDemogfxObject(${familyId} = 'STRING')`)
+    let enroll = {}
+    
+    enroll.action = {}
+    enroll.action.superEnrollmentStatus = 'CONTINUE';//local.getItem('superEnrollmentStatus')
+    enroll.action.superEnrollmentString = 'INSTANTIATE';//local.getItem('superEnrollmentStatus')
+
+    enroll.familyId = 'PENDING'
+    enroll.familyIdStatus = 'PENDING'//'Staff-Eye-D'// inferred by Data, precision here not necessary
+    enroll.maxPreviousFamilyTermId = 201506
+    enroll.maxPreviousStudentTermId = 201506
+    enroll.wixWebhookId = local.getItem('wixWebhookId')
+    // ø <demogrfx-application-processed>
+    enroll.application = {}
+    enroll.application.termId = local.getItem('termId')
+    enroll.application.staffIdentifiedFamilyId = local.getItem('staffIdentifiedFamilyId')
+    enroll.application.familySeed = local.getItem('familySeed')
+    enroll.application.primary = {}
+    enroll.application.primary.familyId = local.getItem('familyId')
+    enroll.application.primary.familyEmail = local.getItem('familyEmail')
+    enroll.application.primary.ppFirst = local.getItem('ppFirst')
+    enroll.application.primary.ppLast = local.getItem('ppLast')
+    enroll.application.student = {}
+    enroll.application.student.studentId = local.getItem('studentId')
+    enroll.application.student.studentEmail = local.getItem('studentEmail')
+    enroll.application.student.stFirst = local.getItem('stFirst')
+    enroll.application.student.stPreferredFirst = local.getItem('stPreferredFirst')
+    enroll.application.student.stLast = local.getItem('stLast')
+    enroll.application.secondary = {}
+    enroll.application.secondary.secondaryId = local.getItem('secondaryId')
+    enroll.application.secondary.secondaryEmail = local.getItem('secondaryEmail')
+    enroll.application.secondary.spFirst = local.getItem('spFirst')
+    enroll.application.secondary.spLast = local.getItem('spLast')
+    // // ø </demogrfx-application-processed>
+    
+    
+    
     // let enroll = {}
     // enroll.familyId = 'PENDING'
     // enroll.familyIdStatus = 'PENDING'//'Staff-Eye-D' inferred by Data, precision here not necessary
-    // enroll.maxPreviousFamilyTermId = 201506
-    // enroll.maxPreviousStudentTermId = 201506
+    // enroll.maxPreviousTermIdFamily = 201506
+    // enroll.maxPreviousTermIdStudent = 201506
     // enroll.wixWebhookId = local.getItem('wixWebhookId')
-    // ø <demogrfx-application-processed>
+    // // ø <demogrfx-application-processed>
+    // // ø <TESTING>
     // enroll.application = {}
     // enroll.application.termId = local.getItem('termId')
-    // enroll.application.staffIdentifiedFamilyId = local.getItem('staffIdentifiedFamilyId')
-    // enroll.application.familySeed = local.getItem('familySeed')
+    // enroll.application.staffIdentifiedFamilyId = '2297c168-cc91-43d1-8864-eb1182967d35'
+    // enroll.application.familySeed = '2297c168cc9143d18864eb1182967d35'
     // enroll.application.primary = {}
-    // enroll.application.primary.familyId = local.getItem('familyId')
-    // enroll.application.primary.familyEmail = local.getItem('familyEmail')
-    // enroll.application.primary.ppFirst = local.getItem('ppFirst')
-    // enroll.application.primary.ppLast = local.getItem('ppLast')
+    // enroll.application.primary.familyId = ''
+    // enroll.application.primary.familyEmail = 'jessikazmuda@gmail.com'
+    // enroll.application.primary.ppFirst = 'Jessika'
+    // enroll.application.primary.ppLast = 'Bottiani'
     // enroll.application.student = {}
-    // enroll.application.student.studentId = local.getItem('studentId')
-    // enroll.application.student.studentEmail = local.getItem('studentEmail')
-    // enroll.application.student.stFirst = local.getItem('stFirst')
-    // enroll.application.student.stPreferredFirst = local.getItem('stPreferredFirst')
-    // enroll.application.student.stLast = local.getItem('stLast')
+    // enroll.application.student.studentId = 'INSTANTIATE'
+    // enroll.application.student.studentEmail = 'steamdiscoveryacademy+grayson2297@gmail.com'
+    // enroll.application.student.stFirst = 'Grayson'
+    // enroll.application.student.stPreferredFirst = 'Grayson'
+    // enroll.application.student.stLast = 'Wilkinson'
     // enroll.application.secondary = {}
-    // enroll.application.secondary.secondaryId = local.getItem('secondaryId')
-    // enroll.application.secondary.secondaryEmail = local.getItem('secondaryEmail')
-    // enroll.application.secondary.spFirst = local.getItem('spFirst')
-    // enroll.application.secondary.spLast = local.getItem('spLast')
-    // ø </demogrfx-application-processed>
+    // enroll.application.secondary.secondaryId = 'EEMPTY'
+    // enroll.application.secondary.secondaryEmail = 'eempty'
+    // enroll.application.secondary.spFirst = 'James'
+    // enroll.application.secondary.spLast = 'Bottiani'
+    // // ø </TESTING>
+    // // ø </demogrfx-application-processed>
     
-    
-    
-    let enroll = {}
-    enroll.familyId = 'PENDING'
-    enroll.familyIdStatus = 'PENDING'//'Staff-Eye-D' inferred by Data, precision here not necessary
-    enroll.maxPreviousTermIdFamily = 201506
-    enroll.maxPreviousTermIdStudent = 201506
-    enroll.wixWebhookId = local.getItem('wixWebhookId')
-    // ø <demogrfx-application-processed>
-    // ø <TESTING>
-    enroll.application = {}
-    enroll.application.termId = local.getItem('termId')
-    enroll.application.staffIdentifiedFamilyId = '2297c168-cc91-43d1-8864-eb1182967d35'
-    enroll.application.familySeed = '2297c168cc9143d18864eb1182967d35'
-    enroll.application.primary = {}
-    enroll.application.primary.familyId = ''
-    enroll.application.primary.familyEmail = 'jessikazmuda@gmail.com'
-    enroll.application.primary.ppFirst = 'Jessika'
-    enroll.application.primary.ppLast = 'Bottiani'
-    enroll.application.student = {}
-    enroll.application.student.studentId = 'INSTANTIATE'
-    enroll.application.student.studentEmail = 'steamdiscoveryacademy+grayson2297@gmail.com'
-    enroll.application.student.stFirst = 'Grayson'
-    enroll.application.student.stPreferredFirst = 'Grayson'
-    enroll.application.student.stLast = 'Wilkinson'
-    enroll.application.secondary = {}
-    enroll.application.secondary.secondaryId = 'EEMPTY'
-    enroll.application.secondary.secondaryEmail = 'eempty'
-    enroll.application.secondary.spFirst = 'James'
-    enroll.application.secondary.spLast = 'Bottiani'
-    // ø </TESTING>
-    // ø </demogrfx-application-processed>
-    
-    
+    let familyPersonsObject = await getFamilyPersonsObject_NotBackend(familyId)
+    await validateFamilyPersonsObject(familyPersonsObject)
+
+    console.log(`familyPersonsObject:`)
+    console.dir(familyPersonsObject)
+    enroll.action.superEnrollmentStatus = familyPersonsObject.validationObject.allDangerBooleansAreValid === true ? enroll.action.superEnrollmentStatus : 'ABORT'
+    enroll.action.superEnrollmentString += familyPersonsObject.validationObject.allDangerBooleansAreValid === true ? '|allDangerBooleansAreValid' : '|allDangerBooleansAre_NOT_Valid'
+
     // ø <current-evaluation-personDbase-personData-wixWebhookId>
     // enroll.familyId = PENDING
     // enroll.familyIdStatus = 'PENDING'//'Staff-Eye-D' inferred by Data, precision here not necessary
@@ -287,7 +330,6 @@ export async function instantiateEnrollmentObject(familyId = 'STRING') {
     enroll.emailQuery.studentEmail = enroll.application.studentEmail
     // let studentEmailKludge = enroll.application.student.studentEmail
     // console.log(`studentEmailKludge: ${studentEmailKludge}`)
-    console.log(`enroll.application.student.studentEmail: ${enroll.application.student.studentEmail}`)
     console.log(`replaceBlock: indexOf ${(enroll.application.student.studentEmail).indexOf('@')}`)
     console.log(`replaceBlock: substr(START: ${(enroll.application.student.studentEmail).indexOf('@')-4}`)
     let replaceBlock = (enroll.application.student.studentEmail).substr((enroll.application.student.studentEmail).indexOf('@') - 4,5)
@@ -303,7 +345,12 @@ export async function instantiateEnrollmentObject(familyId = 'STRING') {
     // enroll.familyIdStatus = 'PENDING'//'Staff-Eye-D' inferred by Data, precision here not necessary
     // enroll.maxPreviousTermIdFamily = 201506
     // enroll.maxPreviousTermIdStudent = 201506
-    enroll.action = {}
+
+    // ø <enroll.action AT TOP for superEnrollmentStatsu>
+    // ø enroll.action = {}
+    // ø enroll.action.superEnrollmentStatus = 'PENDING';//local.getItem('superEnrollmentStatus')
+    // ø </enroll.action AT TOP for superEnrollmentStatsu>
+    
     enroll.action.primary = {}
     enroll.action.primary.member = 'PENDING_LOGIC'
     enroll.action.primary.contact = 'PENDING_LOGIC'
@@ -329,75 +376,27 @@ export async function instantiateEnrollmentObject(familyId = 'STRING') {
     enroll.action.termId = enroll.application.termId
     enroll.action.familySeed = 'PENDING'//enroll.application.familySeed
     // enroll.action.familySeed = enroll.application.familySeed
-    enroll.action.primary = {}
+    // enroll.action.primary = {}
     enroll.action.primary.familyEmail = enroll.application.primary.familyEmail
     enroll.action.primary.ppFirst = enroll.application.primary.ppFirst
     enroll.action.primary.ppLast = enroll.application.ppLast
-    enroll.action.student = {}
+    // enroll.action.student = {}
     enroll.action.student.studentEmail = enroll.application.student.studentEmail
     enroll.action.student.stFirst = enroll.application.student.stFirst
-    enroll.action.student.stPreferredFirst = enroll.application.stPreferredFirst
+    enroll.action.student.stPreferredFirst = enroll.application.student.stPreferredFirst
     enroll.action.student.stLast = enroll.application.student.stLast
-    enroll.action.secondary = {}
+    // enroll.action.secondary = {}
     enroll.action.secondary.secondaryEmail = enroll.application.secondary.secondaryEmail
     enroll.action.secondary.spFirst = enroll.application.secondary.spFirst
     enroll.action.secondary.spLast = enroll.application.secondary.spLast
     // ø </>
     // ø </SAME AS APPLICATION: update if different>
     // ø </action-actionEvaluation-final>
+    local.setItem('enrollObjectJSON', JSON.stringify(enroll))
+
     return enroll
 }
 // ø <-------------------- </instantiateEnrollmentObject> -------------------->
-
-// ø <-------------------- <instantiateSimpleDemogfxObjectDEPRECATED>  -------------------->
-export async function instantiateSimpleDemogfxObjectDEPRECATED() {
-    // ø <final in Post-Enrollment>
-    // let simpleDemogfxObject = {}
-    // simpleDemogfxObject.termId = local.getItem('termId')
-    // simpleDemogfxObject.staffIdentifiedFamilyId = local.getItem('staffIdentifiedFamilyId')
-    // simpleDemogfxObject.familySeed = local.getItem('familySeed')
-    // simpleDemogfxObject.primary = {}
-    // simpleDemogfxObject.primary.familyId = local.getItem('familyId')
-    // simpleDemogfxObject.primary.familyEmail = local.getItem('familyEmail')
-    // simpleDemogfxObject.primary.ppFirst = local.getItem('ppFirst')
-    // simpleDemogfxObject.primary.ppLast = local.getItem('ppLast')
-    // simpleDemogfxObject.student = {}
-    // simpleDemogfxObject.student.studentId = local.getItem('studentId')
-    // simpleDemogfxObject.student.studentEmail = local.getItem('studentEmail')
-    // simpleDemogfxObject.student.stFirst = local.getItem('stFirst')
-    // simpleDemogfxObject.student.stPreferredFirst = local.getItem('stPreferredFirst')
-    // simpleDemogfxObject.student.stLast = local.getItem('stLast')
-    // simpleDemogfxObject.secondary = {}
-    // simpleDemogfxObject.secondary.secondaryId = local.getItem('secondaryId')
-    // simpleDemogfxObject.secondary.secondaryEmail = local.getItem('secondaryEmail')
-    // simpleDemogfxObject.secondary.spFirst = local.getItem('spFirst')
-    // simpleDemogfxObject.secondary.spLast = local.getItem('spLast')
-    // ø </final in Post-Enrollment>
-
-    // ø <TESTING>
-    let simpleDemogfxObject = {}
-    simpleDemogfxObject.termId = local.getItem('termId')
-    simpleDemogfxObject.staffIdentifiedFamilyId = '2297c168-cc91-43d1-8864-eb1182967d35'
-    simpleDemogfxObject.familySeed = '2297c168cc9143d18864eb1182967d35'
-    simpleDemogfxObject.primary = {}
-    simpleDemogfxObject.primary.familyId = '2297c168-cc91-43d1-8864-eb1182967d35'
-    simpleDemogfxObject.primary.familyEmail = 'jessikazmuda@gmail.com'
-    simpleDemogfxObject.primary.ppFirst = 'Jessika'
-    simpleDemogfxObject.primary.ppLast = 'Bottiani'
-    simpleDemogfxObject.student = {}
-    simpleDemogfxObject.student.studentId = 'INSTANTIATE'
-    simpleDemogfxObject.student.studentEmail = 'steamdiscoveryacademy+grayson2297@gmail.com'
-    simpleDemogfxObject.student.stFirst = 'Grayson'
-    simpleDemogfxObject.student.stPreferredFirst = 'Grayson'
-    simpleDemogfxObject.student.stLast = 'Wilkinson'
-    simpleDemogfxObject.secondary = {}
-    simpleDemogfxObject.secondary.secondaryId = 'EEMPTY'
-    simpleDemogfxObject.secondary.secondaryEmail = 'eempty'
-    simpleDemogfxObject.secondary.spFirst = 'James'
-    simpleDemogfxObject.secondary.spLast = 'Bottiani'
-    // ø </TESTING>
-}
-// ø <-------------------- </instantiateSimpleDemogfxObjectDEPRECATED> -------------------->
 
 
 // ø <-------------------- <validateFamilyPersonsObject>  -------------------->

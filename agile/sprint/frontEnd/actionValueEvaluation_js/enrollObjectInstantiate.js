@@ -1,5 +1,5 @@
 // ø <-------------------- <instantiateSimpleDemogfxObject>  -------------------->
-export async function instantiateSimpleDemogfxObject() {
+export async function instantiateSimpleDemogfxObject(familyId = 'STRING') {
     // let enroll = {}
     // enroll.familyId = PENDING
     // enroll.familyIdStatus = 'PENDING'//'Staff-Eye-D' inferred by Data, precision here not necessary
@@ -131,5 +131,6 @@ export async function instantiateSimpleDemogfxObject() {
     // ø </>
     // ø </SAME AS APPLICATION: update if different>
     // ø </action-actionEvaluation-final>
+    return enroll
 }
 // ø <-------------------- </instantiateSimpleDemogfxObject> -------------------->

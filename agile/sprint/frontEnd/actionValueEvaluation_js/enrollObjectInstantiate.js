@@ -1,3 +1,4 @@
+// ø <-------------------- <instantiateSimpleDemogfxObject>  -------------------->
 export async function instantiateSimpleDemogfxObject() {
     // let enroll = {}
     // enroll.familyId = PENDING
@@ -26,7 +27,6 @@ export async function instantiateSimpleDemogfxObject() {
     // enroll.application.secondary.secondaryEmail = local.getItem('secondaryEmail')
     // enroll.application.secondary.spFirst = local.getItem('spFirst')
     // enroll.application.secondary.spLast = local.getItem('spLast')
-    
     // ø </demogrfx-application-processed>
     
     
@@ -132,3 +132,4 @@ export async function instantiateSimpleDemogfxObject() {
     // ø </SAME AS APPLICATION: update if different>
     // ø </action-actionEvaluation-final>
 }
+// ø <-------------------- </instantiateSimpleDemogfxObject> -------------------->

@@ -80,6 +80,14 @@ DOX = '2021-08-31T07:49:01|stepMessagingJSON|the result of all the PPEQ Append C
 wixLocalStorageLibraryObject.admin.localAttributesDoxPPEQArray.push(DOX)
 wixLocalStorageLibraryObject.wixLocalStorageArray.push('stepMessagingJSON')
 
+DOX = '2021-10-01T15:34:01|familyPersonsObjectJSON|the result of getFamilyPersonsObject(familyId) applied to person DataSet in Wix';
+wixLocalStorageLibraryObject.admin.localAttributesDoxPPEQArray.push(DOX)
+wixLocalStorageLibraryObject.wixLocalStorageArray.push('familyPersonsObjectJSON')
+
+DOX = '2021-10-01T15:34:01|enrollObjectJSON|the result of instantiateEnrollmentObject(familyId) by Family ID';
+wixLocalStorageLibraryObject.admin.localAttributesDoxPPEQArray.push(DOX)
+wixLocalStorageLibraryObject.wixLocalStorageArray.push('enrollObjectJSON')
+
 
 
 console.warn("wixLocalStorageLibraryObject: ");

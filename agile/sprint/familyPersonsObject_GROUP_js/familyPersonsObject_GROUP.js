@@ -9,10 +9,7 @@ export async function getFamilyPersonsObject(familyId = 'STRING') {
     let familyIdPersonQueryResponseObject = await dataQueryPerson_filterByFamilyId(familyId)
     console.log(`familyIdPersonQueryResponseObject:`)
     console.dir(familyIdPersonQueryResponseObject)
-    // let arrayOfPersonRecords = familyIdPersonQueryResponseObject.items
     let arrayOfPersonRecords =  familyIdPersonQueryResponseObject.items
-
-
 
 	arrayOfPersonRecords.forEach(item => {
 		item.familyAlphaKey = 'TBD'
@@ -29,9 +26,6 @@ export async function getFamilyPersonsObject(familyId = 'STRING') {
 		delete item._id
 	});
 
-
-
-
     console.log(`arrayOfPersonRecords:`)
     console.dir(arrayOfPersonRecords)
 
@@ -41,7 +35,7 @@ export async function getFamilyPersonsObject(familyId = 'STRING') {
     familyDataObject.familyAlphaKey_uniqueArray = []
     // ø => Validation: Should have a Single Value
     familyDataObject.personIdCount = 0
-    familyDataObject.personIdArray = [] // very unlikely event where on personId has more than one role (¿primary/secondary switch?)
+    familyDataObject.personIdArray = [] // very unlikely event where one personId has more than one role (¿primary/secondary switch?)
     familyDataObject.primaryMemberObjectsById = {}
     familyDataObject.primaryPersonCount = 0
     familyDataObject.studentMemberObjectsById = {}
@@ -55,51 +49,26 @@ export async function getFamilyPersonsObject(familyId = 'STRING') {
     // ø </familyDataObject INSTANTIATE>
     console.log(`familyDataObject: INSTANTIATE:`)
     console.dir(familyDataObject)
-    // console.log(`familyDataObject: INSTANTIATE:`)
-    // console.dir(familyDataObject)
-    // console.groupEnd()
-    // return
-    // let arrayAsElement = []
 
-    // let personIdObject = {}
     arrayOfPersonRecords.forEach(person => {
         appendPerson_toPersonObjectById(person, familyDataObject)
-
-
-
-        // familyDataObject.personIdCount++
-        // personIdObject = {}
-        // familyDataObject.primaryPersonCount++
-        // familyDataObject.studentPersonCount++
-
-        // familyDataObject.secondaryPersonCount++
-
-
-        // arrayAsElement = [person._id, person.role]
-        // familyDataObject.unsupportedRolePersonIdArray.push(arrayAsElement)
-
     });
 
-    // let primaryPersonIdArray = Object.keys(familyDataObject.primaryMemberObjectsById)
-    // let primaryPersonIdCount = primaryPersonIdArray.length;
-    // let studentPersonIdArray = Object.keys(familyDataObject.studentMemberObjectsById)
-    // let studentPersonIdCount = studentPersonIdArray.length;
-    // let secondaryPersonIdArray = Object.keys(familyDataObject.secondaryMemberObjectsById)
-    // let secondaryPersonIdCount = secondaryPersonIdArray.length;
-    
     console.log(`familyDataObject: Pre-Validation: `)
     console.dir(familyDataObject)
     
     validateFamilyPersonsObject(familyDataObject)
+
     console.log(`familyDataObject: FINAL: `)
     console.dir(familyDataObject)
+
     console.groupEnd()
     return familyDataObject
 
 }
 // ø <-------------------- </getFamilyPersonsObject> -------------------->
 
-// ø <-------------------- </appendPerson_toPersonObjectById> -------------------->
+// ø <-------------------- <appendPerson_toPersonObjectById>  -------------------->
 export async function appendPerson_toPersonObjectById(person = {}, familyDataObject = {}) {
     // ø <personObjectById_TEMPLATE INSTANTIATE>
     let DOX = 'entering'
@@ -109,6 +78,7 @@ export async function appendPerson_toPersonObjectById(person = {}, familyDataObj
     console.dir(person)
 
     // ø <familyAlphaKey CowCatcher>
+    // ø TBD above
     person.alphaKey = person.alphaKey == null ? 'alphaKeyPENDING' : person.alphaKey
     // ø </familyAlphaKey CowCatcher>
 

@@ -1,7 +1,9 @@
-// ø <-------------------- <instantiateSimpleDemogfxObject>  -------------------->
-export async function instantiateSimpleDemogfxObject(familyId = 'STRING') {
+// ø <-------------------- <instantiateEnrollmentObject>  -------------------->
+export async function instantiateEnrollmentObject(familyId = 'STRING') {
+    console.groupCollapsed(`instantiateSimpleDemogfxObject(familyId)`)
+    console.log(`FULL DECLARATION: export async function instantiateSimpleDemogfxObject(${familyId} = 'STRING')`)
     // let enroll = {}
-    // enroll.familyId = PENDING
+    // enroll.familyId = 'PENDING'
     // enroll.familyIdStatus = 'PENDING'//'Staff-Eye-D' inferred by Data, precision here not necessary
     // enroll.maxPreviousFamilyTermId = 201506
     // enroll.maxPreviousStudentTermId = 201506
@@ -32,10 +34,10 @@ export async function instantiateSimpleDemogfxObject(familyId = 'STRING') {
     
     
     let enroll = {}
-    enroll.familyId = PENDING
+    enroll.familyId = 'PENDING'
     enroll.familyIdStatus = 'PENDING'//'Staff-Eye-D' inferred by Data, precision here not necessary
-    enroll.maxPreviousFamilyTermId = 201506
-    enroll.maxPreviousStudentTermId = 201506
+    enroll.maxPreviousTermIdFamily = 201506
+    enroll.maxPreviousTermIdStudent = 201506
     enroll.wixWebhookId = local.getItem('wixWebhookId')
     // ø <demogrfx-application-processed>
     // ø <TESTING>
@@ -66,11 +68,16 @@ export async function instantiateSimpleDemogfxObject(familyId = 'STRING') {
     // ø <current-evaluation-personDbase-personData-wixWebhookId>
     // enroll.familyId = PENDING
     // enroll.familyIdStatus = 'PENDING'//'Staff-Eye-D' inferred by Data, precision here not necessary
+    // enroll.maxPreviousTermIdFamily = 201506
+    // enroll.maxPreviousTermIdStudent = 201506
     enroll.personData = {}
+    enroll.personData.primary = {}
     enroll.personData.primary.familyId = 'FROM_familyDataObject'
     enroll.personData.primary.maxTermId = 'FROM_familyDataObject'
+    enroll.personData.student = {}
     enroll.personData.student.studentId = 'FROM_familyDataObject'
     enroll.personData.student.maxTermId = 'FROM_familyDataObject'
+    enroll.personData.secondary = {}
     enroll.personData.secondary.secondaryId = 'FROM_familyDataObject'
     enroll.personData.secondary.maxTermId = 'FROM_familyDataObject'
     // ø </current-evaluation-personDbase-personData-wixWebhookId>
@@ -79,20 +86,35 @@ export async function instantiateSimpleDemogfxObject(familyId = 'STRING') {
     // enroll.familyId = PENDING
     // enroll.familyIdStatus = 'PENDING'//'Staff-Eye-D' inferred by Data, precision here not necessary
     enroll.emailQuery = {}
-    enroll.emailQuery.primary.familyId = 'FROM_familyDataObject_OR_FROM_emailQuery'
-    enroll.emailQuery.student.studentId = 'FROM_familyDataObject_OR_FROM_emailQuery'
-    enroll.emailQuery.secondary.secondaryId = 'FROM_familyDataObject_OR_FROM_emailQuery'
+    // enroll.emailQuery.primary.familyId = 'FROM_familyDataObject_OR_FROM_emailQuery'
+    enroll.emailQuery.familyId = 'FROM_familyDataObject_OR_FROM_emailQuery'
+    // enroll.emailQuery.student.studentId = 'FROM_familyDataObject_OR_FROM_emailQuery'
+    enroll.emailQuery.studentId = 'FROM_familyDataObject_OR_FROM_emailQuery'
+    // enroll.emailQuery.secondary.secondaryId = 'FROM_familyDataObject_OR_FROM_emailQuery'
+    enroll.emailQuery.secondaryId = 'FROM_familyDataObject_OR_FROM_emailQuery'
     // ø <DATA FOR THE QUERY(IES)>
-    enroll.emailQuery.primary.familyEmail = enroll.application.familyEmail
-    enroll.emailQuery.student.studentEmail = enroll.application.studentEmail
-    let replaceBlock = (enroll.application.studentEmail).substr((enroll.application.studentEmail).indexOf('@') - 4,5)
-    enroll.emailQuery.student.studentEmailKludge = (enroll.application.studentEmail).replace(replaceBlock, 'eemp@')
+    // enroll.emailQuery.primary.familyEmail = enroll.application.familyEmail
+    enroll.emailQuery.familyEmail = enroll.application.familyEmail
+    // enroll.emailQuery.student.studentEmail = enroll.application.studentEmail
+    enroll.emailQuery.studentEmail = enroll.application.studentEmail
+    // let studentEmailKludge = enroll.application.student.studentEmail
+    // console.log(`studentEmailKludge: ${studentEmailKludge}`)
+    console.log(`enroll.application.student.studentEmail: ${enroll.application.student.studentEmail}`)
+    console.log(`replaceBlock: indexOf ${(enroll.application.student.studentEmail).indexOf('@')}`)
+    console.log(`replaceBlock: substr(START: ${(enroll.application.student.studentEmail).indexOf('@')-4}`)
+    let replaceBlock = (enroll.application.student.studentEmail).substr((enroll.application.student.studentEmail).indexOf('@') - 4,5)
+    console.log(`replaceBlock: replaceBlock: ${replaceBlock}`)
+    // enroll.emailQuery.student.studentEmailKludge = (enroll.application.studentEmail).replace(replaceBlock, 'eemp@')
+    enroll.emailQuery.studentEmailKludge = (enroll.application.student.studentEmail).replace(replaceBlock, 'eemp@')
+    console.log(`enroll.emailQuery.studentEmailKludge: ${enroll.emailQuery.studentEmailKludge}`)
     // ø </DATA FOR THE QUERY(IES)>
     // ø </contacts-directQuery-emailQuery-emailQueryWithKludge>
     
     // ø <action-actionEvaluation-final>
     // enroll.familyId = PENDING
     // enroll.familyIdStatus = 'PENDING'//'Staff-Eye-D' inferred by Data, precision here not necessary
+    // enroll.maxPreviousTermIdFamily = 201506
+    // enroll.maxPreviousTermIdStudent = 201506
     enroll.action = {}
     enroll.action.primary = {}
     enroll.action.primary.member = 'PENDING_LOGIC'
@@ -100,11 +122,13 @@ export async function instantiateSimpleDemogfxObject(familyId = 'STRING') {
     enroll.action.primary.dataBase = 'PENDING_LOGIC'
     // enroll.emailQuery.primary.familyId = 'DANGER'
     // enroll.action.primary.familyId = enroll.application.familyId
+    enroll.action.student = {}
     enroll.action.student.member = 'PENDING_LOGIC'
     enroll.action.student.contact = 'PENDING_LOGIC'
     enroll.action.student.dataBase = 'PENDING_LOGIC'
     // enroll.action.student.studentId = enroll.application.studentId
     // enroll.emailQuery.student.studentId = 'DANGER'
+    enroll.action.secondary = {}
     enroll.action.secondary.member = 'PENDING_LOGIC_but_NA'
     enroll.action.secondary.contact = 'PENDING_LOGIC'
     enroll.action.secondary.dataBase = 'PENDING_LOGIC'
@@ -112,25 +136,27 @@ export async function instantiateSimpleDemogfxObject(familyId = 'STRING') {
     // enroll.action.secondary.secondaryId = enroll.application.secondaryId
     // ø <SAME AS APPLICATION: update if different>
     // ø <>
+    console.groupEnd()
+    // return
     enroll.action.termId = enroll.application.termId
-    enroll.action.familySeed = enroll.application.familySeed
+    enroll.action.familySeed = 'PENDING'//enroll.application.familySeed
     // enroll.action.familySeed = enroll.application.familySeed
     enroll.action.primary = {}
-    enroll.action.primary.familyEmail = enroll.application.familyEmail
-    enroll.action.primary.ppFirst = enroll.application.ppFirst
+    enroll.action.primary.familyEmail = enroll.application.primary.familyEmail
+    enroll.action.primary.ppFirst = enroll.application.primary.ppFirst
     enroll.action.primary.ppLast = enroll.application.ppLast
     enroll.action.student = {}
-    enroll.action.student.studentEmail = enroll.application.studentEmail
-    enroll.action.student.stFirst = enroll.application.stFirst
+    enroll.action.student.studentEmail = enroll.application.student.studentEmail
+    enroll.action.student.stFirst = enroll.application.student.stFirst
     enroll.action.student.stPreferredFirst = enroll.application.stPreferredFirst
-    enroll.action.student.stLast = enroll.application.stLast
+    enroll.action.student.stLast = enroll.application.student.stLast
     enroll.action.secondary = {}
-    enroll.action.secondary.secondaryEmail = enroll.application.secondaryEmail
-    enroll.action.secondary.spFirst = enroll.application.spFirst
-    enroll.action.secondary.spLast = enroll.application.spLast
+    enroll.action.secondary.secondaryEmail = enroll.application.secondary.secondaryEmail
+    enroll.action.secondary.spFirst = enroll.application.secondary.spFirst
+    enroll.action.secondary.spLast = enroll.application.secondary.spLast
     // ø </>
     // ø </SAME AS APPLICATION: update if different>
     // ø </action-actionEvaluation-final>
     return enroll
 }
-// ø <-------------------- </instantiateSimpleDemogfxObject> -------------------->
+// ø <-------------------- </instantiateEnrollmentObject> -------------------->

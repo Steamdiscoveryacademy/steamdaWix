@@ -9,10 +9,7 @@ export async function getFamilyPersonsObject_NotBackend(familyId = 'STRING') {
     let familyIdPersonQueryResponseObject = await dataQueryPerson_filterByFamilyId(familyId)
     console.log(`familyIdPersonQueryResponseObject:`)
     console.dir(familyIdPersonQueryResponseObject)
-    // let arrayOfPersonRecords = familyIdPersonQueryResponseObject.items
     let arrayOfPersonRecords =  familyIdPersonQueryResponseObject.items
-
-
 
 	arrayOfPersonRecords.forEach(item => {
 		item.familyAlphaKey = 'TBD'
@@ -28,9 +25,6 @@ export async function getFamilyPersonsObject_NotBackend(familyId = 'STRING') {
 		delete item._owner
 		delete item._id
 	});
-
-
-
 
     console.log(`arrayOfPersonRecords:`)
     console.dir(arrayOfPersonRecords)
@@ -55,62 +49,38 @@ export async function getFamilyPersonsObject_NotBackend(familyId = 'STRING') {
     // ø </familyDataObject INSTANTIATE>
     console.log(`familyDataObject: INSTANTIATE:`)
     console.dir(familyDataObject)
-    // console.log(`familyDataObject: INSTANTIATE:`)
-    // console.dir(familyDataObject)
-    // console.groupEnd()
-    // return
-    // let arrayAsElement = []
 
-    // let personIdObject = {}
-    arrayOfPersonRecords.forEach(person => {
-        appendPerson_toPersonObjectById(person, familyDataObject)
+    let person = {}
+    for (let index = 0; index < arrayOfPersonRecords.length; index++) {
+        person = arrayOfPersonRecords[index];
+        await appendPerson_toPersonObjectById_NotBackend(person, familyDataObject)
+    }
 
-
-
-        // familyDataObject.personIdCount++
-        // personIdObject = {}
-        // familyDataObject.primaryPersonCount++
-        // familyDataObject.studentPersonCount++
-
-        // familyDataObject.secondaryPersonCount++
-
-
-        // arrayAsElement = [person._id, person.role]
-        // familyDataObject.unsupportedRolePersonIdArray.push(arrayAsElement)
-
-    });
-
-    // let primaryPersonIdArray = Object.keys(familyDataObject.primaryMemberObjectsById)
-    // let primaryPersonIdCount = primaryPersonIdArray.length;
-    // let studentPersonIdArray = Object.keys(familyDataObject.studentMemberObjectsById)
-    // let studentPersonIdCount = studentPersonIdArray.length;
-    // let secondaryPersonIdArray = Object.keys(familyDataObject.secondaryMemberObjectsById)
-    // let secondaryPersonIdCount = secondaryPersonIdArray.length;
-    
     console.log(`familyDataObject: Pre-Validation: `)
     console.dir(familyDataObject)
     
-    validateFamilyPersonsObject(familyDataObject)
+    await validateFamilyPersonsObject_NotBackend(familyDataObject)
     console.log(`familyDataObject: FINAL: `)
     console.dir(familyDataObject)
     local.setItem('familyPersonsObjectJSON', JSON.stringify(familyDataObject))
+
     console.groupEnd()
     return familyDataObject
 
 }
 // ø <-------------------- </getFamilyPersonsObject_NotBackend> -------------------->
 
-// ø <-------------------- </appendPerson_toPersonObjectById> -------------------->
-export async function appendPerson_toPersonObjectById(person = {}, familyDataObject = {}) {
+// ø <-------------------- </appendPerson_toPersonObjectById_NotBackend> -------------------->
+export async function appendPerson_toPersonObjectById_NotBackend(person = {}, familyDataObject = {}) {
     // ø <personObjectById_TEMPLATE INSTANTIATE>
     let DOX = 'entering'
-    console.groupCollapsed(`appendPerson_toPersonObjectById(person, familyDataObject)`)
-    console.log(`Full Declaration: export async function appendPerson_toPersonObjectById(person = {}, familyDataObject = {})`)
+    console.groupCollapsed(`appendPerson_toPersonObjectById_NotBackend(person, familyDataObject)`)
+    console.log(`Full Declaration: export async function appendPerson_toPersonObjectById_NotBackend(person = {}, familyDataObject = {})`)
     console.log(`person: PARAM: `)
     console.dir(person)
 
     // ø <familyAlphaKey CowCatcher>
-    person.alphaKey = person.alphaKey == null ? 'alphaKeyPENDING' : person.alphaKey
+    person.alphaKey = person.alphaKey == null ? 'TBDz' : person.alphaKey
     // ø </familyAlphaKey CowCatcher>
 
     /**
@@ -215,7 +185,7 @@ export async function appendPerson_toPersonObjectById(person = {}, familyDataObj
     console.groupEnd()
     return
 }
-// ø <-------------------- </appendPerson_toPersonObjectById> -------------------->
+// ø <-------------------- </appendPerson_toPersonObjectById_NotBackend> -------------------->
 
 // ø <-------------------- <instantiateEnrollmentObject>  -------------------->
 export async function instantiateEnrollmentObject(familyId = 'STRING') {
@@ -289,7 +259,10 @@ export async function instantiateEnrollmentObject(familyId = 'STRING') {
     // // ø </demogrfx-application-processed>
     
     let familyPersonsObject = await getFamilyPersonsObject_NotBackend(familyId)
-    await validateFamilyPersonsObject(familyPersonsObject)
+    $w('#secondaryResponseTXTBX').value = JSON.stringify(familyPersonsObject,undefined,4)
+    // await validateFamilyPersonsObject_NotBackend(familyPersonsObject)
+    console.warn('≈308≈ validateFamilyPerson: COMMENTED OUT')
+
 
     console.log(`familyPersonsObject:`)
     console.dir(familyPersonsObject)
@@ -399,8 +372,8 @@ export async function instantiateEnrollmentObject(familyId = 'STRING') {
 // ø <-------------------- </instantiateEnrollmentObject> -------------------->
 
 
-// ø <-------------------- <validateFamilyPersonsObject>  -------------------->
-export async function validateFamilyPersonsObject(familyDataObject = {}){
+// ø <-------------------- <validateFamilyPersonsObject_NotBackend>  -------------------->
+export async function validateFamilyPersonsObject_NotBackend(familyDataObject = {}){
     let DOX = 'TO BE VISIBLE IN WIX EDITOR'
     // ø <PROOF OF CONCEPT OVERALL>
     /**
@@ -484,7 +457,7 @@ export async function validateFamilyPersonsObject(familyDataObject = {}){
 
     familyDataObject.validationObject = validationObject
 }
-// ø <-------------------- </validateFamilyPersonsObject> -------------------->
+// ø <-------------------- </validateFamilyPersonsObject_NotBackend> -------------------->
 
 // ø <==========================================================================================>
 // ø <============================== </familyPersonsObject_GROUP> ==============================>

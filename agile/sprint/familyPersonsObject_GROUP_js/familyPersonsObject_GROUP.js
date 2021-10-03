@@ -6,13 +6,14 @@ export async function getFamilyPersonsObject_NotBackend(familyId = 'STRING') {
     console.groupCollapsed(`getFamilyPersonsObject_NotBackend(familyId)`)
     console.log(`Full Declaration: export async function getFamilyPersonsObject_NotBackend(familyId = 'STRING')`)
     console.log(`familyId: ${familyId} [@todo: validate family id]`)
+    let DOX = 'So that it is readable in the WiX Editor'
     let familyIdPersonQueryResponseObject = await dataQueryPerson_filterByFamilyId(familyId)
     console.log(`familyIdPersonQueryResponseObject:`)
     console.dir(familyIdPersonQueryResponseObject)
     let arrayOfPersonRecords =  familyIdPersonQueryResponseObject.items
-
 	arrayOfPersonRecords.forEach(item => {
 		item.familyAlphaKey = 'TBD'
+		item.personContactEmail = 'TBD'
 		delete item.objectData
 		delete item.objectCorollary
 		delete item.idBL
@@ -29,11 +30,25 @@ export async function getFamilyPersonsObject_NotBackend(familyId = 'STRING') {
     console.log(`arrayOfPersonRecords:`)
     console.dir(arrayOfPersonRecords)
 
+    let pendingString = 'PENDING'
     // ø <familyDataObject INSTANTIATE>
+    DOX = '<INSTANTIATE>'
     let familyDataObject = {}
     familyDataObject.familyId = familyId
+    familyDataObject.familyTermIdMax = 201506
+    familyDataObject.studentTermIdMax = 201506
+    familyDataObject.primaryId = pendingString
+    familyDataObject.primaryEmail = pendingString
+    familyDataObject.primaryIsUpToDate = false
+    familyDataObject.studentId = pendingString
+    familyDataObject.studentEmail = pendingString
+    familyDataObject.studentIsUpToDate = false
+    familyDataObject.secondaryId = pendingString
+    familyDataObject.secondaryEmail = pendingString
+    familyDataObject.secondaryIsUpToDate = false
     familyDataObject.familyAlphaKey_uniqueArray = []
     // ø => Validation: Should have a Single Value
+
     familyDataObject.personIdCount = 0
     familyDataObject.personIdArray = [] // very unlikely event where on personId has more than one role (¿primary/secondary switch?)
     familyDataObject.primaryMemberObjectsById = {}
@@ -41,12 +56,15 @@ export async function getFamilyPersonsObject_NotBackend(familyId = 'STRING') {
     familyDataObject.studentMemberObjectsById = {}
     familyDataObject.studentPersonCount = 0
     familyDataObject.studentFirstTermIdConcatArray = []
+    familyDataObject.studentFirstTermId2dArray = []
+    familyDataObject.studentFirstArray = []
     familyDataObject.secondaryMemberObjectsById = {}
     familyDataObject.secondaryPersonCount = 0
     familyDataObject.unsupportedRolePersonIdArray = []
     familyDataObject.unsupportedRolePersonCount = 0
     // ø => Validation: Should be empty
     // ø </familyDataObject INSTANTIATE>
+    DOX = '</INSTANTIATE>'
     console.log(`familyDataObject: INSTANTIATE:`)
     console.dir(familyDataObject)
 
@@ -96,8 +114,9 @@ export async function appendPerson_toPersonObjectById_NotBackend(person = {}, fa
      */
 
     let personObjectById_TEMPLATE = {}
-    personObjectById_TEMPLATE.familyAlphaKey = 'STRING'//redundant, but
     personObjectById_TEMPLATE.contactId = 'STRING'//redundant, but
+    personObjectById_TEMPLATE.familyAlphaKey = 'STRING'//redundant, but
+    personObjectById_TEMPLATE.personContactEmail = 'STRING'//redundant, but
     personObjectById_TEMPLATE.role = 'STRING'//redundant, but
     personObjectById_TEMPLATE.termId = 777
     personObjectById_TEMPLATE.first = 'STRING'//legal for student
@@ -126,12 +145,14 @@ export async function appendPerson_toPersonObjectById_NotBackend(person = {}, fa
         case 'Primary':
             holderArray = Object.keys(familyDataObject.primaryMemberObjectsById)
             personObjectById = holderArray.includes(person.personId) ? familyDataObject.primaryMemberObjectsById[person.personId] : personObjectById_TEMPLATE
-            // personObjectById.redundantId = person.personId
+            // personObjectById.personContactEmail = person.personContactEmail === 'TDB' ? 'pp' + person.personContactEmail : person.personContactEmail
             break;
         case 'Student':
             holderArray = Object.keys(familyDataObject.studentMemberObjectsById)
             personObjectById = holderArray.includes(person.personId) ? familyDataObject.primaryMemberObjectsById[person.personId] : personObjectById_TEMPLATE
             familyDataObject.studentFirstTermIdConcatArray.push(person.firstLegal + '_' + person.termId + '_' + person.personId)
+            familyDataObject.studentFirstTermId2dArray.push([person.firstLegal , person.termId , person.personId])
+            familyDataObject.studentFirstArray.push(person.firstLegal)
             break;
         case 'Secondary':
             holderArray = Object.keys(familyDataObject.secondaryMemberObjectsById)
@@ -145,15 +166,22 @@ export async function appendPerson_toPersonObjectById_NotBackend(person = {}, fa
     }
     // ø </SWITCH to INSTANTIATE>
 
+    let rolePrefix = person.role === 'Primary' ? 'pp' : 'zz'
+    rolePrefix = person.role === 'Student' ? 'st' : rolePrefix
+    rolePrefix = person.role === 'Secondary' ? 'sp' : rolePrefix
     // ø <Populate personObjectById>
     personObjectById.familyAlphaKey = person.familyAlphaKey//redundant, but
     personObjectById.contactId = person.personId//redundant, but
+    personObjectById.personContactEmail = person.personContactEmail === 'TBD' ? rolePrefix + person.personContactEmail : person.personContactEmail//redundant, but
     personObjectById.role = person.role//redundant, but
     personObjectById.termId = person.termId
     holderString = person.role === 'Student' ? person.firstLegal : person.first//legal for student
     personObjectById.first = holderString//legal for student
     personObjectById.last = person.last
     personObjectById.termIdArray.push(person.termId)
+    personObjectById.termIdMax = personObjectById.termIdMax == null || personObjectById.termIdMax < person.termId ? person.termId : personObjectById.termIdMax
+    familyDataObject.familyTermIdMax = person.termId > familyDataObject.familyTermIdMax ? person.termId : familyDataObject.familyTermIdMax  
+
     personObjectById.firstArray.push(holderString)//legal for student
     holderArray = [person.termId, holderString]
     personObjectById.termIdFirst2dArray.push(holderArray)
@@ -170,6 +198,7 @@ export async function appendPerson_toPersonObjectById_NotBackend(person = {}, fa
         case 'Student':
             familyDataObject.studentMemberObjectsById[person.personId] = personObjectById
             familyDataObject.studentPersonCount++
+            familyDataObject.studentTermIdMax = person.termId > familyDataObject.studentTermIdMax ? person.termId : familyDataObject.studentTermIdMax
             break;
         case 'Secondary':
             familyDataObject.secondaryMemberObjectsById[person.personId] = personObjectById
@@ -191,8 +220,20 @@ export async function appendPerson_toPersonObjectById_NotBackend(person = {}, fa
 export async function instantiateEnrollmentObject(familyId = 'STRING') {
     console.groupCollapsed(`instantiateSimpleDemogfxObject(familyId)`)
     console.log(`FULL DECLARATION: export async function instantiateSimpleDemogfxObject(${familyId} = 'STRING')`)
+    let DOX = 'so that it can be viewed in the Online Editor'
+    let pendingString = 'PENDING'
+    let unconfirmedString = 'UNCONFIRMED'
     let enroll = {}
     
+    if(typeof familyId !== 'string'){
+        // ø <CODE for Below>
+        let contactId_PARAM = 'ZXZ'
+        let emailToFind_PARAM = 'ZXZ'
+        let contactById = await steamdaGetContactFunction(contactId_PARAM);
+        let contactByEmail = await steamdaGetContactByEmailFunction(emailToFind_PARAM);
+        // ø </CODE for Below>
+    }
+
     enroll.action = {}
     enroll.action.superEnrollmentStatus = 'CONTINUE';//local.getItem('superEnrollmentStatus')
     enroll.action.superEnrollmentString = 'INSTANTIATE';//local.getItem('superEnrollmentStatus')
@@ -257,12 +298,42 @@ export async function instantiateEnrollmentObject(familyId = 'STRING') {
     // enroll.application.secondary.spLast = 'Bottiani'
     // // ø </TESTING>
     // // ø </demogrfx-application-processed>
-    
+
     let familyPersonsObject = await getFamilyPersonsObject_NotBackend(familyId)
     $w('#secondaryResponseTXTBX').value = JSON.stringify(familyPersonsObject,undefined,4)
     // await validateFamilyPersonsObject_NotBackend(familyPersonsObject)
-    console.warn('≈308≈ validateFamilyPerson: COMMENTED OUT')
-
+    console.warn('≈308≈ validateFamilyPerson: COMMENTED OUT: OKAY: inside main getFamilyPersonsObject_NotBackend() ')
+    
+    // ø <>
+    // ø <Ecapsulated Queries>
+    // ø <ENCAPSULATED QUERIES>
+ 
+    // DOX = 'PrimaryParent:\n---\nById:\n---\n'
+    // let primaryParentId = local.getItem('staffIdentifiedFamilyId')
+    // let primaryParentById = await steamdaGetContactFunction(primaryParentId)
+    // $w('#tertiaryResponseTXTBX').value = JSON.stringify(primaryParentById,undefined,4)
+ 
+    // DOX = 'PrimaryParent:\n---\nByEmail:\n---\n'
+    // let primaryParentEmail = local.getItem('familyEmail')
+    // let primaryParentByEmail = await steamdaGetContactByEmailFunction(primaryParentEmail)
+    // $w('#quaternaryResponseTXTBX').value = JSON.stringify(primaryParentByEmail,undefined,4)
+ 
+ 
+    DOX = 'Student:\n---\nById:\n---\n'
+    let studentId = 'c90f23aa-2838-4e4e-9135-3995d25c5eb3'
+    let studentById = await steamdaGetContactFunction(studentId)
+    DOX += JSON.stringify(studentById,undefined,4)
+    $w('#tertiaryResponseTXTBX').value = DOX
+ 
+    DOX = 'Student:\n---\nByEmail:\n---\n'
+    let studentEmail = 'steamdiscoveryacademy+gabrieleemp@gmail.com'
+    let studentByEmail = await steamdaGetContactByEmailFunction(studentEmail)
+    DOX += JSON.stringify(studentByEmail,undefined,4)
+    $w('#quaternaryResponseTXTBX').value = DOX
+ 
+    // ø </ENCAPSULATED QUERIES>
+    // ø </Ecapsulated Queries>
+    // ø </>
 
     console.log(`familyPersonsObject:`)
     console.dir(familyPersonsObject)
@@ -275,6 +346,19 @@ export async function instantiateEnrollmentObject(familyId = 'STRING') {
     // enroll.maxPreviousTermIdFamily = 201506
     // enroll.maxPreviousTermIdStudent = 201506
     enroll.personData = {}
+    enroll.confirmed = {}
+    enroll.confirmed.familyId = familyPersonsObject.primaryPersonCount === 1 ? familyPersonsObject.familyId : unconfirmedString
+    enroll.confirmed.familyEmail = unconfirmedString
+    enroll.confirmed.familyMaxTermId = 201506
+    enroll.confirmed.familyUpToDate = familyPersonsObject.primaryPersonCount === 1 ? true : false
+    enroll.confirmed.studentId = unconfirmedString
+    enroll.confirmed.studentEmail = unconfirmedString
+    enroll.confirmed.studentMaxTermId = 201506
+    enroll.confirmed.studentUpToDate = false
+    enroll.confirmed.studentId = unconfirmedString
+    enroll.confirmed.studentEmail = unconfirmedString
+    enroll.confirmed.studentMaxTermId = unconfirmedString
+    enroll.confirmed.studentUpToDate = false
     enroll.personData.primary = {}
     enroll.personData.primary.familyId = 'FROM_familyDataObject'
     enroll.personData.primary.maxTermId = 'FROM_familyDataObject'
@@ -375,6 +459,46 @@ export async function instantiateEnrollmentObject(familyId = 'STRING') {
 // ø <-------------------- <validateFamilyPersonsObject_NotBackend>  -------------------->
 export async function validateFamilyPersonsObject_NotBackend(familyDataObject = {}){
     let DOX = 'TO BE VISIBLE IN WIX EDITOR'
+    let unconfirmedString = 'UNCONFIRMED'
+    let validationObject = {}
+    // ø <VALIDATE ONTO familyDataObject>
+    /**
+     * ø NOTES:
+     * ø   - use of local variables for clarity
+     * ø   - use of inline comments to align Ternary-Operator Question Marks by Block  
+     */
+    
+    let holderCriteria = false
+    let holderArray = Object.keys(familyDataObject.primaryMemberObjectsById)
+    holderCriteria = holderArray.length === 1
+    holderCriteria = holderCriteria && familyDataObject.familyId === holderArray[0]
+
+    familyDataObject.primaryId = holderCriteria ? familyDataObject.familyId : familyDataObject.primaryId
+    familyDataObject.primaryEmail = holderCriteria ? familyDataObject.primaryMemberObjectsById[familyDataObject.familyId]["personContactEmail"] : familyDataObject.primaryEmail
+    holderCriteria = holderCriteria && familyDataObject.familyId === holderArray[0]
+    familyDataObject.primaryIsUpToDate = familyDataObject.primaryMemberObjectsById[familyDataObject.familyId]["termIdMax"] === Number(local.getItem('termId'))? true : false
+    
+    holderCriteria = false
+    familyDataObject.studentId = holderCriteria ? 'zRESULTz' : familyDataObject.studentId
+    familyDataObject.studentEmail = holderCriteria ? 'zRESULTz' : familyDataObject.studentEmail
+    familyDataObject.studentIsUpToDate = false
+
+    holderCriteria = false
+    holderArray = Object.keys(familyDataObject.secondaryMemberObjectsById)
+    holderCriteria = holderArray.length === 1
+    holderCriteria = holderCriteria && familyDataObject.familyId !== holderArray[0]
+    familyDataObject.secondaryId = holderCriteria ? holderArray[0] : familyDataObject.secondaryId
+    familyDataObject.secondaryEmail = holderCriteria ? familyDataObject.secondaryMemberObjectsById[familyDataObject.secondaryId]["personContactEmail"] : familyDataObject.secondaryEmail
+    familyDataObject.secondaryIsUpToDate = false
+    familyDataObject.secondaryIsUpToDate = familyDataObject.secondaryMemberObjectsById[familyDataObject.secondaryId]["termIdMax"] === Number(local.getItem('termId'))? true : false
+ 
+    // ø </VALIDATE ONTO familyDataObject>
+
+
+
+
+
+
     // ø <PROOF OF CONCEPT OVERALL>
     /**
      * ø NOTES:
@@ -395,10 +519,10 @@ export async function validateFamilyPersonsObject_NotBackend(familyDataObject = 
     // ø ø </PROOF OF CONCEPT SINGLETON>
     // ø </PROOF OF CONCEPT OVERALL>
 
-    let validationObject = {}
+    
     validationObject.isValidStrings = {}
     validationObject.isValidBooleans = {}
-    
+
     let holderIsValidString = 'ISVALID'
     const emptyString = ''
     let personIdCountBySum = familyDataObject.primaryPersonCount + familyDataObject.studentPersonCount + familyDataObject.secondaryPersonCount + familyDataObject.unsupportedRolePersonCount

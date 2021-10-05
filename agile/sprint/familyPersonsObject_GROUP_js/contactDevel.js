@@ -183,6 +183,17 @@ export async function appendPerson_toPersonObjectById_NotBackend(person = {}, fa
             familyDataObject.studentFirstTermIdConcatArray.push(person.firstLegal + '_' + person.termId + '_' + person.personId)
             familyDataObject.studentFirstTermId2dArray.push([person.firstLegal , person.termId , person.personId])
             familyDataObject.studentFirstArray.push(person.firstLegal)
+            // if (person.personId === '1cd3b68a-1f6d-44d6-afa4-b5b72d8e496b') {
+            if (person.personId === 'c90f23aa-2838-4e4e-9135-3995d25c5eb3') {
+                // ø <KLUDGE for Testing Existing Student>
+                console.groupCollapsed(`<KLUDGE for Testing Existing Student`)
+                console.log(`person.personId: ${person.personId}`)
+                familyDataObject.studentFirstArray.push('Leonel')
+                console.log(`familyDataObject.studentFirstArray:`)
+                console.dir(familyDataObject.studentFirstArray)
+                console.groupEnd()
+                // ø </KLUDGE for Testing Existing Student>
+            }
             break;
         case 'Secondary':
             holderArray = Object.keys(familyDataObject.secondaryMemberObjectsById)
@@ -492,9 +503,9 @@ export async function instantiateEnrollmentObject(familyId = 'STRING') {
     enroll.confirmed.studentMaxTermId = 201506
     enroll.confirmed.studentUpToDate = false
     enroll.confirmed.secondaryId = familyPersonsObject.secondaryPersonCount === 1 ? familyPersonsObject.secondaryId : unconfirmedString
-    enroll.confirmed.secondaryEmail = unconfirmedString
-    enroll.confirmed.secondaryMaxTermId = 201506
-    enroll.confirmed.secondaryUpToDate = false
+    enroll.confirmed.secondaryEmail = familyPersonsObject.secondaryMemberObjectsById[enroll.confirmed.secondaryId]['personContactEmail']
+    enroll.confirmed.secondaryMaxTermId = familyPersonsObject.secondaryTermIdMax
+    enroll.confirmed.secondaryUpToDate = familyPersonsObject.secondaryIsUpToDate
     enroll.personData.primary = {}
     enroll.personData.primary.familyId = 'FROM_familyDataObject'
     enroll.personData.primary.maxTermId = 'FROM_familyDataObject'
@@ -563,7 +574,7 @@ export async function instantiateEnrollmentObject(familyId = 'STRING') {
         /*doxNOTE*/enroll.notes.push(DOX)
         enroll.action.superEnrollmentStatus = 'ABORT'
         enroll.action.superEnrollmentString += '|Gather Student from familyPersonObject IS PENDING'
-        return
+        // return
 
     }
  
@@ -791,12 +802,14 @@ export async function instantiateEnrollmentObject(familyId = 'STRING') {
     enroll.action.primary.contact = enroll.confirmed.familyUpToDate ? 'SKIP' : 'UPDATE'
     enroll.action.primary.dataBase = enroll.confirmed.familyUpToDate ? 'SKIP' : 'INSERT'
     enroll.action.primary.ppAction = enroll.action.primary.member + '|' + enroll.action.primary.contact + '|' + enroll.action.primary.dataBase
+    enroll.action.primary.ppAction = enroll.action.superEnrollmentStatus !== 'CONTINUE' ? enroll.action.superEnrollmentStatus + '|' + enroll.action.superEnrollmentStatus + '|' + enroll.action.superEnrollmentStatus: enroll.action.primary.ppAction
 
     // enroll.action.student = {}
     enroll.action.student.member = (enroll.confirmed.studentId).length > 30 ? 'SKIP' : 'INSERT'
     enroll.action.student.contact = enroll.confirmed.studentUpToDate ? 'SKIP' : 'UPDATE'
     enroll.action.student.dataBase = enroll.confirmed.studentUpToDate ? 'SKIP' : 'INSERT'
     enroll.action.student.stAction = enroll.action.student.member + '|' + enroll.action.student.contact + '|' + enroll.action.student.dataBase
+    enroll.action.student.stAction = enroll.action.superEnrollmentStatus !== 'CONTINUE' ? enroll.action.superEnrollmentStatus + '|' + enroll.action.superEnrollmentStatus + '|' + enroll.action.superEnrollmentStatus: enroll.action.primary.stAction
 
     // enroll.action.secondary = {}
     let possibleNULLvalueArray = ['NULL', 'EMPTY', 'PENDING', 'NA', 'UNCONFIRMED', 'NNULL', 'EEMPTY', 'PPENDING', 'NNA', 'UUNCONFIRMED']
@@ -812,6 +825,7 @@ export async function instantiateEnrollmentObject(familyId = 'STRING') {
     enroll.action.secondary.contact = enroll.action.secondary.contact === 'PENDING' ? 'SKIP' : enroll.action.secondary.contact
     enroll.action.secondary.dataBase = enroll.action.secondary.contact === 'UPDATE' ? 'INSERT' : enroll.action.secondary.contact
     enroll.action.secondary.spAction = enroll.action.secondary.member + '|' + enroll.action.secondary.contact + '|' + enroll.action.secondary.dataBase
+    enroll.action.secondary.spAction = enroll.action.superEnrollmentStatus !== 'CONTINUE' ? enroll.action.superEnrollmentStatus + '|' + enroll.action.superEnrollmentStatus + '|' + enroll.action.superEnrollmentStatus: enroll.action.primary.spAction
     DOX = '</FINAL: enroll.action By Confirmed>'
     // return
     enroll.action.termId = enroll.application.termId

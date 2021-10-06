@@ -1,12 +1,63 @@
 ---
-#?========================================================
-#¿=====     Sprint  Wednesday September 22, 2021     =====
-#?========================================================
+#?=====================================================
+#¿=====     Sprint  Wednesday October 6, 2021     =====
+#?=====================================================
 daily Commits:
       - postEnrollment: no
       - processWebhooks: no
       - enrollmentLandingPage: no
 ...
+---
+Wednesday October 6:
+      - familyPersonsObject.jsw:
+            - Multiply Rewrite:
+                  - Rewrite in BackEnd: yes
+                  - YAML in my files: no
+                  - Multiply Test in Front-End: no
+                  - Multiply FULL-BOAT Front-End <==> Back-End: no
+...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ---
 Brainstorm enrollmentstates UI:
       - States:

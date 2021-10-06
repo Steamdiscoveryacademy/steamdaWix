@@ -15,6 +15,11 @@ Wednesday October 6:
                   - YAML in my files: no
                   - Multiply Test in Front-End: no
                   - Multiply FULL-BOAT Front-End <==> Back-End: no
+            - Gather YAML Rewrite - IN Canine-Cnsulting:
+                  - test that you can Place a YAML File into the BackEnd: no #†
+                  - test that you can Read a YAML File into the BackEnd function: no #†
+                  - test that you can Return that YAML File Content with a BackEnd function: no #†
+                  - test that within the FronEnd function that calls the BackEnd function that you can write to local-setItem(): no #†
 ...
 
 

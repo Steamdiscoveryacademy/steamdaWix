@@ -27,13 +27,34 @@ export function multiplyFor_familyPersonsObject(factor1, factor2) {
 
 // ø <-------------------- <getFamilyPersonsObject>  -------------------->
 export async function getFamilyPersonsObject(familyId = 'STRING', currentTermId = 201506) {
-    console.groupCollapsed(`getFamilyPersonsObject(familyId)`)
-    console.log(`Full Declaration: export async function getFamilyPersonsObject(familyId = 'STRING')`)
+    console.groupCollapsed(`getFamilyPersonsObject(familyId,currentTermId)`)
+    console.log(`Full Declaration: export async function getFamilyPersonsObject(familyId = 'STRING', currentTermId = 201506)`)
     console.log(`familyId: ${familyId} [@todo: validate family id]`)
-    let DOX = 'So that it is readable in the WiX Editor'
+    let DOX = `So that it is readable in the WiX Editor`
+    if(familyId.length < 30 || currentTermId === 201506){
+        let errorObject = {}
+        errorObject.errorString = `familyId.length[${familyId.length}] < 30 || currentTermId[${currentTermId}] === 201506`
+        console.groupEnd()
+        return errorObject
+    }
+    let testingObject = {}
+    testingObject.personParamObject = {}
+    testingObject.responseObject = {}
+    testingObject.notes = []
+    DOX = `familyId && currentTermId Validation Successfull`
+    testingObject.notes.push(DOX)
+
+    // console.groupEnd()
+    // return testingObject
+
     let familyIdPersonQueryResponseObject = await dataQueryPerson_filterByFamilyId(familyId)
-    console.log(`familyIdPersonQueryResponseObject:`)
-    console.dir(familyIdPersonQueryResponseObject)
+    //  console.log(`familyIdPersonQueryResponseObject:`)
+    //  console.dir(familyIdPersonQueryResponseObject)
+
+    DOX = `Return from await dataQueryPerson_filterByFamilyId(familyId)`
+    testingObject.notes.push(DOX)
+    
+
     let arrayOfPersonRecords =  familyIdPersonQueryResponseObject.items
 	arrayOfPersonRecords.forEach(item => {
 		item.familyAlphaKey = 'TBD'
@@ -51,8 +72,16 @@ export async function getFamilyPersonsObject(familyId = 'STRING', currentTermId 
 		delete item._id
 	});
 
+    DOX = `TRIM familyIdPersonQueryResponseObect.items`
+    testingObject.notes.push(DOX)
+
+    console.log(`familyIdPersonQueryResponseObject:`)
+    console.dir(familyIdPersonQueryResponseObject)
+    
+    testingObject.personParamObject.arrayOfPersonRecords = arrayOfPersonRecords
+    
     console.log(`arrayOfPersonRecords:`)
-    console.dir(arrayOfPersonRecords)
+    console.log(arrayOfPersonRecords)
 
     let pendingString = 'PENDING'
     // ø <familyDataObject INSTANTIATE>
@@ -94,6 +123,9 @@ export async function getFamilyPersonsObject(familyId = 'STRING', currentTermId 
     console.log(`familyDataObject: INSTANTIATE:`)
     console.dir(familyDataObject)
 
+    DOX = `familyDataObject: INSTANTIATE-ed`
+    testingObject.notes.push(DOX)
+
     let person = {}
     for (let index = 0; index < arrayOfPersonRecords.length; index++) {
         person = arrayOfPersonRecords[index];
@@ -103,7 +135,15 @@ export async function getFamilyPersonsObject(familyId = 'STRING', currentTermId 
     console.log(`familyDataObject: Pre-Validation: `)
     console.dir(familyDataObject)
     
-    await validateFamilyPersonsObject(familyDataObject)
+    DOX = `AFTER: Loopting through arrayOfPersonRecord => appendPerson(≈)`
+    testingObject.notes.push(DOX)
+    
+    testingObject.responseObject = familyDataObject
+
+    // console.groupEnd()
+    // return testingObject
+    
+    await validateFamilyPersonsObject(familyDataObject, currentTermId)
     console.log(`familyDataObject: FINAL: `)
     console.dir(familyDataObject)
     // localZXZ.setItem('familyPersonsObjectJSON', JSON.stringify(familyDataObject))
@@ -256,7 +296,7 @@ export async function appendPerson_toPersonObjectById(person = {}, familyDataObj
 // ø <-------------------- </appendPerson_toPersonObjectById> -------------------->
 
 // ø <-------------------- <validateFamilyPersonsObject>  -------------------->
-export async function validateFamilyPersonsObject(familyDataObject = {}){
+export async function validateFamilyPersonsObject(familyDataObject = {}, currentTermId = 201506){
     let DOX = 'TO BE VISIBLE IN WIX EDITOR'
     let unconfirmedString = 'UNCONFIRMED'
     let validationObject = {}
@@ -400,7 +440,7 @@ export async function dataQueryPerson_filterByFamilyId(familyId = 'STRING'){
     .eq("familyId", familyId)
     // .eq("role", 'Student')
     // .gt("age", 25)
-    .ascending("_createdDate")
+    .descending("_createdDate")
     // .limit(10)
     .find()
 	return query

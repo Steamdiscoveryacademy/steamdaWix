@@ -4,6 +4,9 @@ import wixWindow from 'wix-window';
 import {local, session, memory} from 'wix-storage';
 import { steamdaGetContactFunction } from 'backend/crmModule.jsw'
 import { steamdaGetContactByEmailFunction } from 'backend/contactReference.jsw';
+import { multiplyFor_familyPersonsObject } from 'backend/familyPersonsObject.jsw';
+import { getFamilyPersonsObject } from 'backend/familyPersonsObject.jsw';
+import { dataQueryPerson_filterByFamilyId } from 'backend/familyPersonsObject.jsw';
 
 $w.onReady(function () {
     // let temoraryParam  = []
@@ -19,8 +22,47 @@ $w.onReady(function () {
 // ø appendPerson_toPersonObjectById_NotBackend
 // ø validateFamilyPersonsObject_NotBackend
 // ø instantiateEnrollmentObject>
+// ø return_develObject
 
 
+
+// ø <================================================================================================>
+// ø <============================== <familyPersonsObject.jsw BackEnd>  ==============================>
+// ø <================================================================================================>
+// ¡ <CALLING FUNCTION - from Canine-Consulting => Import Export Data>
+export async function btnMultiply_click(event) {
+    let uniquePipedString = await multiply($w("#operand1").value, $w("#operand2").value)
+	let responseStringArray = uniquePipedString.split('|')
+	// let product = await multiply($w("#operand1").value, $w("#operand2").value)
+	let product = responseStringArray[1]
+	$w("#product").value = product;
+	let responseStringFinal = typeof session.getItem('lastMultiplyJSON') !== 'string' || (session.getItem('lastMultiplyJSON')).length < 10 ? `Invalid session.getItem('lastMultiplyJSON')` : session.getItem('lastMultiplyJSON');
+	responseStringFinal = `\n==========\n` + responseStringFinal
+	responseStringFinal = responseStringArray[0] + responseStringFinal
+	$w("#multiplyResponseTXAREA").value = responseStringFinal
+}
+// ¡ </CALLING FUNCTION - from Canine-Consulting => Import Export Data>
+/**
+ *	Adds an event handler that runs when the element is clicked.
+ *	 @param {$w.MouseEvent} event
+ */
+export async function btnMultiply_click_1(event) {
+	// $w('#multiplyResponseTXAREA').value = `Multiply for familyPersonObject.jsw`
+	// $w('#multiplyResponseTXAREA').value = `Multiply for familyPersonObject.jsw: '${$w("#operand1").value} x ${$w("#operand2").value}'`
+    // return
+    let uniquePipedString = await multiplyFor_familyPersonsObject($w("#operand1").value, $w("#operand2").value)
+	let responseStringArray = uniquePipedString.split('|')
+	// let product = await multiply($w("#operand1").value, $w("#operand2").value)
+	let product = responseStringArray[1]
+	$w("#product").value = product;
+	let responseStringFinal = typeof session.getItem('lastMultiplyJSON') !== 'string' || (session.getItem('lastMultiplyJSON')).length < 10 ? `Invalid session.getItem('lastMultiplyJSON')` : session.getItem('lastMultiplyJSON');
+	responseStringFinal = `\n==========\n` + responseStringFinal
+	responseStringFinal = responseStringArray[0] + responseStringFinal
+	$w("#multiplyResponseTXAREA").value = responseStringFinal
+}
+// ø <================================================================================================>
+// ø <============================== </familyPersonsObject.jsw BackEnd> ==============================>
+// ø <================================================================================================>
 
 // ø <==========================================================================================>
 // ø <============================== <familyPersonsObject_GROUP>  ==============================>
@@ -35,7 +77,7 @@ export async function getFamilyPersonsObject_NotBackend(familyId = 'STRING') {
     console.log(`Full Declaration: export async function getFamilyPersonsObject_NotBackend(familyId = 'STRING')`)
     console.log(`familyId: ${familyId} [@todo: validate family id]`)
     let DOX = 'So that it is readable in the WiX Editor'
-    let familyIdPersonQueryResponseObject = await dataQueryPerson_filterByFamilyId(familyId)
+    let familyIdPersonQueryResponseObject = await dataQueryPerson_filterByFamilyId_NotBackend(familyId)
     console.log(`familyIdPersonQueryResponseObject:`)
     console.dir(familyIdPersonQueryResponseObject)
     let arrayOfPersonRecords =  familyIdPersonQueryResponseObject.items
@@ -184,15 +226,15 @@ export async function appendPerson_toPersonObjectById_NotBackend(person = {}, fa
             familyDataObject.studentFirstTermId2dArray.push([person.firstLegal , person.termId , person.personId])
             familyDataObject.studentFirstArray.push(person.firstLegal)
             // if (person.personId === '1cd3b68a-1f6d-44d6-afa4-b5b72d8e496b') {
-            if (person.personId === 'c90f23aa-2838-4e4e-9135-3995d25c5eb3') {
-                // ø <KLUDGE for Testing Existing Student>
+            if (person.personId === 'ZZZ_c90f23aa-2838-4e4e-9135-3995d25c5eb3') {
+                // ø <FORCE_TEST for Testing Existing Student>
                 console.groupCollapsed(`<KLUDGE for Testing Existing Student`)
                 console.log(`person.personId: ${person.personId}`)
                 familyDataObject.studentFirstArray.push('Leonel')
                 console.log(`familyDataObject.studentFirstArray:`)
                 console.dir(familyDataObject.studentFirstArray)
                 console.groupEnd()
-                // ø </KLUDGE for Testing Existing Student>
+                // ø </FORCE_TEST for Testing Existing Student>
             }
             break;
         case 'Secondary':
@@ -393,6 +435,15 @@ export async function instantiateEnrollmentObject(familyId = 'STRING') {
     console.groupCollapsed(`instantiateEnrollmentObject(familyId)`)
     console.log(`FULL DECLARATION: export async function instantiateEnrollmentObject(${familyId} = 'STRING')`)
     let DOX = 'so that it can be viewed in the Online Editor'
+    let develObject = {}
+    develObject.paramObject = {}
+    develObject.responseObject = {}
+    develObject.responseObject.notes = []
+    DOX = `instantiateEnrollmentObject(familyId = 'STRING')`
+    develObject.responseObject.notes.push(DOX)
+    DOX = `these notes will parallel 'enroll.notes = []`
+    develObject.responseObject.notes.push(DOX)
+    develObject.paramObject.familyId = familyId
     let pendingString = 'PENDING'
     let unconfirmedString = 'UNCONFIRMED'
     let enroll = {}
@@ -400,6 +451,8 @@ export async function instantiateEnrollmentObject(familyId = 'STRING') {
 
     /*doxNOTE*/DOX = `instantiateSimpleDemogfxObject(${familyId})`
     /*doxNOTE*/enroll.notes.push(DOX)
+    /*doxNOTE*/develObject.responseObject.notes.push(DOX)
+
     
     if(typeof familyId !== 'string'){
         // ø <CODE for Below>
@@ -409,6 +462,7 @@ export async function instantiateEnrollmentObject(familyId = 'STRING') {
         let contactByEmail = await steamdaGetContactByEmailFunction(emailToFind_PARAM);
         // ø </CODE for Below>
     }
+
 
     enroll.action = {}
     enroll.action.superEnrollmentStatus = 'CONTINUE';//local.getItem('superEnrollmentStatus')
@@ -475,7 +529,43 @@ export async function instantiateEnrollmentObject(familyId = 'STRING') {
     // // ø </TESTING>
     // // ø </demogrfx-application-processed>
 
-    let familyPersonsObject = await getFamilyPersonsObject_NotBackend(familyId)
+      
+    /*doxNOTE*/DOX = `enroll = {} instantiated)`
+    /*doxNOTE*/develObject.responseObject.notes.push(DOX)
+      
+    /*doxNOTE*/DOX = `enroll.appliocation = {} instantiated)`
+    /*doxNOTE*/develObject.responseObject.notes.push(DOX)
+      
+    develObject.responseObject.enrollSOFAR = enroll
+      
+    // ø <familyPersonsObjectFRONTEND>
+    let familyPersonsObjectFRONTEND = await getFamilyPersonsObject_NotBackend(familyId)
+      
+    /*doxNOTE*/DOX = `getFamilyPersonsObject_NotBackend(familyId)`
+    /*doxNOTE*/develObject.responseObject.notes.push(DOX)
+    
+    /*doxNOTE*/DOX = `familyId,enroll.application.termId: ${typeof enroll.application.termId}: ${enroll.application.termId}`
+    /*doxNOTE*/develObject.responseObject.notes.push(DOX)
+      
+    develObject.responseObject.familyPersonsObjectFRONTEND = familyPersonsObjectFRONTEND
+    // ø </familyPersonsObjectFRONTEND>
+      
+    // ø <familyPersonsObjectBACKEND>
+    let familyPersonsObject = await getFamilyPersonsObject(familyId,Number(enroll.application.termId))
+      
+    /*doxNOTE*/DOX = `getFamilyPersonsObject(familyId,enroll.application.termId)`
+    /*doxNOTE*/develObject.responseObject.notes.push(DOX)
+      
+    develObject.responseObject.familyPersonsObjectBACKEND = familyPersonsObject
+    // ø </familyPersonsObjectBACKEND>
+     
+    // console.log(`develObject:`)
+    // console.dir(develObject)
+    // console.groupEnd()
+    // // return_develObject
+    // return develObject
+
+    local.setItem('familyPersonsObjectJSON', JSON.stringify(familyPersonsObject))
     $w('#secondaryResponseTXTBX').value = JSON.stringify(familyPersonsObject,undefined,4)
     // await validateFamilyPersonsObject_NotBackend(familyPersonsObject)
     console.warn('≈308≈ validateFamilyPerson: COMMENTED OUT: OKAY: inside main getFamilyPersonsObject_NotBackend() ')
@@ -570,11 +660,51 @@ export async function instantiateEnrollmentObject(familyId = 'STRING') {
     }
  
     if(doGatherStudentFromFamilyPersonObject){
-        /*doxNOTE*/DOX = `Gather Student from familyPersonObject IS PENDING => doGatherStudentFromFamilyPersonObject = ${doGatherStudentFromFamilyPersonObject}`
-        /*doxNOTE*/enroll.notes.push(DOX)
-        enroll.action.superEnrollmentStatus = 'ABORT'
-        enroll.action.superEnrollmentString += '|Gather Student from familyPersonObject IS PENDING'
-        // return
+        //     enroll.application.student.stFirst = local.getItem('stFirst')
+        // enroll.application.student.stPreferredFirst = local.getItem('stPreferredFirst')
+
+        let elementArray = []
+        let doGatherMaxTermId = 'PENDING';
+        let doGatherPersonId = 'PENDING';
+        for (let index = 0; index < familyPersonsObject.studentFirstTermId2dArray.length; index++) {
+            elementArray = familyPersonsObject.studentFirstTermId2dArray[index];
+            if(enroll.application.student.stFirst === elementArray[0] || enroll.application.student.stPreferredFirst === elementArray[0]){
+                doGatherMaxTermId = elementArray[1];
+                doGatherPersonId = elementArray[2];
+            }
+            
+        }
+        if (doGatherMaxTermId === 'PENDING' || doGatherPersonId === 'PENDING') {
+            /*doxNOTE*/DOX = `Gather Student from familyPersonObject FAILED => familyPersonsObject.studentFirstTermId2dArray[i][0] did NOT include ${enroll.application.student.stFirst}`
+            /*doxNOTE*/enroll.notes.push(DOX)
+            enroll.action.superEnrollmentStatus = 'ABORT'
+            enroll.action.superEnrollmentString += '|Gather Student from familyPersonObject FAILED [studentFirstTermId2dArray]'
+            doGatherStudentFromFamilyPersonObject = false
+        }
+ 
+        if(doGatherStudentFromFamilyPersonObject){
+            if (typeof familyPersonsObject.studentMemberObjectsById[doGatherPersonId] !== 'object' || doGatherPersonId !== familyPersonsObject.studentMemberObjectsById[doGatherPersonId]['contactId']) {
+                // ø <SHOULD BE IMPOSSIBLE>
+                /*doxNOTE*/DOX = `Gather Student from familyPersonObject FAILED => doGatherPersonId ['${doGatherPersonId}'] does NOT match familyPersonsObject.studentMemberObjectsById[doGatherPersonId]['contactId']`
+                /*doxNOTE*/enroll.notes.push(DOX)
+                enroll.action.superEnrollmentStatus = 'ABORT'
+                enroll.action.superEnrollmentString += '|Gather Student from familyPersonObject FAILED [doGatherPersonId MisMatch]'
+                doGatherStudentFromFamilyPersonObject = false
+                // ø </SHOULD BE IMPOSSIBLE>
+            }
+        }
+ 
+        if(doGatherStudentFromFamilyPersonObject){
+            // /*doxNOTE*/DOX = `Gather Student from familyPersonObject IS PENDING => doGatherStudentFromFamilyPersonObject = ${doGatherStudentFromFamilyPersonObject}`
+            // /*doxNOTE*/enroll.notes.push(DOX)
+            // enroll.action.superEnrollmentStatus = 'ABORT'
+            // enroll.action.superEnrollmentString += '|Gather Student from familyPersonObject IS PENDING'
+            enroll.confirmed.studentId = familyPersonsObject.studentMemberObjectsById[doGatherPersonId]['contactId']
+            enroll.confirmed.studentEmail = familyPersonsObject.studentMemberObjectsById[doGatherPersonId]['personContactEmail']
+            enroll.confirmed.studentMaxTermId = familyPersonsObject.studentMemberObjectsById[doGatherPersonId]['termIdMax']
+            enroll.confirmed.studentUpToDate = enroll.confirmed.studentMaxTermId === Number(local.getItem('termId')) ? true : enroll.confirmed.studentUpToDate
+
+        }
 
     }
  
@@ -809,7 +939,7 @@ export async function instantiateEnrollmentObject(familyId = 'STRING') {
     enroll.action.student.contact = enroll.confirmed.studentUpToDate ? 'SKIP' : 'UPDATE'
     enroll.action.student.dataBase = enroll.confirmed.studentUpToDate ? 'SKIP' : 'INSERT'
     enroll.action.student.stAction = enroll.action.student.member + '|' + enroll.action.student.contact + '|' + enroll.action.student.dataBase
-    enroll.action.student.stAction = enroll.action.superEnrollmentStatus !== 'CONTINUE' ? enroll.action.superEnrollmentStatus + '|' + enroll.action.superEnrollmentStatus + '|' + enroll.action.superEnrollmentStatus: enroll.action.primary.stAction
+    enroll.action.student.stAction = enroll.action.superEnrollmentStatus !== 'CONTINUE' ? enroll.action.superEnrollmentStatus + '|' + enroll.action.superEnrollmentStatus + '|' + enroll.action.superEnrollmentStatus: enroll.action.student.stAction
 
     // enroll.action.secondary = {}
     let possibleNULLvalueArray = ['NULL', 'EMPTY', 'PENDING', 'NA', 'UNCONFIRMED', 'NNULL', 'EEMPTY', 'PPENDING', 'NNA', 'UUNCONFIRMED']
@@ -825,7 +955,7 @@ export async function instantiateEnrollmentObject(familyId = 'STRING') {
     enroll.action.secondary.contact = enroll.action.secondary.contact === 'PENDING' ? 'SKIP' : enroll.action.secondary.contact
     enroll.action.secondary.dataBase = enroll.action.secondary.contact === 'UPDATE' ? 'INSERT' : enroll.action.secondary.contact
     enroll.action.secondary.spAction = enroll.action.secondary.member + '|' + enroll.action.secondary.contact + '|' + enroll.action.secondary.dataBase
-    enroll.action.secondary.spAction = enroll.action.superEnrollmentStatus !== 'CONTINUE' ? enroll.action.superEnrollmentStatus + '|' + enroll.action.superEnrollmentStatus + '|' + enroll.action.superEnrollmentStatus: enroll.action.primary.spAction
+    enroll.action.secondary.spAction = enroll.action.superEnrollmentStatus !== 'CONTINUE' ? enroll.action.superEnrollmentStatus + '|' + enroll.action.superEnrollmentStatus + '|' + enroll.action.superEnrollmentStatus: enroll.action.secondary.spAction
     DOX = '</FINAL: enroll.action By Confirmed>'
     // return
     enroll.action.termId = enroll.application.termId
@@ -861,13 +991,13 @@ export async function instantiateEnrollmentObject(familyId = 'STRING') {
 // ø <============================== </familyPersonsObject_GROUP> ==============================>
 // ø <==========================================================================================>
 
-export async function dataQueryPerson_filterByFamilyId(familyId = 'STRING'){
+export async function dataQueryPerson_filterByFamilyId_NotBackend(familyId = 'STRING'){
 	// familyId = 'b63c40a1-076a-4e23-9d92-74e985caba9a'
     let query = await wixData.query("person")
     .eq("familyId", familyId)
     // .eq("role", 'Student')
     // .gt("age", 25)
-    .ascending("_createdDate")
+    .descending("_createdDate")
     // .limit(10)
     .find()
 	return query
@@ -1070,8 +1200,8 @@ export async function familyPersonQueryBTN_click(event) {
 
 	// $w('#develRawTXTBX').value = JSON.stringify(await instantiateSimpleDemogfxObject($w('#familyIdINPT').value),undefined,4)
     let enrollObject = await instantiateEnrollmentObject($w('#familyIdINPT').value)
-    populateNewActionValueButtons(enrollObject.action)
 	$w('#develRawTXTBX').value = JSON.stringify(enrollObject,undefined,4)
+    populateNewActionValueButtons(enrollObject.action)
 	// await wixWindow.copyToClipboard($w('#develRawTXTBX').value)
 	copyToClipboard($w('#develRawTXTBX').value)
 }
@@ -1087,8 +1217,12 @@ export async function getFamilyPersonObjectBTN_click(event) {
 		$w('#develRawTXTBX').value = 'INVALID FAMILY ID: please try again or ask for'
 		return
 	}
-	let dataQuery = await dataQueryPerson_filterByFamilyId($w('#familyIdINPT').value)
-	dataQuery.items.forEach(item => {
+	let dataQueryNotBackEnd = await dataQueryPerson_filterByFamilyId_NotBackend($w('#familyIdINPT').value)
+    let develItem = {}
+    develItem.kind = 'Button Only'
+    develItem.source = 'FrontEnd'
+    dataQueryNotBackEnd.items.push(develItem)
+	dataQueryNotBackEnd.items.forEach(item => {
 		delete item.objectData
 		delete item.objectCorollary
 		delete item.idBL
@@ -1101,8 +1235,7 @@ export async function getFamilyPersonObjectBTN_click(event) {
 		delete item._owner
 		delete item._id
 	});
-	$w('#develRawTXTBX').value = JSON.stringify(dataQuery.items,undefined,4)
-	let originalLength = dataQuery.length
+	let originalLength = dataQueryNotBackEnd.length
 	// delete dataQuery.items
 	// delete dataQuery.totalCount
 	// let count = 0
@@ -1112,7 +1245,12 @@ export async function getFamilyPersonObjectBTN_click(event) {
 	// 	element = (dataQuery.items).pop()
 	// 	count++
 	// }
-	$w('#secondaryResponseTXTBX').value = JSON.stringify(dataQuery,undefined,4)
+	$w('#secondaryResponseTXTBX').value = JSON.stringify(dataQueryNotBackEnd,undefined,4)
+	let dataQuery = await dataQueryPerson_filterByFamilyId($w('#familyIdINPT').value)
+    develItem.kind = 'Button Only'
+    develItem.source = 'BackEnd'
+    dataQuery.items.push(develItem)
+	$w('#develRawTXTBX').value = JSON.stringify(dataQuery,undefined,4)
 	copyToClipboard($w('#develRawTXTBX').value)
 }
 
@@ -1171,19 +1309,41 @@ export async function getFamilyPersonObjectFUllBTN_click(event) {
     console.log(`MISNAMED button/onclick - FULL meaning the previous button/onclick was mis-named 'getFamilyPersonObjectBTN_click'`)
 	if(($w('#familyIdINPT').value).length < 32){
 		$w('#develRawTXTBX').value = 'INVALID FAMILY ID: please try again or ask for'
+        console.log(`INVALID FAMILY ID: please try again or ask for`)
         console.groupEnd()
 		return
 	}
+    console.log(`VALID FAMILY ID`)
     console.groupEnd()
-	let familyPersonObject = await getFamilyPersonsObject($w('#familyIdINPT').value)
+    console.group(`ORIGINAL (FrontEnd) familyPersonObject`)
+    let paramFamilyId = $w('#familyIdINPT').value
+    console.log(`paramFamilyId: ${paramFamilyId}`)
+    let currentTermId = Number(local.getItem('termId'))
+    console.log(`currentTermId: ${currentTermId}`)
+	let familyPersonObjectFrontEnd = await getFamilyPersonsObject_NotBackend(paramFamilyId)
+	familyPersonObjectFrontEnd.buttonONLY = {}
+	familyPersonObjectFrontEnd.buttonONLY.source = 'Front-End'
+    console.log(`familyPersonObjectFrontEnd:`)
+    console.dir(familyPersonObjectFrontEnd)
+    console.groupEnd()
+	$w('#secondaryResponseTXTBX').value = JSON.stringify(familyPersonObjectFrontEnd,undefined,4)
+	// copyToClipboard($w('#secondaryResponseTXTBX').value)
+	let familyPersonObject = await getFamilyPersonsObject(paramFamilyId, currentTermId)
+	familyPersonObject.buttonONLY = {}
+	familyPersonObject.buttonONLY.source = 'Back-End'
+    console.groupCollapsed(`UPDATED (BackEnd) familyPersonObject`)
+    console.log(`paramFamilyId: ${paramFamilyId}`)
+    console.log(`currentTermId: ${currentTermId}`)
+    console.log(`familyPersonObject:`)
+    console.dir(familyPersonObject)
 	$w('#develRawTXTBX').value = JSON.stringify(familyPersonObject,undefined,4)
 	copyToClipboard($w('#develRawTXTBX').value)
-	$w('#secondaryResponseTXTBX').value = JSON.stringify(familyPersonObject.validationObject,undefined,4)
-	// copyToClipboard($w('#secondaryResponseTXTBX').value)
-    console.groupCollapsed(`getFamilyPersonObjectFUllBTN_click: EXIT`)
+    console.log(`getFamilyPersonObjectFUllBTN_click: EXIT`)
     console.groupEnd()
 }
 // ø <=============================================================================>
 // ø <============================== </Just Buttons> ==============================>
 // ø <=============================================================================>
+
+
 

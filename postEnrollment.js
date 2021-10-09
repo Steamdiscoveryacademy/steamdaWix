@@ -10,6 +10,8 @@ import { streamdaUpdateContactFunction } from 'backend/contactReference.jsw'
 import { steamdaGetContactByEmailFunction } from 'backend/contactReference';
 import { steamdaGetContactByEmailAndNotIdFunction } from 'backend/contactReference';
 import { steamdaDeleteContactById } from 'backend/contactReference';
+import { multiplyFor_familyPersonsObject } from 'backend/familyPersonsObject.jsw';
+import { getFamilyPersonsObject } from 'backend/familyPersonsObject.jsw';
 import { nowISO } from 'backend/utility.jsw'
 import wixData from 'wix-data';
 import wixWindow from 'wix-window';
@@ -44,13 +46,25 @@ import wixWindow from 'wix-window';
  // ø 202109_processALIASES TODAY
  // ø 202109_Developer TODAY
  // ø 202109_alphaTimeKey
+ // ø currentBUG_wixUsers.register
  */
 
 
 $w.onReady(function () {
+    console.groupCollapsed(`$w.onReady(function ()`)
     // ø <UI Disable PP, ST & SP Buttons>
     // ø </UI Disable PP, ST & SP Buttons>
     onReadyPostEnrollment();
+    // ø <KLUDGE Applying Back-End>
+    // ø <Simple Demogrfx Assignment to local-Storage AFTER onReadyEnrollment>
+    // ø ø Make its own onReadyFUNCTION() if it gets munch more involved
+    $w('#ppNameBTN').label = local.getItem('ppLast') + ',\n' + local.getItem('ppFirst')
+    $w('#stNameBTN').label = local.getItem('stLast') + ',\n' + local.getItem('stFirst')
+    $w('#spNameBTN').label = local.getItem('spLast') + ',\n' + local.getItem('spFirst')
+    // ø </Simple Demogrfx Assignment to local-Storage AFTER onReadyEnrollment>
+    populateNewActionValueButtons()
+    // ø </KLUDGE Applying Back-End>
+
     // doUserInterfaceCleanupCurrent();// DISABLED 20210906
     memory.setItem('msboxCurrentId', '#mxboxPostEnrollmentSeven');
     let uniqueWatchdogBootstrapKeyArray = ["EMERGENCY","CRITICAL","ERROR","ALERT","WARNING","NOTICE","success","primary","info","secondary","devel"];
@@ -85,15 +99,19 @@ $w.onReady(function () {
     // goToState()
     // console.log('[ready]Next');
     let initLog = 'TTRUE $w.onReady() NEXT';
+    console.log(`about to call: msboxPostEnrollmentSevenActionOnReady(${initLog})`)
     msboxPostEnrollmentSevenActionOnReady(initLog)
+    console.log(`about to call: wixUsersOnReady()`)
     wixUsersOnReady()
+    console.groupEnd()
 });
 
 
 export function onReadyPostEnrollment() {
+    console.groupCollapsed(`onReadyPostEnrollment()`)
     let now = new Date();
     let ISO = now.getFullYear() + ("00" + (now.getMonth() + 1)).substr(-2) + ("00" + now.getDate()).substr(-2) + ("00" + now.getHours()).substr(-2) + ("00" + now.getMinutes()).substr(-2) + ("00" + now.getSeconds()).substr(-2);
-    if (Number(ISO) < Number("20210930235959")) {
+    if (Number(ISO) < Number("20211015235959")) {
         local.setItem('timezoneOffset', -4);
         local.setItem('tzAbbrv', 'EDT');
         local.setItem('termId', '202106');
@@ -103,9 +121,11 @@ export function onReadyPostEnrollment() {
         local.setItem('weekIdToLabelKeyJSON', weekIdToLabelKeyJSON);
         local.setItem('termBeginMMDD', '0607');
         local.setItem('termEndMMDD', '0930');
-        local.setItem('termEndYYYYMMDD', '20210930');
+        local.setItem('termEndYYYYMMDD', '20211031');
         local.setItem('kAppendString', '\n\nNo Action taken.\nPlease try again, or ask for assistance.');
     }
+    console.log(`${Number(ISO)} < Number("20211015235959")`)
+    console.groupEnd()
 }
 
 export function wixUsersOnReady(){
@@ -804,6 +824,20 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
             actionValueRepeatersParamObject.prepKey = 'stateInstantiate';
             await loadActionValueRepeatersWithJSON(actionValueRepeatersParamObject);
 
+            // ø <KLUDGE memory => session>
+            session.setItem('ppAction',memory.getItem('ppAction'))
+            session.setItem('stAction',memory.getItem('stAction'))
+            session.setItem('spAction',memory.getItem('spAction'))
+            // ø ø <Duplicates for DEVEL during Transition to Robust Action-Value-Evaluation>
+            // ø ø ø NOTE: considered using 'memory.getItem('ppAction') [and so on...]
+            // memory.setItem('ppAction202109', ppAction);
+            // memory.setItem('stAction202109', stAction);
+            // memory.setItem('spAction202109', spAction);
+            // ø ø </Duplicates for DEVEL during Transition to Robust Action-Value-Evaluation>
+            // ø </KLUDGE memory => session>
+            // ø <KLUDGE New Back-End UI>
+            populateOriginalActionValueButtons()
+            // ø </KLUDGE New Back-End UI>
             console.log('UI Step: ' + stepKey)
             // $w('#txtActionValueGridDescr').hide();
             // $w('#boxActionValueGrid').show();
@@ -1572,6 +1606,9 @@ export async function getContactByEmailAndNotIdFunction(paramObject = { diagnost
 
 // ø <---------- <steamdaMemberRegistration Front-End (no backend)>  ---------->
 export async function steamdaMemberRegistration(paramObjectParam = {}) {
+    console.groupCollapsed(`export async function steamdaMemberRegistration(paramObjectParam = {})`)
+    console.log(`paramObjectParam:`)
+    console.dir(paramObjectParam)
     // ø <expected that paramObject will be gathered from memory.getItem(JSON)>
     let paramObject = {};
     if (typeof paramObjectParam.memoryKey === 'string') {
@@ -1582,6 +1619,8 @@ export async function steamdaMemberRegistration(paramObjectParam = {}) {
         // ø <BUT still allows for Direct paramObject>
         paramObject = paramObjectParam;
     }
+    console.log(`paramObject:`)
+    console.dir(paramObject)
     // ø </expected that paramObject will be gathered from memory.getItem(JSON)>
     let email = paramObject.email;// the user's email addresses
     let password = paramObject.password;// the user's password
@@ -1589,6 +1628,13 @@ export async function steamdaMemberRegistration(paramObjectParam = {}) {
     let lastName = paramObject.lastName;// the user's last name
     let phone = paramObject.phone;// the user's phone number
 
+    console.log(`about to call: let memberResponse = await wixUsers.register(${email}, ${password}, {`)
+    // try {
+        
+    // } catch (error) {
+        
+    // }
+    // currentBUG_wixUsers.register
     let memberResponse = await wixUsers.register(email, password, {
         contactInfo: {
             "firstName": firstName,
@@ -1596,6 +1642,9 @@ export async function steamdaMemberRegistration(paramObjectParam = {}) {
             "phones": [phone]
         }
     })
+    console.log(`memberResponse:`)
+    console.dir(memberResponse)
+    console.groupEnd()
     return memberResponse;
 }
 // ø <---------- </steamdaMemberRegistration Front-End (no backend)> ---------->
@@ -1744,8 +1793,68 @@ export async function actionValueEvaluation() {
     // local.setItem('superEnrollmentStatus', 'CONTINUE'); ALREADY SET
     // 202109_ActionValues
     let DOX = 'To Make It Visible';
-    console.groupCollapsed('actionValueEvaluation');
-    console.log('≈1676≈ actionValueEvaluation(); ENTERED');
+    console.groupCollapsed('export async function actionValueEvaluation()');
+    console.log('≈1771≈ actionValueEvaluation(); ENTERED');
+
+    /**
+     * ø Notes:
+     * ø   - Trust Staff-Eye-D
+     * ø   - by Extension, Trust doSimpleDemogrfxAssignment()
+     * ø   - by Extension, Trust local.getItem() values
+     * ø   - action values by Defaults (below in orig)
+     */
+    let actionValueObject = {}
+    actionValueObject.primary = {}
+    actionValueObject.student = {}
+    actionValueObject.secondary = {}
+    // ø <----- <member> ----->
+    actionValueObject.primary.member = {}
+    actionValueObject.student.member = {}
+    actionValueObject.secondary.member = {}
+    actionValueObject.primary.member.final = false
+    actionValueObject.student.member.final = false
+    actionValueObject.secondary.member.final = true
+    actionValueObject.primary.member.action = 'INSERT'
+    actionValueObject.student.member.action = 'INSERT'
+    actionValueObject.secondary.member.action = 'NA'
+    // ø <----- </member> ----->
+    // ø <----- <contact> ----->
+    actionValueObject.primary.contact = {}
+    actionValueObject.student.contact = {}
+    actionValueObject.secondary.contact = {}
+    actionValueObject.primary.contact.final = false
+    actionValueObject.student.contact.final = false
+    actionValueObject.secondary.contact.final = false
+    actionValueObject.primary.contact.action = 'UPDATE'
+    actionValueObject.student.contact.action = 'UPDATE'
+    actionValueObject.secondary.contact.action = 'INSERT'
+    // ø <----- </contact> ----->
+    // ø <----- <dataBase> ----->
+    actionValueObject.primary.dataBase = {}
+    actionValueObject.student.dataBase = {}
+    actionValueObject.secondary.dataBase = {}
+    actionValueObject.primary.dataBase.final = false
+    actionValueObject.student.dataBase.final = false
+    actionValueObject.secondary.dataBase.final = false
+    actionValueObject.primary.dataBase.action = 'INSERT'
+    actionValueObject.student.dataBase.action = 'INSERT'
+    actionValueObject.secondary.dataBase.action = 'INSERT'
+    // ø <----- </dataBase> ----->
+    actionValueObject.primary.contactId = local.getItem('familyId')
+    actionValueObject.student.contactId = local.getItem('studentId')
+    actionValueObject.secondary.contactId = local.getItem('secondaryId')
+    actionValueObject.primary.email = local.getItem('familyEmail')
+    actionValueObject.student.email = local.getItem('studentEmail')
+    actionValueObject.secondary.email = local.getItem('secondaryEmail')
+    actionValueObject.primary.first = local.getItem('ppFirst')
+    actionValueObject.student.first = local.getItem('stFirst')//this is Legal
+    actionValueObject.secondary.first = local.getItem('spFirst')
+    actionValueObject.primary.last = local.getItem('ppLast')
+    actionValueObject.student.last = local.getItem('stLast')
+    actionValueObject.secondary.last = local.getItem('spLast')
+    console.log(`actionValueObject:`)
+    console.dir(actionValueObject)
+
 
     // pstEnrSeven20210825_ActionValueEvaluation
     let tempStamp = await nowISO(local.getItem('timezoneOffset'), local.getItem('tzAbbrv'));
@@ -1905,7 +2014,7 @@ export async function actionValueEvaluation() {
     memory.setItem('ppAction', ppAction);
     memory.setItem('stAction', stAction);
     memory.setItem('spAction', spAction);
-
+     
     let allActionStrings = memory.getItem('ppAction') + memory.getItem('stAction') + memory.getItem('spAction');
     let superEnrollmentStatus = local.getItem('superEnrollmentStatus');
     superEnrollmentStatus = allActionStrings.indexOf('ALERT') >= 0 ? 'ALERT' : superEnrollmentStatus;
@@ -4462,6 +4571,9 @@ export async function btnExtraContactStudent_click(event) {
 
 // ø <---------- <msboxPostEnrollmentSevenAnyAction>  ---------->
 export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}) {
+    console.groupCollapsed(`msboxPostEnrollmentSevenAnyAction(responseObject = {})`)
+    console.log(`responseObject:`)
+    console.dir(responseObject)
     // pstEnrSeven202108ANY BEGIN
     // pstZEnrSeven202108STEP_RN_02 ==> OnReadty-To-Next ==> pstZEnrSeven202108STEP_N_02
     let DOX = 'pstEnrSeven202108STEP_RN_02 ==> OnReadty-To-Next ==> pstEnrSeven202108STEP_N_02';
@@ -4495,7 +4607,12 @@ export async function msboxPostEnrollmentSevenAnyAction(responseObject = {}) {
     let tempKey = 'PPENDING';
     // tempObjectJSON = memory.getItem('stepObjects');
     tempKey = responseObject.button === 'NEXT' ? memory.getItem('msboxNextStateId') : memory.getItem('msboxCurrentStateId');
+    console.log(`memory.getItem('msboxNextStateId') => tempKey:${tempKey}`)
     tempObject = JSON.parse(memory.getItem('stepObjects'));
+    console.log(`memory.getItem('stepObjects') => tempObject:$`)
+    console.dir(tempObject)
+    // console.dir(responseObject)
+    console.groupEnd()
     responseObject.currentStepObject = tempObject[tempKey];
     tempObject = JSON.parse(memory.getItem('stepMessaging'));
     responseObject.currentMessagingObject = tempObject[tempKey];
@@ -4789,6 +4906,7 @@ export async function msboxPostEnrollmentSevenPerformStepDO(responseObject = {})
 
 // ø <---------- <msboxPostEnrollmentSevenActionOnReady - [within $w.onReady(function ())]>  ---------->
 export async function msboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# no button log #}') {
+    console.groupCollapsed(`msboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# no button log #}')`)
     // pstEnrSeven202108ACTION
     // pstZEnrSeven202108STEP_R_01 BEGIN (CLICK DURING DEV)
     // 202109_UserInterface
@@ -4830,6 +4948,7 @@ export async function msboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# n
     memory.setItem('msboxLastState', 'stateZero')
     responseObject.logArrayDeveloper.push('{# responseObject.button = NEXT #}');
     responseObject.logArrayDeveloper.push('{# memory.setItem(msboxLastState,stateZero) #}');
+    console.log(`responseObject = {instantiated}`)
 
     // <202108100800> 
     let key = "pstEnrBootstrap";
@@ -4861,14 +4980,23 @@ export async function msboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# n
         $w('#btnSecondaryIdLabel').enable();
     }
     // ø </assign UI Demografx>
+    console.log(`doSimpleDemogrfxAssignment() +> <assign UI Demografx> seems to be working`)
 
     // 202109_ActionValueRepeaters
     let actionValueRepeatersParamObject = {};
     actionValueRepeatersParamObject.prepKey = 'OnReady';
     await loadActionValueRepeatersWithJSON(actionValueRepeatersParamObject);
+    console.log(`await loadActionValueRepeatersWithJSON(actionValueRepeatersParamObject); seems to be working`)
 
+    console.log(`about to call: await msboxPostEnrollmentSevenAnyAction(responseObject);`)
+    console.dir(responseObject)
     await msboxPostEnrollmentSevenAnyAction(responseObject);
+    console.log(`about to call: await onReadyToOnRamp(responseObject);`)
+    console.dir(responseObject)
     await onReadyToOnRamp(responseObject);
+    console.log(`GROUP-END; msboxPostEnrollmentSevenActionOnReady(anyButtonLog = '{# no button log #}')`)
+    console.dir(responseObject)
+    console.groupEnd()
     // </202108100800> 
 }
 // ø <---------- </msboxPostEnrollmentSevenActionOnReady - [within $w.onReady(function ())]> ---------->
@@ -4932,9 +5060,44 @@ export async function doSimpleDemogrfxAssignment(){
     // ø <--->
     // ø <added 20210909>
     // ø <Simple Demogrfx Assignment to local-Storage upon OnRamp>
+        // ø updated 20210926
+    // ø   - familySeed,studentEmail
+    // ø updated 20210927
+    // ø   - actionValueEvaluation dependent values set to 'EEMPTY' so no null-fuss
+    // let actionValueNonNullLocalKeyArray_FULL = ['staffIdentifiedFamilyId','familySeed','familyId','studentId','secondaryId','familyEmail','studentEmail','secondaryEmail','ppFirst','ppLast','stFirst','stPreferredFirst','stLast','spFirst','spLast','ppRevision','stRevision'];
+    let actionValueNonNullLocalKeyArray /*SUFFICIENT*/ = ['familyId','studentId','secondaryId','studentEmail','secondaryEmail'];
+    let actionValueNonNullMemoryKeyArray /*SUFFICIENT*/ = ['ppRevision','stRevision'];
+    let actionValueNonNullAllKeyArray /*SUFFICIENT*/ = actionValueNonNullLocalKeyArray.concat(actionValueNonNullMemoryKeyArray)
+    let tempBoolean = false
+    actionValueNonNullAllKeyArray.forEach(key => {
+        // console.log(key);
+        if(actionValueNonNullLocalKeyArray.includes(key)){
+            tempBoolean = local.getItem(key) == null ? true : false;
+            if (tempBoolean) {
+                local.setItem(key,'EEMPTY')
+            }
+        }
+        if(actionValueNonNullMemoryKeyArray.includes(key)){
+            tempBoolean = memory.getItem(key) == null ? true : false;
+            if (tempBoolean) {
+                memory.setItem(key,'EEMPTY')
+            }
+        }
+
+    });
+
     let enrollmentObject = JSON.parse(local.getItem('ondeckEnrollmentJSON'));
     // local.setItem('superEnrollmentStatus', enrollmentObject.descr);
     local.setItem('staffIdentifiedFamilyId', enrollmentObject.family.parent.primary.memberId);
+    // ø <same code as below>
+        let familySeed = enrollmentObject.family.parent.primary.memberId;
+    // in stMemberPrepJSON()
+        familySeed = familySeed.replace('-', '');
+        familySeed = familySeed.replace('-', '');
+        familySeed = familySeed.replace('-', '');
+        familySeed = familySeed.replace('-', '');
+        local.setItem('familySeed', familySeed);
+    // ø </same code as below>
     // local.setItem('familySeed', enrollmentObject.descr);
     // local.setItem('familyId', enrollmentObject.descr);
     // local.setItem('studentId', enrollmentObject.descr);
@@ -4947,6 +5110,16 @@ export async function doSimpleDemogrfxAssignment(){
     local.setItem('stFirst', enrollmentObject.family.student.name.first);
     local.setItem('stPreferredFirst', enrollmentObject.family.student.name.preferred);
     local.setItem('stLast', enrollmentObject.family.student.name.last);
+    // ø <same code as below>
+    // in stMemberPrepJSON()
+        let email = enrollmentObject.family.student.name.first;
+        let firstSpace = email.indexOf(' ');
+        email = firstSpace > 0 ? email.substr(0, firstSpace) : email;
+        email += local.getItem('familySeed').substr(0, 4);//should be identical to above, 
+        email = 'steamdiscoveryacademy' + '+' + email + '@gmail.com';
+        email = email.toLowerCase();
+        local.setItem('studentEmail', email);
+    // ø </same code as below>
     let spFirst = "";
     let spLast = "";
     let spAny = typeof enrollmentObject.family.parent.secondary === 'undefined' ? false : true;
@@ -5714,6 +5887,7 @@ export function btnSafeUnloadRoles_click(event) {
 export function btnDoSafeUnload_click(event) {
 	// ø <UNLOAD>
     let DOX = ''
+    doEnrollmentCleanupByKind('ALL_EXCEPT_ENROLLMENT')
     local.setItem("ondeckEnrollmentJSON",DOX);
     local.setItem('wixWebhookId',DOX);
     local.setItem('wixWebhookStatus',DOX);
@@ -5743,6 +5917,114 @@ export async function btnMultButtonParseJSON_click(event) {
 // ! ========================================================================================================================
 // ! ===================================               </Button Clicks Only>              ===================================
 // ! ========================================================================================================================
+
+// ! ======================================================================================================================================
+// ! ======================================== <Enhanced Back-End Action-Value-Evaluation TESTING>  ========================================
+// ! ======================================================================================================================================
+
+// ! ===================================               <Harvested from contactDevel.js>              ===================================
+
+export function populateOriginalActionValueButtons(){
+    console.groupCollapsed(`populateOriginalActionValueButtons()`)
+    console.log(`export function populateOriginalActionValueButtons()`)
+
+    let responseString = `session.getItem('ppAction'): ${session.getItem('ppAction')}\n`;
+    responseString += `session.getItem('stAction'): ${session.getItem('stAction')}\n`;
+    responseString += `session.getItem('spAction'): ${session.getItem('spAction')}`;
+    // $w('#secondaryResponseTXTBX').value = responseString
+
+
+    let origIdArray = ['#OppMemberBTN','#OppContactBTN','#OppDbaseBTN','#OstMemberBTN','#OstContactBTN','#OstDbaseBTN','#OspMemberBTN','#OspContactBTN','#OspDbaseBTN']
+    console.log(`origIdArray:`)
+    console.dir(origIdArray)
+    let origValuePipedArray = session.getItem('ppAction') + '|' + session.getItem('stAction') + '|' + session.getItem('spAction')
+    console.log(`origValuePipedArray: ${origValuePipedArray}`)
+    let origValueArray = origValuePipedArray.split('|')
+    console.log(`origValueArray:`)
+    console.dir(origValueArray)
+    let buttonId = '';
+    for (let index = 0; index < origIdArray.length; index++) {
+        buttonId = origIdArray[index];
+        if (typeof origValueArray[index] === 'string' && origValueArray[index] !== 'null') {
+            console.log(`$w(${buttonId}).label = origValueArray[${index}] =>`)
+            console.log(`${$w(buttonId).label} = ${origValueArray[index]}`)
+            $w(buttonId).label = origValueArray[index]
+        }
+    }
+}
+
+export function populateNewActionValueButtons(action = {}){
+    console.groupCollapsed(`populateNewActionValueButtons()`)
+    console.log(`export function populateNewActionValueButtons()`)
+    // ø <APPLY TEST OBJECT>
+    let actionObjectBottianiGraysonTEST = {
+    "superEnrollmentStatus": "CONTINUE",
+    "superEnrollmentString": "INSTANTIATE|allDangerBooleansAreValid",
+    "primary": {
+        "member": "SKIP",
+        "contact": "UPDATE",
+        "dataBase": "INSERT",
+        "ppAction": "SKIP|UPDATE|INSERT",
+        "familyEmail": "jessikazmuda@gmail.com",
+        "ppFirst": "Jessika"
+    },
+    "student": {
+        "member": "SKIP",
+        "contact": "UPDATE",
+        "dataBase": "INSERT",
+        "stAction": "SKIP|UPDATE|INSERT",
+        "studentEmail": "steamdiscoveryacademy+grayson2297@gmail.com",
+        "stFirst": "Grayson",
+        "stPreferredFirst": "Grayson",
+        "stLast": "Bottiani"
+    },
+    "secondary": {
+        "member": "NA",
+        "contact": "INSERT",
+        "dataBase": "INSERT",
+        "spAction": "NA|INSERT|INSERT",
+        "secondaryEmail": "eempty",
+        "spFirst": "James",
+        "spLast": "Wilkinson"
+    },
+    "termId": "202106",
+    "familySeed": "PENDING"
+}
+action = actionObjectBottianiGraysonTEST
+    // ø </APPLY TEST OBJECT>
+
+    // let responseString = `session.getItem('ppAction'): ${session.getItem('ppAction')}\n`;
+    // responseString += `session.getItem('stAction'): ${session.getItem('stAction')}\n`;
+    // responseString += `session.getItem('spAction'): ${session.getItem('spAction')}`;
+    // $w('#secondaryResponseTXTBX').value = responseString
+
+
+    // let origIdArray = ['#OppMemberBTN','#OppContactBTN','#OppDbaseBTN','#OstMemberBTN','#OstContactBTN','#OstDbaseBTN','#OspMemberBTN','#OspContactBTN','#OspDbaseBTN']
+    let newIdArray = ['#NppMemberBTN','#NppContactBTN','#NppDbaseBTN','#NstMemberBTN','#NstContactBTN','#NstDbaseBTN','#NspMemberBTN','#NspContactBTN','#NspDbaseBTN']
+
+    console.log(`newIdArray:`)
+    console.dir(newIdArray)
+    let newValuePipedArray = action.primary.ppAction + '|' + action.student.stAction + '|' + action.secondary.spAction
+    console.log(`newValuePipedArray: ${newValuePipedArray}`)
+    let newValueArray = newValuePipedArray.split('|')
+    console.log(`newValueArray:`)
+    console.dir(newValueArray)
+    let buttonId = '';
+    for (let index = 0; index < newIdArray.length; index++) {
+        buttonId = newIdArray[index];
+        if (typeof newValueArray[index] === 'string' && newValueArray[index] !== 'null') {
+            console.log(`$w(${buttonId}).label = origValueArray[${index}] =>`)
+            console.log(`${$w(buttonId).label} = ${newValueArray[index]}`)
+            $w(buttonId).label = newValueArray[index]
+        }
+    }
+}
+// ! ===================================               </Harvested from contactDevel.js>               ===================================
+
+
+// ! ======================================================================================================================================
+// ! ======================================== </Enhanced Back-End Action-Value-Evaluation TESTING> ========================================
+// ! ======================================================================================================================================
 
 export async function overallManyButtonsByManyDropDowns(paramObject = {ddValue: "NNULL",response: {string:'STRING'},done: false, messaging: {}}){
      // 202109_Developer
@@ -6168,6 +6450,18 @@ export async function manyButtonsDropDownO3(paramObject = {ddValue: "NNULL",resp
         paramObject.done = done;
         paramObject.response.string = responseString;
     }
+    if (value === 'SESSION_ACTION_VALUES') {
+        // let DOX = ''
+        // local.setItem("ondeckEnrollmentJSON",DOX);
+        // local.setItem('wixWebhookId',DOX);
+        // local.setItem('wixWebhookStatus',DOX);
+        responseString = `session.getItem('ppAction'): ${session.getItem('ppAction')}\n`;
+        responseString += `session.getItem('stAction'): ${session.getItem('stAction')}\n`;
+        responseString += `session.getItem('spAction'): ${session.getItem('spAction')}`;
+        done = true;
+        paramObject.done = done;
+        paramObject.response.string = responseString;
+    }
     if (value === 'doUnloadSafelyDD03') {
         let DOX = ''
         local.setItem("ondeckEnrollmentJSON",DOX);
@@ -6186,3 +6480,13 @@ export async function manyButtonsDropDownO3(paramObject = {ddValue: "NNULL",resp
 // ! ========================================================================================================================
 // ! ==============================               </DEVELOPER ONLY MultiStateBox>              ==============================
 // ! ========================================================================================================================
+
+// ø <=================================================================================================>
+// ø <======================================== <Just Buttons>  ========================================>
+// ø <============ WiX Editor places thenm here • Should only be Calling-UI-Input Non-Code ============>
+// ø <====================         Standard BTN Handling as of October 2021        ====================>
+// ø <=================================================================================================>
+
+// ø <=================================================================================================>
+// ø <======================================== </Just Buttons> ========================================>
+// ø <=================================================================================================>

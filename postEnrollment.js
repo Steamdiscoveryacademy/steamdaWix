@@ -62,7 +62,6 @@ $w.onReady(function () {
     $w('#stNameBTN').label = local.getItem('stLast') + ',\n' + local.getItem('stFirst')
     $w('#spNameBTN').label = local.getItem('spLast') + ',\n' + local.getItem('spFirst')
     // ø </Simple Demogrfx Assignment to local-Storage AFTER onReadyEnrollment>
-    populateNewActionValueButtons()
     // ø </KLUDGE Applying Back-End>
 
     // doUserInterfaceCleanupCurrent();// DISABLED 20210906
@@ -837,6 +836,7 @@ export async function doStepUserInterfaceSwitch(stepKey = 'PPENDING',paramObject
             // ø </KLUDGE memory => session>
             // ø <KLUDGE New Back-End UI>
             populateOriginalActionValueButtons()
+            populateNewActionValueButtons()
             // ø </KLUDGE New Back-End UI>
             console.log('UI Step: ' + stepKey)
             // $w('#txtActionValueGridDescr').hide();
@@ -1705,9 +1705,14 @@ export function ppMemberBuildOnDeckJSONZZZ() {
 // ø <---------- <manually added Step Functions>  ---------->
 // ø <---------- <doInstantiateLoopSwitchStep>  ---------->
 export async function doInstantiateLoopSwitchStep() {
-    console.groupCollapsed('≈1589≈ doInstantiateLoopSwitchStep')
+    await doInstantiateLoopSwitchStepORIG()
+}
+// ø <---------- </doInstantiateLoopSwitchStep>  ---------->
+// ø <---------- <doInstantiateLoopSwitchStepORIG>  ---------->
+export async function doInstantiateLoopSwitchStepORIG() {
+    console.groupCollapsed('≈1589≈ doInstantiateLoopSwitchStepORIG')
     memory.setItem('lastStamp', await nowISO(local.getItem('timezoneOffset'), local.getItem('tzAbbrv')));
-    local.setItem('logString', local.getItem('logString') + '\n[~Z319]entering: ' + 'doInstantiateLoopSwitchStep() at ' + memory.getItem('lastStamp'))
+    local.setItem('logString', local.getItem('logString') + '\n[~Z319]entering: ' + 'doInstantiateLoopSwitchStepORIG() at ' + memory.getItem('lastStamp'))
     console.log(`memory.getItem('lastStamp'): ${memory.getItem('lastStamp')}`)
 
     local.setItem('superEnrollmentStatus', 'CONTINUE');
@@ -1779,14 +1784,14 @@ export async function doInstantiateLoopSwitchStep() {
     let result = await wixData.get("webhookPayload", webhookId, options);
     local.setItem('wixWebhookStatus', result.currentStatus);
     local.setItem('logString', local.getItem('logString') + '\nwixWebhookStatus: ' + local.getItem('wixWebhookStatus'))
-    local.setItem('logString', local.getItem('logString') + '\n[~Z334]exiting: ' + 'doInstantiateLoopSwitchStep()');
+    local.setItem('logString', local.getItem('logString') + '\n[~Z334]exiting: ' + 'doInstantiateLoopSwitchStepORIG()');
     let stepResponseBootstrapKey = local.getItem('superEnrollmentStatus') !== 'CONTINUE' ? 'warning' : 'success';
     stepResponseBootstrapKey = local.getItem('superEnrollmentStatus') === 'ALERT' ? 'danger' : stepResponseBootstrapKey;
     // stepResponseBootstrapKey = 'warning'
     // stepResponseBootstrapKey = 'danger'
     memory.setItem('stepResponseBootstrapKey',stepResponseBootstrapKey);
 }
-// ø <---------- </doInstantiateLoopSwitchStep> ---------->
+// ø <---------- </doInstantiateLoopSwitchStepORIG> ---------->
 
 // ø <---------- <actionValueEvaluation of IINSTANTIATE>  ---------->
 export async function actionValueEvaluation() {
@@ -6486,7 +6491,22 @@ export async function manyButtonsDropDownO3(paramObject = {ddValue: "NNULL",resp
 // ø <============ WiX Editor places thenm here • Should only be Calling-UI-Input Non-Code ============>
 // ø <====================         Standard BTN Handling as of October 2021        ====================>
 // ø <=================================================================================================>
+export async function multiplyFamilyPersonObjectBTN_click(event) {
+	// $w('#multiplyResponseTXAREA').value = `Multiply for familyPersonObject.jsw`
+	// $w('#multiplyResponseTXAREA').value = `Multiply for familyPersonObject.jsw: '${$w("#operand1").value} x ${$w("#operand2").value}'`
+    // return
+    let uniquePipedString = await multiplyFor_familyPersonsObject($w("#operand1").value, $w("#operand2").value)
+	let responseStringArray = uniquePipedString.split('|')
+	// let product = await multiply($w("#operand1").value, $w("#operand2").value)
+	let product = responseStringArray[1]
+	$w("#product").value = product;
+	let responseStringFinal = typeof session.getItem('lastMultiplyJSON') !== 'string' || (session.getItem('lastMultiplyJSON')).length < 10 ? `Invalid session.getItem('lastMultiplyJSON')` : session.getItem('lastMultiplyJSON');
+	responseStringFinal = `\n==========\n` + responseStringFinal
+	responseStringFinal = responseStringArray[0] + responseStringFinal
+	$w("#multiplyResponseTXAREA").value = responseStringFinal
+}
 
 // ø <=================================================================================================>
 // ø <======================================== </Just Buttons> ========================================>
 // ø <=================================================================================================>
+

@@ -47,6 +47,8 @@ import wixWindow from 'wix-window';
  // ø 202109_Developer TODAY
  // ø 202109_alphaTimeKey
  // ø currentBUG_wixUsers.register
+ // ø 202110_Enhanced_BackEnd_ActionValueEvaluation-START
+ // ø 202110_instantiateEnrollmentObject
  */
 
 
@@ -2031,7 +2033,543 @@ export async function actionValueEvaluation() {
     console.groupEnd();
 }
 // ø <---------- </actionValueEvaluation of IINSTANTIATE> ---------->
+ 
+// ø <---------- <NEW> ---------->
+// ø <-------------------- <instantiateEnrollmentObject>  -------------------->
+// ø 202110_instantiateEnrollmentObject-START
+export async function instantiateEnrollmentObject(familyId = 'STRING') {
+    console.groupCollapsed(`instantiateEnrollmentObject(familyId)`)
+    console.log(`FULL DECLARATION: export async function instantiateEnrollmentObject(${familyId} = 'STRING')`)
+    let DOX = 'so that it can be viewed in the Online Editor'
+    let develObject = {}
+    develObject.paramObject = {}
+    develObject.responseObject = {}
+    develObject.responseObject.notes = []
+    DOX = `instantiateEnrollmentObject(familyId = 'STRING')`
+    develObject.responseObject.notes.push(DOX)
+    DOX = `these notes will parallel 'enroll.notes = []`
+    develObject.responseObject.notes.push(DOX)
+    develObject.paramObject.familyId = familyId
+    let pendingString = 'PENDING'
+    let unconfirmedString = 'UNCONFIRMED'
+    let enroll = {}
+    enroll.notes = []
+     
+    /*doxNOTE*/DOX = `instantiateSimpleDemogfxObject(${familyId}) INTO enroll.application = {}`
+    /*doxNOTE*/enroll.notes.push(DOX)
+    /*doxNOTE*/develObject.responseObject.notes.push(DOX)
+     
+    /*doxNOTE*/DOX = `ALL response into holder $w('#TXAREA') elements are being removed, rather use wixStorage instead`
+    /*doxNOTE*/enroll.notes.push(DOX)
+    /*doxNOTE*/develObject.responseObject.notes.push(DOX)
 
+    
+    if(typeof familyId !== 'string'){
+        // ø <CODE for Below>
+        let contactId_PARAM = 'ZXZ'
+        let emailToFind_PARAM = 'ZXZ'
+        let contactById = await steamdaGetContactFunction(contactId_PARAM);
+        let contactByEmail = await steamdaGetContactByEmailFunction(emailToFind_PARAM);
+        // ø </CODE for Below>
+    }
+
+
+    enroll.action = {}
+    enroll.action.superEnrollmentStatus = 'CONTINUE';//local.getItem('superEnrollmentStatus')
+    enroll.action.superEnrollmentString = 'INSTANTIATE';//local.getItem('superEnrollmentStatus')
+
+    enroll.familyId = 'PENDING'
+    enroll.familyIdStatus = 'PENDING'//'Staff-Eye-D'// inferred by Data, precision here not necessary
+    enroll.maxPreviousFamilyTermId = 201506
+    enroll.maxPreviousStudentTermId = 201506
+    enroll.wixWebhookId = local.getItem('wixWebhookId')
+    // ø <demogrfx-application-processed>
+    enroll.application = {}
+    enroll.application.termId = local.getItem('termId')
+    enroll.application.staffIdentifiedFamilyId = local.getItem('staffIdentifiedFamilyId')
+    enroll.application.familySeed = local.getItem('familySeed')
+    enroll.application.primary = {}
+    enroll.application.primary.familyId = local.getItem('familyId')
+    enroll.application.primary.familyEmail = local.getItem('familyEmail')
+    enroll.application.primary.ppFirst = local.getItem('ppFirst')
+    enroll.application.primary.ppLast = local.getItem('ppLast')
+    enroll.application.student = {}
+    enroll.application.student.studentId = local.getItem('studentId')
+    enroll.application.student.studentEmail = local.getItem('studentEmail')
+    enroll.application.student.stFirst = local.getItem('stFirst')
+    enroll.application.student.stPreferredFirst = local.getItem('stPreferredFirst')
+    enroll.application.student.stLast = local.getItem('stLast')
+    enroll.application.secondary = {}
+    enroll.application.secondary.secondaryId = local.getItem('secondaryId')
+    enroll.application.secondary.secondaryEmail = local.getItem('secondaryEmail')
+    enroll.application.secondary.spFirst = local.getItem('spFirst')
+    enroll.application.secondary.spLast = local.getItem('spLast')
+    // // ø </demogrfx-application-processed>
+    
+     
+    /*doxNOTE*/DOX = `enroll = {} instantiated`
+    /*doxNOTE*/develObject.responseObject.notes.push(DOX)
+      
+    /*doxNOTE*/DOX = `enroll.appliocation = {} instantiated)`
+    /*doxNOTE*/develObject.responseObject.notes.push(DOX)
+      
+    develObject.responseObject.enrollSOFAR = enroll
+      
+    // ø <familyPersonsObjectFRONTEND>
+    // let familyPersonsObjectFRONTEND = await getFamilyPersonsObject_NotBackend(familyId)
+      
+    // /*doxNOTE*/DOX = `getFamilyPersonsObject_NotBackend(familyId)`
+    // /*doxNOTE*/develObject.responseObject.notes.push(DOX)
+    
+    // /*doxNOTE*/DOX = `familyId,enroll.application.termId: ${typeof enroll.application.termId}: ${enroll.application.termId}`
+    // /*doxNOTE*/develObject.responseObject.notes.push(DOX)
+      
+    // develObject.responseObject.familyPersonsObjectFRONTEND = familyPersonsObjectFRONTEND
+    // ø </familyPersonsObjectFRONTEND>
+      
+    // ø <familyPersonsObjectBACKEND>
+    let familyPersonsObject = await getFamilyPersonsObject(familyId,Number(enroll.application.termId))
+      
+    /*doxNOTE*/DOX = `getFamilyPersonsObject(familyId,enroll.application.termId)`
+    /*doxNOTE*/develObject.responseObject.notes.push(DOX)
+      
+    develObject.responseObject.familyPersonsObjectBACKEND = familyPersonsObject
+    // ø </familyPersonsObjectBACKEND>
+     
+    // console.log(`develObject:`)
+    // console.dir(develObject)
+    // console.groupEnd()
+    // // return_develObject
+    // return develObject
+
+    local.setItem('familyPersonsObjectJSON', JSON.stringify(familyPersonsObject))
+    // $w('#secondaryResponseTXTBX').value = JSON.stringify(familyPersonsObject,undefined,4)
+
+    // await validateFamilyPersonsObject_NotBackend(familyPersonsObject)
+    console.warn('≈308≈ validateFamilyPerson: COMMENTED OUT: OKAY: inside main getFamilyPersonsObject_NotBackend() ')
+    DOX = '<MOVED TO JUST BELOW familyPersonObject RENDERED>'
+    DOX = '¡WHICH is where it was origially before all the intervening code was placed between!'
+    DOX = '¡SO this is, essentially, placing it back where it was originally!'
+    console.log(`familyPersonsObject:`)
+    console.dir(familyPersonsObject)
+    enroll.action.superEnrollmentStatus = familyPersonsObject.validationObject.allDangerBooleansAreValid === true ? enroll.action.superEnrollmentStatus : 'ABORT'
+    enroll.action.superEnrollmentString += familyPersonsObject.validationObject.allDangerBooleansAreValid === true ? '|allDangerBooleansAreValid' : '|allDangerBooleansAre_NOT_Valid'
+
+    // ø <current-evaluation-personDbase-personData-wixWebhookId>
+    // enroll.familyId = PENDING
+    // enroll.familyIdStatus = 'PENDING'//'Staff-Eye-D' inferred by Data, precision here not necessary
+    // enroll.maxPreviousTermIdFamily = 201506
+    // enroll.maxPreviousTermIdStudent = 201506
+    let holderErrorBOOLEAN = true
+    let holderIdErrorString = `HOLDER`
+    enroll.personData = {}
+    enroll.confirmed = {}
+    enroll.confirmed.familyId = familyPersonsObject.primaryPersonCount === 1 ? familyPersonsObject.familyId : unconfirmedString
+    holderErrorBOOLEAN = enroll.confirmed.familyId === unconfirmedString ? true : false
+    holderIdErrorString = `Family-ID Error`
+    enroll.confirmed.familyEmail = holderErrorBOOLEAN ? holderIdErrorString : familyPersonsObject.primaryMemberObjectsById[enroll.confirmed.familyId]['personContactEmail']
+    enroll.confirmed.familyMaxTermId = familyPersonsObject.primaryTermIdMax
+    enroll.confirmed.familyUpToDate = familyPersonsObject.primaryIsUpToDate
+    enroll.confirmed.studentId = unconfirmedString
+    enroll.confirmed.studentEmail = unconfirmedString
+    enroll.confirmed.studentMaxTermId = 201506
+    enroll.confirmed.studentUpToDate = false
+    enroll.confirmed.secondaryId = familyPersonsObject.secondaryPersonCount === 1 ? familyPersonsObject.secondaryId : unconfirmedString
+    holderErrorBOOLEAN = enroll.confirmed.secondaryId === unconfirmedString ? true : false
+    holderIdErrorString = `Secondary-ID Error`
+    enroll.confirmed.secondaryEmail = holderErrorBOOLEAN ? holderIdErrorString : familyPersonsObject.secondaryMemberObjectsById[enroll.confirmed.secondaryId]['personContactEmail']
+    enroll.confirmed.secondaryMaxTermId = familyPersonsObject.secondaryTermIdMax
+    enroll.confirmed.secondaryUpToDate = familyPersonsObject.secondaryIsUpToDate
+    enroll.personData.primary = {}
+    enroll.personData.primary.familyId = 'FROM_familyDataObject'
+    enroll.personData.primary.maxTermId = 'FROM_familyDataObject'
+    enroll.personData.student = {}
+    enroll.personData.student.studentId = 'FROM_familyDataObject'
+    enroll.personData.student.maxTermId = 'FROM_familyDataObject'
+    enroll.personData.secondary = {}
+    enroll.personData.secondary.secondaryId = 'FROM_familyDataObject'
+    enroll.personData.secondary.maxTermId = 'FROM_familyDataObject'
+    // ø </current-evaluation-personDbase-personData-wixWebhookId>
+    DOX = '</MOVED TO JUST BELOW familyPersonObject RENDERED>'
+    
+    let doQueryPrimaryApplicationEmail = false
+    let doGatherStudentFromFamilyPersonObject = false
+    let doQueryStudentEmail = false
+    let doQueryStudentEmailKludge = false
+    /*doxNOTE*/DOX = `<do-Booleans>`
+    /*doxNOTE*/enroll.notes.push(DOX)
+    
+    doQueryPrimaryApplicationEmail = familyPersonsObject.primaryId.length < 30 ? true: false
+    /*doxNOTE*/DOX = `familyPersonsObject.primaryId.length['${familyPersonsObject.primaryId.length}'] < 30 => doQueryPrimaryApplicationEmail = ${doQueryPrimaryApplicationEmail}`
+    /*doxNOTE*/enroll.notes.push(DOX)
+
+    doGatherStudentFromFamilyPersonObject = familyPersonsObject.studentFirstArray.includes(enroll.application.student.stFirst) ? true : false 
+    doGatherStudentFromFamilyPersonObject = /*OOAAOC*/ familyPersonsObject.studentFirstArray.includes(enroll.application.student.stPreferredFirst) ? true : doGatherStudentFromFamilyPersonObject 
+    /*doxNOTE*/DOX = `familyPersonsObject.studentFirstArray.includes(enroll.application.student.stFirst) => ['${familyPersonsObject.studentFirstArray}']-includes('${enroll.application.student.stFirst}') => doGatherStudentFromFamilyPersonObject = ${doGatherStudentFromFamilyPersonObject}`
+    /*doxNOTE*/enroll.notes.push(DOX)
+
+
+    doQueryStudentEmail = !doGatherStudentFromFamilyPersonObject
+    /*doxNOTE*/DOX = `doQueryStudentEmail = !doGatherStudentFromFamilyPersonObject => doQueryStudentEmail = ${doQueryStudentEmail}`
+    /*doxNOTE*/enroll.notes.push(DOX)
+    doQueryStudentEmailKludge = doQueryStudentEmail
+    /*doxNOTE*/DOX = `doQueryStudentEmailKludge = doQueryStudentEmail => doQueryStudentEmailKludge = ${doQueryStudentEmailKludge}`
+    /*doxNOTE*/enroll.notes.push(DOX)
+    /*doxNOTE*/DOX = `</do-Booleans>`
+    /*doxNOTE*/enroll.notes.push(DOX)
+    let doProcess_primaryParentByEmail = false
+    let doProcess_studentByEmail = false
+    let primaryParentByEmail = {}
+    if(doQueryPrimaryApplicationEmail){
+        // /*doxNOTE*/DOX = `Query Primary-Application-Email IS PENDING => doQueryPrimaryApplicationEmail = ${doQueryPrimaryApplicationEmail}`
+        // /*doxNOTE*/enroll.notes.push(DOX)
+        primaryParentByEmail = await steamdaGetContactByEmailFunction(local.getItem('familyEmail'))
+        if(primaryParentByEmail.resultsCount > 1){
+            enroll.action.superEnrollmentStatus = 'ABORT'
+            enroll.action.superEnrollmentString += '|Gather Student from familyPersonObject IS PENDING'
+            return
+        }
+        if(primaryParentByEmail.resultsCount === 1){
+            doProcess_primaryParentByEmail = true
+            console.groupCollapsed(`doQueryPrimaryApplicationEmail === 1:`)
+            console.dir(primaryParentByEmail)
+            console.groupEnd()
+            /*doxNOTE*/DOX = `SEE console.log() => primaryParentByEmail.resultsCount === ${primaryParentByEmail.resultsCount}`
+            /*doxNOTE*/enroll.notes.push(DOX)
+            $w('#tertiaryResponseTXTBX').value = JSON.stringify(primaryParentByEmail,undefined,4)
+        }else{
+            /*doxNOTE*/DOX = `primaryParentByEmail.resultsCount === ${primaryParentByEmail.resultsCount}`
+            /*doxNOTE*/enroll.notes.push(DOX)
+        }
+    }
+ 
+    if(doGatherStudentFromFamilyPersonObject){
+        //     enroll.application.student.stFirst = local.getItem('stFirst')
+        // enroll.application.student.stPreferredFirst = local.getItem('stPreferredFirst')
+
+        let elementArray = []
+        let doGatherMaxTermId = 'PENDING';
+        let doGatherPersonId = 'PENDING';
+        for (let index = 0; index < familyPersonsObject.studentFirstTermId2dArray.length; index++) {
+            elementArray = familyPersonsObject.studentFirstTermId2dArray[index];
+            if(enroll.application.student.stFirst === elementArray[0] || enroll.application.student.stPreferredFirst === elementArray[0]){
+                doGatherMaxTermId = elementArray[1];
+                doGatherPersonId = elementArray[2];
+            }
+            
+        }
+        if (doGatherMaxTermId === 'PENDING' || doGatherPersonId === 'PENDING') {
+            /*doxNOTE*/DOX = `Gather Student from familyPersonObject FAILED => familyPersonsObject.studentFirstTermId2dArray[i][0] did NOT include ${enroll.application.student.stFirst}`
+            /*doxNOTE*/enroll.notes.push(DOX)
+            enroll.action.superEnrollmentStatus = 'ABORT'
+            enroll.action.superEnrollmentString += '|Gather Student from familyPersonObject FAILED [studentFirstTermId2dArray]'
+            doGatherStudentFromFamilyPersonObject = false
+        }
+ 
+        if(doGatherStudentFromFamilyPersonObject){
+            if (typeof familyPersonsObject.studentMemberObjectsById[doGatherPersonId] !== 'object' || doGatherPersonId !== familyPersonsObject.studentMemberObjectsById[doGatherPersonId]['contactId']) {
+                // ø <SHOULD BE IMPOSSIBLE>
+                /*doxNOTE*/DOX = `Gather Student from familyPersonObject FAILED => doGatherPersonId ['${doGatherPersonId}'] does NOT match familyPersonsObject.studentMemberObjectsById[doGatherPersonId]['contactId']`
+                /*doxNOTE*/enroll.notes.push(DOX)
+                enroll.action.superEnrollmentStatus = 'ABORT'
+                enroll.action.superEnrollmentString += '|Gather Student from familyPersonObject FAILED [doGatherPersonId MisMatch]'
+                doGatherStudentFromFamilyPersonObject = false
+                // ø </SHOULD BE IMPOSSIBLE>
+            }
+        }
+ 
+        if(doGatherStudentFromFamilyPersonObject){
+            // /*doxNOTE*/DOX = `Gather Student from familyPersonObject IS PENDING => doGatherStudentFromFamilyPersonObject = ${doGatherStudentFromFamilyPersonObject}`
+            // /*doxNOTE*/enroll.notes.push(DOX)
+            // enroll.action.superEnrollmentStatus = 'ABORT'
+            // enroll.action.superEnrollmentString += '|Gather Student from familyPersonObject IS PENDING'
+            enroll.confirmed.studentId = familyPersonsObject.studentMemberObjectsById[doGatherPersonId]['contactId']
+            enroll.confirmed.studentEmail = familyPersonsObject.studentMemberObjectsById[doGatherPersonId]['personContactEmail']
+            enroll.confirmed.studentMaxTermId = familyPersonsObject.studentMemberObjectsById[doGatherPersonId]['termIdMax']
+            enroll.confirmed.studentUpToDate = enroll.confirmed.studentMaxTermId === Number(local.getItem('termId')) ? true : enroll.confirmed.studentUpToDate
+
+        }
+
+    }
+ 
+    let studentEmail = local.getItem('studentEmail')
+    let studentByEmail = {}
+    if(doQueryStudentEmail){
+        // /*doxNOTE*/DOX = `Query Student-Auto-Email IS PENDING => doQueryStudentEmail = ${doQueryStudentEmail}`
+        // /*doxNOTE*/enroll.notes.push(DOX)
+    
+        /*doxNOTE*/DOX = `steamdaGetContactByEmailFunction(${studentEmail})`
+        /*doxNOTE*/enroll.notes.push(DOX)
+        studentByEmail = await steamdaGetContactByEmailFunction(studentEmail)
+        if(studentByEmail.resultsCount > 1){
+            enroll.action.superEnrollmentStatus = 'ABORT'
+            enroll.action.superEnrollmentString += '|Gather Student from familyPersonObject IS PENDING'
+            return
+        }
+        if(studentByEmail.resultsCount === 1){
+            doProcess_studentByEmail = true
+            doQueryStudentEmailKludge = false
+            /*doxNOTE*/DOX = `SEE console.log() => studentByEmail.resultsCount === ${studentByEmail.resultsCount}`
+            /*doxNOTE*/enroll.notes.push(DOX)
+            /*doxNOTE*/DOX = `studentByEmail.resultsCount === ${studentByEmail.resultsCount} => doQueryStudentEmailKludge = ${doQueryStudentEmailKludge}`
+            /*doxNOTE*/enroll.notes.push(DOX)
+            $w('#quaternaryResponseTXTBX').value = JSON.stringify(studentByEmail,undefined,4)
+        }else{
+            /*doxNOTE*/DOX = `studentByEmail.resultsCount === ${studentByEmail.resultsCount}`
+            /*doxNOTE*/enroll.notes.push(DOX)
+        }
+    }
+ 
+    if(doQueryStudentEmailKludge){
+        // /*doxNOTE*/DOX = `Query Student-Auto-Email-KLUDGE IS PENDING => doQueryStudentEmailKludge = ${doQueryStudentEmailKludge}`
+        // /*doxNOTE*/enroll.notes.push(DOX)
+
+        DOX = (enroll.application.familySeed).substr(0,4) + '@'
+        studentEmail = studentEmail.replace(DOX,'eemp@')
+        /*doxNOTE*/DOX = `steamdaGetContactByEmailFunction(${studentEmail})`
+        /*doxNOTE*/enroll.notes.push(DOX)
+        studentByEmail = await steamdaGetContactByEmailFunction(studentEmail)
+        if(studentByEmail.resultsCount > 1){
+            enroll.action.superEnrollmentStatus = 'ABORT'
+            enroll.action.superEnrollmentString += '|Gather Student from familyPersonObject IS PENDING'
+            return
+        }
+        if(studentByEmail.resultsCount === 1){
+            doProcess_studentByEmail = true
+            console.groupCollapsed(`doQueryStudentEmailKludge === 1:`)
+            console.dir(studentByEmail)
+            console.groupEnd()
+            /*doxNOTE*/DOX = `SEE console.log() => [KLUDGE] studentByEmail.resultsCount === ${studentByEmail.resultsCount}`
+            /*doxNOTE*/enroll.notes.push(DOX)
+            $w('#quaternaryResponseTXTBX').value = JSON.stringify(studentByEmail,undefined,4)
+        }else{
+            /*doxNOTE*/DOX = `[KLUDGE] studentByEmail.resultsCount === ${studentByEmail.resultsCount}`
+            /*doxNOTE*/enroll.notes.push(DOX)
+        }
+    }
+ 
+    if(doProcess_primaryParentByEmail){
+        /*doxNOTE*/DOX = `Process Primary-Parent-By-Email IS PENDING: doProcess_primaryParentByEmail === ${doProcess_primaryParentByEmail}`
+        /*doxNOTE*/enroll.notes.push(DOX)
+        
+        enroll.confirmed.familyId = primaryParentByEmail.results._items[0]._id
+        enroll.confirmed.familyEmail = primaryParentByEmail.results._items[0].primaryInfo.email
+ 
+    }
+    if(doProcess_studentByEmail){
+        /*doxNOTE*/DOX = `doProcess_studentByEmail IS PENDING: doProcess_studentByEmail === ${doProcess_studentByEmail}`
+        /*doxNOTE*/enroll.notes.push(DOX)
+        
+        enroll.confirmed.studentId = studentByEmail.results._items[0]._id
+        enroll.confirmed.studentEmail = studentByEmail.results._items[0].primaryInfo.email
+ 
+    }
+
+
+    // ø <>
+    // ø <Ecapsulated Queries>
+    // ø <ENCAPSULATED QUERIES>
+ 
+    // DOX = 'PrimaryParent:\n---\nById:\n---\n'
+    // let primaryParentId = local.getItem('staffIdentifiedFamilyId')
+    // let primaryParentById = await steamdaGetContactFunction(primaryParentId)
+    // $w('#tertiaryResponseTXTBX').value = JSON.stringify(primaryParentById,undefined,4)
+ 
+    // DOX = 'PrimaryParent:\n---\nByEmail:\n---\n'
+    // let primaryParentEmail = local.getItem('familyEmail')
+    // let primaryParentByEmail = await steamdaGetContactByEmailFunction(primaryParentEmail)
+    // $w('#quaternaryResponseTXTBX').value = JSON.stringify(primaryParentByEmail,undefined,4)
+ 
+ 
+    // DOX = 'Student:\n---\nById:\n---\n'
+    // let studentId = 'c90f23aa-2838-4e4e-9135-3995d25c5eb3'
+    // let studentById = await steamdaGetContactFunction(studentId)
+    // DOX += JSON.stringify(studentById,undefined,4)
+    // $w('#tertiaryResponseTXTBX').value = DOX
+  
+    // let studentEmail = local.getItem('studentEmail')
+    // DOX = `Student:\n---\nByEmail:\nsteamdaGetContactByEmailFunction(${studentEmail})\n---\n`
+    // let studentByEmail = await steamdaGetContactByEmailFunction(studentEmail)
+    // DOX += JSON.stringify(studentByEmail,undefined,4)
+    // $w('#tertiaryResponseTXTBX').value = DOX
+ 
+    // DOX = familyId.substr(0,4) + '@'
+    // studentEmail = studentEmail.replace(DOX,'eemp@')
+    // DOX = `Student:\n---\nByEmailKludge:\nsteamdaGetContactByEmailFunction(${studentEmail})\n---\n`
+    // studentByEmail = await steamdaGetContactByEmailFunction(studentEmail)
+    // DOX += JSON.stringify(studentByEmail,undefined,4)
+    // $w('#quaternaryResponseTXTBX').value = DOX
+ 
+    // ø </ENCAPSULATED QUERIES>
+    // ø </Ecapsulated Queries>
+    // ø </>
+
+    DOX = '<MOVED TO JUST BELOW familyPersonObject RENDERED>'
+    // console.log(`familyPersonsObject:`)
+    // console.dir(familyPersonsObject)
+    // enroll.action.superEnrollmentStatus = familyPersonsObject.validationObject.allDangerBooleansAreValid === true ? enroll.action.superEnrollmentStatus : 'ABORT'
+    // enroll.action.superEnrollmentString += familyPersonsObject.validationObject.allDangerBooleansAreValid === true ? '|allDangerBooleansAreValid' : '|allDangerBooleansAre_NOT_Valid'
+
+    // // ø <current-evaluation-personDbase-personData-wixWebhookId>
+    // // enroll.familyId = PENDING
+    // // enroll.familyIdStatus = 'PENDING'//'Staff-Eye-D' inferred by Data, precision here not necessary
+    // // enroll.maxPreviousTermIdFamily = 201506
+    // // enroll.maxPreviousTermIdStudent = 201506
+    // enroll.personData = {}
+    // enroll.confirmed = {}
+    // enroll.confirmed.familyId = familyPersonsObject.primaryPersonCount === 1 ? familyPersonsObject.familyId : unconfirmedString
+    // enroll.confirmed.familyEmail = unconfirmedString
+    // enroll.confirmed.familyMaxTermId = 201506
+    // enroll.confirmed.familyUpToDate = familyPersonsObject.primaryPersonCount === 1 ? true : false
+    // enroll.confirmed.studentId = unconfirmedString
+    // enroll.confirmed.studentEmail = unconfirmedString
+    // enroll.confirmed.studentMaxTermId = 201506
+    // enroll.confirmed.studentUpToDate = false
+    // enroll.confirmed.studentId = unconfirmedString
+    // enroll.confirmed.studentEmail = unconfirmedString
+    // enroll.confirmed.studentMaxTermId = unconfirmedString
+    // enroll.confirmed.studentUpToDate = false
+    // enroll.personData.primary = {}
+    // enroll.personData.primary.familyId = 'FROM_familyDataObject'
+    // enroll.personData.primary.maxTermId = 'FROM_familyDataObject'
+    // enroll.personData.student = {}
+    // enroll.personData.student.studentId = 'FROM_familyDataObject'
+    // enroll.personData.student.maxTermId = 'FROM_familyDataObject'
+    // enroll.personData.secondary = {}
+    // enroll.personData.secondary.secondaryId = 'FROM_familyDataObject'
+    // enroll.personData.secondary.maxTermId = 'FROM_familyDataObject'
+    // ø </current-evaluation-personDbase-personData-wixWebhookId>
+    DOX = '</MOVED TO JUST BELOW familyPersonObject RENDERED>'
+    
+    // ø <contacts-directQuery-emailQuery-emailQueryWithKludge>
+    // enroll.familyId = PENDING
+    // enroll.familyIdStatus = 'PENDING'//'Staff-Eye-D' inferred by Data, precision here not necessary
+    DOX = '</ this Block ¿IS MOOT?: enroll.emailQuery = {}>'
+    enroll.emailQuery = {}
+    // enroll.emailQuery.primary.familyId = 'FROM_familyDataObject_OR_FROM_emailQuery'
+    enroll.emailQuery.familyId = 'FROM_familyDataObject_OR_FROM_emailQuery'
+    // enroll.emailQuery.student.studentId = 'FROM_familyDataObject_OR_FROM_emailQuery'
+    enroll.emailQuery.studentId = 'FROM_familyDataObject_OR_FROM_emailQuery'
+    // enroll.emailQuery.secondary.secondaryId = 'FROM_familyDataObject_OR_FROM_emailQuery'
+    enroll.emailQuery.secondaryId = 'FROM_familyDataObject_OR_FROM_emailQuery'
+    // ø <DATA FOR THE QUERY(IES)>
+    // enroll.emailQuery.primary.familyEmail = enroll.application.familyEmail
+    enroll.emailQuery.familyEmail = enroll.application.familyEmail
+    // enroll.emailQuery.student.studentEmail = enroll.application.studentEmail
+    enroll.emailQuery.studentEmail = enroll.application.studentEmail
+    // let studentEmailKludge = enroll.application.student.studentEmail
+    // console.log(`studentEmailKludge: ${studentEmailKludge}`)
+    console.log(`replaceBlock: indexOf ${(enroll.application.student.studentEmail).indexOf('@')}`)
+    console.log(`replaceBlock: substr(START: ${(enroll.application.student.studentEmail).indexOf('@')-4}`)
+    let replaceBlock = (enroll.application.student.studentEmail).substr((enroll.application.student.studentEmail).indexOf('@') - 4,5)
+    console.log(`replaceBlock: replaceBlock: ${replaceBlock}`)
+    // enroll.emailQuery.student.studentEmailKludge = (enroll.application.studentEmail).replace(replaceBlock, 'eemp@')
+    enroll.emailQuery.studentEmailKludge = (enroll.application.student.studentEmail).replace(replaceBlock, 'eemp@')
+    console.log(`enroll.emailQuery.studentEmailKludge: ${enroll.emailQuery.studentEmailKludge}`)
+    // ø </DATA FOR THE QUERY(IES)>
+    DOX = '< this Block ¿IS MOOT?: enroll.emailQuery = {}>'
+    // ø </contacts-directQuery-emailQuery-emailQueryWithKludge>
+    
+    // ø <action-actionEvaluation-final>
+    // enroll.familyId = PENDING
+    // enroll.familyIdStatus = 'PENDING'//'Staff-Eye-D' inferred by Data, precision here not necessary
+    // enroll.maxPreviousTermIdFamily = 201506
+    // enroll.maxPreviousTermIdStudent = 201506
+
+    // ø <enroll.action AT TOP for superEnrollmentStatsu>
+    // ø enroll.action = {}
+    // ø enroll.action.superEnrollmentStatus = 'PENDING';//local.getItem('superEnrollmentStatus')
+    // ø </enroll.action AT TOP for superEnrollmentStatsu>
+    
+    // memory.getItem('ppAction'): null
+    // memory.getItem('stAction'): null
+    // memory.getItem('spAction'): null
+    
+    enroll.action.primary = {}
+    enroll.action.primary.member = 'PENDING_LOGIC'
+    enroll.action.primary.contact = 'PENDING_LOGIC'
+    enroll.action.primary.dataBase = 'PENDING_LOGIC'
+    enroll.action.primary.ppAction = 'PENDING|PENDING|PENDING'
+    // enroll.emailQuery.primary.familyId = 'DANGER'
+    // enroll.action.primary.familyId = enroll.application.familyId
+    enroll.action.student = {}
+    enroll.action.student.member = 'PENDING_LOGIC'
+    enroll.action.student.contact = 'PENDING_LOGIC'
+    enroll.action.student.dataBase = 'PENDING_LOGIC'
+    enroll.action.student.stAction = 'PENDING|PENDING|PENDING'
+    // enroll.action.student.studentId = enroll.application.studentId
+    // enroll.emailQuery.student.studentId = 'DANGER'
+    enroll.action.secondary = {}
+    enroll.action.secondary.member = 'PENDING_LOGIC_but_NA'
+    enroll.action.secondary.contact = 'PENDING_LOGIC'
+    enroll.action.secondary.dataBase = 'PENDING_LOGIC'
+    enroll.action.secondary.spAction = 'PENDING|PENDING|PENDING'
+    // enroll.emailQuery.secondary.secondaryId = 'DANGER'
+    // enroll.action.secondary.secondaryId = enroll.application.secondaryId
+    // ø <SAME AS APPLICATION: update if different>
+    // ø <>
+    console.groupEnd()
+
+    DOX = '<FINAL: enroll.action By Confirmed>'
+    // enroll.action.primary = {}
+    enroll.action.primary.member = (enroll.confirmed.familyId).length > 30 ? 'SKIP' : 'INSERT'
+    enroll.action.primary.contact = enroll.confirmed.familyUpToDate ? 'SKIP' : 'UPDATE'
+    enroll.action.primary.dataBase = enroll.confirmed.familyUpToDate ? 'SKIP' : 'INSERT'
+    enroll.action.primary.ppAction = enroll.action.primary.member + '|' + enroll.action.primary.contact + '|' + enroll.action.primary.dataBase
+    enroll.action.primary.ppAction = enroll.action.superEnrollmentStatus !== 'CONTINUE' ? enroll.action.superEnrollmentStatus + '|' + enroll.action.superEnrollmentStatus + '|' + enroll.action.superEnrollmentStatus: enroll.action.primary.ppAction
+
+    // enroll.action.student = {}
+    enroll.action.student.member = (enroll.confirmed.studentId).length > 30 ? 'SKIP' : 'INSERT'
+    enroll.action.student.contact = enroll.confirmed.studentUpToDate ? 'SKIP' : 'UPDATE'
+    enroll.action.student.dataBase = enroll.confirmed.studentUpToDate ? 'SKIP' : 'INSERT'
+    enroll.action.student.stAction = enroll.action.student.member + '|' + enroll.action.student.contact + '|' + enroll.action.student.dataBase
+    enroll.action.student.stAction = enroll.action.superEnrollmentStatus !== 'CONTINUE' ? enroll.action.superEnrollmentStatus + '|' + enroll.action.superEnrollmentStatus + '|' + enroll.action.superEnrollmentStatus: enroll.action.student.stAction
+
+    // enroll.action.secondary = {}
+    let possibleNULLvalueArray = ['NULL', 'EMPTY', 'PENDING', 'NA', 'UNCONFIRMED', 'NNULL', 'EEMPTY', 'PPENDING', 'NNA', 'UUNCONFIRMED']
+    let secondaryFirstIsValid = !possibleNULLvalueArray.includes((enroll.application.secondary.spFirst).toUpperCase())
+    secondaryFirstIsValid = secondaryFirstIsValid && (enroll.application.secondary.spFirst).length > 0
+    let secondaryIsPerson = (enroll.confirmed.secondaryId).length > 30 ? true : false
+    let secondaryIsUpToDate = enroll.confirmed.secondaryUpToDate
+    enroll.action.secondary.member = 'NA' // ALWAYS 'NA'
+    enroll.action.secondary.contact = secondaryFirstIsValid ? 'UPSERT' : 'PENDING'
+    enroll.action.secondary.contact = secondaryIsPerson ? 'UPDATE' : enroll.action.secondary.contact
+    enroll.action.secondary.contact = secondaryIsUpToDate ? 'SKIP' : enroll.action.secondary.contact
+    enroll.action.secondary.contact = enroll.action.secondary.contact === 'UPSERT' ? 'INSERT' : enroll.action.secondary.contact
+    enroll.action.secondary.contact = enroll.action.secondary.contact === 'PENDING' ? 'SKIP' : enroll.action.secondary.contact
+    enroll.action.secondary.dataBase = enroll.action.secondary.contact === 'UPDATE' ? 'INSERT' : enroll.action.secondary.contact
+    enroll.action.secondary.spAction = enroll.action.secondary.member + '|' + enroll.action.secondary.contact + '|' + enroll.action.secondary.dataBase
+    enroll.action.secondary.spAction = enroll.action.superEnrollmentStatus !== 'CONTINUE' ? enroll.action.superEnrollmentStatus + '|' + enroll.action.superEnrollmentStatus + '|' + enroll.action.superEnrollmentStatus: enroll.action.secondary.spAction
+    DOX = '</FINAL: enroll.action By Confirmed>'
+    // return
+    enroll.action.termId = enroll.application.termId
+    enroll.action.familySeed = 'PENDING'//enroll.application.familySeed
+    // enroll.action.familySeed = enroll.application.familySeed
+    // enroll.action.primary = {}
+    enroll.action.primary.familyEmail = enroll.application.primary.familyEmail
+    enroll.action.primary.ppFirst = enroll.application.primary.ppFirst
+    enroll.action.primary.ppLast = enroll.application.ppLast
+    // enroll.action.student = {}
+    enroll.action.student.studentEmail = enroll.application.student.studentEmail
+    enroll.action.student.stFirst = enroll.application.student.stFirst
+    enroll.action.student.stPreferredFirst = enroll.application.student.stPreferredFirst
+    enroll.action.student.stLast = enroll.application.student.stLast
+    // enroll.action.secondary = {}
+    enroll.action.secondary.secondaryEmail = enroll.application.secondary.secondaryEmail
+    enroll.action.secondary.spFirst = enroll.application.secondary.spFirst
+    enroll.action.secondary.spLast = enroll.application.secondary.spLast
+    // ø </>
+    // ø </SAME AS APPLICATION: update if different>
+    // ø </action-actionEvaluation-final>
+    local.setItem('enrollObjectJSON', JSON.stringify(enroll))
+    local.setItem('lastDevelObject', JSON.stringify(develObject))
+
+    return enroll
+}
+// ø 202110_instantiateEnrollmentObject-END
+// ø <-------------------- </instantiateEnrollmentObject> -------------------->
+// ø <---------- </NEW> ---------->
+ 
 // ø <---------- </manually added Step Functions> ---------->
 export async function ppMemberPrepJSON() {
     let stepItemKeyThis = 'ppMemberPrepJSON';
@@ -5926,7 +6464,7 @@ export async function btnMultButtonParseJSON_click(event) {
 // ! ======================================================================================================================================
 // ! ======================================== <Enhanced Back-End Action-Value-Evaluation TESTING>  ========================================
 // ! ======================================================================================================================================
-
+// ø 202110_Enhanced_BackEnd_ActionValueEvaluation-START
 // ! ===================================               <Harvested from contactDevel.js>              ===================================
 
 export function populateOriginalActionValueButtons(){
@@ -5995,7 +6533,7 @@ export function populateNewActionValueButtons(action = {}){
     "termId": "202106",
     "familySeed": "PENDING"
 }
-action = actionObjectBottianiGraysonTEST
+// action = actionObjectBottianiGraysonTEST
     // ø </APPLY TEST OBJECT>
 
     // let responseString = `session.getItem('ppAction'): ${session.getItem('ppAction')}\n`;
@@ -6026,7 +6564,7 @@ action = actionObjectBottianiGraysonTEST
 }
 // ! ===================================               </Harvested from contactDevel.js>               ===================================
 
-
+// ø 202110_Enhanced_BackEnd_ActionValueEvaluation-END
 // ! ======================================================================================================================================
 // ! ======================================== </Enhanced Back-End Action-Value-Evaluation TESTING> ========================================
 // ! ======================================================================================================================================

@@ -448,8 +448,12 @@ export async function instantiateEnrollmentObject(familyId = 'STRING') {
     let unconfirmedString = 'UNCONFIRMED'
     let enroll = {}
     enroll.notes = []
-
-    /*doxNOTE*/DOX = `instantiateSimpleDemogfxObject(${familyId})`
+     
+    /*doxNOTE*/DOX = `instantiateSimpleDemogfxObject(${familyId}) INTO enroll.application = {}`
+    /*doxNOTE*/enroll.notes.push(DOX)
+    /*doxNOTE*/develObject.responseObject.notes.push(DOX)
+     
+    /*doxNOTE*/DOX = `ALL response into holder $w('#TXAREA') elements are being removed, rather use wixStorage instead`
     /*doxNOTE*/enroll.notes.push(DOX)
     /*doxNOTE*/develObject.responseObject.notes.push(DOX)
 
@@ -496,41 +500,8 @@ export async function instantiateEnrollmentObject(familyId = 'STRING') {
     enroll.application.secondary.spLast = local.getItem('spLast')
     // // ø </demogrfx-application-processed>
     
-    
-    
-    // let enroll = {}
-    // enroll.familyId = 'PENDING'
-    // enroll.familyIdStatus = 'PENDING'//'Staff-Eye-D' inferred by Data, precision here not necessary
-    // enroll.maxPreviousTermIdFamily = 201506
-    // enroll.maxPreviousTermIdStudent = 201506
-    // enroll.wixWebhookId = local.getItem('wixWebhookId')
-    // // ø <demogrfx-application-processed>
-    // // ø <TESTING>
-    // enroll.application = {}
-    // enroll.application.termId = local.getItem('termId')
-    // enroll.application.staffIdentifiedFamilyId = '2297c168-cc91-43d1-8864-eb1182967d35'
-    // enroll.application.familySeed = '2297c168cc9143d18864eb1182967d35'
-    // enroll.application.primary = {}
-    // enroll.application.primary.familyId = ''
-    // enroll.application.primary.familyEmail = 'jessikazmuda@gmail.com'
-    // enroll.application.primary.ppFirst = 'Jessika'
-    // enroll.application.primary.ppLast = 'Bottiani'
-    // enroll.application.student = {}
-    // enroll.application.student.studentId = 'INSTANTIATE'
-    // enroll.application.student.studentEmail = 'steamdiscoveryacademy+grayson2297@gmail.com'
-    // enroll.application.student.stFirst = 'Grayson'
-    // enroll.application.student.stPreferredFirst = 'Grayson'
-    // enroll.application.student.stLast = 'Wilkinson'
-    // enroll.application.secondary = {}
-    // enroll.application.secondary.secondaryId = 'EEMPTY'
-    // enroll.application.secondary.secondaryEmail = 'eempty'
-    // enroll.application.secondary.spFirst = 'James'
-    // enroll.application.secondary.spLast = 'Bottiani'
-    // // ø </TESTING>
-    // // ø </demogrfx-application-processed>
-
-      
-    /*doxNOTE*/DOX = `enroll = {} instantiated)`
+     
+    /*doxNOTE*/DOX = `enroll = {} instantiated`
     /*doxNOTE*/develObject.responseObject.notes.push(DOX)
       
     /*doxNOTE*/DOX = `enroll.appliocation = {} instantiated)`
@@ -539,15 +510,15 @@ export async function instantiateEnrollmentObject(familyId = 'STRING') {
     develObject.responseObject.enrollSOFAR = enroll
       
     // ø <familyPersonsObjectFRONTEND>
-    let familyPersonsObjectFRONTEND = await getFamilyPersonsObject_NotBackend(familyId)
+    // let familyPersonsObjectFRONTEND = await getFamilyPersonsObject_NotBackend(familyId)
       
-    /*doxNOTE*/DOX = `getFamilyPersonsObject_NotBackend(familyId)`
-    /*doxNOTE*/develObject.responseObject.notes.push(DOX)
+    // /*doxNOTE*/DOX = `getFamilyPersonsObject_NotBackend(familyId)`
+    // /*doxNOTE*/develObject.responseObject.notes.push(DOX)
     
-    /*doxNOTE*/DOX = `familyId,enroll.application.termId: ${typeof enroll.application.termId}: ${enroll.application.termId}`
-    /*doxNOTE*/develObject.responseObject.notes.push(DOX)
+    // /*doxNOTE*/DOX = `familyId,enroll.application.termId: ${typeof enroll.application.termId}: ${enroll.application.termId}`
+    // /*doxNOTE*/develObject.responseObject.notes.push(DOX)
       
-    develObject.responseObject.familyPersonsObjectFRONTEND = familyPersonsObjectFRONTEND
+    // develObject.responseObject.familyPersonsObjectFRONTEND = familyPersonsObjectFRONTEND
     // ø </familyPersonsObjectFRONTEND>
       
     // ø <familyPersonsObjectBACKEND>
@@ -566,7 +537,8 @@ export async function instantiateEnrollmentObject(familyId = 'STRING') {
     // return develObject
 
     local.setItem('familyPersonsObjectJSON', JSON.stringify(familyPersonsObject))
-    $w('#secondaryResponseTXTBX').value = JSON.stringify(familyPersonsObject,undefined,4)
+    // $w('#secondaryResponseTXTBX').value = JSON.stringify(familyPersonsObject,undefined,4)
+
     // await validateFamilyPersonsObject_NotBackend(familyPersonsObject)
     console.warn('≈308≈ validateFamilyPerson: COMMENTED OUT: OKAY: inside main getFamilyPersonsObject_NotBackend() ')
     DOX = '<MOVED TO JUST BELOW familyPersonObject RENDERED>'
@@ -582,10 +554,14 @@ export async function instantiateEnrollmentObject(familyId = 'STRING') {
     // enroll.familyIdStatus = 'PENDING'//'Staff-Eye-D' inferred by Data, precision here not necessary
     // enroll.maxPreviousTermIdFamily = 201506
     // enroll.maxPreviousTermIdStudent = 201506
+    let holderErrorBOOLEAN = true
+    let holderIdErrorString = `HOLDER`
     enroll.personData = {}
     enroll.confirmed = {}
     enroll.confirmed.familyId = familyPersonsObject.primaryPersonCount === 1 ? familyPersonsObject.familyId : unconfirmedString
-    enroll.confirmed.familyEmail = familyPersonsObject.primaryMemberObjectsById[enroll.confirmed.familyId]['personContactEmail']
+    holderErrorBOOLEAN = enroll.confirmed.familyId === unconfirmedString ? true : false
+    holderIdErrorString = `Family-ID Error`
+    enroll.confirmed.familyEmail = holderErrorBOOLEAN ? holderIdErrorString : familyPersonsObject.primaryMemberObjectsById[enroll.confirmed.familyId]['personContactEmail']
     enroll.confirmed.familyMaxTermId = familyPersonsObject.primaryTermIdMax
     enroll.confirmed.familyUpToDate = familyPersonsObject.primaryIsUpToDate
     enroll.confirmed.studentId = unconfirmedString
@@ -593,7 +569,9 @@ export async function instantiateEnrollmentObject(familyId = 'STRING') {
     enroll.confirmed.studentMaxTermId = 201506
     enroll.confirmed.studentUpToDate = false
     enroll.confirmed.secondaryId = familyPersonsObject.secondaryPersonCount === 1 ? familyPersonsObject.secondaryId : unconfirmedString
-    enroll.confirmed.secondaryEmail = familyPersonsObject.secondaryMemberObjectsById[enroll.confirmed.secondaryId]['personContactEmail']
+    holderErrorBOOLEAN = enroll.confirmed.secondaryId === unconfirmedString ? true : false
+    holderIdErrorString = `Secondary-ID Error`
+    enroll.confirmed.secondaryEmail = holderErrorBOOLEAN ? holderIdErrorString : familyPersonsObject.secondaryMemberObjectsById[enroll.confirmed.secondaryId]['personContactEmail']
     enroll.confirmed.secondaryMaxTermId = familyPersonsObject.secondaryTermIdMax
     enroll.confirmed.secondaryUpToDate = familyPersonsObject.secondaryIsUpToDate
     enroll.personData.primary = {}
@@ -978,6 +956,7 @@ export async function instantiateEnrollmentObject(familyId = 'STRING') {
     // ø </SAME AS APPLICATION: update if different>
     // ø </action-actionEvaluation-final>
     local.setItem('enrollObjectJSON', JSON.stringify(enroll))
+    local.setItem('lastDevelObject', JSON.stringify(develObject))
 
     return enroll
 }
@@ -1106,6 +1085,10 @@ export async function doSimpleDemogrfxAssignment(){
     local.setItem('spFirst', spFirst);
     local.setItem('spLast', spLast);
     local.setItem('comboName', enrollmentObject.family.student.name.studentParentCombo);
+
+    $w('#ppNameBTN').label = local.getItem('ppLast') + ',\n' + local.getItem('ppFirst')
+    $w('#stNameBTN').label = local.getItem('stLast') + ',\n' + local.getItem('stFirst')
+    $w('#spNameBTN').label = local.getItem('spLast') + ',\n' + local.getItem('spFirst')
     // ø </Simple Demogrfx Assignment to local-Storage upon OnRamp>
     // ø </added 20210909>
     // ø </...>

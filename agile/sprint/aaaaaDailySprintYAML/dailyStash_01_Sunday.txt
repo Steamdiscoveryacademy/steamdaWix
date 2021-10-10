@@ -8,15 +8,12 @@ $w('#HOLDER')
 https://webhook.site/191e8210-1ce6-4d05-8d72-e3a3a10cf0e4
 
 
-===========================================
-=====    Sunday September 26, 2021    =====
-===========================================
-===========================================
+==========================================
+=====     Sunday Octber 10, 2021     =====
+==========================================
+==========================================
 
-
-
-
-    console.groupCollapsed(`someFunction`)
-    console.log(`something`)
-    console.groupEnd()
-
+local.setItem('familyPersonsObjectJSON', JSON.stringify(familyPersonsObject))
+$w('#secondaryResponseTXTBX').value = JSON.stringify(familyPersonsObject,undefined,4)
+BETTER:
+$w('#secondaryResponseTXTBX').value = JSON.stringify(flocal.getItem('familyPersonsObjectJSON'),undefined,4)

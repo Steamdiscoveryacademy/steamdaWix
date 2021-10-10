@@ -87,7 +87,13 @@ wixLocalStorageLibraryObject.wixLocalStorageArray.push('familyPersonsObjectJSON'
 DOX = '2021-10-01T15:34:01|enrollObjectJSON|the result of instantiateEnrollmentObject(familyId) by Family ID';
 wixLocalStorageLibraryObject.admin.localAttributesDoxPPEQArray.push(DOX)
 wixLocalStorageLibraryObject.wixLocalStorageArray.push('enrollObjectJSON')
-
+ 
+DOX = '2021-10-10T10:15:01|lastDevelObject|the result of develObject Response during Devel (especially for Back-End)';
+wixLocalStorageLibraryObject.admin.localAttributesDoxPPEQArray.push(DOX)
+DOX = '2021-10-10T10:15:01|lastDevelObject|parallel to lastParamObject & lastResponseObject the suffix JSON is implied';
+wixLocalStorageLibraryObject.admin.localAttributesDoxPPEQArray.push(DOX)
+wixLocalStorageLibraryObject.wixLocalStorageArray.push('lastDevelObject')
+ 
 
 
 console.warn("wixLocalStorageLibraryObject: ");

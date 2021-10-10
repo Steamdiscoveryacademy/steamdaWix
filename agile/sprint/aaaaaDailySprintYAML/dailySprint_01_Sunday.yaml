@@ -1,39 +1,68 @@
 ---
-#?========================================================
-#¿=====       Sprint  Sunday September 26, 2021      =====
-#?========================================================
+#?==================================================
+#¿=====     Sprint  Sunday October 6, 2021     =====
+#?==================================================
 daily Commits:
       - postEnrollment: no
       - processWebhooks: no
       - enrollmentLandingPage: no
 ...
 ---
-Sunday Septermber 26:
-      - backend alphaTimeKey(): no
-      - backend getImagePath_ofRandomDiverseFace():
-            - migrate to OnDeck: yes
-            - YAML: yes
-            - Test in Canine-Consulting: no
-      - backend getImagePath_ofAlphabetAvatar(): 
-            - migrate to OnDeck: yes
-            - YAML: yes
-            - Test in Canine-Consulting: no
-      - backend intlDateTimeFormatByDateAliasFormatAlias(): 
-            - migrate to OnDeck: yes
-            - YAML: yes
-            - Test in Canine-Consulting: no
-      - Creation Date and AlphaKey INSTEAD for Student: no
-      - "_createdDate": "2021-03-16T18:10:57.830Z",
-      - work on and enhance intlDateTimeFormatByDateAliasFormatAlias() for above:
-            - cleanup, bug-killed, better devel-output: yes
-            - more data-aliases: no
-      - integrate Sprint => backEnd_20210715_lotsToOrganize: no
-      - recreate 'multiply' function Backend File TEMPLATE: yes
-      - recreate 'multiply' function for-each Backend File TEMPLATE:
-            - FILENAME:
-                  - Update Multiply Function
-                  - convert YAML to JSON manually (until API is found)
+Wednesday October 6:
+      - familyPersonsObject.jsw:
+            - Multiply Rewrite:
+                  - Rewrite in BackEnd: yes
+                  - YAML in my files: no
+                  - Multiply Test in Front-End: no
+                  - Multiply FULL-BOAT Front-End <==> Back-End: no
+            - Gather YAML Rewrite - IN Canine-Cnsulting:
+                  - test that you can Place a YAML File into the BackEnd: no #†
+                  - test that you can Read a YAML File into the BackEnd function: no #†
+                  - test that you can Return that YAML File Content with a BackEnd function: no #†
+                  - test that within the FronEnd function that calls the BackEnd function that you can write to local-setItem(): no #†
 ...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ---
 Brainstorm enrollmentstates UI:
       - States:

@@ -17,3 +17,8 @@ local.setItem('familyPersonsObjectJSON', JSON.stringify(familyPersonsObject))
 $w('#secondaryResponseTXTBX').value = JSON.stringify(familyPersonsObject,undefined,4)
 BETTER:
 $w('#secondaryResponseTXTBX').value = JSON.stringify(flocal.getItem('familyPersonsObjectJSON'),undefined,4)
+
+
+{{ form.components[3].hidden=false;
+form.components[2].hidden=true;
+form.components[1].hidden=true;}}

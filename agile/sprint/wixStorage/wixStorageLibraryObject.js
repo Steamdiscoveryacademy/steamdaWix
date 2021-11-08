@@ -94,6 +94,12 @@ DOX = '2021-10-10T10:15:01|lastDevelObject|parallel to lastParamObject & lastRes
 wixLocalStorageLibraryObject.admin.localAttributesDoxPPEQArray.push(DOX)
 wixLocalStorageLibraryObject.wixLocalStorageArray.push('lastDevelObject')
  
+DOX = '2021-11-07T21:18:01|termRegion|other term local,wixStorage values this makes sense to add';
+wixLocalStorageLibraryObject.admin.localAttributesDoxPPEQArray.push(DOX)
+DOX = '2021-10-10T10:15:01|termRegion|parallel to termId, termBegin, termEnd';
+wixLocalStorageLibraryObject.admin.localAttributesDoxPPEQArray.push(DOX)
+wixLocalStorageLibraryObject.wixLocalStorageArray.push('termRegion')
+ 
 
 
 console.warn("wixLocalStorageLibraryObject: ");

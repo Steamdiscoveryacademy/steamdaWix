@@ -12,6 +12,7 @@ import {courseKeyHuman} from 'public/utilityModule.js';
 import {datestampinventoryDocDbJSON} from 'public/inventoryDocDbJSON.js'
 import {getInventoryResponse} from 'public/inventoryDocDbJSON.js'
 import {timeCrunch} from 'public/timeCrunchModule.js'
+import {jsDaysOfWeekArrayToString} from 'public/timeCrunchModule.js'
 import {getEndDateFromSchedule_Start_Weeks_DaysOfWeek} from 'public/timeCrunchModule.js'
 import {sectionObjectEscapedJSON} from 'public/courseCatalogModule.js'
 import {getNatoPhoneticArrayObjectItem} from 'public/natoPhoneticTestData.js';
@@ -21,12 +22,14 @@ import {patchDrupalNode} from 'backend/apiDrupalModule.jsw';
 import {CONSTRUCT_apiObject_POSTbyKind} from 'public/apiObjectPrepModule.js';
 // import {apiObjectPrep} from 'public/apiObjectPrepModule.js';
 import {utilityDirectParseDataIntoTemplate} from 'public/apiObjectPrepModule.js';
-
+import { compareAsc, format } from 'date-fns'
+import {adminDispatch} from 'public/adminDispatch.js';
 
 // ø QUICK_LIST:
 // ø CREATE_NEW_COURSE
-// ø CREATE_NEW_COURSE_±2_Click_clearCourseForm
-// ø CREATE_NEW_COURSE_±1_resetCourseForm
+// ø CREATE_NEW_COURSE_±3_Click_clearCourseForm
+// ø CREATE_NEW_COURSE_±2_resetCourseForm
+// ø CREATE_NEW_COURSE_±1_completeCourseForm_SCRIPTS
 // ø 
 // ø CREATE_NEW_COURSE_00_Click_PreviewBTN
 // ø CREATE_NEW_COURSE_01_ValidateFormData
@@ -34,13 +37,6 @@ import {utilityDirectParseDataIntoTemplate} from 'public/apiObjectPrepModule.js'
 // ø CREATE_NEW_COURSE_02_collectAndCalculateData [CREATE_NEW_COURSE_02_catchAndDisplayError]
 // ø CREATE_NEW_COURSE_03_composeAndDisplayPreview
 // ø CREATE_NEW_COURSE_04_Click_PostBTN
-// • ø NOT A STEP: BUT DEP calculateDefaultSectionDEPRECATED (newCourseDataObject)
-// • ø NOT A STEP: BUT DEP collectAndCalculateDataORIG_DEP(courseStartDate, courseEndDate)
-// • ø CREATE_NEW_COURSE_05_buttonPostCourseSequence
-// • ø CREATE_NEW_COURSE_06_calculateNewCoursePOST
-// • ø ø CREATE_NEW_COURSE_06a_sectionObjectEscapedJSON
-// • ø CREATE_NEW_COURSE_07_newCoursePrePOST
-// ø RENAMED CREATE_NEW_COURSE_08_newCourseDrupalPOST
 // ø CREATE_NEW_COURSE_05_newCourseDrupalPOST
 
 
@@ -306,8 +302,8 @@ export async function develOnReady(){
 //==================================================       <Instantiate from Curricula Click>
  
 // ø <---------- <restCourseFormAll>  ---------->
-// ø CREATE_NEW_COURSE_±1_resetCourseForm
 function resetCourseFormAll(){
+// ø CREATE_NEW_COURSE_±2_resetCourseForm
 	let wID_unsetArray = ['#courseNameINPUT','#courseNameDisplayINPUT','#regionLocationINPUT','#regionLocationKeyINPUT']
 	for (let index = 0; index < wID_unsetArray.length; index++) {
 		const element = wID_unsetArray[index];
@@ -333,7 +329,9 @@ function resetCourseFormAll(){
 	$w('#daysOfWeekCBXGRP').value = ['MON','TUE','WED','THU','FRI']
 	// $w("#myCheckboxGroup").value = ["value1", "value2"];
 	session.setItem('lastResponseObject', '')
-	// TERMINUS
+	// ø TERMINUS CREATE_NEW_COURSE_±2_resetCourseForm
+	// ø ±1 course form scripts, but...
+	// ø NEXT-BTN_click =>  CREATE_NEW_COURSE_00_Click_PreviewBTN
 }
 // ø <---------- </restCourseFormAll> ---------->
  
@@ -378,7 +376,62 @@ export function instantiateNewCourseObject(clickedItemData){
 
 }
 // ø <---------- </On Click Curriculum Object> ---------->
-
+ 
+ 
+// ø <---------- <On Change Start-Time & Duration>  ---------->
+function onChangeStartTimeDurationRadioSettings(scriptName = 'STRING'){
+	let whatChanged = scriptName.substr(-7) === '_change' ? scriptName.substr(0, scriptName.length - 7) : scriptName
+	$w('#developerResponseTXTBX').value += 'NEW-CHANGE:\n===========\n' + whatChanged
+	let supportedWhatChangedArray = ['summerTmBlksRDBTNS','startTimeTMPKR','durationTMPKR']
+	if(!supportedWhatChangedArray.includes(whatChanged)){
+		return
+	}
+	let wIdWhatChanged = '#' + whatChanged
+	if(whatChanged === 'summerTmBlksRDBTNS'){
+		$w('#developerResponseTXTBX').value += '\nSINCE: Summner-Block is: '+ $w('#summerTmBlksRDBTNS').value
+		//Full Day,FULL; Morning,AM; Afternoon,PM
+		if($w('#summerTmBlksRDBTNS').value === 'FULL'){
+			$w('#developerResponseTXTBX').value += '\nSET: Start & Duration to: 9:00am - 8:00'
+			// $w("#myTimeInput").value = "16:30";
+			$w('#startTimeTMPKR').value = '09:00'
+			$w('#durationTMPKR').value = '08:00'
+		}
+		if($w('#summerTmBlksRDBTNS').value === 'AM'){
+			$w('#developerResponseTXTBX').value += '\nSET: Start & Duration to: 9:00am - 3:30'
+			// $w('#developerResponseTXTBX').value += '\nto: AM'
+			$w('#startTimeTMPKR').value = '09:00'
+			$w('#durationTMPKR').value = '03:30'
+		}
+		if($w('#summerTmBlksRDBTNS').value === 'PM'){
+			$w('#developerResponseTXTBX').value += '\nSET: Start & Duration to: 1:30pm - 3:30'
+			// $w('#developerResponseTXTBX').value += '\nto: PM'
+			$w('#startTimeTMPKR').value = '13:30'
+			$w('#durationTMPKR').value = '03:30'
+		}
+	}
+	if(whatChanged !== 'summerTmBlksRDBTNS'){
+		$w('#developerResponseTXTBX').value += `\nSINCE: StartTime: ${$w('#startTimeTMPKR').value} & Duration: ${$w('#durationTMPKR').value}`
+		$w('#summerTmBlksRDBTNS').value = ''
+		if($w('#startTimeTMPKR').value === '09:00:00.000' && $w('#durationTMPKR').value === '08:00:00.000'){
+			$w('#developerResponseTXTBX').value += '\nSET: Summner-Block to: FULL'
+			$w('#summerTmBlksRDBTNS').value = 'FULL'
+		}
+		if($w('#startTimeTMPKR').value === '09:00:00.000' && $w('#durationTMPKR').value === '03:30:00.000'){
+			$w('#developerResponseTXTBX').value += '\nSET: Summner-Block to: AM'
+			$w('#summerTmBlksRDBTNS').value = 'AM'
+		}
+		if($w('#startTimeTMPKR').value === '13:30:00.000' && $w('#durationTMPKR').value === '03:30:00.000'){
+			$w('#developerResponseTXTBX').value += '\nSET: Summner-Block to: PM'
+			$w('#summerTmBlksRDBTNS').value = 'PM'
+		}
+		if($w('#summerTmBlksRDBTNS').value.length === 0){
+			$w('#developerResponseTXTBX').value += '\nSET: Summner-Block to: EEMPTY'
+		}
+	}
+		$w('#developerResponseTXTBX').value += '\n...\n'
+}
+// ø <---------- </On Change Start-Time & Duration> ---------->
+ 
 // ø <---------- <Instantiate jsonDocDb for Locations>  ---------->
 export function appendLocationsJsonDocDb(newCourseDataObject){
 	let paramObject = {}
@@ -541,6 +594,8 @@ export function validateFormData(){
 // ø <---------- <catch & display ERROR>  ---------->
 export function catchAndDisplayError(ErrorString){
 	// ø TERMINUS CREATE_NEW_COURSE_02_catchAndDisplayError
+	// START OVER: NEXT-BTN_click => CREATE_NEW_COURSE_±3_Click_clearCourseForm
+	// ADJUST FORM: NEXT-BTN_click =>  CREATE_NEW_COURSE_00_Click_PreviewBTN
 	console.log(`ErrorString: `)
 	console.log(ErrorString)
 	$w('#previewErrorStringTXT').expand()
@@ -582,7 +637,7 @@ export function collectAndCalculateData(courseStartDate, courseEndDate){
 	newCourseApiObject.workingDataObject.field_curriculumid = Number(newCourseDataObject.curriculumId)
 	newCourseApiObject.workingDataObject.field_curriculumkey = newCourseDataObject.textKey
 	newCourseApiObject.workingDataObject.field_daysofweek = daysofweek
-	newCourseApiObject.workingDataObject.field_enrollexcptn = "NNULL"
+	// newCourseApiObject.workingDataObject.field_enrollexcptn = "NNULL"
 	newCourseApiObject.workingDataObject.field_gradelevelkey = gradeLevelKey
 	newCourseApiObject.workingDataObject.field_jcal = "NNULL"
 	newCourseApiObject.workingDataObject.field_locationkey = $w('#regionLocationKeyINPUT').value
@@ -636,6 +691,8 @@ export function composeAndDisplayPreview(workingDataObject){
 
 	// <COMPOSE_PREVIEW_TEXT>
 	delete workingDataObject.type
+	console.log(`before Preview Composition Code: workingDataObject: [object below`)
+	console.dir(workingDataObject)
 
 	let lineBeginText = ''
 	let paddedAttribute = 'PENDING'
@@ -652,22 +709,49 @@ export function composeAndDisplayPreview(workingDataObject){
 		//const attributeMaxLength = attributeArrayMaxLength[indexMaxLength]
 		maxLength = maxLength > attributeKeyString.length ? maxLength : attributeKeyString.length
 	}
-	console.log(`attributeArrayKeyString: `)
+	console.log(`attributeArrayKeyString: RAW:`)
 	console.dir(attributeArrayKeyString)
-	attributeArrayKeyString = ["Course Name Display","Promote","Sticky","Course Date End","Course Date Start","Course Key","Course Name","Course Name Abbrv","Curriculum ID","Curriculum Key","Days of Week","Grade Level Key","Location Key","Location Name","Section","Section Count","Term ID","Week ID"]
+	// attributeArrayKeyString = ["Course Name Display","Promote","Sticky","Course Date End","Course Date Start","Course Key","Course Name","Course Name Abbrv","Curriculum ID","Curriculum Key","Days of Week","Grade Level Key","Location Key","Location Name","Section","Section Count","Term ID","Week ID"]
+	attributeArrayKeyString = ["Course Name Display","Promote","Sticky","Course Date End","Course Date Start","Course Key","Course Name","Course Name Abbrv","Curriculum ID","Curriculum Key","Days of Week","Grade Level Key","jCal Expression","Location Key","Location Name","Section","Section Count","Term ID","Week ID"]
+	// • ¯\_(ツ)_/¯   ¯\__ (keep jCAL field as 'NNULL' - expect it to be more important) __/¯
+	let attributeArrayReOrderArray = [0,6,7,14,13,11,4,3,10,12,16,18,17,8,9,5,15,1,2]
+	let reOrderIndex = 0
+	// • ¯\_(ツ)_/¯   ¯\__ (keep jCAL field as 'NNULL' - expect it to be more important) __/¯
+	// ø <Transform Literals>
+	// ø ø <Transform Workings>
+	console.log(`<Transform Workings>`)
+	// let workingDaysOfWeek = workingDataObject.field_daysofweek.toString() + 'ZZZ'
+	let workingDaysOfWeek = jsDaysOfWeekArrayToString(workingDataObject.field_daysofweek)
+	console.log(`</Transform Workings>`)
+	// ø ø </Transform Workings>
+	let transformLiteralsObject = {}
+	transformLiteralsObject.field_jcal = 'jCal formatted schedule is pending'
+	transformLiteralsObject.field_daysofweek = workingDaysOfWeek
+	transformLiteralsObject.field_coursedatestart = format(new Date(workingDataObject.field_coursedatestart), 'EEE MMMMMM d, yyyy')
+	transformLiteralsObject.field_coursedateend = format(new Date(workingDataObject.field_coursedateend), 'EEE MMMMMM d, yyyy')
+	
+	// ø </Transform Literals>
+	// console.log(`attributeArrayKeyString: DISPLAY:`)
+	// console.dir(attributeArrayKeyString)
+	// • COURSES: ["title","promote","sticky","field_coursedateend","field_coursedatestart","field_coursekey","field_coursename","field_coursenameabbrv","field_curriculumid","field_curriculumkey","field_daysofweek","field_gradelevelkey","field_jcal","field_locationkey","field_locationname","field_sectionarray","field_sectioncount","field_termid","field_weekid"]
 	maxLength = paddingSide === 'LEFT' ? maxLength * -1 : maxLength
+	let valueString = 'STRING'
 	let padding = '                                                  '
 	let previewText = ''
 	//let attributeKeyString = 'PENDING'
 	let attributeArray = Object.keys(workingDataObject)
+	console.log(`≈673≈ attributeArray: [array below]`)
+	console.dir(attributeArray)
 	let noDisplayAttributeArray = ['promote','sticky']
 	for (let index = 0; index < attributeArray.length; index++){
-		attributeKeyString = attributeArrayKeyString[index]
-		const attribute = attributeArray[index]
+		reOrderIndex = attributeArrayReOrderArray[index]
+		attributeKeyString = attributeArrayKeyString[reOrderIndex]
+		const attribute = attributeArray[reOrderIndex]
+		valueString = typeof transformLiteralsObject[attribute] === 'string' ? transformLiteralsObject[attribute] : workingDataObject[attribute].toString()
 		if(!noDisplayAttributeArray.includes(attribute)){
 			paddedAttribute = paddingSide === 'LEFT' ? (padding + attributeKeyString).substr(maxLength) : (attributeKeyString + padding).substr(0,maxLength)
 			previewText += '\n ' + lineBeginText + ' ' + paddedAttribute + keyValueSeparatorText  
-			previewText += workingDataObject[attribute].toString()
+			previewText += valueString
 		}
 	}
 	// </COMPOSE_PREVIEW_TEXT>
@@ -677,7 +761,7 @@ export function composeAndDisplayPreview(workingDataObject){
 
 
 	// ø TERMINUS CREATE_NEW_COURSE_03_composeAndDisplayPreview
-	// ø NEXT-BTN_click CREATE_NEW_COURSE_04_Click_PostBTN
+	// ø NEXT-BTN_click => CREATE_NEW_COURSE_04_Click_PostBTN
 }
 // ø <---------- </Compose & Display Preview> ---------->
 
@@ -689,7 +773,6 @@ export function composeAndDisplayPreview(workingDataObject){
 
 // ø <---------- <Post Course to Drupal>  ---------->
 export async function newCourseDrupalPOST(newCourseDrupalObject = {}){
-    // ø RENAMED CREATE_NEW_COURSE_08_newCourseDrupalPOST
     // ø CREATE_NEW_COURSE_05_newCourseDrupalPOST
 	console.group(`newCourseDrupalPOST(newCourseDrupalObject)`)
 	// console.groupCollapsed(`newCourseDrupalPOST(newCourseDrupalObject)`)
@@ -699,7 +782,7 @@ export async function newCourseDrupalPOST(newCourseDrupalObject = {}){
 	let kludgeOptionsReturn = $w('#kludgeBooleanRADIO').value === 'true' ? true : false
 	// $w('#kludgeBooleanRADIO').value = 'false'
 	if (kludgeOptionsReturn) {
-        let kludgeExpires = new Date(2021,11,5)
+        let kludgeExpires = new Date(2021,12,5)
         let now = new Date()
         if(now > kludgeExpires){
             kludgeOptionsReturn = false
@@ -709,7 +792,7 @@ export async function newCourseDrupalPOST(newCourseDrupalObject = {}){
 
 	let newCourseApiObject = JSON.parse(session.getItem('lastResponseObject'))
 	if (kludgeOptionsReturn) {
-		newCourseApiObject.paramObject.requestBody = newCourseApiObject.paramObject.requestBody.replace('courses','course')
+		// newCourseApiObject.paramObject.requestBody = newCourseApiObject.paramObject.requestBody.replace('courses','course')
 	}
 
 	let responseObject = await postDrupalNode(newCourseApiObject.paramObject.requestBody, kludgeOptionsReturn)
@@ -745,8 +828,8 @@ export async function newCourseDrupalPOST(newCourseDrupalObject = {}){
 
 
 
-	// ø TERMINUS RENAMED CREATE_NEW_COURSE_08_newCourseDrupalPOST
 	// ø TERMINUS CREATE_NEW_COURSE_05_newCourseDrupalPOST
+	// ø ANOTHER COURSE: NEXT-BTN_click => CREATE_NEW_COURSE_±3_Click_clearCourseForm
 
 	// console.log(`only console.log() for now...`)
 	console.log(`groupEnd: newCourseDrupalPOST(newCourseDrupalObject)`)
@@ -811,7 +894,7 @@ export async function doKLUDGE(){
 		let natoPhoneticObject = getNatoPhoneticArrayObjectItem('Ozark')
 		// $w(wIdKldgeResponseTXTBX).value = JSON.stringify(natoPhoneticObject, undefined, 4)
 		
-		// {
+		{
 			KLUDGE = 'postDrupalNode(requestBodyThis)'
 			step = KLUDGE
 			iso = '2021-11-30T18:11:00'
@@ -834,7 +917,7 @@ export async function doKLUDGE(){
 				KLUDGE += '\n  - ' + descrThis
 			});
 			$w(wIdKldgeDoxTXTBX).value = KLUDGE
-		// }
+		}
 		let requestBodyThis = "{\n  \"type\":[{\"target_id\":\"page\"}],\n  \"title\":[{\"value\":\"{%title%}\"}],\n  \"body\":[{\"value\":\"{%body%}\"}]\n}"
 		requestBodyThis = requestBodyThis.replace('{%title%}',natoPhoneticObject.word)
 		requestBodyThis = requestBodyThis.replace('{%body%}',natoPhoneticObject.sentence)
@@ -874,6 +957,7 @@ export function btnblkDo4BTN_click(event) {
 }
 
 export function selectedNewCourseBTN_click(event) {
+	// ø CREATE_NEW_COURSE_±1_completeCourseForm_SCRIPTS
 	let scriptName = 'selectedNewCourseBTN_click'
 	let clickedItemData = processYesMaybeNoForSix(event,scriptName)
 	instantiateNewCourseObject(clickedItemData)
@@ -884,6 +968,7 @@ export function btnKLUDGEdeveloperTask_click(event) {
 }
 
 export function selectLocationBTN_click(event) {
+	// ø CREATE_NEW_COURSE_±1_completeCourseForm_SCRIPTS
 	if($w('#formLocationRPTR').collapsed === false){
 		$w('#formLocationRPTR').collapse()
 		return
@@ -916,21 +1001,17 @@ export function previewCourseBTN_click(event) {
 	// ø NEXT CREATE_NEW_COURSE_01_ValidateFormData
 	validateFormData()
 }
-
 export async function postCourseBTN_click(event) {
 	// ø CREATE_NEW_COURSE_04_Click_PostBTN
-	// • ø NEXT CREATE_NEW_COURSE_05_buttonPostCourseSequence
-	// await buttonPostCourseSequence()
-	// SKIP STEPS 5 - 6 and 7
-	// ø NEXT RENAMED CREATE_NEW_COURSE_08_newCourseDrupalPOST
     // ø NEXT CREATE_NEW_COURSE_05_newCourseDrupalPOST
+	$w('#postCourseBTN').hide()
 	await newCourseDrupalPOST()
 }
 
 export function clearCourseFormBTN_click(event) {
 	$w('#postCourseBTN').hide()
-	// ø CREATE_NEW_COURSE_±2_Click_clearCourseForm
-	// ø NEXT CREATE_NEW_COURSE_±1_resetCourseForm
+	// ø CREATE_NEW_COURSE_±3_Click_clearCourseForm
+	// ø NEXT CREATE_NEW_COURSE_±2_resetCourseForm
 	resetCourseFormAll()
 }
 
@@ -940,4 +1021,140 @@ export function getItemLastResponseObjectBTN_click(event) {
 
 export function kludgeDevelBTN_click(event) {
 	$w("#BannerStateBox").changeState("Four");
+}
+
+/**
+*	Adds an event handler that runs when the element is clicked.
+	[Read more](https://www.wix.com/corvid/reference/$w.ClickableMixin.html#onClick)
+*	 @param {$w.MouseEvent} event
+*/
+export function adminDispatchBTN_click(event) {
+	// ø doKludge JUST FOR adminDispatch iterations...
+	const wIdKldgeDoxTXTBX = '#developerTaskTXTBX'
+	const wIdKldgeResponseTXTBX = '#developerResponseTXTBX'
+	let KLUDGE = ''
+	let step = KLUDGE
+	let iso = '2008-01-20T12:00:00'
+	iso = '2021-12-07T09:37:00'
+	iso = '2021-12-07T10:53:00'
+	iso = '2021-12-07T11:22:00'
+	let descrArray = []
+	let responseObject = {}
+	let responseString = 'STRING'
+		if(iso === '2021-12-07T09:37:00'){
+			{
+				KLUDGE = 'adminDispatch()'
+				step = KLUDGE
+				iso = '2021-12-07T09:37:00'
+				descrArray = []
+				KLUDGE = 'only defuaul parameter'
+				descrArray.push(KLUDGE)
+				KLUDGE = `import {adminDispatch} from 'public/adminDispatch.js'`
+				descrArray.push(KLUDGE)
+				KLUDGE = `paramObject.call: 'undefined''`
+				descrArray.push(KLUDGE)
+			// 	KLUDGE = `[below always last]`
+				KLUDGE = iso
+				descrArray.push(KLUDGE)
+				KLUDGE = step + ':'
+				descrArray.forEach(descrThis => {
+					KLUDGE += '\n  - ' + descrThis
+				});
+				$w(wIdKldgeDoxTXTBX).value = KLUDGE
+			}
+			responseObject = adminDispatch()
+			responseString = JSON.stringify(responseObject, undefined, 4)
+		}
+		if(iso === '2021-12-07T10:53:00'){
+			{
+				KLUDGE = 'adminDispatch(paramObject)'
+				step = KLUDGE
+				iso = '2021-12-07T10:53:00'
+				descrArray = []
+				KLUDGE = 'paramObject = {}'
+				descrArray.push(KLUDGE)
+				KLUDGE = `import {adminDispatch} from 'public/adminDispatch.js'`
+				descrArray.push(KLUDGE)
+				KLUDGE = `paramObject.call: 'undefined''`
+				descrArray.push(KLUDGE)
+			// 	KLUDGE = `[below always last]`
+				KLUDGE = iso
+				descrArray.push(KLUDGE)
+				KLUDGE = step + ':'
+				descrArray.forEach(descrThis => {
+					KLUDGE += '\n  - ' + descrThis
+				});
+				$w(wIdKldgeDoxTXTBX).value = KLUDGE
+			}
+			let paramObject = {}
+			responseObject = adminDispatch(paramObject)
+			responseString = JSON.stringify(responseObject, undefined, 4)
+		}
+		if(iso === '2021-12-07T11:22:00'){
+			let paramObject = {}
+			paramObject.call = 'curriculumUpdatePeding'
+			paramObject.liveDrupalCurriculaISO = '2021-12-07T11:22:00'
+			paramObject.termCurriculaISO = '2021-12-07T11:22:00'
+			paramObject.wixSourcedJSONCurriculaISO = '2021-12-07T11:22:00'
+			{
+				KLUDGE = 'adminDispatch(paramObject)'
+				step = KLUDGE
+				iso = '2021-12-07T11:22:00'
+				descrArray = []
+				KLUDGE = 'paramObject: call: ${call}'
+				descrArray.push(KLUDGE)
+				KLUDGE = 'paramObject: liveDrupalCurriculaISO: ${liveDrupalCurriculaISO}'
+				descrArray.push(KLUDGE)
+				KLUDGE = 'paramObject: termCurriculaISO: ${termCurriculaISO}'
+				descrArray.push(KLUDGE)
+				KLUDGE = 'paramObject: wixSourcedJSONCurriculaISO: ${wixSourcedJSONCurriculaISO}'
+				descrArray.push(KLUDGE)
+				KLUDGE = `import {adminDispatch} from 'public/adminDispatch.js'`
+				descrArray.push(KLUDGE)
+				KLUDGE = `paramObject.call: 'undefined''`
+				descrArray.push(KLUDGE)
+			// 	KLUDGE = `[below always last]`
+				KLUDGE = iso
+				descrArray.push(KLUDGE)
+				KLUDGE = step + ':'
+				descrArray.forEach(descrThis => {
+					KLUDGE += '\n  - ' + descrThis
+				});
+				$w(wIdKldgeDoxTXTBX).value = KLUDGE
+			}
+			responseObject = adminDispatch(paramObject)
+			responseString = JSON.stringify(responseObject, undefined, 4)
+		}
+		$w(wIdKldgeResponseTXTBX).value = responseString
+		
+}
+
+/**
+*	Adds an event handler that runs when an input element's value
+ is changed.
+	[Read more](https://www.wix.com/corvid/reference/$w.ValueMixin.html#onChange)
+*	 @param {$w.Event} event let 
+*/
+export function summerTmBlksRDBTNS_change(event) {
+	onChangeStartTimeDurationRadioSettings('summerTmBlksRDBTNS_change')
+}
+
+/**
+*	Adds an event handler that runs when an input element's value
+ is changed.
+	[Read more](https://www.wix.com/corvid/reference/$w.ValueMixin.html#onChange)
+*	 @param {$w.Event} event
+*/
+export function startTimeTMPKR_change(event) {
+	onChangeStartTimeDurationRadioSettings('startTimeTMPKR_change')
+}
+
+/**
+*	Adds an event handler that runs when an input element's value
+ is changed.
+	[Read more](https://www.wix.com/corvid/reference/$w.ValueMixin.html#onChange)
+*	 @param {$w.Event} event
+*/
+export function durationTMPKR_change(event) {
+	onChangeStartTimeDurationRadioSettings('durationTMPKR_change')
 }

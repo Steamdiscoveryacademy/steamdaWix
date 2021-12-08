@@ -1,0 +1,92 @@
+{
+    "type": [
+        {
+            "target_id": "courses",
+            "target_type": "node_type"        }
+    ],
+    "status": [
+        {
+            "value": true
+        }
+    ],
+    "title": [
+        {
+            "value": "{%courseNameDisplay%}"
+        }
+    ],
+    "field_coursedateend": [
+        {
+            "value": "{%courseDateEnd%}"
+        }
+    ],
+    "field_coursedatestart": [
+        {
+            "value": "{%courseDateStart%}"
+        }
+    ],
+    "field_coursekey": [
+        {
+            "value": "{%courseKey%}"
+        }
+    ],
+    "field_coursename": [
+        {
+            "value": "{%courseName%}"
+        }
+    ],
+    "field_coursenameabbrv": [
+        {
+            "value": "{%courseNameAbbrv%}"
+        }
+    ],
+    "field_curriculumid": [
+        {
+            "value": {%curriculumId%}
+        }
+    ],
+    "field_curriculumkey": [
+        {
+            "value": "{%curriculumKey%}"
+        }
+    ],
+    "field_daysofweek": [
+        {
+            "value": "{%daysOfWeek%}"
+        }
+    ],
+    "field_gradelevelkey": [
+        {
+            "value": "{%gradeLevelKey%}"
+        }
+    ],
+    "field_locationkey": [
+        {
+            "value": "{%locationKey%}"
+        }
+    ],
+    "field_locationname": [
+        {
+            "value": "{%locationName%}"
+        }
+    ],
+    "field_sectioncount": [
+        {
+            "value": 1
+        }
+    ],
+    "field_sections": [
+        {
+            "value": "{%sections%}"
+        }
+    ],
+    "field_termid": [
+        {
+            "value": {%termId%}
+        }
+    ],
+    "field_weekid": [
+        {
+            "value": {%weekId%}
+        }
+    ]
+}

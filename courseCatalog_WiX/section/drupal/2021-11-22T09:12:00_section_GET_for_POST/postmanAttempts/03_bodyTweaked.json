@@ -1,0 +1,107 @@
+{
+    "type": [
+        {
+            "target_id": "courses",
+            "target_type": "node_type"        }
+    ],
+    "status": [
+        {
+            "value": true
+        }
+    ],
+    "title": [
+        {
+            "value": "Puppy Training 2 Spots Left!"
+        }
+    ],
+    "field_coursedateend": [
+        {
+            "value": "2021-07-09T11:59:00.000Z"
+        }
+    ],
+    "field_coursedatestart": [
+        {
+            "value": "2021-07-05T11:59:00.000Z"
+        }
+    ],
+    "field_coursekey": [
+        {
+            "value": "PUPPYTRNGu2328ceDULa"
+        }
+    ],
+    "field_coursename": [
+        {
+            "value": "Puppy Training"
+        }
+    ],
+    "field_coursenameabbrv": [
+        {
+            "value": "Puppy Training"
+        }
+    ],
+    "field_curriculumid": [
+        {
+            "value": 777
+        }
+    ],
+    "field_curriculumkey": [
+        {
+            "value": "CATCLUB"
+        }
+    ],
+    "field_daysofweek": [
+        {
+            "value": "1,2,3,4,5"
+        }
+    ],
+    "field_enrollexcptn": [
+        {
+            "value": "absoluteEnrollment=50"
+        },
+        {
+            "value": "min=25"
+        },
+        {
+            "value": "max=45"
+        },
+        {
+            "value": "waitlist=5"
+        }
+    ],
+    "field_gradelevelkey": [
+        {
+            "value": "GL02"
+        }
+    ],
+    "field_jcal": [],
+    "field_locationkey": [
+        {
+            "value": "DULb"
+        }
+    ],
+    "field_locationname": [
+        {
+            "value": "Morgan Park Mews"
+        }
+    ],
+    "field_sectioncount": [
+        {
+            "value": 1
+        }
+    ],
+    "field_sections": [
+        {
+            "value": "{\r\n        \"sectionId\": \"1\",\r\n        \"courseKey\": \"PUPPYTRNGu2328ceDULa\",\r\n        \"sectionKey\": \"PUPPYTRNGu2328ceDULa1\",\r\n        \"roomNumber\": \"103-A\",\r\n        \"roomTitle\": \"Crimmons Gym\",\r\n        \"roomAliases\": [\r\n            \"Crimmons Gym\",\r\n            \"West Gym\",\r\n            \"Girls Gym\",\r\n            \"Geraldine Crimmons Memorial Gym\"\r\n        ],\r\n        \"notes\": [\r\n            \"no non-athletic shoes allowed\",\r\n            \"only use hallway restrooms, not the locker rooms\"\r\n        ]\r\n    }"
+        }
+    ],
+    "field_termid": [
+        {
+            "value": 202123
+        }
+    ],
+    "field_weekid": [
+        {
+            "value": 202127
+        }
+    ]
+}

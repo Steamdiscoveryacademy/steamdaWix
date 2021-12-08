@@ -1,0 +1,87 @@
+{
+    "nid": [
+        {
+            "value": 3499
+        }
+    ],
+    "type": [
+        {
+            "target_id": "courses",
+            "target_type": "node_type",
+            "target_uuid": "928f9397-b228-4ff2-b713-50df78fe0f4c"
+        }
+    ],
+   "status": [
+        {
+            "value": true
+        }
+    ],
+    "title": [
+        {
+            "value": "Happy Dogs"
+        }
+    ],
+    "promote": [
+        {
+            "value": true
+        }
+    ],
+    "sticky": [
+        {
+            "value": false
+        }
+    ],
+    "path": [
+        {
+            "alias": null,
+            "pid": null,
+            "langcode": "en"
+        }
+    ],
+    "menu_link": [],
+    "field_curriculum_id": [
+        {
+            "value": 777
+        }
+    ],
+    "field_curriculumkey": [
+        {
+            "value": "HAPPYDOGS"
+        }
+    ],
+    "field_locationkey": [
+        {
+            "value": "DULa"
+        }
+    ],
+    "field_roomname": [
+        {
+            "value": "Breakout 3"
+        }
+    ],
+    "field_roomnumber": [
+        {
+            "value": "103-A"
+        }
+    ],
+    "field_sectionid": [
+        {
+            "value": 1
+        }
+    ],
+    "field_sectionkey": [
+        {
+            "value": "HAPPYDOGSu2323acDULa1"
+        }
+    ],
+    "field_termid": [
+        {
+            "value": 202123
+        }
+    ],
+    "field_weekid": [
+        {
+            "value": 202128
+        }
+    ]
+}

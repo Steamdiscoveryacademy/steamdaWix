@@ -5,7 +5,10 @@
  */
 // ø <---------- <getSourcedJSON_byKey UTILITY>  ---------->
 // pstEnrSevenNEW202108
-export async function getSourcedJSON_byKey(key) {
+export async function getSourcedJSON_byKey(key, returnAs = 'stringify') {
+    let supportedReturnAsValueArray = ['stringify','parse','raw']
+    returnAs = supportedReturnAsValueArray.includes(returnAs) ? returnAs : 'stringify'
+    // ø 'stringify' is default _only_ because it was the original, unparameterized, return state
     let now = new Date();
     let nowISO = now.toISOString();
     let recordSourcedJSON = await wixData.query("sourcedJSON")
@@ -14,7 +17,24 @@ export async function getSourcedJSON_byKey(key) {
         .descending("versionStampTxt")
         .limit(1)
         .find();
-    return JSON.stringify(recordSourcedJSON.items[0].jsonData);
+    switch (returnAs) {
+        case 'stringify':
+            return JSON.stringify(recordSourcedJSON.items[0].jsonData);
+            break;
+        case 'parse':
+            // ø 'parse' is same as 'raw' at creation, 
+            // ø  ø but expecting that there _will_ be a distinction with a difference later
+            return recordSourcedJSON.items[0].jsonData
+            break;
+        case 'raw':
+            return recordSourcedJSON.items[0].jsonData
+            break;
+            
+        default:
+            // ø default: IS 'stringify'
+            return JSON.stringify(recordSourcedJSON.items[0].jsonData);
+        break;
+    }
 }
 // ø <---------- </getSourcedJSON_byKey UTILITY> ---------->
 

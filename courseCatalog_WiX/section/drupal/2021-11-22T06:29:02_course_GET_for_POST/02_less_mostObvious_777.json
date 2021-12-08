@@ -1,0 +1,63 @@
+{
+    "type": [
+        {
+            "target_id": "courses",
+            "target_type": "node_type",
+        }
+    ],
+   "status": [
+        {
+            "value": true
+        }
+    ],
+    "title": [
+        {
+            "value": "Sad Cats"
+        }
+    ],
+    "field_curriculum_id": [
+        {
+            "value": 888
+        }
+    ],
+    "field_curriculumkey": [
+        {
+            "value": "SADCATS"
+        }
+    ],
+    "field_locationkey": [
+        {
+            "value": "DULb"
+        }
+    ],
+    "field_roomname": [
+        {
+            "value": "Clawing Room"
+        }
+    ],
+    "field_roomnumber": [
+        {
+            "value": "C-224"
+        }
+    ],
+    "field_sectionid": [
+        {
+            "value": 2
+        }
+    ],
+    "field_sectionkey": [
+        {
+            "value": "SADCATSu2327acDULb2"
+        }
+    ],
+    "field_termid": [
+        {
+            "value": 202123
+        }
+    ],
+    "field_weekid": [
+        {
+            "value": 202127
+        }
+    ]
+}

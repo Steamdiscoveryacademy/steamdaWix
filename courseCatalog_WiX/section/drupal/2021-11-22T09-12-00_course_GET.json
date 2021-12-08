@@ -1,0 +1,179 @@
+{
+    "nid": [
+        {
+            "value": 3473
+        }
+    ],
+    "uuid": [
+        {
+            "value": "6d2327df-c013-45ad-9307-169a9bb5c7ae"
+        }
+    ],
+    "vid": [
+        {
+            "value": 5648
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "type": [
+        {
+            "target_id": "courses",
+            "target_type": "node_type",
+            "target_uuid": "4bf6492d-da3c-473c-b42c-585b2e39e67d"
+        }
+    ],
+    "revision_timestamp": [
+        {
+            "value": "2021-11-22T14:53:22+00:00",
+            "format": "Y-m-d\\TH:i:sP"
+        }
+    ],
+    "revision_uid": [
+        {
+            "target_id": 2,
+            "target_type": "user",
+            "target_uuid": "b68c078f-630e-4e7e-9e5f-355a95be8252",
+            "url": "/user/2"
+        }
+    ],
+    "revision_log": [],
+    "status": [
+        {
+            "value": true
+        }
+    ],
+    "uid": [
+        {
+            "target_id": 2,
+            "target_type": "user",
+            "target_uuid": "b68c078f-630e-4e7e-9e5f-355a95be8252",
+            "url": "/user/2"
+        }
+    ],
+    "title": [
+        {
+            "value": "Puppy Training 2 Spots Left!"
+        }
+    ],
+    "created": [
+        {
+            "value": "2021-11-22T14:47:51+00:00",
+            "format": "Y-m-d\\TH:i:sP"
+        }
+    ],
+    "changed": [
+        {
+            "value": "2021-11-22T14:53:22+00:00",
+            "format": "Y-m-d\\TH:i:sP"
+        }
+    ],
+    "promote": [
+        {
+            "value": true
+        }
+    ],
+    "sticky": [
+        {
+            "value": false
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": true
+        }
+    ],
+    "revision_translation_affected": [
+        {
+            "value": true
+        }
+    ],
+    "path": [
+        {
+            "alias": null,
+            "pid": null,
+            "langcode": "en"
+        }
+    ],
+    "menu_link": [],
+    "field_coursedateend": [
+        {
+            "value": "2021-07-16T11:59:00.000Z"
+        }
+    ],
+    "field_coursedatestart": [
+        {
+            "value": "2021-07-12T11:59:00.000Z"
+        }
+    ],
+    "field_coursekey": [
+        {
+            "value": "PUPPYTRNGu2328ceDULa"
+        }
+    ],
+    "field_coursename": [
+        {
+            "value": "Puppy Training"
+        }
+    ],
+    "field_coursenameabbrv": [
+        {
+            "value": "Puppy Training"
+        }
+    ],
+    "field_curriculumid": [
+        {
+            "value": 777
+        }
+    ],
+    "field_curriculumkey": [
+        {
+            "value": "PUPPYTRNG"
+        }
+    ],
+    "field_daysofweek": [
+        {
+            "value": "1,2,3,4,5"
+        }
+    ],
+    "field_enrollexcptn": [],
+    "field_gradelevelkey": [
+        {
+            "value": "GL47"
+        }
+    ],
+    "field_jcal": [],
+    "field_locationkey": [
+        {
+            "value": "DULa"
+        }
+    ],
+    "field_locationname": [
+        {
+            "value": "Canal Barks"
+        }
+    ],
+    "field_sectioncount": [
+        {
+            "value": 1
+        }
+    ],
+    "field_sections": [
+        {
+            "value": "TBD"
+        }
+    ],
+    "field_termid": [
+        {
+            "value": 202123
+        }
+    ],
+    "field_weekid": [
+        {
+            "value": 202128
+        }
+    ]
+}

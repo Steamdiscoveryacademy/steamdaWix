@@ -1,0 +1,192 @@
+{
+    "nid": [
+        {
+            "value": 3473
+        }
+    ],
+    "uuid": [
+        {
+            "value": "6d2327df-c013-45ad-9307-169a9bb5c7ae"
+        }
+    ],
+    "vid": [
+        {
+            "value": 5650
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "type": [
+        {
+            "target_id": "courses",
+            "target_type": "node_type",
+            "target_uuid": "4bf6492d-da3c-473c-b42c-585b2e39e67d"
+        }
+    ],
+    "revision_timestamp": [
+        {
+            "value": "2021-11-22T15:21:50+00:00",
+            "format": "Y-m-d\\TH:i:sP"
+        }
+    ],
+    "revision_uid": [
+        {
+            "target_id": 2,
+            "target_type": "user",
+            "target_uuid": "b68c078f-630e-4e7e-9e5f-355a95be8252",
+            "url": "/user/2"
+        }
+    ],
+    "revision_log": [],
+    "status": [
+        {
+            "value": true
+        }
+    ],
+    "uid": [
+        {
+            "target_id": 2,
+            "target_type": "user",
+            "target_uuid": "b68c078f-630e-4e7e-9e5f-355a95be8252",
+            "url": "/user/2"
+        }
+    ],
+    "title": [
+        {
+            "value": "Puppy Training 2 Spots Left!"
+        }
+    ],
+    "created": [
+        {
+            "value": "2021-11-22T14:47:51+00:00",
+            "format": "Y-m-d\\TH:i:sP"
+        }
+    ],
+    "changed": [
+        {
+            "value": "2021-11-22T15:21:50+00:00",
+            "format": "Y-m-d\\TH:i:sP"
+        }
+    ],
+    "promote": [
+        {
+            "value": true
+        }
+    ],
+    "sticky": [
+        {
+            "value": false
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": true
+        }
+    ],
+    "revision_translation_affected": [
+        {
+            "value": true
+        }
+    ],
+    "path": [
+        {
+            "alias": null,
+            "pid": null,
+            "langcode": "en"
+        }
+    ],
+    "menu_link": [],
+    "field_coursedateend": [
+        {
+            "value": "2021-07-16T11:59:00.000Z"
+        }
+    ],
+    "field_coursedatestart": [
+        {
+            "value": "2021-07-12T11:59:00.000Z"
+        }
+    ],
+    "field_coursekey": [
+        {
+            "value": "PUPPYTRNGu2328ceDULa"
+        }
+    ],
+    "field_coursename": [
+        {
+            "value": "Puppy Training"
+        }
+    ],
+    "field_coursenameabbrv": [
+        {
+            "value": "Puppy Training"
+        }
+    ],
+    "field_curriculumid": [
+        {
+            "value": 777
+        }
+    ],
+    "field_curriculumkey": [
+        {
+            "value": "PUPPYTRNG"
+        }
+    ],
+    "field_daysofweek": [
+        {
+            "value": "1,2,3,4,5"
+        }
+    ],
+    "field_enrollexcptn": [
+        {
+            "value": "absoluteEnrollment=300"
+        },
+        {
+            "value": "min=150"
+        },
+        {
+            "value": "max=270"
+        },
+        {
+            "value": "waitlist=25"
+        }
+    ],
+    "field_gradelevelkey": [
+        {
+            "value": "GL47"
+        }
+    ],
+    "field_jcal": [],
+    "field_locationkey": [
+        {
+            "value": "DULa"
+        }
+    ],
+    "field_locationname": [
+        {
+            "value": "Canal Barks"
+        }
+    ],
+    "field_sectioncount": [
+        {
+            "value": 1
+        }
+    ],
+    "field_sections": [
+        {
+            "value": "{\r\n        \"sectionId\": \"1\",\r\n        \"courseKey\": \"PUPPYTRNGu2328ceDULa\",\r\n        \"sectionKey\": \"PUPPYTRNGu2328ceDULa1\",\r\n        \"roomNumber\": \"103-A\",\r\n        \"roomTitle\": \"Crimmons Gym\",\r\n        \"roomAliases\": [\r\n            \"Crimmons Gym\",\r\n            \"West Gym\",\r\n            \"Girls Gym\",\r\n            \"Geraldine Crimmons Memorial Gym\"\r\n        ],\r\n        \"notes\": [\r\n            \"no non-athletic shoes allowed\",\r\n            \"only use hallway restrooms, not the locker rooms\"\r\n        ]\r\n    }"
+        }
+    ],
+    "field_termid": [
+        {
+            "value": 202123
+        }
+    ],
+    "field_weekid": [
+        {
+            "value": 202128
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "courseName": "holder",
+    "curriculumId": 777,
+    "curriculumKey": "holder",
+    "locationKey": "holder",
+    "roomName": "TBD",
+    "roomNumber": "TBD1",
+    "sectionId": "1",
+    "sectionKey": "holder",
+    "termId": 777,
+    "weekId": 777,
+    "notes": [
+        "universalParamObjectBuilder RUN",
+        "appendRoomCore RUN"
+    ]
+}

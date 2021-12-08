@@ -1,0 +1,12 @@
+---
+Testing in doKludge_adminDispath():
+- NO PARAM (defaults to empty object):
+  - iso = '2021-12-07T09:37:00'
+  - assertion: response.negative.boolean === true
+  - status: pass
+- emptyObject:
+  - iso = '2021-12-07T10:53:00'
+  - assertion: response.negative.boolean === true
+  - status: pending
+
+...

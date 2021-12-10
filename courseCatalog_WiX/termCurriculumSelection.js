@@ -12,12 +12,7 @@ import {getJSON} from 'wix-fetch'; //FETCH || getDrupal || getJSON()
 
 $w.onReady(async function () {
 	assignStringsOnReady([1,2,3],[1,2,3])
-	// await develRandomOnReady()
-	// return
-	// await develResetOnReady()
-	// return
 	await onReadyCurriculaJSON()
-
 });
 // ø <---------- <getSourcedJSON_byKeyPageByPage UTILITY>  ---------->
 export async function getSourcedJSON_byKeyPageByPage(key) {
@@ -34,76 +29,6 @@ export async function getSourcedJSON_byKeyPageByPage(key) {
     return recordSourcedJSON.items[0].jsonData
 }
 // ø <---------- </getSourcedJSON_byKeyPageByPage UTILITY> ---------->
-
-export async function develRandomOnReady(){
-	let doRandomize = true
-	console.groupCollapsed(`develRandomOnReady()`)
-	// let termObject = JSON.parse(local.getItem('lastParamObject'))/*BIGBLEED*//*LINE_41*/
-	let termObject = JSON.parse(memory.getItem('memoryParamObject'))/*BIGBLEED*//*LINE_41*/
-	// ø <randomize Status>
-	console.groupCollapsed(`block: randomize Status`)
-	let randomValueArray = ['0','0','0','7','9']
-	let randomValueThis = '0'
-	console.log(`|BeginLoop|`)
-		for (let index = 0; index < termObject.curriculum.curricula.length; index++) {
-			const elementObject = termObject.curriculum.curricula[index];
-			if(doRandomize){
-				randomValueThis = randomValueArray[Math.floor(Math.random() * randomValueArray.length)]
-				console.log(`random: randomValueThis: ${randomValueThis}`)
-				randomValueThis = index === 0 ? '0' : randomValueThis
-				randomValueThis = index === 1 ? '7' : randomValueThis
-				randomValueThis = index === 2 ? '9' : randomValueThis
-				console.log(`forced: randomValueThis: ${randomValueThis}`)
-			}
-			elementObject.status = randomValueThis
-			console.log(`elementObject.status: ${elementObject.status}`)
-		}
-	console.log(`|EndLoop|`)
-	console.log(`randomized: termObject.curriculum.curricula`)
-	console.dir(termObject.curriculum.curricula)
-	// session.setItem('lastParamObject',JSON.stringify(termObject))/*BIGBLEED*//*LINE_63*/
-	// console.log(`session.getItem('lastParamObject'): [see below]`)/*BIGBLEED*//*LINE_64*/
-	// console.log(session.getItem('lastParamObject'))/*BIGBLEED*//*LINE_65*/
-	console.groupEnd()
-	// ø </randomize Status>
-	// $w('#txareaCodeBlock').value = JSON.stringify(termObject,undefined,4)
-	// $w('#currRepeaterSourceTXBX').value = JSON.stringify(termObject.curriculum.curricula,undefined,4)
-	// session.setItem('curriculaBuffer',JSON.stringify(termObject.curriculum.curricula))/*BIGBLEED*//*LINE_70*/
-	memory.setItem('memoryWorkingObject',JSON.stringify(termObject.curriculum.curricula))/*BIGBLEED*//*LINE_70*/
-	// console.log(`session.getItem('curriculaBuffer: [see below]')`)/*BIGBLEED*//*LINE_71*/
-	console.log(`memory.getItem('memoryWorkingObject: [see below]')`)/*BIGBLEED*//*LINE_71*/
-	// console.log(session.getItem('curriculaBuffer'))/*BIGBLEED*//*LINE_72*/
-	console.log(memory.getItem('memoryWorkingObject'))/*BIGBLEED*//*LINE_72*/
-	// session.setItem('curriculaBufferNOCHANGE',JSON.stringify(termObject.curriculum.curricula))/*BIGBLEED*//*LINE_73*/
-	memory.setItem('memoryWorkingBackupObject',JSON.stringify(termObject.curriculum.curricula))/*BIGBLEED*//*LINE_73*/
-	// await wixWindow.copyToClipboard($w('#txareaCodeBlock').value)
-	// $w('#whoWeAreANCHR').scrollTo()
-	console.groupEnd()
-	return //OOAAOC
-}
-export async function develResetOnReady(){
-	let doRandomize = false
-	console.groupCollapsed(`develResetOnReady()`)
-	// let termObject = JSON.parse(local.getItem('lastParamObject'))/*BIGBLEED*//*LINE_82*/
-	let termObject = JSON.parse(memory.getItem('memoryParamObject'))/*BIGBLEED*//*LINE_82*/
-	// ø <randomize Status>
-	console.groupCollapsed(`block: randomize Status`)
-	let randomValueArray = ['0','0','0','7','9']
-	let randomValueThis = '0'
-	console.log(`|BeginLoop|`)
-		for (let index = 0; index < termObject.curriculum.curricula.length; index++) {
-			const elementObject = termObject.curriculum.curricula[index];
-			elementObject.status = randomValueThis
-			console.log(`elementObject.status: ${elementObject.status}`)
-		}
-	console.log(`|EndLoop|`)
-	console.log(`reset: termObject.curriculum.curricula`)
-	console.dir(termObject.curriculum.curricula)
-	await wixData.save("term", termObject)
-	console.log(`await wixData.save("term", termObject)`)
-	console.groupEnd()
-	return
-}
 export async function onReadyCurriculaJSON(){
 	await load_reloadEntirePage()
 }
@@ -115,88 +40,38 @@ export async function load_reloadEntirePage(kind = 'ONREADY'){
 	$w('#lastTermNameTXT').text = 'Curricula Selection for: ' + session.getItem('lastTermName')
 	// FOR postCurriculaSelectionsUpdate()
 	if(kind === 'POSTUPDATE') {
-		console.groupCollapsed(`if(kind === 'POSTUPDATE'): if(${kind} === 'POSTUPDATE')`)
 		$w('#updatesPendingCONTBX').collapse()
 		let toUpdateCurriculumRecordId = session.getItem('termRecordId')
-		console.log(`toUpdateCurriculumRecordId: ${toUpdateCurriculumRecordId}`)
 		let toUpdateCurriculumRecord = await wixData.get("term",toUpdateCurriculumRecordId )
-		console.log(`current: toUpdateCurriculumRecord: [object below] `)
-		console.dir(toUpdateCurriculumRecord)
-		// session.setItem('lastParamObject', JSON.stringify(toUpdateCurriculumRecord,undefined,4))/*BIGBLEED*//*LINE_119*/
-		console.log(`current: toUpdateCurriculumRecord: [object below] `)
-		console.dir(toUpdateCurriculumRecord)
-		console.groupEnd()
-
 	}
 	// FOR onReadyCurriculaJSON()
-	// console.groupCollapsed(`onReadyCurriculaJSON()`)
-	// let termObject = JSON.parse(local.getItem('lastParamObject'))/*BIGBLEED*//*LINE_127*/
-	let termObject = JSON.parse(memory.getItem('memoryParamObject'))/*BIGBLEED*//*LINE_127*/
-	// console.log(`termObject: [object below]`)
-	// console.dir(termObject)
-	// console.log(`termObject._id: ${termObject._id}`)
-	// console.groupEnd()
+	let termObject = JSON.parse(memory.getItem('memoryParamObject'))
 	session.setItem('termRecordId',termObject._id)
-	console.log(`session.getItem('termRecordId') ${session.getItem('termRecordId')}`)
 	let curriculaBufferThis = JSON.stringify(termObject.curriculum.curricula)
-	console.log(`curriculaBufferThis.length: ${curriculaBufferThis.length}`)
 	if(curriculaBufferThis.length < 300){
-		// curriculaBufferThis = `[{"name":"Test Kitchen","textKey":"TESTKITCH","abbrvName":"Test Kitchen","isoLastUpdate":"2021-11-09T17:06:33+0000","status":"0","counter":82,"repeaterDataArrayIndex":81,"nid":"3363"},{"name":"Art of Theater","textKey":"THEATER","abbrvName":"Theater","isoLastUpdate":"2021-11-08T16:21:44+0000","status":"0","counter":83,"repeaterDataArrayIndex":82,"nid":"19"},{"name":"Toy Inventing and Woodworking","textKey":"TOYWOOD","abbrvName":"TOYINVENTWOOD","isoLastUpdate":"2021-11-09T17:06:45+0000","status":"0","counter":85,"repeaterDataArrayIndex":84,"nid":"3330"},{"name":"Weather","textKey":"WEATHER","abbrvName":"Weather","isoLastUpdate":"2021-11-09T17:07:17+0000","status":"0","counter":89,"repeaterDataArrayIndex":88,"nid":"1225"},{"name":"Wildlife and Dissection","textKey":"WILDDISC","abbrvName":false,"isoLastUpdate":"2021-11-09T17:09:31+0000","status":"0","counter":90,"repeaterDataArrayIndex":89,"nid":"1226"},{"name":"Woodworking","textKey":"WOODWORKING","abbrvName":"Woodw","isoLastUpdate":"2021-11-09T17:07:33+0000","status":"0","counter":95,"repeaterDataArrayIndex":94,"nid":"47"}]`
 		let sourcedJSON_drupalCurricula = await getSourcedJSON_byKeyPageByPage('drupalCurricula')//JSON.stringify(FIELD)
-		// console.log(`sourcedJSON_drupalCurricula.curricula: [array below]`)
-		// console.log(sourcedJSON_drupalCurricula)
-		// console.dir(sourcedJSON_drupalCurricula.curricula)
 		curriculaBufferThis = JSON.stringify(sourcedJSON_drupalCurricula.curricula)
 	}
-	// console.log(`curriculaBufferThis: [array below]`)
-	// console.dir(curriculaBufferThis)
-	// session.setItem('curriculaBuffer', curriculaBufferThis)/*BIGBLEED*//*LINE_146*/
-	memory.setItem('memoryWorkingObject', curriculaBufferThis)/*BIGBLEED*//*LINE_146*/
-	// session.setItem('curriculaBufferNOCHANGE',curriculaBufferThis)/*BIGBLEED*//*LINE_147*/
-	memory.setItem('memoryWorkingBackupObject',curriculaBufferThis)/*BIGBLEED*//*LINE_147*/
+	memory.setItem('memoryWorkingObject', curriculaBufferThis)
+	memory.setItem('memoryWorkingBackupObject',curriculaBufferThis)
 	loadAllCurriculaRepeaters()
 }
 export function loadAllCurriculaRepeaters(){
 	// ø <Tasks Upon any loadCurricularRepeater>
-	// if(session.getItem('curriculaBuffer') !== session.getItem('curriculaBufferNOCHANGE'))/*BIGBLEED*//*LINE_152*/{
-	if(memory.getItem('memoryWorkingObject') !== memory.getItem('memoryWorkingBackupObject'))/*BIGBLEED*//*LINE_152*/{
+	if(memory.getItem('memoryWorkingObject') !== memory.getItem('memoryWorkingBackupObject')){
 		$w('#updatesPendingCONTBX').expand()
 	}
 	// ø </Tasks Upon any loadCurricularRepeater>
-	// loadCurriculaRepeater()
 	// let simpleParamArray = ['maybe']
 	// let simpleParamArray = ['maybe','yes']
 	let simpleParamArray = ['maybe','yes','no']
-	// let activeRepeaterIdArray = ['#curriculaOndeckRPTR']
-	// let activeRepeaterIdArray = ['#curriculaOndeckRPTR','#curriculaSelectedRPTR']
-	// let activeRepeaterIdArray = ['#curriculaOndeckRPTR','#curriculaSelectedRPTR','#curriculaRejectedRPTR']
-	// let activeRepeaterStatusArray = ['0']
-	// let activeRepeaterStatusArray = ['0','7']
-	// let activeRepeaterStatusArray = ['0','7','9']
-	// for (let index = 0; index < activeRepeaterIdArray.length; index++) {
-	// 	const repeaterId = activeRepeaterIdArray[index];
-	// 	const status = activeRepeaterStatusArray[index];
-	// 	// loadCurriculaRepeater(repeaterId, status)
-	// 	loadCurriculaRepeater(repeaterId)
-	// }
 	let paginationObject = {}
 	let paginationObjectThis = {}
-	// let fullCurriculaObjectArray = JSON.parse(session.getItem('curriculaBuffer'))/*BIGBLEED*//*LINE_174*/
-	let fullCurriculaObjectArray = JSON.parse(memory.getItem('memoryWorkingObject'))/*BIGBLEED*//*LINE_174*/
-	// console.log(`fullCurriculaObjectArray: [array below]`)
-	// console.dir(fullCurriculaObjectArray)
-	// let KLUDGE = '<KLUDGE: Exit Early>'
-	// return
-
+	let fullCurriculaObjectArray = JSON.parse(memory.getItem('memoryWorkingObject'))
 	paginationObject.totalCountAllCurricula = fullCurriculaObjectArray.length
-	// let totalCount = 0
 	let paginationObjectArray = []
 	for (let index = 0; index < simpleParamArray.length; index++) {
-		// const repeaterId = simpleParamArray[index];
 		const simpleParam = simpleParamArray[index];
-		// const status = activeRepeaterStatusArray[index];
-		// loadCurriculaRepeater(repeaterId, status)
-		// loadCurriculaRepeater(repeaterId)
 		paginationObjectThis = loadCurriculaRepeater(simpleParam)
 		paginationObjectArray.push(paginationObjectThis)
 	}
@@ -204,22 +79,12 @@ export function loadAllCurriculaRepeaters(){
 	$w('#txareaCodeBlock').value = JSON.stringify(paginationObject,undefined,4)
 }
 export function loadCurriculaRepeater(simpleParam = 'default'){
-// export function loadCurriculaRepeater(repeaterId = 'default', status = '0'){
-	// console.group(`loadCurriculaRepeater(repeaterId = 'default', status = '0')`)
-	console.group(`loadCurriculaRepeater(${simpleParam} = 'default')`)
-	// console.log(`param: repeaterId: ${repeaterId}`)
-	// console.log(`param: status: ${status}`)
-
-	// let supportedRepeaterValues = ['maybe','yes','no']
-	// let supportedPrefixValues = ['ondeck','selected','rejected']
 	let supportedSimpleParam = ['maybe','yes','no']
-	// repeaterId = supportedRepeaterValues.includes(repeaterId) ? repeaterId : 'maybe'
 	simpleParam = supportedSimpleParam.includes(simpleParam) ? simpleParam : 'maybe'
 	let status = '777'
 	let repeaterId = 'repeaterIdHOLDER'
 	let paginationId = 'paginationIdHOLDER'
 	let prefixId = 'prefixIdHOLDER'
-	console.log(`supported: simpleParam: ${simpleParam}`)
 	let repeaterFinal2dArray = [['maybe','0','#curriculaOndeckRPTR','#curriculaOndeckPGNTN','ondeck'],['yes','7','#curriculaSelectedRPTR','#curriculaSelectedPGNTN','selected'],['no','9','#curriculaRejectedRPTR','#curriculaRejectedPGNTN','rejected']]
 
 	for (let index = 0; index < supportedSimpleParam.length; index++) {
@@ -234,29 +99,7 @@ export function loadCurriculaRepeater(simpleParam = 'default'){
 		
 	}
 
-	// repeaterFinal2dArray.forEach(kvp => {
-	// 	const key = kvp[0]
-	// 	if(key === simpleParam){
-	// 		status = kvp[1]
-	// 		repeaterId = kvp[2]
-	// 		prefixId = kvp[3]
-	// 	}
-	// });
-	console.log(`final: simpleParam: ${simpleParam}`)
-	console.log(`final: status: ${status}`)
-	console.log(`final: repeaterId: ${repeaterId}`)
-	console.log(`final: paginationId: ${paginationId}`)
-	console.log(`final: prefixId: ${prefixId}`)
-	// return
-	
-	// let supportedStatusrValues = ['0','7','9']
-	// status = supportedStatusrValues.includes(status) ? status : '0'
-	// console.log(`supported: status: ${status}`)
-
-	// let fullCurriculaObjectArray = JSON.parse(session.getItem('curriculaBuffer'))/*BIGBLEED*//*LINE_245*/
-	let fullCurriculaObjectArray = JSON.parse(memory.getItem('memoryWorkingObject'))/*BIGBLEED*//*LINE_245*/
-	console.log(`fullCurriculaObjectArray: [array below]`)
-	console.dir(fullCurriculaObjectArray)
+	let fullCurriculaObjectArray = JSON.parse(memory.getItem('memoryWorkingObject'))
 	let curriculaObjectArray = [];
 	let totalCount = 0
 	let count = 0
@@ -280,12 +123,10 @@ export function loadCurriculaRepeater(simpleParam = 'default'){
 	let DEVEL_MAX = 6
 	let done = false
 	fullCurriculaObjectArray.forEach(elementObject => {
-		// done = index_id >= DEVEL_MAX ? true : false
 		done = count >= pageItemCount ? true : done
 		if(elementObject.status === status){
 			totalCount++
 			if(!done){
-				// elementObject._id = index_id.toString()
 				elementObject._id = elementObject.nid.toString()
 				curriculaObjectArray.push(elementObject)
 				count++
@@ -294,37 +135,15 @@ export function loadCurriculaRepeater(simpleParam = 'default'){
 	});
 	paginationObject.totalCount = totalCount
 	paginationObject.pageItemCountThisPage = count
-	console.log(`curriculaObjectArray: `)
-	console.dir(curriculaObjectArray)
 
-
-
-
-	// return
-	console.groupCollapsed(`rptr load iteration: repeaterId: ${repeaterId}`)
 	$w(repeaterId).data = curriculaObjectArray;
-	console.log(`$w(repeaterId).data: $w(${repeaterId}).data:`)
-	console.dir($w(repeaterId).data)
 	let keyTXTid = '#'+ prefixId + 'KeyTXT'
 	let nameTXTid = '#'+ prefixId + 'NameTXT'
 	$w(repeaterId).onItemReady( ($curriculumElement, curriculumElementData, index) => {
-		// $courseElement._id = index.toString();
 		$curriculumElement(keyTXTid).text = curriculumElementData.textKey;
 		$curriculumElement(nameTXTid).text = curriculumElementData.name;
-		// $courseElement('#btnCourseAbbrvButton').label = courseElementData.courseAbrrv;
-		// // $courseElement('#imgCourse').src = courseElementData.image;
-		// $courseElement('#txtWeek').text = courseElementData.week;
-		// $courseElement('#txtGradeLevel').text = courseElementData.gradeLevel;
-		// // $courseElement('#txtLocation').html = `<span style="${elementStyle}"><a href="${courseElementData.wikiBreed}" target="_blank">${courseElementData.visibleBreed}</a></span>`;
-		// $courseElement('#txtLocation').text = courseElementData.location;
-		// $courseElement('#txtId').text = `[${courseElementData._id}]`;
 	});
 
-	console.log(`groupEnd: rptr load iteration: repeaterId: ${repeaterId}`)
-	console.groupEnd()
-
-	console.log(`groupEnd: loadCurriculaRepeater(${simpleParam} = 'default')`)
-	console.groupEnd()
 	return paginationObject
 }
 //====================================================================================================
@@ -336,16 +155,10 @@ export function loadCurriculaRepeater(simpleParam = 'default'){
 //====================================================================================================
 //====================================================================================================
 export function processYesMaybeNoForSix(event,scriptName){
-	console.group(`processYesMaybeNoForSix(scriptname)`)
-	// console.log(`$item:`)
-	// console.dir($item)
-	console.log(`scriptName: ${scriptName}`)
 	scriptName = scriptName.toLowerCase()
-	console.log(`scriptName: ${scriptName}`)
 	let repeaterId = scriptName.includes('ondeck') ? 'ondeck' : 'pending'
 	repeaterId = scriptName.includes('selected') ? 'selected' : repeaterId
 	repeaterId = scriptName.includes('rejected') ? 'rejected' : repeaterId
-	console.log(`inferred from scriptName: repeaterId: ${repeaterId}`)
 	let repeaterFinal2dArray = [['ondeck','#curriculaOndeckRPTR'],['selected','#curriculaSelectedRPTR'],['rejected','#curriculaRejectedRPTR']]
 	repeaterFinal2dArray.forEach(kvp => {
 		const key = kvp[0]
@@ -353,35 +166,18 @@ export function processYesMaybeNoForSix(event,scriptName){
 			repeaterId = kvp[1]
 		}
 	});
-	console.log(`final: repeaterId: ${repeaterId}`)
 	let statusChangeTo = scriptName.includes('yes') ? '7' : 'pending'
 	statusChangeTo = scriptName.includes('maybe') ? '0' : statusChangeTo
 	statusChangeTo = scriptName.includes('no') ? '9' : statusChangeTo
-	console.log(`inferred from scriptName: statusChangeTo: ${statusChangeTo}`)
 
 	const data = $w(repeaterId).data;
-	console.log(`data`)
-	console.dir(data)
     let clickedItemData = data.find(item => item._id === event.context.itemId);
-	console.log(`clickedItemData:`)
-	console.dir(clickedItemData)
 	let bufferIndex = clickedItemData.repeaterDataArrayIndex;
-	console.log(`bufferIndex: ${bufferIndex}`)
-	// let toModifyBuffer = JSON.parse(session.getItem('curriculaBuffer'))/*BIGBLEED*//*LINE_358*/
-	let toModifyBuffer = JSON.parse(memory.getItem('memoryWorkingObject'))/*BIGBLEED*//*LINE_358*/
-	console.log(`current: toModifyBuffer:`)
-	console.dir(toModifyBuffer)
+	let toModifyBuffer = JSON.parse(memory.getItem('memoryWorkingObject'))
 	toModifyBuffer[bufferIndex].status = statusChangeTo
-	console.log(`ready for UPDATE: toModifyBuffer:`)
-	console.dir(toModifyBuffer)
-	// session.setItem('curriculaBuffer', JSON.stringify(toModifyBuffer))/*BIGBLEED*//*LINE_364*/
-	memory.setItem('memoryWorkingObject', JSON.stringify(toModifyBuffer))/*BIGBLEED*//*LINE_364*/
+	memory.setItem('memoryWorkingObject', JSON.stringify(toModifyBuffer))
 
 	loadAllCurriculaRepeaters()
-
-
-
-	console.groupEnd()
 }
 //====================================================================================================
 //==============================       </Process CurriculaRepeater>     ==============================
@@ -391,24 +187,14 @@ export function processYesMaybeNoForSix(event,scriptName){
 //==============================      <Post Curricula Selections Update>      ========================
 //====================================================================================================
 export async function postCurriculaSelectionsUpdate(){
-	console.groupCollapsed(`postCurriculaSelectionsUpdate()`)
-	// let updateCurricula = JSON.parse(session.getItem('curriculaBuffer'))/*BIGBLEED*//*LINE_381*/
-	let updateCurricula = JSON.parse(memory.getItem('memoryWorkingObject'))/*BIGBLEED*//*LINE_381*/
-	console.log(`updateCurricula: [object below] `)
-	console.dir(updateCurricula)
+	let updateCurricula = JSON.parse(memory.getItem('memoryWorkingObject'))
 	let toUpdateCurriculumRecordId = session.getItem('termRecordId')
-	console.log(`toUpdateCurriculumRecordId: ${toUpdateCurriculumRecordId}`)
 	let toUpdateCurriculumRecord = await wixData.get("term",toUpdateCurriculumRecordId )
-	console.log(`current: toUpdateCurriculumRecord: [object below] `)
-	console.dir(toUpdateCurriculumRecord)
 	toUpdateCurriculumRecord.curriculum.curricula = updateCurricula
-	console.log(`up-to-date: toUpdateCurriculumRecord: [object below] `)
-	console.dir(toUpdateCurriculumRecord)
 	await wixData.save("term", toUpdateCurriculumRecord)
-	console.groupEnd()
 	// ø <cleanup>
-	// session.setItem('curriculaBuffer','')/*BIGBLEED*//*LINE_395*/
-	memory.setItem('memoryWorkingObject','')/*BIGBLEED*//*LINE_395*/
+	// session.setItem('curriculaBuffer','')
+	memory.setItem('memoryWorkingObject','')
 	// ø </cleanup>
 
 	wixLocation.to("/term-building")
@@ -434,15 +220,8 @@ export function btnblkToggle2BTN_click(event) {
 	btnblkToggleBTN_click('btnblkToggle2BTN_click(event)')
 }
 
-/**
-*	Adds an event handler that runs when the element is clicked.
-	[Read more](https://www.wix.com/corvid/reference/$w.ClickableMixin.html#onClick)
-*	 @param {$w.MouseEvent} event
-*/
 export function btnblkToggle3BTN_click(event) {
 	btnblkToggleBTN_click('btnblkToggle3BTN_click(event)')
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-	// Add your code for this event here: 
 }
 
 export function btnblkDo1BTN_click(event) {
@@ -453,15 +232,8 @@ export function btnblkDo2BTN_click(event) {
 	btnblkDoBTN_click('btnblkDo2BTN_click(event)')
 }
 
-/**
-*	Adds an event handler that runs when the element is clicked.
-	[Read more](https://www.wix.com/corvid/reference/$w.ClickableMixin.html#onClick)
-*	 @param {$w.MouseEvent} event
-*/
 export function btnblkDo3BTN_click(event) {
 	btnblkDoBTN_click('btnblkDo3BTN_click(event)')
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-	// Add your code for this event here: 
 }
 //====================================================================================================
 //=================            SIX Yes-Maybe-No Curricula SelectionButtons           =================
@@ -478,158 +250,60 @@ export function ondeckYesBTN_DELETEME_click(event) {
 export function ondeckYesBTN_click(event) {
 	let scriptName = 'ondeckYesBTN_click(event)'
 	processYesMaybeNoForSix(event,scriptName)
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-	// Add your code for this event here: 
 }
 
 export function ondeckNoBTN_click(event) {
 	let scriptName = 'ondeckNoBTN_click(event)'
 	processYesMaybeNoForSix(event,scriptName)
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-	// Add your code for this event here: 
 }
 
 export function rejectedYesBTN_click(event) {
 	let scriptName = 'rejectedYesBTN_click(event)'
 	processYesMaybeNoForSix(event,scriptName)
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-	// Add your code for this event here: 
 }
 
 export function rejectedMaybeBTN_click(event) {
 	let scriptName = 'rejectedMaybeBTN_click(event)'
 	processYesMaybeNoForSix(event,scriptName)
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-	// Add your code for this event here: 
 }
 
 export function selectedMaybeBTN_click(event) {
 	let scriptName = 'selectedMaybeBTN_click(event)'
 	processYesMaybeNoForSix(event,scriptName)
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-	// Add your code for this event here: 
 }
 
 export function selectedNoBTN_click(event) {
 	let scriptName = 'selectedNoBTN_click(event)'
 	processYesMaybeNoForSix(event,scriptName)
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-	// Add your code for this event here: 
 }
 
 //====================================================================================================
 //=================            SIX Yes-Maybe-No Curricula SelectionButtons           =================
 //====================================================================================================
 
-
-/**
-*	Adds an event handler that runs when the element is clicked.
-	[Read more](https://www.wix.com/corvid/reference/$w.ClickableMixin.html#onClick)
-*	 @param {$w.MouseEvent} event
-*/
 export async function updatesTermCurriculaBTN_click(event) {
 	await postCurriculaSelectionsUpdate()
 }
 
-/**
-*	Adds an event handler that runs when the element is clicked.
-	[Read more](https://www.wix.com/corvid/reference/$w.ClickableMixin.html#onClick)
-*	 @param {$w.MouseEvent} event
-*/
 export function stateRejectedTabBTN_click(event) {
 	$w("#CurriculaStateMBOX").changeState("Rejected");
 	$w("#CurriculaPaginationMBOX").changeState("RejectedPagination");
 	$w("#stateOndeckTabBTN").enable()
 	$w("#stateRejectedTabBTN").disable()
-
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-	// Add your code for this event here: 
 }
 
-/**
-*	Adds an event handler that runs when the element is clicked.
-	[Read more](https://www.wix.com/corvid/reference/$w.ClickableMixin.html#onClick)
-*	 @param {$w.MouseEvent} event
-*/
 export function stateOndeckTabBTN_click(event) {
 	$w("#CurriculaStateMBOX").changeState("OnDeck");
 	$w("#CurriculaPaginationMBOX").changeState("OnDeckPagination");
 	$w("#stateOndeckTabBTN").disable()
 	$w("#stateRejectedTabBTN").enable()
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-	// Add your code for this event here: 
 }
 
-
-/**
-*	Adds an event handler that runs when the element is clicked.
-	[Read more](https://www.wix.com/corvid/reference/$w.ClickableMixin.html#onClick)
-*	 @param {$w.MouseEvent} event
-*/
 export function button14_click(event) {
 	$w("#BannerStateBox").changeState('Three');
  
 }
 
-/**
-*	Adds an event handler that runs when the element is clicked.
-	[Read more](https://www.wix.com/corvid/reference/$w.ClickableMixin.html#onClick)
-*	 @param {$w.MouseEvent} event
-*/
 export function getLastParamObjectBTN_click(event) {
-	// $w('#developerResponseTXTBX').value = local.getItem('lastParamObject')/*BIGBLEED*//*LINE_564*/
-	$w('#developerResponseTXTBX').value = memory.getItem('memoryParamObject')/*BIGBLEED*//*LINE_564*/
-	// console.log(`lastParamObject: [something below: log then dir]`)
-	// console.log(lastParamObject)
-	// console.dir(lastParamObject)
-}
-
-/**
-*	Adds an event handler that runs when the element is clicked.
-	[Read more](https://www.wix.com/corvid/reference/$w.ClickableMixin.html#onClick)
-*	 @param {$w.MouseEvent} event
-*/
-export async function getFaumFormioBTN_click(event) {
-	// console.groupCollapsed(`getFaumFormioBTN_click(event)`)
-	console.group(`getFaumFormioBTN_click(event)`)
-	let kludgeBoolean = $w('#kludgeBooleanRADIO').value === 'true' ? true : false
-	console.log(`kludgeBoolean: ${kludgeBoolean}`)
-	// let gizmo = 'fetch'
-	// let gizmo = 'getJSON'
-	let gizmo = 'apiDrupalModule'
-	console.log(`gizmo: ${gizmo}`)
-	let endpoint = `https://live-steamda.pantheonsite.io/fauxformio?_format=json`
-	if (gizmo === 'apiDrupalModule') {
-		let uri = `fauxformio`
-		console.log(`gizmo: ${gizmo} : uri: ${uri}`)
-		// let kludgeBoolean = $w('#kludgeBooleanRADIO').vallue === 'true' ? true : false
-		let responseObject = await getDrupalURI(uri,false,kludgeBoolean)
-		$w('#developerResponseTXTBX').value = JSON.stringify(responseObject,undefined,4)
-	}
-	if(gizmo === 'fetch'){
-		let optionsThese = {}
-		optionsThese.method = 'get'
-		optionsThese.mode = "no-cors"
-
-	// <fetch-primise>
-	fetch(endpoint, { method: 'get', mode: 'no-cors' })
-		.then( (httpResponse) => {
-			if (httpResponse.ok) {
-			return httpResponse.json();
-			} else {
-			return Promise.reject("Fetch did not succeed");
-			}
-		} )
-		.then(json => console.log(json.someKey))
-		.catch(err => console.log(err));
-	// </fetch-primise>
-	}
-	if (gizmo === 'getJSON') {
-		getJSON(endpoint,{ method: 'get', mode: 'no-cors' })
-		.then(json => console.log(json))
-		.catch(err => console.log(err));
-	}
-
-	console.log(`groupEnd: getFaumFormioBTN_click(event)`)
-	console.groupEnd()
+	$w('#developerResponseTXTBX').value = memory.getItem('memoryParamObject')
 }

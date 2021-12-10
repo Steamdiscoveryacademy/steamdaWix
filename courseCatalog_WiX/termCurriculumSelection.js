@@ -14,6 +14,35 @@ $w.onReady(async function () {
 	assignStringsOnReady([1,2,3],[1,2,3])
 	await onReadyCurriculaJSON()
 });
+//==========================================================================================
+//==================================================              <OnReady Called Functions>
+export async function onReadyCurriculaJSON(){
+	await load_reloadEntirePage()
+}
+function setUpOnReady(){
+	
+}
+
+function cleanUpOnReady(){
+	// Harmless to call _AS_ OnReady(), but really to call before Redirecting after change
+	// ø <Memory Standard WiX-Storage>
+	memory.setItem('memoryParamObject','')
+	memory.setItem('memoryResponseObject','')
+	memory.setItem('memoryWorkingObject','')
+	memory.setItem('memoryWorkingBackupObject','')
+	// ø </Memory Standard WiX-Storage>
+	// ø <Memory Semi-Esoteric WiX-Storage>
+	memory.setItem('memoryReversePointingObject','')
+	memory.setItem('memoryWorkingObject_AFFIRMATIVE','')
+	memory.setItem('memoryWorkingObject_NEGATIVE','')
+	memory.setItem('memoryWorkingObject_PENDING','')
+	// ø </Memory Semi-Esoteric WiX-Storage>
+	console.log(`cleanUpOnReady(): was CALLED`)
+}
+
+//==================================================             </OnReady Called Functions>
+//==========================================================================================
+
 // ø <---------- <getSourcedJSON_byKeyPageByPage UTILITY>  ---------->
 export async function getSourcedJSON_byKeyPageByPage(key) {
     // pstEnrSeven202108UTILITY SHORT
@@ -29,9 +58,6 @@ export async function getSourcedJSON_byKeyPageByPage(key) {
     return recordSourcedJSON.items[0].jsonData
 }
 // ø <---------- </getSourcedJSON_byKeyPageByPage UTILITY> ---------->
-export async function onReadyCurriculaJSON(){
-	await load_reloadEntirePage()
-}
 //====================================================================================================
 //==============================        <loadCurriculaRepeater>         ==============================
 //====================================================================================================
@@ -54,30 +80,171 @@ export async function load_reloadEntirePage(kind = 'ONREADY'){
 	}
 	memory.setItem('memoryWorkingObject', curriculaBufferThis)
 	memory.setItem('memoryWorkingBackupObject',curriculaBufferThis)
-	loadAllCurriculaRepeaters()
+	instantiatePageFromTermRecord()
 }
-export function loadAllCurriculaRepeaters(){
-	// ø <Tasks Upon any loadCurricularRepeater>
-	if(memory.getItem('memoryWorkingObject') !== memory.getItem('memoryWorkingBackupObject')){
-		$w('#updatesPendingCONTBX').expand()
-	}
-	// ø </Tasks Upon any loadCurricularRepeater>
-	// let simpleParamArray = ['maybe']
-	// let simpleParamArray = ['maybe','yes']
-	let simpleParamArray = ['maybe','yes','no']
-	let paginationObject = {}
-	let paginationObjectThis = {}
+export function instantiatePageFromTermRecord(){
+//==========================================================================================
+//==================================================     <Instantiate Page from Term Record>
+	// ø <ParseCurriculaObjectArray into Three Repeater Sources>
+	// ø ø <MAYBE ITS OWN FUNCTION>
+	/*
+				status = kvp[1]
+			repeaterId = kvp[2]
+			paginationId = kvp[3]
+			prefixId = kvp[4]
+	let repeaterFinal2dArray = [
+		['maybe','0','#curriculaOndeckRPTR','#curriculaOndeckPGNTN','ondeck'],
+		['yes','7','#curriculaSelectedRPTR','#curriculaSelectedPGNTN','selected'],
+		['no','9','#curriculaRejectedRPTR','#curriculaRejectedPGNTN','rejected']
+	]
+	*/
+	let yesObject = {}
+	yesObject.key = 'yes'
+	yesObject.status = '7'
+	yesObject.repeaterId = '#curriculaSelectedRPTR'
+	yesObject.paginationId = '#curriculaSelectedPGNTN'
+	yesObject.prefixId = 'selected'
+	yesObject.pageItemCount = 8
+	yesObject.forcePaginationOffset = 0
+	let noObject = {}
+	noObject.key = 'no'
+	noObject.status = '9'
+	noObject.repeaterId = '#curriculaRejectedRPTR'
+	noObject.paginationId = '#curriculaRejectedPGNTN'
+	noObject.prefixId = 'rejected'
+	noObject.pageItemCount = 8
+	noObject.forcePaginationOffset = 0
+	let maybeObject = {}
+	maybeObject.key = 'maybe'
+	maybeObject.status = '0'
+	maybeObject.repeaterId = '#curriculaOndeckRPTR'
+	maybeObject.paginationId = '#curriculaOndeckPGNTN'
+	maybeObject.prefixId = 'ondeck'
+	maybeObject.pageItemCount = 8
+	maybeObject.forcePaginationOffset = 0
+	// console.log('NOTE: maybeObject.pageItemCount will likely be the same, as in this instance, but not always')
+	// console.log(`NOTE: use 'forcePaginationOffset' ONLY if the PaginationObject _cannot_ be counted on, especially at instantiation`)
 	let fullCurriculaObjectArray = JSON.parse(memory.getItem('memoryWorkingObject'))
-	paginationObject.totalCountAllCurricula = fullCurriculaObjectArray.length
-	let paginationObjectArray = []
-	for (let index = 0; index < simpleParamArray.length; index++) {
-		const simpleParam = simpleParamArray[index];
-		paginationObjectThis = loadCurriculaRepeater(simpleParam)
-		paginationObjectArray.push(paginationObjectThis)
+	let indexFromCurrIdObject = {}
+	for (let indexFromId = 0; indexFromId < fullCurriculaObjectArray.length; indexFromId++) {
+		const elementObject = fullCurriculaObjectArray[indexFromId];
+		elementObject._id = elementObject.nid.toString()
+		indexFromCurrIdObject[elementObject._id] = indexFromId
 	}
-	paginationObject.paginationObjectArray = paginationObjectArray
-	$w('#txareaCodeBlock').value = JSON.stringify(paginationObject,undefined,4)
+	console.log(`fullCurriculaObjectArray: [array below]`)
+	console.dir(fullCurriculaObjectArray)
+	console.log(`indexFromCurrIdObject: [object below]`)
+	console.dir(indexFromCurrIdObject)
+	let yesCurriculaObjectArray = []
+	let noCurriculaObjectArray = []
+	let maybeCurriculaObjectArray = []
+	for (let indexParseByStatus = 0; indexParseByStatus < fullCurriculaObjectArray.length; indexParseByStatus++) {
+		const element = fullCurriculaObjectArray[indexParseByStatus];
+		if(element.status === '7'){
+			yesCurriculaObjectArray.push(element)
+		}
+		if(element.status === '9'){
+			noCurriculaObjectArray.push(element)
+		}
+		
+		if(element.status === '0'){
+			maybeCurriculaObjectArray.push(element)
+		}
+	}
+	yesObject.curriculaObjectArray = yesCurriculaObjectArray
+	noObject.curriculaObjectArray = noCurriculaObjectArray
+	maybeObject.curriculaObjectArray = maybeCurriculaObjectArray
+	loadRepeaterByObject(yesObject)
+	console.log(`yesObject: [object below]`)
+	console.dir(yesObject)
+	console.log(`noObject: [object below]`)
+	console.dir(noObject)
+	console.log(`maybeObject: [object below]`)
+	console.dir(maybeObject)
+	// ø ø <MEMORY ASSIGNMENTS>
+	memory.setItem('memoryReversePointingObject', JSON.stringify(indexFromCurrIdObject))
+	memory.setItem('memoryWorkingObject_AFFIRMATIVE',JSON.stringify(yesCurriculaObjectArray))
+	memory.setItem('memoryWorkingObject_NEGATIVE',JSON.stringify(noCurriculaObjectArray))
+	memory.setItem('memoryWorkingObject_PENDING',JSON.stringify(maybeCurriculaObjectArray))
+	// ø ø </MEMORY ASSIGNMENTS>
+	// $w('#developerResponseTXTBX').value = JSON.stringify($w(yesObject.paginationId),undefined,4)
+	// ø ø </MAYBE ITS OWN FUNCTION>
+	// ø </ParseCurriculaObjectArray into Three Repeater Sources>
+//==================================================    </Instantiate Page from Term Record>
+//==========================================================================================
 }
+//==========================================================================================
+//==================================================  <loadRepeaterByObject(repeaterObject)>
+function loadRepeaterByObject(repeaterObject = {}){
+	// console.groupCollapsed(`loadRepeaterByObject(repeaterObject = {})`)
+	console.group(`loadRepeaterByObject(repeaterObject = {})`)
+	let areValidParameters = true
+	repeaterObject.notes = []
+	repeaterObject.notes.push('VALIDATION Is Pending')
+	if(!areValidParameters){
+		// return repeaterObject
+		return
+	}
+	let paginationObject = $w(repeaterObject.paginationId)
+	repeaterObject.notes.push('Pagination as Attribute for DEVEL remove eventually')
+	repeaterObject.notes.push(`'forcePaginationOffset' Attribute will be destroyed as soon as it is utilized`)
+	repeaterObject.notes.push(`'forcePaginationOffset' ONLY used if the PaginationObject _cannot_ be counted on [100?,3?], especially at instantiation`)
+	repeaterObject.paginationObject = paginationObject
+	return
+
+	let statusCurriculaObjectArray = JSON.parse(memory.getItem('memoryWorkingObject'))
+	console.log(`statusCurriculaObjectArray: `)
+	console.dir(statusCurriculaObjectArray)
+
+
+
+	let pageItemCount = 8
+	if($w(paginationId).totalPages === 100){
+		$w(paginationId).currentPage = 1
+		$w(paginationId).totalPages = Math.ceil(statusCurriculaObjectArray.length / pageItemCount);
+		console.log(`$w(paginationId): [¿object? below]`)
+		console.dir($w(paginationId))
+	}
+	let pageIndex = $w(paginationId).currentPage - 1
+	let offset = pageIndex * pageItemCount
+
+	let DOX = `@ToDO: rename 'curriculaObjectArray' to 'repeaterCurriculaObjectArray'`
+	// let index_id = 0
+	// let done = false
+	let repeaterCurriculaObjectArray = []
+	for (let rptrIndex = offset ; rptrIndex < pageItemCount + offset; rptrIndex++) {
+		const element = statusCurriculaObjectArray[rptrIndex];
+		// element._id = index_id
+		repeaterCurriculaObjectArray.push(element)	
+		// index_id++
+	}
+	console.log(`repeaterCurriculaObjectArray: `)
+	console.dir(repeaterCurriculaObjectArray)
+
+	// $w(repeaterId).data = curriculaObjectArray;
+	$w(repeaterId).data = repeaterCurriculaObjectArray;
+	console.log(`$w(repeaterId).data: $w(${repeaterId}).data:`)
+	console.dir($w(repeaterId).data)
+	$w(repeaterId).onItemReady( ($curriculumElement, curriculumElementData, index) => {
+		// $courseElement._id = index.toString();
+		$curriculumElement('#keyTXT').text = curriculumElementData.textKey;
+		$curriculumElement('#nameTXT').text = curriculumElementData.name;
+		// $courseElement('#btnCourseAbbrvButton').label = courseElementData.courseAbrrv;
+		// // $courseElement('#imgCourse').src = courseElementData.image;
+		// $courseElement('#txtWeek').text = courseElementData.week;
+		// $courseElement('#txtGradeLevel').text = courseElementData.gradeLevel;
+		// // $courseElement('#txtLocation').html = `<span style="${elementStyle}"><a href="${courseElementData.wikiBreed}" target="_blank">${courseElementData.visibleBreed}</a></span>`;
+		// $courseElement('#txtLocation').text = courseElementData.location;
+		// $courseElement('#txtId').text = `[${courseElementData._id}]`;
+	});
+
+
+	console.log(`groupEnd: loadRepeaterByObject(repeaterObject = {})`)
+	console.groupEnd()
+}
+//================================================== </loadRepeaterByObject(repeaterObject)>
+//==========================================================================================
+
 export function loadCurriculaRepeater(simpleParam = 'default'){
 	let supportedSimpleParam = ['maybe','yes','no']
 	simpleParam = supportedSimpleParam.includes(simpleParam) ? simpleParam : 'maybe'
@@ -194,7 +361,7 @@ export async function postCurriculaSelectionsUpdate(){
 	await wixData.save("term", toUpdateCurriculumRecord)
 	// ø <cleanup>
 	// session.setItem('curriculaBuffer','')
-	memory.setItem('memoryWorkingObject','')
+	cleanUpOnReady()
 	// ø </cleanup>
 
 	wixLocation.to("/term-building")
@@ -229,10 +396,12 @@ export function btnblkDo1BTN_click(event) {
 }
 
 export function btnblkDo2BTN_click(event) {
+	cleanUpOnReady()
 	btnblkDoBTN_click('btnblkDo2BTN_click(event)')
 }
 
 export function btnblkDo3BTN_click(event) {
+	cleanUpOnReady()
 	btnblkDoBTN_click('btnblkDo3BTN_click(event)')
 }
 //====================================================================================================

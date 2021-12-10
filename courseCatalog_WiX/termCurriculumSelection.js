@@ -38,7 +38,8 @@ export async function getSourcedJSON_byKeyPageByPage(key) {
 export async function develRandomOnReady(){
 	let doRandomize = true
 	console.groupCollapsed(`develRandomOnReady()`)
-	let termObject = JSON.parse(local.getItem('lastParamObject'))
+	// let termObject = JSON.parse(local.getItem('lastParamObject'))/*BIGBLEED*//*LINE_41*/
+	let termObject = JSON.parse(memory.getItem('memoryParamObject'))/*BIGBLEED*//*LINE_41*/
 	// ø <randomize Status>
 	console.groupCollapsed(`block: randomize Status`)
 	let randomValueArray = ['0','0','0','7','9']
@@ -60,17 +61,21 @@ export async function develRandomOnReady(){
 	console.log(`|EndLoop|`)
 	console.log(`randomized: termObject.curriculum.curricula`)
 	console.dir(termObject.curriculum.curricula)
-	session.setItem('lastParamObject',JSON.stringify(termObject))
-	console.log(`session.getItem('lastParamObject'): [see below]`)
-	console.log(session.getItem('lastParamObject'))
+	// session.setItem('lastParamObject',JSON.stringify(termObject))/*BIGBLEED*//*LINE_63*/
+	// console.log(`session.getItem('lastParamObject'): [see below]`)/*BIGBLEED*//*LINE_64*/
+	// console.log(session.getItem('lastParamObject'))/*BIGBLEED*//*LINE_65*/
 	console.groupEnd()
 	// ø </randomize Status>
 	// $w('#txareaCodeBlock').value = JSON.stringify(termObject,undefined,4)
 	// $w('#currRepeaterSourceTXBX').value = JSON.stringify(termObject.curriculum.curricula,undefined,4)
-	session.setItem('curriculaBuffer',JSON.stringify(termObject.curriculum.curricula))
-	console.log(`session.getItem('curriculaBuffer: [see below]')`)
-	console.log(session.getItem('curriculaBuffer'))
-	session.setItem('curriculaBufferNOCHANGE',JSON.stringify(termObject.curriculum.curricula))
+	// session.setItem('curriculaBuffer',JSON.stringify(termObject.curriculum.curricula))/*BIGBLEED*//*LINE_70*/
+	memory.setItem('memoryWorkingObject',JSON.stringify(termObject.curriculum.curricula))/*BIGBLEED*//*LINE_70*/
+	// console.log(`session.getItem('curriculaBuffer: [see below]')`)/*BIGBLEED*//*LINE_71*/
+	console.log(`memory.getItem('memoryWorkingObject: [see below]')`)/*BIGBLEED*//*LINE_71*/
+	// console.log(session.getItem('curriculaBuffer'))/*BIGBLEED*//*LINE_72*/
+	console.log(memory.getItem('memoryWorkingObject'))/*BIGBLEED*//*LINE_72*/
+	// session.setItem('curriculaBufferNOCHANGE',JSON.stringify(termObject.curriculum.curricula))/*BIGBLEED*//*LINE_73*/
+	memory.setItem('memoryWorkingBackupObject',JSON.stringify(termObject.curriculum.curricula))/*BIGBLEED*//*LINE_73*/
 	// await wixWindow.copyToClipboard($w('#txareaCodeBlock').value)
 	// $w('#whoWeAreANCHR').scrollTo()
 	console.groupEnd()
@@ -79,7 +84,8 @@ export async function develRandomOnReady(){
 export async function develResetOnReady(){
 	let doRandomize = false
 	console.groupCollapsed(`develResetOnReady()`)
-	let termObject = JSON.parse(local.getItem('lastParamObject'))
+	// let termObject = JSON.parse(local.getItem('lastParamObject'))/*BIGBLEED*//*LINE_82*/
+	let termObject = JSON.parse(memory.getItem('memoryParamObject'))/*BIGBLEED*//*LINE_82*/
 	// ø <randomize Status>
 	console.groupCollapsed(`block: randomize Status`)
 	let randomValueArray = ['0','0','0','7','9']
@@ -106,7 +112,7 @@ export async function onReadyCurriculaJSON(){
 //====================================================================================================
 export async function load_reloadEntirePage(kind = 'ONREADY'){
 	// set lastTermNameTXT
-	$w('#lastTermNameTXT').text = 'Curricula Selection for: ' + session.getItem('lastTermName')
+	$w('#lastTermNameTXT').text = 'Curricula Selection for: ' + session.getItem('lastTermName')
 	// FOR postCurriculaSelectionsUpdate()
 	if(kind === 'POSTUPDATE') {
 		console.groupCollapsed(`if(kind === 'POSTUPDATE'): if(${kind} === 'POSTUPDATE')`)
@@ -116,8 +122,7 @@ export async function load_reloadEntirePage(kind = 'ONREADY'){
 		let toUpdateCurriculumRecord = await wixData.get("term",toUpdateCurriculumRecordId )
 		console.log(`current: toUpdateCurriculumRecord: [object below] `)
 		console.dir(toUpdateCurriculumRecord)
-		// session.setItem('lastParamObject', JSON.stringify(toUpdateCurriculumRecord))
-		session.setItem('lastParamObject', JSON.stringify(toUpdateCurriculumRecord,undefined,4))
+		// session.setItem('lastParamObject', JSON.stringify(toUpdateCurriculumRecord,undefined,4))/*BIGBLEED*//*LINE_119*/
 		console.log(`current: toUpdateCurriculumRecord: [object below] `)
 		console.dir(toUpdateCurriculumRecord)
 		console.groupEnd()
@@ -125,7 +130,8 @@ export async function load_reloadEntirePage(kind = 'ONREADY'){
 	}
 	// FOR onReadyCurriculaJSON()
 	// console.groupCollapsed(`onReadyCurriculaJSON()`)
-	let termObject = JSON.parse(local.getItem('lastParamObject'))
+	// let termObject = JSON.parse(local.getItem('lastParamObject'))/*BIGBLEED*//*LINE_127*/
+	let termObject = JSON.parse(memory.getItem('memoryParamObject'))/*BIGBLEED*//*LINE_127*/
 	// console.log(`termObject: [object below]`)
 	// console.dir(termObject)
 	// console.log(`termObject._id: ${termObject._id}`)
@@ -144,15 +150,16 @@ export async function load_reloadEntirePage(kind = 'ONREADY'){
 	}
 	// console.log(`curriculaBufferThis: [array below]`)
 	// console.dir(curriculaBufferThis)
-	// session.setItem('curriculaBuffer',JSON.stringify(curriculaBufferThis))
-	// session.setItem('curriculaBufferNOCHANGE',JSON.stringify(termObject.curriculum.curricula))
-	session.setItem('curriculaBuffer', curriculaBufferThis)
-	session.setItem('curriculaBufferNOCHANGE',curriculaBufferThis)
+	// session.setItem('curriculaBuffer', curriculaBufferThis)/*BIGBLEED*//*LINE_146*/
+	memory.setItem('memoryWorkingObject', curriculaBufferThis)/*BIGBLEED*//*LINE_146*/
+	// session.setItem('curriculaBufferNOCHANGE',curriculaBufferThis)/*BIGBLEED*//*LINE_147*/
+	memory.setItem('memoryWorkingBackupObject',curriculaBufferThis)/*BIGBLEED*//*LINE_147*/
 	loadAllCurriculaRepeaters()
 }
 export function loadAllCurriculaRepeaters(){
 	// ø <Tasks Upon any loadCurricularRepeater>
-	if(session.getItem('curriculaBuffer') !== session.getItem('curriculaBufferNOCHANGE')){
+	// if(session.getItem('curriculaBuffer') !== session.getItem('curriculaBufferNOCHANGE'))/*BIGBLEED*//*LINE_152*/{
+	if(memory.getItem('memoryWorkingObject') !== memory.getItem('memoryWorkingBackupObject'))/*BIGBLEED*//*LINE_152*/{
 		$w('#updatesPendingCONTBX').expand()
 	}
 	// ø </Tasks Upon any loadCurricularRepeater>
@@ -174,7 +181,8 @@ export function loadAllCurriculaRepeaters(){
 	// }
 	let paginationObject = {}
 	let paginationObjectThis = {}
-	let fullCurriculaObjectArray = JSON.parse(session.getItem('curriculaBuffer'))
+	// let fullCurriculaObjectArray = JSON.parse(session.getItem('curriculaBuffer'))/*BIGBLEED*//*LINE_174*/
+	let fullCurriculaObjectArray = JSON.parse(memory.getItem('memoryWorkingObject'))/*BIGBLEED*//*LINE_174*/
 	// console.log(`fullCurriculaObjectArray: [array below]`)
 	// console.dir(fullCurriculaObjectArray)
 	// let KLUDGE = '<KLUDGE: Exit Early>'
@@ -245,7 +253,8 @@ export function loadCurriculaRepeater(simpleParam = 'default'){
 	// status = supportedStatusrValues.includes(status) ? status : '0'
 	// console.log(`supported: status: ${status}`)
 
-	let fullCurriculaObjectArray = JSON.parse(session.getItem('curriculaBuffer'))
+	// let fullCurriculaObjectArray = JSON.parse(session.getItem('curriculaBuffer'))/*BIGBLEED*//*LINE_245*/
+	let fullCurriculaObjectArray = JSON.parse(memory.getItem('memoryWorkingObject'))/*BIGBLEED*//*LINE_245*/
 	console.log(`fullCurriculaObjectArray: [array below]`)
 	console.dir(fullCurriculaObjectArray)
 	let curriculaObjectArray = [];
@@ -358,13 +367,15 @@ export function processYesMaybeNoForSix(event,scriptName){
 	console.dir(clickedItemData)
 	let bufferIndex = clickedItemData.repeaterDataArrayIndex;
 	console.log(`bufferIndex: ${bufferIndex}`)
-	let toModifyBuffer = JSON.parse(session.getItem('curriculaBuffer'))
+	// let toModifyBuffer = JSON.parse(session.getItem('curriculaBuffer'))/*BIGBLEED*//*LINE_358*/
+	let toModifyBuffer = JSON.parse(memory.getItem('memoryWorkingObject'))/*BIGBLEED*//*LINE_358*/
 	console.log(`current: toModifyBuffer:`)
 	console.dir(toModifyBuffer)
 	toModifyBuffer[bufferIndex].status = statusChangeTo
 	console.log(`ready for UPDATE: toModifyBuffer:`)
 	console.dir(toModifyBuffer)
-	session.setItem('curriculaBuffer', JSON.stringify(toModifyBuffer))
+	// session.setItem('curriculaBuffer', JSON.stringify(toModifyBuffer))/*BIGBLEED*//*LINE_364*/
+	memory.setItem('memoryWorkingObject', JSON.stringify(toModifyBuffer))/*BIGBLEED*//*LINE_364*/
 
 	loadAllCurriculaRepeaters()
 
@@ -381,7 +392,8 @@ export function processYesMaybeNoForSix(event,scriptName){
 //====================================================================================================
 export async function postCurriculaSelectionsUpdate(){
 	console.groupCollapsed(`postCurriculaSelectionsUpdate()`)
-	let updateCurricula = JSON.parse(session.getItem('curriculaBuffer'))
+	// let updateCurricula = JSON.parse(session.getItem('curriculaBuffer'))/*BIGBLEED*//*LINE_381*/
+	let updateCurricula = JSON.parse(memory.getItem('memoryWorkingObject'))/*BIGBLEED*//*LINE_381*/
 	console.log(`updateCurricula: [object below] `)
 	console.dir(updateCurricula)
 	let toUpdateCurriculumRecordId = session.getItem('termRecordId')
@@ -395,8 +407,8 @@ export async function postCurriculaSelectionsUpdate(){
 	await wixData.save("term", toUpdateCurriculumRecord)
 	console.groupEnd()
 	// ø <cleanup>
-	session.setItem('curriculaBuffer','')
-	// session.setItem('termRecordId','')
+	// session.setItem('curriculaBuffer','')/*BIGBLEED*//*LINE_395*/
+	memory.setItem('memoryWorkingObject','')/*BIGBLEED*//*LINE_395*/
 	// ø </cleanup>
 
 	wixLocation.to("/term-building")
@@ -565,8 +577,8 @@ export function button14_click(event) {
 *	 @param {$w.MouseEvent} event
 */
 export function getLastParamObjectBTN_click(event) {
-	$w('#developerResponseTXTBX').value = local.getItem('lastParamObject')
-	// let lastParamObject = local.getItem('lastParamObject')
+	// $w('#developerResponseTXTBX').value = local.getItem('lastParamObject')/*BIGBLEED*//*LINE_564*/
+	$w('#developerResponseTXTBX').value = memory.getItem('memoryParamObject')/*BIGBLEED*//*LINE_564*/
 	// console.log(`lastParamObject: [something below: log then dir]`)
 	// console.log(lastParamObject)
 	// console.dir(lastParamObject)

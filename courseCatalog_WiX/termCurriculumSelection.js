@@ -72,6 +72,8 @@ export async function load_reloadEntirePage(kind = 'ONREADY'){
 	}
 	// FOR onReadyCurriculaJSON()
 	let termObject = JSON.parse(memory.getItem('memoryParamObject'))
+	console.log(`termObject: [object below]`)
+	console.dir(termObject)
 	session.setItem('termRecordId',termObject._id)
 	let curriculaBufferThis = JSON.stringify(termObject.curriculum.curricula)
 	if(curriculaBufferThis.length < 300){
@@ -155,17 +157,19 @@ export function instantiatePageFromTermRecord(){
 	noObject.curriculaObjectArray = noCurriculaObjectArray
 	maybeObject.curriculaObjectArray = maybeCurriculaObjectArray
 	loadRepeaterByObject(yesObject)
-	console.log(`yesObject: [object below]`)
-	console.dir(yesObject)
-	console.log(`noObject: [object below]`)
-	console.dir(noObject)
-	console.log(`maybeObject: [object below]`)
-	console.dir(maybeObject)
+	loadRepeaterByObject(noObject)
+	loadRepeaterByObject(maybeObject)
+	// console.log(`yesObject: [object below]`)
+	// console.dir(yesObject)
+	// console.log(`noObject: [object below]`)
+	// console.dir(noObject)
+	// console.log(`maybeObject: [object below]`)
+	// console.dir(maybeObject)
 	// ø ø <MEMORY ASSIGNMENTS>
 	memory.setItem('memoryReversePointingObject', JSON.stringify(indexFromCurrIdObject))
-	memory.setItem('memoryWorkingObject_AFFIRMATIVE',JSON.stringify(yesCurriculaObjectArray))
-	memory.setItem('memoryWorkingObject_NEGATIVE',JSON.stringify(noCurriculaObjectArray))
-	memory.setItem('memoryWorkingObject_PENDING',JSON.stringify(maybeCurriculaObjectArray))
+	memory.setItem('memoryWorkingObject_AFFIRMATIVE',JSON.stringify(yesObject))
+	memory.setItem('memoryWorkingObject_NEGATIVE',JSON.stringify(noObject))
+	memory.setItem('memoryWorkingObject_PENDING',JSON.stringify(maybeObject))
 	// ø ø </MEMORY ASSIGNMENTS>
 	// $w('#developerResponseTXTBX').value = JSON.stringify($w(yesObject.paginationId),undefined,4)
 	// ø ø </MAYBE ITS OWN FUNCTION>
@@ -176,8 +180,31 @@ export function instantiatePageFromTermRecord(){
 //==========================================================================================
 //==================================================  <loadRepeaterByObject(repeaterObject)>
 function loadRepeaterByObject(repeaterObject = {}){
+	if(typeof repeaterObject === 'object' && Array.isArray(repeaterObject) === false){
+		let aliasKeys = Object.keys(repeaterObject)
+		if(aliasKeys.length === 1 && aliasKeys[0] === 'alias'){
+			// console.log(`loadRepeaterByObject: repeaterObject: [object below]`)
+			// console.dir(repeaterObject)
+			let alias = repeaterObject.alias
+			if(alias === 'yes'){
+				repeaterObject = JSON.parse(memory.getItem('memoryWorkingObject_AFFIRMATIVE'))
+				// console.log(`repeaterObject: maybe: memoryWorkingObject_AFFIRMATIVE: [object below]`)
+				// console.dir(repeaterObject)
+			}
+			if(alias === 'maybe'){
+				repeaterObject = JSON.parse(memory.getItem('memoryWorkingObject_PENDING'))
+				// console.log(`repeaterObject: maybe: memoryWorkingObject_PENDING: [object below]`)
+				// console.dir(repeaterObject)
+			}
+			if(alias === 'no'){
+				repeaterObject = JSON.parse(memory.getItem('memoryWorkingObject_NEGATIVE'))
+				// console.log(`repeaterObject: maybe: memoryWorkingObject_PENDING: [object below]`)
+				// console.dir(repeaterObject)
+			}
+		}
+	}
 	// console.groupCollapsed(`loadRepeaterByObject(repeaterObject = {})`)
-	console.group(`loadRepeaterByObject(repeaterObject = {})`)
+	// console.group(`loadRepeaterByObject(repeaterObject = {})`)
 	let areValidParameters = true
 	repeaterObject.notes = []
 	repeaterObject.notes.push('VALIDATION Is Pending')
@@ -185,62 +212,72 @@ function loadRepeaterByObject(repeaterObject = {}){
 		// return repeaterObject
 		return
 	}
-	let paginationObject = $w(repeaterObject.paginationId)
-	repeaterObject.notes.push('Pagination as Attribute for DEVEL remove eventually')
+	// let paginationObject = $w(repeaterObject.paginationId)
+	// repeaterObject.notes.push('Pagination as Attribute for DEVEL remove eventually')
 	repeaterObject.notes.push(`'forcePaginationOffset' Attribute will be destroyed as soon as it is utilized`)
 	repeaterObject.notes.push(`'forcePaginationOffset' ONLY used if the PaginationObject _cannot_ be counted on [100?,3?], especially at instantiation`)
-	repeaterObject.paginationObject = paginationObject
-	return
+	// repeaterObject.paginationObject = paginationObject
 
-	let statusCurriculaObjectArray = JSON.parse(memory.getItem('memoryWorkingObject'))
-	console.log(`statusCurriculaObjectArray: `)
-	console.dir(statusCurriculaObjectArray)
+	// let statusCurriculaObjectArray = JSON.parse(memory.getItem('memoryWorkingObject'))
 
 
 
+	// console.log(`loadRepeaterByObject(${repeaterObject.key}Object): `)
+	// console.dir(repeaterObject)
 	let pageItemCount = 8
-	if($w(paginationId).totalPages === 100){
-		$w(paginationId).currentPage = 1
-		$w(paginationId).totalPages = Math.ceil(statusCurriculaObjectArray.length / pageItemCount);
-		console.log(`$w(paginationId): [¿object? below]`)
-		console.dir($w(paginationId))
+	if($w(repeaterObject.paginationId).totalPages === 100){
+		$w(repeaterObject.paginationId).currentPage = 1
+		$w(repeaterObject.paginationId).totalPages = Math.ceil(repeaterObject.curriculaObjectArray.length / pageItemCount);
+		// console.log(`$w(repeaterObject.paginationId): [object below]`)
+		// console.dir($w(repeaterObject.paginationId))
 	}
-	let pageIndex = $w(paginationId).currentPage - 1
+	repeaterObject.currentPagination = {}
+	repeaterObject.currentPagination.totalPages = $w(repeaterObject.paginationId).totalPages
+	repeaterObject.currentPagination.currentPage = $w(repeaterObject.paginationId).currentPage
+	let pageIndex = $w(repeaterObject.paginationId).currentPage - 1
 	let offset = pageIndex * pageItemCount
+	repeaterObject.currentPagination.pageIndex = pageIndex
+	repeaterObject.currentPagination.offset = offset
 
-	let DOX = `@ToDO: rename 'curriculaObjectArray' to 'repeaterCurriculaObjectArray'`
-	// let index_id = 0
-	// let done = false
+	// let DOX = `@ToDO: rename 'curriculaObjectArray' to 'repeaterCurriculaObjectArray'`
+	// // let index_id = 0
+	// // let done = false
+	// let repeaterCurriculaObjectArray = []
+	// for (let rptrIndex = offset ; rptrIndex < pageItemCount + offset; rptrIndex++) {
+	// 	const element = statusCurriculaObjectArray[rptrIndex];
+	// 	// element._id = index_id
+	// 	repeaterCurriculaObjectArray.push(element)	
+	// 	// index_id++
+	// }
+	// console.log(`repeaterCurriculaObjectArray: `)
+	// console.dir(repeaterCurriculaObjectArray)
+
 	let repeaterCurriculaObjectArray = []
 	for (let rptrIndex = offset ; rptrIndex < pageItemCount + offset; rptrIndex++) {
-		const element = statusCurriculaObjectArray[rptrIndex];
-		// element._id = index_id
-		repeaterCurriculaObjectArray.push(element)	
-		// index_id++
+		const element = repeaterObject.curriculaObjectArray[rptrIndex];
+		if(typeof element !== 'undefined'){
+			repeaterCurriculaObjectArray.push(element)	
+		}
 	}
-	console.log(`repeaterCurriculaObjectArray: `)
-	console.dir(repeaterCurriculaObjectArray)
+	// if (repeaterObject.currentPagination.totalPages === repeaterObject.currentPagination.currentPage) {
+	// 	console.log(`repeaterCurriculaObjectArray: Last-Page: [array below]`)
+	// 	console.dir(repeaterCurriculaObjectArray)
+	// }
 
 	// $w(repeaterId).data = curriculaObjectArray;
-	$w(repeaterId).data = repeaterCurriculaObjectArray;
-	console.log(`$w(repeaterId).data: $w(${repeaterId}).data:`)
-	console.dir($w(repeaterId).data)
-	$w(repeaterId).onItemReady( ($curriculumElement, curriculumElementData, index) => {
-		// $courseElement._id = index.toString();
-		$curriculumElement('#keyTXT').text = curriculumElementData.textKey;
-		$curriculumElement('#nameTXT').text = curriculumElementData.name;
-		// $courseElement('#btnCourseAbbrvButton').label = courseElementData.courseAbrrv;
-		// // $courseElement('#imgCourse').src = courseElementData.image;
-		// $courseElement('#txtWeek').text = courseElementData.week;
-		// $courseElement('#txtGradeLevel').text = courseElementData.gradeLevel;
-		// // $courseElement('#txtLocation').html = `<span style="${elementStyle}"><a href="${courseElementData.wikiBreed}" target="_blank">${courseElementData.visibleBreed}</a></span>`;
-		// $courseElement('#txtLocation').text = courseElementData.location;
-		// $courseElement('#txtId').text = `[${courseElementData._id}]`;
+	let keyTXTid = '#'+ repeaterObject.prefixId + 'KeyTXT'
+	let nameTXTid = '#'+ repeaterObject.prefixId + 'NameTXT'
+
+	$w(repeaterObject.repeaterId).data = repeaterCurriculaObjectArray;
+	console.log(`$w(repeaterId).data: $w(${repeaterObject.repeaterId}).data:`)
+	console.dir($w(repeaterObject.repeaterId).data)
+	$w(repeaterObject.repeaterId).onItemReady( ($curriculumElement, curriculumElementData, index) => {
+		$curriculumElement(keyTXTid).text = curriculumElementData.textKey;
+		$curriculumElement(nameTXTid).text = curriculumElementData.name;
 	});
 
-
-	console.log(`groupEnd: loadRepeaterByObject(repeaterObject = {})`)
-	console.groupEnd()
+	// console.log(`groupEnd: loadRepeaterByObject(repeaterObject = {})`)
+	// console.groupEnd()
 }
 //================================================== </loadRepeaterByObject(repeaterObject)>
 //==========================================================================================
@@ -344,7 +381,7 @@ export function processYesMaybeNoForSix(event,scriptName){
 	toModifyBuffer[bufferIndex].status = statusChangeTo
 	memory.setItem('memoryWorkingObject', JSON.stringify(toModifyBuffer))
 
-	loadAllCurriculaRepeaters()
+	// loadAllCurriculaRepeaters()
 }
 //====================================================================================================
 //==============================       </Process CurriculaRepeater>     ==============================
@@ -475,4 +512,28 @@ export function button14_click(event) {
 
 export function getLastParamObjectBTN_click(event) {
 	$w('#developerResponseTXTBX').value = memory.getItem('memoryParamObject')
+}
+
+export function curriculaOndeckPGNTN_click(event) {
+	let aliasObject = {}
+	aliasObject.alias = 'maybe'
+	// console.log(`aliasObject: [object below]`)
+	// console.dir(aliasObject)
+	loadRepeaterByObject(aliasObject)
+}
+
+export function curriculaSelectedPGNTN_click(event) {
+	let aliasObject = {}
+	aliasObject.alias = 'yes'
+	// console.log(`aliasObject: [object below]`)
+	// console.dir(aliasObject)
+	loadRepeaterByObject(aliasObject)
+}
+
+export function curriculaRejectedPGNTN_click(event) {
+	let aliasObject = {}
+	aliasObject.alias = 'yes'
+	// console.log(`aliasObject: [object below]`)
+	// console.dir(aliasObject)
+	loadRepeaterByObject(aliasObject)
 }

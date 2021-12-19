@@ -1,0 +1,44 @@
+{
+    "_id-AsString": {
+        "key": "1",
+        "name": "Weeks Summer 2022",
+        "_id": 777,
+        "dateEnd": "holder",
+        "dateStart": "holder",
+        "dateStartAbbrv": "holder",
+        "dateStartFull": "holder",
+        "dateStartSlash": "holder",
+        "daysOfWeekJSArray": [
+            "String One",
+            "String Two",
+            "String Three"
+        ],
+        "daysOfWeekString": "holder",
+        "nameAbbrv": "holder",
+        "nameAcronym": "holder",
+        "nameCommon": "holder",
+        "nameFull": "holder",
+        "spanStart": "holder",
+        "spandEnd": "holder",
+        "termId": 777,
+        "timeBlockKey": {
+            "timeBlockKey": "String_0",
+            "timeBlockName": "String_1",
+            "timeBlockStartTime": "String_2",
+            "timeBlockEndTime": "String_3",
+            "timeBlockDuration": "String_4",
+            "timeBlockStartTimeString": "String_5",
+            "timeBlockEndTimeString": "String_6",
+            "timeBlockDurationString": "String_7",
+            "timeBlockSpanString": "String_8",
+            "timeBlockSpanStringAbbrv": "String_9"
+        },
+        "weekCardinal": 777,
+        "weekId": 777,
+        "weekOrdinal": "holder",
+        "notes": [
+            "universalParamObjectBuilder RUN",
+            "appendRoomCore RUN"
+        ]
+    }
+}

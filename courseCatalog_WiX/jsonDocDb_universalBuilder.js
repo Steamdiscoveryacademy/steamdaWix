@@ -237,7 +237,7 @@ export function appendWeekCore(paramObject = {}) {
     //animals.push('chickens', 'cats', 'dogs');
     // stringAttributeArray.push('nameFull', 'nameCommon', 'nameAbbrv', 'nameAcronym', 'street_1', 'street_2', 'city', 'state', 'zip', 'zipPlus')
     // stringAttributeArray.push('sectionKey', "locationKey","courseName","curriculumKey","roomNumber","roomName")
-    stringAttributeArray.push('nameFull', 'nameCommon', 'nameCardinal', 'nameAcronym', 'termId', 'nameOrdinal', 'daysOfWeekJSArray', 'daysOfWeekString', 'dateStart', 'dateStartFull', 'dateStartAbbrv', 'dateStartSlash', 'dateEnd','spanStart','spandEnd')
+    stringAttributeArray.push('nameFull', 'nameCommon', 'nameCardinal', 'nameAcronym', 'termId', 'nameOrdinal', 'daysOfWeekJSArray', 'daysOfWeekString', 'dateStart', 'dateStartFull', 'dateStartAbbrv', 'dateStartSlash', 'dateEnd','spanStart','spanEnd')
     // ø <ONLY for emptyString default value NOT separate attributes>
     // ø - 1d element the same as the first element of the 2nd d of 3d
     // ø - 3d element is array of object elements (all string for now)

@@ -1,4 +1,15 @@
 {
+    "cardinalityLookupObject": {
+        "1": "202223",
+        "2": "202224",
+        "3": "202225",
+        "4": "202226",
+        "5": "202228",
+        "6": "202229",
+        "7": "202230",
+        "8": "202231",
+        "9": "202232"
+    },
     "202223": {
         "key": "1",
         "name": "Week One",
@@ -66,5 +77,12 @@
             "real note here",
             "another real note here"
         ]
-    }
+    },
+    "weeksAllNotesInternal": [
+        "span values: Zulu as Local or?...",
+        "termId is the OuterKey – weekId is the Inner Key ",
+        "cardinalityLookupObject is how to get all of this data from the drop-down 1,,2,3,4...",
+        "note how cardinalityLookupObject _skips_ weekId: 202227"
+    ],
+    "weeksAllNotesPublic": []
 }

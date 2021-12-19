@@ -62,9 +62,10 @@
         },
         "weekCardinal": 1,
         "weekId": 202223,
-        "weekNotes": [
+        "weekNotesInternal": [
             "real note here",
             "another real note here"
-        ]
+        ],
+        "weekNotesPublic": []
     }
 }

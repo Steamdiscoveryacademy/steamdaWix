@@ -73,10 +73,11 @@
         },
         "weekCardinal": 1,
         "weekId": 202223,
-        "weekNotes": [
+        "weekNotesInternal": [
             "real note here",
             "another real note here"
-        ]
+        ],
+        "weekNotesPublic": []
     },
     "202224": {
         "key": "2",
@@ -141,10 +142,11 @@
         },
         "weekCardinal": 2,
         "weekId": 202224,
-        "weekNotes": [
+        "weekNotesInternal": [
             "real note here",
             "another real note here"
-        ]
+        ],
+        "weekNotesPublic": []
     },
     "202225": {
         "key": "3",
@@ -207,18 +209,20 @@
             "timeBlockSpanString": "1:30pm to 5:00pm",
             "timeBlockSpanStringAbbrv": "1:30 to 5:00"
         },
-        "weekCardinal": 2,
-        "weekId": 202224,
-        "weekNotes": [
+        "weekCardinal": 3,
+        "weekId": 202225,
+        "weekNotesInternal": [
             "real note here",
             "another real note here"
-        ]
+        ],
+        "weekNotesPublic": []
     },
     "weeksAllNotesInternal": [
         "span values: Zulu as Local or?...",
-        "termId is the OuterKey – weekId is the Inner Key ",
+        "termId is the OuterKey - weekId is the Inner Key ",
         "cardinalityLookupObject is how to get all of this data from the drop-down 1,,2,3,4...",
-        "note how cardinalityLookupObject _skips_ weekId: 202227"
+        "note how cardinalityLookupObject _skips_ weekId: 202227",
+        "weeksAllNotesPublic and weekNotesPublic: just a simple string that can be displayed in a bullet list"
     ],
     "weeksAllNotesPublic": []
 }

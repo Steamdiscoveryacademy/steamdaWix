@@ -49,6 +49,17 @@ import {fetch} from 'wix-fetch';
 // ø CREATE_NEW_COURSE_±1_completeCourseForm_SCRIPTS
 // ø CREATE_NEW_COURSE_±1a_instantiateNewCourseObject
 // ø 
+// ø LOAD_COURSES_ON_READY_00_konstantTermCoursesOnReady
+// ø LOAD_COURSES_ON_READY_01_composeFilterFormObject_OnReadyForceChangeNoFilter
+// ø LOAD_COURSES_ON_READY_02_applyFilterToBuffer_OnReadyForceAllCourses
+// ø LOAD_COURSES_ON_READY_03_evaluationPaginationAndLoadRepeater_OnReadyFirstEightCourses
+// ø 
+// ø FILTER_COURSES_00_previewCourseBTN_click
+// ø FILTER_COURSES_01_validateFilterForm
+// ø FILTER_COURSES_02_composeFilterFormObject | FILTER_COURSES_02err_catchAndDisplayError
+// ø FILTER_COURSES_03_applyFilterToBuffer
+// ø FILTER_COURSES_04_evaluationPaginationAndLoadRepeater
+// ø 
 // ø CREATE_NEW_COURSE_00_Click_PreviewBTN
 // ø CREATE_NEW_COURSE_01_validateFilterForm
 // ø CREATE_NEW_COURSE_02
@@ -67,7 +78,8 @@ import {fetch} from 'wix-fetch';
 $w.onReady(function () {
 	// await onReadyCurriculaJSON()
 	setUpOnReady()
-	konstantSelectedCurriculaRepeaterOnReady()
+	// konstantSelectedCurriculaRepeaterOnReady_DEP()
+	konstantTermCoursesOnReady()
 	wixStorageDisplayOnReady()	
     // datestampinventoryDocDbJSONOnReady()
 	// develOnReady()
@@ -87,9 +99,72 @@ function setUpOnReady(){
 function cleanUpOnReady(){
 	// memory.setItem('memoryParamObject', JSON.stringify({"pipedBoolean":"ON_READY"}))
 }
-async function konstantSelectedCurriculaRepeaterOnReady(){
-	// console.groupCollapsed(`konstantSelectedCurriculaRepeaterOnReady()`)
-	console.group(`konstantSelectedCurriculaRepeaterOnReady()`)
+
+async function konstantTermCoursesOnReady(){
+	// ø LOAD_COURSES_ON_READY_00_konstantTermCoursesOnReady
+	console.groupCollapsed(`konstantTermCoursesOnReady()`)
+	// console.group(`konstantTermCoursesOnReady()`)
+	// ø <KLUDGE_GET>
+	// ø ¯\_(ツ)_/¯ => until I can get 'simple' fetch() working
+	let allCoursesWorkingObject = [{"_id":"3562","courseNameDisplay":"Kickoff Camp","courseName":"Kickoff Camp","courseNameAbbrv":"z_STRING_z","curriculumKey":"KICKOFF","courseKey":"KICKOFFv2323bCHOb","sectionArray":["KICKOFFv2323bCHOb1"],"sectionCount":"1","courseDateStart":"2022-06-06T11:59:00.000Z","courseDateEnd":"2022-06-10T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD,AM","jCal":"NNULL","gradeLevelKey":"GL02","locationName":"Charlottesville Catholic School","locationKey":"CHOb","courseRegionKey":"CHO","curriculumId":"3510","termId":"202223","weekId":"202223"},{"_id":"3563","courseNameDisplay":"Kickoff Camp","courseName":"Kickoff Camp","courseNameAbbrv":"z_STRING_z","curriculumKey":"KICKOFF","courseKey":"KICKOFFv2323ceCHOb","sectionArray":["KICKOFFv2323ceCHOb1"],"sectionCount":"1","courseDateStart":"2022-06-06T11:59:00.000Z","courseDateEnd":"2022-06-10T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD","jCal":"NNULL","gradeLevelKey":"GL35","locationName":"Charlottesville Catholic School","locationKey":"CHOb","courseRegionKey":"CHO","curriculumId":"3510","termId":"202223","weekId":"202223"},{"_id":"3564","courseNameDisplay":"Kickoff Camp","courseName":"Kickoff Camp","courseNameAbbrv":"z_STRING_z","curriculumKey":"KICKOFF","courseKey":"KICKOFFv2323fhCHOb","sectionArray":["KICKOFFv2323fhCHOb1"],"sectionCount":"1","courseDateStart":"2022-06-06T11:59:00.000Z","courseDateEnd":"2022-06-10T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD","jCal":"NNULL","gradeLevelKey":"GL68","locationName":"Charlottesville Catholic School","locationKey":"CHOb","courseRegionKey":"CHO","curriculumId":"3510","termId":"202223","weekId":"202223"},{"_id":"3556","courseNameDisplay":"Architecture","courseName":"Architecture","courseNameAbbrv":"Architecture","curriculumKey":"ARCHITECT","courseKey":"ARCHITECTv2324ceCHOb","sectionArray":["ARCHITECTv2324ceCHOb1"],"sectionCount":"1","courseDateStart":"2022-06-13T11:59:00.000Z","courseDateEnd":"2022-06-17T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD","jCal":"NNULL","gradeLevelKey":"GL35","locationName":"Charlottesville Catholic School","locationKey":"CHOb","courseRegionKey":"CHO","curriculumId":"3500","termId":"202223","weekId":"202224"},{"_id":"3572","courseNameDisplay":"Biosphere Challenge","courseName":"Biosphere Challenge","courseNameAbbrv":"z_STRING_z","curriculumKey":"BIOSPHERE","courseKey":"BIOSPHEREv2324cfCHOa","sectionArray":["BIOSPHEREv2324cfCHOa1"],"sectionCount":"1","courseDateStart":"2022-06-13T11:59:00.000Z","courseDateEnd":"2022-06-17T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD","jCal":"NNULL","gradeLevelKey":"GL36","locationName":"STEAM Incubator","locationKey":"CHOa","courseRegionKey":"CHO","curriculumId":"3520","termId":"202223","weekId":"202224"},{"_id":"3565","courseNameDisplay":"Ceramics","courseName":"Ceramics","courseNameAbbrv":"Ceramics","curriculumKey":"CERAMICS","courseKey":"CERAMICSv2324bCHOb","sectionArray":["CERAMICSv2324bCHOb1"],"sectionCount":"1","courseDateStart":"2022-06-13T11:59:00.000Z","courseDateEnd":"2022-06-17T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD","jCal":"NNULL","gradeLevelKey":"GL02","locationName":"Charlottesville Catholic School","locationKey":"CHOb","courseRegionKey":"CHO","curriculumId":"20","termId":"202223","weekId":"202224"},{"_id":"3571","courseNameDisplay":"Creative Creatures","courseName":"Creative Creatures","courseNameAbbrv":"CreativeCreatures","curriculumKey":"CREATURES","courseKey":"CREATURESv2324bCHOa","sectionArray":["CREATURESv2324bCHOa1"],"sectionCount":"1","courseDateStart":"2022-06-13T11:59:00.000Z","courseDateEnd":"2022-06-17T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"03:30:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"HD,AM","jCal":"NNULL","gradeLevelKey":"GL02","locationName":"STEAM Incubator","locationKey":"CHOa","courseRegionKey":"CHO","curriculumId":"3356","termId":"202223","weekId":"202224"},{"_id":"3568","courseNameDisplay":"Flight Technology:Gliders, Rockets and Drones","courseName":"Flight Technology:Gliders, Rockets and Drones","courseNameAbbrv":"Flight","curriculumKey":"FLIGHTTECH","courseKey":"FLIGHTTECHv2324ceCHOb","sectionArray":["FLIGHTTECHv2324ceCHOb1"],"sectionCount":"1","courseDateStart":"2022-06-13T11:59:00.000Z","courseDateEnd":"2022-06-17T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD","jCal":"NNULL","gradeLevelKey":"GL35","locationName":"Charlottesville Catholic School","locationKey":"CHOb","courseRegionKey":"CHO","curriculumId":"23","termId":"202223","weekId":"202224"},{"_id":"3567","courseNameDisplay":"Gadgets and Gizmos","courseName":"Gadgets and Gizmos","courseNameAbbrv":"Gadgets","curriculumKey":"GADGETS","courseKey":"GADGETSv2324bCHOb","sectionArray":["GADGETSv2324bCHOb1"],"sectionCount":"1","courseDateStart":"2022-06-13T11:59:00.000Z","courseDateEnd":"2022-06-17T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD","jCal":"NNULL","gradeLevelKey":"GL02","locationName":"Charlottesville Catholic School","locationKey":"CHOb","courseRegionKey":"CHO","curriculumId":"25","termId":"202223","weekId":"202224"},{"_id":"3566","courseNameDisplay":"Intro to STEAM","courseName":"Intro to STEAM","courseNameAbbrv":"Int Ste","curriculumKey":"INTROSTEAM","courseKey":"INTROSTEAMv2324bCHOb","sectionArray":["INTROSTEAMv2324bCHOb1"],"sectionCount":"1","courseDateStart":"2022-06-13T11:59:00.000Z","courseDateEnd":"2022-06-17T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD,AM","jCal":"NNULL","gradeLevelKey":"GL02","locationName":"Charlottesville Catholic School","locationKey":"CHOb","courseRegionKey":"CHO","curriculumId":"39","termId":"202223","weekId":"202224"},{"_id":"3570","courseNameDisplay":"Mad Scientist Chemistry","courseName":"Mad Scientist Chemistry","courseNameAbbrv":"Mad Science","curriculumKey":"MADSCICHEM","courseKey":"MADSCICHEMv2324fhCHOb","sectionArray":["MADSCICHEMv2324fhCHOb1"],"sectionCount":"1","courseDateStart":"2022-06-13T11:59:00.000Z","courseDateEnd":"2022-06-17T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD","jCal":"NNULL","gradeLevelKey":"GL68","locationName":"Charlottesville Catholic School","locationKey":"CHOb","courseRegionKey":"CHO","curriculumId":"27","termId":"202223","weekId":"202224"},{"_id":"3569","courseNameDisplay":"Robotics and Coding","courseName":"Robotics and Coding","courseNameAbbrv":"Robot","curriculumKey":"ROBOTCODE","courseKey":"ROBOTCODEv2324ceCHOb","sectionArray":["ROBOTCODEv2324ceCHOb1"],"sectionCount":"1","courseDateStart":"2022-06-13T11:59:00.000Z","courseDateEnd":"2022-06-17T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD","jCal":"NNULL","gradeLevelKey":"GL35","locationName":"Charlottesville Catholic School","locationKey":"CHOb","courseRegionKey":"CHO","curriculumId":"33","termId":"202223","weekId":"202224"},{"_id":"3578","courseNameDisplay":"Architecture","courseName":"Architecture","courseNameAbbrv":"z_STRING_z","curriculumKey":"ARCHITECT","courseKey":"ARCHITECTv2325fhCHOb","sectionArray":["ARCHITECTv2325fhCHOb1"],"sectionCount":"1","courseDateStart":"2022-06-20T11:59:00.000Z","courseDateEnd":"2022-06-24T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD","jCal":"NNULL","gradeLevelKey":"GL68","locationName":"Charlottesville Catholic School","locationKey":"CHOb","courseRegionKey":"CHO","curriculumId":"3500","termId":"202223","weekId":"202225"},{"_id":"3583","courseNameDisplay":"Biomechanics in Sports & Trick Shots","courseName":"Biomechanics Lab","courseNameAbbrv":"z_STRING_z","curriculumKey":"BIOMECH","courseKey":"BIOMECHv2325ceCHOb","sectionArray":["BIOMECHv2325ceCHOb1"],"sectionCount":"1","courseDateStart":"2022-06-20T11:59:00.000Z","courseDateEnd":"2022-06-24T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD","jCal":"NNULL","gradeLevelKey":"GL35","locationName":"Charlottesville Catholic School","locationKey":"CHOb","courseRegionKey":"CHO","curriculumId":"3509","termId":"202223","weekId":"202225"},{"_id":"3575","courseNameDisplay":"Ceramics","courseName":"Ceramics","courseNameAbbrv":"Ceramics","curriculumKey":"CERAMICS","courseKey":"CERAMICSv2325ceCHOb","sectionArray":["CERAMICSv2325ceCHOb1"],"sectionCount":"1","courseDateStart":"2022-06-20T11:59:00.000Z","courseDateEnd":"2022-06-24T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD","jCal":"NNULL","gradeLevelKey":"GL35","locationName":"Charlottesville Catholic School","locationKey":"CHOb","courseRegionKey":"CHO","curriculumId":"20","termId":"202223","weekId":"202225"},{"_id":"3577","courseNameDisplay":"Drone Academy","courseName":"Drone Academy","courseNameAbbrv":"Drone Acad","curriculumKey":"DRONEAC","courseKey":"DRONEACv2325ceCHOb","sectionArray":["DRONEACv2325ceCHOb1"],"sectionCount":"1","courseDateStart":"2022-06-20T11:59:00.000Z","courseDateEnd":"2022-06-24T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD","jCal":"NNULL","gradeLevelKey":"GL35","locationName":"Charlottesville Catholic School","locationKey":"CHOb","courseRegionKey":"CHO","curriculumId":"37","termId":"202223","weekId":"202225"},{"_id":"3579","courseNameDisplay":"Girls Leadership","courseName":"Girls Leadership Elem","courseNameAbbrv":"Girls Leadership Elem","curriculumKey":"GIRLLEADEL","courseKey":"GIRLLEADELv2325bCHOa","sectionArray":["GIRLLEADELv2325bCHOa1"],"sectionCount":"1","courseDateStart":"2022-06-20T11:59:00.000Z","courseDateEnd":"2022-06-24T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD,AM","jCal":"NNULL","gradeLevelKey":"GL02","locationName":"STEAM Incubator","locationKey":"CHOa","courseRegionKey":"CHO","curriculumId":"3352","termId":"202223","weekId":"202225"},{"_id":"3580","courseNameDisplay":"Girls Leadership","courseName":"Girls Leadership Elem","courseNameAbbrv":"Girls Leadership Elem","curriculumKey":"GIRLLEADEL","courseKey":"GIRLLEADELv2325ceCHOa","sectionArray":["GIRLLEADELv2325ceCHOa1"],"sectionCount":"1","courseDateStart":"2022-06-20T11:59:00.000Z","courseDateEnd":"2022-06-24T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD","jCal":"NNULL","gradeLevelKey":"GL35","locationName":"STEAM Incubator","locationKey":"CHOa","courseRegionKey":"CHO","curriculumId":"3352","termId":"202223","weekId":"202225"},{"_id":"3581","courseNameDisplay":"Girls Leadership MS","courseName":"Girls Leadership MS","courseNameAbbrv":"GirlsLeadershipMS","curriculumKey":"GIRLLEADMS","courseKey":"GIRLLEADMSv2325fhCHOa","sectionArray":["GIRLLEADMSv2325fhCHOa1"],"sectionCount":"1","courseDateStart":"2022-06-20T11:59:00.000Z","courseDateEnd":"2022-06-24T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD","jCal":"NNULL","gradeLevelKey":"GL68","locationName":"STEAM Incubator","locationKey":"CHOa","courseRegionKey":"CHO","curriculumId":"3360","termId":"202223","weekId":"202225"},{"_id":"3574","courseNameDisplay":"Mad Scientist Chemistry","courseName":"Mad Scientist Chemistry","courseNameAbbrv":"Mad Science","curriculumKey":"MADSCICHEM","courseKey":"MADSCICHEMv2325bCHOb","sectionArray":["MADSCICHEMv2325bCHOb1"],"sectionCount":"1","courseDateStart":"2022-06-20T11:59:00.000Z","courseDateEnd":"2022-06-24T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD","jCal":"NNULL","gradeLevelKey":"GL02","locationName":"Charlottesville Catholic School","locationKey":"CHOb","courseRegionKey":"CHO","curriculumId":"27","termId":"202223","weekId":"202225"},{"_id":"3573","courseNameDisplay":"Pirate Science","courseName":"Pirate Science","courseNameAbbrv":"z_STRING_z","curriculumKey":"PIRATESCI","courseKey":"PIRATESCIv2325bCHOb","sectionArray":["PIRATESCIv2325bCHOb1"],"sectionCount":"2","courseDateStart":"2022-06-20T11:59:00.000Z","courseDateEnd":"2022-06-24T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD,AM","jCal":"NNULL","gradeLevelKey":"GL02","locationName":"Charlottesville Catholic School","locationKey":"CHOb","courseRegionKey":"CHO","curriculumId":"3511","termId":"202223","weekId":"202225"},{"_id":"3576","courseNameDisplay":"STEAM Survivor","courseName":"STEAM Survivor","courseNameAbbrv":"z_STRING_z","curriculumKey":"Survivor","courseKey":"Survivorv2325ceCHOb","sectionArray":["Survivorv2325ceCHOb1"],"sectionCount":"1","courseDateStart":"2022-06-20T11:59:00.000Z","courseDateEnd":"2022-06-24T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD","jCal":"NNULL","gradeLevelKey":"GL35","locationName":"Charlottesville Catholic School","locationKey":"CHOb","courseRegionKey":"CHO","curriculumId":"3501","termId":"202223","weekId":"202225"},{"_id":"3582","courseNameDisplay":"Superhero Science","courseName":"Superhero Science","courseNameAbbrv":"z_STRING_z","curriculumKey":"SUPERHERO","courseKey":"SUPERHEROv2325bCHOb","sectionArray":["SUPERHEROv2325bCHOb1"],"sectionCount":"1","courseDateStart":"2022-06-20T11:59:00.000Z","courseDateEnd":"2022-06-24T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD","jCal":"NNULL","gradeLevelKey":"GL02","locationName":"Charlottesville Catholic School","locationKey":"CHOb","courseRegionKey":"CHO","curriculumId":"3514","termId":"202223","weekId":"202225"},{"_id":"3586","courseNameDisplay":"Ceramics","courseName":"Ceramics","courseNameAbbrv":"Ceramics","curriculumKey":"CERAMICS","courseKey":"CERAMICSv2326fhCHOb","sectionArray":["CERAMICSv2326fhCHOb1"],"sectionCount":"1","courseDateStart":"2022-06-27T11:59:00.000Z","courseDateEnd":"2022-07-01T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD","jCal":"NNULL","gradeLevelKey":"GL68","locationName":"Charlottesville Catholic School","locationKey":"CHOb","courseRegionKey":"CHO","curriculumId":"20","termId":"202223","weekId":"202226"},{"_id":"3584","courseNameDisplay":"Forensics Detectives","courseName":"Forensics","courseNameAbbrv":"Forensics","curriculumKey":"FORENSICS","courseKey":"FORENSICSv2326ceCHOb","sectionArray":["FORENSICSv2326ceCHOb1"],"sectionCount":"1","courseDateStart":"2022-06-27T11:59:00.000Z","courseDateEnd":"2022-07-01T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD","jCal":"NNULL","gradeLevelKey":"GL35","locationName":"Charlottesville Catholic School","locationKey":"CHOb","courseRegionKey":"CHO","curriculumId":"24","termId":"202223","weekId":"202226"},{"_id":"3587","courseNameDisplay":"Inventing","courseName":"Inventing","courseNameAbbrv":"Invent","curriculumKey":"INVENT","courseKey":"INVENTv2326bCHOa","sectionArray":["INVENTv2326bCHOa1"],"sectionCount":"1","courseDateStart":"2022-06-27T11:59:00.000Z","courseDateEnd":"2022-07-01T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"03:30:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"HD,AM","jCal":"NNULL","gradeLevelKey":"GL02","locationName":"STEAM Incubator","locationKey":"CHOa","courseRegionKey":"CHO","curriculumId":"50","termId":"202223","weekId":"202226"},{"_id":"3585","courseNameDisplay":"Mad Scientist Chemistry","courseName":"Mad Scientist Chemistry","courseNameAbbrv":"Mad Science","curriculumKey":"MADSCICHEM","courseKey":"MADSCICHEMv2326ceCHOb","sectionArray":["MADSCICHEMv2326ceCHOb1"],"sectionCount":"1","courseDateStart":"2022-06-27T11:59:00.000Z","courseDateEnd":"2022-07-01T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD","jCal":"NNULL","gradeLevelKey":"GL35","locationName":"Charlottesville Catholic School","locationKey":"CHOb","courseRegionKey":"CHO","curriculumId":"27","termId":"202223","weekId":"202226"},{"_id":"3588","courseNameDisplay":"Maker Laboratory","courseName":"Maker Laboratory","courseNameAbbrv":"Maker Sum","curriculumKey":"MAKERLAB","courseKey":"MAKERLABv2326ceCHOa","sectionArray":["MAKERLABv2326ceCHOa1"],"sectionCount":"1","courseDateStart":"2022-06-27T11:59:00.000Z","courseDateEnd":"2022-07-01T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD,AM","jCal":"NNULL","gradeLevelKey":"GL35","locationName":"STEAM Incubator","locationKey":"CHOa","courseRegionKey":"CHO","curriculumId":"1296","termId":"202223","weekId":"202226"},{"_id":"3590","courseNameDisplay":"Art Lab","courseName":"Art Lab","courseNameAbbrv":"Art Lab","curriculumKey":"ARTLAB","courseKey":"ARTLABv2328bCHOb","sectionArray":["ARTLABv2328bCHOb1"],"sectionCount":"1","courseDateStart":"2022-07-11T11:59:00.000Z","courseDateEnd":"2022-07-15T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD","jCal":"NNULL","gradeLevelKey":"GL02","locationName":"Charlottesville Catholic School","locationKey":"CHOb","courseRegionKey":"CHO","curriculumId":"16","termId":"202223","weekId":"202228"},{"_id":"3594","courseNameDisplay":"Construction Kids","courseName":"Construction Kids","courseNameAbbrv":"ConstructKids","curriculumKey":"CONKIDS","courseKey":"CONKIDSv2328bCHOa","sectionArray":["CONKIDSv2328bCHOa1"],"sectionCount":"1","courseDateStart":"2022-07-11T11:59:00.000Z","courseDateEnd":"2022-07-15T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"03:30:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"HD,AM","jCal":"NNULL","gradeLevelKey":"GL02","locationName":"STEAM Incubator","locationKey":"CHOa","courseRegionKey":"CHO","curriculumId":"1283","termId":"202223","weekId":"202228"},{"_id":"3592","courseNameDisplay":"Drone Academy","courseName":"Drone Academy","courseNameAbbrv":"Drone Acad","curriculumKey":"DRONEAC","courseKey":"DRONEACv2328fhCHOb","sectionArray":["DRONEACv2328fhCHOb1"],"sectionCount":"1","courseDateStart":"2022-07-11T11:59:00.000Z","courseDateEnd":"2022-07-15T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD","jCal":"NNULL","gradeLevelKey":"GL68","locationName":"Charlottesville Catholic School","locationKey":"CHOb","courseRegionKey":"CHO","curriculumId":"37","termId":"202223","weekId":"202228"},{"_id":"3593","courseNameDisplay":"Forensics Investigators","courseName":"Forensics","courseNameAbbrv":"Forensics","curriculumKey":"FORENSICS","courseKey":"FORENSICSv2328fhCHOb","sectionArray":["FORENSICSv2328fhCHOb1"],"sectionCount":"1","courseDateStart":"2022-07-11T11:59:00.000Z","courseDateEnd":"2022-07-15T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD","jCal":"NNULL","gradeLevelKey":"GL68","locationName":"Charlottesville Catholic School","locationKey":"CHOb","courseRegionKey":"CHO","curriculumId":"24","termId":"202223","weekId":"202228"},{"_id":"3589","courseNameDisplay":"Journey to Atlantis","courseName":"Journey to Atlantis","courseNameAbbrv":"z_STRING_z","curriculumKey":"ATLANTIS","courseKey":"ATLANTISv2328bCHOb","sectionArray":["ATLANTISv2328bCHOb1"],"sectionCount":"1","courseDateStart":"2022-07-11T11:59:00.000Z","courseDateEnd":"2022-07-15T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD,AM","jCal":"NNULL","gradeLevelKey":"GL02","locationName":"Charlottesville Catholic School","locationKey":"CHOb","courseRegionKey":"CHO","curriculumId":"3515","termId":"202223","weekId":"202228"},{"_id":"3591","courseNameDisplay":"Photography 101","courseName":"Photography","courseNameAbbrv":"Photo","curriculumKey":"PHOTO","courseKey":"PHOTOv2328ceCHOb","sectionArray":["PHOTOv2328ceCHOb1"],"sectionCount":"1","courseDateStart":"2022-07-11T11:59:00.000Z","courseDateEnd":"2022-07-15T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD","jCal":"NNULL","gradeLevelKey":"GL35","locationName":"Charlottesville Catholic School","locationKey":"CHOb","courseRegionKey":"CHO","curriculumId":"30","termId":"202223","weekId":"202228"},{"_id":"3600","courseNameDisplay":"Sport & Trick Shot Biomechanics","courseName":"Biomechanics Lab","courseNameAbbrv":"z_STRING_z","curriculumKey":"BIOMECH","courseKey":"BIOMECHv2329fhCHOb","sectionArray":["BIOMECHv2329fhCHOb1"],"sectionCount":"1","courseDateStart":"2022-07-18T11:59:00.000Z","courseDateEnd":"2022-07-22T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD","jCal":"NNULL","gradeLevelKey":"GL68","locationName":"Charlottesville Catholic School","locationKey":"CHOb","courseRegionKey":"CHO","curriculumId":"3509","termId":"202223","weekId":"202229"},{"_id":"3595","courseNameDisplay":"Digging Dinos","courseName":"Digging Dinos","courseNameAbbrv":"z_STRING_z","curriculumKey":"Dinosaurs","courseKey":"Dinosaursv2329bCHOb","sectionArray":["Dinosaursv2329bCHOb1"],"sectionCount":"1","courseDateStart":"2022-07-18T11:59:00.000Z","courseDateEnd":"2022-07-22T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD,AM","jCal":"NNULL","gradeLevelKey":"GL02","locationName":"Charlottesville Catholic School","locationKey":"CHOb","courseRegionKey":"CHO","curriculumId":"3516","termId":"202223","weekId":"202229"},{"_id":"3598","courseNameDisplay":"Forensic Detectives","courseName":"Forensics","courseNameAbbrv":"Forensics","curriculumKey":"FORENSICS","courseKey":"FORENSICSv2329ceCHOb","sectionArray":["FORENSICSv2329ceCHOb1"],"sectionCount":"1","courseDateStart":"2022-07-18T11:59:00.000Z","courseDateEnd":"2022-07-22T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD","jCal":"NNULL","gradeLevelKey":"GL35","locationName":"Charlottesville Catholic School","locationKey":"CHOb","courseRegionKey":"CHO","curriculumId":"24","termId":"202223","weekId":"202229"},{"_id":"3601","courseNameDisplay":"Lead with STEAM","courseName":"Lead with STEAM","courseNameAbbrv":"LeadwithSTEAM","curriculumKey":"LEADSTEAM","courseKey":"LEADSTEAMv2329bCHOa","sectionArray":["LEADSTEAMv2329bCHOa1"],"sectionCount":"1","courseDateStart":"2022-07-18T11:59:00.000Z","courseDateEnd":"2022-07-22T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD,AM","jCal":"NNULL","gradeLevelKey":"GL02","locationName":"STEAM Incubator","locationKey":"CHOa","courseRegionKey":"CHO","curriculumId":"3461","termId":"202223","weekId":"202229"},{"_id":"3602","courseNameDisplay":"Lead with STEAM","courseName":"Lead with STEAM","courseNameAbbrv":"LeadwithSTEAM","curriculumKey":"LEADSTEAM","courseKey":"LEADSTEAMv2329beCHOa","sectionArray":["LEADSTEAMv2329beCHOa1"],"sectionCount":"1","courseDateStart":"2022-07-18T11:59:00.000Z","courseDateEnd":"2022-07-22T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD,AM","jCal":"NNULL","gradeLevelKey":"GL25","locationName":"STEAM Incubator","locationKey":"CHOa","courseRegionKey":"CHO","curriculumId":"3461","termId":"202223","weekId":"202229"},{"_id":"3603","courseNameDisplay":"Lead with STEAM","courseName":"Lead with STEAM","courseNameAbbrv":"LeadwithSTEAM","curriculumKey":"LEADSTEAM","courseKey":"LEADSTEAMv2329fhCHOa","sectionArray":["LEADSTEAMv2329fhCHOa1"],"sectionCount":"1","courseDateStart":"2022-07-18T11:59:00.000Z","courseDateEnd":"2022-07-22T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD","jCal":"NNULL","gradeLevelKey":"GL68","locationName":"STEAM Incubator","locationKey":"CHOa","courseRegionKey":"CHO","curriculumId":"3461","termId":"202223","weekId":"202229"},{"_id":"3596","courseNameDisplay":"Paint and Mixed Media","courseName":"Paint and Mixed Media","courseNameAbbrv":"Paint","curriculumKey":"PAINTMEDIA","courseKey":"PAINTMEDIAv2329ceCHOb","sectionArray":["PAINTMEDIAv2329ceCHOb1"],"sectionCount":"1","courseDateStart":"2022-07-18T11:59:00.000Z","courseDateEnd":"2022-07-22T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD","jCal":"NNULL","gradeLevelKey":"GL35","locationName":"Charlottesville Catholic School","locationKey":"CHOb","courseRegionKey":"CHO","curriculumId":"29","termId":"202223","weekId":"202229"},{"_id":"3599","courseNameDisplay":"Photography 201*","courseName":"Photography","courseNameAbbrv":"Photo","curriculumKey":"PHOTO","courseKey":"PHOTOv2329dhCHOb","sectionArray":["PHOTOv2329dhCHOb1"],"sectionCount":"1","courseDateStart":"2022-07-18T11:59:00.000Z","courseDateEnd":"2022-07-22T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD","jCal":"NNULL","gradeLevelKey":"GL48","locationName":"Charlottesville Catholic School","locationKey":"CHOb","courseRegionKey":"CHO","curriculumId":"30","termId":"202223","weekId":"202229"},{"_id":"3597","courseNameDisplay":"Robotics and Coding","courseName":"Robotics and Coding","courseNameAbbrv":"Robot","curriculumKey":"ROBOTCODE","courseKey":"ROBOTCODEv2329ceCHOb","sectionArray":["ROBOTCODEv2329ceCHOb1"],"sectionCount":"1","courseDateStart":"2022-07-18T11:59:00.000Z","courseDateEnd":"2022-07-22T11:59:00.000Z","couseTimeStart":"09:00:00.000","courseTimeDuration":"08:00:00.000","courseDaysOfWeek":"1,2,3,4,5","courseOptions":"FD","jCal":"NNULL","gradeLevelKey":"GL35","locationName":"Charlottesville Catholic School","locationKey":"CHOb","courseRegionKey":"CHO","curriculumId":"33","termId":"202223","weekId":"202229"}]
+	// ø </KLUDGE_GET>
+	
+	let weekDocDbObject = weeksGetByTermId(Number(session.getItem('termId')))
+	// console.log(`weekDocDbObject = weeksGetByTermId(Number(session.getItem('termId')))`)
+	// console.log(`weekDocDbObject = weeksGetByTermId(${Number(session.getItem('termId'))})`)
+	// console.log(`weekDocDbObject: [object below]`)
+	// console.dir(weekDocDbObject)
+	let weekObjectThis = {}
+	// weekObjectThis = weekDocDbObject[202223]
+	// console.log(`weekObjectThis: [object below]`)
+	// console.log(weekObjectThis)
+
+	let locationObject = locationGetByRegionKey(session.getItem('termRegionId'))
+	// console.log(`locationObject: [object below]`)
+	// console.dir(locationObject)
+
+
+	let gradeLevelDocDbObject = gradeLevelGetCurrent()
+	// console.log(`gradeLevelDocDbObject: [object below]`)
+	// console.dir(gradeLevelDocDbObject)
+	let gradeLevelObjectThis = {}
+
+	
+	
+	for (let index = 0; index < allCoursesWorkingObject.length; index++) {
+		const element = allCoursesWorkingObject[index];
+		gradeLevelObjectThis = gradeLevelDocDbObject[element.gradeLevelKey]
+		weekObjectThis = weekDocDbObject[element.weekId]
+		 
+		element.weekNameCardinal = weekObjectThis.nameCardinal
+		element.weekDateStartAbbrv = weekObjectThis.dateStartAbbrv
+		element.weekDaysOfWeekString = weekObjectThis.daysOfWeekString
+
+		let weekTimeBlockKey = (element.courseOptions).replace(',','_')
+		weekTimeBlockKey = weekTimeBlockKey.includes('FD') ? 'FD' : weekTimeBlockKey
+		weekTimeBlockKey = weekTimeBlockKey === 'HD_AM' ? 'AM' : weekTimeBlockKey
+		weekTimeBlockKey = weekTimeBlockKey === 'HD_PM' ? 'PM' : weekTimeBlockKey
+		element.weekTimeBlockKey = weekTimeBlockKey	
+		element.weekTimeBlockSpanString = weekObjectThis[weekTimeBlockKey]['timeBlockSpanString']
+		 
+		element.locationNameCommon = locationObject[element.locationKey]['nameCommon']
+		 
+		element.gradeLevelHuman = gradeLevelObjectThis.humanHyphenatedKey
+		element.gradeLevelFullArray = gradeLevelObjectThis.fullArray
+		 
+		element.weight = index
+	}
+	memory.setItem('memoryWorkingBackupObject',JSON.stringify(allCoursesWorkingObject))
+	// $w('#developerResponseTXTBX').value = JSON.stringify(allCoursesWorkingObject,undefined,4)
+	
+	
+	console.log(`groupEnd: konstantTermCoursesOnReady()`)
+	console.groupEnd()
+	composeFilterFormObject()
+}
+async function konstantSelectedCurriculaRepeaterOnReady_DEP(){
+	// console.groupCollapsed(`konstantSelectedCurriculaRepeaterOnReady_DEP()`)
+	console.group(`konstantSelectedCurriculaRepeaterOnReady_DEP()`)
 	let termObject = JSON.parse(memory.getItem('memoryResponseObject'))
 	console.log(`termObject: [object below`)
 	console.dir(termObject)
@@ -147,7 +222,7 @@ async function konstantSelectedCurriculaRepeaterOnReady(){
 	// // let coursesGET = await getDrupalURI(url, false, true)
 	// console.log(`coursesGET: `)
 	// console.dir(coursesGET)
-	// console.log(`groupEnd: konstantSelectedCurriculaRepeaterOnReady()`)
+	// console.log(`groupEnd: konstantSelectedCurriculaRepeaterOnReady_DEP()`)
 	// console.groupEnd()
 	composeFilterFormObject()
 	return
@@ -237,8 +312,24 @@ export async function onReadyCurriculaJSON_DEP(){
 //==============================        <loadCurriculaRepeater_DEP>         ==============================
 //====================================================================================================
 function evaluationPaginationAndLoadRepeater(){
+	// ø LOAD_COURSES_ON_READY_03_evaluationPaginationAndLoadRepeater_OnReadyFirstEightCourses
+	// ø FILTER_COURSES_04_evaluationPaginationAndLoadRepeater
 	// ø CREATE_NEW_COURSE_04_evaluationPaginationAndLoadRepeater
-	let curriculaObjectArray = JSON.parse(memory.getItem('memoryWorkingObject'))
+	// console.groupCollapsed(`evaluationPaginationAndLoadRepeater`)
+	console.group(`evaluationPaginationAndLoadRepeater`)
+	let allCoursesWorkingObject = JSON.parse(memory.getItem('memoryWorkingBackupObject'))
+	let filteredCourseBuffer = JSON.parse(memory.getItem('memoryWorkingObject'))
+	// /* EVEN ONLY DEMO: SUCCESS*/ let filteredCourseBuffer = ["1","3","5","7","9","11","13","15","17","19","21","23","25","27","29","31","33","35","37","39","41"]
+	// /* ODD ONLY DEMO: SUCCESS*/ let filteredCourseBuffer = ["0","2","4","6","8","10","12","14","16","18","20","22","24","26","28","30","32","34","36","38","40","42"]
+	// 		memory.setItem('memoryWorkingObject',JSON.stringify(filteredCourseBuffer))
+	//memory.setItem('memoryWorkingObject',JSON.stringify(filteredCourseBuffer))
+	console.log(`allCoursesWorkingObject [array - from JSON.parse() below]`)
+	console.dir(allCoursesWorkingObject)
+	console.log(`filteredCourseBuffer [array - from JSON.parse() below]`)
+	console.dir(filteredCourseBuffer)
+	console.log('return FORCE: evaluationPaginationAndLoadRepeater: just logs above')
+
+	// let curriculaObjectArray = JSON.parse(memory.getItem('memoryWorkingObject'))
 	// console.log(`curriculaObjectArray: [array below]`)
 	// console.dir(curriculaObjectArray)
 	// let repeaterObject = yesObject
@@ -258,18 +349,18 @@ function evaluationPaginationAndLoadRepeater(){
 	// paramObject.kind = 'location'
 	// paramObject.key = session.getItem('termRegionId')
 	// let locationObject = locationGetByKey('CHO')
-	let locationObject = locationGetByRegionKey(session.getItem('termRegionId'))
+	// let locationObject = locationGetByRegionKey(session.getItem('termRegionId'))
 	// console.log(`locationObject: [object below]`)
 	// console.dir(locationObject)
 
 
-	let weekDocDbObject = weeksGetByTermId(Number(session.getItem('termId')))
+	// let weekDocDbObject = weeksGetByTermId(Number(session.getItem('termId')))
 	// console.log(`weekDocDbObject = weeksGetByTermId(Number(session.getItem('termId')))`)
 	// console.log(`weekDocDbObject = weeksGetByTermId(${Number(session.getItem('termId'))})`)
 	// console.log(`weekDocDbObject: [object below]`)
 	// console.dir(weekDocDbObject)
 
-	let gradeLevelDocDbObject = gradeLevelGetCurrent()
+	// let gradeLevelDocDbObject = gradeLevelGetCurrent()
 	// console.log(`gradeLevelDocDbObject: [object below]`)
 	// console.dir(gradeLevelDocDbObject)
 
@@ -280,7 +371,7 @@ function evaluationPaginationAndLoadRepeater(){
 	if($w(paginationId).totalPages === 100){
 		// totalPages === 100 indicates default paginationObject
 		$w(paginationId).currentPage = 1
-		$w(paginationId).totalPages = Math.ceil(curriculaObjectArray.length / pageItemCount);
+		$w(paginationId).totalPages = Math.ceil(filteredCourseBuffer.length / pageItemCount);
 	}
 	// repeaterObject.currentPagination = {}
 	// repeaterObject.currentPagination.totalPages = $w(paginationId).totalPages
@@ -290,61 +381,63 @@ function evaluationPaginationAndLoadRepeater(){
 	// repeaterObject.currentPagination.pageIndex = pageIndex
 	// repeaterObject.currentPagination.offset = offset
 
-	let repeaterCurriculaObjectArray = []
+	let repeaterCoursesObjectArray = []
 	for (let rptrIndex = offset ; rptrIndex < pageItemCount + offset; rptrIndex++) {
-		const element = curriculaObjectArray[rptrIndex];
+		const filteredPointerIndex = filteredCourseBuffer[rptrIndex]
+		const element = allCoursesWorkingObject[filteredPointerIndex];
 		if(typeof element !== 'undefined'){
 			// ø <TRANSFORM_REPEATER_DATA>
 			// element.simpleWeek = element.weekId - element.termId + 1
 			// ø </TRANSFORM_REPEATER_DATA>
-			repeaterCurriculaObjectArray.push(element)	
+			repeaterCoursesObjectArray.push(element)	
 		}
 	}
-	console.log(`repeaterCurriculaObjectArray: [array below]`)
-	console.dir(repeaterCurriculaObjectArray)
+	console.log(`repeaterCoursesObjectArray: [array below]`)
+	console.dir(repeaterCoursesObjectArray)
 	
 	// let prefix = 'selected'//KLUDGE: rewrite later
 	// let keyTXTid = '#'+ prefix + 'KeyTXT'
 	// let nameTXTid = '#'+ prefix + 'NameTXT'
 
-	$w(repeaterId).data = repeaterCurriculaObjectArray;
+	$w(repeaterId).data = repeaterCoursesObjectArray;
 	// console.log(`$w(repeaterId).data: $w(${repeaterId}).data:`)
 	// console.dir($w(repeaterId).data)
-	let gradeLevelObjectThis = {}
-	let weekObjectThis = {}
-	let weekTimeBlockKey = 'STRING'
-	let weekTimeBlockObjectThis = {}
+	// let gradeLevelObjectThis = {}
+	// let weekObjectThis = {}
+	// let weekTimeBlockKey = 'STRING'
+	// let weekTimeBlockObjectThis = {}
 	console.log(`REFACTOR: repeaterCurriculaObjectArray => repeaterCourseObjectArray`)
-	$w(repeaterId).onItemReady( ($curriculumElement, curriculumElementData, index) => {
-		gradeLevelObjectThis = gradeLevelDocDbObject[curriculumElementData.gradeLevelKey]
+	$w(repeaterId).onItemReady( ($courseElement, courseElementData, index) => {
+		// gradeLevelObjectThis = gradeLevelDocDbObject[courseElementData.gradeLevelKey]
 		// console.log(`gradeLevelObjectThis: [object below]`)
 		// console.log(gradeLevelObjectThis)
-		weekObjectThis = weekDocDbObject[curriculumElementData.weekId]
-		weekTimeBlockKey = (curriculumElementData.courseOptions).replace(',','_')
-		console.log(`weekObjectThis: [object below]`)
-		console.log(weekObjectThis)
+		// weekObjectThis = weekDocDbObject[courseElementData.weekId]
+		// weekTimeBlockKey = (courseElementData.courseOptions).replace(',','_')
+		// console.log(`weekObjectThis: [object below]`)
+		// console.log(weekObjectThis)
 		 
-		weekTimeBlockKey = weekTimeBlockKey.includes('FD') ? 'FD' : weekTimeBlockKey
-		weekTimeBlockKey = weekTimeBlockKey === 'HD_AM' ? 'AM' : weekTimeBlockKey
-		weekTimeBlockKey = weekTimeBlockKey === 'HD_PM' ? 'pM' : weekTimeBlockKey
+		// weekTimeBlockKey = weekTimeBlockKey.includes('FD') ? 'FD' : weekTimeBlockKey
+		// weekTimeBlockKey = weekTimeBlockKey === 'HD_AM' ? 'AM' : weekTimeBlockKey
+		// weekTimeBlockKey = weekTimeBlockKey === 'HD_PM' ? 'pM' : weekTimeBlockKey
 		// console.log(`weekTimeBlockKey: ${weekTimeBlockKey}`)
-		weekTimeBlockObjectThis = weekObjectThis[weekTimeBlockKey]
+		// weekTimeBlockObjectThis = weekObjectThis[weekTimeBlockKey]
 		// console.log(`weekTimeBlockObjectThis: [object below]`)
 		// console.log(weekTimeBlockObjectThis)
 
 		 
-		$curriculumElement('#courseNameDisplayTXT').text = curriculumElementData.courseNameDisplay;
-		$curriculumElement('#locationConcatTXT').text = `${locationObject[curriculumElementData.locationKey]['nameCommon']} [${curriculumElementData.locationKey}]`
-		// $curriculumElement('#simpleWeekTXT').text = `${weekObjectThis.nameCardinal} [${weekObjectThis.dateStartAbbrv.substr(0,weekObjectThis.dateStartAbbrv.length - 6)}]`
-		$curriculumElement('#simpleWeekTXT').text = `${weekObjectThis.nameCardinal} [${weekObjectThis.dateStartAbbrv}]`
+		$courseElement('#courseNameDisplayTXT').text = courseElementData.courseNameDisplay;
+		$courseElement('#locationConcatTXT').text = `${courseElementData.locationNameCommon} [${courseElementData.locationKey}]`
+		$courseElement('#simpleWeekTXT').text = `${courseElementData.weekNameCardinal} [${courseElementData.weekDateStartAbbrv}]`
 
-		$curriculumElement('#gradeLevelHumanTXT').text = gradeLevelObjectThis.humanHyphenatedKey
-		$curriculumElement('#timeSpanStringTXT').text = weekTimeBlockObjectThis.timeBlockSpanString
-		$curriculumElement('#timeSpanStringTXT').text += (curriculumElementData.courseOptions.substr(3)).length > 0 ? ` [${curriculumElementData.courseOptions.substr(3)}]` : ''
-		$curriculumElement('#daysOfWeekStringTXT').text = weekObjectThis.daysOfWeekString
-		$curriculumElement('#courseKeyTXT').text = curriculumElementData.courseKey;
-		$curriculumElement('#sectionCountTXT').text = curriculumElementData.sectionCount.toString()
+		$courseElement('#gradeLevelHumanTXT').text = courseElementData.gradeLevelHuman
+		$courseElement('#timeSpanStringTXT').text = courseElementData.weekTimeBlockSpanString
+		$courseElement('#timeSpanStringTXT').text += (courseElementData.courseOptions.substr(3)).length > 0 ? ` [${courseElementData.courseOptions.substr(3)}]` : ''
+		$courseElement('#daysOfWeekStringTXT').text = courseElementData.weekDaysOfWeekString
+		$courseElement('#courseKeyTXT').text = courseElementData.courseKey;
+		$courseElement('#sectionCountTXT').text = courseElementData.sectionCount.toString()
 	});
+	console.log(`groupEnd: evaluationPaginationAndLoadRepeater`)
+	console.groupEnd()
 
 }
 
@@ -803,6 +896,7 @@ export function newCourseFormLoadAfterClick(newCourseDataObject){
 
 // ø <---------- <validate preview data>  ---------->
 export function validateFilterForm(){
+	// ø FILTER_COURSES_01_validateFilterForm
 	// ø CREATE_NEW_COURSE_01_ValidateFilterForm
 	let ErrorString = ''
 	// if(($w('#courseNameINPUT').value).length === 0){
@@ -947,6 +1041,7 @@ export function validateFilterForm(){
 
 // ø <---------- <catch & display ERROR>  ---------->
 export function catchAndDisplayError(ErrorString){
+	// ø FILTER_COURSES_02err_catchAndDisplayError
 	// ø TERMINUS CREATE_NEW_COURSE_02_catchAndDisplayError
 	// START OVER: NEXT-BTN_click => CREATE_NEW_COURSE_±3_Click_clearCourseForm
 	// ADJUST FORM: NEXT-BTN_click =>  CREATE_NEW_COURSE_00_Click_PreviewBTN
@@ -965,6 +1060,8 @@ export function catchAndDisplayError(ErrorString){
 
 // ø <---------- <collectAndCalculateData_DEP(courseStartDate, courseEndDate)>  ---------->
 function composeFilterFormObject(){
+	// ø LOAD_COURSES_ON_READY_01_composeFilterFormObject_OnReadyForceChangeNoFilter
+	// ø FILTER_COURSES_02_composeFilterFormObject
 	// ø CREATE_NEW_COURSE_02_composeFilterFormObject
 	// console.groupCollapsed(`composeFilterFormObject()`)
 	console.group(`composeFilterFormObject()`)
@@ -1020,6 +1117,8 @@ function composeFilterFormObject(){
 	}
 }
 function applyFilterToBuffer(paramObjectFilterForm){
+	// ø LOAD_COURSES_ON_READY_02_applyFilterToBuffer_OnReadyForceAllCourses
+	// ø FILTER_COURSES_03_applyFilterToBuffer
 	// ø CREATE_NEW_COURSE_03_applyFilterToBuffer_paramObjectFilterForm
 	// console.groupCollapsed(`applyFilterToBuffer(paramObjectFilterForm)`)
 	console.group(`applyFilterToBuffer(paramObjectFilterForm)`)
@@ -1035,22 +1134,22 @@ function applyFilterToBuffer(paramObjectFilterForm){
 	// console.log(`gradeLevelDocDbObject: [object below]`)
 	// console.dir(gradeLevelDocDbObject)
 
-	let pendingCourseBuffer = JSON.parse(memory.getItem('memoryWorkingObject'))
-	// console.log(`pendingCourseBuffer: [array below]`)
-	// console.dir(pendingCourseBuffer)
-	// console.log(`paramObjectFilterForm: [object below]`)
-	// console.dir(paramObjectFilterForm)
-	
+	let allCoursesWorkingObject = JSON.parse(memory.getItem('memoryWorkingBackupObject'))
+	console.log(`allCoursesWorkingObject: [array below]`)
+	console.dir(allCoursesWorkingObject)
+	console.log(`paramObjectFilterForm: [object below]`)
+	console.dir(paramObjectFilterForm)
+	// return
 	let filteredCourseBuffer = []
 	let filteringComplete = paramObjectFilterForm.pipedBoolean === "false|false|false|false|false" ? true : false
 	if(filteringComplete){
-		filteredCourseBuffer = pendingCourseBuffer
-		// console.log(`filteredCourseBuffer: [array below]`)
-		// console.dir(filteredCourseBuffer)
+		filteredCourseBuffer = Object.keys(allCoursesWorkingObject)
+		console.log(`filteredCourseBuffer: [array below]`)
+		console.dir(filteredCourseBuffer)
 		// console.log(`LOAD_COURSE_REPEATER: evaluationPaginationAndLoadRepeater()`)
 		console.log(`groupEnd: applyFilterToBuffer(paramObjectFilterForm)`)
 		console.groupEnd()
-		memory.setItem('memoryWorkingObject',JSON.stringify(pendingCourseBuffer))
+		memory.setItem('memoryWorkingObject',JSON.stringify(filteredCourseBuffer))
 		evaluationPaginationAndLoadRepeater()
 		return
 	}
@@ -1393,7 +1492,7 @@ async function develTestingCALL(){
 		await onReadyCurriculaJSON()
 	}
 	if($w('#develTestingRADIOGRP').value === 'ONDECK'){
-		konstantSelectedCurriculaRepeaterOnReady()
+		konstantSelectedCurriculaRepeaterOnReady_DEP()
 	}
 }
 export async function doKLUDGE(){
@@ -1550,6 +1649,7 @@ export function rawPreviewKLUDGE_PreTrash(){
 }
 
 export function previewCourseBTN_click(event) {
+	// ø FILTER_COURSES_00_previewCourseBTN_click
 	// ø CREATE_NEW_COURSE_00_Click_PreviewBTN
 	// ø NEXT CREATE_NEW_COURSE_01_ValidateFilterForm
 	validateFilterForm()

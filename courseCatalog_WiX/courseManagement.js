@@ -43,11 +43,6 @@ import {adminDispatch} from 'public/adminDispatch.js';
 import {fetch} from 'wix-fetch';
 
 // ø QUICK_LIST:
-// ø CREATE_NEW_COURSE
-// ø CREATE_NEW_COURSE_±3_Click_clearCourseForm
-// ø CREATE_NEW_COURSE_±2_resetCourseForm
-// ø CREATE_NEW_COURSE_±1_completeCourseForm_SCRIPTS
-// ø CREATE_NEW_COURSE_±1a_instantiateNewCourseObject
 // ø 
 // ø LOAD_COURSES_ON_READY_00_konstantTermCoursesOnReady
 // ø LOAD_COURSES_ON_READY_01_composeFilterFormObject_OnReadyForceChangeNoFilter
@@ -60,30 +55,12 @@ import {fetch} from 'wix-fetch';
 // ø FILTER_COURSES_03_applyFilterToBuffer
 // ø FILTER_COURSES_04_evaluationPaginationAndLoadRepeater
 // ø 
-// ø CREATE_NEW_COURSE_00_Click_PreviewBTN
-// ø CREATE_NEW_COURSE_01_validateFilterForm
-// ø CREATE_NEW_COURSE_02
-// ø CREATE_NEW_COURSE_02_composeFilterFormObject [CREATE_NEW_COURSE_02_catchAndDisplayError]
-// // ø CREATE_NEW_COURSE_02_collectAndCalculateData_DEP [CREATE_NEW_COURSE_02_catchAndDisplayError]
-// // ø CREATE_NEW_COURSE_03_composeAndDisplayPreview
-// ø CREATE_NEW_COURSE_03_applyFilterToBuffer_paramObjectFilterForm
-// ø CREATE_NEW_COURSE_04_evaluationPaginationAndLoadRepeater
-// // ø CREATE_NEW_COURSE_03a_transformBlock
-// ø TRANSFORM_REPEATER_DATA <----- KLUDGE
-// ø CREATE_NEW_COURSE_03a_transformBlock
-// ø CREATE_NEW_COURSE_04_Click_PostBTN
-// ø CREATE_NEW_COURSE_05_newCourseDrupalPOST
 
 
 $w.onReady(function () {
-	// await onReadyCurriculaJSON()
 	setUpOnReady()
-	// konstantSelectedCurriculaRepeaterOnReady_DEP()
 	konstantTermCoursesOnReady()
 	wixStorageDisplayOnReady()	
-    // datestampinventoryDocDbJSONOnReady()
-	// develOnReady()
-	// callPublicADD_from_toggleExpandButtons_OnReady ()
 	let buttonObjectButtonsUsedArray = [2,3]
 	assignStringsOnReady(buttonObjectButtonsUsedArray,[2,3])
 	wixUserPermissionsOnReady()
@@ -162,12 +139,9 @@ async function konstantTermCoursesOnReady(){
 	console.groupEnd()
 	composeFilterFormObject()
 }
-//==================================================             </OnReady Called Functions>
-//==========================================================================================
-
 
 async function wixUserPermissionsOnReady(){
-
+	
 	let workingMember = await getCurrentMemberObject()
 	// console.log(`workingMember: [object below]`)
 	// console.dir(workingMember)
@@ -192,7 +166,7 @@ async function wixUserPermissionsOnReady(){
 }
 
 export function  datestampinventoryDocDbJSONOnReady() {
-    console.groupCollapsed(`'inventoryDocDbJSON.js' date-stamp function DEMO`)
+	console.groupCollapsed(`'inventoryDocDbJSON.js' date-stamp function DEMO`)
     let datestampStringResult = datestampinventoryDocDbJSON();
     console.log(datestampStringResult);
     console.log(`groupEnd: 'inventoryDocDbJSON.js' date-stamp function DEMO`);
@@ -202,62 +176,28 @@ export function wixStorageDisplayOnReady(){
 	// set lastTermNameTXT
 	$w('#lastTermNameTXT').text = 'Course Management for:\n' + session.getItem('lastTermName')
 }
+
+//==================================================             </OnReady Called Functions>
+//==========================================================================================
+
 //====================================================================================================
-//==============================        <loadCurriculaRepeater_DEP>         ==============================
+//==============================        <Filter and Load Course-Repeater>         ==============================
 //====================================================================================================
+
 function evaluationPaginationAndLoadRepeater(){
 	// ø LOAD_COURSES_ON_READY_03_evaluationPaginationAndLoadRepeater_OnReadyFirstEightCourses
 	// ø FILTER_COURSES_04_evaluationPaginationAndLoadRepeater
-	// ø CREATE_NEW_COURSE_04_evaluationPaginationAndLoadRepeater
 	// console.groupCollapsed(`evaluationPaginationAndLoadRepeater`)
 	console.group(`evaluationPaginationAndLoadRepeater`)
 	let allCoursesWorkingObject = JSON.parse(memory.getItem('memoryWorkingBackupObject'))
 	let filteredCourseBuffer = JSON.parse(memory.getItem('memoryWorkingObject'))
 	// /* EVEN ONLY DEMO: SUCCESS*/ let filteredCourseBuffer = ["1","3","5","7","9","11","13","15","17","19","21","23","25","27","29","31","33","35","37","39","41"]
 	// /* ODD ONLY DEMO: SUCCESS*/ let filteredCourseBuffer = ["0","2","4","6","8","10","12","14","16","18","20","22","24","26","28","30","32","34","36","38","40","42"]
-	// 		memory.setItem('memoryWorkingObject',JSON.stringify(filteredCourseBuffer))
-	//memory.setItem('memoryWorkingObject',JSON.stringify(filteredCourseBuffer))
 	console.log(`allCoursesWorkingObject [array - from JSON.parse() below]`)
 	console.dir(allCoursesWorkingObject)
 	console.log(`filteredCourseBuffer [array - from JSON.parse() below]`)
 	console.dir(filteredCourseBuffer)
 	console.log('return FORCE: evaluationPaginationAndLoadRepeater: just logs above')
-
-	// let curriculaObjectArray = JSON.parse(memory.getItem('memoryWorkingObject'))
-	// console.log(`curriculaObjectArray: [array below]`)
-	// console.dir(curriculaObjectArray)
-	// let repeaterObject = yesObject
-	// console.log(`repeaterObject: [object below]`)
-	// console.dir(repeaterObject)
-	
-	// let areValidParameters = true
-	// repeaterObject.notes = []
-	// repeaterObject.notes.push('VALIDATION Is Pending')
-	// if(!areValidParameters){
-	// 	// return repeaterObject
-	// 	return
-	// }
-	// repeaterObject.notes.push(`'forcePaginationOffset' Attribute will be destroyed as soon as it is utilized`)
-	// repeaterObject.notes.push(`'forcePaginationOffset' ONLY used if the PaginationObject _cannot_ be counted on [100?,3?], especially at instantiation`)
-	// let paramObject = {}
-	// paramObject.kind = 'location'
-	// paramObject.key = session.getItem('termRegionId')
-	// let locationObject = locationGetByKey('CHO')
-	// let locationObject = locationGetByRegionKey(session.getItem('termRegionId'))
-	// console.log(`locationObject: [object below]`)
-	// console.dir(locationObject)
-
-
-	// let weekDocDbObject = weeksGetByTermId(Number(session.getItem('termId')))
-	// console.log(`weekDocDbObject = weeksGetByTermId(Number(session.getItem('termId')))`)
-	// console.log(`weekDocDbObject = weeksGetByTermId(${Number(session.getItem('termId'))})`)
-	// console.log(`weekDocDbObject: [object below]`)
-	// console.dir(weekDocDbObject)
-
-	// let gradeLevelDocDbObject = gradeLevelGetCurrent()
-	// console.log(`gradeLevelDocDbObject: [object below]`)
-	// console.dir(gradeLevelDocDbObject)
-
 
 	let repeaterId = '#courseFilteredRPTR'
 	let paginationId = '#courseFilteredPGNTN'
@@ -267,58 +207,26 @@ function evaluationPaginationAndLoadRepeater(){
 		$w(paginationId).currentPage = 1
 		$w(paginationId).totalPages = Math.ceil(filteredCourseBuffer.length / pageItemCount);
 	}
-	// repeaterObject.currentPagination = {}
-	// repeaterObject.currentPagination.totalPages = $w(paginationId).totalPages
-	// repeaterObject.currentPagination.currentPage = $w(paginationId).currentPage
 	let pageIndex = $w(paginationId).currentPage - 1
 	let offset = pageIndex * pageItemCount
-	// repeaterObject.currentPagination.pageIndex = pageIndex
-	// repeaterObject.currentPagination.offset = offset
 
 	let repeaterCoursesObjectArray = []
 	for (let rptrIndex = offset ; rptrIndex < pageItemCount + offset; rptrIndex++) {
 		const filteredPointerIndex = filteredCourseBuffer[rptrIndex]
 		const element = allCoursesWorkingObject[filteredPointerIndex];
 		if(typeof element !== 'undefined'){
-			// ø <TRANSFORM_REPEATER_DATA>
-			// element.simpleWeek = element.weekId - element.termId + 1
-			// ø </TRANSFORM_REPEATER_DATA>
 			repeaterCoursesObjectArray.push(element)	
 		}
 	}
-	console.log(`repeaterCoursesObjectArray: [array below]`)
-	console.dir(repeaterCoursesObjectArray)
+	// console.log(`repeaterCoursesObjectArray: [array below]`)
+	// console.dir(repeaterCoursesObjectArray)
 	
-	// let prefix = 'selected'//KLUDGE: rewrite later
-	// let keyTXTid = '#'+ prefix + 'KeyTXT'
-	// let nameTXTid = '#'+ prefix + 'NameTXT'
-
 	$w(repeaterId).data = repeaterCoursesObjectArray;
 	// console.log(`$w(repeaterId).data: $w(${repeaterId}).data:`)
 	// console.dir($w(repeaterId).data)
-	// let gradeLevelObjectThis = {}
-	// let weekObjectThis = {}
-	// let weekTimeBlockKey = 'STRING'
-	// let weekTimeBlockObjectThis = {}
-	console.log(`REFACTOR: repeaterCurriculaObjectArray => repeaterCourseObjectArray`)
-	$w(repeaterId).onItemReady( ($courseElement, courseElementData, index) => {
-		// gradeLevelObjectThis = gradeLevelDocDbObject[courseElementData.gradeLevelKey]
-		// console.log(`gradeLevelObjectThis: [object below]`)
-		// console.log(gradeLevelObjectThis)
-		// weekObjectThis = weekDocDbObject[courseElementData.weekId]
-		// weekTimeBlockKey = (courseElementData.courseOptions).replace(',','_')
-		// console.log(`weekObjectThis: [object below]`)
-		// console.log(weekObjectThis)
-		 
-		// weekTimeBlockKey = weekTimeBlockKey.includes('FD') ? 'FD' : weekTimeBlockKey
-		// weekTimeBlockKey = weekTimeBlockKey === 'HD_AM' ? 'AM' : weekTimeBlockKey
-		// weekTimeBlockKey = weekTimeBlockKey === 'HD_PM' ? 'pM' : weekTimeBlockKey
-		// console.log(`weekTimeBlockKey: ${weekTimeBlockKey}`)
-		// weekTimeBlockObjectThis = weekObjectThis[weekTimeBlockKey]
-		// console.log(`weekTimeBlockObjectThis: [object below]`)
-		// console.log(weekTimeBlockObjectThis)
 
-		 
+	$w(repeaterId).onItemReady( ($courseElement, courseElementData, index) => {
+
 		$courseElement('#courseNameDisplayTXT').text = courseElementData.courseNameDisplay;
 		$courseElement('#locationConcatTXT').text = `${courseElementData.locationNameCommon} [${courseElementData.locationKey}]`
 		$courseElement('#simpleWeekTXT').text = `${courseElementData.weekNameCardinal} [${courseElementData.weekDateStartAbbrv}]`
@@ -334,6 +242,8 @@ function evaluationPaginationAndLoadRepeater(){
 	console.groupEnd()
 
 }
+
+// ø <KEEP_FOR transform into 'Edit Section' && || 'Add Section'>
 export function processSelectCurriculum(event,scriptName){
 	// ø BEGIN processSelectCurriculum
 	console.groupCollapsed(`processSelectCurriculum(scriptname)`)
@@ -355,7 +265,7 @@ export function processSelectCurriculum(event,scriptName){
 		}
 	});
 	console.log(`final: repeaterId: ${repeaterId}`)
-
+	
 	const data = $w(repeaterId).data;
 	console.log(`data`)
 	console.dir(data)
@@ -367,32 +277,20 @@ export function processSelectCurriculum(event,scriptName){
 	return clickedItemData
 	// ø END processSelectCurriculum
 }
+// ø </KEEP_FOR transform into 'Edit Section' && || 'Add Section'>
 
 //====================================================================================================
-//==============================        </loadCurriculaRepeater_DEP>        ==============================
+//==============================        </Filter and Load Course-Repeater>        ==============================
 //====================================================================================================
 
 //====================================================================================================
 //========================================        <Confirm Backend with Mulitply and Publick with Add>
-export function callPublicADD_from_toggleExpandButtons_OnReady () {
-	console.groupCollapsed(`callPublicADD_from_toggleExpandButtons_OnReady`)
-	let yyyymmOfBuild = 202111
-	let ddOfBuild = 9
-    let sum = addFrom_toggleExpandButtons(yyyymmOfBuild,ddOfBuild);
-	console.log(`${sum} = addFrom_toggleExpandButtons(${202111},${9})`)
-    console.groupEnd();
-}
-
-
-export async function develOnReady(){
-	// let termObject = JSON.parse(local.getItem('lastParamObject'))/*BIGBLEED*//*LINE_288*/
-	let termObject = JSON.parse(memory.getItem('memoryParamObject'))/*BIGBLEED*//*LINE_288*/
-}
 //========================================       </Confirm Backend with Mulitply and Publick with Add>
 //====================================================================================================
 
 //====================================================================================================
-//============================================================                  <Overall Build Course>
+//============================================================                  <Overall THINGS Course>
+//============================================================        ...Some Active && Some Vestigial
 //====================================================================================================
 
 //==========================================================================================
@@ -436,130 +334,15 @@ function resetCourseFiltersAll(){
 	// ø NEXT-BTN_click =>  CREATE_NEW_COURSE_00_Click_PreviewBTN
 }
 // ø <---------- </restCourseFormAll> ---------->
- 
-// ø <---------- <On Click Curriculum Object>  ---------->
-export function instantiateNewCourseObject(clickedItemData){
-	// ø CREATE_NEW_COURSE_±1a_instantiateNewCourseObject
-	console.groupCollapsed(`export function instantiateNewCourseObject(clickedItemData)`)
-	console.log(`clickedItemData: [object below]`)
-	console.dir(clickedItemData)
 
-	let newCourseDataObject = {}
-	newCourseDataObject.notes = []
-	newCourseDataObject.abbrvName = clickedItemData.abbrvName
-	newCourseDataObject.name = clickedItemData.name
-	newCourseDataObject.curriculumId = clickedItemData.nid
-	newCourseDataObject.textKey = clickedItemData.textKey
-	newCourseDataObject.notes.push(`append clickedItemData to newCourseDataObject`)
-	// console.log(`append clickedItemData: newCourseDataObject: [object below]`)
-	// console.dir(newCourseDataObject)
-
-	// let lastTermRecord =  JSON.parse(local.getItem('lastParamObject'))/*BIGBLEED*//*LINE_350*/
-	let lastTermRecord =  JSON.parse(memory.getItem('memoryParamObject'))/*BIGBLEED*//*LINE_350*/
-	// console.log(`lastTermRecord: [object below]`)
-	// console.dir(lastTermRecord)
- 
-	newCourseDataObject.termDateEnd = lastTermRecord.termDateEnd
-	newCourseDataObject.termDateStart = lastTermRecord.termDateStart
-	newCourseDataObject.termId = lastTermRecord.termId
-	newCourseDataObject.termRegion = lastTermRecord.termRegion
-	newCourseDataObject.title = lastTermRecord.title
-	newCourseDataObject.termWix_id = lastTermRecord._id
-	newCourseDataObject.notes.push(`append lastTermRecord to  newCourseDataObject`)
-	// console.log(`append lastTermRecord: newCourseDataObject: [object below]`)
-
-	// appendLocationsJsonDocDb(newCourseDataObject)
-	// console.log(`append Locations: newCourseDataObject: [object below]`)
-	console.log(`CREATE_NEW_COURSE_±1a_instantiateNewCourseObject: newCourseDataObject:`)
-	console.dir(newCourseDataObject)
-	
-	newCourseFormLoadAfterClick(newCourseDataObject)
-
-	console.log(`groupEnd: export function instantiateNewCourseObject(clickedItemData)`)
-	console.groupEnd()
-
-}
-// ø <---------- </On Click Curriculum Object> ---------->
- 
- 
-// ø <---------- <On Change Start-Time & Duration>  ---------->
-function onChangeStartTimeDurationRadioSettings(scriptName = 'STRING'){
-	let whatChanged = scriptName.substr(-7) === '_change' ? scriptName.substr(0, scriptName.length - 7) : scriptName
-	$w('#developerResponseTXTBX').value += 'NEW-CHANGE:\n===========\n' + whatChanged
-	let supportedWhatChangedArray = ['summerTmBlksRDBTNS','startTimeTMPKR','durationTMPKR']
-	if(!supportedWhatChangedArray.includes(whatChanged)){
-		return
-	}
-	let wIdWhatChanged = '#' + whatChanged
-	if(whatChanged === 'summerTmBlksRDBTNS'){
-		$w('#developerResponseTXTBX').value += '\nSINCE: Summner-Block is: '+ $w('#summerTmBlksRDBTNS').value
-		//Full Day,FULL; Morning,AM; Afternoon,PM
-		if($w('#summerTmBlksRDBTNS').value === 'FULL'){
-			$w('#developerResponseTXTBX').value += '\nSET: Start & Duration to: 9:00am - 8:00'
-			// $w("#myTimeInput").value = "16:30";
-			$w('#startTimeTMPKR').value = '09:00'
-			$w('#durationTMPKR').value = '08:00'
-			$w('#halfDayCNTBX').expand()
-		}
-		if($w('#summerTmBlksRDBTNS').value === 'AM'){
-			$w('#developerResponseTXTBX').value += '\nSET: Start & Duration to: 9:00am - 3:30'
-			// $w('#developerResponseTXTBX').value += '\nto: AM'
-			$w('#startTimeTMPKR').value = '09:00'
-			$w('#durationTMPKR').value = '03:30'
-			$w('#halfDayCBXGRP').value = []
-			$w('#halfDayCBXGRP').resetValidityIndication()
-			$w('#halfDayCNTBX').collapse()
-		}
-		if($w('#summerTmBlksRDBTNS').value === 'PM'){
-			$w('#developerResponseTXTBX').value += '\nSET: Start & Duration to: 1:30pm - 3:30'
-			// $w('#developerResponseTXTBX').value += '\nto: PM'
-			$w('#startTimeTMPKR').value = '13:30'
-			$w('#durationTMPKR').value = '03:30'
-			$w('#halfDayCBXGRP').value = []
-			$w('#halfDayCBXGRP').resetValidityIndication()
-			$w('#halfDayCNTBX').collapse()
-		}
-	}
-	if(whatChanged !== 'summerTmBlksRDBTNS'){
-		$w('#developerResponseTXTBX').value += `\nSINCE: StartTime: ${$w('#startTimeTMPKR').value} & Duration: ${$w('#durationTMPKR').value}`
-		$w('#summerTmBlksRDBTNS').value = ''
-		if($w('#startTimeTMPKR').value === '09:00:00.000' && $w('#durationTMPKR').value === '08:00:00.000'){
-			$w('#developerResponseTXTBX').value += '\nSET: Summner-Block to: FULL'
-			$w('#summerTmBlksRDBTNS').value = 'FULL'
-			$w('#halfDayCNTBX').expand()
-		}
-		if($w('#startTimeTMPKR').value === '09:00:00.000' && $w('#durationTMPKR').value === '03:30:00.000'){
-			$w('#developerResponseTXTBX').value += '\nSET: Summner-Block to: AM'
-			$w('#summerTmBlksRDBTNS').value = 'AM'
-			$w('#halfDayCBXGRP').value = []
-			$w('#halfDayCBXGRP').resetValidityIndication()
-			$w('#halfDayCNTBX').collapse()
-		}
-		if($w('#startTimeTMPKR').value === '13:30:00.000' && $w('#durationTMPKR').value === '03:30:00.000'){
-			$w('#developerResponseTXTBX').value += '\nSET: Summner-Block to: PM'
-			$w('#summerTmBlksRDBTNS').value = 'PM'
-			$w('#halfDayCBXGRP').value = []
-			$w('#halfDayCBXGRP').resetValidityIndication()
-			$w('#halfDayCNTBX').collapse()
-		}
-		if($w('#summerTmBlksRDBTNS').value.length === 0){
-			$w('#developerResponseTXTBX').value += '\nSET: Summner-Block to: EEMPTY'
-			$w('#halfDayCBXGRP').value = []
-			$w('#halfDayCBXGRP').resetValidityIndication()
-			$w('#halfDayCNTBX').collapse()
-		}
-	}
-		$w('#developerResponseTXTBX').value += '\n...\n'
-}
-// ø <---------- </On Change Start-Time & Duration> ---------->
- 
 // ø <---------- <Instantiate jsonDocDb for Locations>  ---------->
+// ø <VESTIGIAL_CODE_except_for_Location_DropDown>
 export function appendLocationsJsonDocDb(newCourseDataObject){
 	let paramObject = {}
 	paramObject.kind = 'location'
 	paramObject.key = session.getItem('termRegionId')
 	let locationResponseObject = getInventoryResponse(paramObject)
-
+	
 	let locationObjectArray = locationResponseObject.data.response
 	console.log(`locationResponseObject.data.response: locationObjectArray: [object below]`)
 	console.dir(locationObjectArray)
@@ -571,7 +354,7 @@ export function appendLocationsJsonDocDb(newCourseDataObject){
 	session.setItem('supportedLocationConcatString', locationKeyConcatSting)
 	
 	// ø <Load Locations Repeater Right Here>
-
+	
 	// • <Specific WiX Repeater Code>
     let repeaterId = '#formLocationRPTR'
     let prefixId = 'formLocation'
@@ -582,61 +365,45 @@ export function appendLocationsJsonDocDb(newCourseDataObject){
 	let keyTXTid = '#'+ prefixId + 'KeyTXT'
 	let nameTXTid = '#'+ prefixId + 'NameTXT'
 	$w(repeaterId).onItemReady( ($locationElement, locationElementData, index) => {
-        $locationElement(keyTXTid).text = locationElementData.key;
+		$locationElement(keyTXTid).text = locationElementData.key;
 		$locationElement(nameTXTid).text = locationElementData.nameFull;
 	});
     // • </Specific WiX Repeater Code>
-
+	
 	// ø </Load Locations Repeater Right Here>
 }
+// ø </VESTIGIAL_CODE_except_for_Location_DropDown>
 // ø <---------- </Instantiate jsonDocDb for Locations> ---------->
 
 // ø <---------- <Populate Form Curriculum and Locations>  ---------->
+// ø <VESTIGIAL_CODE_except_for_GENERAL_loadAfterClick>
 export function newCourseFormLoadAfterClick(newCourseDataObject){
 	$w('#courseNameINPUT').value = newCourseDataObject.name
 	$w('#courseNameDisplayINPUT').value = newCourseDataObject.name
 	// session.setItem('lastResponseObject', JSON.stringify(newCourseDataObject))/*BIGBLEED*//*LINE_473*/
 	memory.setItem('memoryResponseObject', JSON.stringify(newCourseDataObject))/*BIGBLEED*//*LINE_473*/
 }
+// ø </VESTIGIAL_CODE_except_for_GENERAL_loadAfterClick>
 // ø <---------- </Populate Form Curriculum and Locations> ---------->
 
 //==================================================      </Instantiate from Curricula Click>
 //==========================================================================================
 //==========================================================================================
-//==================================================              <Preview Button: Validate>
+//==================================================         <Apply Filter Button: Validate>
 
-// ø <---------- <validate preview data>  ---------->
+// ø <---------- <validate Filter-Form data>  ---------->
 export function validateFilterForm(){
 	// ø FILTER_COURSES_01_validateFilterForm
 	// ø CREATE_NEW_COURSE_01_ValidateFilterForm
 	let ErrorString = ''
-	// if(($w('#courseNameINPUT').value).length === 0){
-	// 	ErrorString += ` •  'Course Name' is blank please select a Course at Left\n`
-	// }
-	// if(($w('#courseNameDisplayINPUT').value).length === 0){
-	// 	ErrorString += ` •  'Course Name Display' cannot be blank\n`
-	// }
 	//ø <GradeLevel>
 	let isValidGradeLevel = 'TTRUE'
-	// isValidMaxMin = $w('#minGradeDRPDN').value === 'NA' && $w('#gradeLevelDRPDN').value === 'NA' ? 'BOTH_NA' : isValidMaxMin
 	isValidGradeLevel = $w('#minGradeDRPDN').value !== 'NA' && $w('#gradeLevelDRPDN').value !== 'NA' ? 'BOTH_VALUES' : isValidGradeLevel
 
-	// isValidMaxMin = isValidMaxMin === 'FFALSE' ? 'MIN_MAX_JUST_ONE' : isValidMaxMin
-	// isValidMaxMin = isValidMaxMin === 'BOTH_VALUES' && Number($w('#minGradeDRPDN').value) > Number($w('#maxGradeDRPDN').value) ? 'MIN_GT_MAX' : isValidMaxMin
-	// isValidMaxMin = isValidMaxMin === 'BOTH_NA' && $w('#gradeLevelDRPDN').value === 'NA' ? 'ALL_UNSET' : isValidMaxMin
-	// isValidMaxMin = isValidMaxMin === 'BOTH_VALUES' && $w('#gradeLevelDRPDN').value !== 'NA' ? 'ALL_SET' : isValidMaxMin
-
-	// let testAppendString = `\nisValidGradeLevel: ${isValidGradeLevel}: `
 	let stringIsValidHOLDER = ''
-	// isValidMaxMin = isValidMaxMin.includes('BOTH') ? 'TTRUE' : 'FFALSE'
-	// testAppendString += `${isValidMaxMin}`
 	if(isValidGradeLevel !== 'TTRUE'){
-		// stringMinMax = stringMinMax === 'MIN_MAX_JUST_ONE' ? 'Only one-of  Min-Grade and Max-Grade is set' : stringMinMax
-		// stringMinMax = stringMinMax === 'MIN_GT_MAX' ? 'Min-Grade cannot be greater than Max-Grade' : stringMinMax
-		// stringMinMax = stringMinMax === 'ALL_UNSET' ? 'No Valid Grade-Level was selected' : stringMinMax
 		stringIsValidHOLDER = isValidGradeLevel === 'BOTH_VALUES' ? `You cannot select both a 'Grade Contains' Grades and a Grade-Level from the Drop-Down` : stringIsValidHOLDER
 		ErrorString += ` •  ${stringIsValidHOLDER}\n`
-		// console.log(`isValidMaxMin === '${isValidMaxMin}': ErrorString: ${ErrorString}`)
 	}
 	//ø </GradeLevel>
 
@@ -661,67 +428,13 @@ export function validateFilterForm(){
 	}
 	//ø </Week-Contains Date>
 
-	// let weekContainsDateKLUDGE = true
-	// if (weekContainsDateKLUDGE) {
-	// 	return
-	// }
 
-
-
-	// if(($w('#isValidWeekDate').value !== 'TTRUE'){
-	// 	ErrorString += ` •  You cannot select both a 'Week Drop-Dow' Week and a 'Contains Date' from the Date-Picker\n`
-	// }
-
-
-	// let coursStartDateDaysOfWeekAreNotNull = ($w('#daysOfWeekCBXGRP').selectedIndices).length === 0 ? false : true
-	// coursStartDateDaysOfWeekAreNotNull = $w('#startDateDTPKR').value === null ? false : coursStartDateDaysOfWeekAreNotNull
-	// // console.log(`coursStartDateDaysOfWeekAreNotNull: ${coursStartDateDaysOfWeekAreNotNull}`)
-	// let courseStartDateDate = $w('#startDateDTPKR').value
-	// courseStartDateDate = courseStartDateDate == null ? new Date(1961,11,25,6,59) : courseStartDateDate
-	// let courseStartDate = courseStartDateDate.toISOString()
-	// courseStartDate   =  (courseStartDate).substr(0,11) + '11:59' + ':00.000Z'//"2021-08-13T05:00:00.000Z"
-	// let courseEndDate = 'SKIP_TERM_DATES_LOGIC'
-	// if(coursStartDateDaysOfWeekAreNotNull){
-	// 	let weeks = Number($w('#weekCountDRPDN').value)
-	// 	let daysOfWeek = $w('#daysOfWeekCBXGRP').selectedIndices
-	// 	let getEndDateFromScheduleResponse = getEndDateFromSchedule_Start_Weeks_DaysOfWeek(courseStartDate, weeks, daysOfWeek)
-	// 	if(getEndDateFromScheduleResponse.affirmativeBoolean === true){
-	// 		courseEndDate = getEndDateFromScheduleResponse.affirmative.simpleResponse
-	// 	}else{
-	// 		ErrorString += ` •  Could not properly Calculat the 'End Date' of the Course\n`
-			
-	// 	}
-		
-	// 	// let termObject = JSON.parse(local.getItem('lastParamObject'))/*BIGBLEED*//*LINE_536*/
-	// 	let termObject = JSON.parse(memory.getItem('memoryParamObject'))/*BIGBLEED*//*LINE_536*/
-	// 	let termDateStart =  (termObject.termDateStart).substr(0,11) + '00:01' + ':00.000Z'//"2021-08-13T05:00:00.000Z"
-	// 	let termDateEnd   =  (termObject.termDateEnd).substr(0,11) + '23:59' + ':00.000Z'//"2021-08-13T05:00:00.000Z"
-
-	// 	if(courseEndDate !== 'SKIP_TERM_DATES_LOGIC'){
-	// 		if(courseStartDate < termDateStart){
-	// 			ErrorString += ` •  The Course begins before the Term has started\n`
-	// 		}
-	// 		if(courseEndDate > termDateEnd){
-	// 			ErrorString += ` •  The Course ends after the Term is over\n`
-	// 		}
-	// 	}
-	// }else{
-	// 	ErrorString += ` •  A Start Date for the Course must be selected\n`
-	// }
-	// let HOLDER = '_' + $w('#regionLocationKeyINPUT').value + '_'
-	// if(!(session.getItem('supportedLocationConcatString')).includes(HOLDER)){
-	// 		ErrorString += ` •  Please select a Valid Location\n`
-	// }
-
-// ø CREATE_NEW_COURSE_01_ValidateFilterForm
+	// ø CREATE_NEW_COURSE_01_ValidateFilterForm
 	if(ErrorString.length === 0){
-		// ErrorString = ErrorString.length === 0 ? 'NO ERRORS YET' : ErrorString
 		// ø SUCCESS CREATE_NEW_COURSE_01_ValidateFilterForm
-		// // ø NEXT CREATE_NEW_COURSE_02_collectAndCalculateData_DEP
 		// ø NEXT CREATE_NEW_COURSE_02_composeFilterFormObject
 		$w('#previewErrorStringTXT').text = `Holder for Errors`
 		$w('#previewErrorStringTXT').collapse()
-		// collectAndCalculateData_DEP(courseStartDate, courseEndDate)
 		console.log('VALID CALL: composeFilterFormObject()')
 		composeFilterFormObject()
 	}else{
@@ -729,33 +442,12 @@ export function validateFilterForm(){
 		// ø NEXT CREATE_NEW_COURSE_02_catchAndDisplayError
 		catchAndDisplayError(ErrorString)
 	}
-
-
-
-	// ErrorString += '\n' + testAppendString
-	// $w('#formPreviewCNTBX').show()
-	// $w('#coursePreviewTXT').text = ErrorString
-	// return
-/*
-	- ‡ courseNameDisplay non-Empty
-	- ‡ at least one day selected
-  - GradeLevel is Valid
-	  - ‡ GradeLevel DropDown is Valid 
-		  - ‡ XOR 
-	  - † (GradeMin Valid && GradeMax Valid) && GradMin <= GradeMax 
-
-	- † Start Date between termDates 
-	- † Start Date + Weeks + last Day of Week between TermDates 
-*/
 }
-// ø <---------- </validate preview data> ---------->
+// ø <---------- </validate Filter-Form data> ---------->
 
 // ø <---------- <catch & display ERROR>  ---------->
 export function catchAndDisplayError(ErrorString){
 	// ø FILTER_COURSES_02err_catchAndDisplayError
-	// ø TERMINUS CREATE_NEW_COURSE_02_catchAndDisplayError
-	// START OVER: NEXT-BTN_click => CREATE_NEW_COURSE_±3_Click_clearCourseForm
-	// ADJUST FORM: NEXT-BTN_click =>  CREATE_NEW_COURSE_00_Click_PreviewBTN
 	console.log(`ErrorString: `)
 	console.log(ErrorString)
 	$w('#previewErrorStringTXT').expand()
@@ -763,13 +455,14 @@ export function catchAndDisplayError(ErrorString){
 }
 // ø <---------- </catch & display ERROR> ---------->
 
-//==================================================             </Preview Button: Validate>
+//==================================================        </Apply Filter Button: Validate>
 //==========================================================================================
 
 //==========================================================================================
-//==================================================      <Preview Button: Compose & Display>
+//==================================================      <Preview Button: Compose & Display_VESTIGIAL>
 
 // ø <---------- <collectAndCalculateData_DEP(courseStartDate, courseEndDate)>  ---------->
+// ø <---------- <composeFilterFormObject>  ---------->
 function composeFilterFormObject(){
 	// ø LOAD_COURSES_ON_READY_01_composeFilterFormObject_OnReadyForceChangeNoFilter
 	// ø FILTER_COURSES_02_composeFilterFormObject
@@ -827,6 +520,9 @@ function composeFilterFormObject(){
 		applyFilterToBuffer(paramObjectFilterForm)
 	}
 }
+// ø <---------- </composeFilterFormObject> ---------->
+
+// ø <---------- <applyFilterToBuffer>  ---------->
 function applyFilterToBuffer(paramObjectFilterForm){
 	// ø LOAD_COURSES_ON_READY_02_applyFilterToBuffer_OnReadyForceAllCourses
 	// ø FILTER_COURSES_03_applyFilterToBuffer
@@ -873,164 +569,163 @@ function applyFilterToBuffer(paramObjectFilterForm){
 	console.log(`groupEnd: applyFilterToBuffer(paramObjectFilterForm)`)
 	console.groupEnd()
 }
-// ø <---------- <collectAndCalculateData_DEP(courseStartDate, courseEndDate)>  ---------->
-// ø <---------- </collectAndCalculateData_DEP(courseStartDate, courseEndDate)> ---------->
+// ø <---------- </applyFilterToBuffer> ---------->
 
-// ø <---------- <Compose & Display Preview>  ---------->
-export function composeAndDisplayPreview(workingDataObject){
-	// ø CREATE_NEW_COURSE_03_composeAndDisplayPreview
-	console.group(`composeAndDisplayPreview(newCourseDataObject)`)
-	// console.groupCollapsed(`composeAndDisplayPreview(newCourseDataObject)`)
+// ø <---------- <Compose & Display Preview_DEP>  ---------->
+// export function composeAndDisplayPreview_DEP(workingDataObject){
+// 	// ø CREATE_NEW_COURSE_03_composeAndDisplayPreview
+// 	console.group(`composeAndDisplayPreview(newCourseDataObject)`)
+// 	// console.groupCollapsed(`composeAndDisplayPreview(newCourseDataObject)`)
 	
-	$w('#formPreviewCNTBX').show()
+// 	$w('#formPreviewCNTBX').show()
 
-	$w('#newCourseDataObjectPreview').text = 'PASSTHRU: composeAndDisplayPreview(newCourseDataObject)'
-	$w('#newCourseDataObjectPreview').text += '\nWill Use Console-Log to proceed, leave this task for last'
+// 	$w('#newCourseDataObjectPreview').text = 'PASSTHRU: composeAndDisplayPreview(newCourseDataObject)'
+// 	$w('#newCourseDataObjectPreview').text += '\nWill Use Console-Log to proceed, leave this task for last'
 	
-	$w('#previewCourseBTN').hide()
-	$w('#postCourseBTN').show()
+// 	$w('#previewCourseBTN').hide()
+// 	$w('#postCourseBTN').show()
 
-	console.log(`groupEnd: composeAndDisplayPreview(newCourseDataObject)`)
-	console.groupEnd()
-	console.group(`Automated Code from api_OOP`)
+// 	console.log(`groupEnd: composeAndDisplayPreview(newCourseDataObject)`)
+// 	console.groupEnd()
+// 	console.group(`Automated Code from api_OOP`)
 
-	// <COMPOSE_PREVIEW_TEXT>
-	delete workingDataObject.type
-	console.log(`before Preview Composition Code: workingDataObject: [object below`)
-	console.dir(workingDataObject)
+// 	// <COMPOSE_PREVIEW_TEXT>
+// 	delete workingDataObject.type
+// 	console.log(`before Preview Composition Code: workingDataObject: [object below`)
+// 	console.dir(workingDataObject)
 
-	let lineBeginText = ''
-	let paddedAttribute = 'PENDING'
-	let paddingSide = 'LEFT'
-	paddingSide = paddingSide === 'LEFT' ? paddingSide : 'RIGHT'
-	let keyValueSeparatorText = ': '
-	let maxLength = 0
-	let attributeArrayMaxLength = Object.keys(workingDataObject)
-	let attributeKeyString = 'PENDING'//Separate attributes from Key-Strings so that you can get fancy later
-	let attributeArrayKeyString = []//Separate attributes from Key-Strings so that you can get fancy later
-	for (let indexMaxLength = 0; indexMaxLength < attributeArrayMaxLength.length; indexMaxLength++){
-		attributeKeyString = '>' + attributeArrayMaxLength[indexMaxLength] + '<' // Ugly, but fancy...
-		attributeArrayKeyString.push(attributeKeyString)
-		//const attributeMaxLength = attributeArrayMaxLength[indexMaxLength]
-		maxLength = maxLength > attributeKeyString.length ? maxLength : attributeKeyString.length
-	}
-	console.log(`attributeArrayKeyString: RAW:`)
-	console.dir(attributeArrayKeyString)
-	// ø CREATE_NEW_COURSE_03a_transformBlock
-	let transformObject = {}
-	// let transformObject = {"title":{"key":"title","label":"Course Name Display","reorderEdited":100,"reorderIndex":0},"field_coursedateend":{"key":"field_coursedateend","label":"Course Date End","reorderEdited":301,"reorderIndex":8},"field_coursedatestart":{"key":"field_coursedatestart","label":"Course Date Start","reorderEdited":300,"reorderIndex":7},"field_coursekey":{"key":"field_coursekey","label":"Course Key","reorderEdited":104,"reorderIndex":4},"field_coursename":{"key":"field_coursename","label":"Course Name","reorderEdited":101,"reorderIndex":1},"field_coursenameabbrv":{"key":"field_coursenameabbrv","label":"Course Name Abbrv","reorderEdited":102,"reorderIndex":2},"field_coursetimeduration":{"key":"field_coursetimeduration","label":"Course Time Duration","reorderEdited":303,"reorderIndex":10},"field_coursetimestart":{"key":"field_coursetimestart","label":"Course Time Start","reorderEdited":302,"reorderIndex":9},"field_curriculumid":{"key":"field_curriculumid","label":"Curriculum ID","reorderEdited":1001,"reorderIndex":16},"field_curriculumkey":{"key":"field_curriculumkey","label":"Curriculum Key","reorderEdited":103,"reorderIndex":3},"field_daysofweek":{"key":"field_daysofweek","label":"Days of Week","reorderEdited":304,"reorderIndex":11},"field_enrollexcptn":{"key":"field_enrollexcptn","label":"Enroll Excptn","reorderEdited":2299,"reorderIndex":19},"field_gradelevelkey":{"key":"field_gradelevelkey","label":"Grade Level Key","reorderEdited":400,"reorderIndex":13},"field_jcal":{"key":"field_jcal","label":"jCal","reorderEdited":305,"reorderIndex":12},"field_locationkey":{"key":"field_locationkey","label":"Location Key","reorderEdited":501,"reorderIndex":15},"field_locationname":{"key":"field_locationname","label":"Location Name","reorderEdited":500,"reorderIndex":14},"field_sectionarray":{"key":"field_sectionarray","label":"Section Key","reorderEdited":105,"reorderIndex":5},"field_sectioncount":{"key":"field_sectioncount","label":"Section Count","reorderEdited":106,"reorderIndex":6},"field_termid":{"key":"field_termid","label":"Term ID","reorderEdited":1900,"reorderIndex":17},"field_weekid":{"key":"field_weekid","label":"Week ID","reorderEdited":2000,"reorderIndex":18}}
-	// attributeArrayKeyString = ["Course Name Display","Promote","Sticky","Course Date End","Course Date Start","Course Key","Course Name","Course Name Abbrv","Curriculum ID","Curriculum Key","Days of Week","Grade Level Key","Location Key","Location Name","Section","Section Count","Term ID","Week ID"]
-	// attributeArrayKeyString = ["Course Name Display","Promote","Sticky","Course Date End","Course Date Start","Course Key","Course Name","Course Name Abbrv","Curriculum ID","Curriculum Key","Days of Week","Grade Level Key","jCal Expression","Location Key","Location Name","Section","Section Count","Term ID","Week ID"]
-	// • ¯\_(ツ)_/¯   ¯\__ (keep jCAL field as 'NNULL' - expect it to be more important) __/¯
-	// attributeArrayKeyString = ["Course Name Display","Course Date End","Course Date Start","Course Key","Course Name","Course Name Abbrv","Course Time Duration","Course Time Start","Curriculum ID","Curriculum Key","Days of Week","Enroll Excptn","Grade Level Key","jCal","Location Key","Location Name","Section Key","Section Count","Term ID","Week ID"]
-	// ø ¯\__ (      2021-12-12T17:17:00 update to add Start Time and Time Duration, using new mechanism (AGAIN!)       ) __/¯
-	// attributeArrayKeyString = ["Course Name Display","Course Date End","Course Date Start","Course Key","Course Name","Course Name Abbrv","Course Time Duration","Course Time Start","Curriculum ID","Curriculum Key","Days of Week","Enroll Excptn","Grade Level Key","jCal","Location Key","Location Name","Section Key","Section Count","Term ID","Week ID"]
-	// ø ¯\__ (      2021-12-12T18:21:00 update to add Start Time and Time Duration, using new mechanism (AGAIN!)       ) __/¯
-	// attributeArrayKeyString = ["Course Name DisplayZ","Course Date EndZ","Course Date StartZ","Course KeyZ","Course NameZ","Course Name AbbrvZ","Course Time DurationZ","Course Time StartZ","Curriculum IDZ","Curriculum KeyZ","Days of WeekZ","fGrade Level KeyZ","jCalZ","Location KeyZ","Location NameZ","SectionZ","Section CountZ","Term IDZ","Week IDZ"]
-	// ø ¯\__ (      2021-12-13T06:21:00 Full-Boat Documented       ) __/¯
-	// attributeArrayKeyString = ["ZCourse Name Display","Course Date End","Course Date Start","Course Key","Course Name","Course Name Abbrv","Course Time Duration","Course Time Start","Curriculum ID","Curriculum Key","Days of Week","Grade Level Key","jCal","Location Key","Location Name","Section Key","Section Count","Term ID","Week ID"]
-	// ø ¯\__ (      2021-12-13T08:28:00 Full-Boat Documented       ) __/¯
-	attributeArrayKeyString = ["Course Name Display","Course Date End","Course Date Start","Course Key","Course Name","Course Name Abbrv","Half Day Options","Course Time Duration","Course Time Start","Curriculum ID","Curriculum Key","Days of Week","Grade Level Key","jCal","Location Key","Location Name","Section Key","Section Count","Term ID","Week ID"]
-	// ø ¯\__ (      2021-12-13T14:13:00 Full-Boat Documented       ) __/¯
-	let attributeArrayReOrderArray = []
-	// let attributeArrayReOrderArray = [0,6,7,14,13,11,4,3,10,12,16,18,17,8,9,5,15,1,2]
-	// let attributeArrayReOrderArray = [0,7,8,4,1,2,10,9,16,3,11,19,13,12,15,14,5,6,17,18]
-	// ø ¯\__ (      2021-12-12T17:17:00 update to add Start Time and Time Duration, using new mechanism (AGAIN!)       ) __/¯
-	// let attributeArrayReOrderArray = [0,8,7,4,1,2,10,9,16,3,11,19,13,12,15,14,5,6,17,18]
-	// attributeArrayReOrderArray = [2,11,10,6,3,4,13,12,9,5,14,16,15,18,17,7,8,0,1]
-	// ø ¯\__ (      2021-12-13T06:21:00 Full-Boat Documented       ) __/¯
-	// attributeArrayReOrderArray = [0,11,10,4,1,2,13,12,16,3,14,7,15,9,8,5,6,17,18]
-	// ø ¯\__ (      2021-12-13T08:28:00 Full-Boat Documented       ) __/¯
-	attributeArrayReOrderArray = [0,8,7,4,1,2,11,10,9,17,3,12,14,13,16,15,5,6,18,19]
-	// ø ¯\__ (      2021-12-13T14:13:00 Full-Boat Documented       ) __/¯
-	let reOrderIndex = 0
-	// • ¯\_(ツ)_/¯   ¯\__ (keep jCAL field as 'NNULL' - expect it to be more important) __/¯
-	// ø <Transform Literals>
-	// ø ø <Transform Workings>
-	console.log(`<Transform Workings>`)
-	// let workingDaysOfWeek = workingDataObject.field_daysofweek.toString() + 'ZZZ'
-	let workingDaysOfWeek = jsDaysOfWeekArrayToString(workingDataObject.field_daysofweek)
-	console.log(`</Transform Workings>`)
-	// ø ø </Transform Workings>
-	let transformLiteralsObject = {}
-	transformLiteralsObject.field_jcal = 'jCal formatted schedule is pending'
-	transformLiteralsObject.field_daysofweek = workingDaysOfWeek
-	transformLiteralsObject.field_coursedatestart = format(new Date(workingDataObject.field_coursedatestart), 'EEE MMMMMM d, yyyy')
-	transformLiteralsObject.field_coursedateend = format(new Date(workingDataObject.field_coursedateend), 'EEE MMMMMM d, yyyy')
+// 	let lineBeginText = ''
+// 	let paddedAttribute = 'PENDING'
+// 	let paddingSide = 'LEFT'
+// 	paddingSide = paddingSide === 'LEFT' ? paddingSide : 'RIGHT'
+// 	let keyValueSeparatorText = ': '
+// 	let maxLength = 0
+// 	let attributeArrayMaxLength = Object.keys(workingDataObject)
+// 	let attributeKeyString = 'PENDING'//Separate attributes from Key-Strings so that you can get fancy later
+// 	let attributeArrayKeyString = []//Separate attributes from Key-Strings so that you can get fancy later
+// 	for (let indexMaxLength = 0; indexMaxLength < attributeArrayMaxLength.length; indexMaxLength++){
+// 		attributeKeyString = '>' + attributeArrayMaxLength[indexMaxLength] + '<' // Ugly, but fancy...
+// 		attributeArrayKeyString.push(attributeKeyString)
+// 		//const attributeMaxLength = attributeArrayMaxLength[indexMaxLength]
+// 		maxLength = maxLength > attributeKeyString.length ? maxLength : attributeKeyString.length
+// 	}
+// 	console.log(`attributeArrayKeyString: RAW:`)
+// 	console.dir(attributeArrayKeyString)
+// 	// ø CREATE_NEW_COURSE_03a_transformBlock
+// 	let transformObject = {}
+// 	// let transformObject = {"title":{"key":"title","label":"Course Name Display","reorderEdited":100,"reorderIndex":0},"field_coursedateend":{"key":"field_coursedateend","label":"Course Date End","reorderEdited":301,"reorderIndex":8},"field_coursedatestart":{"key":"field_coursedatestart","label":"Course Date Start","reorderEdited":300,"reorderIndex":7},"field_coursekey":{"key":"field_coursekey","label":"Course Key","reorderEdited":104,"reorderIndex":4},"field_coursename":{"key":"field_coursename","label":"Course Name","reorderEdited":101,"reorderIndex":1},"field_coursenameabbrv":{"key":"field_coursenameabbrv","label":"Course Name Abbrv","reorderEdited":102,"reorderIndex":2},"field_coursetimeduration":{"key":"field_coursetimeduration","label":"Course Time Duration","reorderEdited":303,"reorderIndex":10},"field_coursetimestart":{"key":"field_coursetimestart","label":"Course Time Start","reorderEdited":302,"reorderIndex":9},"field_curriculumid":{"key":"field_curriculumid","label":"Curriculum ID","reorderEdited":1001,"reorderIndex":16},"field_curriculumkey":{"key":"field_curriculumkey","label":"Curriculum Key","reorderEdited":103,"reorderIndex":3},"field_daysofweek":{"key":"field_daysofweek","label":"Days of Week","reorderEdited":304,"reorderIndex":11},"field_enrollexcptn":{"key":"field_enrollexcptn","label":"Enroll Excptn","reorderEdited":2299,"reorderIndex":19},"field_gradelevelkey":{"key":"field_gradelevelkey","label":"Grade Level Key","reorderEdited":400,"reorderIndex":13},"field_jcal":{"key":"field_jcal","label":"jCal","reorderEdited":305,"reorderIndex":12},"field_locationkey":{"key":"field_locationkey","label":"Location Key","reorderEdited":501,"reorderIndex":15},"field_locationname":{"key":"field_locationname","label":"Location Name","reorderEdited":500,"reorderIndex":14},"field_sectionarray":{"key":"field_sectionarray","label":"Section Key","reorderEdited":105,"reorderIndex":5},"field_sectioncount":{"key":"field_sectioncount","label":"Section Count","reorderEdited":106,"reorderIndex":6},"field_termid":{"key":"field_termid","label":"Term ID","reorderEdited":1900,"reorderIndex":17},"field_weekid":{"key":"field_weekid","label":"Week ID","reorderEdited":2000,"reorderIndex":18}}
+// 	// attributeArrayKeyString = ["Course Name Display","Promote","Sticky","Course Date End","Course Date Start","Course Key","Course Name","Course Name Abbrv","Curriculum ID","Curriculum Key","Days of Week","Grade Level Key","Location Key","Location Name","Section","Section Count","Term ID","Week ID"]
+// 	// attributeArrayKeyString = ["Course Name Display","Promote","Sticky","Course Date End","Course Date Start","Course Key","Course Name","Course Name Abbrv","Curriculum ID","Curriculum Key","Days of Week","Grade Level Key","jCal Expression","Location Key","Location Name","Section","Section Count","Term ID","Week ID"]
+// 	// • ¯\_(ツ)_/¯   ¯\__ (keep jCAL field as 'NNULL' - expect it to be more important) __/¯
+// 	// attributeArrayKeyString = ["Course Name Display","Course Date End","Course Date Start","Course Key","Course Name","Course Name Abbrv","Course Time Duration","Course Time Start","Curriculum ID","Curriculum Key","Days of Week","Enroll Excptn","Grade Level Key","jCal","Location Key","Location Name","Section Key","Section Count","Term ID","Week ID"]
+// 	// ø ¯\__ (      2021-12-12T17:17:00 update to add Start Time and Time Duration, using new mechanism (AGAIN!)       ) __/¯
+// 	// attributeArrayKeyString = ["Course Name Display","Course Date End","Course Date Start","Course Key","Course Name","Course Name Abbrv","Course Time Duration","Course Time Start","Curriculum ID","Curriculum Key","Days of Week","Enroll Excptn","Grade Level Key","jCal","Location Key","Location Name","Section Key","Section Count","Term ID","Week ID"]
+// 	// ø ¯\__ (      2021-12-12T18:21:00 update to add Start Time and Time Duration, using new mechanism (AGAIN!)       ) __/¯
+// 	// attributeArrayKeyString = ["Course Name DisplayZ","Course Date EndZ","Course Date StartZ","Course KeyZ","Course NameZ","Course Name AbbrvZ","Course Time DurationZ","Course Time StartZ","Curriculum IDZ","Curriculum KeyZ","Days of WeekZ","fGrade Level KeyZ","jCalZ","Location KeyZ","Location NameZ","SectionZ","Section CountZ","Term IDZ","Week IDZ"]
+// 	// ø ¯\__ (      2021-12-13T06:21:00 Full-Boat Documented       ) __/¯
+// 	// attributeArrayKeyString = ["ZCourse Name Display","Course Date End","Course Date Start","Course Key","Course Name","Course Name Abbrv","Course Time Duration","Course Time Start","Curriculum ID","Curriculum Key","Days of Week","Grade Level Key","jCal","Location Key","Location Name","Section Key","Section Count","Term ID","Week ID"]
+// 	// ø ¯\__ (      2021-12-13T08:28:00 Full-Boat Documented       ) __/¯
+// 	attributeArrayKeyString = ["Course Name Display","Course Date End","Course Date Start","Course Key","Course Name","Course Name Abbrv","Half Day Options","Course Time Duration","Course Time Start","Curriculum ID","Curriculum Key","Days of Week","Grade Level Key","jCal","Location Key","Location Name","Section Key","Section Count","Term ID","Week ID"]
+// 	// ø ¯\__ (      2021-12-13T14:13:00 Full-Boat Documented       ) __/¯
+// 	let attributeArrayReOrderArray = []
+// 	// let attributeArrayReOrderArray = [0,6,7,14,13,11,4,3,10,12,16,18,17,8,9,5,15,1,2]
+// 	// let attributeArrayReOrderArray = [0,7,8,4,1,2,10,9,16,3,11,19,13,12,15,14,5,6,17,18]
+// 	// ø ¯\__ (      2021-12-12T17:17:00 update to add Start Time and Time Duration, using new mechanism (AGAIN!)       ) __/¯
+// 	// let attributeArrayReOrderArray = [0,8,7,4,1,2,10,9,16,3,11,19,13,12,15,14,5,6,17,18]
+// 	// attributeArrayReOrderArray = [2,11,10,6,3,4,13,12,9,5,14,16,15,18,17,7,8,0,1]
+// 	// ø ¯\__ (      2021-12-13T06:21:00 Full-Boat Documented       ) __/¯
+// 	// attributeArrayReOrderArray = [0,11,10,4,1,2,13,12,16,3,14,7,15,9,8,5,6,17,18]
+// 	// ø ¯\__ (      2021-12-13T08:28:00 Full-Boat Documented       ) __/¯
+// 	attributeArrayReOrderArray = [0,8,7,4,1,2,11,10,9,17,3,12,14,13,16,15,5,6,18,19]
+// 	// ø ¯\__ (      2021-12-13T14:13:00 Full-Boat Documented       ) __/¯
+// 	let reOrderIndex = 0
+// 	// • ¯\_(ツ)_/¯   ¯\__ (keep jCAL field as 'NNULL' - expect it to be more important) __/¯
+// 	// ø <Transform Literals>
+// 	// ø ø <Transform Workings>
+// 	console.log(`<Transform Workings>`)
+// 	// let workingDaysOfWeek = workingDataObject.field_daysofweek.toString() + 'ZZZ'
+// 	let workingDaysOfWeek = jsDaysOfWeekArrayToString(workingDataObject.field_daysofweek)
+// 	console.log(`</Transform Workings>`)
+// 	// ø ø </Transform Workings>
+// 	let transformLiteralsObject = {}
+// 	transformLiteralsObject.field_jcal = 'jCal formatted schedule is pending'
+// 	transformLiteralsObject.field_daysofweek = workingDaysOfWeek
+// 	transformLiteralsObject.field_coursedatestart = format(new Date(workingDataObject.field_coursedatestart), 'EEE MMMMMM d, yyyy')
+// 	transformLiteralsObject.field_coursedateend = format(new Date(workingDataObject.field_coursedateend), 'EEE MMMMMM d, yyyy')
 	
-	// ø </Transform Literals>
-	// console.log(`attributeArrayKeyString: DISPLAY:`)
-	// console.dir(attributeArrayKeyString)
-	// • COURSES: ["title","promote","sticky","field_coursedateend","field_coursedatestart","field_coursekey","field_coursename","field_coursenameabbrv","field_curriculumid","field_curriculumkey","field_daysofweek","field_gradelevelkey","field_jcal","field_locationkey","field_locationname","field_sectionarray","field_sectioncount","field_termid","field_weekid"]
-	maxLength = paddingSide === 'LEFT' ? maxLength * -1 : maxLength
-	let valueString = 'STRING'
-	let padding = '                                                  '
-	let previewText = ''
-	//let attributeKeyString = 'PENDING'
-	let attributeArray = Object.keys(workingDataObject)
-	console.log(`≈673≈ attributeArray: [array below]`)
-	console.dir(attributeArray)
-	let develReorderAttributeArray = []
-	let noDisplayAttributeArray = ['promote','sticky']
-	let develReorderIndex = 777
-	let develReorderIndexArray = []
-	for (let index = 0; index < attributeArray.length; index++){
-		reOrderIndex = index
-		// develReorderIndex = 777
-		if(typeof attributeArrayReOrderArray.indexOf(index) === 'number'){
-			develReorderIndex = attributeArrayReOrderArray.indexOf(index)
-			reOrderIndex = attributeArrayReOrderArray.indexOf(index)
-		}
-		develReorderIndexArray.push(develReorderIndex)
-		// if(typeof transformObject[attribute]['reorderIndex'] === 'number'){
-		// 	reOrderIndex = transformObject[attribute]['reorderIndex']
-		// }
-		const attribute = attributeArray[reOrderIndex]
-		// if(typeof attributeArrayReOrderArray[index] === 'number'){
-		// 	reOrderIndex = attributeArrayReOrderArray[index]
-		// }
-		attributeKeyString = attribute
-		if (typeof attributeArrayKeyString[reOrderIndex] === 'string') {
-			attributeKeyString = attributeArrayKeyString[reOrderIndex]
-		}
-		// if(typeof transformObject[attribute]['label'] === 'string'){
-		// 	attributeKeyString = transformObject[attribute]['label']
-		// }
-		// if(typeof attributeArrayKeyString[reOrderIndex] === 'string'){
-		// 	attributeKeyString = attributeArrayKeyString[reOrderIndex]
-		// }
-		develReorderAttributeArray.push(attribute)
-		if(typeof workingDataObject[attribute] === 'undefined'){
-			workingDataObject[attribute] = `${attribute} UNDEFINED`
-		}
-		valueString = typeof transformLiteralsObject[attribute] === 'string' ? transformLiteralsObject[attribute] : workingDataObject[attribute].toString()
-		if(!noDisplayAttributeArray.includes(attribute)){
-			paddedAttribute = paddingSide === 'LEFT' ? (padding + attributeKeyString).substr(maxLength) : (attributeKeyString + padding).substr(0,maxLength)
-			previewText += '\n ' + lineBeginText + ' ' + paddedAttribute + keyValueSeparatorText  
-			previewText += valueString
-		}
-	}
-	// </COMPOSE_PREVIEW_TEXT>
-	console.log(`after 'COMPOSE_PREVIEW_TEXT': develReorderIndexArray: [${develReorderIndexArray.toString()}]`)
-	console.log(`after 'COMPOSE_PREVIEW_TEXT': develReorderAttributeArray: [${develReorderAttributeArray.toString()}]`)
-	console.warn(previewText)
-	// $w('#newCourseDataObjectPreview').text = previewText
-	console.groupEnd()
+// 	// ø </Transform Literals>
+// 	// console.log(`attributeArrayKeyString: DISPLAY:`)
+// 	// console.dir(attributeArrayKeyString)
+// 	// • COURSES: ["title","promote","sticky","field_coursedateend","field_coursedatestart","field_coursekey","field_coursename","field_coursenameabbrv","field_curriculumid","field_curriculumkey","field_daysofweek","field_gradelevelkey","field_jcal","field_locationkey","field_locationname","field_sectionarray","field_sectioncount","field_termid","field_weekid"]
+// 	maxLength = paddingSide === 'LEFT' ? maxLength * -1 : maxLength
+// 	let valueString = 'STRING'
+// 	let padding = '                                                  '
+// 	let previewText = ''
+// 	//let attributeKeyString = 'PENDING'
+// 	let attributeArray = Object.keys(workingDataObject)
+// 	console.log(`≈673≈ attributeArray: [array below]`)
+// 	console.dir(attributeArray)
+// 	let develReorderAttributeArray = []
+// 	let noDisplayAttributeArray = ['promote','sticky']
+// 	let develReorderIndex = 777
+// 	let develReorderIndexArray = []
+// 	for (let index = 0; index < attributeArray.length; index++){
+// 		reOrderIndex = index
+// 		// develReorderIndex = 777
+// 		if(typeof attributeArrayReOrderArray.indexOf(index) === 'number'){
+// 			develReorderIndex = attributeArrayReOrderArray.indexOf(index)
+// 			reOrderIndex = attributeArrayReOrderArray.indexOf(index)
+// 		}
+// 		develReorderIndexArray.push(develReorderIndex)
+// 		// if(typeof transformObject[attribute]['reorderIndex'] === 'number'){
+// 		// 	reOrderIndex = transformObject[attribute]['reorderIndex']
+// 		// }
+// 		const attribute = attributeArray[reOrderIndex]
+// 		// if(typeof attributeArrayReOrderArray[index] === 'number'){
+// 		// 	reOrderIndex = attributeArrayReOrderArray[index]
+// 		// }
+// 		attributeKeyString = attribute
+// 		if (typeof attributeArrayKeyString[reOrderIndex] === 'string') {
+// 			attributeKeyString = attributeArrayKeyString[reOrderIndex]
+// 		}
+// 		// if(typeof transformObject[attribute]['label'] === 'string'){
+// 		// 	attributeKeyString = transformObject[attribute]['label']
+// 		// }
+// 		// if(typeof attributeArrayKeyString[reOrderIndex] === 'string'){
+// 		// 	attributeKeyString = attributeArrayKeyString[reOrderIndex]
+// 		// }
+// 		develReorderAttributeArray.push(attribute)
+// 		if(typeof workingDataObject[attribute] === 'undefined'){
+// 			workingDataObject[attribute] = `${attribute} UNDEFINED`
+// 		}
+// 		valueString = typeof transformLiteralsObject[attribute] === 'string' ? transformLiteralsObject[attribute] : workingDataObject[attribute].toString()
+// 		if(!noDisplayAttributeArray.includes(attribute)){
+// 			paddedAttribute = paddingSide === 'LEFT' ? (padding + attributeKeyString).substr(maxLength) : (attributeKeyString + padding).substr(0,maxLength)
+// 			previewText += '\n ' + lineBeginText + ' ' + paddedAttribute + keyValueSeparatorText  
+// 			previewText += valueString
+// 		}
+// 	}
+// 	// </COMPOSE_PREVIEW_TEXT>
+// 	console.log(`after 'COMPOSE_PREVIEW_TEXT': develReorderIndexArray: [${develReorderIndexArray.toString()}]`)
+// 	console.log(`after 'COMPOSE_PREVIEW_TEXT': develReorderAttributeArray: [${develReorderAttributeArray.toString()}]`)
+// 	console.warn(previewText)
+// 	// $w('#newCourseDataObjectPreview').text = previewText
+// 	console.groupEnd()
 
 
-	// ø TERMINUS CREATE_NEW_COURSE_03_composeAndDisplayPreview
-	// ø NEXT-BTN_click => CREATE_NEW_COURSE_04_Click_PostBTN
-}
-// ø <---------- </Compose & Display Preview> ---------->
+// 	// ø TERMINUS CREATE_NEW_COURSE_03_composeAndDisplayPreview
+// 	// ø NEXT-BTN_click => CREATE_NEW_COURSE_04_Click_PostBTN
+// }
+// ø <---------- </Compose & Display Preview_DEP> ---------->
 
-//==================================================     </Preview Button: Compose & Display>
+//==================================================     </Preview Button: Compose & Display_VESTIGIAL>
 //==========================================================================================
 
 //==========================================================================================
-//==================================================      <Post Course & API POST to Drupal>
+//==================================================      <Post Course & API POST to Drupal_VESTIGIAL_PATCH>
 
-// ø <---------- <Post Course to Drupal>  ---------->
-export async function newCourseDrupalPOST(newCourseDrupalObject = {}){
+// ø <---------- <Post Course to Drupal_VESTIGIAL_PATCH>  ---------->
+export async function newCourseDrupalPOST_VESTIGIAL_PATCH(newCourseDrupalObject = {}){
     // ø CREATE_NEW_COURSE_05_newCourseDrupalPOST
 	console.group(`newCourseDrupalPOST(newCourseDrupalObject)`)
 	// console.groupCollapsed(`newCourseDrupalPOST(newCourseDrupalObject)`)
@@ -1095,17 +790,13 @@ export async function newCourseDrupalPOST(newCourseDrupalObject = {}){
 	console.groupEnd()
 
 }
-// ø <---------- </Post Course to Drupal> ---------->
-
-// ø <---------- <Reset WiX Page for Next Course>  ---------->
-// ø <---------- </Reset WiX Page for Next Course> ---------->
-
-//==================================================     </Post Course & API POST to Drupal>
+// ø <---------- </Post Course to Drupal_VESTIGIAL_PATCH> ---------->
+//==================================================     </Post Course & API POST to Drupal_VESTIGIAL_PATCH>
 //==========================================================================================
 
 
 //====================================================================================================
-//============================================================                 </Overall Build Course>
+//============================================================                 </Overall THINGS Course>
 //====================================================================================================
  
 //==========================================================================================
@@ -1284,15 +975,6 @@ export function formSelectLocationBTN_click(event) {
 	$w('#selectLocationBTN').label = 'Toggle to All Locations'
 }
 
-export function rawPreviewKLUDGE_PreTrash(){
-	let newCourseDataObject = {"topping":[{"id":"5001","type":"None"},{"id":"5002","type":"Glazed"},{"id":"5005","type":"Sugar"},{"id":"5007","type":"Powdered Sugar"},{"id":"5006","type":"Chocolate with Sprinkles"},{"id":"5003","type":"Chocolate"},{"id":"5004","type":"Maple"}]}
-	console.log(`newCourseDataObject: [object below] [maybe]]`)
-	console.dir(newCourseDataObject)
-	$w('#formPreviewCNTBX').show()
-	$w('#coursePreviewTXT').text = JSON.stringify(newCourseDataObject, undefined, 4)
-	
-}
-
 export function previewCourseBTN_click(event) {
 	// ø FILTER_COURSES_00_previewCourseBTN_click
 	// ø CREATE_NEW_COURSE_00_Click_PreviewBTN
@@ -1311,11 +993,6 @@ export function clearCourseFormBTN_click(event) {
 	// ø CREATE_NEW_COURSE_±3_Click_clearCourseForm
 	// ø NEXT CREATE_NEW_COURSE_±2_resetCourseForm
 	resetCourseFiltersAll()
-}
-
-export function getItemLastResponseObjectBTN_click(event) {
-	// $w('#developerResponseTXTBX').value = session.getItem('lastResponseObject')/*BIGBLEED*//*LINE_1015*/
-	$w('#developerResponseTXTBX').value = memory.getItem('memoryResponseObject')/*BIGBLEED*//*LINE_1015*/
 }
 
 export function kludgeDevelBTN_click(event) {
@@ -1428,35 +1105,6 @@ export function adminDispatchBTN_click(event) {
 		
 }
 
-/**
-*	Adds an event handler that runs when an input element's value
- is changed.
-	[Read more](https://www.wix.com/corvid/reference/$w.ValueMixin.html#onChange)
-*	 @param {$w.Event} event let 
-*/
-export function summerTmBlksRDBTNS_change(event) {
-	onChangeStartTimeDurationRadioSettings('summerTmBlksRDBTNS_change')
-}
-
-/**
-*	Adds an event handler that runs when an input element's value
- is changed.
-	[Read more](https://www.wix.com/corvid/reference/$w.ValueMixin.html#onChange)
-*	 @param {$w.Event} event
-*/
-export function startTimeTMPKR_change(event) {
-	onChangeStartTimeDurationRadioSettings('startTimeTMPKR_change')
-}
-
-/**
-*	Adds an event handler that runs when an input element's value
- is changed.
-	[Read more](https://www.wix.com/corvid/reference/$w.ValueMixin.html#onChange)
-*	 @param {$w.Event} event
-*/
-export function durationTMPKR_change(event) {
-	onChangeStartTimeDurationRadioSettings('durationTMPKR_change')
-}
 
 /**
 *	Adds an event handler that runs when the element is clicked.
@@ -1472,24 +1120,10 @@ export function curriculaSelectedPGNTN_click(event) {
 	evaluationPaginationAndLoadRepeater()
 }
 
-/**
-*	Adds an event handler that runs when the element is clicked.
-	[Read more](https://www.wix.com/corvid/reference/$w.ClickableMixin.html#onClick)
-*	 @param {$w.MouseEvent} event
-*/
 export function btnblkToggle3BTN_click(event) {
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-	// Add your code for this event here: 
 	btnblkToggleBTN_click('btnblkToggle3BTN_click(event)')
 }
 
-/**
-*	Adds an event handler that runs when the element is clicked.
-	[Read more](https://www.wix.com/corvid/reference/$w.ClickableMixin.html#onClick)
-*	 @param {$w.MouseEvent} event
-*/
 export function btnblkDo3BTN_click(event) {
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-	// Add your code for this event here:
 	btnblkDoBTN_click('btnblkDo3BTN_click(event)') 
 }

@@ -16,7 +16,7 @@
         "_id": 202223,
         "dateEnd": "2022-06-10T11:59:59.999Z",
         "dateStart": "2022-06-06T11:59:59.999Z",
-        "dateStartAbbrv": "Jun 6, 2022",
+        "dateStartAbbrv": "Jun 6",
         "dateStartFull": "Monday, June 6, 2022",
         "dateStartSlash": "6/6/2022",
         "daysOfWeekJSArray": [
@@ -85,7 +85,7 @@
         "_id": 202224,
         "dateEnd": "2022-06-17T11:59:59.999Z",
         "dateStart": "2022-06-13T11:59:59.999Z",
-        "dateStartAbbrv": "Jun 13, 2022",
+        "dateStartAbbrv": "Jun 13",
         "dateStartFull": "Monday, June 13, 2022",
         "dateStartSlash": "6/13/2022",
         "daysOfWeekJSArray": [
@@ -154,7 +154,7 @@
         "_id": 202225,
         "dateEnd": "2022-06-24T11:59:59.999Z",
         "dateStart": "2022-06-20T11:59:59.999Z",
-        "dateStartAbbrv": "Jun 20, 2022",
+        "dateStartAbbrv": "Jun 20",
         "dateStartFull": "Monday, June 20, 2022",
         "dateStartSlash": "6/20/2022",
         "daysOfWeekJSArray": [
@@ -223,7 +223,7 @@
         "_id": 202226,
         "dateEnd": "2022-07-01T11:59:59.999Z",
         "dateStart": "2022-06-27T11:59:59.999Z",
-        "dateStartAbbrv": "Jun 27, 2022",
+        "dateStartAbbrv": "Jun 27",
         "dateStartFull": "Monday, June 27, 2022",
         "dateStartSlash": "6/27/2022",
         "daysOfWeekJSArray": [
@@ -293,7 +293,7 @@
         "_id": 202228,
         "dateEnd": "2022-07-15T11:59:59.999Z",
         "dateStart": "2022-07-11T11:59:59.999Z",
-        "dateStartAbbrv": "Jul 11, 2022",
+        "dateStartAbbrv": "Jul 11",
         "dateStartFull": "Monday, July 11, 2022",
         "dateStartSlash": "7/11/2022",
         "daysOfWeekJSArray": [
@@ -361,7 +361,7 @@
         "_id": 202229,
         "dateEnd": "2022-07-22T11:59:59.999Z",
         "dateStart": "2022-07-18T11:59:59.999Z",
-        "dateStartAbbrv": "Jul 18, 2022",
+        "dateStartAbbrv": "Jul 18",
         "dateStartFull": "Monday, July 18, 2022",
         "dateStartSlash": "7/18/2022",
         "daysOfWeekJSArray": [
@@ -427,7 +427,7 @@
         "_id": 202230,
         "dateEnd": "2022-07-29T11:59:59.999Z",
         "dateStart": "2022-07-25T11:59:59.999Z",
-        "dateStartAbbrv": "Jul 25, 2022",
+        "dateStartAbbrv": "Jul 25",
         "dateStartFull": "Monday, July 25, 2022",
         "dateStartSlash": "7/25/2022",
         "daysOfWeekJSArray": [
@@ -493,7 +493,7 @@
         "_id": 202231,
         "dateEnd": "2022-08-05T11:59:59.999Z",
         "dateStart": "2022-08-01T11:59:59.999Z",
-        "dateStartAbbrv": "Aug 1, 2022",
+        "dateStartAbbrv": "Aug 1",
         "dateStartFull": "Monday, August 1, 2022",
         "dateStartSlash": "8/1/2022",
         "daysOfWeekJSArray": [
@@ -559,7 +559,7 @@
         "_id": 202232,
         "dateEnd": "2022-08-12T11:59:59.999Z",
         "dateStart": "2022-08-8T11:59:59.999Z",
-        "dateStartAbbrv": "Aug 8, 2022",
+        "dateStartAbbrv": "Aug 8",
         "dateStartFull": "Monday, August 8, 2022",
         "dateStartSlash": "8/8/2022",
         "daysOfWeekJSArray": [

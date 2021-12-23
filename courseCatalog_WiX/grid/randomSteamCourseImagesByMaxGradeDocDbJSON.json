@@ -1,0 +1,69 @@
+{
+    "2": {
+        "imagePath": [
+            "wix:image://v1/38f83c_4543b5d1f35240a6b672dbf4a759d84d~mv2.png",
+            "wix:image://v1/38f83c_974568f0952a4c44b99d800bfc432ffd~mv2.jpg",
+            "wix:image://v1/38f83c_e5ff91ff0aeb49f5955d5dd4ea27ef33~mv2.jpeg",
+            "wix:image://v1/38f83c_53ad3b7b0ab34f56a5d006f85431652f~mv2.jpg",
+            "wix:image://v1/38f83c_9622f28a092c499b96e58dcc61b9bc33~mv2.jpg"
+        ],
+        "urlAddendum": [
+            "/IMG_6155.HEIC#originWidth=1124&originHeight=1500",
+            "/IMG_6943.jpg#originWidth=1125&originHeight=1500",
+            "/IMG_1206.JPEG#originWidth=1536&originHeight=2048",
+            "/IMG_4687.jpg#originWidth=1125&originHeight=1500",
+            "/IMG_5706.jpg#originWidth=1125&originHeight=1500"
+        ]
+    },
+    "5": {
+        "imagePath": [
+            "wix:image://v1/38f83c_097302d092994bb8a668805b33ca7ac1~mv2.jpg",
+            "wix:image://v1/38f83c_ac38a0e95f32426f800fdd46f60b21e2~mv2.jpg",
+            "wix:image://v1/11062b_15ff650a681e43f4a5a001aaeb9dccc8~mv2.jpg",
+            "wix:image://v1/2e795b6636ad4de9a8ee81f3259c0fad.jpg"
+        ],
+        "urlAddendum": [
+            "/IMG_4542_edited.jpg#originWidth=1124&originHeight=1500",
+            "/IMG_1451_edited.jpg#originWidth=2214&originHeight=2171",
+            "/Gingerbread%20Cookie%20Wreath.jpg#originWidth=4000&originHeight=6000",
+            "/Animal%20Fossil.jpg#originWidth=3000&originHeight=2000"
+        ]
+    },
+    "6": {
+        "imagePath": [
+            "wix:image://v1/38f83c_916177ff96da4dc2833aeca9dc9cc9f3~mv2.png"
+        ],
+        "urlAddendum": [
+            "/IMG_7617.HEIC#originWidth=1124&originHeight=1500"
+        ]
+    },
+    "7": {
+        "imagePath": [
+            "wix:image://v1/38f83c_441056638bce48efaea29825701cfafa~mv2.png"
+        ],
+        "urlAddendum": [
+            "/IMG_0078.HEIC#originWidth=3024&originHeight=4032"
+        ]
+    },
+    "8": {
+        "imagePath": [
+            "wix:image://v1/38f83c_52be370a3066481c81791670d8ec84dd~mv2.jpg",
+            "wix:image://v1/38f83c_9f1afef228254cef8a47ca0abb956f3d~mv2.jpg",
+            "wix:image://v1/38f83c_8c6e37747b73449799294c68ea774a85~mv2.jpeg"
+        ],
+        "urlAddendum": [
+            "/IMG_1688_edited.jpg#originWidth=1998&originHeight=2629",
+            "/Ben.jpg#originWidth=4032&originHeight=3024",
+            "/IMG_1190.JPEG#originWidth=1536&originHeight=2048"
+        ]
+    },
+    "9": {
+        "imagePath": [
+            "wix:image://v1/11062b_4dff0af50dc64ca092cfca810aaa64bb~mv2.jpeg"
+        ],
+        "urlAddendum": [
+            "/Writing%20in%20a%20Notebook.jpeg#originWidth=3800&originHeight=2004"
+        ]
+    },
+    "unsupportedPathArray": []
+}

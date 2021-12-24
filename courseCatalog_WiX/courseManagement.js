@@ -129,7 +129,7 @@ async function konstantTermCoursesOnReady(){
 		element.gradeLevelHuman = gradeLevelObjectThis.humanHyphenatedKey
 		element.gradeLevelFullArray = gradeLevelObjectThis.fullArray
 		 
-		element.weight = index
+		element.weight = Number(element.weekNameCardinal) * 1000 + index
 	}
 	memory.setItem('memoryWorkingBackupObject',JSON.stringify(allCoursesWorkingObject))
 	// $w('#developerResponseTXTBX').value = JSON.stringify(allCoursesWorkingObject,undefined,4)
@@ -184,7 +184,7 @@ export function wixStorageDisplayOnReady(){
 //==============================        <Filter and Load Course-Repeater>         ==============================
 //====================================================================================================
 
-function evaluationPaginationAndLoadRepeater(){
+function evaluationPaginationAndLoadRepeater(forceRepaginate = false){
 	// ø LOAD_COURSES_ON_READY_03_evaluationPaginationAndLoadRepeater_OnReadyFirstEightCourses
 	// ø FILTER_COURSES_04_evaluationPaginationAndLoadRepeater
 	// console.groupCollapsed(`evaluationPaginationAndLoadRepeater`)
@@ -202,7 +202,7 @@ function evaluationPaginationAndLoadRepeater(){
 	let repeaterId = '#courseFilteredRPTR'
 	let paginationId = '#courseFilteredPGNTN'
 	let pageItemCount = 8
-	if($w(paginationId).totalPages === 100){
+	if(forceRepaginate === true || $w(paginationId).totalPages === 100){
 		// totalPages === 100 indicates default paginationObject
 		$w(paginationId).currentPage = 1
 		$w(paginationId).totalPages = Math.ceil(filteredCourseBuffer.length / pageItemCount);
@@ -296,10 +296,20 @@ export function processSelectCurriculum(event,scriptName){
 //==========================================================================================
 //==================================================       <Instantiate from Curricula Click>
  
-// ø <---------- <restCourseFormAll>  ---------->
+// ø <---------- <adjustCourseFiltersAany>  ---------->
+function adjustCourseFiltersAany(){
+	$w('#previewCourseBTN').label = 'Apply Filters'
+	$w('#previewCourseBTN').show()
+	$w('#clearCourseFormBTN').show()
+
+}
+// ø <---------- </adjustCourseFiltersAany> ---------->
+
+// ø <---------- <resetCourseFiltersAll>  ---------->
 function resetCourseFiltersAll(){
 // ø CREATE_NEW_COURSE_±2_resetCourseForm
 	// let wID_unsetArray = ['#courseNameINPUT','#courseNameDisplayINPUT','#regionLocationINPUT','#regionLocationKeyINPUT']
+	$w('#clearCourseFormBTN').hide()
 	let wID_unsetArray = ['#regionLocationINPUT','#regionLocationKeyINPUT']
 	for (let index = 0; index < wID_unsetArray.length; index++) {
 		const element = wID_unsetArray[index];
@@ -324,6 +334,10 @@ function resetCourseFiltersAll(){
 	$w('#gradeLevelDRPDN').value = 'NA'
 	$w('#minGradeDRPDN').value = 'NA'
 	$w('#weekCountDRPDN').value = 'NA'
+	// ø <#previewCourseBTN>
+	$w('#previewCourseBTN').label = 'Apply No-Filters'
+	$w('#previewCourseBTN').show()
+	// ø </#previewCourseBTN>
 	// $w('#daysOfWeekCBXGRP').value = ['1','2','3','4','5']
 	// $w('#daysOfWeekCBXGRP').value = ['MON','TUE','WED','THU','FRI']
 	// $w("#myCheckboxGroup").value = ["value1", "value2"];
@@ -333,7 +347,7 @@ function resetCourseFiltersAll(){
 	// ø ±1 course form scripts, but...
 	// ø NEXT-BTN_click =>  CREATE_NEW_COURSE_00_Click_PreviewBTN
 }
-// ø <---------- </restCourseFormAll> ---------->
+// ø <---------- </resetCourseFiltersAll> ---------->
 
 // ø <---------- <Instantiate jsonDocDb for Locations>  ---------->
 // ø <VESTIGIAL_CODE_except_for_Location_DropDown>
@@ -531,6 +545,8 @@ function applyFilterToBuffer(paramObjectFilterForm){
 	console.group(`applyFilterToBuffer(paramObjectFilterForm)`)
 	console.log(`REACHED: applyFilterToBuffer(paramObjectFilterForm)`)
 
+	$w('#previewCourseBTN').hide()
+
 	// let weekDocDbObject = weeksGetByTermId(Number(session.getItem('termId')))
 	// console.log(`weekDocDbObject = weeksGetByTermId(Number(session.getItem('termId')))`)
 	// console.log(`weekDocDbObject = weeksGetByTermId(${Number(session.getItem('termId'))})`)
@@ -548,18 +564,85 @@ function applyFilterToBuffer(paramObjectFilterForm){
 	console.dir(paramObjectFilterForm)
 	// return
 	let filteredCourseBuffer = []
+	let filteredCourseExcludedBuffer = []
 	let filteringComplete = paramObjectFilterForm.pipedBoolean === "false|false|false|false|false" ? true : false
 	if(filteringComplete){
 		filteredCourseBuffer = Object.keys(allCoursesWorkingObject)
-		console.log(`filteredCourseBuffer: [array below]`)
+		filteredCourseExcludedBuffer = []
+		console.log(`ALL_FALSE: filteredCourseBuffer: [array below]`)
 		console.dir(filteredCourseBuffer)
 		// console.log(`LOAD_COURSE_REPEATER: evaluationPaginationAndLoadRepeater()`)
 		console.log(`groupEnd: applyFilterToBuffer(paramObjectFilterForm)`)
 		console.groupEnd()
 		memory.setItem('memoryWorkingObject',JSON.stringify(filteredCourseBuffer))
-		evaluationPaginationAndLoadRepeater()
+		evaluationPaginationAndLoadRepeater(true)
 		return
 	}
+	// return
+	for (let index = 0; index < allCoursesWorkingObject.length; index++) {
+		const courseThis = allCoursesWorkingObject[index];
+		let includeThis = true
+
+		let logicalOpertor = 'ALL_AND'// maybe 'ALL_OR' later, maybe even trickier
+		// ø <logicalOpertor === 'ALL_AND'>
+		if(logicalOpertor === 'ALL_AND'){
+
+			// ø <Apply Either Grade Based Filter>
+			// ø ø <Apply Grade Level Filter>
+			if(paramObjectFilterForm.byGradeLevel){
+				// console.log(`DO: Apply Grade Level Filter`)
+				if(courseThis.gradeLevelKey !== paramObjectFilterForm.gradeLevel){
+					includeThis = false
+				}
+			}
+			// ø ø </Apply Grade Level Filter>
+			// ø ø 
+			// ø ø <Apply Contains Level Filter>
+			if(paramObjectFilterForm.byContainsGrade){
+				// console.log(`DO: Apply Contains Level Filter`)
+				if(!courseThis.gradeLevelFullArray.includes(Number(paramObjectFilterForm.containsGrade))){
+					includeThis = false
+				}
+			}
+			// ø ø </Apply Contains Level Filter>
+			// ø </Apply Either Grade Based Filter>
+			// ø 
+			// ø <Apply Either Date Based Filter>
+			// ø ø <Apply Week Number Filter>
+			if(paramObjectFilterForm.byWeek){
+				if(Number(courseThis.weekNameCardinal) !== paramObjectFilterForm.weekCardinal){
+					includeThis = false
+				}
+			}
+			// ø ø </Apply Week Number Filter>
+			// ø ø 
+			// ø ø <Apply Contains Date Filter>
+			if(paramObjectFilterForm.byContainsDate){
+				let dateIsWithinSpan = true
+				dateIsWithinSpan = paramObjectFilterForm.containsDateISO.substr(0,11) < courseThis.courseDateStart.substr(0,11) ? false : dateIsWithinSpan
+				dateIsWithinSpan = paramObjectFilterForm.containsDateISO.substr(0,11) > courseThis.courseDateEnd.substr(0,11) ? false : dateIsWithinSpan
+				if(!dateIsWithinSpan){
+					includeThis = false
+				}
+			}
+			// ø ø </Apply Contains Date Filter>
+			// ø </Apply Either Date Based Filter>
+		}
+		// ø </logicalOpertor === 'ALL_AND'>
+		if(includeThis){
+			filteredCourseBuffer.push(index.toString())
+		}
+		if(!includeThis){
+			filteredCourseExcludedBuffer.push(index.toString())
+		}
+
+	}
+
+	memory.setItem('memoryWorkingObject',JSON.stringify(filteredCourseBuffer))
+	console.log(`FILTER_APPLIED: filteredCourseBuffer: [array below]`)
+	console.dir(filteredCourseBuffer)
+	console.log(`FILTER_APPLIED: filteredCourseExcludedBuffer: [array below]`)
+	console.dir(filteredCourseExcludedBuffer)
 
 
 
@@ -568,155 +651,11 @@ function applyFilterToBuffer(paramObjectFilterForm){
 
 	console.log(`groupEnd: applyFilterToBuffer(paramObjectFilterForm)`)
 	console.groupEnd()
+	// return
+	evaluationPaginationAndLoadRepeater(true)
+
 }
 // ø <---------- </applyFilterToBuffer> ---------->
-
-// ø <---------- <Compose & Display Preview_DEP>  ---------->
-// export function composeAndDisplayPreview_DEP(workingDataObject){
-// 	// ø CREATE_NEW_COURSE_03_composeAndDisplayPreview
-// 	console.group(`composeAndDisplayPreview(newCourseDataObject)`)
-// 	// console.groupCollapsed(`composeAndDisplayPreview(newCourseDataObject)`)
-	
-// 	$w('#formPreviewCNTBX').show()
-
-// 	$w('#newCourseDataObjectPreview').text = 'PASSTHRU: composeAndDisplayPreview(newCourseDataObject)'
-// 	$w('#newCourseDataObjectPreview').text += '\nWill Use Console-Log to proceed, leave this task for last'
-	
-// 	$w('#previewCourseBTN').hide()
-// 	$w('#postCourseBTN').show()
-
-// 	console.log(`groupEnd: composeAndDisplayPreview(newCourseDataObject)`)
-// 	console.groupEnd()
-// 	console.group(`Automated Code from api_OOP`)
-
-// 	// <COMPOSE_PREVIEW_TEXT>
-// 	delete workingDataObject.type
-// 	console.log(`before Preview Composition Code: workingDataObject: [object below`)
-// 	console.dir(workingDataObject)
-
-// 	let lineBeginText = ''
-// 	let paddedAttribute = 'PENDING'
-// 	let paddingSide = 'LEFT'
-// 	paddingSide = paddingSide === 'LEFT' ? paddingSide : 'RIGHT'
-// 	let keyValueSeparatorText = ': '
-// 	let maxLength = 0
-// 	let attributeArrayMaxLength = Object.keys(workingDataObject)
-// 	let attributeKeyString = 'PENDING'//Separate attributes from Key-Strings so that you can get fancy later
-// 	let attributeArrayKeyString = []//Separate attributes from Key-Strings so that you can get fancy later
-// 	for (let indexMaxLength = 0; indexMaxLength < attributeArrayMaxLength.length; indexMaxLength++){
-// 		attributeKeyString = '>' + attributeArrayMaxLength[indexMaxLength] + '<' // Ugly, but fancy...
-// 		attributeArrayKeyString.push(attributeKeyString)
-// 		//const attributeMaxLength = attributeArrayMaxLength[indexMaxLength]
-// 		maxLength = maxLength > attributeKeyString.length ? maxLength : attributeKeyString.length
-// 	}
-// 	console.log(`attributeArrayKeyString: RAW:`)
-// 	console.dir(attributeArrayKeyString)
-// 	// ø CREATE_NEW_COURSE_03a_transformBlock
-// 	let transformObject = {}
-// 	// let transformObject = {"title":{"key":"title","label":"Course Name Display","reorderEdited":100,"reorderIndex":0},"field_coursedateend":{"key":"field_coursedateend","label":"Course Date End","reorderEdited":301,"reorderIndex":8},"field_coursedatestart":{"key":"field_coursedatestart","label":"Course Date Start","reorderEdited":300,"reorderIndex":7},"field_coursekey":{"key":"field_coursekey","label":"Course Key","reorderEdited":104,"reorderIndex":4},"field_coursename":{"key":"field_coursename","label":"Course Name","reorderEdited":101,"reorderIndex":1},"field_coursenameabbrv":{"key":"field_coursenameabbrv","label":"Course Name Abbrv","reorderEdited":102,"reorderIndex":2},"field_coursetimeduration":{"key":"field_coursetimeduration","label":"Course Time Duration","reorderEdited":303,"reorderIndex":10},"field_coursetimestart":{"key":"field_coursetimestart","label":"Course Time Start","reorderEdited":302,"reorderIndex":9},"field_curriculumid":{"key":"field_curriculumid","label":"Curriculum ID","reorderEdited":1001,"reorderIndex":16},"field_curriculumkey":{"key":"field_curriculumkey","label":"Curriculum Key","reorderEdited":103,"reorderIndex":3},"field_daysofweek":{"key":"field_daysofweek","label":"Days of Week","reorderEdited":304,"reorderIndex":11},"field_enrollexcptn":{"key":"field_enrollexcptn","label":"Enroll Excptn","reorderEdited":2299,"reorderIndex":19},"field_gradelevelkey":{"key":"field_gradelevelkey","label":"Grade Level Key","reorderEdited":400,"reorderIndex":13},"field_jcal":{"key":"field_jcal","label":"jCal","reorderEdited":305,"reorderIndex":12},"field_locationkey":{"key":"field_locationkey","label":"Location Key","reorderEdited":501,"reorderIndex":15},"field_locationname":{"key":"field_locationname","label":"Location Name","reorderEdited":500,"reorderIndex":14},"field_sectionarray":{"key":"field_sectionarray","label":"Section Key","reorderEdited":105,"reorderIndex":5},"field_sectioncount":{"key":"field_sectioncount","label":"Section Count","reorderEdited":106,"reorderIndex":6},"field_termid":{"key":"field_termid","label":"Term ID","reorderEdited":1900,"reorderIndex":17},"field_weekid":{"key":"field_weekid","label":"Week ID","reorderEdited":2000,"reorderIndex":18}}
-// 	// attributeArrayKeyString = ["Course Name Display","Promote","Sticky","Course Date End","Course Date Start","Course Key","Course Name","Course Name Abbrv","Curriculum ID","Curriculum Key","Days of Week","Grade Level Key","Location Key","Location Name","Section","Section Count","Term ID","Week ID"]
-// 	// attributeArrayKeyString = ["Course Name Display","Promote","Sticky","Course Date End","Course Date Start","Course Key","Course Name","Course Name Abbrv","Curriculum ID","Curriculum Key","Days of Week","Grade Level Key","jCal Expression","Location Key","Location Name","Section","Section Count","Term ID","Week ID"]
-// 	// • ¯\_(ツ)_/¯   ¯\__ (keep jCAL field as 'NNULL' - expect it to be more important) __/¯
-// 	// attributeArrayKeyString = ["Course Name Display","Course Date End","Course Date Start","Course Key","Course Name","Course Name Abbrv","Course Time Duration","Course Time Start","Curriculum ID","Curriculum Key","Days of Week","Enroll Excptn","Grade Level Key","jCal","Location Key","Location Name","Section Key","Section Count","Term ID","Week ID"]
-// 	// ø ¯\__ (      2021-12-12T17:17:00 update to add Start Time and Time Duration, using new mechanism (AGAIN!)       ) __/¯
-// 	// attributeArrayKeyString = ["Course Name Display","Course Date End","Course Date Start","Course Key","Course Name","Course Name Abbrv","Course Time Duration","Course Time Start","Curriculum ID","Curriculum Key","Days of Week","Enroll Excptn","Grade Level Key","jCal","Location Key","Location Name","Section Key","Section Count","Term ID","Week ID"]
-// 	// ø ¯\__ (      2021-12-12T18:21:00 update to add Start Time and Time Duration, using new mechanism (AGAIN!)       ) __/¯
-// 	// attributeArrayKeyString = ["Course Name DisplayZ","Course Date EndZ","Course Date StartZ","Course KeyZ","Course NameZ","Course Name AbbrvZ","Course Time DurationZ","Course Time StartZ","Curriculum IDZ","Curriculum KeyZ","Days of WeekZ","fGrade Level KeyZ","jCalZ","Location KeyZ","Location NameZ","SectionZ","Section CountZ","Term IDZ","Week IDZ"]
-// 	// ø ¯\__ (      2021-12-13T06:21:00 Full-Boat Documented       ) __/¯
-// 	// attributeArrayKeyString = ["ZCourse Name Display","Course Date End","Course Date Start","Course Key","Course Name","Course Name Abbrv","Course Time Duration","Course Time Start","Curriculum ID","Curriculum Key","Days of Week","Grade Level Key","jCal","Location Key","Location Name","Section Key","Section Count","Term ID","Week ID"]
-// 	// ø ¯\__ (      2021-12-13T08:28:00 Full-Boat Documented       ) __/¯
-// 	attributeArrayKeyString = ["Course Name Display","Course Date End","Course Date Start","Course Key","Course Name","Course Name Abbrv","Half Day Options","Course Time Duration","Course Time Start","Curriculum ID","Curriculum Key","Days of Week","Grade Level Key","jCal","Location Key","Location Name","Section Key","Section Count","Term ID","Week ID"]
-// 	// ø ¯\__ (      2021-12-13T14:13:00 Full-Boat Documented       ) __/¯
-// 	let attributeArrayReOrderArray = []
-// 	// let attributeArrayReOrderArray = [0,6,7,14,13,11,4,3,10,12,16,18,17,8,9,5,15,1,2]
-// 	// let attributeArrayReOrderArray = [0,7,8,4,1,2,10,9,16,3,11,19,13,12,15,14,5,6,17,18]
-// 	// ø ¯\__ (      2021-12-12T17:17:00 update to add Start Time and Time Duration, using new mechanism (AGAIN!)       ) __/¯
-// 	// let attributeArrayReOrderArray = [0,8,7,4,1,2,10,9,16,3,11,19,13,12,15,14,5,6,17,18]
-// 	// attributeArrayReOrderArray = [2,11,10,6,3,4,13,12,9,5,14,16,15,18,17,7,8,0,1]
-// 	// ø ¯\__ (      2021-12-13T06:21:00 Full-Boat Documented       ) __/¯
-// 	// attributeArrayReOrderArray = [0,11,10,4,1,2,13,12,16,3,14,7,15,9,8,5,6,17,18]
-// 	// ø ¯\__ (      2021-12-13T08:28:00 Full-Boat Documented       ) __/¯
-// 	attributeArrayReOrderArray = [0,8,7,4,1,2,11,10,9,17,3,12,14,13,16,15,5,6,18,19]
-// 	// ø ¯\__ (      2021-12-13T14:13:00 Full-Boat Documented       ) __/¯
-// 	let reOrderIndex = 0
-// 	// • ¯\_(ツ)_/¯   ¯\__ (keep jCAL field as 'NNULL' - expect it to be more important) __/¯
-// 	// ø <Transform Literals>
-// 	// ø ø <Transform Workings>
-// 	console.log(`<Transform Workings>`)
-// 	// let workingDaysOfWeek = workingDataObject.field_daysofweek.toString() + 'ZZZ'
-// 	let workingDaysOfWeek = jsDaysOfWeekArrayToString(workingDataObject.field_daysofweek)
-// 	console.log(`</Transform Workings>`)
-// 	// ø ø </Transform Workings>
-// 	let transformLiteralsObject = {}
-// 	transformLiteralsObject.field_jcal = 'jCal formatted schedule is pending'
-// 	transformLiteralsObject.field_daysofweek = workingDaysOfWeek
-// 	transformLiteralsObject.field_coursedatestart = format(new Date(workingDataObject.field_coursedatestart), 'EEE MMMMMM d, yyyy')
-// 	transformLiteralsObject.field_coursedateend = format(new Date(workingDataObject.field_coursedateend), 'EEE MMMMMM d, yyyy')
-	
-// 	// ø </Transform Literals>
-// 	// console.log(`attributeArrayKeyString: DISPLAY:`)
-// 	// console.dir(attributeArrayKeyString)
-// 	// • COURSES: ["title","promote","sticky","field_coursedateend","field_coursedatestart","field_coursekey","field_coursename","field_coursenameabbrv","field_curriculumid","field_curriculumkey","field_daysofweek","field_gradelevelkey","field_jcal","field_locationkey","field_locationname","field_sectionarray","field_sectioncount","field_termid","field_weekid"]
-// 	maxLength = paddingSide === 'LEFT' ? maxLength * -1 : maxLength
-// 	let valueString = 'STRING'
-// 	let padding = '                                                  '
-// 	let previewText = ''
-// 	//let attributeKeyString = 'PENDING'
-// 	let attributeArray = Object.keys(workingDataObject)
-// 	console.log(`≈673≈ attributeArray: [array below]`)
-// 	console.dir(attributeArray)
-// 	let develReorderAttributeArray = []
-// 	let noDisplayAttributeArray = ['promote','sticky']
-// 	let develReorderIndex = 777
-// 	let develReorderIndexArray = []
-// 	for (let index = 0; index < attributeArray.length; index++){
-// 		reOrderIndex = index
-// 		// develReorderIndex = 777
-// 		if(typeof attributeArrayReOrderArray.indexOf(index) === 'number'){
-// 			develReorderIndex = attributeArrayReOrderArray.indexOf(index)
-// 			reOrderIndex = attributeArrayReOrderArray.indexOf(index)
-// 		}
-// 		develReorderIndexArray.push(develReorderIndex)
-// 		// if(typeof transformObject[attribute]['reorderIndex'] === 'number'){
-// 		// 	reOrderIndex = transformObject[attribute]['reorderIndex']
-// 		// }
-// 		const attribute = attributeArray[reOrderIndex]
-// 		// if(typeof attributeArrayReOrderArray[index] === 'number'){
-// 		// 	reOrderIndex = attributeArrayReOrderArray[index]
-// 		// }
-// 		attributeKeyString = attribute
-// 		if (typeof attributeArrayKeyString[reOrderIndex] === 'string') {
-// 			attributeKeyString = attributeArrayKeyString[reOrderIndex]
-// 		}
-// 		// if(typeof transformObject[attribute]['label'] === 'string'){
-// 		// 	attributeKeyString = transformObject[attribute]['label']
-// 		// }
-// 		// if(typeof attributeArrayKeyString[reOrderIndex] === 'string'){
-// 		// 	attributeKeyString = attributeArrayKeyString[reOrderIndex]
-// 		// }
-// 		develReorderAttributeArray.push(attribute)
-// 		if(typeof workingDataObject[attribute] === 'undefined'){
-// 			workingDataObject[attribute] = `${attribute} UNDEFINED`
-// 		}
-// 		valueString = typeof transformLiteralsObject[attribute] === 'string' ? transformLiteralsObject[attribute] : workingDataObject[attribute].toString()
-// 		if(!noDisplayAttributeArray.includes(attribute)){
-// 			paddedAttribute = paddingSide === 'LEFT' ? (padding + attributeKeyString).substr(maxLength) : (attributeKeyString + padding).substr(0,maxLength)
-// 			previewText += '\n ' + lineBeginText + ' ' + paddedAttribute + keyValueSeparatorText  
-// 			previewText += valueString
-// 		}
-// 	}
-// 	// </COMPOSE_PREVIEW_TEXT>
-// 	console.log(`after 'COMPOSE_PREVIEW_TEXT': develReorderIndexArray: [${develReorderIndexArray.toString()}]`)
-// 	console.log(`after 'COMPOSE_PREVIEW_TEXT': develReorderAttributeArray: [${develReorderAttributeArray.toString()}]`)
-// 	console.warn(previewText)
-// 	// $w('#newCourseDataObjectPreview').text = previewText
-// 	console.groupEnd()
-
-
-// 	// ø TERMINUS CREATE_NEW_COURSE_03_composeAndDisplayPreview
-// 	// ø NEXT-BTN_click => CREATE_NEW_COURSE_04_Click_PostBTN
-// }
-// ø <---------- </Compose & Display Preview_DEP> ---------->
 
 //==================================================     </Preview Button: Compose & Display_VESTIGIAL>
 //==========================================================================================
@@ -1127,3 +1066,69 @@ export function btnblkToggle3BTN_click(event) {
 export function btnblkDo3BTN_click(event) {
 	btnblkDoBTN_click('btnblkDo3BTN_click(event)') 
 }
+
+//==========================================================================================
+//==================================================          <adjustCourseFiltersAany BTNs>
+
+
+/**
+*	Adds an event handler that runs when an input element's value
+ is changed.
+	[Read more](https://www.wix.com/corvid/reference/$w.ValueMixin.html#onChange)
+*	 @param {$w.Event} event
+*/
+export function weekCountDRPDN_change(event) {
+	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+	// Add your code for this event here:
+	adjustCourseFiltersAany() 
+}
+
+/**
+*	Adds an event handler that runs when an input element's value
+ is changed.
+	[Read more](https://www.wix.com/corvid/reference/$w.ValueMixin.html#onChange)
+*	 @param {$w.Event} event
+*/
+export function startDateDTPKR_change(event) {
+	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+	// Add your code for this event here: 
+	adjustCourseFiltersAany() 
+}
+
+/**
+*	Adds an event handler that runs when an input element's value
+ is changed.
+	[Read more](https://www.wix.com/corvid/reference/$w.ValueMixin.html#onChange)
+*	 @param {$w.Event} event
+*/
+export function gradeLevelDRPDN_change(event) {
+	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+	// Add your code for this event here: 
+	adjustCourseFiltersAany() 
+}
+
+/**
+*	Adds an event handler that runs when an input element's value
+ is changed.
+	[Read more](https://www.wix.com/corvid/reference/$w.ValueMixin.html#onChange)
+*	 @param {$w.Event} event
+*/
+export function minGradeDRPDN_change(event) {
+	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+	// Add your code for this event here: 
+	adjustCourseFiltersAany() 
+}
+
+/**
+*	Adds an event handler that runs when an input element's value
+ is changed.
+	[Read more](https://www.wix.com/corvid/reference/$w.ValueMixin.html#onChange)
+*	 @param {$w.Event} event
+*/
+export function regionLocationKeyINPUT_change(event) {
+	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
+	// Add your code for this event here: 
+	adjustCourseFiltersAany() 
+}
+//==================================================         </adjustCourseFiltersAany BTNs>
+//==========================================================================================

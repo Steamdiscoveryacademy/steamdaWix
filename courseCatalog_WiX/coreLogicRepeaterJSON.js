@@ -1,8 +1,4 @@
 // API Reference: https://www.wix.com/velo/reference/api-overview/introduction
-
-// ø RENAMED_FROM: CORE_COMPLEX_RepeaterJSON_from_courseManagement.js
-// ø ABOVE_DELTED_WITH_2021-12-24T06:01:01
-
 import {local, session, memory} from 'wix-storage';
 import wixData from 'wix-data';
 import wixWindow from 'wix-window';
@@ -96,6 +92,29 @@ function setUpOnReady(){
 	
     memory.setItem('memoryParamObject', JSON.stringify({"pipedBoolean":"ON_READY"}))
 	// ¯\__  triggers _FILTER_ of no-Filter onReady()  __/¯
+
+	let doxObject = {}
+    let attributeThis = {}
+    doxObject.attributeArray = []
+    attributeThis = {}
+    attributeThis.name = 'documentation'
+    attributeThis.wId = 'DOX'
+    attributeThis.notes = []
+	attributeThis.notes.push(`USAGE: optional`)
+	attributeThis.notes.push(`↪ Some use cases it would be overkill ie 'Terms' three of them, just brute-force-it`)
+	attributeThis.notes.push(`↪ Some use cases it would be a sanity-saver ie 'Family' PrimaryParent, Secondary, 1+Children`)
+	attributeThis.notes.push(`CONVENTION:`)
+	attributeThis.notes.push(`.name = 'the repeater attribute object attribute name'`)
+	attributeThis.notes.push(`.wId = the $w() Element Id:`)
+	attributeThis.notes.push(`↪ IF Full THEN include the '#'`)
+	attributeThis.notes.push(`↪ ELSE-IF TYPE only then only the Type ('TXT','HTML','CNTNRBX' etc) `)
+	attributeThis.notes.push(`↪ prefix with '#' and name attribute (above)`)
+	attributeThis.notes.push(`↪ can Mix and Match`)
+	attributeThis.notes.push(`↪ prefix with '#' and name attribute (above), can Mix and Match`)
+	attributeThis.notes.push(`↪ '#' will indicate which is which`)
+    doxObject.attributeArray.push(attributeThis)
+	memory.setItem('memoryDoxObject', JSON.stringify(doxObject))
+
     console.log(`groupEnd: setUpOnReady()`)
     console.groupEnd()
 }

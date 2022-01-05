@@ -391,17 +391,6 @@ export function appendLocationsJsonDocDb(newCourseDataObject){
 // ø </VESTIGIAL_CODE_except_for_Location_DropDown>
 // ø <---------- </Instantiate jsonDocDb for Locations> ---------->
 
-// ø <---------- <Populate Form Curriculum and Locations>  ---------->
-// ø <VESTIGIAL_CODE_except_for_GENERAL_loadAfterClick>
-export function newCourseFormLoadAfterClick_DEP(newCourseDataObject){
-	$w('#courseNameINPUT').value = newCourseDataObject.name
-	$w('#courseNameDisplayINPUT').value = newCourseDataObject.name
-	// session.setItem('lastResponseObject', JSON.stringify(newCourseDataObject))/*BIGBLEED*//*LINE_473*/
-	memory.setItem('memoryResponseObject', JSON.stringify(newCourseDataObject))/*BIGBLEED*//*LINE_473*/
-}
-// ø </VESTIGIAL_CODE_except_for_GENERAL_loadAfterClick>
-// ø <---------- </Populate Form Curriculum and Locations> ---------->
-
 //==================================================      </Instantiate from Curricula Click>
 //==========================================================================================
 //==========================================================================================
@@ -477,7 +466,6 @@ export function catchAndDisplayError(ErrorString){
 //==========================================================================================
 //==================================================      <Preview Button: Compose & Display_VESTIGIAL>
 
-// ø <---------- <collectAndCalculateData_DEP(courseStartDate, courseEndDate)>  ---------->
 // ø <---------- <composeFilterFormObject>  ---------->
 function composeFilterFormObject(){
 	// ø LOAD_COURSES_ON_READY_01_composeFilterFormObject_OnReadyForceChangeNoFilter
@@ -665,73 +653,6 @@ function applyFilterToBuffer(paramObjectFilterForm){
 //==========================================================================================
 //==================================================      <Post Course & API POST to Drupal_VESTIGIAL_PATCH>
 
-// ø <---------- <Post Course to Drupal_VESTIGIAL_PATCH>  ---------->
-export async function newCourseDrupalPOST_VESTIGIAL_PATCH_DEP(newCourseDrupalObject = {}){
-    // ø CREATE_NEW_COURSE_05_newCourseDrupalPOST
-	console.group(`newCourseDrupalPOST(newCourseDrupalObject)`)
-	// console.groupCollapsed(`newCourseDrupalPOST(newCourseDrupalObject)`)
-	console.log(`newCourseDrupalObject: prototype only: [object below]`)
-	console.dir(newCourseDrupalObject)
-
-	let kludgeOptionsReturn = $w('#kludgeBooleanRADIO').value === 'true' ? true : false
-	// $w('#kludgeBooleanRADIO').value = 'false'
-	if (kludgeOptionsReturn) {
-        let kludgeExpires = new Date(2021,12,5)
-        let now = new Date()
-        if(now > kludgeExpires){
-            kludgeOptionsReturn = false
-        }
-    }
-
-
-	// let newCourseApiObject = JSON.parse(session.getItem('lastResponseObject'))/*BIGBLEED*//*LINE_789*/
-	let newCourseApiObject = JSON.parse(memory.getItem('memoryResponseObject'))/*BIGBLEED*//*LINE_789*/
-	if (kludgeOptionsReturn) {
-		// newCourseApiObject.paramObject.requestBody = newCourseApiObject.paramObject.requestBody.replace('courses','course')
-	}
-
-	let responseObject = await postDrupalNode(newCourseApiObject.paramObject.requestBody, kludgeOptionsReturn)
-	let responseString = 'PPENDING'
-	let responseBoolean = null
-	console.log(`newCourseDrupalPOST: postDrupalNode: responseObject: [object below]`)
-	console.dir(responseObject)
-	$w('#developerResponseTXTBX').value = JSON.stringify(responseObject, undefined, 4)
-	// $w('#developerResponseTXTBX').value = responseObject
-	if(typeof responseObject.nid === 'undefined'){
-		responseBoolean = false
-		responseString = 'ERROR: Course Not Posted [1]'// get fancier later if you capture the promise-error
-	}else if(responseObject.nid[0].value > 3500){
-		responseBoolean = true
-		responseString = `SUCEESS: Course Posted [${responseObject.nid[0].value}]`// get fancier later if you capture the promise-error
-	}else{
-		responseBoolean = false
-		responseString = 'ERROR: Course Not Posted [2]'// get fancier later if you capture the promise-error
-	}
-
-	console.log(`responseString: `)
-	console.log(responseString)
-	$w('#previewErrorStringTXT').expand()
-	$w('#previewErrorStringTXT').text = responseString
-		
-	// $w('#previewErrorStringTXT').text = `Holder for Errors`
-	// $w('#previewErrorStringTXT').collapse()
-	$w('#newCourseDataObjectPreview').text = `use $w('#coursePreviewTXT').html`
-	$w('#previewCourseBTN').hide()
-	$w('#formPreviewCNTBX').hide()
-	$w('#postCourseBTN').hide()
-	$w('#selectedNewCourseBTN').disable()
-
-
-
-	// ø TERMINUS CREATE_NEW_COURSE_05_newCourseDrupalPOST
-	// ø ANOTHER COURSE: NEXT-BTN_click => CREATE_NEW_COURSE_±3_Click_clearCourseForm
-
-	// console.log(`only console.log() for now...`)
-	console.log(`groupEnd: newCourseDrupalPOST(newCourseDrupalObject)`)
-	console.groupEnd()
-
-}
-// ø <---------- </Post Course to Drupal_VESTIGIAL_PATCH> ---------->
 //==================================================     </Post Course & API POST to Drupal_VESTIGIAL_PATCH>
 //==========================================================================================
 
@@ -1129,108 +1050,7 @@ function doCourseEditSection(stepThis = 'NO_OVERLOAD', paramObject = {}){
  
 //==========================================================================================
 //==================================================                  <KLUDGE Buttons Steps>
-// KLUDGE BUTTON AS STEPS:
-/**
-*	Adds an event handler that runs when the element is clicked.
-	[Read more](https://www.wix.com/corvid/reference/$w.ClickableMixin.html#onClick)
-*	 @param {$w.MouseEvent} event
-*/
-export function develTestingBTN_DEP_click(event) {
-	develTestingCALL() 
-}
-async function develTestingCALL_DEP(){
-	if($w('#develTestingRADIOGRP').value === 'CURRENT'){
-		await onReadyCurriculaJSON()
-	}
-	if($w('#develTestingRADIOGRP').value === 'ONDECK'){
-		konstantSelectedCurriculaRepeaterOnReady_DEP()
-	}
-}
-export async function doKLUDGE_DEP(){
-	const wIdKldgeDoxTXTBX = '#developerTaskTXTBX'
-	const wIdKldgeResponseTXTBX = '#developerResponseTXTBX'
-	let KLUDGE = ''
-	let step = KLUDGE
-	let iso = '2021-11-26T08:44:00'
-	let descrArray = []
-	{
-		// // let nidArray = [3473]
-		// let nidArray = [3495,3496,3497,3498]
-		// let nidThis = nidArray[Math.floor(Math.random() * nidArray.length)]
-		// // // let nidThis = nidArray[nidArray.length - 1]
-		// // let nidThis = nidArray[0]
-		// console.log(`nidThis: ${nidThis}`)
-		// {
-		// 	// KLUDGE = 'drupalNodeGET(nidThis)'
-		// 	KLUDGE = 'getDrupalNode(nidThis)'
-		// 	step = KLUDGE
-		// 	iso = '2021-11-30T16:53:00'
-		// 	descrArray = []
-		// 	KLUDGE = `getDrupalNode(${nidThis})`
-		// 	descrArray.push(KLUDGE)
-		// 	KLUDGE = `import {getDrupalNode} from 'backend/apiDrupalModule.jsw'`
-		// 	descrArray.push(KLUDGE)
-		// 	KLUDGE = `[below always last]`
-		// 	KLUDGE = iso
-		// 	descrArray.push(KLUDGE)
-		// }
-
-		// // drupalNodeGET(nidThis)
-		// // export async function getDrupalNode(nid) 
-		// let responseObject = await getDrupalNode(nidThis)
-		// $w(wIdKldgeResponseTXTBX).value = JSON.stringify(responseObject, undefined, 4)
-	}
-	{
-		// let natoPhoneticObject = getNatoPhoneticArrayObjectItem('R')
-		// let natoPhoneticObject = getNatoPhoneticArrayObjectItem('Juliet')
-		// let natoPhoneticObject = getNatoPhoneticArrayObjectItem('F')
-		// let natoPhoneticObject = getNatoPhoneticArrayObjectItem('Oscar')
-		let natoPhoneticObject = getNatoPhoneticArrayObjectItem('Ozark')
-		// $w(wIdKldgeResponseTXTBX).value = JSON.stringify(natoPhoneticObject, undefined, 4)
-		
-		{
-			KLUDGE = 'postDrupalNode(requestBodyThis)'
-			step = KLUDGE
-			iso = '2021-11-30T18:11:00'
-			descrArray = []
-			KLUDGE = 'drupalNodePOST(requestBodyThis)'
-			descrArray.push(KLUDGE)
-			KLUDGE = `import {postDrupalNode} from 'backend/apiDrupalModule.jsw'`
-			descrArray.push(KLUDGE)
-			KLUDGE = 'title: ' + natoPhoneticObject.word
-			descrArray.push(KLUDGE)
-			KLUDGE = 'body: ' + natoPhoneticObject.sentence
-			descrArray.push(KLUDGE)
-			KLUDGE = 'kludgeObject: for testing'
-			descrArray.push(KLUDGE)
-		// 	KLUDGE = `[below always last]`
-			KLUDGE = iso
-			descrArray.push(KLUDGE)
-			KLUDGE = step + ':'
-			descrArray.forEach(descrThis => {
-				KLUDGE += '\n  - ' + descrThis
-			});
-			$w(wIdKldgeDoxTXTBX).value = KLUDGE
-		}
-		let requestBodyThis = "{\n  \"type\":[{\"target_id\":\"page\"}],\n  \"title\":[{\"value\":\"{%title%}\"}],\n  \"body\":[{\"value\":\"{%body%}\"}]\n}"
-		requestBodyThis = requestBodyThis.replace('{%title%}',natoPhoneticObject.word)
-		requestBodyThis = requestBodyThis.replace('{%body%}',natoPhoneticObject.sentence)
-		// console.log(`requestBodyThis: `)
-		let kludgeOptionsReturn = $w('#kludgeBooleanRADIO').value === 'true' ? true : false
-		// $w('#kludgeBooleanRADIO').value = 'false'
-		// console.log(requestBodyThis)
-		// iso = requestBodyThis
-		// drupalNodePOST(requestBodyThis)
-		// let responseObject = await postDrupalNode(requestBodyThis)
-		// let responseObject = await postDrupalNode(requestBodyThis, true)
-		let responseObject = await postDrupalNode(requestBodyThis, kludgeOptionsReturn)
-		$w(wIdKldgeResponseTXTBX).value = JSON.stringify(responseObject, undefined, 4)
-		
-	}
-
-}
  
-
 //==================================================                 </KLUDGE Buttons Steps>
 //==========================================================================================
 
@@ -1250,17 +1070,7 @@ export function btnblkDo4BTN_click(event) {
 	btnblkDoBTN_click('btnblkDo2BTN_click(event)') 
 }
 
-export function selectedNewCourseBTN_DEP_click(event) {
-	// ø CREATE_NEW_COURSE_±1_completeCourseForm_SCRIPTS
-	let scriptName = 'selectedNewCourseBTN_click'
-	let clickedItemData = processSelectCurriculum(event,scriptName)
-	// ø NEXT CREATE_NEW_COURSE_±1a_instantiateNewCourseObject
-	instantiateNewCourseObject(clickedItemData)
-}
 
-export function btnKLUDGEdeveloperTask_DEP_click(event) {
-	doKLUDGE()
-}
 
 export function selectLocationBTN_click(event) {
 	if($w('#regionLocationKeyINPUT').value.length > 0){
@@ -1296,22 +1106,12 @@ export function previewCourseBTN_click(event) {
 	// ø NEXT CREATE_NEW_COURSE_01_ValidateFilterForm
 	validateFilterForm()
 }
-export async function ZZZpostCourseBTN_DEP_click(event) {
-	// ø CREATE_NEW_COURSE_04_Click_PostBTN
-    // ø NEXT CREATE_NEW_COURSE_05_newCourseDrupalPOST
-	$w('#postCourseBTN').hide()
-	await newCourseDrupalPOST()
-}
 
 export function clearCourseFormBTN_click(event) {
 	// $w('#postCourseBTN').hide()
 	// ø CREATE_NEW_COURSE_±3_Click_clearCourseForm
 	// ø NEXT CREATE_NEW_COURSE_±2_resetCourseForm
 	resetCourseFiltersAll()
-}
-
-export function kludgeDevelBTN_DEP_click(event) {
-	$w("#courseEditMSBOX").changeState("develSTT");
 }
 
 export function adminDispatchBTN_click(event) {
@@ -1415,12 +1215,6 @@ export function adminDispatchBTN_click(event) {
 		
 }
 
-
-export function develBTN_DEP_click(event) {
-	console.log(`export function develBTN_click(event)`)
-	toggleTopSection()
-}
-
 export function curriculaSelectedPGNTN_click(event) {
 	evaluationPaginationAndLoadRepeater()
 }
@@ -1484,10 +1278,6 @@ export function courseAddSectionBTTN_click(event) {
 
 export function courseEditSectionBTTN_click(event) {
 	courseEditNavigation('courseEditSectionBTTN_click',event.context.itemId)
-}
-
-export function courseNavigationOffRampBTTN_DEP_click(event) {
-	courseEditNavigation('OFF_RAMP')
 }
 
 export function editCourseCanxBTTN_click(event) {

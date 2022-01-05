@@ -1304,7 +1304,7 @@ export async function ZZZpostCourseBTN_click(event) {
 }
 
 export function clearCourseFormBTN_click(event) {
-	$w('#postCourseBTN').hide()
+	// $w('#postCourseBTN').hide()
 	// ø CREATE_NEW_COURSE_±3_Click_clearCourseForm
 	// ø NEXT CREATE_NEW_COURSE_±2_resetCourseForm
 	resetCourseFiltersAll()
@@ -1502,9 +1502,12 @@ export function minGradeDRPDN_change(event) {
 *	 @param {$w.Event} event
 */
 export function regionLocationKeyINPUT_change(event) {
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-	// Add your code for this event here: 
+	console.group(`regionLocationKeyINPUT_change(event)`)
+	// console.groupCollapsed(`regionLocationKeyINPUT_change(event)`)
 	adjustCourseFiltersAany() 
+	console.log(`YIKES!: Not Working`)
+	console.log(`groupEnd: regionLocationKeyINPUT_change(event)`)
+	console.groupEnd()
 }
 //==================================================         </adjustCourseFiltersAany BTNs>
 //==========================================================================================

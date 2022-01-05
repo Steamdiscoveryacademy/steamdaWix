@@ -393,7 +393,7 @@ export function appendLocationsJsonDocDb(newCourseDataObject){
 
 // ø <---------- <Populate Form Curriculum and Locations>  ---------->
 // ø <VESTIGIAL_CODE_except_for_GENERAL_loadAfterClick>
-export function newCourseFormLoadAfterClick(newCourseDataObject){
+export function newCourseFormLoadAfterClick_DEP(newCourseDataObject){
 	$w('#courseNameINPUT').value = newCourseDataObject.name
 	$w('#courseNameDisplayINPUT').value = newCourseDataObject.name
 	// session.setItem('lastResponseObject', JSON.stringify(newCourseDataObject))/*BIGBLEED*//*LINE_473*/
@@ -666,7 +666,7 @@ function applyFilterToBuffer(paramObjectFilterForm){
 //==================================================      <Post Course & API POST to Drupal_VESTIGIAL_PATCH>
 
 // ø <---------- <Post Course to Drupal_VESTIGIAL_PATCH>  ---------->
-export async function newCourseDrupalPOST_VESTIGIAL_PATCH(newCourseDrupalObject = {}){
+export async function newCourseDrupalPOST_VESTIGIAL_PATCH_DEP(newCourseDrupalObject = {}){
     // ø CREATE_NEW_COURSE_05_newCourseDrupalPOST
 	console.group(`newCourseDrupalPOST(newCourseDrupalObject)`)
 	// console.groupCollapsed(`newCourseDrupalPOST(newCourseDrupalObject)`)
@@ -1135,10 +1135,10 @@ function doCourseEditSection(stepThis = 'NO_OVERLOAD', paramObject = {}){
 	[Read more](https://www.wix.com/corvid/reference/$w.ClickableMixin.html#onClick)
 *	 @param {$w.MouseEvent} event
 */
-export function develTestingBTN_click(event) {
+export function develTestingBTN_DEP_click(event) {
 	develTestingCALL() 
 }
-async function develTestingCALL(){
+async function develTestingCALL_DEP(){
 	if($w('#develTestingRADIOGRP').value === 'CURRENT'){
 		await onReadyCurriculaJSON()
 	}
@@ -1146,7 +1146,7 @@ async function develTestingCALL(){
 		konstantSelectedCurriculaRepeaterOnReady_DEP()
 	}
 }
-export async function doKLUDGE(){
+export async function doKLUDGE_DEP(){
 	const wIdKldgeDoxTXTBX = '#developerTaskTXTBX'
 	const wIdKldgeResponseTXTBX = '#developerResponseTXTBX'
 	let KLUDGE = ''
@@ -1250,7 +1250,7 @@ export function btnblkDo4BTN_click(event) {
 	btnblkDoBTN_click('btnblkDo2BTN_click(event)') 
 }
 
-export function selectedNewCourseBTN_click(event) {
+export function selectedNewCourseBTN_DEP_click(event) {
 	// ø CREATE_NEW_COURSE_±1_completeCourseForm_SCRIPTS
 	let scriptName = 'selectedNewCourseBTN_click'
 	let clickedItemData = processSelectCurriculum(event,scriptName)
@@ -1258,7 +1258,7 @@ export function selectedNewCourseBTN_click(event) {
 	instantiateNewCourseObject(clickedItemData)
 }
 
-export function btnKLUDGEdeveloperTask_click(event) {
+export function btnKLUDGEdeveloperTask_DEP_click(event) {
 	doKLUDGE()
 }
 
@@ -1296,7 +1296,7 @@ export function previewCourseBTN_click(event) {
 	// ø NEXT CREATE_NEW_COURSE_01_ValidateFilterForm
 	validateFilterForm()
 }
-export async function ZZZpostCourseBTN_click(event) {
+export async function ZZZpostCourseBTN_DEP_click(event) {
 	// ø CREATE_NEW_COURSE_04_Click_PostBTN
     // ø NEXT CREATE_NEW_COURSE_05_newCourseDrupalPOST
 	$w('#postCourseBTN').hide()
@@ -1310,15 +1310,10 @@ export function clearCourseFormBTN_click(event) {
 	resetCourseFiltersAll()
 }
 
-export function kludgeDevelBTN_click(event) {
+export function kludgeDevelBTN_DEP_click(event) {
 	$w("#courseEditMSBOX").changeState("develSTT");
 }
 
-/**
-*	Adds an event handler that runs when the element is clicked.
-	[Read more](https://www.wix.com/corvid/reference/$w.ClickableMixin.html#onClick)
-*	 @param {$w.MouseEvent} event
-*/
 export function adminDispatchBTN_click(event) {
 	// ø doKludge JUST FOR adminDispatch iterations...
 	const wIdKldgeDoxTXTBX = '#developerTaskTXTBX'
@@ -1421,12 +1416,7 @@ export function adminDispatchBTN_click(event) {
 }
 
 
-/**
-*	Adds an event handler that runs when the element is clicked.
-	[Read more](https://www.wix.com/corvid/reference/$w.ClickableMixin.html#onClick)
-*	 @param {$w.MouseEvent} event
-*/
-export function develBTN_click(event) {
+export function develBTN_DEP_click(event) {
 	console.log(`export function develBTN_click(event)`)
 	toggleTopSection()
 }
@@ -1447,60 +1437,22 @@ export function btnblkDo3BTN_click(event) {
 //==================================================          <adjustCourseFiltersAany BTNs>
 
 
-/**
-*	Adds an event handler that runs when an input element's value
- is changed.
-	[Read more](https://www.wix.com/corvid/reference/$w.ValueMixin.html#onChange)
-*	 @param {$w.Event} event
-*/
 export function weekCountDRPDN_change(event) {
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-	// Add your code for this event here:
 	adjustCourseFiltersAany() 
 }
 
-/**
-*	Adds an event handler that runs when an input element's value
- is changed.
-	[Read more](https://www.wix.com/corvid/reference/$w.ValueMixin.html#onChange)
-*	 @param {$w.Event} event
-*/
 export function startDateDTPKR_change(event) {
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-	// Add your code for this event here: 
 	adjustCourseFiltersAany() 
 }
 
-/**
-*	Adds an event handler that runs when an input element's value
- is changed.
-	[Read more](https://www.wix.com/corvid/reference/$w.ValueMixin.html#onChange)
-*	 @param {$w.Event} event
-*/
 export function gradeLevelDRPDN_change(event) {
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-	// Add your code for this event here: 
 	adjustCourseFiltersAany() 
 }
 
-/**
-*	Adds an event handler that runs when an input element's value
- is changed.
-	[Read more](https://www.wix.com/corvid/reference/$w.ValueMixin.html#onChange)
-*	 @param {$w.Event} event
-*/
 export function minGradeDRPDN_change(event) {
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-	// Add your code for this event here: 
 	adjustCourseFiltersAany() 
 }
 
-/**
-*	Adds an event handler that runs when an input element's value
- is changed.
-	[Read more](https://www.wix.com/corvid/reference/$w.ValueMixin.html#onChange)
-*	 @param {$w.Event} event
-*/
 export function regionLocationKeyINPUT_change(event) {
 	console.group(`regionLocationKeyINPUT_change(event)`)
 	// console.groupCollapsed(`regionLocationKeyINPUT_change(event)`)
@@ -1534,7 +1486,7 @@ export function courseEditSectionBTTN_click(event) {
 	courseEditNavigation('courseEditSectionBTTN_click',event.context.itemId)
 }
 
-export function courseNavigationOffRampBTTN_click(event) {
+export function courseNavigationOffRampBTTN_DEP_click(event) {
 	courseEditNavigation('OFF_RAMP')
 }
 
@@ -1562,14 +1514,10 @@ export function nextCourseTilePathINPUT_change(event) {
 
 
 export function previewCourseTileBTTN_click(event) {
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-	// Add your code for this event here: 
 	doCourseEdit_courseTilePath('onPreviewClick')
 }
 
 export function postCourseTileBTTN_click(event) {
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-	// Add your code for this event here: 
 	doCourseEdit_courseTilePath('onPostClick')
 }
 //==================================================             </nextCourseTilePath BTTNs>

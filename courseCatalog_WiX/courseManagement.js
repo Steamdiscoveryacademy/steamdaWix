@@ -784,6 +784,10 @@ function courseEditNavigation(scriptName = 'STRING', itemId = "777"){
 		$w(`#${element}BTTN`).disable()
 		console.log(`$w('#elementBTTN').disable(): $w('#${element}BTTN').disable()`)
 	});
+	if(actionKey === 'courseTilePathEdit' && currentCourseTilePath.length === 0){
+		actionKey = 'courseTileSvgEdit'
+		courseEditActionKeyArray.push(actionKey) // may be MOOT, but better form
+	}
 	console.log(`actionKey: ${actionKey}`)
 	// ø </¿Map?>
 
@@ -791,7 +795,11 @@ function courseEditNavigation(scriptName = 'STRING', itemId = "777"){
 	// ø expand courseEditSTRP
 	$w('#courseEditSTRP').expand()
 	// ø change State
-	$w(`#${actionKey}SingletonBTTN`).show()
+	let wIdSingletonBTTN = `#${actionKey}SingletonBTTN`
+	// ø <KLUDGE>
+	wIdSingletonBTTN = wIdSingletonBTTN === `#courseTileSvgEditSingletonBTTN` ? `#courseTilePathEditSingletonBTTN` : wIdSingletonBTTN
+	// ø </KLUDGE>
+	$w(wIdSingletonBTTN).show()
 	$w('#courseEditMSBOX').changeState(`${actionKey}STT`);
 
 	// ø scrollTo ANCHR
@@ -807,6 +815,14 @@ function courseEditNavigation(scriptName = 'STRING', itemId = "777"){
 		paramObject.actionKey = actionKey
 		paramObject.stepKey = 'onReady'
 		doCourseEdit_courseTilePath('NO_OVERLOAD',paramObject)
+	}
+	if(actionKey === 'courseTileSvgEdit'){
+		// ! YIKES: courseEdit (actionKey) to doCourseEdit_courseTilePath: ¿time to change actionKey strings?
+		paramObject.nid = Number(itemId)
+		paramObject.currentCourseTilePath = currentCourseTilePath
+		paramObject.actionKey = actionKey
+		paramObject.stepKey = 'onReady'
+		doCourseEdit_courseTileSvg('NO_OVERLOAD',paramObject)
 	}
 	if(actionKey === 'courseAddSection'){
 		paramObject.nid = Number(itemId)
@@ -1068,12 +1084,18 @@ function doCourseEdit_previewCourseTilePath(path = 'FFFALSE', topText = 'NNULL')
 
 }
 // ø <---------- </doCourseEdit_previewCourseTilePath(preview)> ---------->
+
+// ø <---------- <doCourseEdit_courseTileSvg(paramObject)>  ---------->
+function doCourseEdit_courseTileSvg(stepThis = 'NO_OVERLOAD', paramObject = {}){
+	console.log(`doCourseAddSection: paramObject; [object below]`)
+	console.dir(paramObject)
+}
+// ø <---------- </doCourseEdit_courseTileSvg(paramObject)> ---------->
  
 // ø <---------- <doCourseAddSection(paramObject)>  ---------->
 function doCourseAddSection(stepThis = 'NO_OVERLOAD', paramObject = {}){
 	console.log(`doCourseAddSection: paramObject; [object below]`)
 	console.dir(paramObject)
-
 }
 // ø <---------- </doCourseAddSection(paramObject)> ---------->
  
@@ -1516,6 +1538,14 @@ export function courseNavigationOffRampBTTN_click(event) {
 export function editCourseCanxBTTN_click(event) {
 	courseEditNavigation('OFF_RAMP')
 }
+
+export function gotoCourseTilePathEditBTTN_click(event) {
+	$w('#courseEditMSBOX').changeState('courseTilePathEditSTT')
+}
+
+export function gotoCourseTileSvgEditBTTN_click(event) {
+	$w('#courseEditMSBOX').changeState('courseTileSvgEditSTT')
+}
 //==================================================            </courseEditNvibation BTTNs>
 //==========================================================================================
 
@@ -1541,3 +1571,5 @@ export function postCourseTileBTTN_click(event) {
 }
 //==================================================             </nextCourseTilePath BTTNs>
 //==========================================================================================
+
+

@@ -10,7 +10,7 @@ function parseStringByCount(stringParam = 'STRING', byCountParam = 5, paramObjec
     // ø <----- <countIsValid>  ----->
     let countIsValid = true
     countIsValid = Math.floor(Math.abs(byCountParam)) !== byCountParam ? false : countIsValid
-    countIsValid = byCountParam < 3 || byCountParam > 3 ? false : countIsValid
+    countIsValid = byCountParam < 1 || byCountParam > 3 ? false : countIsValid
     if(!countIsValid){
         paramObject.error = {}
         paramObject.error.boolean = !countIsValid
@@ -73,15 +73,55 @@ function parseStringByCount(stringParam = 'STRING', byCountParam = 5, paramObjec
     paramObject.wordCountEqualTo = wordCountEqualTo
 
     paramObject.characterNumberByCount = characterNumberByCount
+    paramObject.returnObject = {}
 
+    let returnChunckObjectKey = byCountParam.toString()
+    let chunkWordCount = -777
+    chunkWordCount = wordCountMaxLessThan > 0 ? wordCountMaxLessThan : chunkWordCount
+    chunkWordCount = wordCountMinGreaterThan < wordCountMaxLessThan ? wordCountMinGreaterThan : chunkWordCount
+    chunkWordCount = wordCountEqualTo > 0 ? wordCountEqualTo : chunkWordCount
+    paramObject.returnObject[returnChunckObjectKey] = {}
+    paramObject.returnObject[returnChunckObjectKey]['wordCound'] = chunkWordCount
+    let currentChunk = ''
+    let currentChunkRemainder = ''
+    let wordCountIndex = 0
+    let leadingChunkSpace = ''
+    let leadingRemainderSpace = ''
+    parsedWordArray.forEach(element => {
+        if(wordCountIndex < chunkWordCount){
+            currentChunk += leadingChunkSpace + element
+            leadingChunkSpace = ' '
+        }
+        if (wordCountIndex >= chunkWordCount) {
+            currentChunkRemainder += leadingRemainderSpace + element
+            leadingRemainderSpace = ' '
+        }
+        wordCountIndex++
+    });
+    paramObject.returnObject[returnChunckObjectKey]['currentChunk'] = currentChunk
+    paramObject.returnObject[returnChunckObjectKey]['currentChunkRemainder'] = currentChunkRemainder
 }
 
 
 
 
-let breakString = "Shirle  Chester Feather"
+let breakString = "Shirley  Chester Feather"
 let paramObjectAsResponse = {}
 parseStringByCount(breakString,3,paramObjectAsResponse)
+console.warn(`paramObjectAsResponse.returnObject['3']['currentChunk']: '${paramObjectAsResponse.returnObject['3']['currentChunk']}'`)
+console.warn(`paramObjectAsResponse.returnObject['3']['currentChunkRemainder']: '${paramObjectAsResponse.returnObject['3']['currentChunkRemainder']}'`)
+breakString = paramObjectAsResponse.returnObject['3']['currentChunkRemainder']
+console.warn(`breakString: '${breakString}'`)
+paramObjectAsResponse = {}
+parseStringByCount(breakString,2,paramObjectAsResponse)
+console.warn(`paramObjectAsResponse.returnObject['2']['currentChunk']: '${paramObjectAsResponse.returnObject['2']['currentChunk']}'`)
+console.warn(`paramObjectAsResponse.returnObject['2']['currentChunkRemainder']: '${paramObjectAsResponse.returnObject['2']['currentChunkRemainder']}'`)
+breakString = paramObjectAsResponse.returnObject['2']['currentChunkRemainder']
+console.warn(`breakString: '${breakString}'`)
+paramObjectAsResponse = {}
+parseStringByCount(breakString,1,paramObjectAsResponse)
+console.warn(`paramObjectAsResponse.returnObject['1']['currentChunk']: '${paramObjectAsResponse.returnObject['1']['currentChunk']}'`)
+console.warn(`paramObjectAsResponse.returnObject['1']['currentChunkRemainder']: '${paramObjectAsResponse.returnObject['1']['currentChunkRemainder']}'`)
 
 console.warn(`paramObjectAsResponse as Response: ${JSON.stringify(paramObjectAsResponse,undefined,4)}`)
 console.warn(JSON.stringify(paramObjectAsResponse,undefined,4))

@@ -1,4 +1,5 @@
-function tempusFugitBooleanByChunk(isoCheck, isoNow, chunk) {
+// ø <---------- <function tempusFugitBoolean(isoCheck, isoNow)>  ---------->
+function tempusFugitBoolean(isoCheck, isoNow) {
 
     // let toUpdateBooleanObject = JSON.parse(`{"ONEyyyy":false,"SIXmm":false,"THREEmm":false,"ONEmm":false,"FIFTEENdd":false,"SEVENdd":false,"ONEdd":false,"TWELVEhh":false,"SIXhh":false,"ONEhh":false,"THIRTYii":false,"FIFTEENii":false,"FIVEii":false,"ONEii":false}`)
     let toUpdateBooleanObject = JSON.parse(`{"yyyy":false,"mm":false,"dd":false,"hh":false,"ii":false}`)
@@ -87,3 +88,4 @@ function tempusFugitBooleanByChunk(isoCheck, isoNow, chunk) {
     responseObject.toUpdateLogicObject = toUpdateLogicObject
     return responseObject
 }
+// ø <---------- </function tempusFugitBoolean(isoCheck, isoNow)> ---------->

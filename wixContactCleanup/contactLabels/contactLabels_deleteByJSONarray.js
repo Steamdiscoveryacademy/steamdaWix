@@ -8,3 +8,17 @@ toDeleteLabelsArray_RAW.forEach(element => {
 });
 console.warn(`toDeleteLabelsArray: [array of objects below]`)
 console.dir(toDeleteLabelsArray)
+toDeleteLabelsArray.forEach(element => {
+    steamdaDeleteLabelFunction_frontendDo(element.key)
+    
+});
+
+
+
+function steamdaDeleteLabelFunction_frontendDo(labelKey = 'STRING'){
+    //import { steamdaDeleteLabelFunction } from 'backend/contactReference';
+    paramObjectThis = {}
+    paramObjectThis.labelKey = labelKey
+    // let newLabelItem = await steamdaDeleteLabelFunction(paramObjectThis);//steamdaDeleteLabelFunction
+    console.warn(`steamdaDeleteLabelFunction(paramObjectThis) => paramObjectThis.labelKey: ${paramObjectThis.labelKey}`)
+}

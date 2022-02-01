@@ -54,7 +54,7 @@ import {fetch} from 'wix-fetch';
 
 // ø QUICK_LIST_LOAD_COURSES_ON_READY
 // ø LOAD_COURSES_ON_READY_00a_monadLoadUpToDateCourses
-// ø LOAD_COURSES_ON_READY_00b_termRegionCoursesOnReady
+// ø LOAD_COURSES_ON_READY_00b_termRegionCoursesRepeaterPreppedOnReady
 // ø LOAD_COURSES_ON_READY_01_composeFilterFormObject_OnReadyForceChangeNoFilter
 // ø LOAD_COURSES_ON_READY_02_applyFilterToBuffer_OnReadyForceAllCourses
 // ø LOAD_COURSES_ON_READY_03_evaluationPaginationAndLoadRepeater_OnReadyFirstEightCourses
@@ -71,7 +71,7 @@ import {fetch} from 'wix-fetch';
 $w.onReady(async function () {
 	setUpOnReady()
 	await wixStorageDisplayOnReady()	//KLUDGE-CleanUp
-	termRegionCoursesOnReady()
+	termRegionCoursesRepeaterPreppedOnReady_FRONT_END()
 	let buttonObjectButtonsUsedArray = [2,3]
 	assignStringsOnReady(buttonObjectButtonsUsedArray,[2,3])
 	wixUserPermissionsOnReady()
@@ -88,13 +88,13 @@ function cleanUpOnReady(){
 	// memory.setItem('memoryParamObject', JSON.stringify({"pipedBoolean":"ON_READY"}))
 }
 
-// ø LOAD_COURSES_ON_READY_00b_termRegionCoursesOnReady
-// ø <---------- <termRegionCoursesOnReady()>  ---------->
-async function termRegionCoursesOnReady(){
-	await monadLoadUpToDateCourses()
+// ø LOAD_COURSES_ON_READY_00b_termRegionCoursesRepeaterPreppedOnReady
+// ø <---------- <termRegionCoursesRepeaterPreppedOnReady_FRONT_END()>  ---------->
+async function termRegionCoursesRepeaterPreppedOnReady_FRONT_END(){
+	await monadLoadUpToDateCourses_FRONT_END()
 
-	// console.groupCollapsed(`termRegionCoursesOnReady()`)
-	console.group(`termRegionCoursesOnReady()`)
+	// console.groupCollapsed(`termRegionCoursesRepeaterPreppedOnReady_FRONT_END()`)
+	console.group(`termRegionCoursesRepeaterPreppedOnReady_FRONT_END()`)
 
 	
 	// ø <KLUDGE_GET>
@@ -104,6 +104,8 @@ async function termRegionCoursesOnReady(){
 	// ø </KLUDGE_GET>
 	let allCoursesWorkingObject = JSON.parse(memory.getItem('TermIdRkCourses'))
 	console.log(`AFTER_MONAD: allCoursesWorkingObject = JSON.parse(memory.getItem('TermIdRkCourses'))`)
+	console.log(`AFTER_MONAD: KLUDGE-CleanUp: 'TermIdRkCourse' vs 'memoryWorkingBackupObject'`)
+	console.log(`AFTER_MONAD: KLUDGE-CleanUp: 'session-TermStuff' vs 'memory-TermStuff'`)
 	console.dir(allCoursesWorkingObject)
 	
 	let weekDocDbObject = weeksGetByTermId(Number(session.getItem('termId')))
@@ -173,16 +175,16 @@ async function termRegionCoursesOnReady(){
 	// $w('#developerResponseTXTBX').value = JSON.stringify(allCoursesWorkingObject,undefined,4)
 	
 	
-	console.log(`groupEnd: termRegionCoursesOnReady()`)
+	console.log(`groupEnd: termRegionCoursesRepeaterPreppedOnReady_FRONT_END()`)
 	console.groupEnd()
-	composeFilterFormObject()
+	composeFilterFormObject_FRONT_END()
 }
-// ø <---------- </termRegionCoursesOnReady()> ---------->
-// ø <---------- <monadLoadUpToDateCourses()>  ---------->
+// ø <---------- </termRegionCoursesRepeaterPreppedOnReady_FRONT_END()> ---------->
+// ø <---------- <monadLoadUpToDateCourses_FRONT_END()>  ---------->
 // ø LOAD_COURSES_ON_READY_00a_monadLoadUpToDateCourses
-async function monadLoadUpToDateCourses(){
-	// console.groupCollapsed(`monadLoadUpToDateCourses()`)
-	console.group(`monadLoadUpToDateCourses()`)
+async function monadLoadUpToDateCourses_FRONT_END(){
+	// console.groupCollapsed(`monadLoadUpToDateCourses_FRONT_END()`)
+	console.group(`monadLoadUpToDateCourses_FRONT_END()`)
 	// console.log(`memory.getItem('memoryTermIdRkCourses'): [ugly JSON below]`)
 	// console.log(memory.getItem('memoryTermIdRkCourses'))
 	console.log(`memory.getItem('memoryWorkingBackupObject'): [ugly JSON below]`)
@@ -217,7 +219,7 @@ async function monadLoadUpToDateCourses(){
 	}
 
 	DOX = '//ø </localTermIdRkCoursesMaxChanged>'
-	console.log(`groupEnd: monadLoadUpToDateCourses()`)
+	console.log(`groupEnd: monadLoadUpToDateCourses_FRONT_END()`)
 	console.groupEnd()
 
 	reloadTermIdRkCourses = nowTermIdRkCoursesMaxChanged > local.getItem('localTermIdRkCoursesMaxChanged') ? true : reloadTermIdRkCourses
@@ -264,7 +266,7 @@ async function monadLoadUpToDateCourses(){
 	}
 
 }
-// ø <---------- </monadLoadUpToDateCourses()> ---------->
+// ø <---------- </monadLoadUpToDateCourses_FRONT_END()> ---------->
 
 
 async function wixUserPermissionsOnReady(){
@@ -587,8 +589,8 @@ export function validateFilterForm(){
 		// ø NEXT CREATE_NEW_COURSE_02_composeFilterFormObject
 		$w('#previewErrorStringTXT').text = `Holder for Errors`
 		$w('#previewErrorStringTXT').collapse()
-		console.log('VALID CALL: composeFilterFormObject()')
-		composeFilterFormObject()
+		console.log('VALID CALL: composeFilterFormObject_FRONT_END()')
+		composeFilterFormObject_FRONT_END()
 	}else{
 		// ø FAILURE CREATE_NEW_COURSE_01_ValidateFilterForm
 		// ø NEXT CREATE_NEW_COURSE_02_catchAndDisplayError
@@ -613,13 +615,13 @@ export function catchAndDisplayError(ErrorString){
 //==========================================================================================
 //==================================================      <Preview Button: Compose & Display_VESTIGIAL>
 
-// ø <---------- <composeFilterFormObject>  ---------->
-function composeFilterFormObject(){
-	// ø LOAD_COURSES_ON_READY_01_composeFilterFormObject_OnReadyForceChangeNoFilter
+// ø <---------- <composeFilterFormObject_FRONT_END>  ---------->
+// ø LOAD_COURSES_ON_READY_01_composeFilterFormObject_OnReadyForceChangeNoFilter
+function composeFilterFormObject_FRONT_END(){
 	// ø FILTER_COURSES_02_composeFilterFormObject
 	// ø CREATE_NEW_COURSE_02_composeFilterFormObject
-	// console.groupCollapsed(`composeFilterFormObject()`)
-	console.group(`composeFilterFormObject()`)
+	// console.groupCollapsed(`composeFilterFormObject_FRONT_END()`)
+	console.group(`composeFilterFormObject_FRONT_END()`)
 	let paramObjectFilterForm = {}
 	paramObjectFilterForm.byWeek = $w('#weekCountDRPDN').value === 'NA' ? false : true
 	paramObjectFilterForm.byContainsDate = $w('#startDateDTPKR').value === null ? false : true
@@ -665,22 +667,22 @@ function composeFilterFormObject(){
 	}
 	
 
-	console.log(`groupEnd: composeFilterFormObject()`)
+	console.log(`groupEnd: composeFilterFormObject_FRONT_END()`)
 	console.groupEnd()
 	if(changedContinue){
-		applyFilterToBuffer(paramObjectFilterForm)
+		applyFilterToBuffer_FRONT_END(paramObjectFilterForm)
 	}
 }
-// ø <---------- </composeFilterFormObject> ---------->
+// ø <---------- </composeFilterFormObject_FRONT_END> ---------->
 
-// ø <---------- <applyFilterToBuffer>  ---------->
-function applyFilterToBuffer(paramObjectFilterForm){
+// ø <---------- <applyFilterToBuffer_FRONT_END>  ---------->
+function applyFilterToBuffer_FRONT_END(paramObjectFilterForm){
 	// ø LOAD_COURSES_ON_READY_02_applyFilterToBuffer_OnReadyForceAllCourses
 	// ø FILTER_COURSES_03_applyFilterToBuffer
 	// ø CREATE_NEW_COURSE_03_applyFilterToBuffer_paramObjectFilterForm
-	// console.groupCollapsed(`applyFilterToBuffer(paramObjectFilterForm)`)
-	console.group(`applyFilterToBuffer(paramObjectFilterForm)`)
-	console.log(`REACHED: applyFilterToBuffer(paramObjectFilterForm)`)
+	// console.groupCollapsed(`applyFilterToBuffer_FRONT_END(paramObjectFilterForm)`)
+	console.group(`applyFilterToBuffer_FRONT_END(paramObjectFilterForm)`)
+	console.log(`REACHED: applyFilterToBuffer_FRONT_END(paramObjectFilterForm)`)
 
 	$w('#previewCourseBTN').hide()
 
@@ -709,7 +711,7 @@ function applyFilterToBuffer(paramObjectFilterForm){
 		console.log(`ALL_FALSE: filteredCourseBuffer: [array below]`)
 		console.dir(filteredCourseBuffer)
 		// console.log(`LOAD_COURSE_REPEATER: evaluationPaginationAndLoadRepeater()`)
-		console.log(`groupEnd: applyFilterToBuffer(paramObjectFilterForm)`)
+		console.log(`groupEnd: applyFilterToBuffer_FRONT_END(paramObjectFilterForm)`)
 		console.groupEnd()
 		memory.setItem('memoryWorkingObject',JSON.stringify(filteredCourseBuffer))
 		evaluationPaginationAndLoadRepeater(true)
@@ -786,13 +788,13 @@ function applyFilterToBuffer(paramObjectFilterForm){
 
 	memory.setItem('memoryParamObject', JSON.stringify(paramObjectFilterForm))
 
-	console.log(`groupEnd: applyFilterToBuffer(paramObjectFilterForm)`)
+	console.log(`groupEnd: applyFilterToBuffer_FRONT_END(paramObjectFilterForm)`)
 	console.groupEnd()
 	// return
 	evaluationPaginationAndLoadRepeater(true)
 
 }
-// ø <---------- </applyFilterToBuffer> ---------->
+// ø <---------- </applyFilterToBuffer_FRONT_END> ---------->
 
 //==================================================     </Preview Button: Compose & Display_VESTIGIAL>
 //==========================================================================================
@@ -1751,6 +1753,14 @@ export function courseSvgSaveBTTN_click(event) {
 	$w('#responseStringCourseTileSvgTXT').text = 'SVG Code Copied To Buffer [comment includes preferred filename]'
 	$w('#responseStringCourseTileSvgTXT').show()
 }
+
+export function hideBlueSquareSWTCH_change(event) {
+	doToggleBlueGuideBox()
+}
+
+export function hideTemplateValuesSWTCH_change(event) {
+	doToggleTemplateFieldValues()
+}
 //============================================================            </courseSVG BTTNs>
 //==========================================================================================
 
@@ -1767,17 +1777,9 @@ export async function drupalAddSectionLinkTXT_click(event) {
 	// wixLocation.to(url, options); 
 
 	await wixWindow.copyToClipboard(url)
-	//   .then( () => {
-	//     // handle case where text was copied
-	//   } )
-	//   .catch( (err) => {
-	//     // handle case where an error occurred
-	//   } );
 }
 
 export async function drupalEditSectionLinkTXT_dblClick(event) {
-	// This function was added from the Properties & Events panel. To learn more, visit http://wix.to/UcBnC-4
-	// Add your code for this event here: 
 	const options = {
 	disableScrollToTop: true
 	};
@@ -1786,30 +1788,4 @@ export async function drupalEditSectionLinkTXT_dblClick(event) {
 	// wixLocation.to(url, options); 
 
 	await wixWindow.copyToClipboard(url)
-	//   .then( () => {
-	//     // handle case where text was copied
-	//   } )
-	//   .catch( (err) => {
-	//     // handle case where an error occurred
-	//   } );
-}
-
-/**
-*	Adds an event handler that runs when an input element's value
- is changed.
-	[Read more](https://www.wix.com/corvid/reference/$w.ValueMixin.html#onChange)
-*	 @param {Event} event
-*/
-export function hideBlueSquareSWTCH_change(event) {
-	doToggleBlueGuideBox()
-}
-
-/**
-*	Adds an event handler that runs when an input element's value
- is changed.
-	[Read more](https://www.wix.com/corvid/reference/$w.ValueMixin.html#onChange)
-*	 @param {Event} event
-*/
-export function hideTemplateValuesSWTCH_change(event) {
-	doToggleTemplateFieldValues()
 }

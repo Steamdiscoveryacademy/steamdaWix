@@ -899,6 +899,18 @@ function doCourseEditSection(stepThis = 'NO_OVERLOAD', paramObject = {}){
 //============================================================                      Buttons ONLY Below
 //============================================================                      (and other Events)
 //====================================================================================================
+//==========================================================================================
+
+//==================================================           <Selected-Course => StatsBox>
+export function selectedCourseStatsBTTN_mouseIn(event) {
+    $w('#statsDisplayCNTNRBX').show() 
+}
+
+export function selectedCourseStatsBTTN_mouseOut(event) {
+$w('#statsDisplayCNTNRBX').hide() 
+}
+//==================================================          </Selected-Course => StatsBox>
+//==========================================================================================
 
 export function selectLocationBTN_click(event) {
 	if($w('#regionLocationKeyINPUT').value.length > 0){

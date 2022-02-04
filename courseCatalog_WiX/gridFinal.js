@@ -69,9 +69,18 @@ import {fetch} from 'wix-fetch';
 
 
 $w.onReady(async function () {
+    console.group(`$w.onReady(async function ()`)
+    // console.groupCollapsed(`$w.onReady(async function ()`)
+
+    console.log(`setUpOnReady()`)
 	setUpOnReady()
+    console.log(`await wixStorageDisplayOnReady()	//KLUDGE-CleanUp`)
 	await wixStorageDisplayOnReady()	//KLUDGE-CleanUp
+    console.log(`termRegionCoursesRepeaterPreppedOnReady_FRONT_END()`)
 	termRegionCoursesRepeaterPreppedOnReady_FRONT_END()
+    console.log(`groupEnd: $w.onReady(async function () => then Force return`)
+    console.groupEnd()
+    return
 	let buttonObjectButtonsUsedArray = [2,3]
 	assignStringsOnReady(buttonObjectButtonsUsedArray,[2,3])
 	wixUserPermissionsOnReady()
@@ -80,9 +89,17 @@ $w.onReady(async function () {
 //==================================================              <OnReady Called Functions>
 //==================================================     (in the order they are called above)
 function setUpOnReady(){
-	memory.setItem('memoryResponseObject', memory.getItem('memoryParamObject'))
-	memory.setItem('memoryParamObject', JSON.stringify({"pipedBoolean":"ON_READY"}))
+    console.groupCollapsed(`setUpOnReady()`)
+    // console.group(`setUpOnReady()`)
+	memory.setItem('memoryResponseObject', JSON.stringify(memory.getItem('memoryParamObject')))
+    console.log(`JSON.parse(memory.getItem(memory.getItem('memoryResponseObject'))) [object below]`)
+    console.dir(JSON.parse(memory.getItem(memory.getItem('memoryResponseObject'))))
+	memory.setItem('memoryParamObject', JSON.stringify(`{"pipedBoolean":"ON_READY"}`))//
+    console.log(`JSON.parse(memory.getItem('memoryParamObject')) [object below]`)
+    console.dir(JSON.parse(memory.getItem('memoryParamObject')))
 	// ¯\__  triggers _FILTER_ of no-Filter onReady()  __/¯
+    console.log(`groupEnd: setUpOnReady()`)
+    console.groupEnd()
 }
 function cleanUpOnReady(){
 	// memory.setItem('memoryParamObject', JSON.stringify({"pipedBoolean":"ON_READY"}))
@@ -137,7 +154,8 @@ async function termRegionCoursesRepeaterPreppedOnReady_FRONT_END(){
 		const element = allCoursesWorkingObject[index];
 		gradeLevelObjectThis = gradeLevelDocDbObject[element.gradeLevelKey]
 		weekObjectThis = weekDocDbObject[element.weekId]
-		if(index === 1){
+		if(index === 1000){
+		// if(index === 1){
 			console.log(`element [object below]`)
 			console.dir(element)
 			console.log(`gradeLevelObjectThis = gradeLevelDocDbObject[element.gradeLevelKey] => gradeLevelDocDbObject[${element.gradeLevelKey}]`)
@@ -173,11 +191,11 @@ async function termRegionCoursesRepeaterPreppedOnReady_FRONT_END(){
 	}
 	memory.setItem('memoryWorkingBackupObject',JSON.stringify(allCoursesWorkingObject))
 	// $w('#developerResponseTXTBX').value = JSON.stringify(allCoursesWorkingObject,undefined,4)
-	
+	$w('#developerResponseTXTBX').value = JSON.stringify(allCoursesWorkingObject.undefined,4)
 	
 	console.log(`groupEnd: termRegionCoursesRepeaterPreppedOnReady_FRONT_END()`)
 	console.groupEnd()
-	composeFilterFormObject_FRONT_END()
+	// composeFilterFormObject_FRONT_END()
 }
 // ø <---------- </termRegionCoursesRepeaterPreppedOnReady_FRONT_END()> ---------->
 // ø <---------- <monadLoadUpToDateCourses_FRONT_END()>  ---------->
@@ -204,9 +222,20 @@ async function monadLoadUpToDateCourses_FRONT_END(){
 		let courseMaxChangedUri = 'https://live-steamda.pantheonsite.io/courseMaxChanged/202223/CHO'
 		// let termId = const regex = /\d/g;paragraph.match(regex);
 		/*KLUDGE-CleanUp better RegEx {6}{3} instead of join()*/let courseUriMaxChanged = `/courseMaxChanged/${termId.join('')}/${regionKey.join('')}`
-		console.log(`courseUriMaxChanged: '${courseUriMaxChanged}'`)
+		console.log(`≈207≈ courseUriMaxChanged: '${courseUriMaxChanged}'`)
+		console.log(`let nowTermIdRkCoursesMaxChangedObject = await getDrupalURI(${courseUriMaxChanged}, false)`)
+		// console.log(`let nowTermIdRkCoursesMaxChangedObject = await getDrupalURI(${courseUriMaxChanged})`)
+		// console.log(`≈209≈ FORCE return`)
+        // return
+		console.log(`≈212≈ nowTermIdRkCoursesMaxChangedObject: [object below]`)
 		let nowTermIdRkCoursesMaxChangedObject = await getDrupalURI(courseUriMaxChanged, false)
-		nowTermIdRkCoursesMaxChanged = (nowTermIdRkCoursesMaxChangedObject[0].isoLastUpdate).substr(0,19)
+		// let nowTermIdRkCoursesMaxChangedObject = await getDrupalURI(courseUriMaxChanged)
+		console.log(`≈215≈ nowTermIdRkCoursesMaxChangedObject: [object below]`)
+		console.dir(nowTermIdRkCoursesMaxChangedObject)
+		nowTermIdRkCoursesMaxChanged = nowTermIdRkCoursesMaxChangedObject.length !== 1 ? (new Date()).toISOString() + 'KLUDGE' : nowTermIdRkCoursesMaxChangedObject[0].isoLastUpdate
+		console.log(`≈218≈ nowTermIdRkCoursesMaxChanged: ${nowTermIdRkCoursesMaxChanged}`)
+		// nowTermIdRkCoursesMaxChanged = (nowTermIdRkCoursesMaxChangedObject[0].isoLastUpdate).substr(0,19)
+		nowTermIdRkCoursesMaxChanged = nowTermIdRkCoursesMaxChanged.substr(0,19)
 		// memory.setItem('TermIdRkCourses', JSON.stringify(nowFullCoursesObjectArray))
 		// console.log(`nowTermIdRkCoursesMaxChangedObject: [objects below]`)
 		// console.dir(nowTermIdRkCoursesMaxChangedObject)
@@ -258,11 +287,11 @@ async function monadLoadUpToDateCourses_FRONT_END(){
 		let courseUri = `https://live-steamda.pantheonsite.io/wixcourses/202223/CHO`
 		// let termId = const regex = /\d/g;paragraph.match(regex);
 		/*KLUDGE-CleanUp better RegEx {6}{3} instead of join()*/courseUri = `/wixcourses/${termId.join('')}/${regionKey.join('')}`
-		console.log(`courseUri: '${courseUri}'`)
+		console.log(`≈272≈ courseUri: '${courseUri}'`)
 		let nowFullCoursesObjectArray = await getDrupalURI(courseUri, false)
 		memory.setItem('TermIdRkCourses', JSON.stringify(nowFullCoursesObjectArray))
-		// console.log(`TermIdRkCourses: nowFullCoursesObjectArray: [array of objects below]`)
-		// console.dir(nowFullCoursesObjectArray)
+		console.log(`≈275≈ TermIdRkCourses: nowFullCoursesObjectArray: [array of objects below]`)
+		console.dir(nowFullCoursesObjectArray)
 	}
 
 }
@@ -302,6 +331,8 @@ export function  datestampinventoryDocDbJSONOnReady() {
     console.groupEnd()
 }
 export function wixStorageDisplayOnReady(){
+    // console.group(`export function wixStorageDisplayOnReady()`)
+    console.groupCollapsed(`export function wixStorageDisplayOnReady()`)
 	// set lastTermNameTXT
 	let tidrKeyMaxChanged = memory.getItem('memoryTermIdRkParamKey')
 	let termId = tidrKeyMaxChanged.match(/\d{6}/g)
@@ -324,6 +355,8 @@ export function wixStorageDisplayOnReady(){
 	
 
 	$w('#lastTermNameTXT').text = 'Course Management for:\n' + lastTermName + ' [' + lastTermId + ' | ' + regionKey + ']'
+    console.log(`groupEnd: export function wixStorageDisplayOnReady()`)
+    console.groupEnd()
  }
 
 //==================================================             </OnReady Called Functions>
@@ -1039,4 +1072,15 @@ export function adminDispatchBTN_click(event) {
 		}
 		$w(wIdKldgeResponseTXTBX).value = responseString
 		
+}
+
+
+export function kludgeToggleSelectedCourseStripBTTN_click(event) {
+	if($w('#selectedCourseSTRP').collapsed) {
+        $w('#selectedCourseSTRP').expand()
+        $w('#selectedCoursseDescrSTRP').expand()
+    } else {
+        $w('#selectedCourseSTRP').collapse()
+        $w('#selectedCoursseDescrSTRP').collapse()
+    }
 }

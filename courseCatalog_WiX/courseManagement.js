@@ -953,6 +953,8 @@ function courseEditNavigation(scriptName = 'STRING', itemId = "777"){
 		$courseElement('#sectionCountSingleTXT').text = courseElementData.sectionCount
 		// $courseElement(wIdCourseTileIMG).src = courseElementData.courseTilePath
 
+		$courseElement('#editUrlCourseKeyTXT').text = courseElementData.courseKey
+
 		// $w(wIdKldgeResponseTXTBX).value = JSON.stringify(courseElementData,undefined,4)
 		console.log(`≈933≈ courseElementData: [object below]`)
 		console.dir(courseElementData)
@@ -1083,44 +1085,52 @@ async function doCourseEdit_courseTilePath(stepThis = 'NO_OVERLOAD', paramObject
 	// ø </STEP: onPreviewClick [could become a ƒn]>
 	// ø <STEP: onPostClick [could become a ƒn]>
 	if(paramObject.stepKey === 'onPostClick'){
-		$w('#responseStringCourseTilePathTXT').text = `FAUX: Post (actually 'PATCH')`
+
+		let responseString = ($w('#currCourseTilePathINPUT').value).toString().length > 0 ? 'updated' : 'set'
+		// paramObject.currentCourseTilePath = paramObject.currentCourseTilePath.length < 20 ? oopsCourseTilePath : paramObject.currentCourseTilePath
+		console.log(`doCourseEdit: paramObject; [object below]`)
+		console.dir(paramObject)
+
+		// ø <PATCH-by-Code>
+		// ø <PATCH-Course-courseTilePath>
+		// • source: /Users/brad/Documents/bradRepositories/vsCode/steamdaWixLocal/steamdaWixNonGit/apiDrupal/BINARY_supportedBundles/courses_3499/reducedForPATCH
+		let nidThis = paramObject.nid
+		let field_coursetilepathThis = paramObject.nextCourseTilePath
+		let requestBodyObject = {}
+		requestBodyObject.nid = []
+		requestBodyObject.nid[0] = {}
+		requestBodyObject.nid[0].value = nidThis
+		requestBodyObject.type = []
+		requestBodyObject.type[0] = {}
+		requestBodyObject.type[0].target_id = 'courses'
+		requestBodyObject.type[0].target_type = 'node_type'
+
+		requestBodyObject.field_coursetilepath = []
+		requestBodyObject.field_coursetilepath[0] = {}
+		requestBodyObject.field_coursetilepath[0].value = field_coursetilepathThis
+
+		let requestBodyPATCH = JSON.stringify(requestBodyObject)
+		console.log(`JSON.stringify(requestBodyObject): requestBodyPATCH: [prettified JSON below]`)
+		console.log(JSON.stringify(requestBodyObject,undefined,4))
+
+		let responseAsFetch = await patchDrupalNode(nidThis, requestBodyPATCH)
+		console.log(`responseAsFetch = patchDrupalNode(nidThis, requestBodyPATCH): [prettified JSON below]`)
+		console.log(responseAsFetch)
+
+		$w('#currCourseTilePathINPUT').value = responseAsFetch.field_coursetilepath[0].value
+
+		// ø </PATCH-Course-courseTilePath>
+		// ø </PATCH-by-Code>
+
+		$w('#postCourseTileBTTN').hide()
+		responseString = `'Current File Path' has been ${responseString} with the value Posted`
+		$w('#responseStringCourseTilePathTXT').text = responseString
 		$w('#responseStringCourseTilePathTXT').show()
 
-	// paramObject.currentCourseTilePath = paramObject.currentCourseTilePath.length < 20 ? oopsCourseTilePath : paramObject.currentCourseTilePath
-	console.log(`doCourseEdit: paramObject; [object below]`)
-	console.dir(paramObject)
-
-	// ø <PATCH-by-Code>
-	// ø <PATCH-Course-courseTilePath>
-	// • source: /Users/brad/Documents/bradRepositories/vsCode/steamdaWixLocal/steamdaWixNonGit/apiDrupal/BINARY_supportedBundles/courses_3499/reducedForPATCH
-	let nidThis = paramObject.nid
-	let field_coursetilepathThis = paramObject.nextCourseTilePath
-	let requestBodyObject = {}
-	requestBodyObject.nid = []
-	requestBodyObject.nid[0] = {}
-	requestBodyObject.nid[0].value = nidThis
-	requestBodyObject.type = []
-	requestBodyObject.type[0] = {}
-	requestBodyObject.type[0].target_id = 'courses'
-	requestBodyObject.type[0].target_type = 'node_type'
-
-	requestBodyObject.field_coursetilepath = []
-	requestBodyObject.field_coursetilepath[0] = {}
-	requestBodyObject.field_coursetilepath[0].value = field_coursetilepathThis
-
-	let requestBodyPATCH = JSON.stringify(requestBodyObject)
-	console.log(`JSON.stringify(requestBodyObject): requestBodyPATCH: [prettified JSON below]`)
-	console.log(JSON.stringify(requestBodyObject,undefined,4))
-
-	let responseAsFetch = await patchDrupalNode(nidThis, requestBodyPATCH)
-	console.log(`responseAsFetch = patchDrupalNode(nidThis, requestBodyPATCH): [¿prettified? JSON below]`)
-	console.log(responseAsFetch)
-
-	// ø </PATCH-Course-courseTilePath>
-	// ø </PATCH-by-Code>
-
-	$w('#postCourseTileBTTN').hide()
-	return // ø MOOT - but structurally consistent
+		console.log(`groupEnd: doCourseEdit_courseTilePath(stepThis = 'NO_OVERLOAD', paramObject = {})`)
+		console.log(`groupEnd: doCourseEdit_courseTilePath(stepThis = 'NO_OVERLOAD', paramObject = {})`)
+		console.groupEnd()
+		return // ø MOOT - but structurally consistent
 	}
 	// ø </STEP: onPostClick [could become a ƒn]>
 	console.log(`groupEnd: doCourseEdit_courseTilePath(stepThis = 'NO_OVERLOAD', paramObject = {})`)

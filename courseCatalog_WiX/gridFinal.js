@@ -53,11 +53,16 @@ import {fetch} from 'wix-fetch';
 // ø 
 
 // ø QUICK_LIST_LOAD_COURSES_ON_READY
+// ø LOAD_COURSES_ON_READY_SG_SubGroup
 // ø LOAD_COURSES_ON_READY_00a_monadLoadUpToDateCourses
 // ø LOAD_COURSES_ON_READY_00b_termRegionCoursesRepeaterPreppedOnReady
 // ø LOAD_COURSES_ON_READY_01_composeFilterFormObject_OnReadyForceChangeNoFilter
 // ø LOAD_COURSES_ON_READY_02_applyFilterToBuffer_OnReadyForceAllCourses
-// ø LOAD_COURSES_ON_READY_03_evaluationPaginationAndLoadRepeater_OnReadyFirstEightCourses
+// ø GRID_BUFFER_RPTRS_UI_ON_READY_SG_SubGroup
+// ø GRID_BUFFER_RPTRS_UI_ON_READY_03a_rebuildBufferForGrid_OnReadyForceAllCourses
+// ø GRID_BUFFER_RPTRS_UI_ON_READY_03b_LoadWeekColumnRepeaters
+// ø YIKES!!! GRID_BUFFER_RPTRS_UI_ON_READY_04_evaluationPaginationAndLoadRepeater_OnReadyFirstEightCourses
+
 // ø 
 // ø QUICK_LIST_FILTER_COURSES
 // ø FILTER_COURSES_00_previewCourseBTN_click
@@ -365,8 +370,8 @@ export function wixStorageDisplayOnReady(){
 //==============================        <Filter and Load Course-Repeater>         ==============================
 //====================================================================================================
 
+// ø GRID_BUFFER_RPTRS_UI_ON_READY_04_evaluationPaginationAndLoadRepeater_OnReadyFirstEightCourses
 function evaluationPaginationAndLoadRepeater(forceRepaginate = false){
-	// ø LOAD_COURSES_ON_READY_03_evaluationPaginationAndLoadRepeater_OnReadyFirstEightCourses
 	// ø FILTER_COURSES_04_evaluationPaginationAndLoadRepeater
 	// console.groupCollapsed(`evaluationPaginationAndLoadRepeater`)
 	console.group(`evaluationPaginationAndLoadRepeater`)
@@ -382,7 +387,8 @@ function evaluationPaginationAndLoadRepeater(forceRepaginate = false){
 
 	let repeaterId = '#courseFilteredRPTR'
 	let paginationId = '#courseFilteredPGNTN'
-	let pageItemCount = 8
+	// let pageItemCount = 8
+	let pageItemCount = 1000 /*!!*/
 	if(forceRepaginate === true || $w(paginationId).totalPages === 100){
 		// totalPages === 100 indicates default paginationObject
 		$w(paginationId).currentPage = 1
@@ -623,8 +629,10 @@ function composeFilterFormObject_FRONT_END(){
 	console.group(`composeFilterFormObject_FRONT_END()`)
 	let paramObjectFilterForm = {}
 	paramObjectFilterForm.byWeek = $w('#weekCountDRPDN').value === 'NA' ? false : true
-	paramObjectFilterForm.byContainsDate = $w('#startDateDTPKR').value === null ? false : true
-	paramObjectFilterForm.byGradeLevel = $w('#gradeLevelDRPDN').value === 'NA' ? false : true
+	// paramObjectFilterForm.byContainsDate = $w('#startDateDTPKR').value === null ? false : true
+	paramObjectFilterForm.byContainsDate = false
+	// paramObjectFilterForm.byGradeLevel = $w('#gradeLevelDRPDN').value === 'NA' ? false : true
+	paramObjectFilterForm.byGradeLevel = false
 	paramObjectFilterForm.byContainsGrade = $w('#minGradeDRPDN').value === 'NA' ? false : true
 	paramObjectFilterForm.byLocationKey = $w('#regionLocationKeyINPUT').value.length === 0 ? false : true
 	paramObjectFilterForm.pipedBoolean = `${paramObjectFilterForm.byWeek}|`
@@ -633,8 +641,8 @@ function composeFilterFormObject_FRONT_END(){
 	paramObjectFilterForm.pipedBoolean += `${paramObjectFilterForm.byContainsGrade}|`
 	paramObjectFilterForm.pipedBoolean += `${paramObjectFilterForm.byLocationKey}`
 	if(paramObjectFilterForm.byWeek){paramObjectFilterForm.weekCardinal = Number($w('#weekCountDRPDN').value); paramObjectFilterForm.weekId = 777777}
-	if(paramObjectFilterForm.byContainsDate){paramObjectFilterForm.containsDateISO = $w('#startDateDTPKR').value.toISOString()}
-	if(paramObjectFilterForm.byGradeLevel){paramObjectFilterForm.gradeLevel = $w('#gradeLevelDRPDN').value}
+	// if(paramObjectFilterForm.byContainsDate){paramObjectFilterForm.containsDateISO = $w('#startDateDTPKR').value.toISOString()}
+	// if(paramObjectFilterForm.byGradeLevel){paramObjectFilterForm.gradeLevel = $w('#gradeLevelDRPDN').value}
 	if(paramObjectFilterForm.byContainsGrade){paramObjectFilterForm.containsGrade = $w('#minGradeDRPDN').value}
 	if(paramObjectFilterForm.byLocationKey){paramObjectFilterForm.locationKey = $w('#regionLocationKeyINPUT').value}
 
@@ -675,15 +683,15 @@ function composeFilterFormObject_FRONT_END(){
 // ø <---------- </composeFilterFormObject_FRONT_END> ---------->
 
 // ø <---------- <applyFilterToBuffer_FRONT_END>  ---------->
+// ø LOAD_COURSES_ON_READY_02_applyFilterToBuffer_OnReadyForceAllCourses
 function applyFilterToBuffer_FRONT_END(paramObjectFilterForm){
-	// ø LOAD_COURSES_ON_READY_02_applyFilterToBuffer_OnReadyForceAllCourses
 	// ø FILTER_COURSES_03_applyFilterToBuffer
 	// ø CREATE_NEW_COURSE_03_applyFilterToBuffer_paramObjectFilterForm
 	// console.groupCollapsed(`applyFilterToBuffer_FRONT_END(paramObjectFilterForm)`)
 	console.group(`applyFilterToBuffer_FRONT_END(paramObjectFilterForm)`)
 	console.log(`REACHED: applyFilterToBuffer_FRONT_END(paramObjectFilterForm)`)
 
-	$w('#previewCourseBTN').hide()
+	// $w('#previewCourseBTN').hide()
 
 	// let weekDocDbObject = weeksGetByTermId(Number(session.getItem('termId')))
 	// console.log(`weekDocDbObject = weeksGetByTermId(Number(session.getItem('termId')))`)
@@ -713,7 +721,12 @@ function applyFilterToBuffer_FRONT_END(paramObjectFilterForm){
 		console.log(`groupEnd: applyFilterToBuffer_FRONT_END(paramObjectFilterForm)`)
 		console.groupEnd()
 		memory.setItem('memoryWorkingObject',JSON.stringify(filteredCourseBuffer))
-		evaluationPaginationAndLoadRepeater(true)
+		/*!!*/
+		// ø <Change for Grid> 
+		// evaluationPaginationAndLoadRepeater(true)
+		LoadWeekColumnRepeaters_FRONT_END()
+		// ø </Change for Grid> 
+		/*!!*/ 
 		return
 	}
 	// return
@@ -790,10 +803,141 @@ function applyFilterToBuffer_FRONT_END(paramObjectFilterForm){
 	console.log(`groupEnd: applyFilterToBuffer_FRONT_END(paramObjectFilterForm)`)
 	console.groupEnd()
 	// return
-	evaluationPaginationAndLoadRepeater(true)
+	/*!!*/
+	// ø <Change for Grid> 
+	// evaluationPaginationAndLoadRepeater(true)
+	LoadWeekColumnRepeaters_FRONT_END()
+	// ø </Change for Grid> 
+	/*!!*/ 
 
 }
 // ø <---------- </applyFilterToBuffer_FRONT_END> ---------->
+
+// ø <---------- <rebuildBufferForGrid_FRONT_END>  ---------->
+// ø GRID_BUFFER_RPTRS_UI_ON_READY_03a_rebuildBufferForGrid_OnReadyForceAllCourses
+function rebuildBufferForGrid_FRONT_END(){
+    // console.group(`applyFilterToBuffer(paramObjectFilterForm)`)
+    // let colCount = 4
+    // console.groupCollapsed(`rebuildBufferForGrid_FRONT_END()`)
+	console.group(`rebuildBufferForGrid_FRONT_END()`)
+	console.log(`REACHED: rebuildBufferForGrid_FRONT_END()`)
+    let doxObject = JSON.parse(memory.getItem('memoryDoxObject'))
+	/*!!*/ 
+	if(doxObject === null) {
+		doxObject = {}
+		doxObject.colCount = 9
+	}
+	/*!!*/ 
+    let colCount = doxObject.colCount
+    // let filteredCourseBuffer = JSON.parse(memory.getItem('memoryWorkingObject'))
+    let filteredCourseBuffer = JSON.parse(memory.getItem('memoryWorkingBackupObject'))/*!!*/
+    console.log(`filteredCourseBuffer: [array below]`)
+    console.dir(filteredCourseBuffer)
+    let weekColIndex = 777
+    let gridWeekMaxArray = /*cardinalWeeks, Zero will be Zero so Not Max*/[0,0,0,0,0,0,0,0,0,0]
+    let gridWeekKeyArray = /*cardinalWeeks, Zero will be Zero so Not Max*/['Zero','One','Two','Three','Four','Five','Six','Seven','Eight','Nine']
+    let gridRepeaterIdArray = gridWeekKeyArray.map(key => {
+		return `week${key}CourseGridRPTR`
+	})
+    for (let index = 0; index < filteredCourseBuffer.length; index++) {
+        const element = filteredCourseBuffer[index]
+		// weekColIndex = Number(element.weekNameCardinal)
+
+        gridWeekMaxArray[Number(element.weekNameCardinal)]++
+    }
+    console.log(`gridWeekMaxArray: [array below]`)
+    console.dir(gridWeekMaxArray)
+    let rowCount = Math.max(...gridWeekMaxArray)
+    console.log(`rowCount: ${rowCount}`)
+    console.log(`gridWeekKeyArray: [array below]`)
+    console.dir(gridWeekKeyArray)
+    console.log(`gridRepeaterIdArray: [array below]`)
+    console.dir(gridRepeaterIdArray)
+    // console.log(`FORCE return: ≈833≈`)
+	// return
+
+
+
+    let gridRebuildCourseBuffer = []
+    let gridRebuildCourseElementThis = {}
+    let placedCourseIndexArray = []
+    for (let rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+        const rowThis = rowIndex + 1 //skips ZERO /*!!*/
+        for (let colIndex = 0; colIndex < colCount; colIndex++) {
+            const colThis = colIndex + 1 //skips ZERO /*!!*/
+            gridRebuildCourseElementThis = {}
+            gridRebuildCourseElementThis.col = colThis
+            gridRebuildCourseElementThis.row = rowThis
+            gridRebuildCourseElementThis._id = `row${rowThis}col${colThis}`
+            gridRebuildCourseElementThis.pointerIndex = null
+            // ø <loop Buffer>
+            for (let bufferIndex = 0; bufferIndex < filteredCourseBuffer.length; bufferIndex++) {
+                const bufferElement = filteredCourseBuffer[bufferIndex]
+                bufferElement.col = Number(bufferElement.weekNameCardinal)
+                if(!placedCourseIndexArray.includes(bufferIndex)){
+					 //¯¯\__(OOAAOC)__/¯¯  /*!!*/
+                    if(colThis === bufferElement.col){
+                        // gridRebuildCourseElementThis.row = rowThis
+                        placedCourseIndexArray.push(bufferIndex)
+                        gridRebuildCourseElementThis.pointerIndex = bufferIndex
+                        break
+                    }
+                }
+            }
+            // ø </loop Buffer>
+            gridRebuildCourseBuffer.push(gridRebuildCourseElementThis)
+        }
+    }
+    console.log(`gridRebuildCourseBuffer: [array below]`)
+    console.dir(gridRebuildCourseBuffer)
+	// console.log(`FORCE return: ≈879≈`)
+	// return
+
+    let gridRowLastArray = /*cardinalWeeks, Zero will be Zero so Not Max*/[0,0,0,0,0,0,0,0,0,0]
+    for (let index = 0; index < filteredCourseBuffer.length; index++) {
+        const element = filteredCourseBuffer[index]
+		// ø <raison d'être>
+        element.row = gridRowLastArray[element.col] + 1
+		// ø </raison d'être>
+        gridRowLastArray[element.col] = element.row
+    }
+    console.log(`gridRowLastArray: [array below]`)
+    console.dir(gridRowLastArray)
+
+	// console.log(`FORCE return: ≈895≈`)
+	// return
+
+    let rows = Math.max(...gridRowLastArray)
+    console.log(`rows: ${rows}`)
+	console.log(`ROW_APPLIED: filteredCourseBuffer: [array below]`)
+	console.dir(filteredCourseBuffer)
+
+	// console.log(`FORCE return: ≈903≈`)
+    // return
+    /*KLUDGE-CleanUp ≈873≈*/// memory.setItem('memoryWorkingObject',JSON.stringify(gridRebuildCourseBuffer))
+    console.log(`/*KLUDGE-CleanUp ≈873≈*/// memory.setItem('memoryWorkingObject',JSON.stringify(gridRebuildCourseBuffer))`)
+	console.log(`GRID_APPLIED: gridRebuildCourseBuffer: [array below]`)
+	console.dir(gridRebuildCourseBuffer)
+	// console.log(`FILTER_APPLIED: filteredCourseExcludedBuffer: [array below]`)
+	// console.dir(filteredCourseExcludedBuffer)
+	$w('#developerDoxTXTBX').value = JSON.stringify(gridRebuildCourseBuffer)
+	console.log(`groupEnd: rebuildBufferForGrid(KLUDGEparamObjectFilterForm)`)
+	console.groupEnd()
+	// console.log(`FORCE return: ≈914≈`)
+	// return
+	// evaluationPaginationAndLoadRepeater(true)
+	LoadWeekColumnRepeaters_FRONT_END()
+}
+// ø <---------- </rebuildBufferForGrid_FRONT_END> ---------->
+
+// ø GRID_BUFFER_RPTRS_UI_ON_READY_03b_LoadWeekColumnRepeaters
+function LoadWeekColumnRepeaters_FRONT_END() {
+	console.group(`LoadWeekColumnRepeaters_FRONT_END()`)
+	// console.groupCollapsed(`LoadWeekColumnRepeaters_FRONT_END()`)
+	console.log(`PENDING: just logging: 2022-02-05T11:02:00`)
+	console.log(`groupEnd: LoadWeekColumnRepeaters_FRONT_END()`)
+	console.groupEnd()
+}
 
 //==================================================     </Preview Button: Compose & Display_VESTIGIAL>
 //==========================================================================================
@@ -920,7 +1064,80 @@ function doCourseEditSection(stepThis = 'NO_OVERLOAD', paramObject = {}){
  
 //==========================================================================================
 //==================================================                  <KLUDGE Buttons Steps>
- 
+ function doKLUDGE(){
+	 rebuildBufferForGrid_FRONT_END()
+ }
+//  ===========
+export function doKludgeBTTN_click(event) {
+	doKLUDGE()
+}
+export function doxKludgeResetBTTN_click(event) {
+	$w('#developerResponseTXTBX').value = ''
+	$w('#developerDoxTXTBX').value = ''
+	console.log(`$w('#developerDoxTXTBX'): ${$w('#developerDoxTXTBX')}`)
+	console.log(`typeof $w('#developerDoxTXTBX'): ${typeof $w('#developerDoxTXTBX')}`)
+}
+
+export function kludgeDataDisplayBTTN_click(event) {
+	let doAppend = $w('#kludgeDataDisplayAppendSWTCH').checked
+	let prefixDox =       !doAppend ? '' : $w('#developerDoxTXTBX').value
+	let prefixResponse =  !doAppend ? '' : $w('#developerResponseTXTBX').value
+	let lineDox = ''
+	let dox = ''
+	let response = ''
+	let which = $w('#kludgeDataDisplayDRPDN').value
+	switch (which) {
+		case 'memoryTermIdRkParamKey':
+			lineDox = ''
+			dox += `≈PARAM≈ memoryTermIdRkParamKey\n`
+			dox += `memory.getItem('memoryTermIdRkParamKey'):\n`
+			response = memory.getItem('memoryTermIdRkParamKey')
+			break;
+		case 'TermIdRkCourses':
+			lineDox = ''
+			dox += `≈295≈ memory.setItem('TermIdRkCourses', JSON.stringify(nowFullCoursesObjectArray))\n`
+			dox += `memory.getItem('TermIdRkCourses'):\n`
+			response = memory.getItem('TermIdRkCourses')
+			break;
+		case 'memoryWorkingBackupObject':
+			lineDox = ''
+			dox += `≈194≈ memory.setItem('memoryWorkingBackupObject',JSON.stringify(allCoursesWorkingObject))\n`
+			dox += `≈704≈ let allCoursesWorkingObject = JSON.parse(memory.getItem('memoryWorkingBackupObject'))\n`
+			dox += `memory.getItem('memoryWorkingBackupObject'):\n`
+			response = memory.getItem('memoryWorkingBackupObject')
+			break;
+		case 'memoryWorkingObject':
+			lineDox = ''
+			dox += `≈785≈ memory.setItem('memoryWorkingObject',JSON.stringify(filteredCourseBuffer))\n`
+			dox += `memory.getItem('memoryWorkingObject'):\n`
+			response = memory.getItem('memoryWorkingObject')
+			break;
+		case 'memoryParamObject':
+			lineDox = ''
+			dox += `≈794≈ memory.setItem('memoryParamObject', JSON.stringify(paramObjectFilterForm))\n`
+			dox += `[the paramObject for the Filter Logic]\n`
+			dox += `memory.getItem('memoryParamObject'):\n`
+			response = memory.getItem('memoryParamObject')
+			break;
+		case 'memoryDoxObject':
+			lineDox = ''
+			dox += `≈812≈ let doxObject = JSON.parse(memory.getItem('memoryDoxObject'))\n`
+			dox += `[probably DEPRECATED]\n`
+			dox += `memory.getItem('memoryDoxObject'):\n`
+			response = memory.getItem('memoryDoxObject')
+			break;
+	
+		default:
+			lineDox = ''
+			dox = `Data Drop-Down Selection UNSUPPORTED:\n`
+			response = $w('#kludgeDataDisplayDRPDN').value
+			break;
+	}
+	dox = prefixDox + lineDox + dox +'\n\n'
+	response = prefixResponse + response +'\n\n'
+	$w('#developerDoxTXTBX').value = dox
+	$w('#developerResponseTXTBX').value = response
+}
 //==================================================                 </KLUDGE Buttons Steps>
 //==========================================================================================
 

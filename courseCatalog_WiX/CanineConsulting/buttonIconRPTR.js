@@ -477,6 +477,7 @@ function applyFilterToBuffer(paramObjectFilterForm){
 // ø <---------- <rebuildBufferForGrid>  ---------->
 // ø LOAD_COURSES_ON_READY_03_rebuildBufferForGrid_OnReadyForceAllCourses
 function rebuildBufferForGrid(){
+    console.group(`applyFilterToBuffer(paramObjectFilterForm)`)
     // console.groupCollapsed(`applyFilterToBuffer(paramObjectFilterForm)`)
     // let colCount = 4
     let doxObject = JSON.parse(memory.getItem('memoryDoxObject'))

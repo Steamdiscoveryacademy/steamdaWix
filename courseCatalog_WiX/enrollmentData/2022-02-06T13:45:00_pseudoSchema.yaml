@@ -1,0 +1,50 @@
+# • NOTES:
+# •   - many values are somewhat redundant, but 
+
+# ø <context>
+nid
+termId
+regionKey
+sectionCount
+enrollExcptn
+# ø </context>
+
+min
+max
+waitList
+maxBlock
+maxAbsolute
+
+countFromMin
+countFromFull
+countFromWaitList
+countFromBlock
+countFromAbsolute
+
+# ø <boolean>
+reachedMin
+reachedMax
+reachedMaxBlock
+reachedMaxAbsolute
+# ø </boolean>
+# ø <process-script values>
+insertMaxCount
+updateMaxCount
+nidDirectedUpsertArray
+# -
+nidIsertedArray
+nidUpdatedArray
+nidInsertSkippedArray
+nidUpdateSkippedArray
+# - counts of thise will be trivial
+# ø </process-script values>
+# ø <konstantJSON>
+let konstantsObject = {}
+konstantsObject.minK = 4
+konstantsObject.maxK = 12
+konstantsObject.waitListK = 10
+konstantsObject.maxBlockK = konstantsObject.maxK + konstantsObject.waitListK = 10
+konstantsObject.maxAbsoluteK = 22
+konstantJSON = JSON.stringify(konstantsObject,undefined,4)
+# ø </konstantJSON>
+

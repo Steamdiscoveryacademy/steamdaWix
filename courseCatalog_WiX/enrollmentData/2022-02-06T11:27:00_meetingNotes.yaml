@@ -1,0 +1,26 @@
+---
+Attributes:
+	- Absolute Max: 22
+		-fire-marshall limit
+	- Max: 12
+		- closed
+	- Min: 4
+		- risks being canx
+	- Waitlist: 10
+		- number of slots that will be held as a waitlist _after_ Max is reached
+	- BlockMax:
+		- Max + Wiatlist nobody can even_try_ to enroll and choose Waitlist
+
+Notes:
+	- 
+...
+
+AM-max: 2 (remove from formio)
+PM-max: 2 (remove from formio)
+
+limited space => max - 2 orange Limit Space
+upon Max => Display 'Waitlist Only'
+BlockMax => "Full" block course Display, Greyed out unclickable
+
+
+

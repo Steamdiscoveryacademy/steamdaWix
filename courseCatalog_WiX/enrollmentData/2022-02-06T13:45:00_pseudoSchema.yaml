@@ -23,7 +23,7 @@ countFromAbsolute
 
 # ø <boolean>
 reachedMin
-reachedMax
+reachedFull
 reachedMaxBlock
 reachedMaxAbsolute
 # ø </boolean>

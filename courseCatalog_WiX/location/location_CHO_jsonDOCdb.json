@@ -1,0 +1,46 @@
+{
+    "CHOa": {
+        "_id": "CHOa",
+        "region": "CHO",
+        "key": "CHOa",
+        "name": "Incubator",
+        "nameFull": "STEAM Incubator",
+        "nameCommon": "Incubator",
+        "nameAbbrv": "Inc",
+        "nameAcronym": "SI",
+        "street_1": "3004 Berkmar Drive",
+        "street_2": "",
+        "city": "Charlottesville",
+        "state": "VA",
+        "zip": "22901",
+        "zipPlus": "",
+        "latitude": 38.08146,
+        "longitude": -78.47798,
+        "notes": [
+            "COMPLETE",
+            "[O] Additional Checks"
+        ]
+    },
+    "CHOb": {
+        "_id": "CHOb",
+        "region": "CHO",
+        "key": "CHOb",
+        "name": "CCS",
+        "nameFull": "Charlottesville Catholic School",
+        "nameCommon": "Cville Catholic",
+        "nameAbbrv": "holder",
+        "nameAcronym": "CCS",
+        "street_1": "1205 Pen Park Rd",
+        "street_2": "",
+        "city": "Charlottesville",
+        "state": "VA",
+        "zip": "22901",
+        "zipPlus": "",
+        "latitude": 38.05438,
+        "longitude": -78.45913,
+        "notes": [
+            "COMPLETE",
+            "[O] Additional Checks"
+        ]
+    }
+}

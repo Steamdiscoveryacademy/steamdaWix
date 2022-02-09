@@ -1,0 +1,27 @@
+nid = _idZZZ
+
+title = courseNameDisplayZZZ
+
+field_courseregionkey = courseRegionKeyZZZ
+
+field_locationkey = locationKeyZZZ
+
+field_termid = termIdZZZ
+
+field_weekid = weekIdZZZ
+
+field_gradelevelkey = gradeLevelKeyZZZ
+
+field_courseoptions = courseOptionsZZZ
+
+field_coursetilepath = courseTilePathZZZ
+
+field_coursekey = courseKeyZZZ
+
+field_sectioncount = sectionCountZZZ
+
+field_coursepromopath = coursePromoPathZZZ
+
+field_curriculumid = curriculumIdZZZ
+
+field_enrollexcptn = enrollExcptnZZZ

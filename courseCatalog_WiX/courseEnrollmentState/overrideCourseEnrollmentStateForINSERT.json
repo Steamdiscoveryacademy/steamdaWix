@@ -5,9 +5,12 @@
         "_createdDate": "2022-02-06T20:38:52.581Z",
         "_updatedDate": "2022-02-08T18:01:39.538Z",
         "sectionCount": 1,
+        "enrollExcptn": "NNULL",
+        "courseOptions": "ONE",
         "enrollmentCount": 1,
         "waitlistCount": 1,
-        "enrollExcptn": "NNULL",
+        "enrollmentCountAm": 1,
+        "enrollmentCountPm": 1,
         "title": "BINARY",
         "nid": 1,
         "termId": 1,
@@ -25,7 +28,13 @@
         "reachedFull": false,
         "reachedMaxBlocked": false,
         "reachedMaxAbsolute": false,
+        "maxAm": 1,
+        "countFromFullAm": 1,
+        "reachedFullAm": true,
+        "maxPm": 1,
+        "countFromFullPm": 1,
+        "reachedFullPm": true,
         "coutFromFull": 1,
-        "coutFromBlock": 1,
+        "coutFromBlock": 1
     }
 ]

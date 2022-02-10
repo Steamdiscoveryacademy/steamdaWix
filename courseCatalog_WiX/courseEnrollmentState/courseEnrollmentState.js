@@ -10,7 +10,6 @@ import wixLocation from 'wix-location';
 import {fetch} from 'wix-fetch';
 import {getJSON} from 'wix-fetch';
 // ø ø </WiX>
-//CHANGE
 // ø ø <NPM>
 import { compareAsc, format } from 'date-fns'
 // ø ø </NPM>
@@ -152,7 +151,7 @@ export function usingFunctionFromPublic(a, b) {
 //==========================================================================================
 //==================================================           <ON_DECK courseCatalogModule>
 
-// ø <---------- <lotsOfStuffHere( whichStuff = 'All of It')>  ---------->
+// ø <---------- <singletonCourseDrupalToWixUpsert_ON_DECK(drupalCourse = {}, wixCourse = {})> ---------->
 export async function singletonCourseDrupalToWixUpsert_ON_DECK(drupalCourse = {}, wixCourse = {}){
     let drupalKeys = Object.keys(drupalCourse)
     if(drupalKeys.length === 0){
@@ -252,12 +251,14 @@ export async function singletonCourseDrupalToWixUpsert_ON_DECK(drupalCourse = {}
     "countFromFullAm": 0,
     "countFromFullPm": 0,
 */
+    // ø <Evaluate Cout-Froms>
     wixCourse.countFromMin = wixCourse.min - wixCourse.enrollmentCount > 0 ? wixCourse.min - wixCourse.enrollmentCount : 0
     wixCourse.countFromFull = wixCourse.max - wixCourse.enrollmentCount > 0 ? wixCourse.max - wixCourse.enrollmentCount : 0
     wixCourse.countFromBlock = wixCourse.maxBlock - (wixCourse.enrollmentCount + wixCourse.waitlistCount) > 0 ? wixCourse.maxBlock - (wixCourse.enrollmentCount + wixCourse.waitlistCount) : 0
     wixCourse.countFromAbsolute = wixCourse.maxAbsolute - (wixCourse.enrollmentCount + wixCourse.waitlistCount) > 0 ? wixCourse.maxAbsolute - (wixCourse.enrollmentCount + wixCourse.waitlistCount) : 0
     wixCourse.countFromFullAm = wixCourse.maxAm - wixCourse.enrollmentCountAm > 0 ? wixCourse.maxAm - wixCourse.enrollmentCountAm : 0
     wixCourse.countFromFullPm = wixCourse.maxPm - wixCourse.enrollmentCountPm > 0 ? wixCourse.maxPm - wixCourse.enrollmentCountPm : 0
+    // ø </Evaluate Cout-Froms>
 /*
     "reachedMin": false,
     "reachedFull": false,
@@ -266,25 +267,163 @@ export async function singletonCourseDrupalToWixUpsert_ON_DECK(drupalCourse = {}
     "reachedFullAm": false,
     "reachedFullPm": false,
 */
+    // ø <Evaluate Booleans>
     wixCourse.reachedMin = wixCourse.countFromMin === 0 ? true : false
     wixCourse.reachedFull = wixCourse.countFromFull === 0 ? true : false
     wixCourse.reachedMaxBlocked = wixCourse.countFromBlock === 0 ? true : false
     wixCourse.reachedMaxAbsolute = wixCourse.countFromAbsolute === 0 ? true : false
     wixCourse.reachedFullAm = wixCourse.countFromFullAm === 0 ? true : false
     wixCourse.reachedFullPm = wixCourse.countFromFullPm === 0 ? true : false
+    // ø </Evaluate Booleans>
 
     await consoleLogProgress(drupalCourse, wixCourse, 'after MATH', 'after MATH')
     // ø </DO_THE_MATH wixCourse by enrollExcptn and K-values>
 
 
-    // memory.setItem('memoryResponseKLUDGE',JSON.stringify(wixCourse,undefined,4))
+    // memory.setItem('memoryPrimaryResponseKLUDGE',JSON.stringify(wixCourse,undefined,4))
     // memory.setItem('memorySecondaryResponseKLUDGE',JSON.stringify(drupalCourse,undefined,4))
+    let wixCourseJSON = JSON.stringify(wixCourse,undefined,4)   
+    let drupalCourseJSON = JSON.stringify(drupalCourse,undefined,4)   
+    memory.setItem('memoryPrimaryResponseKLUDGE',wixCourseJSON)
+    memory.setItem('memorySecondaryResponseKLUDGE',drupalCourseJSON)
 
 
     console.log(`groupEnd: singletonCourseDrupalToWixUpsert_ON_DECK(drupalCourse = {}, wixCourse = {})`)
     console.groupEnd()
 }
-// ø <---------- </lotsOfStuffHere( whichStuff = 'All of It')> ---------->
+// ø <---------- </singletonCourseDrupalToWixUpsert_ON_DECK(drupalCourse = {}, wixCourse = {})> ---------->
+// ø <---------- <courseEnrollmentStateIncrementByKVP_ON_DECK(key = 'STRING', value = 'STRING')> ---------->
+function courseEnrollmentStateIncrementByKVP_ON_DECK(key = 'STRING', value = 'STRING'){
+    let supportedPrimaryLikeKeyValueArray = ['nid','courseKey','_id']
+    if(!supportedPrimaryLikeKeyValueArray.includes(key)){
+        let errorObject = {}
+        errorObject.errorBoolean = true
+        errorObject.status = 'ERROR'
+        errorObject.statusDescr = `Invalid key`
+        errorObject.conditionFailureCode = `!supportedPrimaryLikeKeyValueArray.includes(key): !${supportedPrimaryLikeKeyValueArray}.includes(${key}): ${!supportedPrimaryLikeKeyValueArray.includes(key)}`
+        // ø more?...
+        return errorObject
+    }
+    let nidToNumber = key === 'nid' ? Number(value) : 77777777
+    let courseEnrollmentStateRecord = {}
+    courseEnrollmentStateRecord.descr  = 'HOLDER: for actual key-value single found Record'
+
+    let TRY_courseEnrollmentState = courseEnrollmentStateIncrementByRecordObjectPassThru_ON_DECK(courseEnrollmentStateRecord.descr)
+    let CATCH_noAction = typeof TRY_courseEnrollmentState.errorBoolean === 'boolean' && TRY_courseEnrollmentState.errorBoolean === true ? true : false
+    if(CATCH_noAction){
+        let noActionObject = {}
+        noActionObject.noactionBoolean = true
+        noActionObject.errorObject = TRY_courseEnrollmentState
+        return noActionObject
+    }
+    return TRY_courseEnrollmentState
+}
+// ø <---------- </courseEnrollmentStateIncrementByKVP_ON_DECK(key = 'STRING', value = 'STRING')> ---------->
+// ø <---------- <courseEnrollmentStateIncrementByRecordObject_ON_DECK(courseEnrollmentStateRecord = {})> ---------->
+function courseEnrollmentStateIncrementByRecordObjectPassThru_ON_DECK(wixCourse = {}){
+    // <NOTE>: change 'enrollmentCourseOption'=>STRING to an 'enrollmentParamObject'=>OBJECT as soon as another parameter emerges
+    // let courseOption = enrollmentParamObject.courseOptions
+    // </NOTE>: change 'enrollmentCourseOption'=>STRING to an 'enrollmentParamObject'=>OBJECT as soon as another parameter emerges
+    // <NOTE>: Better: evaluate courseOption by wixCourse.courseOptions
+    let courseOption = 'NA'
+    courseOption = (wixCourse.courseOptions).includes('FD') ? 'FD' : courseOption
+    courseOption = courseOption === 'FD' && (wixCourse.courseOptions).includes('AM') ? 'AM' : courseOption
+    courseOption = courseOption === 'NA' && (wixCourse.courseOptions).includes('AM') ? 'AzM' : courseOption
+    courseOption = courseOption === 'FD' && (wixCourse.courseOptions).includes('PM') ? 'PM' : courseOption
+    courseOption = courseOption === 'NA' && (wixCourse.courseOptions).includes('PM') ? 'PzM' : courseOption
+    // </NOTE>: Better: evaluate courseOption by wixCourse.courseOptions
+    let supportedCourseOptionValueArray = ['FD','AM','PM','AzM','PzM']
+    // ø NOTE: 'FD' and 'AzM' and 'PzM' are Logically Equivalent: Valid - Enrollment/Wait-List Increment Only - No Half-Day as Option Increments
+    if(!supportedCourseOptionValueArray.includes(courseOption)){
+        let errorObject = {}
+        errorObject.errorBoolean = true
+        errorObject.status = 'ERROR'
+        errorObject.statusDescr = `Invalid courseOption`
+        errorObject.conditionFailureCode = `!supportedCourseOptionValueArray.includes(courseOption): !${supportedCourseOptionValueArray}.includes(${courseOption}): ${!supportedCourseOptionValueArray.includes(courseOption)}`
+        // ø more?...
+        return errorObject
+    }
+    let enrollmentIncrement = 0
+    let enrollmentIncrementAm = 0
+    let enrollmentIncrementPm = 0
+    let waitlistIncrement = 0
+    if(wixCourse.reachedMaxAbsolute){
+        let errorObject = {}
+        errorObject.errorBoolean = true
+        errorObject.status = 'ERROR'
+        errorObject.statusDescr = `Reached Max Absolute`
+        errorObject.conditionFailureCode = `wixCourse.reachedMaxAbsolute: ${wixCourse.reachedMaxAbsolute}`
+        // ø more?...
+        return errorObject
+    }
+    // ø REMEMBER => would be returned already if above
+    if(wixCourse.reachedMaxBlocked){
+        let errorObject = {}
+        errorObject.errorBoolean = true
+        errorObject.status = 'ERROR'
+        errorObject.statusDescr = `Reached Max Blocked`
+        errorObject.conditionFailureCode = `wixCourse.reachedMaxBlocked: ${wixCourse.reachedMaxBlocked}`
+        // ø more?...
+        return errorObject
+    }
+    // ø REMEMBER => would be returned already if above
+    if(courseOption === 'AM' && wixCourse.reachedFullAm === true ){
+        let errorObject = {}
+        errorObject.errorBoolean = true
+        errorObject.status = 'ERROR'
+        errorObject.statusDescr = `Half-Day AM Option and Reached Full AM`
+        errorObject.conditionFailureCode = `courseOption === 'AM' && wixCourse.reachedFullAm === true: ${courseOption} === 'AM' && ${wixCourse.reachedFullAm} === true`
+        // ø more?...
+        return errorObject
+    }
+    // ø REMEMBER => would be returned already if above
+    if(courseOption === 'PM' && wixCourse.reachedFullPm === true ){
+        let errorObject = {}
+        errorObject.errorBoolean = true
+        errorObject.status = 'ERROR'
+        errorObject.statusDescr = `Half-Day PM Option and Reached Full PM`
+        errorObject.conditionFailureCode = `courseOption === 'PM' && wixCourse.reachedFullPm === true: ${courseOption} === 'PM' && ${wixCourse.reachedFullPm} === true`
+        // ø more?...
+        return errorObject
+    }
+    // ø REMEMBER => would be returned already if above
+    enrollmentIncrement = 1
+    waitlistIncrement = 0
+    if(wixCourse.reachedFull){
+        enrollmentIncrement = 0
+        waitlistIncrement = 1
+    }
+    if(courseOption === 'AM'){
+        enrollmentIncrementAm = 1
+    }
+    if(courseOption === 'PM'){
+        enrollmentIncrementPm = 1
+    }
+    // ø <Increment Arithmetic>
+    wixCourse.enrollmentCount += enrollmentIncrement
+    wixCourse.wixCourse.waitlistCount += waitlistIncrement
+    wixCourse.enrollmentCountAm += enrollmentIncrementAm
+    wixCourse.enrollmentCountPm += enrollmentIncrementPm
+    // ø </Increment Arithmetic>
+    // ø <Evaluate Cout-Froms>
+    wixCourse.countFromMin = wixCourse.min - wixCourse.enrollmentCount > 0 ? wixCourse.min - wixCourse.enrollmentCount : 0
+    wixCourse.countFromFull = wixCourse.max - wixCourse.enrollmentCount > 0 ? wixCourse.max - wixCourse.enrollmentCount : 0
+    wixCourse.countFromBlock = wixCourse.maxBlock - (wixCourse.enrollmentCount + wixCourse.waitlistCount) > 0 ? wixCourse.maxBlock - (wixCourse.enrollmentCount + wixCourse.waitlistCount) : 0
+    wixCourse.countFromAbsolute = wixCourse.maxAbsolute - (wixCourse.enrollmentCount + wixCourse.waitlistCount) > 0 ? wixCourse.maxAbsolute - (wixCourse.enrollmentCount + wixCourse.waitlistCount) : 0
+    wixCourse.countFromFullAm = wixCourse.maxAm - wixCourse.enrollmentCountAm > 0 ? wixCourse.maxAm - wixCourse.enrollmentCountAm : 0
+    wixCourse.countFromFullPm = wixCourse.maxPm - wixCourse.enrollmentCountPm > 0 ? wixCourse.maxPm - wixCourse.enrollmentCountPm : 0
+    // ø </Evaluate Cout-Froms>
+    // ø <Evaluate Booleans>
+    wixCourse.reachedMin = wixCourse.countFromMin === 0 ? true : false
+    wixCourse.reachedFull = wixCourse.countFromFull === 0 ? true : false
+    wixCourse.reachedMaxBlocked = wixCourse.countFromBlock === 0 ? true : false
+    wixCourse.reachedMaxAbsolute = wixCourse.countFromAbsolute === 0 ? true : false
+    wixCourse.reachedFullAm = wixCourse.countFromFullAm === 0 ? true : false
+    wixCourse.reachedFullPm = wixCourse.countFromFullPm === 0 ? true : false
+    // ø </Evaluate Booleans>
+
+}
+// ø <---------- </courseEnrollmentStateIncrementByRecordObject_ON_DECK(courseEnrollmentStateRecord = {})> ---------->
 async function consoleLogProgress(drupalCourse = {}, wixCourse = {}, drupalCourseTag = 'TAG', wixCourseTag = 'TAG'){
     console.log(`wixCourse: ${wixCourseTag}: [object below]`)
     console.dir(wixCourse)
@@ -375,7 +514,7 @@ function doxKLUDGE(descrArray = [], resetForm = false) {
                 $w('#whichKludgeDRPDWN').value = 'SAVE_WIX_COURSE'
                 $w('#developerResponseTXTBX').value = 'NNULL'
                 doxString = 'Test: singletonCourseDrupalToWixUpsert_ON_DECK()'
-                doxString += '\n' + `responseAsParam set to wixCourse JSON`
+                doxString += '\n' + `primaryResponseAsParam set to wixCourse JSON`
                 doxString += '\n' + `↪ or 'NNULL' or <empty> for INSERT option`
                 doxString += '\n' + `secondaryResponseAsParam set to drupalCourse 'nid'`
                 doxString += '\n' + `click 'doKLUDGE' to Instantiate *actual* parameters`
@@ -423,14 +562,14 @@ function doxKLUDGE(descrArray = [], resetForm = false) {
     $w(doxWID).value = KLUDGE
 }
 export async function doKLUDGE(paramObject = {}) {
-    const responseWID = '#developerResponseTXTBX'
+    const primaryResponseWID = '#developerResponseTXTBX'
     const secondaryResponseWID = '#developerSecondaryResponseTXTBX'
     const stepWID = '#developerStepINPT'
     const stepAsParam = $w('#developerStepINPT').value
-    const responseAsParam = $w('#developerResponseTXTBX').value
+    const primaryResponseAsParam = $w('#developerResponseTXTBX').value
     const doxAsParam = $w('#developerDoxTXTBX').value
     const secondaryResponseAsParam = $w('#developerSecondaryResponseTXTBX').value
-    let response = null
+    let primaryResponse = null
     let secondaryResponse = null
     let KLUDGE = ''
     let step = KLUDGE
@@ -456,12 +595,12 @@ export async function doKLUDGE(paramObject = {}) {
                 doxKLUDGE(descrArray)
                 // ø </HERE - So that dox() will run regardless of Kludge-Code below>
             }
-            $w(responseWID).value = JSON.stringify(paramObject,undefined,4)
+            $w(primaryResponseWID).value = JSON.stringify(paramObject,undefined,4)
             let locationResponse = locationGetByRegionKey('CHO')
             $w(secondaryResponseWID).value = JSON.stringify(locationResponse,undefined,4)
-            response = paramObject
-            console.log(`response: [object below]`)
-            console.dir(response)
+            primaryResponse = paramObject
+            console.log(`primaryResponse: [object below]`)
+            console.dir(primaryResponse)
             return
         }
     } // END: if(paramObject.whichKludgeDRPDWN === 'PARAM_OBJECT')
@@ -484,10 +623,10 @@ export async function doKLUDGE(paramObject = {}) {
                 doxKLUDGE(descrArray)
                 // ø </HERE - So that dox() will run regardless of Kludge-Code below>
             }
-            response = await monadCourseEnrollmentStateUpSertByDrupalChanged( responseAsParam , secondaryResponseAsParam)
-            $w(responseWID).value = JSON.stringify(response,undefined,4)
-            console.log(`response: [object below]`)
-            console.dir(response)
+            primaryResponse = await monadCourseEnrollmentStateUpSertByDrupalChanged( primaryResponseAsParam , secondaryResponseAsParam)
+            $w(primaryResponseWID).value = JSON.stringify(primaryResponse,undefined,4)
+            console.log(`primaryResponse: [object below]`)
+            console.dir(primaryResponse)
             return
         }
     } // END: if(paramObject.whichKludgeDRPDWN === 'MONAD_COURSE_ENROLLMENT')
@@ -510,8 +649,8 @@ export async function doKLUDGE(paramObject = {}) {
                 doxKLUDGE(descrArray)
                 // ø </HERE - So that dox() will run regardless of Kludge-Code below>
             }
-            let responseRaw = wixData.query("courseMaxChangedTermIdRegionKey")
-                .eq("termId", responseAsParam)
+            let primaryResponseRaw = wixData.query("courseMaxChangedTermIdRegionKey")
+                .eq("termId", primaryResponseAsParam)
                 .eq("courseRegionKey", secondaryResponseAsParam)
                 .find()
                 .then( (results) => {
@@ -526,8 +665,8 @@ export async function doKLUDGE(paramObject = {}) {
                     let errorMsg = err;
                 } );
 
-            console.log(`responseRaw: [object below]`)
-            console.dir(responseRaw)
+            console.log(`primaryResponseRaw: [object below]`)
+            console.dir(primaryResponseRaw)
             let wixCourseMaxChangedRecord = await wixData.query("courseMaxChangedTermIdRegionKey")
                 .eq("courseRegionKey", "CHO")
                 .eq("termId", 202123)
@@ -536,13 +675,13 @@ export async function doKLUDGE(paramObject = {}) {
             console.dir(wixCourseMaxChangedRecord)
 
 
-            response = {"title":"Zero Found","message":"No matching courseMaxChangedTermIdRegionKey record found"}
+            primaryResponse = {"title":"Zero Found","message":"No matching courseMaxChangedTermIdRegionKey record found"}
 
 
-            $w(responseWID).value = JSON.stringify(response,undefined,4)
+            $w(primaryResponseWID).value = JSON.stringify(primaryResponse,undefined,4)
 
-            let DOX = `let responseRaw = wixData.query("courseMaxChangedTermIdRegionKey")
-                .eq("termId", ${responseAsParam})
+            let DOX = `let primaryResponseRaw = wixData.query("courseMaxChangedTermIdRegionKey")
+                .eq("termId", ${primaryResponseAsParam})
                 .eq("regionKey", ${secondaryResponseAsParam})
                 .find()
                 .then( (results) => {
@@ -559,8 +698,8 @@ export async function doKLUDGE(paramObject = {}) {
 
             $w(secondaryResponseWID).value = DOX
 
-            console.log(`response: [object below]`)
-            console.dir(response)
+            console.log(`primaryResponse: [object below]`)
+            console.dir(primaryResponse)
             return
         }
     } // END: if(paramObject.whichKludgeDRPDWN === 'PROMISE_HELL')
@@ -588,28 +727,28 @@ export async function doKLUDGE(paramObject = {}) {
             innerStep = stepAsParam.substr(0,6) === 'TOGGLE' ? 'TOGGLE' : innerStep
             innerStep = stepAsParam.substr(0,5) === 'AGAIN' ? 'AGAIN' : innerStep
             console.log(`innerStep: ${innerStep}`)
-            response = null
+            primaryResponse = null
             let nextStep = `NNULL`
             if(innerStep === 'BEGIN') {
                 let wixCourseMaxChangedResponse = await wixData.query(collectionName)
                     .eq("courseRegionKey", secondaryResponseAsParam)
-                    .eq("termId", Number(responseAsParam))
+                    .eq("termId", Number(primaryResponseAsParam))
                     .find()
                 let wixCourseMaxChangedRecord = wixCourseMaxChangedResponse.items[0]
                 console.log(`wixCourseMaxChangedRecord: [object below]`)
                 console.dir(wixCourseMaxChangedRecord)
 
 
-                response = wixCourseMaxChangedResponse.items[0]
+                primaryResponse = wixCourseMaxChangedResponse.items[0]
 
-                nextStep = `TOGGLE|click 'doKLUDGE' again to Toggle ${response.title}`
+                nextStep = `TOGGLE|click 'doKLUDGE' again to Toggle ${primaryResponse.title}`
             }
             if(innerStep === 'TOGGLE') {
-                let responseObject = JSON.parse(responseAsParam)
+                let primaryResponseObject = JSON.parse(primaryResponseAsParam)
                 let toggleOriginal = `{"termId":202123,"_id":"9c7e47a3-1052-4057-8325-cd8bded4d761","_owner":"523205d7-b40b-4478-90b5-8345dbe9e920","_createdDate":"2022-02-07T01:33:07.648Z","_updatedDate":"2022-02-07T01:34:03.713Z","isoLastUpdate":"2008-01-20T12:00:00+0000","courseRegionKey":"CHO","title":"KLUDGE202123CHO","courseKey":"BINARY","nid":1}`
                 let toggleAlternate = `{"termId":202123,"_id":"9c7e47a3-1052-4057-8325-cd8bded4d761","_owner":"523205d7-b40b-4478-90b5-8345dbe9e920","_createdDate":"2022-02-07T01:33:07.648Z","_updatedDate":"2022-02-07T01:34:03.713Z","isoLastUpdate":"2008-01-20T12:00:00+0000","courseRegionKey":"CHO","title":"Toggled-202123CHO","courseKey":"RANDOM","nid":1}`
-                let recordUpdateWhich = responseObject.title === "KLUDGE202123CHO" ? 'ALTERNATE' : 'ORIGINAL'
-                let recordUpdateTo = responseObject.title === "KLUDGE202123CHO" ? JSON.parse(toggleAlternate) : JSON.parse(toggleOriginal)
+                let recordUpdateWhich = primaryResponseObject.title === "KLUDGE202123CHO" ? 'ALTERNATE' : 'ORIGINAL'
+                let recordUpdateTo = primaryResponseObject.title === "KLUDGE202123CHO" ? JSON.parse(toggleAlternate) : JSON.parse(toggleOriginal)
                 if(recordUpdateWhich === 'ALTERNATE'){
                     let natoPhoneticObjectItem = getNatoPhoneticArrayObjectItem()
                     console.log(`natoPhoneticObjectItem: [object below]]`)
@@ -622,16 +761,16 @@ export async function doKLUDGE(paramObject = {}) {
                 if(recordUpdateWhich === 'ORIGINAL'){
                     recordUpdateTo = JSON.parse(toggleOriginal)
                 }
-                console.log(`responseObject.title: ${responseObject.title}`)
+                console.log(`primaryResponseObject.title: ${primaryResponseObject.title}`)
                 console.log(`recordUpdateWhich: ${recordUpdateWhich}`)
                 console.log(`recordUpdateTo: [object below]]`)
                 console.dir(recordUpdateTo)
 
                 wixData.save(collectionName, recordUpdateTo)
 
-                let responseJSON = `{"title":"TOGGLE is Pending","message":"The Toggle Step of this Multi-Step-KLUDGE is still Pending"}`
-                // response = JSON.parse(responseJSON)
-                response = recordUpdateTo
+                let primaryResponseJSON = `{"title":"TOGGLE is Pending","message":"The Toggle Step of this Multi-Step-KLUDGE is still Pending"}`
+                // primaryResponse = JSON.parse(primaryResponseJSON)
+                primaryResponse = recordUpdateTo
                 nextStep = `AGAIN?|click 'doKLUDGE' again to repeat this Multi-Step Toggle Sequence`
             }
             if(innerStep === 'AGAIN') {
@@ -647,14 +786,14 @@ export async function doKLUDGE(paramObject = {}) {
             }
 
 
-            $w(responseWID).value = JSON.stringify(response,undefined,4)
+            $w(primaryResponseWID).value = JSON.stringify(primaryResponse,undefined,4)
 
 
             $w(stepWID).value = nextStep
 
 
-            console.log(`response: [object below]`)
-            console.dir(response)
+            console.log(`primaryResponse: [object below]`)
+            console.dir(primaryResponse)
             return
         }
     } // END: if(paramObject.whichKludgeDRPDWN === 'RESET_MAX_CHANGED_RECORD')
@@ -682,13 +821,13 @@ export async function doKLUDGE(paramObject = {}) {
             innerStep = stepAsParam.substr(0,6) === 'TOGGLE' ? 'TOGGLE' : innerStep
             // innerStep = stepAsParam.substr(0,5) === 'AGAIN' ? 'AGAIN' : innerStep
             console.log(`innerStep: ${innerStep}`)
-            response = null
+            primaryResponse = null
             let nextStep = `NNULL`
             if(innerStep === 'BEGIN') {
                 let wixCourseEnrollmentStateResponse = await wixData.query(collectionName)
                     .limit(1000)
                     .eq("regionKey", secondaryResponseAsParam)
-                    .eq("termId", Number(responseAsParam))
+                    .eq("termId", Number(primaryResponseAsParam))
                     .find()
                 console.log(`wixCourseEnrollmentStateResponse: [object below]`)
                 console.dir(wixCourseEnrollmentStateResponse)
@@ -698,9 +837,9 @@ export async function doKLUDGE(paramObject = {}) {
 
 
                 secondaryResponse = wixCourseEnrollmentStateResponse
-                response = wixCourseEnrollmentStateResponse.items
+                primaryResponse = wixCourseEnrollmentStateResponse.items
 
-                nextStep = `TOGGLE|click 'doKLUDGE' again to Toggle response.title`
+                nextStep = `TOGGLE|click 'doKLUDGE' again to Toggle primaryResponse.title`
             }
             if(innerStep === 'TOGGLE') {
                 nextStep = `AGAIN?|click 'doKLUDGE' again to repeat this Multi-Step Toggle Sequence`
@@ -713,14 +852,14 @@ export async function doKLUDGE(paramObject = {}) {
             }
 
 
-            $w(responseWID).value = JSON.stringify(response,undefined,4)
+            $w(primaryResponseWID).value = JSON.stringify(primaryResponse,undefined,4)
             $w(secondaryResponseWID).value = JSON.stringify(secondaryResponse,undefined,4)
 
 
             $w(stepWID).value = nextStep
 
-            console.log(`response: [object below]`)
-            console.dir(response)
+            console.log(`primaryResponse: [object below]`)
+            console.dir(primaryResponse)
             return
         }
     } // END: if(paramObject.whichKludgeDRPDWN === 'MANAGE_COURSE_STATE_DB')
@@ -751,9 +890,9 @@ export async function doKLUDGE(paramObject = {}) {
             innerStep = stepAsParam.substr(0,4) === 'PREP' ? 'PREP' : innerStep
             // innerStep = stepAsParam.substr(0,5) === 'AGAIN' ? 'AGAIN' : innerStep
             console.log(`innerStep: ${innerStep}`)
-            response = null
+            primaryResponse = null
             let nextStep = `NNULL`
-            let uri = `/wixcourses/${responseAsParam}/${secondaryResponseAsParam}`
+            let uri = `/wixcourses/${primaryResponseAsParam}/${secondaryResponseAsParam}`
             if(innerStep === 'BEGIN') {
                 let drupalCoursesTidRkeyArray = await getDrupalURI(uri, false)
                 let all202123CHO_courseNidIdArray = [3604,3605,3607,3608,3609,3546,3524,3525,3526,3527,3528,3529,3530,3545,3523,3606,361]
@@ -778,12 +917,12 @@ export async function doKLUDGE(paramObject = {}) {
 
                 secondaryResponse = drupalCoursesTidRkeyArray
 
-                response = limitedDrupalCoursesTidRkeyArray
+                primaryResponse = limitedDrupalCoursesTidRkeyArray
 
-                nextStep = `PREP|click 'doKLUDGE' again to Toggle response.title`
+                nextStep = `PREP|click 'doKLUDGE' again to Toggle primaryResponse.title`
             }
             if(innerStep === 'PREP') {
-                let drupalCourseObjectArray = JSON.parse(responseAsParam)
+                let drupalCourseObjectArray = JSON.parse(primaryResponseAsParam)
                 console.log(`drupalCourseObjectArray: [object array below]`)
                 console.dir(drupalCourseObjectArray)
                 const minK = 4
@@ -799,7 +938,7 @@ export async function doKLUDGE(paramObject = {}) {
                 let courseObjectINSERT = JSON.parse(courseObjectJsonINSERT)
                 // console.log(`courseObjectINSERT: [object below]`)
                 // console.dir(courseObjectINSERT)
-                // response = JSON.stringify(courseObjectINSERT,undefined,4)
+                // primaryResponse = JSON.stringify(courseObjectINSERT,undefined,4)
                 let courseKeysUPSERT = Object.keys(courseObjectINSERT)
                 // secondaryResponse = `courseKeysUPSERT: [${courseKeysUPSERT}]`
                 // console.log(`secondaryResponse: courseKeysUPSERT: ${courseKeysUPSERT}`)
@@ -846,14 +985,14 @@ export async function doKLUDGE(paramObject = {}) {
             }
 
 
-            $w(responseWID).value = typeof response === 'object' ? JSON.stringify(response,undefined,4) : response
+            $w(primaryResponseWID).value = typeof primaryResponse === 'object' ? JSON.stringify(primaryResponse,undefined,4) : primaryResponse
             $w(secondaryResponseWID).value = typeof secondaryResponse === 'object' ? JSON.stringify(secondaryResponse,undefined,4) : secondaryResponse
 
 
             $w(stepWID).value = nextStep
 
-            console.log(`response: [object below]`)
-            console.dir(response)
+            console.log(`primaryResponse: [object below]`)
+            console.dir(primaryResponse)
             return
         }
     } // END: if(paramObject.whichKludgeDRPDWN === 'GET_DRUPAL_COURSES')
@@ -884,9 +1023,9 @@ export async function doKLUDGE(paramObject = {}) {
             innerStep = stepAsParam.substr(0,4) === 'SAVE' ? 'SAVE' : innerStep
             // innerStep = stepAsParam.substr(0,5) === 'AGAIN' ? 'AGAIN' : innerStep
             console.log(`innerStep: ${innerStep}`)
-            response = null
+            primaryResponse = null
             let nextStep = `NNULL`
-            let uri = `/wixcourses/${responseAsParam}/${secondaryResponseAsParam}`
+            let uri = `/wixcourses/${primaryResponseAsParam}/${secondaryResponseAsParam}`
             if(innerStep === 'BEGIN') {
                 // let node = await getDrupalNode(Number(secondaryResponseAsParam))
                 // console.log(`node: object below`)
@@ -895,15 +1034,15 @@ export async function doKLUDGE(paramObject = {}) {
                 // let transforKeyArray = []
                 secondaryResponse = secondaryResponseAsParam
 
-                if(responseAsParam.substr(0,1) !== '{'){
-                response = `{"_id":"INSTANTIATE","sectionCount":1,"enrollExcptn":"NNULL","courseOptions":"DDEFAULT","enrollmentCount":0,"waitlistCount":0,"enrollmentCountAm":0,"enrollmentCountPm":0,"title":"DDEFAULT","nid":7777777,"termId":777777,"regionKey":"DLH","min":0,"max":0,"waitList":0,"maxBlock":0,"maxAbsolute":0,"countFromMin":0,"countFromFull":0,"countFromBlock":0,"countFromAbsolute":0,"reachedMin":false,"reachedFull":false,"reachedMaxBlocked":false,"reachedMaxAbsolute":false,"maxAm":0,"countFromFullAm":0,"reachedFullAm":false,"maxPm":0,"countFromFullPm":0,"reachedFullPm":false,"coutFromFull":777,"coutFromBlock":777}`
+                if(primaryResponseAsParam.substr(0,1) !== '{'){
+                primaryResponse = `{"_id":"INSTANTIATE","sectionCount":1,"enrollExcptn":"NNULL","courseOptions":"DDEFAULT","enrollmentCount":0,"waitlistCount":0,"enrollmentCountAm":0,"enrollmentCountPm":0,"title":"DDEFAULT","nid":7777777,"termId":777777,"regionKey":"DLH","min":0,"max":0,"waitList":0,"maxBlock":0,"maxAbsolute":0,"countFromMin":0,"countFromFull":0,"countFromBlock":0,"countFromAbsolute":0,"reachedMin":false,"reachedFull":false,"reachedMaxBlocked":false,"reachedMaxAbsolute":false,"maxAm":0,"countFromFullAm":0,"reachedFullAm":false,"maxPm":0,"countFromFullPm":0,"reachedFullPm":false,"coutFromFull":777,"coutFromBlock":777}`
 
                 }
 
                 nextStep = `SAVE|click 'doKLUDGE' again execute wixData=>save() to courseEnrollState table`
             }
             if(innerStep === 'ZZZ_PREP') {
-                let drupalCourseObjectArray = JSON.parse(responseAsParam)
+                let drupalCourseObjectArray = JSON.parse(primaryResponseAsParam)
                 console.log(`drupalCourseObjectArray: [object array below]`)
                 console.dir(drupalCourseObjectArray)
                 const minK = 4
@@ -919,7 +1058,7 @@ export async function doKLUDGE(paramObject = {}) {
                 let courseObjectINSERT = JSON.parse(courseObjectJsonINSERT)
                 // console.log(`courseObjectINSERT: [object below]`)
                 // console.dir(courseObjectINSERT)
-                // response = JSON.stringify(courseObjectINSERT,undefined,4)
+                // primaryResponse = JSON.stringify(courseObjectINSERT,undefined,4)
                 let courseKeysUPSERT = Object.keys(courseObjectINSERT)
                 // secondaryResponse = `courseKeysUPSERT: [${courseKeysUPSERT}]`
                 // console.log(`secondaryResponse: courseKeysUPSERT: ${courseKeysUPSERT}`)
@@ -959,39 +1098,43 @@ export async function doKLUDGE(paramObject = {}) {
                 nextStep = `AGAIN?|click 'doKLUDGE' again to repeat this Multi-Step Toggle Sequence`
             }
             if(innerStep === 'SAVE') {
-                // let wixCourse = JSON.parse(responseAsParam)
+                // let wixCourse = JSON.parse(primaryResponseAsParam)
                 // console.log(`wixCourse: [object below]`)
                 // console.dir(wixCourse)
                 let drupalCourse = JSON.parse(secondaryResponseAsParam)
                 // console.log(`drupalCourse: [object below]`)
                 // console.dir(drupalCourse)
                 // singletonCourseDrupalToWixUpsert_ON_DECK(drupalCourse = {}, wixCourse = {}){
-                singletonCourseDrupalToWixUpsert_ON_DECK(drupalCourse)
-                return
+                await singletonCourseDrupalToWixUpsert_ON_DECK(drupalCourse)
+                primaryResponse = memory.getItem('memoryPrimaryResponseKLUDGE')
+                secondaryResponse = memory.getItem('memorySecondaryResponseKLUDGE')
+                nextStep = `AGAIN?|click 'doKLUDGE' again to repeat this Multi-Step Toggle Sequence`
+                // return
             }
             if(innerStep === 'AGAIN') {
                 $w("#resetByDrpDwnSWTCH").checked = true
-                $w('#whichKludgeDRPDWN').value = 'GET_DRUPAL_COURSES'
+                $w('#whichKludgeDRPDWN').value = 'SAVE_WIX_COURSE'
                 doxKLUDGE(['reset for AGAIN'], true)
                 return
             }
 
 
-            $w(responseWID).value = typeof response === 'object' ? JSON.stringify(response,undefined,4) : response
+            $w(primaryResponseWID).value = typeof primaryResponse === 'object' ? JSON.stringify(primaryResponse,undefined,4) : primaryResponse
             $w(secondaryResponseWID).value = typeof secondaryResponse === 'object' ? JSON.stringify(secondaryResponse,undefined,4) : secondaryResponse
 
 
             $w(stepWID).value = nextStep
 
-            console.log(`response: [object below]`)
-            console.dir(response)
+            console.log(`primaryResponse: [object below]`)
+            console.dir(primaryResponse)
             return
         }
     } // END: if(paramObject.whichKludgeDRPDWN === 'SAVE_WIX_COURSE')
     if(!keepMemoryKLUDGE){
-        memory.removeItem('memoryResponseKLUDGE')
+        memory.removeItem('memoryPrimaryResponseKLUDGE')
         memory.removeItem('memorySecondaryResponseKLUDGE')
     }
+    memory.removeItem('memoryResponseKLUDGE')//KLUDGE-CleanUp
 
 }
 export function doxKludgeResetBTTN_click(event) {

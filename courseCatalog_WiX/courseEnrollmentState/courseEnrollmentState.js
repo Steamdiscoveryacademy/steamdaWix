@@ -55,7 +55,7 @@ import {getNatoPhoneticArrayObjectItem} from 'public/natoPhoneticTestData.js';
 // • </import from> 'public/'
 // • <import from> 'backend/'
 import {getDrupalURI} from 'backend/apiDrupalModule.jsw';
-import {getDrupalNode} from 'backend/apiDrupalModule.jsw';
+// import {getDrupalNode} from 'backend/apiDrupalModule.jsw';
 // import {postDrupalNode} from 'backend/apiDrupalModule.jsw';
 // import {patchDrupalNode} from 'backend/apiDrupalModule.jsw';
 // • </import from> 'backend/'
@@ -178,14 +178,16 @@ export async function singletonCourseDrupalToWixUpsert_ON_DECK(drupalCourse = {}
     // console.log(`drupalCourse: PARAM [object below]`)
     // console.dir(drupalCourse)
 
-    // ø <TRANSFORM wixCourse by drupalCourse>
     wixCourse.sectionCount = Number(drupalCourse.sectionCount)
     wixCourse.courseOptions = drupalCourse.courseOptions
-    wixCourse.nid = drupalCourse.nid
-    wixCourse.termId = drupalCourse.termId
+    wixCourse.nid = Number(drupalCourse._id)
+    wixCourse.termId = Number(drupalCourse.termId)
     wixCourse.regionKey = drupalCourse.courseRegionKey
-    wixCourse.title = drupalCourse.title
+    wixCourse.title = drupalCourse.courseNameDisplay
     wixCourse.courseKey = drupalCourse.courseKey
+    // ø ø <TRY Non-UUID _id>
+    wixCourse._id = drupalCourse._id + '_courseNid'
+    // ø ø </TRY Non-UUID _id>
     // ø </TRANSFORM wixCourse by drupalCourse>
     // wixCourse.courseOptions = 'FD PM AM'
 
@@ -519,32 +521,14 @@ function doxKLUDGE(descrArray = [], resetForm = false) {
                 doxString += '\n' + `secondaryResponseAsParam set to drupalCourse 'nid'`
                 doxString += '\n' + `click 'doKLUDGE' to Instantiate *actual* parameters`
                 $w('#developerDoxTXTBX').value = doxString
-                // $w('#developerSecondaryResponseTXTBX').value = '3604'
-                $w('#developerSecondaryResponseTXTBX').value = `{
-    "_id": "3604",
-    "courseNameDisplay": "Ceramics FD",
-    "courseRegionKey": "CHO",
-    "locationKey": "CHOa",
-    "termId": 202123,
-    "weekId": "202123",
-    "gradeLevelKey": "GL02",
-    "courseOptions": "FD",
-    "courseTilePath": "FFALSE",
-    "courseKey": "CERAMICSu2323bCHOa",
-    "sectionCount": "1",
-    "coursePromoPath": "FFALSE",
-    "curriculumId": "20",
-    "enrollExcptn": [],
-    "nid": 3604,
-    "title": "Ceramics FD",
-    "regionKey": "CHO"
-}`
-                $w('#developerStepINPT').value = `BEGIN|click 'doKLUDGE' to Instantiate *actual* parameters`
+                $w('#developerSecondaryResponseTXTBX').value = '3608'
+                $w('#developerStepTXTBX').value = `BEGIN|click 'doKLUDGE' to Instantiate *actual* parameters`
+                $w('#developerStepINPT').value = `BEGIN`
                 break;
             default:
                 $w("#resetByDrpDwnSWTCH").checked = false
                 $w('#kludgeBooleanRADIO').value === 'false'
-                $w('#whichKludgeDRPDWN').value = '/wixcourses/'
+                $w('#whichKludgeDRPDWN').value = ''
                 $w('#developerResponseTXTBX').value = ''
                 $w('#developerDoxTXTBX').value = ''
                 $w('#developerSecondaryResponseTXTBX').value = ''
@@ -565,7 +549,9 @@ export async function doKLUDGE(paramObject = {}) {
     const primaryResponseWID = '#developerResponseTXTBX'
     const secondaryResponseWID = '#developerSecondaryResponseTXTBX'
     const stepWID = '#developerStepINPT'
+    const stepDescrWID = '#developerStepTXTBX'
     const stepAsParam = $w('#developerStepINPT').value
+    const stepDescrAsParam = $w('#developerStepTXTBX').value
     const primaryResponseAsParam = $w('#developerResponseTXTBX').value
     const doxAsParam = $w('#developerDoxTXTBX').value
     const secondaryResponseAsParam = $w('#developerSecondaryResponseTXTBX').value
@@ -789,7 +775,7 @@ export async function doKLUDGE(paramObject = {}) {
             $w(primaryResponseWID).value = JSON.stringify(primaryResponse,undefined,4)
 
 
-            $w(stepWID).value = nextStep
+            $w(stepWID).value = nextStep //@ToDo stepTXTBX
 
 
             console.log(`primaryResponse: [object below]`)
@@ -856,7 +842,7 @@ export async function doKLUDGE(paramObject = {}) {
             $w(secondaryResponseWID).value = JSON.stringify(secondaryResponse,undefined,4)
 
 
-            $w(stepWID).value = nextStep
+            $w(stepWID).value = nextStep //@ToDo stepTXTBX
 
             console.log(`primaryResponse: [object below]`)
             console.dir(primaryResponse)
@@ -989,7 +975,7 @@ export async function doKLUDGE(paramObject = {}) {
             $w(secondaryResponseWID).value = typeof secondaryResponse === 'object' ? JSON.stringify(secondaryResponse,undefined,4) : secondaryResponse
 
 
-            $w(stepWID).value = nextStep
+            $w(stepWID).value = nextStep //@ToDo stepTXTBX
 
             console.log(`primaryResponse: [object below]`)
             console.dir(primaryResponse)
@@ -1020,6 +1006,7 @@ export async function doKLUDGE(paramObject = {}) {
             let collectionName = 'courseEnrollmentState'
             let innerStep = 'BEGIN'
             console.log(`stepAsParam.substr(0,4): ${stepAsParam}.substr(0,4): ${stepAsParam.substr(0,4)}`)
+            innerStep = stepAsParam.substr(0,4) === 'PREP' ? 'PREP' : innerStep
             innerStep = stepAsParam.substr(0,4) === 'SAVE' ? 'SAVE' : innerStep
             // innerStep = stepAsParam.substr(0,5) === 'AGAIN' ? 'AGAIN' : innerStep
             console.log(`innerStep: ${innerStep}`)
@@ -1027,19 +1014,18 @@ export async function doKLUDGE(paramObject = {}) {
             let nextStep = `NNULL`
             let uri = `/wixcourses/${primaryResponseAsParam}/${secondaryResponseAsParam}`
             if(innerStep === 'BEGIN') {
-                // let node = await getDrupalNode(Number(secondaryResponseAsParam))
-                // console.log(`node: object below`)
-                // console.dir(node)
-                // let transformedDrupalCourse = {}
-                // let transforKeyArray = []
-                secondaryResponse = secondaryResponseAsParam
+                let uriSingleton = `/wixcoursesingleton/${secondaryResponseAsParam}`
+                let nodeSingletonArray = await getDrupalURI(uriSingleton,false)
+                // console.log(`≈1021≈ await getDrupalURI(uriSingleton,false): await getDrupalURI(${uriSingleton},false)`)
+                // console.log(`≈1022≈ nodeSingletonArray: [object array singleton below]`)
+                // console.dir(nodeSingletonArray)
+                secondaryResponse = JSON.stringify(nodeSingletonArray[0],undefined,4)
 
                 if(primaryResponseAsParam.substr(0,1) !== '{'){
-                primaryResponse = `{"_id":"INSTANTIATE","sectionCount":1,"enrollExcptn":"NNULL","courseOptions":"DDEFAULT","enrollmentCount":0,"waitlistCount":0,"enrollmentCountAm":0,"enrollmentCountPm":0,"title":"DDEFAULT","nid":7777777,"termId":777777,"regionKey":"DLH","min":0,"max":0,"waitList":0,"maxBlock":0,"maxAbsolute":0,"countFromMin":0,"countFromFull":0,"countFromBlock":0,"countFromAbsolute":0,"reachedMin":false,"reachedFull":false,"reachedMaxBlocked":false,"reachedMaxAbsolute":false,"maxAm":0,"countFromFullAm":0,"reachedFullAm":false,"maxPm":0,"countFromFullPm":0,"reachedFullPm":false,"coutFromFull":777,"coutFromBlock":777}`
-
+                    primaryResponse = `{"_id":"INSTANTIATE","sectionCount":1,"enrollExcptn":"NNULL","courseOptions":"DDEFAULT","enrollmentCount":0,"waitlistCount":0,"enrollmentCountAm":0,"enrollmentCountPm":0,"title":"DDEFAULT","nid":7777777,"termId":777777,"regionKey":"DLH","min":0,"max":0,"waitList":0,"maxBlock":0,"maxAbsolute":0,"countFromMin":0,"countFromFull":0,"countFromBlock":0,"countFromAbsolute":0,"reachedMin":false,"reachedFull":false,"reachedMaxBlocked":false,"reachedMaxAbsolute":false,"maxAm":0,"countFromFullAm":0,"reachedFullAm":false,"maxPm":0,"countFromFullPm":0,"reachedFullPm":false,"coutFromFull":777,"coutFromBlock":777}`
                 }
 
-                nextStep = `SAVE|click 'doKLUDGE' again execute wixData=>save() to courseEnrollState table`
+                nextStep = `PREP|click 'doKLUDGE' again execute wixData=>save() to courseEnrollState table`
             }
             if(innerStep === 'ZZZ_PREP') {
                 let drupalCourseObjectArray = JSON.parse(primaryResponseAsParam)
@@ -1097,7 +1083,7 @@ export async function doKLUDGE(paramObject = {}) {
 
                 nextStep = `AGAIN?|click 'doKLUDGE' again to repeat this Multi-Step Toggle Sequence`
             }
-            if(innerStep === 'SAVE') {
+            if(innerStep === 'PREP') {
                 // let wixCourse = JSON.parse(primaryResponseAsParam)
                 // console.log(`wixCourse: [object below]`)
                 // console.dir(wixCourse)
@@ -1108,7 +1094,25 @@ export async function doKLUDGE(paramObject = {}) {
                 await singletonCourseDrupalToWixUpsert_ON_DECK(drupalCourse)
                 primaryResponse = memory.getItem('memoryPrimaryResponseKLUDGE')
                 secondaryResponse = memory.getItem('memorySecondaryResponseKLUDGE')
-                nextStep = `AGAIN?|click 'doKLUDGE' again to repeat this Multi-Step Toggle Sequence`
+                nextStep = `SAVE|click 'doKLUDGE' again to repeat this Multi-Step Toggle Sequence`
+                // return
+            }
+            if(innerStep === 'SAVE') {
+                // // let wixCourse = JSON.parse(primaryResponseAsParam)
+                // // console.log(`wixCourse: [object below]`)
+                // // console.dir(wixCourse)
+                // let drupalCourse = JSON.parse(secondaryResponseAsParam)
+                // // console.log(`drupalCourse: [object below]`)
+                // // console.dir(drupalCourse)
+                // // singletonCourseDrupalToWixUpsert_ON_DECK(drupalCourse = {}, wixCourse = {}){
+                // await singletonCourseDrupalToWixUpsert_ON_DECK(drupalCourse)
+                primaryResponse = `wixData.save(collectionName, wixCourse): wixData.save("${collectionName}", wixCourse)`
+                primaryResponse += '\n' + `[wixCourse = memory.getItem('memoryPrimaryResponseKLUDGE')]`
+                // secondaryResponse = `wixCourse.errorBoolean !== true && wixCourse.noactionBoolean !== true`
+                // secondaryResponse = memory.getItem('memoryPrimaryResponseKLUDGE')
+                // secondaryResponse = await wixData.save(collectionName, memory.getItem('memoryPrimaryResponseKLUDGE'))
+                secondaryResponse = await wixData.save(collectionName, JSON.parse(memory.getItem('memoryPrimaryResponseKLUDGE')))
+                nextStep = `AGAIN?|NOT Click 'Reset' to go again (at this time)`
                 // return
             }
             if(innerStep === 'AGAIN') {
@@ -1123,7 +1127,8 @@ export async function doKLUDGE(paramObject = {}) {
             $w(secondaryResponseWID).value = typeof secondaryResponse === 'object' ? JSON.stringify(secondaryResponse,undefined,4) : secondaryResponse
 
 
-            $w(stepWID).value = nextStep
+            $w(stepDescrWID).value = nextStep //@ToDo stepTXTBX
+            $w(stepWID).value = (nextStep.split('|'))[0] //@ToDo stepTXTBX
 
             console.log(`primaryResponse: [object below]`)
             console.dir(primaryResponse)

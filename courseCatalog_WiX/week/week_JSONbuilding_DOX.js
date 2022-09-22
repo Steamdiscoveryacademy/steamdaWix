@@ -1,10 +1,42 @@
 
+import { composeDocDbJSON_byYear, composeDocDbJSON_byTerm } from '/Users/brad/Documents/bradRepositories/vsCode/steamdaWixLocal/steamdaWix/courseCatalog_WiX/week/week_JSONbuilding.js'
+
+
 // ø ====================================================================================================
 // ø ================================================================================         <Call Code>
 // ø ================================================================================          (constant)
 // ø ====================================================================================================
-// let YYYY = (new Date()).getFullYear
-// let weekDocDbJSON = composeWeekDocDbJSION(YYYY)
+let YYYY = (new Date()).getFullYear()
+console.log(`DOX => YYYY: [${typeof YYYY}] ${YYYY}`)
+// ! <script not 'export'-ed in buider>
+// let weekDocDbJSON = composeDocDbJSON_byYear(YYYY)
+// console.warn(`weekDocDbJSON = composeDocDbJSON_byYear(${YYYY})`)
+// console.log(weekDocDbJSON)
+// ! </script not 'export'-ed in buider>
+// • <top called script >
+/** 
+ * • NOTES:
+ * • retooling this as of 2022-09-21T10:18:00 
+ * •   » for 'import' rather than KLUDGEY ticked-JSON in SWITCH for RESULT
+ * •   » for 'import' of code HERE rathern than in-file Calling
+ * •   » » 'export' as few script as possible
+ */
+// let StartDate = 'startDateHOLDER'
+// let EndDate = 'endDateHOLDER'
+let resultObject = {}
+// resultObject.StartDate = StartDate
+// resultObject.EndDate = EndDate
+// let resultObject = composeDocDbJSON_byTerm(StartDate, EndDate)
+// console.warn(`resultObject = composeDocDbJSON_byTerm(${StartDate}, ${EndDate})`)
+resultObject = composeDocDbJSON_byYear(YYYY)
+console.log(`DOX => resultObject: [${typeof resultObject}]`)
+// console.log(resultObject)
+console.log(JSON.stringify(resultObject,undefined,4))
+// console.warn(`resultObject = composeDocDbJSON_byYear(${YYYY})`)
+// console.log(resultObject)
+// console.log(JSON.stringify(resultObject,undefined,4))
+// • </top called script >
+
 
 // ø ====================================================================================================
 // ø ================================================================================        </Call Code>

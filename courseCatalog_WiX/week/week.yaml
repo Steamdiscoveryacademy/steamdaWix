@@ -1,0 +1,14 @@
+---
+# holder for things about this folder and the work therein
+...
+---
+# I thought this wqs further along than it is. I must have manually built the versions
+# ... here we go!
+...
+---
+# 2022-09-22T12:21:00_UNIVERSAL_Auto_week_template.json
+for Import as Template:
+  startOverFileName: 2022-09-22T12:21:00_UNIVERSAL_Auto_week_template.json
+  changeLog:
+    - cardinal numbers for daysOfWeekJSArray
+...

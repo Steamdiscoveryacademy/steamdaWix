@@ -1,0 +1,117 @@
+{
+    "key": "1%cardinality%",
+    "name": "Weeks Summer 2022%redundant, so what%",
+    "_id": 777,
+    "dateEnd": "holder",
+    "dateStart": "holder",
+    "dateStartAbbrv": "holder",
+    "dateStartFull": "holder",
+    "dateStartSlash": "holder",
+    "daysOfWeekJSArray": [
+        1,
+        2,
+        3
+    ],
+    "daysOfWeekString": "holder",
+    "nameAcronym": "holder",
+    "nameCardinal": "holder",
+    "nameCommon": "holder",
+    "nameFull": "holder",
+    "nameOrdinal": "holder",
+    "spanEnd": "holder",
+    "spanStart": "holder",
+    "termId": 777,
+    "timeBlockKey": {
+        "timeBlockKey": "String_0",
+        "timeBlockName": "String_1",
+        "timeBlockStartTime": "String_2",
+        "timeBlockEndTime": "String_3",
+        "timeBlockDuration": "String_4",
+        "timeBlockStartTimeString": "String_5",
+        "timeBlockEndTimeString": "String_6",
+        "timeBlockDurationString": "String_7",
+        "timeBlockSpanString": "String_8",
+        "timeBlockSpanStringAbbrv": "String_9"
+    },
+    "weekCardinal": 777,
+    "weekId": 777,
+    "notes": [
+        "universalParamObjectBuilder RUN",
+        "appendRoomCore RUN"
+    ]
+}
+
+// ! <EXAMPLE WEEK TWO SUMMER 2022>
+/*
+"202224": {
+        "key": "2",
+        "name": "Week Two",
+        "_id": 202224,
+        "dateEnd": "2022-06-17T11:59:59.999Z",
+        "dateStart": "2022-06-13T11:59:59.999Z",
+        "dateStartAbbrv": "Jun 13",
+        "dateStartFull": "Monday, June 13, 2022",
+        "dateStartSlash": "6/13/2022",
+        "daysOfWeekJSArray": [
+            1,
+            2,
+            3,
+            4,
+            5
+        ],
+        "daysOfWeekString": "Mon, Tue, Wed, Thu, Fri",
+        "nameAcronym": "Wk2",
+        "nameCardinal": "2",
+        "nameCommon": "Week 2",
+        "nameFull": "Week Two",
+        "nameOrdinal": "2nd",
+        "spanEnd": "2022-06-17T17:00:00.000Z",
+        "spanStart": "2022-06-13T09:00:00.000Z",
+        "termId": 202223,
+        "FD": {
+            "timeBlockKey": "FD",
+            "timeBlockName": "Full Day",
+            "timeBlockStartTime": "09:00:00",
+            "timeBlockEndTime": "17:00:00",
+            "timeBlockDuration": "08:00:00",
+            "timeBlockStartTimeString": "9:00am",
+            "timeBlockEndTimeString": "5:00pm",
+            "timeBlockDurationString": "8 hours",
+            "timeBlockSpanString": "9:00am to 5:00pm",
+            "timeBlockSpanStringAbbrv": "9 to 5"
+        },
+        "AM": {
+            "timeBlockKey": "AM",
+            "timeBlockName": "Morning",
+            "timeBlockStartTime": "09:00:00",
+            "timeBlockEndTime": "12:30:00",
+            "timeBlockDuration": "03:30:00",
+            "timeBlockStartTimeString": "9:00am",
+            "timeBlockEndTimeString": "12:30pm",
+            "timeBlockDurationString": "3.5 hours",
+            "timeBlockSpanString": "9:00am to 12:30pm",
+            "timeBlockSpanStringAbbrv": "9:00 to 12:30"
+        },
+        "PM": {
+            "timeBlockKey": "PM",
+            "timeBlockName": "Afternoon",
+            "timeBlockStartTime": "13:30",
+            "timeBlockEndTime": "17:00:00",
+            "timeBlockDuration": "03:30:00",
+            "timeBlockStartTimeString": "1:30pm",
+            "timeBlockEndTimeString": "5:00pm",
+            "timeBlockDurationString": "3.5 hours",
+            "timeBlockSpanString": "1:30pm to 5:00pm",
+            "timeBlockSpanStringAbbrv": "1:30 to 5:00"
+        },
+        "weekCardinal": 2,
+        "weekId": 202224,
+        "weekNotesInternal": [
+            "real note here",
+            "another real note here"
+        ],
+        "weekNotesPublic": []
+    }
+
+*/
+// ! </EXAMPLE WEEK TWO SUMMER 2022>

@@ -5,6 +5,7 @@
 // ø ====================================================================================================
 // let YYYY = (new Date()).getFullYear
 // let weekDocDbJSON = composeDocDbJSON_byYear(YYYY)
+const tzOffsetK = -6
 
 // ø ====================================================================================================
 // ø ================================================================================        </Call Code>
@@ -14,12 +15,14 @@
 // ø ======================================================================          <Override Functions>
 // ø ================================================================================          (constant)
 // ø ====================================================================================================
-export function composeDocDbJSON_byYear(year, tzOffset = -6){
+export function composeDocDbJSON_byYear(year, tzOffset = tzOffsetK){
     // let StartDate = (new Date(year, 0, 1,0 + tzOffset,0,1))
-    let StartDate = (new Date(year, 0, 1,0 + tzOffset,0,1)).toISOString()
-    console.log(`composeDocDbJSON_byYear => StartDate: ${StartDate}`)
-    let EndDate = (new Date(year, 11, 31,23 + tzOffset,59,59)).toISOString()
-    console.log(`composeDocDbJSON_byYear => EndDate: ${EndDate}`)
+    let StartDate = (new Date(year, 0, 1,0 + tzOffset,0,1))
+    let StartDateISO = StartDate.toISOString()
+    console.log(`composeDocDbJSON_byYear => StartDateISO: ${StartDateISO}`)
+    let EndDate = (new Date(year, 11, 31,23 + tzOffset,59,59))
+    let EndDateISO = EndDate.toISOString()
+    console.log(`composeDocDbJSON_byYear => EndDateISO: ${EndDateISO}`)
 
     return composeDocDbJSON_byTerm(StartDate,EndDate)
 }
@@ -29,6 +32,8 @@ export function composeDocDbJSON_byTerm(StartDate,EndDate){
     // paramObject.endDate = EndDate.toISOString()
     paramObject.startDate = StartDate
     paramObject.endDate = EndDate
+    paramObject.startDateISO = StartDate.toISOString()
+    paramObject.endDateISO = EndDate.toISOString()
     console.log(`composeDocDbJSON_byTerm => paramObject:`)
     console.log(JSON.stringify(paramObject,undefined,4))
     
@@ -50,6 +55,9 @@ function composeWeekDocDbJSON(paramObject = {}){
     let responseObject = {}
     responseObject.responseObject = {}
     responseObject.paramObject = paramObject
+    responseObject.buildingBlocks = {}
+    responseObject.buildingBlocks.termId = getTermId(paramObject.startDate)
+
     return responseObject
 /**'
  * NOTES:
@@ -85,7 +93,12 @@ function composeWeekDocDbJSON(paramObject = {}){
 // ø ==============================   path: /vsCode/snippets/javaScriptSnippets/weekId_YYYY_weekNumISO.js
 // ø ====================================================================================================
 
+function getTermId(startDate) {
+    console.warn(`getTermId(startDate): getTermId(${startDate})`)
+    return getWeekId(startDate)
+}
 function getWeekId(dateParam) {
+    console.warn(`getWeekId(dateParam): getWeekId(${dateParam})`)
     // Copy date so don't modify original
     let dateResponse = new Date(Date.UTC(dateParam.getFullYear(), dateParam.getMonth(), dateParam.getDate()));
     // Set to nearest Thursday: current date + 4 - current day number

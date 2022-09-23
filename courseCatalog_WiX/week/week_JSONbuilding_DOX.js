@@ -6,8 +6,25 @@ import { composeDocDbJSON_byYear, composeDocDbJSON_byTerm } from '/Users/brad/Do
 // ø ================================================================================         <Call Code>
 // ø ================================================================================          (constant)
 // ø ====================================================================================================
-let YYYY = (new Date()).getFullYear()
-console.log(`DOX => YYYY: [${typeof YYYY}] ${YYYY}`)
+let which = 'ONE_OF_THESE'
+which = 'YEAR'
+which = 'TERM'
+let resultObject = {}
+if(which === 'YEAR'){
+    // ø <YEAR>
+    let YYYY = (new Date()).getFullYear()
+    console.log(`DOX => YYYY: [${typeof YYYY}] ${YYYY}`)
+    resultObject = composeDocDbJSON_byYear(YYYY)
+    // ø </YEAR>
+}
+if(which === 'TERM'){
+    // ø <TERM>
+    let YYYY = (new Date()).getFullYear()
+    console.log(`DOX => YYYY: [${typeof YYYY}] ${YYYY}`)
+    // ø </TERM>
+}
+console.log(`DOX => resultObject: [${typeof resultObject}]`)
+console.log(JSON.stringify(resultObject,undefined,4))
 // ! <script not 'export'-ed in buider>
 // let weekDocDbJSON = composeDocDbJSON_byYear(YYYY)
 // console.warn(`weekDocDbJSON = composeDocDbJSON_byYear(${YYYY})`)
@@ -23,15 +40,11 @@ console.log(`DOX => YYYY: [${typeof YYYY}] ${YYYY}`)
  */
 // let StartDate = 'startDateHOLDER'
 // let EndDate = 'endDateHOLDER'
-let resultObject = {}
 // resultObject.StartDate = StartDate
 // resultObject.EndDate = EndDate
 // let resultObject = composeDocDbJSON_byTerm(StartDate, EndDate)
 // console.warn(`resultObject = composeDocDbJSON_byTerm(${StartDate}, ${EndDate})`)
-resultObject = composeDocDbJSON_byYear(YYYY)
-console.log(`DOX => resultObject: [${typeof resultObject}]`)
 // console.log(resultObject)
-console.log(JSON.stringify(resultObject,undefined,4))
 // console.warn(`resultObject = composeDocDbJSON_byYear(${YYYY})`)
 // console.log(resultObject)
 // console.log(JSON.stringify(resultObject,undefined,4))

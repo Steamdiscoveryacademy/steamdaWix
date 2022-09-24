@@ -12,3 +12,23 @@ for Import as Template:
   changeLog:
     - cardinal numbers for daysOfWeekJSArray
 ...
+---
+# gather Courses by termId & regionKey
+testUrl: https://live-steamda.pantheonsite.io/wixcourses/202235/CHO
+endpoint: https://live-steamda.pantheonsite.io/wixcourses/{{termId}}/{{regionKey}}
+postMan:
+  workSpace: STEAM Drupal
+  collection: 20211109_SteamDA
+  folderPath: GOLD rigorous/Courses
+  name: Courses by Term & Region
+  verb: GET
+  endpointParameters: 
+    termId:
+      scope: environment
+      initialValue: 202235
+      currentValue: 202235
+    regionKey:
+      scope: environment
+      initialValue: CHO
+      currentValue: CHO
+...

@@ -10,16 +10,10 @@
 const tzOffsetK = -6
 
 import coursesCurrentObjectArray from /*CURRENT=>termId:202235;regionKey:CHO*/ '/Users/brad/Documents/bradRepositories/vsCode/steamdaWixLocal/steamdaWix/courseCatalog_WiX/week/weekBuilder_coursesCurrent.json'
-// import coursesCurrentObjectArray from /*WITH_ERRORS=>termId:202235;regionKey:CHO*/
-// '/Users/brad/Documents/bradRepositories/vsCode/steamdaWixLocal/steamdaWix/courseCatalog_WiX/week/wERRORS_weekBuilder_coursesCurrent.json'
-
-import fiftyTwoWeekObjectArray from '/Users/brad/Documents/bradRepositories/vsCode/reference/fiftyTwoWeekObjectArray.json'
 // import coursesCurrentObjectArray from /*WITH_ERRORS=>termId:202235;regionKey:CHO*/ '/Users/brad/Documents/bradRepositories/vsCode/steamdaWixLocal/steamdaWix/courseCatalog_WiX/week/wERRORS_weekBuilder_coursesCurrent.json'
 
-// export async function currentCoursesObjectArrayLog(){
-    //     console.warn(`coursesCurrentObjectArray:`)
-    //     console.warn(coursesCurrentObjectArray)
-    // }
+import fiftyTwoWeekObjectArray from '/Users/brad/Documents/bradRepositories/vsCode/reference/fiftyTwoWeekObjectArray.json'
+
 // ø ====================================================================================================
 // ø ================================================================================    </Constant Code>
 // ø ====================================================================================================
@@ -39,7 +33,7 @@ export function composeDocDbJSON_byCurrentCoursesJSON(paramObject = {}){
 
 // ø ====================================================================================================
 // ø ================================================================================     <Function Code>
-// ø ================================================================================          (constant)
+// ø ================================================================================          (overall)
 // ø ====================================================================================================
 // ø ====================================================================================================
 function composeWeekDocDbJSON(paramObject = {}){
@@ -58,8 +52,10 @@ function composeWeekDocDbJSON(paramObject = {}){
     // ø <simple if Validation Passes>
     responseObject.buildingBlocks.termId = coursesCurrentObjectArray[0].termId
     responseObject.buildingBlocks.regionKey = coursesCurrentObjectArray[0].courseRegionKey
+    responseObject.buildingBlocks.lastupdateThisTermIdRegionKey = (new Date).toISOString()
     // ø </simple if Validation Passes>
     responseObject.responseObject.cardinalityLookupObject = buildCardinalityLookupObject(paramObject)
+    responseObject.responseObject.lastupdateThisTermIdRegionKey = responseObject.buildingBlocks.lastupdateThisTermIdRegionKey
     
     responseObject.buildingBlocks.weekKeys = []
     let cardinalKeys = Object.keys(responseObject.responseObject.cardinalityLookupObject)
@@ -72,32 +68,6 @@ function composeWeekDocDbJSON(paramObject = {}){
     // responseObject.testString = testString
     loopKeysToPopulateObjects(responseObject)
     return responseObject
-    /**'
-     * NOTES:
-     * ? Will respond with all days of included weeks, but where 'dayInSpan' === 0 if need-be
-     * ? that is, maybe some pre-days for a Year and maybe some post-days for a Year
-     * ? there will (probably) NOT be an override where 'termId' is a parameter
-     * ? • this is because this code _calculates_ termId and does not _consume_ termId
-     * EVENTUALLY:
-     * ? there will be a check for a Holidy in each Month, it can be marked as Not-Observed
-     * ? • this is to confirm that the Holiday-DocDbJSON is valid
-     * ? • a Holiday Element is a specific Day, but 'Days Off' can be a range of days
-     * ? • • Xmas might be 3 days either side of the Day
-     * ? • • July 4th was OBSERVED as July 5th in 2021
-     * ? • Thanksgiving is was November 25th 2021 but often you will want to 'take-off' Wed, Thu & Fri
-     * ? • Also, since programming can happen on Weekends, 'take-off' is more complicated:
-     * ? • • again, with Thanksgiving: you wouldn't want to schedule for the Sat or Sun after as well
-     * ? • • in particular STEAMDA has July 4th extend for the entire week
-     * ? • • couter-intuitively, STEAMDA may hold programs _on_ a holiday:
-     * ? • • • as quasi-day-care for a Holidy here or there that the school observes, but industry does not
-     * ATTRIBUTES:
-     * ? weekId: YYYYWW
-     * ? termId: YYYYww of start date
-     * ? cardinalWeek: 1,2,3... of whatever span
-     * ? First Date of Week
-     * ? Last Date of Week
-     * ? Days of Week (probably [0,1,2,3,4,5,6], but maybe it is different)
-     */
 }
 
 function loopKeysToPopulateObjects(responseObject = {}){
@@ -167,11 +137,15 @@ function loopKeysToPopulateObjects(responseObject = {}){
 }
 
 // ø ====================================================================================================
-// ø ================================================================================     <Function Code>
-// ø ================================================================================          (constant)
-// ø ============================================================     from file:weekId_YYYY_weekNumISO.js
-// ø ==============================   path: /vsCode/snippets/javaScriptSnippets/weekId_YYYY_weekNumISO.js
+// ø ================================================================================    </Function Code>
+// ø ================================================================================          (overall)
 // ø ====================================================================================================
+
+// ø ====================================================================================================
+// ø ================================================================================     <Function Code>
+// ø ================================================================================            (helper)
+// ø ====================================================================================================
+
 
 function validateCurrentCoursesObjectArray(paramObject = {}){
     // • <_validateCurrentCoursesObjectArray_>
@@ -213,7 +187,7 @@ function validateCurrentCoursesObjectArray(paramObject = {}){
         errorObject.errorLog.push(logThis)
     }
     // ø </regionKey is Valid>
-    // ø <regionKey is Supported>
+    // ! <regionKey is Supported>
     const supportedRegionKeyArray = [] // gather from SOMEWHERE or MANUALLY UPDATE
     if(1 === 2 && supportedRegionKeyArray.includes(regionKey) !== true){
         logThis = {}
@@ -222,7 +196,7 @@ function validateCurrentCoursesObjectArray(paramObject = {}){
         logThis.logic /*As String*/ = 'if(1 === 2 && supportedRegionKeyArray.includes(regionKey) !== true)'
         errorObject.errorLog.push(logThis)
     }
-    // ø </regionKey is Supported>
+    // ! </regionKey is Supported>
     responseObject.errorObject = errorObject
     return responseObject
 }
@@ -251,7 +225,7 @@ function positiveIntegerKludge(simpleWeekId = 999, returnParam = 'ucWord'){
     let weekObject = fiftyTwoWeekObjectArray.weekObjectArray[simpleWeekId]
     return weekObject[returnParam]
     // return 'TeSt'
-
+    
 }
 
 // • <All Indicated Date Formatting>
@@ -274,12 +248,10 @@ function indicatedDateFormatting(dateISO = "2008-01-2-T12:00:00.000Z", format = 
     let weekObject = fiftyTwoWeekObjectArray.weekObjectArray[simpleWeekId]
     return weekObject[returnParam]
     // return 'TeSt'
-
+    
 }
 function dateFormatABBRV(dateISO){
     if(Date.parse(dateISO) === NaN){
-    // if(true){
-    // if(false){
         return "Mon DD"
     }
     const dateObject = new Date(dateISO)
@@ -290,11 +262,9 @@ function dateFormatABBRV(dateISO){
     dateString += dateObject.getDate()
     return dateString
 }
-
+        
 function dateFormatFULL(dateISO){
     if(Date.parse(dateISO) === NaN){
-    // if(true){
-    // if(false){
         return "Somday, Month 19, 2021"
     }
     const dateObject = new Date(dateISO)
@@ -308,11 +278,9 @@ function dateFormatFULL(dateISO){
     dateString += dateObject.getFullYear()
     return dateString
 }
-
+                
 function dateFormatSLASH(dateISO){
     if(Date.parse(dateISO) === NaN){
-    // if(true){
-    // if(false){
         return "12/19/2021"
     }
     const dateObject = new Date(dateISO)
@@ -326,234 +294,91 @@ function dateFormatSLASH(dateISO){
     return dateString
 }
 // • </All Indicated Date Formatting>
-// • <All Indicated Days-of-Week Formatting>
-function parseDaysOfWeekFullListStringToNumericArray(daysOfWeekNumberString = 'S,T,R,I,N,G'){
-    let daysOfWeekNumberStringArray = daysOfWeekNumberString.split(",").sort()
-    
-    let daysOfWeekNumberArray = []
-    for (const element of daysOfWeekNumberStringArray) {
-        if(!daysOfWeekNumberArray.includes(Number(element))){
-            daysOfWeekNumberArray.push(Number(element))
+    // • <All Indicated Days-of-Week Formatting>
+    function parseDaysOfWeekFullListStringToNumericArray(daysOfWeekNumberString = 'S,T,R,I,N,G'){
+        let daysOfWeekNumberStringArray = daysOfWeekNumberString.split(",").sort()
+        
+        let daysOfWeekNumberArray = []
+        for (const element of daysOfWeekNumberStringArray) {
+            if(!daysOfWeekNumberArray.includes(Number(element))){
+                daysOfWeekNumberArray.push(Number(element))
+            }
         }
+        return daysOfWeekNumberArray
     }
-    return daysOfWeekNumberArray
-}
-function parseDaysOfWeekJSArrayToStringArray(daysOfWeekJSArray = [], format = 'Dow'){
-    const supportedFromatArray = ['Dow']
-    if(supportedFromatArray.includes(format) === false){
-        return `UNSUPPORTED_DAYOFWEEK_FORMAT: ${format}`
-    }
-    const formattedArrayOfStrings_Dow = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
-    let formattedDayOfWeekListString = ''
-    let comma = ''
-    for (const integer of daysOfWeekJSArray) {
-        formattedDayOfWeekListString += comma
-        if(format === 'Dow'){
-            formattedDayOfWeekListString += formattedArrayOfStrings_Dow[integer]
+    function parseDaysOfWeekJSArrayToStringArray(daysOfWeekJSArray = [], format = 'Dow'){
+        const supportedFromatArray = ['Dow']
+        if(supportedFromatArray.includes(format) === false){
+            return `UNSUPPORTED_DAYOFWEEK_FORMAT: ${format}`
         }
-        comma = ','   
+        const formattedArrayOfStrings_Dow = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+        let formattedDayOfWeekListString = ''
+        let comma = ''
+        for (const integer of daysOfWeekJSArray) {
+            formattedDayOfWeekListString += comma
+            if(format === 'Dow'){
+                formattedDayOfWeekListString += formattedArrayOfStrings_Dow[integer]
+            }
+            comma = ','   
+        }
+        return formattedDayOfWeekListString
     }
-    return formattedDayOfWeekListString
-}
-// • </All Indicated Days-of-Week Formatting>
-// ! ø <DO CONFIRM THESE EACH TERM>
-function timeblockFullDay_FD(){
-    // return 'FD HOLDER FOR CONSTANT BLOCK'
-    const objectLiteral = {
-        timeBlockKey: 'FD',
-        timeBlockName: 'Full Day',
-        timeBlockStartTime: '09:00:00',
-        timeBlockEndTime: '17:00:00',
-        timeBlockDuration: '08:00:00',
-        timeBlockStartTimeString: '9:00am',
-        timeBlockEndTimeString: '5:00pm',
-        timeBlockDurationString: '8 hours',
-        timeBlockSpanString: '9:00am to 5:00pm',
-        timeBlockSpanStringAbbrv: '9 to 5'
+    // • </All Indicated Days-of-Week Formatting>
+    // ! ø <DO CONFIRM THESE EACH TERM>
+    function timeblockFullDay_FD(){
+        // return 'FD HOLDER FOR CONSTANT BLOCK'
+        const objectLiteral = {
+            timeBlockKey: 'FD',
+            timeBlockName: 'Full Day',
+            timeBlockStartTime: '09:00:00',
+            timeBlockEndTime: '17:00:00',
+            timeBlockDuration: '08:00:00',
+            timeBlockStartTimeString: '9:00am',
+            timeBlockEndTimeString: '5:00pm',
+            timeBlockDurationString: '8 hours',
+            timeBlockSpanString: '9:00am to 5:00pm',
+            timeBlockSpanStringAbbrv: '9 to 5'
+        }
+        return objectLiteral
     }
-    return objectLiteral
-}
-function timeblockMorning_AM(){
-    // return 'AM HOLDER FOR CONSTANT BLOCK'
-    const objectLiteral = {
-        timeBlockKey: 'AM',
-        timeBlockName: 'Morning',
-        timeBlockStartTime: '09:00:00',
-        timeBlockEndTime: '12:30:00',
-        timeBlockDuration: '03:30:00',
-        timeBlockStartTimeString: '9:00am',
-        timeBlockEndTimeString: '12:30pm',
-        timeBlockDurationString: '3.5 hours',
-        timeBlockSpanString: '9:00am to 12:30pm',
-        timeBlockSpanStringAbbrv: '9:00 to 12:30'
+    function timeblockMorning_AM(){
+        // return 'AM HOLDER FOR CONSTANT BLOCK'
+        const objectLiteral = {
+            timeBlockKey: 'AM',
+            timeBlockName: 'Morning',
+            timeBlockStartTime: '09:00:00',
+            timeBlockEndTime: '12:30:00',
+            timeBlockDuration: '03:30:00',
+            timeBlockStartTimeString: '9:00am',
+            timeBlockEndTimeString: '12:30pm',
+            timeBlockDurationString: '3.5 hours',
+            timeBlockSpanString: '9:00am to 12:30pm',
+            timeBlockSpanStringAbbrv: '9:00 to 12:30'
+        }
+        return objectLiteral
     }
-    return objectLiteral
-}
-function timeblockAfternoon_PM(){
-    // return 'PM HOLDER FOR CONSTANT BLOCK'
-    const objectLiteral = {
-        timeBlockKey: 'PM',
-        timeBlockName: 'Afternoon',
-        timeBlockStartTime: '13:30',
-        timeBlockEndTime: '17:00:00',
-        timeBlockDuration: '03:30:00',
-        timeBlockStartTimeString: '1:30pm',
-        timeBlockEndTimeString: '5:00pm',
-        timeBlockDurationString: '3.5 hours',
-        timeBlockSpanString: '1:30pm to 5:00pm',
-        timeBlockSpanStringAbbrv: '1:30 to 5:00'
+    function timeblockAfternoon_PM(){
+        // return 'PM HOLDER FOR CONSTANT BLOCK'
+        const objectLiteral = {
+            timeBlockKey: 'PM',
+            timeBlockName: 'Afternoon',
+            timeBlockStartTime: '13:30',
+            timeBlockEndTime: '17:00:00',
+            timeBlockDuration: '03:30:00',
+            timeBlockStartTimeString: '1:30pm',
+            timeBlockEndTimeString: '5:00pm',
+            timeBlockDurationString: '3.5 hours',
+            timeBlockSpanString: '1:30pm to 5:00pm',
+            timeBlockSpanStringAbbrv: '1:30 to 5:00'
+        }
+        return objectLiteral
     }
-    return objectLiteral
-}
-function timeblockEvening_EVE(){
-    return 'EVE HOLDER FOR CONSTANT BLOCK'
-}
-// ! ø </DO CONFIRM THESE EACH TERM>
-
-
-
-// • PRE-TRASH ====================================================================================================
-// • PRE-TRASH ====================================================================================================
-// • PRE-TRASH ====================================================================================================
-// • PRE-TRASH ====================================================================================================
-// • PRE-TRASH ====================================================================================================
-// • PRE-TRASH ====================================================================================================
-// • PRE-TRASH ====================================================================================================
-// • PRE-TRASH ====================================================================================================
-// • PRE-TRASH ====================================================================================================
-// • PRE-TRASH ====================================================================================================
-// • PRE-TRASH ====================================================================================================
-// • PRE-TRASH ====================================================================================================
-// • PRE-TRASH ====================================================================================================
-// • PRE-TRASH ====================================================================================================
-// • PRE-TRASH ====================================================================================================
-// • PRE-TRASH ====================================================================================================
-// • PRE-TRASH ====================================================================================================
-// • PRE-TRASH ====================================================================================================
-// • PRE-TRASH ====================================================================================================
-// • PRE-TRASH ====================================================================================================
-// • PRE-TRASH ====================================================================================================
-// • PRE-TRASH ====================================================================================================
-
-
-
-
-
-
-
-
-// ! ====================================================================================================
-// ! ======================================================================          <Exported Functions>
-// ! ================================================================================       [DEPRECATED]
-// ! ====================================================================================================
-export function composeDocDbJSON_byYear(year, tzOffset = tzOffsetK){
-    // let StartDate = (new Date(year, 0, 1,0 + tzOffset,0,1))
-    let StartDate = (new Date(year, 0, 1,0 + tzOffset,0,1))
-    let StartDateISO = StartDate.toISOString()
-    console.log(`composeDocDbJSON_byYear => StartDateISO: ${StartDateISO}`)
-    let EndDate = (new Date(year, 11, 31,23 + tzOffset,59,59))
-    let EndDateISO = EndDate.toISOString()
-    console.log(`composeDocDbJSON_byYear => EndDateISO: ${EndDateISO}`)
-    
-    return composeDocDbJSON_byTerm(StartDate,EndDate)
-}
-export function composeDocDbJSON_byTerm(StartDate,EndDate){
-    let paramObject = {}
-    // paramObject.startDate = StartDate.toISOString()
-    // paramObject.endDate = EndDate.toISOString()
-    paramObject.startDate = StartDate
-    paramObject.endDate = EndDate
-    paramObject.startDateISO = StartDate.toISOString()
-    paramObject.endDateISO = EndDate.toISOString()
-    console.log(`composeDocDbJSON_byTerm => paramObject:`)
-    console.log(JSON.stringify(paramObject,undefined,4))
-    
-    return composeWeekDocDbJSON_byParams(paramObject)
-}
-// ! ====================================================================================================
-// ! ======================================================================         </Exported Functions>
-// ! ================================================================================       [/DEPRECATED]
-// ! ====================================================================================================
-
-
-
-
-
-
-// ! ====================================================================================================
-// ! ================================================================================      <¿deprecated?>
-function getTermId(startDate) {
-    console.warn(`getTermId(startDate): getTermId(${startDate})`)
-    return getWeekId(startDate)
-}
-function getWeekId(dateParam) {
-    console.warn(`getWeekId(dateParam): getWeekId(${dateParam})`)
-    // Copy date so don't modify original
-    let dateResponse = new Date(Date.UTC(dateParam.getFullYear(), dateParam.getMonth(), dateParam.getDate()));
-    // Set to nearest Thursday: current date + 4 - current day number
-    // Make Sunday's day number 7
-    dateResponse.setUTCDate(dateResponse.getUTCDate() + 4 - (dateResponse.getUTCDay() || 7));
-    // Get first day of year
-    let yearStart = new Date(Date.UTC(dateResponse.getUTCFullYear(), 0, 1));
-    // Calculate full weeks to nearest Thursday
-    let weekNo = Math.ceil((((dateResponse - yearStart) / 86400000) + 1) / 7);
-    // Return array of year and week number
-    // return [dateResponse.getUTCFullYear(), weekNo];
-    return dateResponse.getUTCFullYear() * 100 + weekNo;
-}
-// ! ================================================================================     </¿deprecated?>
-// ! ====================================================================================================
-
+    function timeblockEvening_EVE(){
+        return 'EVE HOLDER FOR CONSTANT BLOCK'
+    }
+    // ! ø </DO CONFIRM THESE EACH TERM>
+                        
 // ø ====================================================================================================
 // ø ================================================================================    </Function Code>
+// ø ================================================================================            (helper)
 // ø ====================================================================================================
-
-
-// ! ====================================================================================================
-// ! ================================================================================     <Function Code>
-// ! ================================================================================       (¿deprecated?)
-// ! ============================================================     from file:weekId_YYYY_weekNumISO.js
-// ! ==============================   path: /vsCode/snippets/javaScriptSnippets/weekId_YYYY_weekNumISO.js
-// ! ====================================================================================================
-function composeWeekDocDbJSON_byParams(paramObject = {}){
-    console.log(`composeWeekDocDbJSON_byParams => paramObject:`)
-    // console.log(paramObject)
-    // console.log(JSON.stringify(paramObject,undefined,4))
-    let responseObject = {}
-    responseObject.responseObject = {}
-    responseObject.paramObject = paramObject
-    responseObject.buildingBlocks = {}
-    responseObject.buildingBlocks.termId = getTermId(paramObject.startDate)
-
-    return responseObject
-/**'
- * NOTES:
- * ! Will respond with all days of included weeks, but where 'dayInSpan' === 0 if need-be
- * ! that is, maybe some pre-days for a Year and maybe some post-days for a Year
- * ! there will (probably) NOT be an override where 'termId' is a parameter
- * ! • this is because this code _calculates_ termId and does not _consume_ termId
- * EVENTUALLY:
- * ! there will be a check for a Holidy in each Month, it can be marked as Not-Observed
- * ! • this is to confirm that the Holiday-DocDbJSON is valid
- * ! • a Holiday Element is a specific Day, but 'Days Off' can be a range of days
- * ! • • Xmas might be 3 days either side of the Day
- * ! • • July 4th was OBSERVED as July 5th in 2021
- * ! • Thanksgiving is was November 25th 2021 but often you will want to 'take-off' Wed, Thu & Fri
- * ! • Also, since programming can happen on Weekends, 'take-off' is more complicated:
- * ! • • again, with Thanksgiving: you wouldn't want to schedule for the Sat or Sun after as well
- * ! • • in particular STEAMDA has July 4th extend for the entire week
- * ! • • couter-intuitively, STEAMDA may hold programs _on_ a holiday:
- * ! • • • as quasi-day-care for a Holidy here or there that the school observes, but industry does not
- * ATTRIBUTES:
- * ! weekId: YYYYWW
- * ! termId: YYYYww of start date
- * ! cardinalWeek: 1,2,3... of whatever span
- * ! First Date of Week
- * ! Last Date of Week
- * ! Days of Week (probably [0,1,2,3,4,5,6], but maybe it is different)
- */
-}
-// ! ====================================================================================================
-// ! ================================================================================    </Function Code>
-// ! ================================================================================       (¿deprecated?)
-// ! ====================================================================================================

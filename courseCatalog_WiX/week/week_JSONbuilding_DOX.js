@@ -79,6 +79,8 @@ if(which === 'TERM'){
 }
 console.log(`DOX => resultObject: [${typeof resultObject}]`)
 console.log(resultObject)
+console.log(JSON.stringify(resultObject.responseObject))
+// console.log(JSON.stringify(resultObject.responseObject.cardinalityLookupObject,undefined,4))
 // console.log(JSON.stringify(resultObject,undefined,4))
 // ø ====================================================================================================
 // ø ================================================================================        </Call Code>

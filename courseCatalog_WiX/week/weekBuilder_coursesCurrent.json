@@ -15,25 +15,10 @@
         "curriculumId": "3500",
         "enrollExcptn": [],
         "enrollmentHardCount": "0",
-        "waitlistHardCount": "0"
-    },
-    {
-        "_id": "3667",
-        "courseNameDisplay": "Competition Club - Sphero Global Challenge 2023",
-        "courseRegionKey": "CHO",
-        "locationKey": "CHOa",
-        "termId": "202235",
-        "weekId": "202236",
-        "gradeLevelKey": "GL38",
-        "courseOptions": "CD",
-        "courseTilePath": "FFALSE",
-        "courseKey": "COMPCLUBv3536chCHOa",
-        "sectionCount": "1",
-        "coursePromoPath": "FFALSE",
-        "curriculumId": "3644",
-        "enrollExcptn": [],
-        "enrollmentHardCount": "0",
-        "waitlistHardCount": "0"
+        "waitlistHardCount": "0",
+        "courseDateStart": "2022-09-08T11:59:00.000Z",
+        "courseDateEnd": "2022-10-21T11:59:00.000Z",
+        "daysOfWeek": "4"
     },
     {
         "_id": "3657",
@@ -51,7 +36,10 @@
         "curriculumId": "3644",
         "enrollExcptn": [],
         "enrollmentHardCount": "0",
-        "waitlistHardCount": "0"
+        "waitlistHardCount": "0",
+        "courseDateStart": "2022-09-08T11:59:00.000Z",
+        "courseDateEnd": "2022-10-21T11:59:00.000Z",
+        "daysOfWeek": "4"
     },
     {
         "_id": "3658",
@@ -69,7 +57,31 @@
         "curriculumId": "3644",
         "enrollExcptn": [],
         "enrollmentHardCount": "0",
-        "waitlistHardCount": "0"
+        "waitlistHardCount": "0",
+        "courseDateStart": "2022-09-08T11:59:00.000Z",
+        "courseDateEnd": "2022-10-21T11:59:00.000Z",
+        "daysOfWeek": "4"
+    },
+    {
+        "_id": "3667",
+        "courseNameDisplay": "Competition Club - Sphero Global Challenge 2023",
+        "courseRegionKey": "CHO",
+        "locationKey": "CHOa",
+        "termId": "202235",
+        "weekId": "202236",
+        "gradeLevelKey": "GL38",
+        "courseOptions": "CD",
+        "courseTilePath": "FFALSE",
+        "courseKey": "COMPCLUBv3536chCHOa",
+        "sectionCount": "1",
+        "coursePromoPath": "FFALSE",
+        "curriculumId": "3644",
+        "enrollExcptn": [],
+        "enrollmentHardCount": "0",
+        "waitlistHardCount": "0",
+        "courseDateStart": "2022-09-08T15:00:00.000Z",
+        "courseDateEnd": "2022-12-08T19:00:00.000Z",
+        "daysOfWeek": "4"
     },
     {
         "_id": "3659",
@@ -87,7 +99,10 @@
         "curriculumId": "3651",
         "enrollExcptn": [],
         "enrollmentHardCount": "0",
-        "waitlistHardCount": "0"
+        "waitlistHardCount": "0",
+        "courseDateStart": "2022-09-06T11:59:00.000Z",
+        "courseDateEnd": "2022-10-18T11:59:00.000Z",
+        "daysOfWeek": "1"
     },
     {
         "_id": "3656",
@@ -105,7 +120,10 @@
         "curriculumId": "3643",
         "enrollExcptn": [],
         "enrollmentHardCount": "0",
-        "waitlistHardCount": "0"
+        "waitlistHardCount": "0",
+        "courseDateStart": "2022-09-06T11:59:00.000Z",
+        "courseDateEnd": "2022-10-16T11:59:00.000Z",
+        "daysOfWeek": "2,5"
     },
     {
         "_id": "3661",
@@ -123,7 +141,10 @@
         "curriculumId": "3643",
         "enrollExcptn": [],
         "enrollmentHardCount": "0",
-        "waitlistHardCount": "0"
+        "waitlistHardCount": "0",
+        "courseDateStart": "2022-09-06T11:59:00.000Z",
+        "courseDateEnd": "2022-10-19T11:59:00.000Z",
+        "daysOfWeek": "2"
     },
     {
         "_id": "3665",
@@ -141,7 +162,10 @@
         "curriculumId": "3664",
         "enrollExcptn": [],
         "enrollmentHardCount": "0",
-        "waitlistHardCount": "0"
+        "waitlistHardCount": "0",
+        "courseDateStart": "2022-09-08T11:59:00.000Z",
+        "courseDateEnd": "2022-10-21T11:59:00.000Z",
+        "daysOfWeek": "4"
     },
     {
         "_id": "3669",
@@ -159,7 +183,10 @@
         "curriculumId": "3360",
         "enrollExcptn": [],
         "enrollmentHardCount": "0",
-        "waitlistHardCount": "0"
+        "waitlistHardCount": "0",
+        "courseDateStart": "2022-09-10T11:59:00.000Z",
+        "courseDateEnd": "2022-09-18T11:59:00.000Z",
+        "daysOfWeek": "6"
     },
     {
         "_id": "3663",
@@ -177,7 +204,10 @@
         "curriculumId": "1279",
         "enrollExcptn": [],
         "enrollmentHardCount": "0",
-        "waitlistHardCount": "0"
+        "waitlistHardCount": "0",
+        "courseDateStart": "2022-09-07T11:59:00.000Z",
+        "courseDateEnd": "2022-10-20T11:59:00.000Z",
+        "daysOfWeek": "3"
     },
     {
         "_id": "3662",
@@ -195,7 +225,10 @@
         "curriculumId": "3649",
         "enrollExcptn": [],
         "enrollmentHardCount": "0",
-        "waitlistHardCount": "0"
+        "waitlistHardCount": "0",
+        "courseDateStart": "2022-09-07T11:59:00.000Z",
+        "courseDateEnd": "2022-10-20T11:59:00.000Z",
+        "daysOfWeek": "3"
     },
     {
         "_id": "3660",
@@ -213,7 +246,10 @@
         "curriculumId": "3654",
         "enrollExcptn": [],
         "enrollmentHardCount": "0",
-        "waitlistHardCount": "0"
+        "waitlistHardCount": "0",
+        "courseDateStart": "2022-09-06T11:59:00.000Z",
+        "courseDateEnd": "2022-10-19T11:59:00.000Z",
+        "daysOfWeek": "2"
     },
     {
         "_id": "3668",
@@ -231,7 +267,10 @@
         "curriculumId": "1279",
         "enrollExcptn": [],
         "enrollmentHardCount": "0",
-        "waitlistHardCount": "0"
+        "waitlistHardCount": "0",
+        "courseDateStart": "2022-09-17T16:00:00.000Z",
+        "courseDateEnd": "2022-12-10T13:00:00.000Z",
+        "daysOfWeek": "6"
     },
     {
         "_id": "3670",
@@ -249,7 +288,10 @@
         "curriculumId": "3360",
         "enrollExcptn": [],
         "enrollmentHardCount": "0",
-        "waitlistHardCount": "0"
+        "waitlistHardCount": "0",
+        "courseDateStart": "2022-10-01T11:59:00.000Z",
+        "courseDateEnd": "2022-10-09T11:59:00.000Z",
+        "daysOfWeek": "6"
     },
     {
         "_id": "3679",
@@ -267,7 +309,10 @@
         "curriculumId": "3653",
         "enrollExcptn": [],
         "enrollmentHardCount": "0",
-        "waitlistHardCount": "0"
+        "waitlistHardCount": "0",
+        "courseDateStart": "2022-09-26T11:59:00.000Z",
+        "courseDateEnd": "2022-09-26T11:59:00.000Z",
+        "daysOfWeek": "1"
     },
     {
         "_id": "3676",
@@ -285,7 +330,10 @@
         "curriculumId": "3653",
         "enrollExcptn": [],
         "enrollmentHardCount": "0",
-        "waitlistHardCount": "0"
+        "waitlistHardCount": "0",
+        "courseDateStart": "2022-10-10T08:30:00.000Z",
+        "courseDateEnd": "2022-10-10T17:30:00.000Z",
+        "daysOfWeek": "1"
     },
     {
         "_id": "3683",
@@ -303,7 +351,10 @@
         "curriculumId": "3653",
         "enrollExcptn": [],
         "enrollmentHardCount": "0",
-        "waitlistHardCount": "0"
+        "waitlistHardCount": "0",
+        "courseDateStart": "2022-10-14T08:30:00Z",
+        "courseDateEnd": "2022-10-14T17:30:00Z",
+        "daysOfWeek": "5"
     },
     {
         "_id": "3677",
@@ -321,7 +372,10 @@
         "curriculumId": "3653",
         "enrollExcptn": [],
         "enrollmentHardCount": "0",
-        "waitlistHardCount": "0"
+        "waitlistHardCount": "0",
+        "courseDateStart": "2022-10-21T11:59:00.000Z",
+        "courseDateEnd": "2022-10-29T11:59:00.000Z",
+        "daysOfWeek": "5"
     },
     {
         "_id": "3680",
@@ -339,7 +393,10 @@
         "curriculumId": "3653",
         "enrollExcptn": [],
         "enrollmentHardCount": "0",
-        "waitlistHardCount": "0"
+        "waitlistHardCount": "0",
+        "courseDateStart": "2022-10-27T08:30:00Z",
+        "courseDateEnd": "2022-10-27T17:30:000Z",
+        "daysOfWeek": "4"
     },
     {
         "_id": "3678",
@@ -357,7 +414,10 @@
         "curriculumId": "3653",
         "enrollExcptn": [],
         "enrollmentHardCount": "0",
-        "waitlistHardCount": "0"
+        "waitlistHardCount": "0",
+        "courseDateStart": "2022-11-04T08:30:000Z",
+        "courseDateEnd": "2022-11-04T17:30:000Z",
+        "daysOfWeek": "5"
     },
     {
         "_id": "3681",
@@ -375,7 +435,10 @@
         "curriculumId": "3653",
         "enrollExcptn": [],
         "enrollmentHardCount": "0",
-        "waitlistHardCount": "0"
+        "waitlistHardCount": "0",
+        "courseDateStart": "2022-11-07T11:59:00.000Z",
+        "courseDateEnd": "2022-11-07T17:30:000Z",
+        "daysOfWeek": "1"
     },
     {
         "_id": "3682",
@@ -393,7 +456,10 @@
         "curriculumId": "3653",
         "enrollExcptn": [],
         "enrollmentHardCount": "0",
-        "waitlistHardCount": "0"
+        "waitlistHardCount": "0",
+        "courseDateStart": "2022-11-08T08:30:00Z",
+        "courseDateEnd": "2022-11-08T17:30:00Z",
+        "daysOfWeek": "2"
     },
     {
         "_id": "3671",
@@ -411,7 +477,10 @@
         "curriculumId": "3360",
         "enrollExcptn": [],
         "enrollmentHardCount": "0",
-        "waitlistHardCount": "0"
+        "waitlistHardCount": "0",
+        "courseDateStart": "2022-11-19T11:59:00.000Z",
+        "courseDateEnd": "2022-11-27T11:59:00.000Z",
+        "daysOfWeek": "6"
     },
     {
         "_id": "3673",
@@ -429,7 +498,10 @@
         "curriculumId": "3672",
         "enrollExcptn": [],
         "enrollmentHardCount": "0",
-        "waitlistHardCount": "0"
+        "waitlistHardCount": "0",
+        "courseDateStart": "2022-12-03T11:59:00.000Z",
+        "courseDateEnd": "2022-12-11T11:59:00.000Z",
+        "daysOfWeek": "6"
     },
     {
         "_id": "3674",
@@ -447,7 +519,10 @@
         "curriculumId": "3672",
         "enrollExcptn": [],
         "enrollmentHardCount": "0",
-        "waitlistHardCount": "0"
+        "waitlistHardCount": "0",
+        "courseDateStart": "2022-12-10T11:59:00.000Z",
+        "courseDateEnd": "2022-12-18T11:59:00.000Z",
+        "daysOfWeek": "6"
     },
     {
         "_id": "3675",
@@ -465,7 +540,10 @@
         "curriculumId": "3653",
         "enrollExcptn": [],
         "enrollmentHardCount": "0",
-        "waitlistHardCount": "0"
+        "waitlistHardCount": "0",
+        "courseDateStart": "2022-12-19T11:59:00.000Z",
+        "courseDateEnd": "2022-12-27T11:59:00.000Z",
+        "daysOfWeek": "1"
     },
     {
         "_id": "3684",
@@ -483,7 +561,10 @@
         "curriculumId": "3653",
         "enrollExcptn": [],
         "enrollmentHardCount": "0",
-        "waitlistHardCount": "0"
+        "waitlistHardCount": "0",
+        "courseDateStart": "2022-12-20T08:30:00Z",
+        "courseDateEnd": "2022-12-20T17:30:000Z",
+        "daysOfWeek": "1"
     },
     {
         "_id": "3685",
@@ -501,7 +582,10 @@
         "curriculumId": "3653",
         "enrollExcptn": [],
         "enrollmentHardCount": "0",
-        "waitlistHardCount": "0"
+        "waitlistHardCount": "0",
+        "courseDateStart": "2022-12-20T08:30:00Z",
+        "courseDateEnd": "2022-12-20T17:30:00Z",
+        "daysOfWeek": "1"
     },
     {
         "_id": "3686",
@@ -519,6 +603,9 @@
         "curriculumId": "3653",
         "enrollExcptn": [],
         "enrollmentHardCount": "0",
-        "waitlistHardCount": "0"
+        "waitlistHardCount": "0",
+        "courseDateStart": "2022-12-19T11:59:00.000Z",
+        "courseDateEnd": "2022-12-25T11:59:00.000Z",
+        "daysOfWeek": "1,2,3"
     }
 ]

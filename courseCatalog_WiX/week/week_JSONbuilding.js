@@ -113,10 +113,23 @@ function loopKeysToPopulateObjects(responseObject = {}){
         })
         let startDateISO = '2999-12-31T23:59:59.999Z'
         let endDateISO = '2000-01-01T00:00:01.001Z'
+        let daysOfWeekNumberString = ''
+        let comma = ''
         for (const object of coursesByKeyArray) {
             startDateISO = startDateISO < object.courseDateStart ? startDateISO : object.courseDateStart
             endDateISO = endDateISO > object.courseDateEnd ? endDateISO : object.courseDateEnd
+            daysOfWeekNumberString += comma + object.daysOfWeek
+            comma = ","
         }
+        
+        // let daysOfWeekNumberStringArray = daysOfWeekNumberString.split(",").sort()
+
+        // let daysOfWeekNumberArray = []
+        // for (const element of daysOfWeekNumberStringArray) {
+        //     if(!daysOfWeekNumberArray.includes(Number(element))){
+        //         daysOfWeekNumberArray.push(Number(element))
+        //     }
+        // }
         simpleWeekId = keyArray.indexOf(key) + 1
         responseObject.responseObject[key].key = simpleWeekId.toString()
         responseObject.responseObject[key].name = 'Week ' + positiveIntegerKludge(simpleWeekId, 'ucWord')
@@ -128,8 +141,12 @@ function loopKeysToPopulateObjects(responseObject = {}){
         responseObject.responseObject[key].dateStartFull = indicatedDateFormatting(startDateISO, 'full')
         responseObject.responseObject[key].dateStartSlash = indicatedDateFormatting(startDateISO, 'slash')
         responseObject.responseObject[key].toDoBottom = 'HOLDER FOR ABOVE ATTRIBUTES TODO'
-        responseObject.responseObject[key].daysOfWeekJSArray = [1,2,3,4,5]
-        responseObject.responseObject[key].daysOfWeekString = "Mon, Tue, Wed, Thu, Fri"
+        // responseObject.responseObject[key].daysOfWeekJSArray = daysOfWeekNumberString
+        // responseObject.responseObject[key].daysOfWeekJSArray = daysOfWeekNumberStringArray
+        // responseObject.responseObject[key].daysOfWeekJSArray = daysOfWeekNumberArray
+        let daysOfWeekJSArray = parseDaysOfWeekFullListStringToNumericArray(daysOfWeekNumberString)
+        responseObject.responseObject[key].daysOfWeekJSArray = daysOfWeekJSArray
+        responseObject.responseObject[key].daysOfWeekString = parseDaysOfWeekJSArrayToStringArray(daysOfWeekJSArray)
         responseObject.responseObject[key].termId = Number(responseObject.buildingBlocks.termId)
         responseObject.responseObject[key].FD = timeblockFullDay_FD()
         responseObject.responseObject[key].AM = timeblockMorning_AM()
@@ -144,7 +161,7 @@ function loopKeysToPopulateObjects(responseObject = {}){
         responseObject.responseObject[key].weekCardinal = simpleWeekId
         responseObject.responseObject[key].weekNotesInternal = []
         responseObject.responseObject[key].weekNotesPublic = []
-        responseObject.responseObject[key].ZcoursesCurrentObjectArray = coursesByKeyArray
+        // responseObject.responseObject[key].ZcoursesCurrentObjectArray = coursesByKeyArray
 
     }
 }
@@ -260,9 +277,9 @@ function indicatedDateFormatting(dateISO = "2008-01-2-T12:00:00.000Z", format = 
 
 }
 function dateFormatABBRV(dateISO){
-    // if(Date.parse(dateISO) === NaN){
+    if(Date.parse(dateISO) === NaN){
     // if(true){
-    if(false){
+    // if(false){
         return "Mon DD"
     }
     const dateObject = new Date(dateISO)
@@ -275,9 +292,9 @@ function dateFormatABBRV(dateISO){
 }
 
 function dateFormatFULL(dateISO){
-    // if(Date.parse(dateISO) === NaN){
+    if(Date.parse(dateISO) === NaN){
     // if(true){
-    if(false){
+    // if(false){
         return "Somday, Month 19, 2021"
     }
     const dateObject = new Date(dateISO)
@@ -293,9 +310,9 @@ function dateFormatFULL(dateISO){
 }
 
 function dateFormatSLASH(dateISO){
-    // if(Date.parse(dateISO) === NaN){
+    if(Date.parse(dateISO) === NaN){
     // if(true){
-    if(false){
+    // if(false){
         return "12/19/2021"
     }
     const dateObject = new Date(dateISO)
@@ -309,21 +326,89 @@ function dateFormatSLASH(dateISO){
     return dateString
 }
 // • </All Indicated Date Formatting>
-
-// ø <DO CONFIRM THESE EACH TERM>
+// • <All Indicated Days-of-Week Formatting>
+function parseDaysOfWeekFullListStringToNumericArray(daysOfWeekNumberString = 'S,T,R,I,N,G'){
+    let daysOfWeekNumberStringArray = daysOfWeekNumberString.split(",").sort()
+    
+    let daysOfWeekNumberArray = []
+    for (const element of daysOfWeekNumberStringArray) {
+        if(!daysOfWeekNumberArray.includes(Number(element))){
+            daysOfWeekNumberArray.push(Number(element))
+        }
+    }
+    return daysOfWeekNumberArray
+}
+function parseDaysOfWeekJSArrayToStringArray(daysOfWeekJSArray = [], format = 'Dow'){
+    const supportedFromatArray = ['Dow']
+    if(supportedFromatArray.includes(format) === false){
+        return `UNSUPPORTED_DAYOFWEEK_FORMAT: ${format}`
+    }
+    const formattedArrayOfStrings_Dow = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+    let formattedDayOfWeekListString = ''
+    let comma = ''
+    for (const integer of daysOfWeekJSArray) {
+        formattedDayOfWeekListString += comma
+        if(format === 'Dow'){
+            formattedDayOfWeekListString += formattedArrayOfStrings_Dow[integer]
+        }
+        comma = ','   
+    }
+    return formattedDayOfWeekListString
+}
+// • </All Indicated Days-of-Week Formatting>
+// ! ø <DO CONFIRM THESE EACH TERM>
 function timeblockFullDay_FD(){
-    return 'FD HOLDER FOR CONSTANT BLOCK'
+    // return 'FD HOLDER FOR CONSTANT BLOCK'
+    const objectLiteral = {
+        timeBlockKey: 'FD',
+        timeBlockName: 'Full Day',
+        timeBlockStartTime: '09:00:00',
+        timeBlockEndTime: '17:00:00',
+        timeBlockDuration: '08:00:00',
+        timeBlockStartTimeString: '9:00am',
+        timeBlockEndTimeString: '5:00pm',
+        timeBlockDurationString: '8 hours',
+        timeBlockSpanString: '9:00am to 5:00pm',
+        timeBlockSpanStringAbbrv: '9 to 5'
+    }
+    return objectLiteral
 }
 function timeblockMorning_AM(){
-    return 'AM HOLDER FOR CONSTANT BLOCK'
+    // return 'AM HOLDER FOR CONSTANT BLOCK'
+    const objectLiteral = {
+        timeBlockKey: 'AM',
+        timeBlockName: 'Morning',
+        timeBlockStartTime: '09:00:00',
+        timeBlockEndTime: '12:30:00',
+        timeBlockDuration: '03:30:00',
+        timeBlockStartTimeString: '9:00am',
+        timeBlockEndTimeString: '12:30pm',
+        timeBlockDurationString: '3.5 hours',
+        timeBlockSpanString: '9:00am to 12:30pm',
+        timeBlockSpanStringAbbrv: '9:00 to 12:30'
+    }
+    return objectLiteral
 }
 function timeblockAfternoon_PM(){
-    return 'PM HOLDER FOR CONSTANT BLOCK'
+    // return 'PM HOLDER FOR CONSTANT BLOCK'
+    const objectLiteral = {
+        timeBlockKey: 'PM',
+        timeBlockName: 'Afternoon',
+        timeBlockStartTime: '13:30',
+        timeBlockEndTime: '17:00:00',
+        timeBlockDuration: '03:30:00',
+        timeBlockStartTimeString: '1:30pm',
+        timeBlockEndTimeString: '5:00pm',
+        timeBlockDurationString: '3.5 hours',
+        timeBlockSpanString: '1:30pm to 5:00pm',
+        timeBlockSpanStringAbbrv: '1:30 to 5:00'
+    }
+    return objectLiteral
 }
 function timeblockEvening_EVE(){
     return 'EVE HOLDER FOR CONSTANT BLOCK'
 }
-// ø </DO CONFIRM THESE EACH TERM>
+// ! ø </DO CONFIRM THESE EACH TERM>
 
 
 

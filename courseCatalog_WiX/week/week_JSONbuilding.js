@@ -9,8 +9,8 @@
 // ø ====================================================================================================
 const tzOffsetK = -6
 
-import coursesCurrentObjectArray from /*CURRENT=>termId:202223;regionKey:CHO*/ '/Users/brad/Documents/bradRepositories/vsCode/steamdaWixLocal/steamdaWix/courseCatalog_WiX/week/weekBuilder_coursesCurrent_202223_CHO.json'
-// import coursesCurrentObjectArray from /*CURRENT=>termId:202235;regionKey:CHO*/ '/Users/brad/Documents/bradRepositories/vsCode/steamdaWixLocal/steamdaWix/courseCatalog_WiX/week/weekBuilder_coursesCurrent.json'
+import coursesCurrentObjectArray from /*CURRENT=>termId:202223;regionKey:CHO*/ '/Users/brad/Documents/bradRepositories/vsCode/steamdaWixLocal/steamdaWix/courseCatalog_WiX/week/assets/drupalCoursesJSON/weekBuilder_coursesCurrent_202223_CHO.json'
+// import coursesCurrentObjectArray from /*CURRENT=>termId:202235;regionKey:CHO*/ '/Users/brad/Documents/bradRepositories/vsCode/steamdaWixLocal/steamdaWix/courseCatalog_WiX/week/assets/drupalCoursesJSON/weekBuilder_coursesCurrent_202235_CHO.json'
 // import coursesCurrentObjectArray from /*WITH_ERRORS=>termId:202235;regionKey:CHO*/ '/Users/brad/Documents/bradRepositories/vsCode/steamdaWixLocal/steamdaWix/courseCatalog_WiX/week/wERRORS_weekBuilder_coursesCurrent.json'
 
 import fiftyTwoWeekObjectArray from '/Users/brad/Documents/bradRepositories/vsCode/reference/fiftyTwoWeekObjectArray.json'

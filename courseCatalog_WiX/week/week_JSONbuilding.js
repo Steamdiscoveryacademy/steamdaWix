@@ -1,4 +1,4 @@
-// • QUICK_FIND
+
 // •  _composeWeekDocDbJSON_
 // • • _validateCurrentCoursesObjectArray_
 // • • _buildCardinalityLookupObject_

@@ -1,5 +1,57 @@
 
+// ¡ ====================================================================================================
+// ¡ ======================================================================        <Overall Code and DOX>
+// ¡ ===== • this task is broken into anonymous brack-blocks for variable scoping                        
+// ¡ ===== • one ƒ (file) as it is so direct and straight-forward                                        
+// ¡ ===== • _reasonable_ to break into core and DOX files                                               
+// ¡ ====================================================================================================
+
+// ø ====================================================================================================
+// ø ==================================================       <would be included in DOX - all else Code>
 let weeksAll_superObject = {}
+let anyErrorWhatSoEver = false
+// ø ==================================================      </would be included in DOX - all else Code>
+// ø ====================================================================================================
+
+// ø ====================================================================================================
+// ø ============================================================         <termId: 202222 regionKey: RIC>
+{   
+    const paramObject = {
+        termId: 202222,
+        regionKey: 'RIC'
+    }
+    validationObject = validateParamObject(paramObject)
+    const {anyError} = validationObject
+    console.warn(`validationObject.anyError ${anyError}`)
+    if(anyError === true){
+        const consoleObject = {}
+        consoleObject.paramObject = paramObject
+        consoleObject.validationObject = validationObject
+        console.warn(consoleObject)
+        anyErrorWhatSoEver = true
+    }
+    // import objectFromJSON from
+    // `/Users/brad/Documents/bradRepositories/vsCode/steamdaWixLocal/steamdaWix/courseCatalog_WiX/week/assets/result_jsonDocDb/weeksAll_${termId}_${regionKey}.json`
+    
+    if(anyError !== true){
+        const { termId,regionKey } = paramObject
+        console.warn(`const { ${termId},${regionKey} } = paramObject`)
+        let weeksAllThese = {}
+        await import(`/Users/brad/Documents/bradRepositories/vsCode/steamdaWixLocal/steamdaWix/courseCatalog_WiX/week/assets/result_jsonDocDb/weeksAll_${termId}_${regionKey}.json`).then(weeks => {
+            // console.warn(`typeof weeks: ${typeof weeks}`);
+            // console.warn(weeks);
+            weeksAllThese = weeks
+        });
+        if(typeof weeksAll_superObject[termId] === 'undefined'){
+            weeksAll_superObject[termId] = {}
+        }
+        // weeksAll_superObject[termId][regionKey] = {}
+        weeksAll_superObject[termId][regionKey] = weeksAllThese.default
+    }
+}
+// ø ============================================================        </termId: 202222 regionKey: RIC>
+// ø ====================================================================================================
+// ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 // ø ====================================================================================================
 // ø ============================================================         <termId: 202223 regionKey: CHO>
 {   
@@ -9,11 +61,20 @@ let weeksAll_superObject = {}
     }
     validationObject = validateParamObject(paramObject)
     const {anyError} = validationObject
+    console.warn(`validationObject.anyError ${anyError}`)
+    if(anyError === true){
+        const consoleObject = {}
+        consoleObject.paramObject = paramObject
+        consoleObject.validationObject = validationObject
+        console.warn(consoleObject)
+        anyErrorWhatSoEver = true
+    }
     // import objectFromJSON from
     // `/Users/brad/Documents/bradRepositories/vsCode/steamdaWixLocal/steamdaWix/courseCatalog_WiX/week/assets/result_jsonDocDb/weeksAll_${termId}_${regionKey}.json`
     
     if(anyError !== true){
         const { termId,regionKey } = paramObject
+        console.warn(`const { ${termId},${regionKey} } = paramObject`)
         let weeksAllThese = {}
         await import(`/Users/brad/Documents/bradRepositories/vsCode/steamdaWixLocal/steamdaWix/courseCatalog_WiX/week/assets/result_jsonDocDb/weeksAll_${termId}_${regionKey}.json`).then(weeks => {
             // console.warn(`typeof weeks: ${typeof weeks}`);
@@ -39,11 +100,20 @@ let weeksAll_superObject = {}
     }
     validationObject = validateParamObject(paramObject)
     const {anyError} = validationObject
+    console.warn(`validationObject.anyError ${anyError}`)
+    if(anyError === true){
+        const consoleObject = {}
+        consoleObject.paramObject = paramObject
+        consoleObject.validationObject = validationObject
+        console.warn(consoleObject)
+        anyErrorWhatSoEver = true
+    }
     // import objectFromJSON from
     // `/Users/brad/Documents/bradRepositories/vsCode/steamdaWixLocal/steamdaWix/courseCatalog_WiX/week/assets/result_jsonDocDb/weeksAll_${termId}_${regionKey}.json`
     
     if(anyError !== true){
         const { termId,regionKey } = paramObject
+        console.warn(`const { ${termId},${regionKey} } = paramObject`)
         let weeksAllThese = {}
         await import(`/Users/brad/Documents/bradRepositories/vsCode/steamdaWixLocal/steamdaWix/courseCatalog_WiX/week/assets/result_jsonDocDb/weeksAll_${termId}_${regionKey}.json`).then(weeks => {
             // console.warn(`typeof weeks: ${typeof weeks}`);
@@ -60,41 +130,22 @@ let weeksAll_superObject = {}
 // ø ============================================================        </termId: 202235 regionKey: CHO>
 // ø ====================================================================================================
 
-console.log(JSON.stringify(weeksAll_superObject))
 
-// async function gatherWeeks(termId = 200023 ,regionKey = 'BVT'){
-//     console.warn(`termId: ${termId}`)
-//     console.warn(`regionKey: ${regionKey}`)
-//     // let validationObject = {}
-//     // validationObject.errorLog = []
-    
-//     {
-//         const supportedTermIdArray = []
-//         termId = Number(termId)
-//     }
-    
-    
-    
-    
-    
-    
-//     let jsonLocation =  gender === 'MALE' ? 'dogsForDisplay_male.json' : 'NA'
-//     jsonLocation  =  gender === 'FEMALE' ? 'dogsForDisplay_female.json' : jsonLocation
-//     if(doImport === true) {
-//         let dogsImported = {}
-//         await import(`/Users/brad/Documents/bradRepositories/vsCode/proofsOfConcept/dynamicJSON_import_maleDogs_femaleDogs/source/${jsonLocation}`).then(dogs => {
-//             // console.warn(`typeof dogs.default: ${typeof dogs.default}`);
-//             // console.warn(dogs.default);
-//             dogsImported = dogs.default
-//         });
-//         // console.warn(`typeof dogsImported: ${typeof dogsImported}`);
-//         // console.warn(dogsImported);
-//         return dogsImported
-//     }else{
-//         return 'NOTHING IMPORTED [doImport not True]'
-//     }
-// }
+// ø ====================================================================================================
+// ø ==================================================       <would be included in DOX - all else Code>
+if(anyErrorWhatSoEver !== true){
+    console.log(JSON.stringify(weeksAll_superObject))
+}
+// ø ==================================================      </would be included in DOX - all else Code>
+// ø ====================================================================================================
 
+// ¡ ====================================================================================================
+// ¡ ======================================================================       </Overall Code and DOX>
+// ¡ ====================================================================================================
+
+
+// ø ====================================================================================================
+// ø ======================================================================            <helper functions>
 function validateParamObject(paramObject = {}){
     validationObject = {}
     validationObject.anyError = false
@@ -106,7 +157,7 @@ function validateParamObject(paramObject = {}){
     // ! <regionKey is Supported>
     let { regionKey = 'BVT',termId = 199923 }  = paramObject
     termId = Number(termId)
-    const supportedRegionKeyArray = ['CHO'] // gather from SOMEWHERE or MANUALLY UPDATE
+    const supportedRegionKeyArray = ['CHO','RIC'] // gather from SOMEWHERE or MANUALLY UPDATE
     // const supportedRegionKeyArray = ['CHO','RIC','ROA'] // gather from SOMEWHERE or MANUALLY UPDATE
     if(supportedRegionKeyArray.includes(regionKey) !== true){
         logThis = {}
@@ -118,7 +169,7 @@ function validateParamObject(paramObject = {}){
     }
     // ! </regionKey is Supported>
     // ! <termId is Supported>
-    const supportedTermIdArray = [202235] // gather from SOMEWHERE or MANUALLY UPDATE
+    const supportedTermIdArray = [202222,202223,202235] // gather from SOMEWHERE or MANUALLY UPDATE
     // const supportedTermIdArray = ['CHO','RIC','ROA'] // gather from SOMEWHERE or MANUALLY UPDATE
     if(supportedTermIdArray.includes(termId) !== true){
         logThis = {}
@@ -131,3 +182,5 @@ function validateParamObject(paramObject = {}){
     // ! </termId is Supported>
     return validationObject
 }
+// ø ======================================================================           </helper functions>
+// ø ====================================================================================================

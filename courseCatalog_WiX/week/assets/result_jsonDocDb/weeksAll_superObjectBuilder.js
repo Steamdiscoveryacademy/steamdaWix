@@ -1,6 +1,36 @@
 let weeksAll_superObject = {}
 
 // ø ====================================================================================================
+// ø ============================================================         <termId: 202223 regionKey: CHO>
+{   
+    const paramObject = {
+        termId: 202223,
+        regionKey: 'CHO'
+    }
+    validationObject = validateParamObject(paramObject)
+    const {anyError} = validationObject
+    // import objectFromJSON from
+    // `/Users/brad/Documents/bradRepositories/vsCode/steamdaWixLocal/steamdaWix/courseCatalog_WiX/week/assets/result_jsonDocDb/weeksAll_${termId}_${regionKey}.json`
+    
+    if(anyError !== true){
+        const { termId,regionKey } = paramObject
+        let weeksAllThese = {}
+        await import(`/Users/brad/Documents/bradRepositories/vsCode/steamdaWixLocal/steamdaWix/courseCatalog_WiX/week/assets/result_jsonDocDb/weeksAll_${termId}_${regionKey}.json`).then(weeks => {
+            // console.warn(`typeof weeks: ${typeof weeks}`);
+            // console.warn(weeks);
+            weeksAllThese = weeks
+        });
+        if(typeof weeksAll_superObject[termId] === 'undefined'){
+            weeksAll_superObject[termId] = {}
+        }
+        // weeksAll_superObject[termId][regionKey] = {}
+        weeksAll_superObject[termId][regionKey] = weeksAllThese.default
+    }
+}
+// ø ============================================================        </termId: 202223 regionKey: CHO>
+// ø ====================================================================================================
+// ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
+// ø ====================================================================================================
 // ø ============================================================         <termId: 202235 regionKey: CHO>
 {   
     const paramObject = {

@@ -23,7 +23,8 @@ let weeksAll_superObject = {}
         if(typeof weeksAll_superObject[termId] === 'undefined'){
             weeksAll_superObject[termId] = {}
         }
-        weeksAll_superObject[termId][regionKey] = weeksAllThese
+        // weeksAll_superObject[termId][regionKey] = {}
+        weeksAll_superObject[termId][regionKey] = weeksAllThese.default
     }
 }
 // ø ============================================================        </termId: 202235 regionKey: CHO>

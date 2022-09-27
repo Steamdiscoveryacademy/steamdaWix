@@ -9,7 +9,8 @@
 // ø ====================================================================================================
 const tzOffsetK = -6
 
-import coursesCurrentObjectArray from /*CURRENT=>termId:202235;regionKey:CHO*/ '/Users/brad/Documents/bradRepositories/vsCode/steamdaWixLocal/steamdaWix/courseCatalog_WiX/week/weekBuilder_coursesCurrent.json'
+import coursesCurrentObjectArray from /*CURRENT=>termId:202223;regionKey:CHO*/ '/Users/brad/Documents/bradRepositories/vsCode/steamdaWixLocal/steamdaWix/courseCatalog_WiX/week/weekBuilder_coursesCurrent_202223_CHO.json'
+// import coursesCurrentObjectArray from /*CURRENT=>termId:202235;regionKey:CHO*/ '/Users/brad/Documents/bradRepositories/vsCode/steamdaWixLocal/steamdaWix/courseCatalog_WiX/week/weekBuilder_coursesCurrent.json'
 // import coursesCurrentObjectArray from /*WITH_ERRORS=>termId:202235;regionKey:CHO*/ '/Users/brad/Documents/bradRepositories/vsCode/steamdaWixLocal/steamdaWix/courseCatalog_WiX/week/wERRORS_weekBuilder_coursesCurrent.json'
 
 import fiftyTwoWeekObjectArray from '/Users/brad/Documents/bradRepositories/vsCode/reference/fiftyTwoWeekObjectArray.json'
@@ -92,28 +93,17 @@ function loopKeysToPopulateObjects(responseObject = {}){
             comma = ","
         }
         
-        // let daysOfWeekNumberStringArray = daysOfWeekNumberString.split(",").sort()
-
-        // let daysOfWeekNumberArray = []
-        // for (const element of daysOfWeekNumberStringArray) {
-        //     if(!daysOfWeekNumberArray.includes(Number(element))){
-        //         daysOfWeekNumberArray.push(Number(element))
-        //     }
-        // }
+        // responseObject.responseObject[key].toDoTop =    'HOLDER FOR BELOW ATTRIBUTES TODO'
+        // responseObject.responseObject[key].toDoBottom = 'HOLDER FOR ABOVE ATTRIBUTES TODO'
         simpleWeekId = keyArray.indexOf(key) + 1
         responseObject.responseObject[key].key = simpleWeekId.toString()
         responseObject.responseObject[key].name = 'Week ' + positiveIntegerKludge(simpleWeekId, 'ucWord')
         responseObject.responseObject[key]._id = Number(key)
-        responseObject.responseObject[key].toDoTop = 'HOLDER FOR BELOW ATTRIBUTES TODO'
         responseObject.responseObject[key].dateStart = startDateISO
         responseObject.responseObject[key].dateEnd = endDateISO
         responseObject.responseObject[key].dateStartAbbrv = indicatedDateFormatting(startDateISO, 'abbrv')
         responseObject.responseObject[key].dateStartFull = indicatedDateFormatting(startDateISO, 'full')
         responseObject.responseObject[key].dateStartSlash = indicatedDateFormatting(startDateISO, 'slash')
-        responseObject.responseObject[key].toDoBottom = 'HOLDER FOR ABOVE ATTRIBUTES TODO'
-        // responseObject.responseObject[key].daysOfWeekJSArray = daysOfWeekNumberString
-        // responseObject.responseObject[key].daysOfWeekJSArray = daysOfWeekNumberStringArray
-        // responseObject.responseObject[key].daysOfWeekJSArray = daysOfWeekNumberArray
         let daysOfWeekJSArray = parseDaysOfWeekFullListStringToNumericArray(daysOfWeekNumberString)
         responseObject.responseObject[key].daysOfWeekJSArray = daysOfWeekJSArray
         responseObject.responseObject[key].daysOfWeekString = parseDaysOfWeekJSArrayToStringArray(daysOfWeekJSArray)

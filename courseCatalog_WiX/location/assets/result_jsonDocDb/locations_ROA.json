@@ -1,0 +1,48 @@
+{
+    "ROA": {
+        "ROAa": {
+            "_id": "ROAa",
+            "region": "ROA",
+            "key": "ROAa",
+            "name": "St. John's",
+            "nameFull": "St. John Neumann Academy",
+            "nameCommon": "St. John's",
+            "nameAbbrv": "Inc",
+            "nameAcronym": "SJNA",
+            "street_1": "3600 Yellow Sulphur Rd",
+            "street_2": "",
+            "city": "Blacksburg",
+            "state": "VA",
+            "zip": "24060",
+            "zipPlus": "",
+            "latitude": 37.187860,
+            "longitude": -80.403350,
+            "notes": [
+                "COMPLETE",
+                "[O] Additional Checks"
+            ]
+        },
+        "ROAb": {
+            "_id": "ROAb",
+            "region": "ROA",
+            "key": "ROAb",
+            "name": "New School",
+            "nameFull": "Blacksburg New School",
+            "nameCommon": "New School",
+            "nameAbbrv": "New School",
+            "nameAcronym": "BNS",
+            "street_1": "2500 N Main St",
+            "street_2": "",
+            "city": "Blacksburg",
+            "state": "VA",
+            "zip": "24060",
+            "zipPlus": "",
+            "latitude": 37.267880,
+            "longitude": -80.415760,
+            "notes": [
+                "COMPLETE",
+                "[O] Additional Checks"
+            ]
+        }
+    }
+}

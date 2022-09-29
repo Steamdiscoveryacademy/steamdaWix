@@ -3,13 +3,11 @@
         "key": "1",
         "name": "Week One",
         "_id": 202236,
-        "toDoTop": "HOLDER FOR BELOW ATTRIBUTES TODO",
         "dateStart": "2022-09-06T11:59:00.000Z",
         "dateEnd": "2022-12-08T19:00:00.000Z",
         "dateStartAbbrv": "Sep 6",
         "dateStartFull": "Tuesday, September 6, 2022",
         "dateStartSlash": "09/06/2022",
-        "toDoBottom": "HOLDER FOR ABOVE ATTRIBUTES TODO",
         "daysOfWeekJSArray": [
             1,
             2,
@@ -20,6 +18,7 @@
         ],
         "daysOfWeekString": "Mon,Tue,Wed,Thu,Fri,Sat",
         "termId": 202235,
+        "regionKey": "CHO",
         "FD": {
             "timeBlockKey": "FD",
             "timeBlockName": "Full Day",
@@ -70,18 +69,17 @@
         "key": "2",
         "name": "Week Two",
         "_id": 202237,
-        "toDoTop": "HOLDER FOR BELOW ATTRIBUTES TODO",
         "dateStart": "2022-09-17T16:00:00.000Z",
         "dateEnd": "2022-12-10T13:00:00.000Z",
         "dateStartAbbrv": "Sep 17",
         "dateStartFull": "Saturday, September 17, 2022",
         "dateStartSlash": "09/17/2022",
-        "toDoBottom": "HOLDER FOR ABOVE ATTRIBUTES TODO",
         "daysOfWeekJSArray": [
             6
         ],
         "daysOfWeekString": "Sat",
         "termId": 202235,
+        "regionKey": "CHO",
         "FD": {
             "timeBlockKey": "FD",
             "timeBlockName": "Full Day",
@@ -132,19 +130,18 @@
         "key": "3",
         "name": "Week Three",
         "_id": 202239,
-        "toDoTop": "HOLDER FOR BELOW ATTRIBUTES TODO",
         "dateStart": "2022-09-26T11:59:00.000Z",
         "dateEnd": "2022-10-09T11:59:00.000Z",
         "dateStartAbbrv": "Sep 26",
         "dateStartFull": "Monday, September 26, 2022",
         "dateStartSlash": "09/26/2022",
-        "toDoBottom": "HOLDER FOR ABOVE ATTRIBUTES TODO",
         "daysOfWeekJSArray": [
             1,
             6
         ],
         "daysOfWeekString": "Mon,Sat",
         "termId": 202235,
+        "regionKey": "CHO",
         "FD": {
             "timeBlockKey": "FD",
             "timeBlockName": "Full Day",
@@ -195,19 +192,18 @@
         "key": "4",
         "name": "Week Four",
         "_id": 202241,
-        "toDoTop": "HOLDER FOR BELOW ATTRIBUTES TODO",
         "dateStart": "2022-10-10T08:30:00.000Z",
         "dateEnd": "2022-10-14T17:30:00Z",
         "dateStartAbbrv": "Oct 10",
         "dateStartFull": "Monday, October 10, 2022",
         "dateStartSlash": "10/10/2022",
-        "toDoBottom": "HOLDER FOR ABOVE ATTRIBUTES TODO",
         "daysOfWeekJSArray": [
             1,
             5
         ],
         "daysOfWeekString": "Mon,Fri",
         "termId": 202235,
+        "regionKey": "CHO",
         "FD": {
             "timeBlockKey": "FD",
             "timeBlockName": "Full Day",
@@ -258,18 +254,17 @@
         "key": "5",
         "name": "Week Five",
         "_id": 202242,
-        "toDoTop": "HOLDER FOR BELOW ATTRIBUTES TODO",
         "dateStart": "2022-10-21T11:59:00.000Z",
         "dateEnd": "2022-10-29T11:59:00.000Z",
         "dateStartAbbrv": "Oct 21",
         "dateStartFull": "Friday, October 21, 2022",
         "dateStartSlash": "10/21/2022",
-        "toDoBottom": "HOLDER FOR ABOVE ATTRIBUTES TODO",
         "daysOfWeekJSArray": [
             5
         ],
         "daysOfWeekString": "Fri",
         "termId": 202235,
+        "regionKey": "CHO",
         "FD": {
             "timeBlockKey": "FD",
             "timeBlockName": "Full Day",
@@ -320,18 +315,17 @@
         "key": "6",
         "name": "Week Six",
         "_id": 202243,
-        "toDoTop": "HOLDER FOR BELOW ATTRIBUTES TODO",
         "dateStart": "2022-10-27T08:30:00Z",
         "dateEnd": "2022-10-27T17:30:000Z",
         "dateStartAbbrv": "Oct 27",
         "dateStartFull": "Thursday, October 27, 2022",
         "dateStartSlash": "10/27/2022",
-        "toDoBottom": "HOLDER FOR ABOVE ATTRIBUTES TODO",
         "daysOfWeekJSArray": [
             4
         ],
         "daysOfWeekString": "Thu",
         "termId": 202235,
+        "regionKey": "CHO",
         "FD": {
             "timeBlockKey": "FD",
             "timeBlockName": "Full Day",
@@ -382,18 +376,17 @@
         "key": "7",
         "name": "Week Seven",
         "_id": 202244,
-        "toDoTop": "HOLDER FOR BELOW ATTRIBUTES TODO",
         "dateStart": "2022-11-04T08:30:000Z",
         "dateEnd": "2022-11-04T17:30:000Z",
         "dateStartAbbrv": "undefined NaN",
         "dateStartFull": "undefined, undefined NaN, NaN",
         "dateStartSlash": "NaN/NaN/NaN",
-        "toDoBottom": "HOLDER FOR ABOVE ATTRIBUTES TODO",
         "daysOfWeekJSArray": [
             5
         ],
         "daysOfWeekString": "Fri",
         "termId": 202235,
+        "regionKey": "CHO",
         "FD": {
             "timeBlockKey": "FD",
             "timeBlockName": "Full Day",
@@ -444,19 +437,18 @@
         "key": "8",
         "name": "Week Eight",
         "_id": 202245,
-        "toDoTop": "HOLDER FOR BELOW ATTRIBUTES TODO",
         "dateStart": "2022-11-07T11:59:00.000Z",
         "dateEnd": "2022-11-08T17:30:00Z",
         "dateStartAbbrv": "Nov 7",
         "dateStartFull": "Monday, November 7, 2022",
         "dateStartSlash": "11/07/2022",
-        "toDoBottom": "HOLDER FOR ABOVE ATTRIBUTES TODO",
         "daysOfWeekJSArray": [
             1,
             2
         ],
         "daysOfWeekString": "Mon,Tue",
         "termId": 202235,
+        "regionKey": "CHO",
         "FD": {
             "timeBlockKey": "FD",
             "timeBlockName": "Full Day",
@@ -507,18 +499,17 @@
         "key": "9",
         "name": "Week Nine",
         "_id": 202246,
-        "toDoTop": "HOLDER FOR BELOW ATTRIBUTES TODO",
         "dateStart": "2022-11-19T11:59:00.000Z",
         "dateEnd": "2022-11-27T11:59:00.000Z",
         "dateStartAbbrv": "Nov 19",
         "dateStartFull": "Saturday, November 19, 2022",
         "dateStartSlash": "11/19/2022",
-        "toDoBottom": "HOLDER FOR ABOVE ATTRIBUTES TODO",
         "daysOfWeekJSArray": [
             6
         ],
         "daysOfWeekString": "Sat",
         "termId": 202235,
+        "regionKey": "CHO",
         "FD": {
             "timeBlockKey": "FD",
             "timeBlockName": "Full Day",
@@ -569,18 +560,17 @@
         "key": "10",
         "name": "Week Ten",
         "_id": 202248,
-        "toDoTop": "HOLDER FOR BELOW ATTRIBUTES TODO",
         "dateStart": "2022-12-03T11:59:00.000Z",
         "dateEnd": "2022-12-11T11:59:00.000Z",
         "dateStartAbbrv": "Dec 3",
         "dateStartFull": "Saturday, December 3, 2022",
         "dateStartSlash": "12/03/2022",
-        "toDoBottom": "HOLDER FOR ABOVE ATTRIBUTES TODO",
         "daysOfWeekJSArray": [
             6
         ],
         "daysOfWeekString": "Sat",
         "termId": 202235,
+        "regionKey": "CHO",
         "FD": {
             "timeBlockKey": "FD",
             "timeBlockName": "Full Day",
@@ -631,18 +621,17 @@
         "key": "11",
         "name": "Week Eleven",
         "_id": 202249,
-        "toDoTop": "HOLDER FOR BELOW ATTRIBUTES TODO",
         "dateStart": "2022-12-10T11:59:00.000Z",
         "dateEnd": "2022-12-18T11:59:00.000Z",
         "dateStartAbbrv": "Dec 10",
         "dateStartFull": "Saturday, December 10, 2022",
         "dateStartSlash": "12/10/2022",
-        "toDoBottom": "HOLDER FOR ABOVE ATTRIBUTES TODO",
         "daysOfWeekJSArray": [
             6
         ],
         "daysOfWeekString": "Sat",
         "termId": 202235,
+        "regionKey": "CHO",
         "FD": {
             "timeBlockKey": "FD",
             "timeBlockName": "Full Day",
@@ -693,13 +682,11 @@
         "key": "12",
         "name": "Week Twelve",
         "_id": 202251,
-        "toDoTop": "HOLDER FOR BELOW ATTRIBUTES TODO",
         "dateStart": "2022-12-19T11:59:00.000Z",
         "dateEnd": "2022-12-27T11:59:00.000Z",
         "dateStartAbbrv": "Dec 19",
         "dateStartFull": "Monday, December 19, 2022",
         "dateStartSlash": "12/19/2022",
-        "toDoBottom": "HOLDER FOR ABOVE ATTRIBUTES TODO",
         "daysOfWeekJSArray": [
             1,
             2,
@@ -707,6 +694,7 @@
         ],
         "daysOfWeekString": "Mon,Tue,Wed",
         "termId": 202235,
+        "regionKey": "CHO",
         "FD": {
             "timeBlockKey": "FD",
             "timeBlockName": "Full Day",
@@ -767,5 +755,5 @@
         "11": "202249",
         "12": "202251"
     },
-    "lastupdateThisTermIdRegionKey": "2022-09-26T20:37:19.801Z"
+    "lastupdateThisTermIdRegionKey": "2022-09-28T14:15:58.658Z"
 }

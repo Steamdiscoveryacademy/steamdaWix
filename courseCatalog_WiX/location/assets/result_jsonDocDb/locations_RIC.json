@@ -1,0 +1,48 @@
+{
+    "RIC": {
+        "RICa": {
+            "_id": "RICa",
+            "region": "RIC",
+            "key": "RICa",
+            "name": "All Saints",
+            "nameFull": "All Saints Catholic School",
+            "nameCommon": "All Saints",
+            "nameAbbrv": "All Saints",
+            "nameAcronym": "ASCS",
+            "street_1": "3418 Noble Ave",
+            "street_2": "",
+            "city": "Richmond",
+            "state": "VA",
+            "zip": "23222",
+            "zipPlus": "",
+            "latitude": 37.580730,
+            "longitude": -77.443180,
+            "notes": [
+                "COMPLETE",
+                "[O] Additional Checks"
+            ]
+        },
+        "RICb": {
+            "_id": "RICb",
+            "region": "RIC",
+            "key": "RICb",
+            "name": "Patrick Henry",
+            "nameFull": "Patrick Henry School of Science & Arts",
+            "nameCommon": "Patrick Henry",
+            "nameAbbrv": "Patrick Henry",
+            "nameAcronym": "PHSSA",
+            "street_1": "3411 Semmes Av",
+            "street_2": "",
+            "city": "Richmond",
+            "state": "VA",
+            "zip": "23225",
+            "zipPlus": "",
+            "latitude": 37.5162481,
+            "longitude": -77.4698202,
+            "notes": [
+                "PENDING",
+                "[O] Additional Checks"
+            ]
+        }
+    }
+}

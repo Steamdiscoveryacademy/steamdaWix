@@ -17,6 +17,7 @@
         ],
         "daysOfWeekString": "Mon,Tue,Wed,Thu,Fri",
         "termId": 202223,
+        "regionKey": "CHO",
         "FD": {
             "timeBlockKey": "FD",
             "timeBlockName": "Full Day",
@@ -81,6 +82,7 @@
         ],
         "daysOfWeekString": "Mon,Tue,Wed,Thu,Fri",
         "termId": 202223,
+        "regionKey": "CHO",
         "FD": {
             "timeBlockKey": "FD",
             "timeBlockName": "Full Day",
@@ -145,6 +147,7 @@
         ],
         "daysOfWeekString": "Mon,Tue,Wed,Thu,Fri",
         "termId": 202223,
+        "regionKey": "CHO",
         "FD": {
             "timeBlockKey": "FD",
             "timeBlockName": "Full Day",
@@ -209,6 +212,7 @@
         ],
         "daysOfWeekString": "Mon,Tue,Wed,Thu,Fri",
         "termId": 202223,
+        "regionKey": "CHO",
         "FD": {
             "timeBlockKey": "FD",
             "timeBlockName": "Full Day",
@@ -273,6 +277,7 @@
         ],
         "daysOfWeekString": "Mon,Tue,Wed,Thu,Fri",
         "termId": 202223,
+        "regionKey": "CHO",
         "FD": {
             "timeBlockKey": "FD",
             "timeBlockName": "Full Day",
@@ -337,6 +342,7 @@
         ],
         "daysOfWeekString": "Mon,Tue,Wed,Thu,Fri",
         "termId": 202223,
+        "regionKey": "CHO",
         "FD": {
             "timeBlockKey": "FD",
             "timeBlockName": "Full Day",
@@ -401,6 +407,7 @@
         ],
         "daysOfWeekString": "Mon,Tue,Wed,Thu,Fri",
         "termId": 202223,
+        "regionKey": "CHO",
         "FD": {
             "timeBlockKey": "FD",
             "timeBlockName": "Full Day",
@@ -465,6 +472,7 @@
         ],
         "daysOfWeekString": "Mon,Tue,Wed,Thu,Fri",
         "termId": 202223,
+        "regionKey": "CHO",
         "FD": {
             "timeBlockKey": "FD",
             "timeBlockName": "Full Day",
@@ -521,5 +529,5 @@
         "7": "202230",
         "8": "202231"
     },
-    "lastupdateThisTermIdRegionKey": "2022-09-27T12:03:06.421Z"
+    "lastupdateThisTermIdRegionKey": "2022-09-28T14:14:02.252Z"
 }

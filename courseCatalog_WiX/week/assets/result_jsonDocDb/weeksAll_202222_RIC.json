@@ -17,6 +17,7 @@
         ],
         "daysOfWeekString": "Mon,Tue,Wed,Thu,Fri",
         "termId": 202222,
+        "regionKey": "RIC",
         "FD": {
             "timeBlockKey": "FD",
             "timeBlockName": "Full Day",
@@ -81,6 +82,7 @@
         ],
         "daysOfWeekString": "Mon,Tue,Wed,Thu,Fri",
         "termId": 202222,
+        "regionKey": "RIC",
         "FD": {
             "timeBlockKey": "FD",
             "timeBlockName": "Full Day",
@@ -145,6 +147,7 @@
         ],
         "daysOfWeekString": "Mon,Tue,Wed,Thu,Fri",
         "termId": 202222,
+        "regionKey": "RIC",
         "FD": {
             "timeBlockKey": "FD",
             "timeBlockName": "Full Day",
@@ -196,5 +199,5 @@
         "2": "202225",
         "3": "202226"
     },
-    "lastupdateThisTermIdRegionKey": "2022-09-27T18:10:17.667Z"
+    "lastupdateThisTermIdRegionKey": "2022-09-28T14:12:29.330Z"
 }

@@ -2,8 +2,8 @@
 import weeksAll from 'public/weeksAll.json'
 import locationsAll from 'public/locationsAll.json'
 
-import dogObectAll from 'public/dogsForDisplay_all.json'
-import dogObectFilter from 'public/dogsForDisplay_filter.json'
+// import dogObectAll from 'public/dogsForDisplay_all.json'
+// import dogObectFilter from 'public/dogsForDisplay_filter.json'
 
 const pangram = ` The quick brown fox jumps over the lazy dog.`
 export function datestampinventoryDocDbJSON(yyyy = 2021, mm = 11, dd = 20) {
@@ -66,17 +66,17 @@ export function getInventoryResponse(paramObject = {}){
 //============================================================            <Location Inventory Scripts>
 //====================================================================================================
 
-//==========================================================================================
-//==================================================                    <JUST the Inventory>
+// ! ==========================================================================================
+// ! ==================================================                    <JUST the Inventory>
 
-export function locationInstantiateObject(){
-    // let locationDocDbJSON = `{"CHO":{"CHOa":{"_id":"CHOa","region":"CHO","key":"CHOa","name":"Incubator","nameFull":"STEAM Incubator","nameCommon":"Incubator","nameAbbrv":"Inc","nameAcronym":"SI","street_1":"3004 Berkmar Drive","street_2":"","city":"Charlottesville","state":"VA","zip":"22901","zipPlus":"","latitude":38.081460,"longitude":-78.477980,"notes":["COMPLETE","[O] Additional Checks"]},"CHOb":{"_id":"CHOb","region":"CHO","key":"CHOb","name":"CCS","nameFull":"Charlottesville Catholic School","nameCommon":"Cville Catholic","nameAbbrv":"holder","nameAcronym":"CCS","street_1":"1205 Pen Park Rd","street_2":"","city":"Charlottesville","state":"VA","zip":"22901","zipPlus":"","latitude":38.054380,"longitude":-78.459130,"notes":["COMPLETE","[O] Additional Checks"]}},"ROA":{"ROAa":{"_id":"ROAa","region":"ROA","key":"ROAa","name":"St. John's","nameFull":"St. John Neumann Academy","nameCommon":"St. John's","nameAbbrv":"Inc","nameAcronym":"SJNA","street_1":"3600 Yellow Sulphur Rd","street_2":"","city":"Blacksburg","state":"VA","zip":"24060","zipPlus":"","latitude":37.187860,"longitude":-80.403350,"notes":["COMPLETE","[O] Additional Checks"]},"ROAb":{"_id":"ROAb","region":"ROA","key":"ROAb","name":"New School","nameFull":"Blacksburg New School","nameCommon":"New School","nameAbbrv":"New School","nameAcronym":"BNS","street_1":"2500 N Main St","street_2":"","city":"Blacksburg","state":"VA","zip":"24060","zipPlus":"","latitude":37.267880,"longitude":-80.415760,"notes":["COMPLETE","[O] Additional Checks"]}},"RIC":{"RICa":{"_id":"RICa","region":"RIC","key":"RICa","name":"All Saints","nameFull":"All Saints Catholic School","nameCommon":"All Saints","nameAbbrv":"All Saints","nameAcronym":"ASCS","street_1":"3418 Noble Ave","street_2":"","city":"Richmond","state":"VA","zip":"23222","zipPlus":"","latitude":37.580730,"longitude":-77.443180,"notes":["COMPLETE","[O] Additional Checks"]},"RICb":{"_id":"CHOa","region":"RIC","key":"CHOa","name":"CCS","nameFull":"Charlottesville Catholic School","nameCommon":"Cville Catholic","nameAbbrv":"holder","nameAcronym":"CCS","street_1":"1205 Pen Park Rd","street_2":"","city":"Charlottesville","state":"VA","zip":"22901","zipPlus":"","latitude":38.054380,"longitude":-78.459130,"notes":["PENDING","[O] Additional Checks"]}}}` 
-    let locationDocDbJSON = `{"CHO":{"CHOa":{"_id":"CHOa","region":"CHO","key":"CHOa","name":"Incubator","nameFull":"STEAM Incubator","nameCommon":"Incubator","nameAbbrv":"Inc","nameAcronym":"SI","street_1":"3004 Berkmar Drive","street_2":"","city":"Charlottesville","state":"VA","zip":"22901","zipPlus":"","latitude":38.081460,"longitude":-78.477980,"notes":["COMPLETE","[O] Additional Checks"]},"CHOb":{"_id":"CHOb","region":"CHO","key":"CHOb","name":"CCS","nameFull":"Charlottesville Catholic School","nameCommon":"Cville Catholic","nameAbbrv":"holder","nameAcronym":"CCS","street_1":"1205 Pen Park Rd","street_2":"","city":"Charlottesville","state":"VA","zip":"22901","zipPlus":"","latitude":38.054380,"longitude":-78.459130,"notes":["COMPLETE","[O] Additional Checks"]}},"ROA":{"ROAa":{"_id":"ROAa","region":"ROA","key":"ROAa","name":"St. John's","nameFull":"St. John Neumann Academy","nameCommon":"St. John's","nameAbbrv":"Inc","nameAcronym":"SJNA","street_1":"3600 Yellow Sulphur Rd","street_2":"","city":"Blacksburg","state":"VA","zip":"24060","zipPlus":"","latitude":37.187860,"longitude":-80.403350,"notes":["COMPLETE","[O] Additional Checks"]},"ROAb":{"_id":"ROAb","region":"ROA","key":"ROAb","name":"New School","nameFull":"Blacksburg New School","nameCommon":"New School","nameAbbrv":"New School","nameAcronym":"BNS","street_1":"2500 N Main St","street_2":"","city":"Blacksburg","state":"VA","zip":"24060","zipPlus":"","latitude":37.267880,"longitude":-80.415760,"notes":["COMPLETE","[O] Additional Checks"]}},"RIC":{"RICa":{"_id":"RICa","region":"RIC","key":"RICa","name":"All Saints","nameFull":"All Saints Catholic School","nameCommon":"All Saints","nameAbbrv":"All Saints","nameAcronym":"ASCS","street_1":"3418 Noble Ave","street_2":"","city":"Richmond","state":"VA","zip":"23222","zipPlus":"","latitude":37.580730,"longitude":-77.443180,"notes":["COMPLETE","[O] Additional Checks"]},"RICb":{"_id":"RICb","region":"RIC","key":"RICb","name":"Patrick Henry","nameFull":"Patrick Henry School of Science & Arts","nameCommon":"Patrick Henry","nameAbbrv":"Patrick Henry","nameAcronym":"PHSSA","street_1":"3411 Semmes Av","street_2":"","city":"Richmond","state":"VA","zip":"23225","zipPlus":"","latitude":37.5162481,"longitude":-77.4698202,"notes":["PENDING","[O] Additional Checks"]}}}` 
-    return JSON.parse(locationDocDbJSON)
-}
+// !  export function locationInstantiateObject(){
+// !      // let locationDocDbJSON = `{"CHO":{"CHOa":{"_id":"CHOa","region":"CHO","key":"CHOa","name":"Incubator","nameFull":"STEAM Incubator","nameCommon":"Incubator","nameAbbrv":"Inc","nameAcronym":"SI","street_1":"3004 Berkmar Drive","street_2":"","city":"Charlottesville","state":"VA","zip":"22901","zipPlus":"","latitude":38.081460,"longitude":-78.477980,"notes":["COMPLETE","[O] Additional Checks"]},"CHOb":{"_id":"CHOb","region":"CHO","key":"CHOb","name":"CCS","nameFull":"Charlottesville Catholic School","nameCommon":"Cville Catholic","nameAbbrv":"holder","nameAcronym":"CCS","street_1":"1205 Pen Park Rd","street_2":"","city":"Charlottesville","state":"VA","zip":"22901","zipPlus":"","latitude":38.054380,"longitude":-78.459130,"notes":["COMPLETE","[O] Additional Checks"]}},"ROA":{"ROAa":{"_id":"ROAa","region":"ROA","key":"ROAa","name":"St. John's","nameFull":"St. John Neumann Academy","nameCommon":"St. John's","nameAbbrv":"Inc","nameAcronym":"SJNA","street_1":"3600 Yellow Sulphur Rd","street_2":"","city":"Blacksburg","state":"VA","zip":"24060","zipPlus":"","latitude":37.187860,"longitude":-80.403350,"notes":["COMPLETE","[O] Additional Checks"]},"ROAb":{"_id":"ROAb","region":"ROA","key":"ROAb","name":"New School","nameFull":"Blacksburg New School","nameCommon":"New School","nameAbbrv":"New School","nameAcronym":"BNS","street_1":"2500 N Main St","street_2":"","city":"Blacksburg","state":"VA","zip":"24060","zipPlus":"","latitude":37.267880,"longitude":-80.415760,"notes":["COMPLETE","[O] Additional Checks"]}},"RIC":{"RICa":{"_id":"RICa","region":"RIC","key":"RICa","name":"All Saints","nameFull":"All Saints Catholic School","nameCommon":"All Saints","nameAbbrv":"All Saints","nameAcronym":"ASCS","street_1":"3418 Noble Ave","street_2":"","city":"Richmond","state":"VA","zip":"23222","zipPlus":"","latitude":37.580730,"longitude":-77.443180,"notes":["COMPLETE","[O] Additional Checks"]},"RICb":{"_id":"CHOa","region":"RIC","key":"CHOa","name":"CCS","nameFull":"Charlottesville Catholic School","nameCommon":"Cville Catholic","nameAbbrv":"holder","nameAcronym":"CCS","street_1":"1205 Pen Park Rd","street_2":"","city":"Charlottesville","state":"VA","zip":"22901","zipPlus":"","latitude":38.054380,"longitude":-78.459130,"notes":["PENDING","[O] Additional Checks"]}}}` 
+// !      let locationDocDbJSON = `{"CHO":{"CHOa":{"_id":"CHOa","region":"CHO","key":"CHOa","name":"Incubator","nameFull":"STEAM Incubator","nameCommon":"Incubator","nameAbbrv":"Inc","nameAcronym":"SI","street_1":"3004 Berkmar Drive","street_2":"","city":"Charlottesville","state":"VA","zip":"22901","zipPlus":"","latitude":38.081460,"longitude":-78.477980,"notes":["COMPLETE","[O] Additional Checks"]},"CHOb":{"_id":"CHOb","region":"CHO","key":"CHOb","name":"CCS","nameFull":"Charlottesville Catholic School","nameCommon":"Cville Catholic","nameAbbrv":"holder","nameAcronym":"CCS","street_1":"1205 Pen Park Rd","street_2":"","city":"Charlottesville","state":"VA","zip":"22901","zipPlus":"","latitude":38.054380,"longitude":-78.459130,"notes":["COMPLETE","[O] Additional Checks"]}},"ROA":{"ROAa":{"_id":"ROAa","region":"ROA","key":"ROAa","name":"St. John's","nameFull":"St. John Neumann Academy","nameCommon":"St. John's","nameAbbrv":"Inc","nameAcronym":"SJNA","street_1":"3600 Yellow Sulphur Rd","street_2":"","city":"Blacksburg","state":"VA","zip":"24060","zipPlus":"","latitude":37.187860,"longitude":-80.403350,"notes":["COMPLETE","[O] Additional Checks"]},"ROAb":{"_id":"ROAb","region":"ROA","key":"ROAb","name":"New School","nameFull":"Blacksburg New School","nameCommon":"New School","nameAbbrv":"New School","nameAcronym":"BNS","street_1":"2500 N Main St","street_2":"","city":"Blacksburg","state":"VA","zip":"24060","zipPlus":"","latitude":37.267880,"longitude":-80.415760,"notes":["COMPLETE","[O] Additional Checks"]}},"RIC":{"RICa":{"_id":"RICa","region":"RIC","key":"RICa","name":"All Saints","nameFull":"All Saints Catholic School","nameCommon":"All Saints","nameAbbrv":"All Saints","nameAcronym":"ASCS","street_1":"3418 Noble Ave","street_2":"","city":"Richmond","state":"VA","zip":"23222","zipPlus":"","latitude":37.580730,"longitude":-77.443180,"notes":["COMPLETE","[O] Additional Checks"]},"RICb":{"_id":"RICb","region":"RIC","key":"RICb","name":"Patrick Henry","nameFull":"Patrick Henry School of Science & Arts","nameCommon":"Patrick Henry","nameAbbrv":"Patrick Henry","nameAcronym":"PHSSA","street_1":"3411 Semmes Av","street_2":"","city":"Richmond","state":"VA","zip":"23225","zipPlus":"","latitude":37.5162481,"longitude":-77.4698202,"notes":["PENDING","[O] Additional Checks"]}}}` 
+// !      return JSON.parse(locationDocDbJSON)
+// !  }
 
-//==================================================                   </JUST the Inventory>
-//==========================================================================================
+// ! ==================================================                   </JUST the Inventory>
+// ! ==========================================================================================
 
 //==========================================================================================
 //==================================================                 <All the Logic Scripts>
@@ -88,77 +88,77 @@ export function locationGetByRegionKey(regionKey = 'DLH'){
 }
 // ø <---------- </locationGetByRegionKey(regionKey)> ---------->
 
-// ø <---------- <locationGetByKey(key)>  ---------->
-export function locationGetByKey(key){
-    let returnErrorString = ''
-    let responseObject = {}
-    responseObject.parameter = key
-    responseObject.notes = []
-    responseObject.errorString = ''
-    let errorThis = ''
-    let keyAlpha = 'ERROR'  
-    keyAlpha = key.length === 3 ? '' : keyAlpha  
-    keyAlpha = key.length === 4 ? key.substr(-1).toLowerCase() : keyAlpha 
-    errorThis = keyAlpha === 'ERROR' ? ` • Invalid Key: '${key}'` : ''
-    returnErrorString += errorThis
-    if(returnErrorString.length){
-        responseObject.notes.push('error detected')
-        responseObject.errorString += returnErrorString
-        return responseObject
-    }
-    responseObject.notes.push('param validated')
-    responseObject.region = key.substr(0,3).toUpperCase()
-    responseObject.keyAlpha = keyAlpha
-    responseObject.validatedParam = responseObject.region + keyAlpha
-    locationGetDataResponse(responseObject)
-    return responseObject
-}
-// ø <---------- </locationGetByKey(key)> ---------->
+// !  // ø <---------- <locationGetByKey(key)>  ---------->
+// !  export function locationGetByKey(key){
+// !      let returnErrorString = ''
+// !      let responseObject = {}
+// !      responseObject.parameter = key
+// !      responseObject.notes = []
+// !      responseObject.errorString = ''
+// !      let errorThis = ''
+// !      let keyAlpha = 'ERROR'  
+// !      keyAlpha = key.length === 3 ? '' : keyAlpha  
+// !      keyAlpha = key.length === 4 ? key.substr(-1).toLowerCase() : keyAlpha 
+// !      errorThis = keyAlpha === 'ERROR' ? ` • Invalid Key: '${key}'` : ''
+// !      returnErrorString += errorThis
+// !      if(returnErrorString.length){
+// !          responseObject.notes.push('error detected')
+// !          responseObject.errorString += returnErrorString
+// !          return responseObject
+// !      }
+// !      responseObject.notes.push('param validated')
+// !      responseObject.region = key.substr(0,3).toUpperCase()
+// !      responseObject.keyAlpha = keyAlpha
+// !      responseObject.validatedParam = responseObject.region + keyAlpha
+// !      locationGetDataResponse(responseObject)
+// !      return responseObject
+// !  }
+// !  // ø <---------- </locationGetByKey(key)> ---------->
 
-// ø <---------- <locationGetDataResponse(responseObject)>  ---------->
-export function locationGetDataResponse(responseObject){
-    // ! NOTE: responseObject.data.response is ALWAYS an Array (like Drupal)
-    responseObject.notes.push('entering: locationGetDataResponse(responseObject)')
-    let dataObject = {}
-    dataObject.notes = []
-    dataObject.notes.push('entered locationGetDataResponse')
+// !  // ø <---------- <locationGetDataResponse(responseObject)>  ---------->
+// !  export function locationGetDataResponse(responseObject){
+// !      // ! NOTE: responseObject.data.response is ALWAYS an Array (like Drupal)
+// !      responseObject.notes.push('entering: locationGetDataResponse(responseObject)')
+// !      let dataObject = {}
+// !      dataObject.notes = []
+// !      dataObject.notes.push('entered locationGetDataResponse')
     
-    let locationDocDbObject = locationInstantiateObject()
-    let regionKeyArray =  Object.keys(locationDocDbObject)
-    if(!regionKeyArray.includes(responseObject.region)){
-        responseObject.notes.push('unsupported Region')
-        responseObject.errorString += ` • Unsupported Region: '${responseObject.region}'`
-        return
-    }
+// !      let locationDocDbObject = locationInstantiateObject()
+// !      let regionKeyArray =  Object.keys(locationDocDbObject)
+// !      if(!regionKeyArray.includes(responseObject.region)){
+// !          responseObject.notes.push('unsupported Region')
+// !          responseObject.errorString += ` • Unsupported Region: '${responseObject.region}'`
+// !          return
+// !      }
     
-    let regionFullObject = locationDocDbObject[responseObject.region]
-    let locationKeyArray =  Object.keys(regionFullObject)
+// !      let regionFullObject = locationDocDbObject[responseObject.region]
+// !      let locationKeyArray =  Object.keys(regionFullObject)
     
-    if((responseObject.keyAlpha).length){
-        if(!locationKeyArray.includes(responseObject.validatedParam)){
-            responseObject.notes.push('unsupported Location')
-            responseObject.errorString += `• Unsupported Location: '${responseObject.validatedParam}' for region '${responseObject.region}'`
-            return
-        }
-        responseObject.notes.push('specific Location')
-        dataObject.notes.push(`specific Location: '${responseObject.validatedParam}' of '${responseObject.region}'`)
-        dataObject.response = []
-        dataObject.response.push(regionFullObject[responseObject.validatedParam])
-        responseObject.data = dataObject
-        return
-    }
-    dataObject.notes.push(`all Locations for region '${responseObject.region}'`)
-    // dataObject.response =  Object.keys(regionFullObject)
-    dataObject.response = []
-    for (let index = 0; index < locationKeyArray.length; index++) {
-        const key = locationKeyArray[index];
-        dataObject.response.push(regionFullObject[key])
-    }
+// !      if((responseObject.keyAlpha).length){
+// !          if(!locationKeyArray.includes(responseObject.validatedParam)){
+// !              responseObject.notes.push('unsupported Location')
+// !              responseObject.errorString += `• Unsupported Location: '${responseObject.validatedParam}' for region '${responseObject.region}'`
+// !              return
+// !          }
+// !          responseObject.notes.push('specific Location')
+// !          dataObject.notes.push(`specific Location: '${responseObject.validatedParam}' of '${responseObject.region}'`)
+// !          dataObject.response = []
+// !          dataObject.response.push(regionFullObject[responseObject.validatedParam])
+// !          responseObject.data = dataObject
+// !          return
+// !      }
+// !      dataObject.notes.push(`all Locations for region '${responseObject.region}'`)
+// !      // dataObject.response =  Object.keys(regionFullObject)
+// !      dataObject.response = []
+// !      for (let index = 0; index < locationKeyArray.length; index++) {
+// !          const key = locationKeyArray[index];
+// !          dataObject.response.push(regionFullObject[key])
+// !      }
 
-    responseObject.data = dataObject
-    return
-}
-// ø <---------- </locationGetDataResponse(responseObject)> ---------->
+// !      responseObject.data = dataObject
+// !      return
+// !  }
+// !  // ø <---------- </locationGetDataResponse(responseObject)> ---------->
 
 //==================================================                </All the Logic Scripts>
 //==========================================================================================
@@ -171,90 +171,90 @@ export function locationGetDataResponse(responseObject){
 //============================================================                <Week Inventory Scripts>
 //=============================================================================================go=======
 
-//==========================================================================================
-//==================================================           <Brad's Dog Proof-of-Concept>
+// ! ==========================================================================================
+// ! ==================================================           <Brad's Dog Proof-of-Concept>
 
-export function dogsAllInstantiateObject(kind = 'ARRAY'){
-    let supportedKindArray = []
-    supportedKindArray.push('FULL') // ø FULL OBJECT
-    supportedKindArray.push('ARRAY') // ø ARRAY OF DOG OBJECTS
-    let weekDocDbJSON = ''
-    // let dogObject = {}
-    if(supportedKindArray.includes(kind) === false){
-        weekDocDbJSON = `{"key":"1","name":"DOGS","_id":99999,"dateEnd":"holder","dateStart":"holder","dateStartAbbrv":"holder","dateStartFull":"holder","dateStartSlash":"holder","daysOfWeekJSArray":["String One","String Two","String Three"],"daysOfWeekString":"holder","nameAcronym":"holder","nameCardinal":"holder","nameCommon":"holder","nameFull":"holder","nameOrdinal":"holder","spanEnd":"holder","spanStart":"holder","termId":777,"timeBlockKey":{"timeBlockKey":"String_0","timeBlockName":"String_1","timeBlockStartTime":"String_2","timeBlockEndTime":"String_3","timeBlockDuration":"String_4","timeBlockStartTimeString":"String_5","timeBlockEndTimeString":"String_6","timeBlockDurationString":"String_7","timeBlockSpanString":"String_8","timeBlockSpanStringAbbrv":"String_9"},"weekCardinal":777,"weekId":777,"notes":["universalParamObjectBuilder RUN","appendRoomCore RUN"]}`
-        return JSON.parse(weekDocDbJSON)
-    }
-    // import weekDocDbJSON from 'public/dogsForDisplay_all.json'
-    // weekDocDbJSON = `{"key":"1","name":"DOGS","_id":77777,"dateEnd":"holder","dateStart":"holder","dateStartAbbrv":"holder","dateStartFull":"holder","dateStartSlash":"holder","daysOfWeekJSArray":["String One","String Two","String Three"],"daysOfWeekString":"holder","nameAcronym":"holder","nameCardinal":"holder","nameCommon":"holder","nameFull":"holder","nameOrdinal":"holder","spanEnd":"holder","spanStart":"holder","termId":777,"timeBlockKey":{"timeBlockKey":"String_0","timeBlockName":"String_1","timeBlockStartTime":"String_2","timeBlockEndTime":"String_3","timeBlockDuration":"String_4","timeBlockStartTimeString":"String_5","timeBlockEndTimeString":"String_6","timeBlockDurationString":"String_7","timeBlockSpanString":"String_8","timeBlockSpanStringAbbrv":"String_9"},"weekCardinal":777,"weekId":777,"notes":["universalParamObjectBuilder RUN","appendRoomCore RUN"]}`
-    // return JSON.parse(weekDocDbJSON)
+// !  export function dogsAllInstantiateObject(kind = 'ARRAY'){
+// !      let supportedKindArray = []
+// !      supportedKindArray.push('FULL') // !  ø FULL OBJECT
+// !      supportedKindArray.push('ARRAY') // !  ø ARRAY OF DOG OBJECTS
+// !      let weekDocDbJSON = ''
+// !      // let dogObject = {}
+// !      if(supportedKindArray.includes(kind) === false){
+// !          weekDocDbJSON = `{"key":"1","name":"DOGS","_id":99999,"dateEnd":"holder","dateStart":"holder","dateStartAbbrv":"holder","dateStartFull":"holder","dateStartSlash":"holder","daysOfWeekJSArray":["String One","String Two","String Three"],"daysOfWeekString":"holder","nameAcronym":"holder","nameCardinal":"holder","nameCommon":"holder","nameFull":"holder","nameOrdinal":"holder","spanEnd":"holder","spanStart":"holder","termId":777,"timeBlockKey":{"timeBlockKey":"String_0","timeBlockName":"String_1","timeBlockStartTime":"String_2","timeBlockEndTime":"String_3","timeBlockDuration":"String_4","timeBlockStartTimeString":"String_5","timeBlockEndTimeString":"String_6","timeBlockDurationString":"String_7","timeBlockSpanString":"String_8","timeBlockSpanStringAbbrv":"String_9"},"weekCardinal":777,"weekId":777,"notes":["universalParamObjectBuilder RUN","appendRoomCore RUN"]}`
+// !          return JSON.parse(weekDocDbJSON)
+// !      }
+// !      // import weekDocDbJSON from 'public/dogsForDisplay_all.json'
+// !      // weekDocDbJSON = `{"key":"1","name":"DOGS","_id":77777,"dateEnd":"holder","dateStart":"holder","dateStartAbbrv":"holder","dateStartFull":"holder","dateStartSlash":"holder","daysOfWeekJSArray":["String One","String Two","String Three"],"daysOfWeekString":"holder","nameAcronym":"holder","nameCardinal":"holder","nameCommon":"holder","nameFull":"holder","nameOrdinal":"holder","spanEnd":"holder","spanStart":"holder","termId":777,"timeBlockKey":{"timeBlockKey":"String_0","timeBlockName":"String_1","timeBlockStartTime":"String_2","timeBlockEndTime":"String_3","timeBlockDuration":"String_4","timeBlockStartTimeString":"String_5","timeBlockEndTimeString":"String_6","timeBlockDurationString":"String_7","timeBlockSpanString":"String_8","timeBlockSpanStringAbbrv":"String_9"},"weekCardinal":777,"weekId":777,"notes":["universalParamObjectBuilder RUN","appendRoomCore RUN"]}`
+// !      // return JSON.parse(weekDocDbJSON)
 
-    if(kind === 'FULL'){
-        // let dogsImported = {}
-        // await import(`public/dogsForDisplay_all.json`).then(dogs => {
-        //     // console.warn(`typeof dogs.default: ${typeof dogs.default}`);
-        //     // console.warn(dogs.default);
-        //     dogsImported = dogs.default
-        // });
-        return dogObectAll
-    }
-    return dogObectAll.dogRepeaterArray
+// !      if(kind === 'FULL'){
+// !          // let dogsImported = {}
+// !          // await import(`public/dogsForDisplay_all.json`).then(dogs => {
+// !          //     // console.warn(`typeof dogs.default: ${typeof dogs.default}`);
+// !          //     // console.warn(dogs.default);
+// !          //     dogsImported = dogs.default
+// !          // });
+// !          return dogObectAll
+// !      }
+// !      return dogObectAll.dogRepeaterArray
 
-}
-export function dogsInstantiateObjectByKind(filter = 'ALL',kind = 'ARRAY'){
-    let supportedFilterArray = []
-    // filter = filter.includes('ALL') ? 'ALL' : filter
-    // filter = filter.includes('FEMALE') ? 'F' : filter
-    // filter = filter.includes('MALE') ? 'MALE' : filter
-    // filter = filter=== 'F' ? 'FEMALE' : filter
-    supportedFilterArray.push('ALL') // ø FULL OBJECT
-    supportedFilterArray.push('MALE') // ø ARRAY OF DOG OBJECTS
-    supportedFilterArray.push('FEMALE') // ø ARRAY OF DOG OBJECTS
-    let supportedKindArray = []
-    supportedKindArray.push('FULL') // ø FULL OBJECT
-    supportedKindArray.push('ARRAY') // ø ARRAY OF DOG OBJECTS
-    let weekDocDbJSON = ''
-    // let dogObject = {}
-    if(supportedFilterArray.includes(filter) === false){
-        weekDocDbJSON = `{"key":"1","name":"DOGS.filter","_id":99999,"dateEnd":"holder","dateStart":"holder","dateStartAbbrv":"ByKind","dateStartFull":"holder","dateStartSlash":"holder","daysOfWeekJSArray":["String One","String Two","String Three"],"daysOfWeekString":"holder","nameAcronym":"holder","nameCardinal":"holder","nameCommon":"holder","nameFull":"holder","nameOrdinal":"holder","spanEnd":"holder","spanStart":"holder","termId":777,"timeBlockKey":{"timeBlockKey":"String_0","timeBlockName":"String_1","timeBlockStartTime":"String_2","timeBlockEndTime":"String_3","timeBlockDuration":"String_4","timeBlockStartTimeString":"String_5","timeBlockEndTimeString":"String_6","timeBlockDurationString":"String_7","timeBlockSpanString":"String_8","timeBlockSpanStringAbbrv":"String_9"},"weekCardinal":777,"weekId":777,"notes":["universalParamObjectBuilder RUN","appendRoomCore RUN"]}`
-        return JSON.parse(weekDocDbJSON)
-    }
-    if(supportedKindArray.includes(kind) === false){
-        weekDocDbJSON = `{"key":"1","name":"DOGS.kind","_id":999,"dateEnd":"holder","dateStart":"holder","dateStartAbbrv":"ByKind","dateStartFull":"holder","dateStartSlash":"holder","daysOfWeekJSArray":["String One","String Two","String Three"],"daysOfWeekString":"holder","nameAcronym":"holder","nameCardinal":"holder","nameCommon":"holder","nameFull":"holder","nameOrdinal":"holder","spanEnd":"holder","spanStart":"holder","termId":777,"timeBlockKey":{"timeBlockKey":"String_0","timeBlockName":"String_1","timeBlockStartTime":"String_2","timeBlockEndTime":"String_3","timeBlockDuration":"String_4","timeBlockStartTimeString":"String_5","timeBlockEndTimeString":"String_6","timeBlockDurationString":"String_7","timeBlockSpanString":"String_8","timeBlockSpanStringAbbrv":"String_9"},"weekCardinal":777,"weekId":777,"notes":["universalParamObjectBuilder RUN","appendRoomCore RUN"]}`
-        return JSON.parse(weekDocDbJSON)
-    }
-    // import weekDocDbJSON from 'public/dogsForDisplay_all.json'
-    // weekDocDbJSON = `{"key":"1","name":"DOGS","_id":77777,"dateEnd":"holder","dateStart":"holder","dateStartAbbrv":"holder","dateStartFull":"holder","dateStartSlash":"holder","daysOfWeekJSArray":["String One","String Two","String Three"],"daysOfWeekString":"holder","nameAcronym":"holder","nameCardinal":"holder","nameCommon":"holder","nameFull":"holder","nameOrdinal":"holder","spanEnd":"holder","spanStart":"holder","termId":777,"timeBlockKey":{"timeBlockKey":"String_0","timeBlockName":"String_1","timeBlockStartTime":"String_2","timeBlockEndTime":"String_3","timeBlockDuration":"String_4","timeBlockStartTimeString":"String_5","timeBlockEndTimeString":"String_6","timeBlockDurationString":"String_7","timeBlockSpanString":"String_8","timeBlockSpanStringAbbrv":"String_9"},"weekCardinal":777,"weekId":777,"notes":["universalParamObjectBuilder RUN","appendRoomCore RUN"]}`
-    // return JSON.parse(weekDocDbJSON)
+// !  }
+// !  export function dogsInstantiateObjectByKind(filter = 'ALL',kind = 'ARRAY'){
+// !      let supportedFilterArray = []
+// !      // filter = filter.includes('ALL') ? 'ALL' : filter
+// !      // filter = filter.includes('FEMALE') ? 'F' : filter
+// !      // filter = filter.includes('MALE') ? 'MALE' : filter
+// !      // filter = filter=== 'F' ? 'FEMALE' : filter
+// !      supportedFilterArray.push('ALL') // ø FULL OBJECT
+// !      supportedFilterArray.push('MALE') // ø ARRAY OF DOG OBJECTS
+// !      supportedFilterArray.push('FEMALE') // ø ARRAY OF DOG OBJECTS
+// !      let supportedKindArray = []
+// !      supportedKindArray.push('FULL') // ø FULL OBJECT
+// !      supportedKindArray.push('ARRAY') // ø ARRAY OF DOG OBJECTS
+// !      let weekDocDbJSON = ''
+// !      // let dogObject = {}
+// !      if(supportedFilterArray.includes(filter) === false){
+// !          weekDocDbJSON = `{"key":"1","name":"DOGS.filter","_id":99999,"dateEnd":"holder","dateStart":"holder","dateStartAbbrv":"ByKind","dateStartFull":"holder","dateStartSlash":"holder","daysOfWeekJSArray":["String One","String Two","String Three"],"daysOfWeekString":"holder","nameAcronym":"holder","nameCardinal":"holder","nameCommon":"holder","nameFull":"holder","nameOrdinal":"holder","spanEnd":"holder","spanStart":"holder","termId":777,"timeBlockKey":{"timeBlockKey":"String_0","timeBlockName":"String_1","timeBlockStartTime":"String_2","timeBlockEndTime":"String_3","timeBlockDuration":"String_4","timeBlockStartTimeString":"String_5","timeBlockEndTimeString":"String_6","timeBlockDurationString":"String_7","timeBlockSpanString":"String_8","timeBlockSpanStringAbbrv":"String_9"},"weekCardinal":777,"weekId":777,"notes":["universalParamObjectBuilder RUN","appendRoomCore RUN"]}`
+// !          return JSON.parse(weekDocDbJSON)
+// !      }
+// !      if(supportedKindArray.includes(kind) === false){
+// !          weekDocDbJSON = `{"key":"1","name":"DOGS.kind","_id":999,"dateEnd":"holder","dateStart":"holder","dateStartAbbrv":"ByKind","dateStartFull":"holder","dateStartSlash":"holder","daysOfWeekJSArray":["String One","String Two","String Three"],"daysOfWeekString":"holder","nameAcronym":"holder","nameCardinal":"holder","nameCommon":"holder","nameFull":"holder","nameOrdinal":"holder","spanEnd":"holder","spanStart":"holder","termId":777,"timeBlockKey":{"timeBlockKey":"String_0","timeBlockName":"String_1","timeBlockStartTime":"String_2","timeBlockEndTime":"String_3","timeBlockDuration":"String_4","timeBlockStartTimeString":"String_5","timeBlockEndTimeString":"String_6","timeBlockDurationString":"String_7","timeBlockSpanString":"String_8","timeBlockSpanStringAbbrv":"String_9"},"weekCardinal":777,"weekId":777,"notes":["universalParamObjectBuilder RUN","appendRoomCore RUN"]}`
+// !          return JSON.parse(weekDocDbJSON)
+// !      }
+// !      // import weekDocDbJSON from 'public/dogsForDisplay_all.json'
+// !      // weekDocDbJSON = `{"key":"1","name":"DOGS","_id":77777,"dateEnd":"holder","dateStart":"holder","dateStartAbbrv":"holder","dateStartFull":"holder","dateStartSlash":"holder","daysOfWeekJSArray":["String One","String Two","String Three"],"daysOfWeekString":"holder","nameAcronym":"holder","nameCardinal":"holder","nameCommon":"holder","nameFull":"holder","nameOrdinal":"holder","spanEnd":"holder","spanStart":"holder","termId":777,"timeBlockKey":{"timeBlockKey":"String_0","timeBlockName":"String_1","timeBlockStartTime":"String_2","timeBlockEndTime":"String_3","timeBlockDuration":"String_4","timeBlockStartTimeString":"String_5","timeBlockEndTimeString":"String_6","timeBlockDurationString":"String_7","timeBlockSpanString":"String_8","timeBlockSpanStringAbbrv":"String_9"},"weekCardinal":777,"weekId":777,"notes":["universalParamObjectBuilder RUN","appendRoomCore RUN"]}`
+// !      // return JSON.parse(weekDocDbJSON)
 
-    if(kind === 'FULL'){
-        // let dogsImported = {}
-        // await import(`public/dogsForDisplay_all.json`).then(dogs => {
-        //     // console.warn(`typeof dogs.default: ${typeof dogs.default}`);
-        //     // console.warn(dogs.default);
-        //     dogsImported = dogs.default
-        // });
-        return dogObectFilter[filter]
-    }
-    return dogObectFilter[filter].dogRepeaterArray
-    // return dogObectFilter[filter].dogRepeaterArray
+// !      if(kind === 'FULL'){
+// !          // let dogsImported = {}
+// !          // await import(`public/dogsForDisplay_all.json`).then(dogs => {
+// !          //     // console.warn(`typeof dogs.default: ${typeof dogs.default}`);
+// !          //     // console.warn(dogs.default);
+// !          //     dogsImported = dogs.default
+// !          // });
+// !          return dogObectFilter[filter]
+// !      }
+// !      return dogObectFilter[filter].dogRepeaterArray
+// !      // return dogObectFilter[filter].dogRepeaterArray
 
-}
-//==================================================          </Brad's Dog Proof-of-Concept>
-//==========================================================================================
+// !  }
+// ! ==================================================          </Brad's Dog Proof-of-Concept>
+// ! ==========================================================================================
 
 //==========================================================================================
 //==================================================                    <JUST the Inventory>
 
-function weekInstantiateObject_KLUDGE(termId = 205523){
-    let supportedTermIdArray = []
-    supportedTermIdArray.push(205535)
-    let weekDocDbJSON = ''
-    if(supportedTermIdArray.includes(termId) === false){
-        weekDocDbJSON = `{"key":"1","name":"Weeks Summer 2022","_id":777,"dateEnd":"holder","dateStart":"holder","dateStartAbbrv":"holder","dateStartFull":"holder","dateStartSlash":"holder","daysOfWeekJSArray":["String One","String Two","String Three"],"daysOfWeekString":"holder","nameAcronym":"holder","nameCardinal":"holder","nameCommon":"holder","nameFull":"holder","nameOrdinal":"holder","spanEnd":"holder","spanStart":"holder","termId":777,"timeBlockKey":{"timeBlockKey":"String_0","timeBlockName":"String_1","timeBlockStartTime":"String_2","timeBlockEndTime":"String_3","timeBlockDuration":"String_4","timeBlockStartTimeString":"String_5","timeBlockEndTimeString":"String_6","timeBlockDurationString":"String_7","timeBlockSpanString":"String_8","timeBlockSpanStringAbbrv":"String_9"},"weekCardinal":777,"weekId":777,"notes":["universalParamObjectBuilder RUN","appendRoomCore RUN"]}`
-        return JSON.parse(weekDocDbJSON)
-    }
+// !  function weekInstantiateObject_KLUDGE(termId = 205523){
+// !      let supportedTermIdArray = []
+// !      supportedTermIdArray.push(205535)
+// !      let weekDocDbJSON = ''
+// !      if(supportedTermIdArray.includes(termId) === false){
+// !          weekDocDbJSON = `{"key":"1","name":"Weeks Summer 2022","_id":777,"dateEnd":"holder","dateStart":"holder","dateStartAbbrv":"holder","dateStartFull":"holder","dateStartSlash":"holder","daysOfWeekJSArray":["String One","String Two","String Three"],"daysOfWeekString":"holder","nameAcronym":"holder","nameCardinal":"holder","nameCommon":"holder","nameFull":"holder","nameOrdinal":"holder","spanEnd":"holder","spanStart":"holder","termId":777,"timeBlockKey":{"timeBlockKey":"String_0","timeBlockName":"String_1","timeBlockStartTime":"String_2","timeBlockEndTime":"String_3","timeBlockDuration":"String_4","timeBlockStartTimeString":"String_5","timeBlockEndTimeString":"String_6","timeBlockDurationString":"String_7","timeBlockSpanString":"String_8","timeBlockSpanStringAbbrv":"String_9"},"weekCardinal":777,"weekId":777,"notes":["universalParamObjectBuilder RUN","appendRoomCore RUN"]}`
+// !          return JSON.parse(weekDocDbJSON)
+// !      }
 
-}
+// !  }
 function weekInstantiateObject(termId = 205523, regionKey = 'BVT'){
     /**
      * ! TODO:
@@ -288,14 +288,6 @@ function weekInstantiateObject(termId = 205523, regionKey = 'BVT'){
         errorObject.termIdIsValid = termIdIsValid
         errorObject.regionKey = regionKey
         errorObject.regionKeyIsValid = regionKeyIsValid
-
-        // logThis = {}
-        // logThis.title = `Current Courses have more than one 'termId' value`
-        // logThis.descr = `Current Courses have more than one 'termId' value`
-        // logThis.logic /*As String*/ = 'if(termIdEvery !== true)'
-        // errorObject.errorLog.push(logThis)
-
-
     }
     
     if(termIdIsValid !== 'TTRUE'){
@@ -342,19 +334,19 @@ function weekInstantiateObject(termId = 205523, regionKey = 'BVT'){
     // } 
 
 }
-function weekInstantiateObject_DEP(termId = 205523){
-    let weekDocDbJSON = `{"key":"1","name":"Weeks Summer 2022","_id":777,"dateEnd":"holder","dateStart":"holder","dateStartAbbrv":"holder","dateStartFull":"holder","dateStartSlash":"holder","daysOfWeekJSArray":["String One","String Two","String Three"],"daysOfWeekString":"holder","nameAcronym":"holder","nameCardinal":"holder","nameCommon":"holder","nameFull":"holder","nameOrdinal":"holder","spanEnd":"holder","spanStart":"holder","termId":777,"timeBlockKey":{"timeBlockKey":"String_0","timeBlockName":"String_1","timeBlockStartTime":"String_2","timeBlockEndTime":"String_3","timeBlockDuration":"String_4","timeBlockStartTimeString":"String_5","timeBlockEndTimeString":"String_6","timeBlockDurationString":"String_7","timeBlockSpanString":"String_8","timeBlockSpanStringAbbrv":"String_9"},"weekCardinal":777,"weekId":777,"notes":["universalParamObjectBuilder RUN","appendRoomCore RUN"]}` 
-    switch (termId) {
-        case 202223:
-            weekDocDbJSON = `{"cardinalityLookupObject":{"1":"202223","2":"202224","3":"202225","4":"202226","5":"202228","6":"202229","7":"202230","8":"202231","9":"202232"},"202223":{"key":"1","name":"Week One","_id":202223,"dateEnd":"2022-06-10T11:59:59.999Z","dateStart":"2022-06-06T11:59:59.999Z","dateStartAbbrv":"Jun 6","dateStartFull":"Monday, June 6, 2022","dateStartSlash":"6/6/2022","daysOfWeekJSArray":[1,2,3,4,5],"daysOfWeekString":"Mon, Tue, Wed, Thu, Fri","nameAcronym":"Wk1","nameCardinal":"1","nameCommon":"Week 1","nameFull":"Week One","nameOrdinal":"1st","spanEnd":"2022-06-10T17:00:00.000Z","spanStart":"2022-06-06T09:00:00.000Z","termId":202223,"FD":{"timeBlockKey":"FD","timeBlockName":"Full Day","timeBlockStartTime":"09:00:00","timeBlockEndTime":"17:00:00","timeBlockDuration":"08:00:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"8 hours","timeBlockSpanString":"9:00am to 5:00pm","timeBlockSpanStringAbbrv":"9 to 5"},"AM":{"timeBlockKey":"AM","timeBlockName":"Morning","timeBlockStartTime":"09:00:00","timeBlockEndTime":"12:30:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"12:30pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"9:00am to 12:30pm","timeBlockSpanStringAbbrv":"9:00 to 12:30"},"PM":{"timeBlockKey":"PM","timeBlockName":"Afternoon","timeBlockStartTime":"13:30","timeBlockEndTime":"17:00:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"1:30pm","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"1:30pm to 5:00pm","timeBlockSpanStringAbbrv":"1:30 to 5:00"},"weekCardinal":1,"weekId":202223,"weekNotesInternal":["real note here","another real note here"],"weekNotesPublic":[]},"202224":{"key":"2","name":"Week Two","_id":202224,"dateEnd":"2022-06-17T11:59:59.999Z","dateStart":"2022-06-13T11:59:59.999Z","dateStartAbbrv":"Jun 13","dateStartFull":"Monday, June 13, 2022","dateStartSlash":"6/13/2022","daysOfWeekJSArray":[1,2,3,4,5],"daysOfWeekString":"Mon, Tue, Wed, Thu, Fri","nameAcronym":"Wk2","nameCardinal":"2","nameCommon":"Week 2","nameFull":"Week Two","nameOrdinal":"2nd","spanEnd":"2022-06-17T17:00:00.000Z","spanStart":"2022-06-13T09:00:00.000Z","termId":202223,"FD":{"timeBlockKey":"FD","timeBlockName":"Full Day","timeBlockStartTime":"09:00:00","timeBlockEndTime":"17:00:00","timeBlockDuration":"08:00:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"8 hours","timeBlockSpanString":"9:00am to 5:00pm","timeBlockSpanStringAbbrv":"9 to 5"},"AM":{"timeBlockKey":"AM","timeBlockName":"Morning","timeBlockStartTime":"09:00:00","timeBlockEndTime":"12:30:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"12:30pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"9:00am to 12:30pm","timeBlockSpanStringAbbrv":"9:00 to 12:30"},"PM":{"timeBlockKey":"PM","timeBlockName":"Afternoon","timeBlockStartTime":"13:30","timeBlockEndTime":"17:00:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"1:30pm","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"1:30pm to 5:00pm","timeBlockSpanStringAbbrv":"1:30 to 5:00"},"weekCardinal":2,"weekId":202224,"weekNotesInternal":["real note here","another real note here"],"weekNotesPublic":[]},"202225":{"key":"3","name":"Week Three","_id":202225,"dateEnd":"2022-06-24T11:59:59.999Z","dateStart":"2022-06-20T11:59:59.999Z","dateStartAbbrv":"Jun 20","dateStartFull":"Monday, June 20, 2022","dateStartSlash":"6/20/2022","daysOfWeekJSArray":[1,2,3,4,5],"daysOfWeekString":"Mon, Tue, Wed, Thu, Fri","nameAcronym":"Wk3","nameCardinal":"3","nameCommon":"Week 3","nameFull":"Week Three","nameOrdinal":"3rd","spanEnd":"2022-06-24T17:00:00.000Z","spanStart":"2022-06-20T09:00:00.000Z","termId":202223,"FD":{"timeBlockKey":"FD","timeBlockName":"Full Day","timeBlockStartTime":"09:00:00","timeBlockEndTime":"17:00:00","timeBlockDuration":"08:00:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"8 hours","timeBlockSpanString":"9:00am to 5:00pm","timeBlockSpanStringAbbrv":"9 to 5"},"AM":{"timeBlockKey":"AM","timeBlockName":"Morning","timeBlockStartTime":"09:00:00","timeBlockEndTime":"12:30:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"12:30pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"9:00am to 12:30pm","timeBlockSpanStringAbbrv":"9:00 to 12:30"},"PM":{"timeBlockKey":"PM","timeBlockName":"Afternoon","timeBlockStartTime":"13:30","timeBlockEndTime":"17:00:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"1:30pm","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"1:30pm to 5:00pm","timeBlockSpanStringAbbrv":"1:30 to 5:00"},"weekCardinal":3,"weekId":202225,"weekNotesInternal":["real note here","another real note here"],"weekNotesPublic":[]},"202226":{"key":"4","name":"Week Four","_id":202226,"dateEnd":"2022-07-01T11:59:59.999Z","dateStart":"2022-06-27T11:59:59.999Z","dateStartAbbrv":"Jun 27","dateStartFull":"Monday, June 27, 2022","dateStartSlash":"6/27/2022","daysOfWeekJSArray":[1,2,3,4,5],"daysOfWeekString":"Mon, Tue, Wed, Thu, Fri","nameAcronym":"Wk4","nameCardinal":"4","nameCommon":"Week 4","nameFull":"Week Four","nameOrdinal":"4th","spanEnd":"2022-07-01T17:00:00.000Z","spanStart":"2022-06-27T09:00:00.000Z","termId":202223,"FD":{"timeBlockKey":"FD","timeBlockName":"Full Day","timeBlockStartTime":"09:00:00","timeBlockEndTime":"17:00:00","timeBlockDuration":"08:00:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"8 hours","timeBlockSpanString":"9:00am to 5:00pm","timeBlockSpanStringAbbrv":"9 to 5"},"AM":{"timeBlockKey":"AM","timeBlockName":"Morning","timeBlockStartTime":"09:00:00","timeBlockEndTime":"12:30:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"12:30pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"9:00am to 12:30pm","timeBlockSpanStringAbbrv":"9:00 to 12:30"},"PM":{"timeBlockKey":"PM","timeBlockName":"Afternoon","timeBlockStartTime":"13:30","timeBlockEndTime":"17:00:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"1:30pm","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"1:30pm to 5:00pm","timeBlockSpanStringAbbrv":"1:30 to 5:00"},"weekCardinal":4,"weekId":202226,"weekNotesInternal":["next week off for July 4th"],"weekNotesPublic":["next week we'll be off for July 4th"]},"202228":{"key":"5","name":"Week Five","_id":202228,"dateEnd":"2022-07-15T11:59:59.999Z","dateStart":"2022-07-11T11:59:59.999Z","dateStartAbbrv":"Jul 11","dateStartFull":"Monday, July 11, 2022","dateStartSlash":"7/11/2022","daysOfWeekJSArray":[1,2,3,4,5],"daysOfWeekString":"Mon, Tue, Wed, Thu, Fri","nameAcronym":"Wk5","nameCardinal":"5","nameCommon":"Week 5","nameFull":"Week Five","nameOrdinal":"5th","spanEnd":"2022-07-15T17:00:00.000Z","spanStart":"2022-07-11T09:00:00.000Z","termId":202223,"FD":{"timeBlockKey":"FD","timeBlockName":"Full Day","timeBlockStartTime":"09:00:00","timeBlockEndTime":"17:00:00","timeBlockDuration":"08:00:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"8 hours","timeBlockSpanString":"9:00am to 5:00pm","timeBlockSpanStringAbbrv":"9 to 5"},"AM":{"timeBlockKey":"AM","timeBlockName":"Morning","timeBlockStartTime":"09:00:00","timeBlockEndTime":"12:30:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"12:30pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"9:00am to 12:30pm","timeBlockSpanStringAbbrv":"9:00 to 12:30"},"PM":{"timeBlockKey":"PM","timeBlockName":"Afternoon","timeBlockStartTime":"13:30","timeBlockEndTime":"17:00:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"1:30pm","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"1:30pm to 5:00pm","timeBlockSpanStringAbbrv":"1:30 to 5:00"},"weekCardinal":5,"weekId":202228,"weekNotesInternal":["previous week off for July 4th"],"weekNotesPublic":[]},"202229":{"key":"6","name":"Week Six","_id":202229,"dateEnd":"2022-07-22T11:59:59.999Z","dateStart":"2022-07-18T11:59:59.999Z","dateStartAbbrv":"Jul 18","dateStartFull":"Monday, July 18, 2022","dateStartSlash":"7/18/2022","daysOfWeekJSArray":[1,2,3,4,5],"daysOfWeekString":"Mon, Tue, Wed, Thu, Fri","nameAcronym":"Wk6","nameCardinal":"6","nameCommon":"Week 6","nameFull":"Week Six","nameOrdinal":"6th","spanEnd":"2022-07-22T17:00:00.000Z","spanStart":"2022-07-18T09:00:00.000Z","termId":202223,"FD":{"timeBlockKey":"FD","timeBlockName":"Full Day","timeBlockStartTime":"09:00:00","timeBlockEndTime":"17:00:00","timeBlockDuration":"08:00:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"8 hours","timeBlockSpanString":"9:00am to 5:00pm","timeBlockSpanStringAbbrv":"9 to 5"},"AM":{"timeBlockKey":"AM","timeBlockName":"Morning","timeBlockStartTime":"09:00:00","timeBlockEndTime":"12:30:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"12:30pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"9:00am to 12:30pm","timeBlockSpanStringAbbrv":"9:00 to 12:30"},"PM":{"timeBlockKey":"PM","timeBlockName":"Afternoon","timeBlockStartTime":"13:30","timeBlockEndTime":"17:00:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"1:30pm","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"1:30pm to 5:00pm","timeBlockSpanStringAbbrv":"1:30 to 5:00"},"weekCardinal":6,"weekId":202229,"weekNotesInternal":[],"weekNotesPublic":[]},"202230":{"key":"7","name":"Week Seven","_id":202230,"dateEnd":"2022-07-29T11:59:59.999Z","dateStart":"2022-07-25T11:59:59.999Z","dateStartAbbrv":"Jul 25","dateStartFull":"Monday, July 25, 2022","dateStartSlash":"7/25/2022","daysOfWeekJSArray":[1,2,3,4,5],"daysOfWeekString":"Mon, Tue, Wed, Thu, Fri","nameAcronym":"Wk7","nameCardinal":"7","nameCommon":"Week 7","nameFull":"Week Seven","nameOrdinal":"7th","spanEnd":"2022-07-29T17:00:00.000Z","spanStart":"2022-07-25T09:00:00.000Z","termId":202223,"FD":{"timeBlockKey":"FD","timeBlockName":"Full Day","timeBlockStartTime":"09:00:00","timeBlockEndTime":"17:00:00","timeBlockDuration":"08:00:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"8 hours","timeBlockSpanString":"9:00am to 5:00pm","timeBlockSpanStringAbbrv":"9 to 5"},"AM":{"timeBlockKey":"AM","timeBlockName":"Morning","timeBlockStartTime":"09:00:00","timeBlockEndTime":"12:30:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"12:30pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"9:00am to 12:30pm","timeBlockSpanStringAbbrv":"9:00 to 12:30"},"PM":{"timeBlockKey":"PM","timeBlockName":"Afternoon","timeBlockStartTime":"13:30","timeBlockEndTime":"17:00:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"1:30pm","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"1:30pm to 5:00pm","timeBlockSpanStringAbbrv":"1:30 to 5:00"},"weekCardinal":7,"weekId":202230,"weekNotesInternal":[],"weekNotesPublic":[]},"202231":{"key":"8","name":"Week Eight","_id":202231,"dateEnd":"2022-08-05T11:59:59.999Z","dateStart":"2022-08-01T11:59:59.999Z","dateStartAbbrv":"Aug 1","dateStartFull":"Monday, August 1, 2022","dateStartSlash":"8/1/2022","daysOfWeekJSArray":[1,2,3,4,5],"daysOfWeekString":"Mon, Tue, Wed, Thu, Fri","nameAcronym":"Wk8","nameCardinal":"8","nameCommon":"Week 8","nameFull":"Week Eight","nameOrdinal":"8th","spanEnd":"2022-08-05T17:00:00.000Z","spanStart":"2022-08-01T09:00:00.000Z","termId":202223,"FD":{"timeBlockKey":"FD","timeBlockName":"Full Day","timeBlockStartTime":"09:00:00","timeBlockEndTime":"17:00:00","timeBlockDuration":"08:00:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"8 hours","timeBlockSpanString":"9:00am to 5:00pm","timeBlockSpanStringAbbrv":"9 to 5"},"AM":{"timeBlockKey":"AM","timeBlockName":"Morning","timeBlockStartTime":"09:00:00","timeBlockEndTime":"12:30:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"12:30pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"9:00am to 12:30pm","timeBlockSpanStringAbbrv":"9:00 to 12:30"},"PM":{"timeBlockKey":"PM","timeBlockName":"Afternoon","timeBlockStartTime":"13:30","timeBlockEndTime":"17:00:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"1:30pm","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"1:30pm to 5:00pm","timeBlockSpanStringAbbrv":"1:30 to 5:00"},"weekCardinal":8,"weekId":202231,"weekNotesInternal":[],"weekNotesPublic":[]},"202232":{"key":"9","name":"Week Nine","_id":202232,"dateEnd":"2022-08-12T11:59:59.999Z","dateStart":"2022-08-8T11:59:59.999Z","dateStartAbbrv":"Aug 8","dateStartFull":"Monday, August 8, 2022","dateStartSlash":"8/8/2022","daysOfWeekJSArray":[1,2,3,4,5],"daysOfWeekString":"Mon, Tue, Wed, Thu, Fri","nameAcronym":"Wk9","nameCardinal":"9","nameCommon":"Week 9","nameFull":"Week Nine","nameOrdinal":"9th","spanEnd":"2022-08-12T17:00:00.000Z","spanStart":"2022-08-08T09:00:00.000Z","termId":202223,"FD":{"timeBlockKey":"FD","timeBlockName":"Full Day","timeBlockStartTime":"09:00:00","timeBlockEndTime":"17:00:00","timeBlockDuration":"08:00:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"8 hours","timeBlockSpanString":"9:00am to 5:00pm","timeBlockSpanStringAbbrv":"9 to 5"},"AM":{"timeBlockKey":"AM","timeBlockName":"Morning","timeBlockStartTime":"09:00:00","timeBlockEndTime":"12:30:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"12:30pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"9:00am to 12:30pm","timeBlockSpanStringAbbrv":"9:00 to 12:30"},"PM":{"timeBlockKey":"PM","timeBlockName":"Afternoon","timeBlockStartTime":"13:30","timeBlockEndTime":"17:00:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"1:30pm","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"1:30pm to 5:00pm","timeBlockSpanStringAbbrv":"1:30 to 5:00"},"weekCardinal":9,"weekId":202232,"weekNotesInternal":[],"weekNotesPublic":[]},"weeksAllNotesInternal":["span values:Zulu as Local or?...","termId is the OuterKey - weekId is the Inner Key","cardinalityLookupObject is how to get all of this data from the drop-down 1,,2,3,4...","note how cardinalityLookupObject _skips_ weekId:202227","weeksAllNotesPublic and weekNotesPublic:just a simple string that can be displayed in a bullet list"],"weeksAllNotesPublic":[]}` 
-            break;
+// !  function weekInstantiateObject_DEP(termId = 205523){
+// !      let weekDocDbJSON = `{"key":"1","name":"Weeks Summer 2022","_id":777,"dateEnd":"holder","dateStart":"holder","dateStartAbbrv":"holder","dateStartFull":"holder","dateStartSlash":"holder","daysOfWeekJSArray":["String One","String Two","String Three"],"daysOfWeekString":"holder","nameAcronym":"holder","nameCardinal":"holder","nameCommon":"holder","nameFull":"holder","nameOrdinal":"holder","spanEnd":"holder","spanStart":"holder","termId":777,"timeBlockKey":{"timeBlockKey":"String_0","timeBlockName":"String_1","timeBlockStartTime":"String_2","timeBlockEndTime":"String_3","timeBlockDuration":"String_4","timeBlockStartTimeString":"String_5","timeBlockEndTimeString":"String_6","timeBlockDurationString":"String_7","timeBlockSpanString":"String_8","timeBlockSpanStringAbbrv":"String_9"},"weekCardinal":777,"weekId":777,"notes":["universalParamObjectBuilder RUN","appendRoomCore RUN"]}` 
+// !      switch (termId) {
+// !          case 202223:
+// !              weekDocDbJSON = `{"cardinalityLookupObject":{"1":"202223","2":"202224","3":"202225","4":"202226","5":"202228","6":"202229","7":"202230","8":"202231","9":"202232"},"202223":{"key":"1","name":"Week One","_id":202223,"dateEnd":"2022-06-10T11:59:59.999Z","dateStart":"2022-06-06T11:59:59.999Z","dateStartAbbrv":"Jun 6","dateStartFull":"Monday, June 6, 2022","dateStartSlash":"6/6/2022","daysOfWeekJSArray":[1,2,3,4,5],"daysOfWeekString":"Mon, Tue, Wed, Thu, Fri","nameAcronym":"Wk1","nameCardinal":"1","nameCommon":"Week 1","nameFull":"Week One","nameOrdinal":"1st","spanEnd":"2022-06-10T17:00:00.000Z","spanStart":"2022-06-06T09:00:00.000Z","termId":202223,"FD":{"timeBlockKey":"FD","timeBlockName":"Full Day","timeBlockStartTime":"09:00:00","timeBlockEndTime":"17:00:00","timeBlockDuration":"08:00:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"8 hours","timeBlockSpanString":"9:00am to 5:00pm","timeBlockSpanStringAbbrv":"9 to 5"},"AM":{"timeBlockKey":"AM","timeBlockName":"Morning","timeBlockStartTime":"09:00:00","timeBlockEndTime":"12:30:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"12:30pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"9:00am to 12:30pm","timeBlockSpanStringAbbrv":"9:00 to 12:30"},"PM":{"timeBlockKey":"PM","timeBlockName":"Afternoon","timeBlockStartTime":"13:30","timeBlockEndTime":"17:00:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"1:30pm","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"1:30pm to 5:00pm","timeBlockSpanStringAbbrv":"1:30 to 5:00"},"weekCardinal":1,"weekId":202223,"weekNotesInternal":["real note here","another real note here"],"weekNotesPublic":[]},"202224":{"key":"2","name":"Week Two","_id":202224,"dateEnd":"2022-06-17T11:59:59.999Z","dateStart":"2022-06-13T11:59:59.999Z","dateStartAbbrv":"Jun 13","dateStartFull":"Monday, June 13, 2022","dateStartSlash":"6/13/2022","daysOfWeekJSArray":[1,2,3,4,5],"daysOfWeekString":"Mon, Tue, Wed, Thu, Fri","nameAcronym":"Wk2","nameCardinal":"2","nameCommon":"Week 2","nameFull":"Week Two","nameOrdinal":"2nd","spanEnd":"2022-06-17T17:00:00.000Z","spanStart":"2022-06-13T09:00:00.000Z","termId":202223,"FD":{"timeBlockKey":"FD","timeBlockName":"Full Day","timeBlockStartTime":"09:00:00","timeBlockEndTime":"17:00:00","timeBlockDuration":"08:00:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"8 hours","timeBlockSpanString":"9:00am to 5:00pm","timeBlockSpanStringAbbrv":"9 to 5"},"AM":{"timeBlockKey":"AM","timeBlockName":"Morning","timeBlockStartTime":"09:00:00","timeBlockEndTime":"12:30:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"12:30pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"9:00am to 12:30pm","timeBlockSpanStringAbbrv":"9:00 to 12:30"},"PM":{"timeBlockKey":"PM","timeBlockName":"Afternoon","timeBlockStartTime":"13:30","timeBlockEndTime":"17:00:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"1:30pm","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"1:30pm to 5:00pm","timeBlockSpanStringAbbrv":"1:30 to 5:00"},"weekCardinal":2,"weekId":202224,"weekNotesInternal":["real note here","another real note here"],"weekNotesPublic":[]},"202225":{"key":"3","name":"Week Three","_id":202225,"dateEnd":"2022-06-24T11:59:59.999Z","dateStart":"2022-06-20T11:59:59.999Z","dateStartAbbrv":"Jun 20","dateStartFull":"Monday, June 20, 2022","dateStartSlash":"6/20/2022","daysOfWeekJSArray":[1,2,3,4,5],"daysOfWeekString":"Mon, Tue, Wed, Thu, Fri","nameAcronym":"Wk3","nameCardinal":"3","nameCommon":"Week 3","nameFull":"Week Three","nameOrdinal":"3rd","spanEnd":"2022-06-24T17:00:00.000Z","spanStart":"2022-06-20T09:00:00.000Z","termId":202223,"FD":{"timeBlockKey":"FD","timeBlockName":"Full Day","timeBlockStartTime":"09:00:00","timeBlockEndTime":"17:00:00","timeBlockDuration":"08:00:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"8 hours","timeBlockSpanString":"9:00am to 5:00pm","timeBlockSpanStringAbbrv":"9 to 5"},"AM":{"timeBlockKey":"AM","timeBlockName":"Morning","timeBlockStartTime":"09:00:00","timeBlockEndTime":"12:30:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"12:30pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"9:00am to 12:30pm","timeBlockSpanStringAbbrv":"9:00 to 12:30"},"PM":{"timeBlockKey":"PM","timeBlockName":"Afternoon","timeBlockStartTime":"13:30","timeBlockEndTime":"17:00:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"1:30pm","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"1:30pm to 5:00pm","timeBlockSpanStringAbbrv":"1:30 to 5:00"},"weekCardinal":3,"weekId":202225,"weekNotesInternal":["real note here","another real note here"],"weekNotesPublic":[]},"202226":{"key":"4","name":"Week Four","_id":202226,"dateEnd":"2022-07-01T11:59:59.999Z","dateStart":"2022-06-27T11:59:59.999Z","dateStartAbbrv":"Jun 27","dateStartFull":"Monday, June 27, 2022","dateStartSlash":"6/27/2022","daysOfWeekJSArray":[1,2,3,4,5],"daysOfWeekString":"Mon, Tue, Wed, Thu, Fri","nameAcronym":"Wk4","nameCardinal":"4","nameCommon":"Week 4","nameFull":"Week Four","nameOrdinal":"4th","spanEnd":"2022-07-01T17:00:00.000Z","spanStart":"2022-06-27T09:00:00.000Z","termId":202223,"FD":{"timeBlockKey":"FD","timeBlockName":"Full Day","timeBlockStartTime":"09:00:00","timeBlockEndTime":"17:00:00","timeBlockDuration":"08:00:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"8 hours","timeBlockSpanString":"9:00am to 5:00pm","timeBlockSpanStringAbbrv":"9 to 5"},"AM":{"timeBlockKey":"AM","timeBlockName":"Morning","timeBlockStartTime":"09:00:00","timeBlockEndTime":"12:30:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"12:30pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"9:00am to 12:30pm","timeBlockSpanStringAbbrv":"9:00 to 12:30"},"PM":{"timeBlockKey":"PM","timeBlockName":"Afternoon","timeBlockStartTime":"13:30","timeBlockEndTime":"17:00:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"1:30pm","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"1:30pm to 5:00pm","timeBlockSpanStringAbbrv":"1:30 to 5:00"},"weekCardinal":4,"weekId":202226,"weekNotesInternal":["next week off for July 4th"],"weekNotesPublic":["next week we'll be off for July 4th"]},"202228":{"key":"5","name":"Week Five","_id":202228,"dateEnd":"2022-07-15T11:59:59.999Z","dateStart":"2022-07-11T11:59:59.999Z","dateStartAbbrv":"Jul 11","dateStartFull":"Monday, July 11, 2022","dateStartSlash":"7/11/2022","daysOfWeekJSArray":[1,2,3,4,5],"daysOfWeekString":"Mon, Tue, Wed, Thu, Fri","nameAcronym":"Wk5","nameCardinal":"5","nameCommon":"Week 5","nameFull":"Week Five","nameOrdinal":"5th","spanEnd":"2022-07-15T17:00:00.000Z","spanStart":"2022-07-11T09:00:00.000Z","termId":202223,"FD":{"timeBlockKey":"FD","timeBlockName":"Full Day","timeBlockStartTime":"09:00:00","timeBlockEndTime":"17:00:00","timeBlockDuration":"08:00:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"8 hours","timeBlockSpanString":"9:00am to 5:00pm","timeBlockSpanStringAbbrv":"9 to 5"},"AM":{"timeBlockKey":"AM","timeBlockName":"Morning","timeBlockStartTime":"09:00:00","timeBlockEndTime":"12:30:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"12:30pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"9:00am to 12:30pm","timeBlockSpanStringAbbrv":"9:00 to 12:30"},"PM":{"timeBlockKey":"PM","timeBlockName":"Afternoon","timeBlockStartTime":"13:30","timeBlockEndTime":"17:00:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"1:30pm","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"1:30pm to 5:00pm","timeBlockSpanStringAbbrv":"1:30 to 5:00"},"weekCardinal":5,"weekId":202228,"weekNotesInternal":["previous week off for July 4th"],"weekNotesPublic":[]},"202229":{"key":"6","name":"Week Six","_id":202229,"dateEnd":"2022-07-22T11:59:59.999Z","dateStart":"2022-07-18T11:59:59.999Z","dateStartAbbrv":"Jul 18","dateStartFull":"Monday, July 18, 2022","dateStartSlash":"7/18/2022","daysOfWeekJSArray":[1,2,3,4,5],"daysOfWeekString":"Mon, Tue, Wed, Thu, Fri","nameAcronym":"Wk6","nameCardinal":"6","nameCommon":"Week 6","nameFull":"Week Six","nameOrdinal":"6th","spanEnd":"2022-07-22T17:00:00.000Z","spanStart":"2022-07-18T09:00:00.000Z","termId":202223,"FD":{"timeBlockKey":"FD","timeBlockName":"Full Day","timeBlockStartTime":"09:00:00","timeBlockEndTime":"17:00:00","timeBlockDuration":"08:00:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"8 hours","timeBlockSpanString":"9:00am to 5:00pm","timeBlockSpanStringAbbrv":"9 to 5"},"AM":{"timeBlockKey":"AM","timeBlockName":"Morning","timeBlockStartTime":"09:00:00","timeBlockEndTime":"12:30:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"12:30pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"9:00am to 12:30pm","timeBlockSpanStringAbbrv":"9:00 to 12:30"},"PM":{"timeBlockKey":"PM","timeBlockName":"Afternoon","timeBlockStartTime":"13:30","timeBlockEndTime":"17:00:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"1:30pm","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"1:30pm to 5:00pm","timeBlockSpanStringAbbrv":"1:30 to 5:00"},"weekCardinal":6,"weekId":202229,"weekNotesInternal":[],"weekNotesPublic":[]},"202230":{"key":"7","name":"Week Seven","_id":202230,"dateEnd":"2022-07-29T11:59:59.999Z","dateStart":"2022-07-25T11:59:59.999Z","dateStartAbbrv":"Jul 25","dateStartFull":"Monday, July 25, 2022","dateStartSlash":"7/25/2022","daysOfWeekJSArray":[1,2,3,4,5],"daysOfWeekString":"Mon, Tue, Wed, Thu, Fri","nameAcronym":"Wk7","nameCardinal":"7","nameCommon":"Week 7","nameFull":"Week Seven","nameOrdinal":"7th","spanEnd":"2022-07-29T17:00:00.000Z","spanStart":"2022-07-25T09:00:00.000Z","termId":202223,"FD":{"timeBlockKey":"FD","timeBlockName":"Full Day","timeBlockStartTime":"09:00:00","timeBlockEndTime":"17:00:00","timeBlockDuration":"08:00:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"8 hours","timeBlockSpanString":"9:00am to 5:00pm","timeBlockSpanStringAbbrv":"9 to 5"},"AM":{"timeBlockKey":"AM","timeBlockName":"Morning","timeBlockStartTime":"09:00:00","timeBlockEndTime":"12:30:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"12:30pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"9:00am to 12:30pm","timeBlockSpanStringAbbrv":"9:00 to 12:30"},"PM":{"timeBlockKey":"PM","timeBlockName":"Afternoon","timeBlockStartTime":"13:30","timeBlockEndTime":"17:00:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"1:30pm","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"1:30pm to 5:00pm","timeBlockSpanStringAbbrv":"1:30 to 5:00"},"weekCardinal":7,"weekId":202230,"weekNotesInternal":[],"weekNotesPublic":[]},"202231":{"key":"8","name":"Week Eight","_id":202231,"dateEnd":"2022-08-05T11:59:59.999Z","dateStart":"2022-08-01T11:59:59.999Z","dateStartAbbrv":"Aug 1","dateStartFull":"Monday, August 1, 2022","dateStartSlash":"8/1/2022","daysOfWeekJSArray":[1,2,3,4,5],"daysOfWeekString":"Mon, Tue, Wed, Thu, Fri","nameAcronym":"Wk8","nameCardinal":"8","nameCommon":"Week 8","nameFull":"Week Eight","nameOrdinal":"8th","spanEnd":"2022-08-05T17:00:00.000Z","spanStart":"2022-08-01T09:00:00.000Z","termId":202223,"FD":{"timeBlockKey":"FD","timeBlockName":"Full Day","timeBlockStartTime":"09:00:00","timeBlockEndTime":"17:00:00","timeBlockDuration":"08:00:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"8 hours","timeBlockSpanString":"9:00am to 5:00pm","timeBlockSpanStringAbbrv":"9 to 5"},"AM":{"timeBlockKey":"AM","timeBlockName":"Morning","timeBlockStartTime":"09:00:00","timeBlockEndTime":"12:30:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"12:30pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"9:00am to 12:30pm","timeBlockSpanStringAbbrv":"9:00 to 12:30"},"PM":{"timeBlockKey":"PM","timeBlockName":"Afternoon","timeBlockStartTime":"13:30","timeBlockEndTime":"17:00:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"1:30pm","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"1:30pm to 5:00pm","timeBlockSpanStringAbbrv":"1:30 to 5:00"},"weekCardinal":8,"weekId":202231,"weekNotesInternal":[],"weekNotesPublic":[]},"202232":{"key":"9","name":"Week Nine","_id":202232,"dateEnd":"2022-08-12T11:59:59.999Z","dateStart":"2022-08-8T11:59:59.999Z","dateStartAbbrv":"Aug 8","dateStartFull":"Monday, August 8, 2022","dateStartSlash":"8/8/2022","daysOfWeekJSArray":[1,2,3,4,5],"daysOfWeekString":"Mon, Tue, Wed, Thu, Fri","nameAcronym":"Wk9","nameCardinal":"9","nameCommon":"Week 9","nameFull":"Week Nine","nameOrdinal":"9th","spanEnd":"2022-08-12T17:00:00.000Z","spanStart":"2022-08-08T09:00:00.000Z","termId":202223,"FD":{"timeBlockKey":"FD","timeBlockName":"Full Day","timeBlockStartTime":"09:00:00","timeBlockEndTime":"17:00:00","timeBlockDuration":"08:00:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"8 hours","timeBlockSpanString":"9:00am to 5:00pm","timeBlockSpanStringAbbrv":"9 to 5"},"AM":{"timeBlockKey":"AM","timeBlockName":"Morning","timeBlockStartTime":"09:00:00","timeBlockEndTime":"12:30:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"9:00am","timeBlockEndTimeString":"12:30pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"9:00am to 12:30pm","timeBlockSpanStringAbbrv":"9:00 to 12:30"},"PM":{"timeBlockKey":"PM","timeBlockName":"Afternoon","timeBlockStartTime":"13:30","timeBlockEndTime":"17:00:00","timeBlockDuration":"03:30:00","timeBlockStartTimeString":"1:30pm","timeBlockEndTimeString":"5:00pm","timeBlockDurationString":"3.5 hours","timeBlockSpanString":"1:30pm to 5:00pm","timeBlockSpanStringAbbrv":"1:30 to 5:00"},"weekCardinal":9,"weekId":202232,"weekNotesInternal":[],"weekNotesPublic":[]},"weeksAllNotesInternal":["span values:Zulu as Local or?...","termId is the OuterKey - weekId is the Inner Key","cardinalityLookupObject is how to get all of this data from the drop-down 1,,2,3,4...","note how cardinalityLookupObject _skips_ weekId:202227","weeksAllNotesPublic and weekNotesPublic:just a simple string that can be displayed in a bullet list"],"weeksAllNotesPublic":[]}` 
+// !              break;
     
-        default:
-            weekDocDbJSON = `{"key":"1","name":"Weeks Summer 2022","_id":777,"dateEnd":"holder","dateStart":"holder","dateStartAbbrv":"holder","dateStartFull":"holder","dateStartSlash":"holder","daysOfWeekJSArray":["String One","String Two","String Three"],"daysOfWeekString":"holder","nameAcronym":"holder","nameCardinal":"holder","nameCommon":"holder","nameFull":"holder","nameOrdinal":"holder","spanEnd":"holder","spanStart":"holder","termId":777,"timeBlockKey":{"timeBlockKey":"String_0","timeBlockName":"String_1","timeBlockStartTime":"String_2","timeBlockEndTime":"String_3","timeBlockDuration":"String_4","timeBlockStartTimeString":"String_5","timeBlockEndTimeString":"String_6","timeBlockDurationString":"String_7","timeBlockSpanString":"String_8","timeBlockSpanStringAbbrv":"String_9"},"weekCardinal":777,"weekId":777,"notes":["universalParamObjectBuilder RUN","appendRoomCore RUN"]}` 
-            break;
-    }
-    return JSON.parse(weekDocDbJSON)
-}
+// !          default:
+// !              weekDocDbJSON = `{"key":"1","name":"Weeks Summer 2022","_id":777,"dateEnd":"holder","dateStart":"holder","dateStartAbbrv":"holder","dateStartFull":"holder","dateStartSlash":"holder","daysOfWeekJSArray":["String One","String Two","String Three"],"daysOfWeekString":"holder","nameAcronym":"holder","nameCardinal":"holder","nameCommon":"holder","nameFull":"holder","nameOrdinal":"holder","spanEnd":"holder","spanStart":"holder","termId":777,"timeBlockKey":{"timeBlockKey":"String_0","timeBlockName":"String_1","timeBlockStartTime":"String_2","timeBlockEndTime":"String_3","timeBlockDuration":"String_4","timeBlockStartTimeString":"String_5","timeBlockEndTimeString":"String_6","timeBlockDurationString":"String_7","timeBlockSpanString":"String_8","timeBlockSpanStringAbbrv":"String_9"},"weekCardinal":777,"weekId":777,"notes":["universalParamObjectBuilder RUN","appendRoomCore RUN"]}` 
+// !              break;
+// !      }
+// !      return JSON.parse(weekDocDbJSON)
+// !  }
 
 //==================================================                   </JUST the Inventory>
 //==========================================================================================

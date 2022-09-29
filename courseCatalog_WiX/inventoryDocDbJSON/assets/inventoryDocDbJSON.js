@@ -24,7 +24,8 @@ export function getInventoryResponse(paramObject = {}){
     switch (paramObject.kind) {
         case 'location':
             paramObject.key = typeof paramObject.key === 'string' && (paramObject.key).length > 0 ? paramObject.key : 'noKey'
-            return locationGetByKey(paramObject.key)
+            // return locationGetByKey(paramObject.key)
+            return locationGetByRegionKey(paramObject.key)
             break;
         // case 'week':
         //     paramObject.key = typeof paramObject.key === 'string' && (paramObject.key).length > 0 ? paramObject.key : 'noKey'
@@ -68,8 +69,7 @@ export function getInventoryResponse(paramObject = {}){
 
 // ø <---------- <locationGetByRegionKey(regionKey)>  ---------->
 export function locationGetByRegionKey(regionKey = 'DLH'){
-    let locationInstantiatedObject = locationInstantiateObject()
-    return locationInstantiatedObject[regionKey]
+    return locationsAll[regionKey]
 }
 // ø <---------- </locationGetByRegionKey(regionKey)> ---------->
 

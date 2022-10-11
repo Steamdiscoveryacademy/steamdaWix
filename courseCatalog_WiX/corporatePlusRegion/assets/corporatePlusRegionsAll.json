@@ -98,13 +98,13 @@
                 "name": "Eastern Standard Time",
                 "kind": "Standard",
                 "abbrv": "EST",
-                "offest": -5
+                "offset": -5
             },
             "EDT": {
                 "name": "Eastern Daylight Time",
                 "kind": "Daylight",
                 "abbrv": "EDT",
-                "offest": -4
+                "offset": -4
             }
         },
         "notes": [
@@ -260,13 +260,13 @@
                     "name": "Eastern Standard Time",
                     "kind": "Standard",
                     "abbrv": "EST",
-                    "offest": -5
+                    "offset": -5
                 },
                 "EDT": {
                     "name": "Eastern Daylight Time",
                     "kind": "Daylight",
                     "abbrv": "EDT",
-                    "offest": -4
+                    "offset": -4
                 }
             },
             "notes": []
@@ -369,13 +369,13 @@
                     "name": "Eastern Standard Time",
                     "kind": "Standard",
                     "abbrv": "EST",
-                    "offest": -5
+                    "offset": -5
                 },
                 "EDT": {
                     "name": "Eastern Daylight Time",
                     "kind": "Daylight",
                     "abbrv": "EDT",
-                    "offest": -4
+                    "offset": -4
                 }
             },
             "notes": []
@@ -477,13 +477,13 @@
                     "name": "Eastern Standard Time",
                     "kind": "Standard",
                     "abbrv": "EST",
-                    "offest": -5
+                    "offset": -5
                 },
                 "EDT": {
                     "name": "Eastern Daylight Time",
                     "kind": "Daylight",
                     "abbrv": "EDT",
-                    "offest": -4
+                    "offset": -4
                 }
             },
             "notes": [

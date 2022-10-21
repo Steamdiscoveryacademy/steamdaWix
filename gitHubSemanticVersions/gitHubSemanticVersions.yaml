@@ -1,0 +1,9 @@
+# a place to put Semantic Versions of Important Files track here
+notes: 
+  - keep file where it will
+  - make folder _here_ that is (key) file _without_ versioning at the end
+  - pace any Semantically changed Version in this folder
+  - it will be put in the gitHub repo
+  - make changes, changes will go inthe gitHub repo:
+    - this will be rare, as versioning changes will most only be tracked here
+  

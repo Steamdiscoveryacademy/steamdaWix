@@ -1,0 +1,17 @@
+# THIS MAY BE REDUNDANT
+# - If so decide which makes more sense
+# - OR decide that redundancy makes sens
+---
+file:
+  name: VSC_rewriteResponse_v1t.1t.1t.js
+  path: /Users/brad/Documents/bradRepositories/vsCode/Postman/aaaaTemplateForDrupalUpdate_viaVSCreWrite_thenPostmanPATCH/VSC_rewriteResponse_v1t.1t.1t.js
+  notes:
+    - first engendering to PATCH new DaysOfWeekBinary onto couseKey
+...
+---
+file:
+  name: VSC_rewriteResponse_v1t.2t.1t.js
+  path: /Users/brad/Documents/bradRepositories/vsCode/Postman/aaaaTemplateForDrupalUpdate_viaVSCreWrite_thenPostmanPATCH/VSC_rewriteResponse_v1t.1t.1t.js
+  notes:
+    - intended for the update that adds the nid-base36 to the coursre key, delimited
+...

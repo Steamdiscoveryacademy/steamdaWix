@@ -76,25 +76,36 @@ if (kontinue) {
         elementResponseObject.pretrashCourseKey = elementObject.courseKey // ! Different: preTrash
         elementResponseObject.originalCourseKey = elementObject.curriculumKey
         elementResponseObject.rebuiltCourseKey = elementObject.curriculumKey
+        elementResponseObject.rebuiltNidCourseKey = elementObject.curriculumKey
 
         elementResponseObject.originalCourseKey += getCurriculumKeyDelimiter('original')
         elementResponseObject.rebuiltCourseKey += getCurriculumKeyDelimiter('new')
+        elementResponseObject.rebuiltNidCourseKey += getCurriculumKeyDelimiter('new')
+
+        elementResponseObject.rebuiltNidCourseKey += getNidBase36(elementObject.nid) // ! Different: nid64 delimited
+        elementResponseObject.rebuiltNidCourseKey += getCurriculumKeyDelimiter('new') // ! Different: nid64 delimited
 
         elementResponseObject.originalCourseKey += alphabetArray[Math.floor((Number(elementObject.termId) % 10000) / 100)]
         elementResponseObject.rebuiltCourseKey += alphabetArray[Math.floor((Number(elementObject.termId) % 10000) / 100)]
+        elementResponseObject.rebuiltNidCourseKey += alphabetArray[Math.floor((Number(elementObject.termId) % 10000) / 100)]
         elementResponseObject.originalCourseKey += elementObject.termId.slice(-2)
         elementResponseObject.rebuiltCourseKey += elementObject.termId.slice(-2)
+        elementResponseObject.rebuiltNidCourseKey += elementObject.termId.slice(-2)
         elementResponseObject.originalCourseKey += (elementObject.weekId % 100)
         elementResponseObject.rebuiltCourseKey += (elementObject.weekId % 100)
+        elementResponseObject.rebuiltNidCourseKey += (elementObject.weekId % 100)
 
         elementResponseObject.originalCourseKey += getGradeLevelLetters(elementObject.gradeLevelKey, 'original')
         elementResponseObject.rebuiltCourseKey += getGradeLevelLetters(elementObject.gradeLevelKey, 'new')
+        elementResponseObject.rebuiltNidCourseKey += getGradeLevelLetters(elementObject.gradeLevelKey, 'new')
 
         elementResponseObject.originalCourseKey += elementObject.locationKey
         elementResponseObject.rebuiltCourseKey += elementObject.locationKey
+        elementResponseObject.rebuiltNidCourseKey += elementObject.locationKey
 
         elementResponseObject.originalCourseKey += ''// ! Different: original doesn't have 'daysOfWeekBinary'
         elementResponseObject.rebuiltCourseKey += getDaysOfWeekBinary(elementObject.daysOfWeek)
+        elementResponseObject.rebuiltNidCourseKey += getDaysOfWeekBinary(elementObject.daysOfWeek)
 
         elementResponseObject.updatedCourseKey = elementResponseObject.originalCourseKey + elementResponseObject.daysOfWeekBinary.toString()
         return elementResponseObject
@@ -156,6 +167,11 @@ function getGradeLevelLetters(gradeLevelString = 'STRING', version = 'new') {
     gradeLevelEnd = gradeLevelArray.length === 3 ? gradeLevelEnd + gradeLevelArray[2] : gradeLevelEnd
 
     return arrayThis[Number(gradeLevelStart)] + arrayThis[Number(gradeLevelEnd)]
+}
+function getNidBase36(nid = 777){
+    // • develOnly no validation
+    nid = Number(nid)
+    return nid.toString(36).toUpperCase()
 }
     // • ============================================================           </HELPER FUNCTIONS>
     // • ==========================================================================================

@@ -1,5 +1,5 @@
 console.log('<TSTS: entering>')
-const maxChangedGatheredPrevious = pm.variables.get("courseMaxChangedGathered")
+const maxChangedGatheredPrevious = pm.variables.get("elementMaxChangedGathered")
 console.log(`TSTS: <Actual TESTS - checking if((testCount + failedCount) > 0)>`)
 // » <Actual TESTS - checking if((testCount + failedCount) > 0)>
 let testCount = 0 
@@ -19,8 +19,8 @@ console.log(`if((testCount [${testCount}] + [${failedCount}] failedCount) === 0)
 // » </Actual TESTS - checking if((testCount + failedCount) > 0)>
 console.log(`TSTS: </Actual TESTS - checking if((testCount + failedCount) > 0)>`)
 
-let maxChangedLoop = pm.variables.get("courseMaxChanged")
-let maxChangedThis = pm.variables.get("courseMaxChanged")
+let maxChangedLoop = pm.variables.get("elementMaxChanged")
+let maxChangedThis = pm.variables.get("elementMaxChanged")
 let maxChangedGatheredThis = pm.variables.replaceIn('{{$isoTimestamp}}')
 
 let responseLogUNIVERSAL = true
@@ -69,8 +69,8 @@ if(responseLogUNIVERSAL === true){
     console.log(`PRS: pm.variables.get("blockSetName"): ${pm.variables.get("blockSetName")}`)
     console.log(`PRS: pm.variables.get("blockUsedName"): ${pm.variables.get("blockUsedName")}`)
     console.log(`PRS: pm.variables.get("blockUsed"): ${pm.variables.get("blockUsed")}`)
-    console.log(`PRS: pm.variables.get("courseMaxChanged"): ${pm.variables.get("courseMaxChanged")}`)
-    console.log(`PRS: pm.variables.get("courseMaxChangedGathered"): ${pm.variables.get("courseMaxChangedGathered")}`)
+    console.log(`PRS: pm.variables.get("elementMaxChanged"): ${pm.variables.get("elementMaxChanged")}`)
+    console.log(`PRS: pm.variables.get("elementMaxChangedGathered"): ${pm.variables.get("elementMaxChangedGathered")}`)
     console.log(`TSTS: maxChangedGatheredPrevious: ${maxChangedGatheredPrevious}`)
     console.log(`TSTS: maxChangedGatheredThis: ${maxChangedGatheredThis}`)
     console.log(`TSTS: maxChangedLoop: ${maxChangedLoop}`)
@@ -96,20 +96,20 @@ if(responseLogUNIVERSAL === true){
 
 
 
-// pm.variables.get("courseMaxChanged")
-// pm.variables.get("courseMaxChangedGathered")
+// pm.variables.get("elementMaxChanged")
+// pm.variables.get("elementMaxChangedGathered")
 // let maxChangedGatheredThis = pm.variables.replaceIn('{{$randomFirstName}}')
 // pm.globals.set("maxChangedGatheredThis", maxChangedGatheredThis)
 
 
 if(updated === true){
-    console.log(`courseMaxChanged Updated (changed) 
+    console.log(`elementMaxChanged Updated (changed) 
 ACTION INDICATED:
 Append the code below to the Pre-request Script:
 copy below FROM HERE =>`)
     // console.log(`"maxChangedGathered", "${maxChangedGatheredThis}")`)
-    console.log(`pm.globals.set("courseMaxChanged", "${maxChangedThis}")`)
-    console.log(`pm.globals.set("courseMaxChangedGathered", "${maxChangedGatheredThis}")`)
+    console.log(`pm.globals.set("elementMaxChanged", "${maxChangedThis}")`)
+    console.log(`pm.globals.set("elementMaxChangedGathered", "${maxChangedGatheredThis}")`)
     console.log(`<= TO HERE`)
 }else{
 console.log(`RESULT:

@@ -1,0 +1,44 @@
+{
+    "discordApplication": {
+        "valintinDespa": {
+            "appKey": "¿maybe public key?",
+            "appSecret": "maybe ¿token?"
+        },
+        "name": "Punch Clock",
+        "id": 1050495673604243476,
+        "publicKey": "5e17873d02a3b11a35601fc707be9ea8efbf7e63317d4af90ecd09827c5bf9a5",
+        "Oauth2": {
+            "clientRedirect": "https://oauth.pstmn.io/v1/callback",
+            "clientRedirectNotes": [
+                "as per Valentin Despa",
+                "https://www.youtube.com/watch?v=YpmEkNJubHA&list=PLYpO7v1vFffsLXsAj1QDWqZKFpJenh-Ew&index=30"
+            ],
+            "clientSecret": "DjCUjS8-ckAjPL3P2Xqx9YQL_61v3d1e",
+            "MultiAccountStore": {
+                "users": [
+                    {
+                        "id": "797145459020922940",
+                        "avatar": "b964e567b07a060059ba151e7ab5fb87",
+                        "username": "bradlowry",
+                        "discriminator": "2859",
+                        "tokenStatus": 2,
+                        "pushSyncToken": null
+                    }
+                ],
+                "canUseMultiAccountMobile": false
+            },
+            "token": "Nzk3MTQ1NDU5MDIwOTIyOTQw.GDQxkC.VmwEx7plsR2hU5AfKhLW6xyteUTPXnCHUNpu_8",
+            "tokens": {
+                "797145459020922940": "Nzk3MTQ1NDU5MDIwOTIyOTQw.GDQxkC.VmwEx7plsR2hU5AfKhLW6xyteUTPXnCHUNpu_8"
+            }
+        }
+    },
+    "discordAuthorization": {
+        "Base authorization URL": "/discord.com/oauth2/authorize",
+        "Token URL": "https://discord.com/api/oauth2/token",
+        "Token Revocation URL": "https://discord.com/api/oauth2/token/revoke",
+        "notes": [
+            "from url: https://discord.com/developers/docs/topics/oauth2"
+        ]
+    }
+}

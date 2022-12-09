@@ -1,7 +1,7 @@
 console.log('<TSTS: entering>')
 const maxChangedGatheredPrevious = pm.variables.get("elementMaxChangedGathered")
-console.log(`TSTS: <Actual TESTS - checking if((testCount + failedCount) > 0)>`)
-// » <Actual TESTS - checking if((testCount + failedCount) > 0)>
+console.log(`TSTS: <Starndard TESTS - .status(200) etc)>`)
+// » <Starndard TESTS - .status(200) etc)>
 let testCount = 0 
 let passedCount = 0 
 let failedCount = 0
@@ -13,11 +13,12 @@ pm.test("Status code is 200", function () {
     failedCount--
 })
 
-console.log(`Tests Aggregate: Test Count: ${testCount}; Passed Count: ${passedCount}; Failed Count: ${(testCount + failedCount)}`)
-console.log(`if((testCount [${testCount}] + [${failedCount}] failedCount) === 0) » 'CONTINUE'`)
+// see 'Tests Esoteric'
+// console.log(`Tests Aggregate: Test Count: ${testCount}; Passed Count: ${passedCount}; Failed Count: ${(testCount + failedCount)}`)
+// console.log(`if((testCount [${testCount}] + [${failedCount}] failedCount) === 0) » 'CONTINUE'`)
  
-// » </Actual TESTS - checking if((testCount + failedCount) > 0)>
-console.log(`TSTS: </Actual TESTS - checking if((testCount + failedCount) > 0)>`)
+// » </Starndard TESTS - .status(200) etc)>
+console.log(`TSTS: </Starndard TESTS - .status(200) etc)>`)
 
 let maxChangedLoop = pm.variables.get("elementMaxChanged")
 let maxChangedThis = pm.variables.get("elementMaxChanged")
@@ -56,6 +57,7 @@ responseObjectArray.forEach(elementObject => {
     }
     // ø </EXAUSTIVE-DOCUMENTATION>
 
+    maxChangedThis = changed > maxChangedLoop ? changed : maxChangedThis
     maxChangedThis = changed > maxChangedLoop ? changed : maxChangedThis
     index++
 })
@@ -117,6 +119,21 @@ No Drupal Course(s) Updated (changed) since ${maxChangedGatheredPrevious}
 NO ACTION INDICATED
 `)
 }
+console.log(`TSTS: <Esoteric TESTS - updatedCount === 0>`)
+// <---------- test ---------->
+testCount++
+pm.test(`NO EXCEPTION: No Updates Since ${pm.variables.get("elementMaxChangedGathered")}`  , function () {
+    //var jsonData = pm.response.json();
+    pm.expect(updatedCount, 'No Elements Changed').to.equal(0)
+    passedCount++
+    failedCount--
+});
+// <---------- test ---------->
 
+// <---------- aggregate ---------->
+console.log(`Tests Aggregate: Test Count: ${testCount}; Passed Count: ${passedCount}; Failed Count: ${(testCount + failedCount)}`)
+console.log(`if((testCount [${testCount}] + [${failedCount}] failedCount) === 0) » 'CONTINUE'`)
+// <---------- aggregate ---------->
+console.log(`TSTS: </Esoteric TESTS - updatedCount === 0>`)
 
 console.log('</TSTS: exiting>')

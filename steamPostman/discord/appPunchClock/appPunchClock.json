@@ -13,6 +13,11 @@
                 "as per Valentin Despa",
                 "https://www.youtube.com/watch?v=YpmEkNJubHA&list=PLYpO7v1vFffsLXsAj1QDWqZKFpJenh-Ew&index=30"
             ],
+            "altClientRedirect": "https://www.getpostman.com/oauth2/callback",
+            "altClientRedirectNotes": [
+                "as per Valentin Despa",
+                "https://www.youtube.com/watch?v=NRU_KdUSjD4&list=TLPQMDkxMjIwMjJBz3HQS8QrJQ&index=31"
+            ],
             "clientSecret": "DjCUjS8-ckAjPL3P2Xqx9YQL_61v3d1e",
             "MultiAccountStore": {
                 "users": [
@@ -34,11 +39,12 @@
         }
     },
     "discordAuthorization": {
-        "Base authorization URL": "/discord.com/oauth2/authorize",
+        "Base authorization URL": "https://discord.com/oauth2/authorize",
         "Token URL": "https://discord.com/api/oauth2/token",
         "Token Revocation URL": "https://discord.com/api/oauth2/token/revoke",
         "notes": [
-            "from url: https://discord.com/developers/docs/topics/oauth2"
+            "from url: https://discord.com/developers/docs/topics/oauth2",
+            "'Token URL' called 'Access Token URL' in Postman"
         ]
     }
 }
